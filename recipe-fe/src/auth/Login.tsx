@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import '../styles/LoginForm.css';
+import InputWithLabel from '../components/InputWithLabel'
+import '../styles/Login.css';
 
 
 const defaultCredentials: { email: string, password: string } = { email: "", password: "" };
@@ -28,25 +29,24 @@ function LoginForm() {
     <div className="LoginForm-container">
       <form className="LoginForm">
         <div className="form-group">
-          <label htmlFor="email" className="LoginForm-email-label">Email:</label>
-          <input
-            type="email"
-            id="email"
-            className="LoginForm-email-input"
-            onChange={handleChange}
+          <InputWithLabel
+            name={"Email"}
+            id={"email"}
+            type={"email"}
+            className={"LoginForm-email"}
+            handleChange={handleChange}
             value={credentials.email}
-            required
-          />
+            required={true} />
         </div>
         <div className="form-group">
-          <label htmlFor="password" className="LoginForm-pw-label">Password:</label>
-          <input
-            type="password"
-            id="password"
-            className="LoginForm-pw-input"
-            onChange={handleChange}
+          <InputWithLabel
+            name={"Password"}
+            id={"password"}
+            type={"password"}
+            className={"LoginForm-password"}
+            handleChange={handleChange}
             value={credentials.password}
-            required />
+            required={true} />
         </div>
       </form>
     </div>
