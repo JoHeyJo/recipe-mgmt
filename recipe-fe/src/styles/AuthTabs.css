@@ -1,0 +1,40 @@
+.cardContainer {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 30vw;
+  margin: auto;
+  overflow: hidden;
+  background: #fff;
+}
+
+.navList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ccc;
+}
+
+.navItem {
+  cursor: pointer;
+  flex-grow: 1;
+  text-align: center;
+  padding: 10px;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s;
+}
+
+.navItem:hover {
+  background-color: #e9e9e9;
+}
+
+.navItemActive {
+  font-weight: bold;
+  background-color: #e0e0e0;
+}
+
+.formContent {
+  padding: 20px;
+}
