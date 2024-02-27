@@ -1,16 +1,10 @@
+import { newUser } from '../utils/types'
 import { ChangeEvent, useState } from 'react';
 import InputWithLabel from '../components/InputWithLabel';
 import '../styles/SignUp.css'
 
-type DefaultNew = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  userName: string;
-}
 
-const defaultNew: DefaultNew = {
+const defaultNew: newUser = {
   firstName: "",
   lastName: "",
   email: "",
