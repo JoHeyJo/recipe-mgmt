@@ -14,7 +14,7 @@ function AuthTabs() {
             Login
           </li>
           <li className={`navItem ${activeTab === 'signup' ? 'navItemActive' : ''}`} onClick={() => setActiveTab('signup')}>
-            Signup
+            Sign up
           </li>
         </ul>
       </nav>

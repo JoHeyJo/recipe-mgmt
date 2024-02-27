@@ -30,7 +30,7 @@ function LoginForm() {
       <form className="LoginForm">
         <div className="form-group">
           <InputWithLabel
-            name={"Email"}
+            name={"Email:"}
             id={"email"}
             type={"email"}
             className={"LoginForm-email"}
@@ -40,7 +40,7 @@ function LoginForm() {
         </div>
         <div className="form-group">
           <InputWithLabel
-            name={"Password"}
+            name={"Password:"}
             id={"password"}
             type={"password"}
             className={"LoginForm-password"}

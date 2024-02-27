@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import InputWithLabel from '../components/InputWithLabel';
 import '../styles/SignUp.css'
 
 type DefaultNew = {
-  firstName:string;
-  lastName:string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
   userName: string;
@@ -14,35 +14,76 @@ const defaultNew: DefaultNew = {
   firstName: "",
   lastName: "",
   email: "",
-  password:"",
-  userName:""
+  password: "",
+  userName: ""
 }
 
-/** Render signup form - handles SignUp logic */
+/** Render SignUp form - handles SignUp logic */
 function SignUp() {
-  const [newUser, setNewUser] = useState();
+  const [newUser, setNewUser] = useState(defaultNew);
+
+  /** Handle changes to sign up form */
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    event.preventDefault();
+    const { id, value } = event.target;
+    setNewUser(user => (
+      { ...user, [id]: value }
+    ))
+  }
+
 
   return (
     <div className="SignUp-container">
       <form className="SignUp">
         <div className="form-group">
           <InputWithLabel
-            name={"First Name"}
+            name={"First Name:"}
             id={"firstName"}
             type={"text"}
             className={"SignUp-fn"}
-            handleChange={()=>{}}
-            value={''}
+            handleChange={handleChange}
+            value={newUser.firstName}
             required={true} />
         </div>
         <div className="form-group">
-          <label htmlFor='lastName' className='SignUp-ln'>Last Name</label>
-          <input 
-            id='lastName'
-            type='text'
-            className='SignUp-ln'
-            value={''}
-            required/>
+          <InputWithLabel
+            name={"Last Name:"}
+            id={'lastName'}
+            type={'text'}
+            className={'SignUp-ln'}
+            handleChange={handleChange}
+            value={newUser.lastName}
+            required />
+        </div>
+        <div className='form-group'>
+          <InputWithLabel
+            id={'email'}
+            name={'Email'}
+            className={'SignUp-email'}
+            type={'email'}
+            handleChange={handleChange}
+            value={newUser.email}
+            required />
+        </div>
+        <div className='form-group'>
+          <InputWithLabel
+            id={'password'}
+            name={'Password:'}
+            className={'SignUp-pw'}
+            type={'password'}
+            value={newUser.password}
+            handleChange={handleChange}
+            required />
+        </div>
+        <div className='form-group'>
+          <InputWithLabel
+            id={'user'}
+            name={'User name:'}
+            type={'text'}
+            className={'SignUp-user-input'}
+            value={newUser.userName}
+            handleChange={handleChange}
+            required />
         </div>
       </form>
     </div>
