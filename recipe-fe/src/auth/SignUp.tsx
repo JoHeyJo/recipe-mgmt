@@ -31,10 +31,14 @@ function SignUp() {
     ))
   }
 
+  /** Submits new user data for */
+  function handleSubmit() {
+
+  }
 
   return (
     <div className="SignUp-container">
-      <form className="SignUp">
+      <form onSubmit={handleSubmit} className="SignUp">
         <div className="form-group">
           <InputWithLabel
             name={"First Name:"}
@@ -58,7 +62,7 @@ function SignUp() {
         <div className='form-group'>
           <InputWithLabel
             id={'email'}
-            name={'Email'}
+            name={'Email:'}
             className={'SignUp-email'}
             type={'email'}
             handleChange={handleChange}
