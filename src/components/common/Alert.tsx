@@ -1,6 +1,10 @@
 import { ExclamationTriangleIcon } from '@heroicons/react/20/solid'
 
-export default function Alert() {
+type AlertProp = {
+  alert: string;
+}
+
+export default function Alert({alert}: AlertProp) {
   return (
     <div className="rounded-md bg-yellow-50 p-4">
       <div className="flex">
@@ -11,8 +15,7 @@ export default function Alert() {
           <h3 className="text-sm font-medium text-yellow-800">Attention needed</h3>
           <div className="mt-2 text-sm text-yellow-700">
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid pariatur, ipsum similique veniam quo
-              totam eius aperiam dolorum.
+              {alert}
             </p>
           </div>
         </div>
