@@ -2,7 +2,10 @@ import axios from "axios";
 import { newUser } from "./utils/types";
 
 const BASEURL = "http://localhost:3000/"
-
+/** API class. 
+ * 
+ * Static class - Contains methods that facilitate communications between client
+ * and backend API */
 class API {
   static token = null;
 
@@ -25,3 +28,5 @@ class API {
     return res.token;
   }
 }
+
+export default API;

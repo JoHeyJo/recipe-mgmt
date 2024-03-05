@@ -1,3 +1,4 @@
+import API from '../api'
 import { newUser } from '../utils/types'
 import { ChangeEvent, useState } from 'react';
 import InputWithLabel from '../components/InputWithLabel';
@@ -26,8 +27,13 @@ function SignUp() {
   }
 
   /** Submits new user data for */
-  function handleSubmit() {
-
+  async function handleSubmit() {
+    try {
+      const token = await API.signUp(newUser);
+      return token
+    } catch (error) {
+      
+    }
   }
 
   return (
