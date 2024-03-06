@@ -16,14 +16,14 @@
   padding: 0;
   display: flex;
   background-color: #f9f9f9;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 0.05rem solid #ccc;
 }
 
 .navItem {
   cursor: pointer;
   flex-grow: 1;
   text-align: center;
-  padding: 10px;
+  padding: 0.5rem;
   background-color: #f9f9f9;
   transition: background-color 0.3s;
 }
@@ -38,5 +38,5 @@
 }
 
 .formContent {
-  padding: 20px;
+  padding: 1.25rem;
 }

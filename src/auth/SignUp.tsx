@@ -3,7 +3,7 @@ import InputWithLabel from '../components/InputWithLabel';
 import Alert from '../components/common/Alert';
 //modules
 import API from '../api'
-import { newUser } from '../utils/types'
+import { User as newUser } from '../utils/types'
 import { ChangeEvent, useState } from 'react';
 //styles
 import '../styles/SignUp.css'
@@ -14,7 +14,8 @@ const defaultNew: newUser = {
   lastName: "",
   email: "",
   password: "",
-  userName: ""
+  userName: "",
+  isAdmin: false
 }
 
 /** Render SignUp form - handles SignUp logic */

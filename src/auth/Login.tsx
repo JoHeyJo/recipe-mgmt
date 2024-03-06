@@ -13,7 +13,9 @@ function LoginForm() {
   const [credentials, setCredentials] = useState(defaultCredentials);
 
   /** sends form data */
-  function handleSubmit() { }
+  function handleSubmit() {
+    
+   }
 
   /** handles input change */
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {

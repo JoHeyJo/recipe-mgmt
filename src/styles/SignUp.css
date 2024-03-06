@@ -10,8 +10,8 @@
   background-color: #ffffff;
   border-radius: .5rem;
   box-shadow: 0 .25rem .5rem rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 25px;
+    width: 100%;
+  max-width: 25rem;
 }
 
 .SignUp label {
@@ -24,10 +24,10 @@
   width: 100%;
   padding-left: 0.625rem;
   padding-right: 0.625rem;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-bottom: 16px;
-  border: 1px solid #333333;
-  border-radius: 4px;
-  font-size: 16px;
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+  margin-bottom: 1rem;
+  border: 0.0625rem solid #333333;
+  border-radius: 0.25rem;
+  font-size: 1rem;
 }
