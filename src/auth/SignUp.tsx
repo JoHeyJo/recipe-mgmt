@@ -7,7 +7,7 @@ import { newUser } from '../utils/types'
 import { ChangeEvent, useState } from 'react';
 //styles
 import '../styles/SignUp.css'
-import Button from '../components/common/Button';
+import { PillButton } from '../components/common/PillButton';
 
 const defaultNew: newUser = {
   firstName: "",
@@ -94,7 +94,7 @@ function SignUp() {
               handleChange={handleChange}
               required />
           </div>
-          <Button />
+          <PillButton action={'submit'} />
         </form>
       </div>
       {/* <Alert /> */}
