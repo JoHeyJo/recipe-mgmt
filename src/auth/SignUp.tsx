@@ -3,13 +3,13 @@ import InputWithLabel from '../components/InputWithLabel';
 import Alert from '../components/common/Alert';
 //modules
 import API from '../api'
-import { User as newUser } from '../utils/types'
 import { ChangeEvent, useState } from 'react';
 //styles
 import '../styles/SignUp.css'
 import { PillButton } from '../components/common/PillButton';
+import { SignUp as SignUpProps, UserSignUp } from '../utils/types';
 
-const defaultNew: newUser = {
+const defaultNew: UserSignUp = {
   firstName: "",
   lastName: "",
   email: "",
@@ -18,8 +18,13 @@ const defaultNew: newUser = {
   isAdmin: false
 }
 
-/** Render SignUp form - handles SignUp logic */
-function SignUp() {
+
+/** Render SignUp form - handles SignUp logic 
+ * 
+ * New user by default is not an admin. Admin privileges are granted to user
+ * when "Recipe Book" is created at time of creation to corresponding book.
+*/
+function SignUp({ signUp }: SignUpProps) {
   const [newUser, setNewUser] = useState(defaultNew);
 
   /** Handle changes to sign up form */
@@ -34,7 +39,9 @@ function SignUp() {
   /** Submits new user data for */
   async function handleSubmit() {
     try {
-      const token = await API.signUp(newUser);
+      let token = 'hi'
+      // const token = signUp(newUser);
+      console.log(token)
       return token
     } catch (error) {
 
@@ -44,7 +51,7 @@ function SignUp() {
   return (
     <>
       <div className="SignUp-container">
-        <form onSubmit={handleSubmit} className="SignUp">
+        <form className="SignUp">
           <div className="form-group">
             <InputWithLabel
               name={"First Name:"}
@@ -87,7 +94,7 @@ function SignUp() {
           </div>
           <div className='form-group'>
             <InputWithLabel
-              id={'user'}
+              id={'userName'}
               name={'User name:'}
               type={'text'}
               className={'SignUp-user-input'}
@@ -95,7 +102,7 @@ function SignUp() {
               handleChange={handleChange}
               required />
           </div>
-          <PillButton action={'submit'} />
+          <PillButton handleAction={handleSubmit} action={'submit'} />
         </form>
       </div>
       {/* <Alert /> */}

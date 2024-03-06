@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import Login from '../auth/Login'; // Adjust path as necessary
-import SignUp from '../auth/SignUp'; // Adjust path as necessary
-import '../styles/AuthTabs.css'; // Import the CSS file
+import Login from '../auth/Login'; 
+import SignUp from '../auth/SignUp'; 
+import '../styles/AuthTabs.css'; 
+import { SignUp as SignUpProps} from '../utils/types';
 
-function AuthTabs() {
+function AuthTabs({ signUp }: SignUpProps) {
   const [activeTab, setActiveTab] = useState('login');
 
   return (
@@ -19,7 +20,7 @@ function AuthTabs() {
         </ul>
       </nav>
       <div className="formContent">
-        {activeTab === 'login' ? <Login /> : <SignUp />}
+        {activeTab === 'login' ? <Login /> : <SignUp signUp={signUp}/>}
       </div>
     </div>
   );

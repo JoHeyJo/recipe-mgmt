@@ -1,5 +1,5 @@
 import axios from "axios";
-import { newUser } from "./utils/types";
+import { UserSignUp } from "./utils/types";
 
 const BASEURL = "http://localhost:3000/"
 /** API class. 
@@ -23,7 +23,7 @@ class API {
   }
 
   /** Register user & return token */
-  static async signUp(data: newUser){
+  static async signUp(data: UserSignUp){
     const res = await this.request("signup", data, "POST");
     return res.token;
   }
