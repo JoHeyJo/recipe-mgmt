@@ -2,8 +2,8 @@
 import InputWithLabel from '../components/InputWithLabel';
 import Alert from '../components/common/Alert';
 //modules
-import API from '../api'
 import { ChangeEvent, useState } from 'react';
+import { redirect } from "react-router-dom";
 //styles
 import '../styles/SignUp.css'
 import { PillButton } from '../components/common/PillButton';
@@ -39,11 +39,9 @@ function SignUp({ signUp }: SignUpProps) {
   /** Submits new user data for */
   async function handleSubmit() {
     try {
-      // const r = signupAPI(newUser)
-      const token = API.signUp(newUser);
-      // const res = await API.getAll()
-      console.log(token)
-      return token
+      signUp(newUser);
+      setNewUser(defaultNew);
+      redirect("/Home")
     } catch (error) {
       console.log("error in SignUp",error)
       throw error

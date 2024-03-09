@@ -1,9 +1,16 @@
-export type UserSignUp = {
+export type User = {
+  userName: string;
+}
+
+export type UserLogin = User & {
+  password: string;
+}
+
+export type UserSignUp = User & {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
-  userName: string;
   isAdmin: boolean;
 }
 

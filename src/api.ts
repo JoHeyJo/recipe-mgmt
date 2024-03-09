@@ -1,5 +1,5 @@
 import axios from "axios";
-import { UserSignUp } from "./utils/types";
+import { UserLogin, UserSignUp } from "./utils/types";
 
 const BASEURL = "http://127.0.0.1:5000"
 /** API class. 
@@ -26,9 +26,16 @@ class API {
     }
   }
 
-  /** Register user & return token */
+  /** Register user: returns token */
   static async signUp(data: UserSignUp) {
     const res = await this.request("signup", data, "POST");
+    console.log(res);
+    return res.token;
+  }
+
+  /**Authenticate user: returns token */
+  static async login(data: UserLogin){
+    const res = await this.request("login", data, "POST");
     return res.token;
   }
 }
