@@ -1,21 +1,23 @@
 import { useState } from 'react';
 import InputWithLabel from '../components/InputWithLabel'
 import '../styles/Login.css';
+import { Login, UserLogin } from '../utils/types';
+import { PillButton } from '../components/common/PillButton';
 
 
-const defaultCredentials: { email: string, password: string } = { email: "", password: "" };
+const defaultCredentials: UserLogin = { userName: "", password: "" };
 
 
 /** Renders login form
  * 
  * App -> LoginForm
  */
-function LoginForm({login}: LoginForm) {
+function LoginForm({login}: Login ) {
   const [credentials, setCredentials] = useState(defaultCredentials);
 
   /** sends form data */
   async function handleSubmit() {
-    const res = login()
+    const res = login(credentials);
    }
 
   /** handles input change */
@@ -33,12 +35,12 @@ function LoginForm({login}: LoginForm) {
       <form className="LoginForm">
         <div className="form-group">
           <InputWithLabel
-            name={"Email:"}
-            id={"email"}
-            type={"email"}
+            name={"Username:"}
+            id={"userName"}
+            type={"text"}
             className={"LoginForm-email"}
             handleChange={handleChange}
-            value={credentials.email}
+            value={credentials.userName}
             required={true} />
         </div>
         <div className="form-group">
@@ -51,6 +53,7 @@ function LoginForm({login}: LoginForm) {
             value={credentials.password}
             required={true} />
         </div>
+        <PillButton handleAction={handleSubmit} action={"Login"} />
       </form>
     </div>
   );

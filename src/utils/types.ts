@@ -21,7 +21,7 @@ export type SignUp = {
 }
 
 export type Login = {
-  login: (loginData: User) => void;
+  login: (loginData: UserLogin) => void;
 }
 
 export type AuthProps = Login & SignUp

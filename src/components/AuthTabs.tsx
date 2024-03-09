@@ -20,7 +20,7 @@ function AuthTabs({ signUp, login }: AuthProps) {
         </ul>
       </nav>
       <div className="formContent">
-        {activeTab === 'login' ? <Login /> : <SignUp signUp={signUp}/>}
+        {activeTab === 'login' ? <Login login={login} /> : <SignUp signUp={signUp}/>}
       </div>
     </div>
   );
