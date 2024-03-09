@@ -3,7 +3,7 @@ import InputWithLabel from '../components/InputWithLabel';
 import Alert from '../components/common/Alert';
 //modules
 import { ChangeEvent, useState } from 'react';
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 //styles
 import '../styles/SignUp.css'
 import { PillButton } from '../components/common/PillButton';
@@ -27,6 +27,7 @@ const defaultNew: UserSignUp = {
 */
 function SignUp({ signUp }: SignUpProps) {
   const [newUser, setNewUser] = useState(defaultNew);
+  const navigate = useNavigate();
 
   /** Handle changes to sign up form */
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -42,7 +43,7 @@ function SignUp({ signUp }: SignUpProps) {
     try {
       signUp(newUser);
       setNewUser(defaultNew);
-      redirect("/Home")
+      navigate("/Home")
     } catch (error: any) {
       errorHandling("SignUp",error)
       throw error

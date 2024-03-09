@@ -6,6 +6,7 @@ import { UserSignUp as SignUpData, UserLogin } from './utils/types';
 import API from "./api";
 //styles
 import './styles/App.css'
+import { errorHandling } from "./components/common/ErrorHandling";
 
 function App() {
   const [currentUser, setCurrentUser] = useState();
@@ -15,7 +16,8 @@ function App() {
     try {
       const credentials = await API.signUp(signUpData);
       console.log('credentials token', credentials)
-    } catch (error) {
+    } catch (error: any) {
+      errorHandling("App->userSignUp",error)
       throw error;
     }
   }
@@ -24,7 +26,8 @@ function App() {
     try {
       const res = await API.login(loginData);
       console.log(res);
-    } catch (error) {
+    } catch (error: any) {
+      errorHandling("App->userLogin",error)
       throw error;
     }
   }

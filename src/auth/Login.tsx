@@ -4,6 +4,7 @@ import '../styles/Login.css';
 import { Login, UserLogin } from '../utils/types';
 import { PillButton } from '../components/common/PillButton';
 import { errorHandling } from '../components/common/ErrorHandling';
+import { useNavigate } from 'react-router-dom';
 
 
 const defaultCredentials: UserLogin = { userName: "", password: "" };
@@ -15,11 +16,14 @@ const defaultCredentials: UserLogin = { userName: "", password: "" };
  */
 function LoginForm({login}: Login ) {
   const [credentials, setCredentials] = useState(defaultCredentials);
+  const navigate = useNavigate();
 
   /** sends form data */
   async function handleSubmit() {
     try {
       login(credentials);
+      setCredentials(defaultCredentials);
+      navigate("/home");
     } catch (error: any) {
       errorHandling("Login",error);
       throw error
@@ -30,7 +34,6 @@ function LoginForm({login}: Login ) {
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     event.preventDefault();
     const { id, value } = event.target
-    console.log(id, value)
     setCredentials(credentials => (
       { ...credentials, [id]: value }
     ))
@@ -38,7 +41,7 @@ function LoginForm({login}: Login ) {
 
   return (
     <div className="LoginForm-container">
-      <form className="LoginForm">
+      <form onSubmit={handleSubmit} className="LoginForm">
         <div className="form-group">
           <InputWithLabel
             name={"Username:"}
