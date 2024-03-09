@@ -3,6 +3,7 @@ import InputWithLabel from '../components/InputWithLabel'
 import '../styles/Login.css';
 import { Login, UserLogin } from '../utils/types';
 import { PillButton } from '../components/common/PillButton';
+import { errorHandling } from '../components/common/ErrorHandling';
 
 
 const defaultCredentials: UserLogin = { userName: "", password: "" };
@@ -17,7 +18,12 @@ function LoginForm({login}: Login ) {
 
   /** sends form data */
   async function handleSubmit() {
-    const res = login(credentials);
+    try {
+      login(credentials);
+    } catch (error: any) {
+      errorHandling("Login",error);
+      throw error
+    }
    }
 
   /** handles input change */

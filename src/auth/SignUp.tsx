@@ -8,6 +8,7 @@ import { redirect } from "react-router-dom";
 import '../styles/SignUp.css'
 import { PillButton } from '../components/common/PillButton';
 import { SignUp as SignUpProps, UserSignUp } from '../utils/types';
+import { errorHandling } from '../components/common/ErrorHandling';
 
 const defaultNew: UserSignUp = {
   firstName: "",
@@ -42,8 +43,8 @@ function SignUp({ signUp }: SignUpProps) {
       signUp(newUser);
       setNewUser(defaultNew);
       redirect("/Home")
-    } catch (error) {
-      console.log("error in SignUp",error)
+    } catch (error: any) {
+      errorHandling("SignUp",error)
       throw error
     }
   }
