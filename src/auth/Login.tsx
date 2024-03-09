@@ -5,16 +5,17 @@ import '../styles/Login.css';
 
 const defaultCredentials: { email: string, password: string } = { email: "", password: "" };
 
+
 /** Renders login form
  * 
  * App -> LoginForm
  */
-function LoginForm() {
+function LoginForm({login}: LoginForm) {
   const [credentials, setCredentials] = useState(defaultCredentials);
 
   /** sends form data */
-  function handleSubmit() {
-    
+  async function handleSubmit() {
+    const res = login()
    }
 
   /** handles input change */

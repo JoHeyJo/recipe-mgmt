@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import Login from '../auth/Login'; 
 import SignUp from '../auth/SignUp'; 
 import '../styles/AuthTabs.css'; 
-import { SignUp as SignUpProps} from '../utils/types';
+import { AuthProps } from '../utils/types';
 
-function AuthTabs({ signUp }: SignUpProps) {
+function AuthTabs({ signUp, login }: AuthProps) {
   const [activeTab, setActiveTab] = useState('login');
 
   return (

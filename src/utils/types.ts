@@ -1,3 +1,5 @@
+import SignUp from "../auth/SignUp";
+
 export type User = {
   userName: string;
 }
@@ -17,3 +19,9 @@ export type UserSignUp = User & {
 export type SignUp = {
   signUp: (signUpData: UserSignUp) => void;
 }
+
+export type Login = {
+  login: (loginData: User) => void;
+}
+
+export type AuthProps = Login & SignUp
