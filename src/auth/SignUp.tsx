@@ -39,12 +39,14 @@ function SignUp({ signUp }: SignUpProps) {
   /** Submits new user data for */
   async function handleSubmit() {
     try {
-      let token = 'hi'
-      // const token = signUp(newUser);
+      // const r = signupAPI(newUser)
+      const token = API.signUp(newUser);
+      // const res = await API.getAll()
       console.log(token)
       return token
     } catch (error) {
-
+      console.log("error in SignUp",error)
+      throw error
     }
   }
 

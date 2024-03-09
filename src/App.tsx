@@ -14,7 +14,6 @@ function App() {
   async function userSignUp(signUpData: SignUpData){
     try {
       const credentials = await API.signUp(signUpData);
-
       console.log('credentials token',credentials)
     } catch (error) {
       throw error;
