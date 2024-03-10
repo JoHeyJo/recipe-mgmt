@@ -2,18 +2,19 @@ import { ExclamationTriangleIcon } from '@heroicons/react/20/solid'
 
 type AlertProp = {
   alert: string;
+  degree: string;
 }
 
-export default function Alert({alert}: AlertProp) {
+export default function Alert({alert, degree}: AlertProp) {
   return (
-    <div className="rounded-md bg-yellow-50 p-4">
+    <div className={`rounded-md bg-${degree}-50 p-4`}>
       <div className="flex">
         <div className="flex-shrink-0">
-          {/* <ExclamationTriangleIcon className="h-5 w-5 text-yellow-400" aria-hidden="true" /> */}
+          <ExclamationTriangleIcon className={`h-5 w-5 text-${degree}-400`} aria-hidden="true" />
         </div>
         <div className="ml-3">
-          <h3 className="text-sm font-medium text-yellow-800">Attention needed</h3>
-          <div className="mt-2 text-sm text-yellow-700">
+          {/* <h3 className={`text-sm font-medium text-${degree}-800`}>Attention needed</h3> */}
+          <div className={`mt-2 text-sm text-${degree}-700`}>
             <p>
               {alert}
             </p>

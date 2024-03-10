@@ -22,10 +22,11 @@ function App() {
     }
   }
 
+  /** User login - returns token */
   async function userLogin(loginData: UserLogin) {
     try {
       const res = await API.login(loginData);
-      console.log(res);
+      return res;
     } catch (error: any) {
       errorHandling("App->userLogin",error)
       throw error;
@@ -34,7 +35,7 @@ function App() {
 
   return (
     <div className="App">
-      <RoutesList signUp={userSignUp} login={userLogin} />
+      <RoutesList signUp= {userSignUp} login={userLogin} />
     </div>
   );
 }

@@ -24,7 +24,7 @@ function InputWithLabel({ type, name, id, className, handleChange, value, requir
         className={`${className}-input`}
         onChange={handleChange}
         value={value}
-        required
+        required={required}
       />
     </>
   )

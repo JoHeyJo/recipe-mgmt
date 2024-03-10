@@ -5,6 +5,7 @@ import { Login, UserLogin } from '../utils/types';
 import { PillButton } from '../components/common/PillButton';
 import { errorHandling } from '../components/common/ErrorHandling';
 import { useNavigate } from 'react-router-dom';
+import Alert from '../components/common/Alert';
 
 
 const defaultCredentials: UserLogin = { userName: "", password: "" };
@@ -14,21 +15,24 @@ const defaultCredentials: UserLogin = { userName: "", password: "" };
  * 
  * App -> LoginForm
  */
-function LoginForm({login}: Login ) {
+function LoginForm({ login }: Login) {
   const [credentials, setCredentials] = useState(defaultCredentials);
+  const [alert, setAlert] = useState(undefined);
   const navigate = useNavigate();
 
   /** sends form data */
   async function handleSubmit() {
     try {
-      login(credentials);
+      const res = await login(credentials);
+      console.log("res in login", res);
       setCredentials(defaultCredentials);
       navigate("/home");
     } catch (error: any) {
-      errorHandling("Login",error);
-      throw error
+      errorHandling("Login", error);
+      setAlert(error.response.data.error)
+      console.log('error in Login', error)
     }
-   }
+  }
 
   /** handles input change */
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -63,6 +67,7 @@ function LoginForm({login}: Login ) {
             required={true} />
         </div>
         <PillButton handleAction={handleSubmit} action={"Login"} />
+      {alert ? <Alert alert={alert} degree={"yellow"} /> : ""}
       </form>
     </div>
   );

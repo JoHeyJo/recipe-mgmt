@@ -21,8 +21,8 @@ class API {
       const res = (await axios({ url, method, data, params, headers })).data;
       return res
     } catch (error) {
-      console.log(`Error in ${endpoint} API => ${error}`)
-      throw Error
+      console.error(`Error in ${endpoint} API => ${error}`)
+      throw error
     }
   }
 
@@ -34,9 +34,10 @@ class API {
   }
 
   /**Authenticate user: returns token */
-  static async login(data: UserLogin){
+  static async login(data: UserLogin) {
     const res = await this.request("login", data, "POST");
-    return res.token;
+    console.log("res", res)
+    return res;
   }
 }
 
