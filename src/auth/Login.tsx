@@ -56,7 +56,7 @@ function LoginForm({ login }: Login) {
             value={credentials.userName}
             required={true} />
         </div>
-        <div className="form-group">
+        {/* <div className="form-group">
           <InputWithLabel
             name={"Password:"}
             id={"password"}
@@ -65,8 +65,16 @@ function LoginForm({ login }: Login) {
             handleChange={handleChange}
             value={credentials.password}
             required={true} />
-        </div>
-        <PillButton handleAction={handleSubmit} action={"Login"} />
+        </div> */}
+        <input type="password" id="password" required />
+
+        {/* <label htmlFor="test" >test</label>
+        <input
+          type="text"
+          id="test"
+          required
+        /> */}
+        <PillButton action={"Login"} />
       {alert ? <Alert alert={alert} degree={"yellow"} /> : ""}
       </form>
     </div>

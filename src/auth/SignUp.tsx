@@ -104,7 +104,7 @@ function SignUp({ signUp }: SignUpProps) {
               handleChange={handleChange}
               required />
           </div>
-          <PillButton handleAction={handleSubmit} action={'submit'} />
+          <PillButton action={'submit'} />
         </form>
       </div>
       {/* <Alert /> */}

@@ -15,6 +15,7 @@ type InputWithLabel = {
  * [Login, SignUp] -> InputWithLabel
 */
 function InputWithLabel({ type, name, id, className, handleChange, value, required }: InputWithLabel) {
+  console.log('required',required)
   return (
     <>
       <label htmlFor={id} className={`${className}-label`}>{name}</label>
