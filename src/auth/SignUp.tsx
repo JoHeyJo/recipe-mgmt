@@ -27,6 +27,7 @@ const defaultNew: UserSignUp = {
 */
 function SignUp({ signUp }: SignUpProps) {
   const [newUser, setNewUser] = useState(defaultNew);
+  const [alert, setAlert] = useState(undefined); 
   const navigate = useNavigate();
 
   /** Handle changes to sign up form */
@@ -39,7 +40,8 @@ function SignUp({ signUp }: SignUpProps) {
   }
 
   /** Submits new user data for */
-  async function handleSubmit() {
+  async function handleSubmit(event:any) {
+    event.preventDefault();
     try {
       signUp(newUser);
       setNewUser(defaultNew);
@@ -53,7 +55,7 @@ function SignUp({ signUp }: SignUpProps) {
   return (
     <>
       <div className="SignUp-container">
-        <form className="SignUp">
+        <form onSubmit={handleSubmit} className="SignUp">
           <div className="form-group">
             <InputWithLabel
               name={"First Name:"}
@@ -107,7 +109,7 @@ function SignUp({ signUp }: SignUpProps) {
           <PillButton action={'submit'} />
         </form>
       </div>
-      {/* <Alert /> */}
+      {alert && <Alert alert={alert} degree={"yellow"} />}
     </>
   )
 }
