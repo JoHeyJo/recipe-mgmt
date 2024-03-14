@@ -43,12 +43,12 @@ function SignUp({ signUp }: SignUpProps) {
   async function handleSubmit(event:any) {
     event.preventDefault();
     try {
-      signUp(newUser);
+      await signUp(newUser);
       setNewUser(defaultNew);
-      navigate("/Home")
+      navigate("/home")
     } catch (error: any) {
       errorHandling("SignUp",error)
-      throw error
+      setAlert(error.response.data.error)
     }
   }
 
