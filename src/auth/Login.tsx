@@ -58,8 +58,8 @@ function LoginForm({ login }: Login) {
   return (
     <div className="LoginForm-container">
       <form onSubmit={handleSubmit} className="LoginForm">
-        <div className="form-group">
         <Notification/>
+        <div className="form-group">
           <InputWithLabel
             name={"Username:"}
             id={"userName"}
