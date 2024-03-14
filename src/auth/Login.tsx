@@ -1,11 +1,15 @@
+//modules
 import { useEffect, useState } from 'react';
-import InputWithLabel from '../components/InputWithLabel'
-import '../styles/Login.css';
 import { Login, UserLogin } from '../utils/types';
+import { useNavigate } from 'react-router-dom';
+//components
 import { PillButton } from '../components/common/PillButton';
 import { errorHandling } from '../components/common/ErrorHandling';
-import { useNavigate } from 'react-router-dom';
+import InputWithLabel from '../components/InputWithLabel'
 import Alert from '../components/common/Alert';
+import Notification from '../components/common/Notification';
+//styles
+import '../styles/Login.css';
 
 
 const defaultCredentials: UserLogin = { userName: "", password: "" };
@@ -55,6 +59,7 @@ function LoginForm({ login }: Login) {
     <div className="LoginForm-container">
       <form onSubmit={handleSubmit} className="LoginForm">
         <div className="form-group">
+        <Notification/>
           <InputWithLabel
             name={"Username:"}
             id={"userName"}
