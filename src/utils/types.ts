@@ -17,11 +17,11 @@ export type UserSignUp = User & {
 }
 
 export type SignUp = {
-  signUp: (signUpData: UserSignUp) => void;
+  signUp: (signUpData: UserSignUp) => Promise<void>;
 }
 
 export type Login = {
-  login: (loginData: UserLogin) => void;
+  login: (loginData: UserLogin) => Promise<void>;
 }
 
 export type AuthProps = Login & SignUp
