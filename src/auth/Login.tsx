@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import InputWithLabel from '../components/InputWithLabel'
 import '../styles/Login.css';
 import { Login, UserLogin } from '../utils/types';
@@ -21,16 +21,15 @@ function LoginForm({ login }: Login) {
   const navigate = useNavigate();
 
   /** sends form data */
-  async function handleSubmit() {
+  async function handleSubmit(event: any) {
+    event.preventDefault();
     try {
       const res = await login(credentials);
-      console.log("res in login", res);
       setCredentials(defaultCredentials);
       navigate("/home");
     } catch (error: any) {
       errorHandling("Login", error);
       setAlert(error.response.data.error)
-      console.log('error in Login', error)
     }
   }
 
@@ -42,6 +41,15 @@ function LoginForm({ login }: Login) {
       { ...credentials, [id]: value }
     ))
   }
+
+  useEffect(() => {
+    function hideAlert() {
+      setTimeout(() => {
+        setAlert(undefined);
+      }, 3000)
+    }
+    hideAlert();
+  }, [alert])
 
   return (
     <div className="LoginForm-container">
@@ -56,7 +64,7 @@ function LoginForm({ login }: Login) {
             value={credentials.userName}
             required={true} />
         </div>
-        {/* <div className="form-group">
+        <div className="form-group">
           <InputWithLabel
             name={"Password:"}
             id={"password"}
@@ -65,17 +73,9 @@ function LoginForm({ login }: Login) {
             handleChange={handleChange}
             value={credentials.password}
             required={true} />
-        </div> */}
-        <input type="password" id="password" required />
-
-        {/* <label htmlFor="test" >test</label>
-        <input
-          type="text"
-          id="test"
-          required
-        /> */}
+        </div>
         <PillButton action={"Login"} />
-      {alert ? <Alert alert={alert} degree={"yellow"} /> : ""}
+        {alert && <Alert alert={alert} degree={"yellow"} />}
       </form>
     </div>
   );

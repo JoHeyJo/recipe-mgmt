@@ -12,6 +12,7 @@ function RoutesList({ signUp, login }: AuthProps) {
       <Routes>
         <Route path="/home" element={<Home />} />
         <Route path="/auth" element={<AuthTabs signUp={signUp} login={login} />} />
+        <Route path="/" element={<Home />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

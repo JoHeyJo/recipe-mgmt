@@ -13,8 +13,7 @@ class API {
 
     const url = `${BASEURL}/${endpoint}`;
     const headers = {
-      Authorization: `Bearer ${API.token}`,
-      'Content-Type': 'application/json',
+      Authorization: `Bearer ${API.token}`
     };
     const params = method === "GET" ? data : {}
     try {
@@ -29,14 +28,12 @@ class API {
   /** Register user: returns token */
   static async signUp(data: UserSignUp) {
     const res = await this.request("signup", data, "POST");
-    console.log(res);
     return res.token;
   }
 
   /**Authenticate user: returns token */
   static async login(data: UserLogin) {
     const res = await this.request("login", data, "POST");
-    console.log("res", res)
     return res;
   }
 }
