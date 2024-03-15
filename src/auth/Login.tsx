@@ -7,7 +7,6 @@ import { PillButton } from '../components/common/PillButton';
 import { errorHandling } from '../components/common/ErrorHandling';
 import InputWithLabel from '../components/InputWithLabel'
 import Alert from '../components/common/Alert';
-import Notification from '../components/common/Notification';
 //styles
 import '../styles/Login.css';
 

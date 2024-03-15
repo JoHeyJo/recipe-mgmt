@@ -19,7 +19,6 @@ const defaultNew: UserSignUp = {
   isAdmin: false
 }
 
-
 /** Render SignUp form - handles SignUp logic 
  * 
  * New user by default is not an admin. Admin privileges are granted to user
@@ -96,7 +95,7 @@ function SignUp({ signUp }: SignUpProps) {
               handleChange={handleChange}
               required />
           </div>
-          <div className='form-group'>
+          <div className='form-group'>        
             <InputWithLabel
               id={'userName'}
               name={'User name:'}
