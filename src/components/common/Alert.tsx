@@ -9,8 +9,8 @@ type AlertProp = {
 export default function Alert({ alert, degree }: AlertProp) {
   return (
     <>
-      <div className={`rounded-md bg-${degree}-50 p-4`}>
-        <div className="flex">
+      <div className={`rounded-md bg-${degree}-50`}>
+        <div className="flex items-end">
           <div className="flex-shrink-0">
             <ExclamationTriangleIcon className={`h-5 w-5 text-${degree}-400`} aria-hidden="true" />
           </div>

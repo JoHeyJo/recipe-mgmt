@@ -58,7 +58,6 @@ function LoginForm({ login }: Login) {
   return (
     <div className="LoginForm-container">
       <form onSubmit={handleSubmit} className="LoginForm">
-        <Notification/>
         <div className="form-group">
           <InputWithLabel
             name={"Username:"}
@@ -79,8 +78,10 @@ function LoginForm({ login }: Login) {
             value={credentials.password}
             required={true} />
         </div>
-        <PillButton action={"Login"} />
-        {alert && <Alert alert={alert} degree={"yellow"} />}
+        <div id='Login-form-footer'>
+          <PillButton action={"Login"} />
+          {alert && <Alert alert={alert} degree={"yellow"} />}
+        </div>
       </form>
     </div>
   );
