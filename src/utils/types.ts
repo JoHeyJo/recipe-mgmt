@@ -2,6 +2,7 @@ import SignUp from "../auth/SignUp";
 
 export type User = {
   userName: string;
+  isAdmin: boolean;
 }
 
 export type UserLogin = User & {

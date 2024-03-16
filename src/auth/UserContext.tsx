@@ -1,13 +1,13 @@
 import { createContext } from "react";
 
 export type UserContextType = {
-  username: string;
-  isAdmin: boolean;
-  token: string;
+  user: string |undefined;
+  isAdmin: boolean | undefined; 
+  // token: string;
 }
 
 export const UserContext = createContext<UserContextType>({
-  username: '',
+  user: '',
   isAdmin: false,
-  token: ''
+  // token: ''
 })

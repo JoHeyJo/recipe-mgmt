@@ -2,19 +2,28 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import AuthTabs from "../components/AuthTabs";
 import NotFound from "../components/NotFound";
-import { UserSignUp } from "../utils/types";
 import { AuthProps } from "../utils/types";
 import Home from "../components/Home";
+import { UserContext } from "../auth/UserContext";
+import { useContext } from "react";
 
 function RoutesList({ signUp, login }: AuthProps) {
+  const { user } = useContext(UserContext);
+
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/auth" element={<AuthTabs signUp={signUp} login={login} />} />
-        <Route path="/" element={<Home />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      {user ?
+        <Routes>
+          <Route path="/home" element={<Home />} />
+        </Routes>
+        :
+
+        <Routes>
+          <Route path="/auth" element={<AuthTabs signUp={signUp} login={login} />} />
+          <Route path="/" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      }
     </BrowserRouter>
   )
 }
