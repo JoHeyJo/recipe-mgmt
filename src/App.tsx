@@ -14,7 +14,7 @@ import { errorHandling } from "./components/common/ErrorHandling";
 
 function App() {
   const [currentUser, setCurrentUser] = useState<User | undefined>(undefined);
-  const [token, setToken] = useState();
+  const [token, setToken] = useLocaStoreage();
 
   const UserData: UserContextType = {
     user: currentUser?.userName,
