@@ -6,15 +6,11 @@ import { UserSignUp as SignUpData, UserLogin } from './utils/types';
 import API from "./api";
 import { jwtDecode } from "jwt-decode";
 import { UserContext, UserContextType } from "./auth/UserContext";
-import { User } from "./utils/types";
+import { User, JWTPayload } from "./utils/types";
 //styles
 import './styles/App.css'
 import { errorHandling } from "./components/common/ErrorHandling";
 
-type jwtPayload = {
-  sub: string;
-  is_admin: boolean;
-}
 
 function App() {
   const [currentUser, setCurrentUser] = useState<User | undefined>(undefined);
@@ -40,17 +36,25 @@ function App() {
   async function userLogin(loginData: UserLogin) {
     try {
       const res = await API.login(loginData);
-      const { sub, is_admin }: jwtPayload = jwtDecode(res.token);
+      const { sub, is_admin }: JWTPayload = jwtDecode(res.token);
       API.token = res.token;
       setCurrentUser({ userName: sub, isAdmin: is_admin })
-      localStorage.setItem('user', res.token);
+      localStorage.setItem("user-token", res.token);
     } catch (error: any) {
       errorHandling("App->userLogin", error)
       throw error;
     }
   }
 
-  // useEffect()
+  useEffect(()=>{
+    const token = localStorage.getItem("user-token");
+    if(token){
+      const { sub, is_admin }: JWTPayload = jwtDecode(token);
+      console.log(sub,is_admin)
+      API.token = token;
+      setCurrentUser({ userName: sub, isAdmin: is_admin })
+    }
+  },[])
 
   return (
     <div className="App">

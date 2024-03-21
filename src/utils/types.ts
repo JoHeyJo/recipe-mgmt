@@ -26,3 +26,8 @@ export type Login = {
 }
 
 export type AuthProps = Login & SignUp
+
+export type JWTPayload = {
+  sub: string;
+  is_admin: boolean;
+}

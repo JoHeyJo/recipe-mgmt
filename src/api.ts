@@ -7,7 +7,7 @@ const BASEURL = "http://127.0.0.1:5000"
  * Static class - Contains methods that facilitate communications between client
  * and backend API */
 class API {
-  static token = null;
+  static token: string | null = null;
 
   static async request(endpoint: string, data: object = {}, method = "GET") {
 
