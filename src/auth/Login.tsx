@@ -11,7 +11,7 @@ import Alert from '../components/common/Alert';
 import '../styles/Login.css';
 
 
-const defaultCredentials: UserLogin = { userName: "", password: "" };
+const defaultCredentials: UserLogin = { userName: "", password: "", isAdmin: false };
 
 
 /** Renders login form
@@ -19,7 +19,7 @@ const defaultCredentials: UserLogin = { userName: "", password: "" };
  * App -> LoginForm
  */
 function LoginForm({ login }: Login) {
-  const [credentials, setCredentials] = useState(defaultCredentials);
+  const [credentials, setCredentials] = useState<UserLogin>(defaultCredentials);
   const [alert, setAlert] = useState(undefined);
   const navigate = useNavigate();
 

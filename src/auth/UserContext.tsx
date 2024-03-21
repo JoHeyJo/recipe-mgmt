@@ -10,4 +10,4 @@ export const UserContext = createContext<UserContextType>({
   user: '',
   isAdmin: false,
   // token: ''
-})
+})  

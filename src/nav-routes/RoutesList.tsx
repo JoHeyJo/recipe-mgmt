@@ -9,7 +9,7 @@ import { useContext } from "react";
 
 function RoutesList({ signUp, login }: AuthProps) {
   const { user } = useContext(UserContext);
-
+  console.log(user)
   return (
     <BrowserRouter>
       {user ?
@@ -17,10 +17,8 @@ function RoutesList({ signUp, login }: AuthProps) {
           <Route path="/home" element={<Home />} />
         </Routes>
         :
-
         <Routes>
           <Route path="/auth" element={<AuthTabs signUp={signUp} login={login} />} />
-          <Route path="/" element={<Home />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       }

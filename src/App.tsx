@@ -11,6 +11,11 @@ import { User } from "./utils/types";
 import './styles/App.css'
 import { errorHandling } from "./components/common/ErrorHandling";
 
+type jwtPayload = {
+  sub: string;
+  is_admin: boolean;
+}
+
 function App() {
   const [currentUser, setCurrentUser] = useState<User | undefined>(undefined);
   const [token, setToken] = useState();
@@ -35,12 +40,10 @@ function App() {
   async function userLogin(loginData: UserLogin) {
     try {
       const res = await API.login(loginData);
-      let { sub } = jwtDecode(res.token);
+      const { sub, is_admin }: jwtPayload = jwtDecode(res.token);
       API.token = res.token;
-      setCurrentUser(res.sub)
+      setCurrentUser({ userName: sub, isAdmin: is_admin })
       localStorage.setItem('user', res.token);
-
-      return res;
     } catch (error: any) {
       errorHandling("App->userLogin", error)
       throw error;
