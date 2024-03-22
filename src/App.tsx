@@ -10,11 +10,12 @@ import { User, JWTPayload } from "./utils/types";
 //styles
 import './styles/App.css'
 import { errorHandling } from "./components/common/ErrorHandling";
+import extractAndSetUser from "./utils/utilities";
 
 
 function App() {
   const [currentUser, setCurrentUser] = useState<User | undefined>(undefined);
-  const [token, setToken] = useLocaStoreage();
+  // const [token, setToken] = useLocalStorage();
 
   const UserData: UserContextType = {
     user: currentUser?.userName,
@@ -36,9 +37,8 @@ function App() {
   async function userLogin(loginData: UserLogin) {
     try {
       const res = await API.login(loginData);
-      const { sub, is_admin }: JWTPayload = jwtDecode(res.token);
+      extractAndSetUser(res,setCurrentUser);
       API.token = res.token;
-      setCurrentUser({ userName: sub, isAdmin: is_admin })
       localStorage.setItem("user-token", res.token);
     } catch (error: any) {
       errorHandling("App->userLogin", error)
@@ -49,8 +49,8 @@ function App() {
   useEffect(()=>{
     const token = localStorage.getItem("user-token");
     if(token){
+      // extractAndSetUser(token, setCurrentUser);
       const { sub, is_admin }: JWTPayload = jwtDecode(token);
-      console.log(sub,is_admin)
       API.token = token;
       setCurrentUser({ userName: sub, isAdmin: is_admin })
     }

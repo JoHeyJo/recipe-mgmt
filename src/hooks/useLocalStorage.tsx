@@ -3,5 +3,7 @@ type UseLocalStorage = {
 }
 
 function useLocalStorage({key}: UseLocalStorage) {
-  
+  return null;
 }
+
+export default useLocalStorage;
