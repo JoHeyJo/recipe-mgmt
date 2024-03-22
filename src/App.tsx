@@ -38,9 +38,7 @@ function App() {
     try {
       const res = await API.login(loginData);
       extractAndSetUser(res.token,setCurrentUser)
-      // const { sub, is_admin }: JWTPayload = jwtDecode(res.token);
       API.token = res.token;
-      // setCurrentUser({ userName: sub, isAdmin: is_admin })
       localStorage.setItem("user-token", res.token);
     } catch (error: any) {
       errorHandling("App->userLogin", error)
@@ -52,10 +50,7 @@ function App() {
     const token = localStorage.getItem("user-token");
     if(token){
       extractAndSetUser(token, setCurrentUser)
-      // const { sub, is_admin }: JWTPayload = jwtDecode(token);
-      // console.log(sub,is_admin)
       API.token = token;
-      // setCurrentUser({ userName: sub, isAdmin: is_admin })
     }
   },[])
 
