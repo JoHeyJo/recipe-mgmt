@@ -49,10 +49,10 @@ function App() {
 
   useEffect(() => {
     if (token) {
-      extractAndSetUser(token, setCurrentUser)
+      extractAndSetUser(token as string, setCurrentUser)
       API.token = token;
     }
-  }, [])
+  }, [token])
 
   return (
     <div className="App">
