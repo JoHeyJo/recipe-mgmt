@@ -28,6 +28,6 @@ export type Login = {
 export type AuthProps = Login & SignUp
 
 export type JWTPayload = {
-  sub: string;
+  sub: string | React.Dispatch<React.SetStateAction<string>>;
   is_admin: boolean;
 }

@@ -1,9 +1,9 @@
 import { jwtDecode } from "jwt-decode";
-import { JWTPayload } from "../utils/types";
+import { JWTPayload, User } from "../utils/types";
 
-function extractAndSetUser(token:any,setUser:any){
+function extractAndSetUser(token: string, setUser: (user: User) => void) {
   const { sub, is_admin }: JWTPayload = jwtDecode(token);
-  setUser({ userName: sub, isAdmin: is_admin })
+  setUser({ userName: sub as string, isAdmin: is_admin })
 }
 
 export default extractAndSetUser;

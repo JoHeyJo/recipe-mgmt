@@ -4,18 +4,19 @@ import RoutesList from "./nav-routes/RoutesList";
 import { useState, useEffect } from 'react';
 import { UserSignUp as SignUpData, UserLogin } from './utils/types';
 import API from "./api";
-import { jwtDecode } from "jwt-decode";
 import { UserContext, UserContextType } from "./auth/UserContext";
-import { User, JWTPayload } from "./utils/types";
+import { User } from "./utils/types";
 //styles
 import './styles/App.css'
 import { errorHandling } from "./components/common/ErrorHandling";
 import extractAndSetUser from "./utils/utilities";
+import useLocalStorage from "./hooks/useLocalStorage";
 
+const TOKEN_STORAGE_ID = "user-token"
 
 function App() {
   const [currentUser, setCurrentUser] = useState<User | undefined>(undefined);
-  // const [token, setToken] = useLocalStorage();
+  const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID); 
 
   const UserData: UserContextType = {
     user: currentUser?.userName,
@@ -37,7 +38,7 @@ function App() {
   async function userLogin(loginData: UserLogin) {
     try {
       const res = await API.login(loginData);
-      extractAndSetUser(res.token,setCurrentUser)
+      extractAndSetUser(res.token, setCurrentUser)
       API.token = res.token;
       localStorage.setItem("user-token", res.token);
     } catch (error: any) {
@@ -46,13 +47,12 @@ function App() {
     }
   }
 
-  useEffect(()=>{
-    const token = localStorage.getItem("user-token");
-    if(token){
+  useEffect(() => {
+    if (token) {
       extractAndSetUser(token, setCurrentUser)
       API.token = token;
     }
-  },[])
+  }, [])
 
   return (
     <div className="App">

@@ -6,7 +6,6 @@ type AlertProp = {
   degree: string;
 }
 
-
 /** Alert component displays message with dynamic background color */
 export default function Alert({ alert, degree }: AlertProp) {
   return (
