@@ -11,13 +11,13 @@ import './styles/App.css'
 import { errorHandling } from "./components/common/ErrorHandling";
 import extractAndSetUser from "./utils/utilities";
 import useLocalStorage from "./hooks/useLocalStorage";
-import Navigation from "./components/Navigation";
+import TopNav from "./components/TopNav";
 
 const TOKEN_STORAGE_ID = "user-token"
 
 function App() {
   const [currentUser, setCurrentUser] = useState<User | undefined>(undefined);
-  const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID); 
+  const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
 
   const UserData: UserContextType = {
     user: currentUser?.userName,
@@ -49,7 +49,7 @@ function App() {
   }
 
   /** Removes token and user data */
-  function logout(){
+  function logout() {
     setCurrentUser(undefined);
     setToken(null);
   }
@@ -64,7 +64,7 @@ function App() {
   return (
     <div className="App">
       <UserContext.Provider value={UserData}>
-        <Navigation logout={logout}/>
+        <TopNav />
         <RoutesList signUp={userSignUp} login={userLogin} />
       </UserContext.Provider>
     </div>
