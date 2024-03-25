@@ -13,6 +13,7 @@ function useLocalStorage( key: string ): [string | null, React.Dispatch<React.Se
   const initialValue = localStorage.getItem(key) || null;
   const [token, setToken] = useState(initialValue);
 
+  /** Removes token when state is null. Else sets current user token */
   useEffect(function setKeyInLocalStorage() {
     if (token === null) {
       localStorage.removeItem(key)

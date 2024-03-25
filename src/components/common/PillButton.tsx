@@ -2,6 +2,11 @@ type PillButton = {
   action: string;
 }
 
+/** Reusable pill button component
+ * 
+ * [Login, SignUp] -> PillButton
+ */
+
 export function PillButton({ action }: PillButton) {
   return (
     <button

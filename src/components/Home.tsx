@@ -1,7 +1,8 @@
-function Home(){
+
+function Home() {
   return (
     <>
-    "Successful sign up or login WELCOME HOME!"
+      "Successful sign up or login WELCOME HOME!"
     </>
   )
 }

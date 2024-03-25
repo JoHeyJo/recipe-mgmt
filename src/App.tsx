@@ -11,6 +11,7 @@ import './styles/App.css'
 import { errorHandling } from "./components/common/ErrorHandling";
 import extractAndSetUser from "./utils/utilities";
 import useLocalStorage from "./hooks/useLocalStorage";
+import Navigation from "./components/Navigation";
 
 const TOKEN_STORAGE_ID = "user-token"
 
@@ -47,6 +48,12 @@ function App() {
     }
   }
 
+  /** Removes token and user data */
+  function logout(){
+    setCurrentUser(undefined);
+    setToken(null);
+  }
+
   useEffect(() => {
     if (token) {
       extractAndSetUser(token as string, setCurrentUser)
@@ -57,6 +64,7 @@ function App() {
   return (
     <div className="App">
       <UserContext.Provider value={UserData}>
+        <Navigation logout={logout}/>
         <RoutesList signUp={userSignUp} login={userLogin} />
       </UserContext.Provider>
     </div>
