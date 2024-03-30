@@ -1,7 +1,8 @@
-import { Fragment } from 'react'
+import { Fragment, useContext } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Eli from "../images/Eli.jpg"
+import { UserContext } from '../auth/UserContext';
 
 const navigation = [
   { name: 'Dashboard', href: '#', current: true },
@@ -15,6 +16,9 @@ function classNames(...classes: any) {
 }
 
 function TopNav() {
+
+  const { user } = useContext(UserContext);
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -123,7 +127,7 @@ function TopNav() {
                             href="#"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            Sign out
+                            {user ? "Sign out" : "Login"}
                           </a>
                         )}
                       </Menu.Item>
