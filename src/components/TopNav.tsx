@@ -3,6 +3,7 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Eli from "../images/Eli.jpg"
 import { UserContext } from '../auth/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 const navigation = [
   { name: 'Dashboard', href: '#', current: true },
@@ -15,9 +16,12 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
 
-function TopNav() {
+type TopNavProps = { logout: () => void }
+
+function TopNav({ logout }: TopNavProps) {
 
   const { user } = useContext(UserContext);
+  const navigate = useNavigate();
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -101,36 +105,55 @@ function TopNav() {
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Your Profile
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Settings
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            {user ? "Sign out" : "Login"}
-                          </a>
-                        )}
-                      </Menu.Item>
+                      {user
+                        ?
+                          <>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                href="#"
+                                className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                              >
+                                Your Profile
+                              </a>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                href="#"
+                                className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                              >
+                                Settings
+                              </a>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                onClick={logout}
+                                href="#"
+                                className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                              >
+                                Logout
+                              </a>
+                            )}
+                          </Menu.Item>
+                          </>
+                        :
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              onClick={()=>navigate("/auth")}
+                              // href="/auth"git s
+                              className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            >
+                              login
+                            </a>
+                          )}
+                        </Menu.Item>
+                      }
+
                     </Menu.Items>
                   </Transition>
                 </Menu>

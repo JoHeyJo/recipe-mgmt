@@ -6,6 +6,7 @@ import { UserSignUp as SignUpData, UserLogin } from './utils/types';
 import API from "./api";
 import { UserContext, UserContextType } from "./auth/UserContext";
 import { User } from "./utils/types";
+import { BrowserRouter } from "react-router-dom";
 //styles
 import './styles/App.css'
 import { errorHandling } from "./components/common/ErrorHandling";
@@ -62,12 +63,14 @@ function App() {
   }, [token])
 
   return (
-    <div className="App">
-      <UserContext.Provider value={UserData}>
-        <TopNav />
-        <RoutesList signUp={userSignUp} login={userLogin} />
-      </UserContext.Provider>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <UserContext.Provider value={UserData}>
+          <TopNav logout={logout} />
+          <RoutesList signUp={userSignUp} login={userLogin} />
+        </UserContext.Provider>
+      </div>
+    </BrowserRouter>
   );
 }
 

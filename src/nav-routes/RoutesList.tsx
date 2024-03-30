@@ -1,5 +1,5 @@
 
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import AuthTabs from "../components/AuthTabs";
 import NotFound from "../components/NotFound";
 import { AuthProps } from "../utils/types";
@@ -11,7 +11,7 @@ function RoutesList({ signUp, login }: AuthProps) {
   const { user } = useContext(UserContext);
   console.log(user)
   return (
-    <BrowserRouter>
+    <>
       {user ?
         <Routes>
           <Route path="/home" element={<Home />} />
@@ -24,7 +24,7 @@ function RoutesList({ signUp, login }: AuthProps) {
           <Route path="*" element={<NotFound />} />
         </Routes>
       }
-    </BrowserRouter>
+    </>
   )
 }
 
