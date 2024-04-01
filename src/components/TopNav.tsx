@@ -23,6 +23,11 @@ function TopNav({ logout }: TopNavProps) {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
+  function logOutAndRedirect(){
+    logout();
+    navigate("/auth")
+  }
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -131,7 +136,8 @@ function TopNav({ logout }: TopNavProps) {
                           <Menu.Item>
                             {({ active }) => (
                               <a
-                                onClick={logout}
+                                onClick={logOutAndRedirect}
+                                href="#"
                                 className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                               >
                                 Logout
