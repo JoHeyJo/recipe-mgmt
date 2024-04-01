@@ -6,6 +6,7 @@ import { AuthProps } from "../utils/types";
 import Home from "../components/Home";
 import { UserContext } from "../auth/UserContext";
 import { useContext } from "react";
+import MainContainer from "../components/MainContainer";
 
 function RoutesList({ signUp, login }: AuthProps) {
   const { user } = useContext(UserContext);
@@ -14,7 +15,7 @@ function RoutesList({ signUp, login }: AuthProps) {
     <>
       {user ?
         <Routes>
-          <Route path="/home" element={<Home />} />
+          <Route path="/home" element={<MainContainer />} />
           <Route path="/" element={<Home />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
