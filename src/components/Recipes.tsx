@@ -9,7 +9,7 @@ function Recipes() {
   return (
     <ul role="list" className="border-2 border-red-500 divide-y divide-gray-200 flex-1 bg-blue-100">
       {items.map((item) => (
-        <li key={item.id} className="py-4">
+        <li key={item.id} className="border-2 border-yellow-500 py-4">
           {item.recipe}
         </li>
       ))}
