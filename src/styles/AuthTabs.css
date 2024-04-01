@@ -41,3 +41,38 @@
 .formContent {
   padding: 1.25rem;
 }
+
+/* For medium screens, increase width */
+@media (max-width: 1200px) {
+  .cardContainer {
+    width: 40vw;
+    /* Example: Increase width as screen gets smaller */
+  }
+}
+
+/* For small screens, increase width further */
+@media (max-width: 768px) {
+  .cardContainer {
+    width: 50vw;
+    /* Adjust based on your design needs */
+  }
+}
+
+/* For extra small screens, you might want to go full width */
+@media (max-width: 480px) {
+  .cardContainer {
+    width: 80vw;
+    /* Or even 100vw, depending on your design */
+  }
+}
+
+@media (orientation: landscape) {
+  .cardContainer {
+    /* height: 100vh; */
+    /* Adjust based on your needs */
+    /* margin-top: 5vh; */
+    /* Smaller margin in landscape */
+    /* overflow: auto; */
+    /* Allows scrolling within the container if needed */
+  }
+}
