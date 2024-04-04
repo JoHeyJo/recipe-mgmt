@@ -9,7 +9,7 @@ const items = [
 //  border-red-500
 function Recipes() {
   return (
-    <ul role="list" id="Recipes-container" className="border-2 mt-5 divide-y divide-gray-200 flex-1">
+    <ul role="list" id="Recipes-container" className="border-2 divide-y divide-gray-200 flex-1">
       {items.map((item) => (
         <li key={item.id} className="border-1 pt-6 py-4">
           {item.recipe}
