@@ -5,7 +5,6 @@ export default (() => {
   } else {
     document.documentElement.classList.remove('dark')
   }
-
   // Whenever the user explicitly chooses light mode
   localStorage.theme = 'light'
 

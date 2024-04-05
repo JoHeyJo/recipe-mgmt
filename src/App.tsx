@@ -16,12 +16,6 @@ import TopNav from "./components/TopNav";
 
 const TOKEN_STORAGE_ID = "user-token"
 
-function toggleDarkMode() {
-  document.documentElement.classList.toggle('dark');
-  console.log("toggled")
-}
-
-
 function App() {
   const [currentUser, setCurrentUser] = useState<User | undefined>(undefined);
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
@@ -75,7 +69,6 @@ function App() {
           <TopNav logout={logout} />
             <RoutesList signUp={userSignUp} login={userLogin} />
         </UserContext.Provider>
-        <button type="button" onClick={toggleDarkMode}>toggle color scheme</button>
       </div>
     </BrowserRouter>
   );
