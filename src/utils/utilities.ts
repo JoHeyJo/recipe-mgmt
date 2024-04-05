@@ -6,4 +6,9 @@ function extractAndSetUser(token: string, setUser: (user: User) => void) {
   setUser({ userName: sub as string, isAdmin: is_admin })
 }
 
+function toggleDarkMode() {
+  document.documentElement.classList.toggle('dark');
+  console.log("toggled")
+}
+
 export default extractAndSetUser;
