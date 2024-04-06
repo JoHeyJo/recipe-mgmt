@@ -7,10 +7,12 @@ import API from "./api";
 import { UserContext, UserContextType } from "./auth/UserContext";
 import { User } from "./utils/types";
 import { BrowserRouter } from "react-router-dom";
+import { toggleDarkMode } from "./utils/utilities";
 //styles
 import './styles/App.css'
+import './styles/theme.css';
 import { errorHandling } from "./components/common/ErrorHandling";
-import extractAndSetUser from "./utils/utilities";
+import { extractAndSetUser } from "./utils/utilities";
 import useLocalStorage from "./hooks/useLocalStorage";
 import TopNav from "./components/TopNav";
 
@@ -64,11 +66,12 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="App">
+      <div className="App bg-[var(--background-color)] text-[var(--text-color)]">
         <UserContext.Provider value={UserData}>
           <TopNav logout={logout} />
-            <RoutesList signUp={userSignUp} login={userLogin} />
+          <RoutesList signUp={userSignUp} login={userLogin} />
         </UserContext.Provider>
+        <button type="button" onClick={toggleDarkMode}>toggle color scheme</button>
       </div>
     </BrowserRouter>
   );

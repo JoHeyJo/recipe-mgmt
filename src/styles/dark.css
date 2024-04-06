@@ -1,0 +1,7 @@
+.dark :root {
+  --background-color: #1a202c;
+  /* Dark background */
+  --text-color: #ffffff;
+  /* Light text */
+  /* Override other variables for dark mode */
+}
