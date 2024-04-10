@@ -1,22 +1,4 @@
-/* :root {
-  background-color: var(--background-color);
-} */
-
-
 :root {
-  background-color: blue;
-  --background-color: #ffffff;
-  /* Light background */
-  --text-color: #1a202c;
-  /* Dark text */
-  /* Define other variables for light mode */
-}
-
-:root.dark {
-  /* background-color: pink; */
-  --background-color: #1a202c;
-  /* Dark background */
-  --text-color: #ffffff;  
-  /* Light text */
-  /* Override other variables for dark mode */
+  background-color: var(--background-color);
+  color:var(--text-color);
 }
