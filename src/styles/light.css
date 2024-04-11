@@ -1,7 +1,13 @@
 :root {
-  --background-color: #8f8888;
+  /* --background-color: #F9FAFB80; */
+  --background-color: #E5E7EB;
+  /* --background-color: rgb(31, 41, 55) */
   /* Light background */
   --text-color: #1a202c;
   /* Dark text */
   /* Define other variables for light mode */
+}
+
+#RecipeView-container, #Recipes-container {
+  --background-color: #F3F4F6;
 }
