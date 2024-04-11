@@ -10,7 +10,6 @@ import MainContainer from "../components/MainContainer";
 
 function RoutesList({ signUp, login }: AuthProps) {
   const { user } = useContext(UserContext);
-  console.log(user)
   return (
     <>
       {user ?
@@ -21,6 +20,7 @@ function RoutesList({ signUp, login }: AuthProps) {
         </Routes>
         :
         <Routes>
+          {/* <Route path="/home" element={<MainContainer />} /> */}
           <Route path="/auth" element={<AuthTabs signUp={signUp} login={login} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
