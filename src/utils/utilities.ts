@@ -6,8 +6,8 @@ export function extractAndSetUser(token: string, setUser: (user: User) => void) 
   setUser({ userName: sub as string, isAdmin: is_admin })
 }
 
-export function toggleDarkMode() {
-  document.documentElement.classList.toggle('dark');
-  console.log("toggled")
-}
+// export function toggleColorScheme() {
+//   document.documentElement.classList.toggle('dark');
+//   console.log("toggled")
+// }
 

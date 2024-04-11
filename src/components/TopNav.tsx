@@ -4,6 +4,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Eli from "../images/Eli.jpg"
 import { UserContext } from '../auth/UserContext';
 import { useNavigate } from 'react-router-dom';
+import ToggleColorScheme from './ToggleColorScheme';
 
 const navigation = [
   { name: 'Dashboard', href: '#', current: true },
@@ -23,7 +24,7 @@ function TopNav({ logout }: TopNavProps) {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
-  function logOutAndRedirect(){
+  function logOutAndRedirect() {
     logout();
     navigate("/auth")
   }
@@ -87,6 +88,7 @@ function TopNav({ logout }: TopNavProps) {
                   </button> */}
 
                 {/* Profile dropdown */}
+                <ToggleColorScheme />
                 <Menu as="div" className="relative ml-3">
                   <div>
                     <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">

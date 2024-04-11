@@ -7,7 +7,7 @@ import API from "./api";
 import { UserContext, UserContextType } from "./auth/UserContext";
 import { User } from "./utils/types";
 import { BrowserRouter } from "react-router-dom";
-import { toggleDarkMode } from "./utils/utilities";
+// import { toggleDarkMode } from "./utils/utilities";
 //styles
 import './styles/App.css'
 import './styles/theme.css';
@@ -76,7 +76,7 @@ function App() {
           <TopNav logout={logout} />
           <RoutesList signUp={userSignUp} login={userLogin} />
         </UserContext.Provider>
-        <button type="button" onClick={toggleDarkMode}>toggle color scheme</button>
+        {/* <button type="button" onClick={toggleDarkMode}>toggle color scheme</button> */}
       </div>
     </BrowserRouter>
   );
