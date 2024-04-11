@@ -11,6 +11,8 @@ import { toggleDarkMode } from "./utils/utilities";
 //styles
 import './styles/App.css'
 import './styles/theme.css';
+import './styles/light.css';
+import './styles/dark.css';
 import { errorHandling } from "./components/common/ErrorHandling";
 import { extractAndSetUser } from "./utils/utilities";
 import useLocalStorage from "./hooks/useLocalStorage";

@@ -2,3 +2,21 @@
   background-color: var(--background-color);
   color:var(--text-color);
 }
+
+
+
+:root.dark {
+  --background-color: #1a202c;
+  /* Dark background */
+  --text-color: #ffffff;
+  /* Light text */
+  /* Override other variables for dark mode */
+}
+
+:root {
+  --background-color: #8f8888;
+  /* Light background */
+  --text-color: #1a202c;
+  /* Dark text */
+  /* Define other variables for light mode */
+}
