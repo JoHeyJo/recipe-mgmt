@@ -3,6 +3,7 @@ import { Combobox, Dialog, Transition } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/24/outline'
 import InputWithLabelTW from './common/InputWithLabelTW';
 import DropDownWithSearch from './common/DropDownWithSearch';
+import IngredientInput from './common/IngredientInput';
 
 type ModalProp = {
   setShowing: any;
@@ -53,8 +54,7 @@ function Modal({ setShowing, isOpen}: ModalProp) {
                     </div>
                   </div>
                 </div> */}
-                <DropDownWithSearch />
-                <InputWithLabelTW type={"text"} name={"ingredient"} id={"ingredient"} title={"Ingredient"}/>
+                <IngredientInput />
                 <div className="mt-5 sm:mt-6">
                   <button
                     type="button"
