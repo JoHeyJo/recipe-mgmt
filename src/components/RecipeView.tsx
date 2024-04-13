@@ -1,6 +1,7 @@
 import "../styles/RecipeView.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import Modal from "./Modal"
 
 function RecipeView() {
   return (
@@ -10,6 +11,7 @@ function RecipeView() {
         <button>
           <FontAwesomeIcon icon={faPlus} />
         </button>
+        <Modal />
       </div>
       <p >Recipe View</p>
     </div>
