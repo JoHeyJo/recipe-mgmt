@@ -2,12 +2,16 @@ import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/24/outline'
 
-function Modal() {
-  const [open, setOpen] = useState(true)
+type ModalProp = {
+  setShowing: any;
+  isOpen: boolean;
+}
+
+function Modal({ setShowing, isOpen}: ModalProp) {
 
   return (
-    <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={setOpen}>
+    <Transition.Root show={isOpen} as={Fragment}>
+      <Dialog as="div" className="relative z-10" onClose={setShowing}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -51,7 +55,7 @@ function Modal() {
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    onClick={() => setOpen(false)}
+                    onClick={() => setShowing(false)}
                   >
                     Go back to dashboard
                   </button>
@@ -65,4 +69,4 @@ function Modal() {
   )
 }
 
-export default  Modal;
+export default Modal;
