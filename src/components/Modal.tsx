@@ -1,6 +1,8 @@
 import { Fragment, useState } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
+import { Combobox, Dialog, Transition } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/24/outline'
+import InputWithLabelTW from './common/InputWithLabelTW';
+import DropDownWithSearch from './common/DropDownWithSearch';
 
 type ModalProp = {
   setShowing: any;
@@ -51,7 +53,8 @@ function Modal({ setShowing, isOpen}: ModalProp) {
                     </div>
                   </div>
                 </div> */}
-                
+                <DropDownWithSearch />
+                <InputWithLabelTW type={"text"} name={"ingredient"} id={"ingredient"} title={"Ingredient"}/>
                 <div className="mt-5 sm:mt-6">
                   <button
                     type="button"
