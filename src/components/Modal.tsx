@@ -55,7 +55,6 @@ function Modal({ setShowing, isOpen}: ModalProp) {
                     </div>
                   </div>
                 </div> */}
-                <IngredientInput />
                 <InputGroup />
                 <div className="mt-5 sm:mt-6">
                   <button
