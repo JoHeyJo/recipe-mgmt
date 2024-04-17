@@ -20,7 +20,7 @@ function classNames(...classes: any) {
 
 function DropDownWithSearch() {
   const [query, setQuery] = useState('')
-  const [selected, setSelected] = useState("")
+  const [selected, setSelected] = useState(null)
 
   const filteredOptions =
     query === ''
@@ -28,6 +28,11 @@ function DropDownWithSearch() {
       : options.filter((option) => {
         return option.name.toLowerCase().includes(query.toLowerCase())
       })
+  
+  const displayValue = (option: any) => {
+    return option ? option.name : query;
+  };
+
 
   return (
     <Combobox as="div" value={selected} onChange={setSelected}>
@@ -36,7 +41,7 @@ function DropDownWithSearch() {
         <Combobox.Input
           className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           onChange={(event) => setQuery(event.target.value)}
-          displayValue={(option:any) => option?.name}
+          displayValue={(displayValue: { name: string }) => displayValue?.name}
         />
         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
           <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -80,4 +85,4 @@ function DropDownWithSearch() {
   )
 }
 
-export default  DropDownWithSearch;
+export default DropDownWithSearch;
