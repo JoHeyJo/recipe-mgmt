@@ -3,9 +3,9 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
 
 const options: { id: number, name: string }[] = [
-  { id: 1, name: 'Leslie Alexander' },
-  { id: 1, name: 'Leslie Alexander' },
-  { id: 1, name: 'Leslie Alexander' },
+  { id: 1, name: '3/4' },
+  { id: 1, name: '1' },
+  { id: 1, name: '2' },
   // More users...
 ]
 
@@ -28,11 +28,6 @@ function DropDownWithSearch() {
       : options.filter((option) => {
         return option.name.toLowerCase().includes(query.toLowerCase())
       })
-  
-  const displayValue = (option: any) => {
-    return option ? option.name : query;
-  };
-
 
   return (
     <Combobox as="div" value={selected} onChange={setSelected}>
