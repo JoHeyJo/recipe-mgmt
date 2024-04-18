@@ -14,7 +14,8 @@ function classNames(...classes: any) {
 }
 
 type DropDownWithSearchProp = {
-  option: string;
+  opt: string | number;
+  handleChange: (event: any) => void;
 }
 
 /** Combobox component - ring is removed 
@@ -22,7 +23,7 @@ type DropDownWithSearchProp = {
  * InputGroup -> DropDownWithSearch
  */
 
-function DropDownWithSearch({ option }: DropDownWithSearchProp) {
+function DropDownWithSearch({ opt, handleChange }: DropDownWithSearchProp) {
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState(null)
 
@@ -39,10 +40,10 @@ function DropDownWithSearch({ option }: DropDownWithSearchProp) {
       <div className="relative">
         <Combobox.Input
           className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          onChange={(event) => setQuery(event.target.value)}
+          onChange={(event) => (setQuery(event.target.value))}
           displayValue={(displayValue: { name: string }) => displayValue?.name}
-          name={"test"}
-        />
+          name={opt as string}
+          />
         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
           <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
         </Combobox.Button>
