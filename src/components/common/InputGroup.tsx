@@ -9,7 +9,7 @@ type Ingredient = {
 
 }
 
-const defaultIngredient: Ingredient = { name: undefined, quantityAmount: undefined, quantityUnit: undefined }
+const defaultIngredient: Ingredient = { name: "", quantityAmount: undefined, quantityUnit: undefined }
 
 /** Renders Comboboxes and processes data for ingredient
  * 
@@ -17,11 +17,20 @@ const defaultIngredient: Ingredient = { name: undefined, quantityAmount: undefin
 */
 function InputGroup() {
   const [ingredient, setIngredient] = useState<Ingredient | null>(defaultIngredient);
+
+  /** Handles changes to ingredient */
+  function handleChange(event: any) {
+    const { name, value } = event.target.name;
+    setIngredient((i) => (
+      { ...i, [name]: value }
+    ))
+  }
+
   return (
     <div className="flex rounded-md border-2">
-      <DropDownWithSearch />
-      <DropDownWithSearch />
-      <DropDownWithSearch />
+      <DropDownWithSearch handleChange={handleChange} option={name}/>
+      <DropDownWithSearch handleChange={handleChange} option={name}/>
+      <DropDownWithSearch handleChange={handleChange} option={name}/>
     </div>
   )
 }
