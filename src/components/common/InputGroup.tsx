@@ -1,6 +1,13 @@
 import { useState } from 'react';
 import DropDownWithSearch from './DropDownWithSearch';
 
+const spirits: { id: number, name: string }[] = [
+  { id: 1, name: '3/4' },
+  { id: 2, name: '1' },
+  { id: 3, name: '2' },
+]
+
+
 type Ingredient = {
   id?: number;
   name: string;
@@ -29,9 +36,9 @@ function InputGroup() {
 
   return (
     <div className="flex rounded-md border-2">
-      <DropDownWithSearch handleChange={handleChange} name={"name"}/>
-      <DropDownWithSearch handleChange={handleChange} name={"quantityUnit"}/>
-      <DropDownWithSearch handleChange={handleChange} name={"quantityAmount"}/>
+      <DropDownWithSearch handleChange={handleChange} options={options} name={"quantityAmount"}/>
+      <DropDownWithSearch handleChange={handleChange} options={options} name={"quantityUnit"}/>
+      <DropDownWithSearch handleChange={handleChange} options={options} name={"name"}/>
     </div>
   )
 }

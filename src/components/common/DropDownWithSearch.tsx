@@ -2,12 +2,6 @@ import { useState } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
 
-const options: { id: number, name: string }[] = [
-  { id: 1, name: '3/4' },
-  { id: 2, name: '1' },
-  { id: 3, name: '2' },
-  // More users...
-]
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
@@ -16,6 +10,7 @@ function classNames(...classes: any) {
 type DropDownWithSearchProp = {
   name: string | number;
   handleChange: (event: any) => void;
+  options: { id: number, name: string }[];
 }
 
 /** Combobox component - ring is removed 
@@ -23,7 +18,7 @@ type DropDownWithSearchProp = {
  * InputGroup -> DropDownWithSearch
  */
 
-function DropDownWithSearch({ name, handleChange }: DropDownWithSearchProp) {
+function DropDownWithSearch({ name, handleChange, options }: DropDownWithSearchProp) {
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState(null)
 
@@ -44,7 +39,7 @@ function DropDownWithSearch({ name, handleChange }: DropDownWithSearchProp) {
           onChange={handleChange}
           displayValue={(displayValue: { name: string }) => displayValue?.name}
           name={name as string}
-          />
+        />
         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
           <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
         </Combobox.Button>
