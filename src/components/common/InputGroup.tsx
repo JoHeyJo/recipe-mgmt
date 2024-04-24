@@ -21,7 +21,7 @@ function InputGroup() {
   function handleChange(event: any) {
     event.preventDefault();
     const { name, value } = event.target;
-    console.log(name,value)
+    console.log(name, value)
     setIngredient(i => (
       { ...i, [name]: value }
     ))
@@ -29,9 +29,9 @@ function InputGroup() {
 
   return (
     <div className="flex rounded-md border-2">
-      <DropDownWithSearch handleChange={handleChange} opt={defaultIngredient.name}/>
-      <DropDownWithSearch handleChange={handleChange} opt={defaultIngredient.quantityUnit}/>
-      <DropDownWithSearch handleChange={handleChange} opt={defaultIngredient.quantityAmount}/>
+      <DropDownWithSearch handleChange={handleChange} opt={"name"}/>
+      <DropDownWithSearch handleChange={handleChange} opt={"quantityUnit"}/>
+      <DropDownWithSearch handleChange={handleChange} opt={"quantityAmount"}/>
     </div>
   )
 }

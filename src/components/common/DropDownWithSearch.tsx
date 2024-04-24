@@ -4,8 +4,8 @@ import { Combobox } from '@headlessui/react'
 
 const options: { id: number, name: string }[] = [
   { id: 1, name: '3/4' },
-  { id: 1, name: '1' },
-  { id: 1, name: '2' },
+  { id: 2, name: '1' },
+  { id: 3, name: '2' },
   // More users...
 ]
 
@@ -40,7 +40,8 @@ function DropDownWithSearch({ opt, handleChange }: DropDownWithSearchProp) {
       <div className="relative">
         <Combobox.Input
           className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          onChange={(event) => (setQuery(event.target.value))}
+          // onChange={(event) => (setQuery(event.target.value))}
+          onChange={handleChange}
           displayValue={(displayValue: { name: string }) => displayValue?.name}
           name={opt as string}
           />
