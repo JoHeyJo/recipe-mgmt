@@ -14,7 +14,7 @@ function classNames(...classes: any) {
 }
 
 type DropDownWithSearchProp = {
-  opt: string | number;
+  name: string | number;
   handleChange: (event: any) => void;
 }
 
@@ -23,7 +23,7 @@ type DropDownWithSearchProp = {
  * InputGroup -> DropDownWithSearch
  */
 
-function DropDownWithSearch({ opt, handleChange }: DropDownWithSearchProp) {
+function DropDownWithSearch({ name, handleChange }: DropDownWithSearchProp) {
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState(null)
 
@@ -43,7 +43,7 @@ function DropDownWithSearch({ opt, handleChange }: DropDownWithSearchProp) {
           // onChange={(event) => (setQuery(event.target.value))}
           onChange={handleChange}
           displayValue={(displayValue: { name: string }) => displayValue?.name}
-          name={opt as string}
+          name={name as string}
           />
         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
           <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />

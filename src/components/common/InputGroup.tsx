@@ -29,9 +29,9 @@ function InputGroup() {
 
   return (
     <div className="flex rounded-md border-2">
-      <DropDownWithSearch handleChange={handleChange} opt={"name"}/>
-      <DropDownWithSearch handleChange={handleChange} opt={"quantityUnit"}/>
-      <DropDownWithSearch handleChange={handleChange} opt={"quantityAmount"}/>
+      <DropDownWithSearch handleChange={handleChange} name={"name"}/>
+      <DropDownWithSearch handleChange={handleChange} name={"quantityUnit"}/>
+      <DropDownWithSearch handleChange={handleChange} name={"quantityAmount"}/>
     </div>
   )
 }
