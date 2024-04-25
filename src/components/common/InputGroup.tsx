@@ -2,8 +2,8 @@ import { useState } from 'react';
 import DropDownWithSearch from './DropDownWithSearch';
 
 const liquidsDB = [{ id: 1, name: "tequila" }, { id: 1, name: "whiskey"}]
-const quantityAmountsDB = [{ id: 1, name: "1 / 3" },  { id: 1, name: '4'}]
-const quantityUnitsDB = [{ id: 1, name: "oz"}]
+const quantityAmountsDB = [{ id: 3, name: "1 / 3" },  { id: 4, name: '4'}]
+const quantityUnitsDB = [{ id: 5, name: "oz"}]
 
 type Ingredient = {
   id?: number;
