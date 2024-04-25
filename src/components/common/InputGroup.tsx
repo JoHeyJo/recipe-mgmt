@@ -1,12 +1,9 @@
 import { useState } from 'react';
 import DropDownWithSearch from './DropDownWithSearch';
 
-const spirits: { id: number, name: string }[] = [
-  { id: 1, name: '3/4' },
-  { id: 2, name: '1' },
-  { id: 3, name: '2' },
-]
-
+const liquidsDB = [{ id: 1, name: "tequila" }, { id: 1, name: "whiskey"}]
+const quantityAmountsDB = [{ id: 1, name: "1 / 3" },  { id: 1, name: '4'}]
+const quantityUnitsDB = [{ id: 1, name: "oz"}]
 
 type Ingredient = {
   id?: number;
@@ -17,28 +14,31 @@ type Ingredient = {
 
 const defaultIngredient: Ingredient = { name: "", quantityAmount: 0, quantityUnit: 0 }
 
-/** Renders Comboboxes and processes data for ingredient
+/** Renders Comboboxes and processes data for newIngredient
  * 
  * Modal -> InputGroup
 */
 function InputGroup() {
-  const [ingredient, setIngredient] = useState<Ingredient>(defaultIngredient);
+  const [newIngredient, setNewIngredient] = useState<Ingredient>(defaultIngredient);
+  const [liquids, setLiquids] = useState(liquidsDB)
+  const [quantityAmount, setQuantityAmounts] = useState(quantityAmountsDB)
+  const [quantityUnits, setQuantityUnits] = useState(quantityUnitsDB)
 
-  /** Handles changes to ingredient */
+  /** Handles changes to newIngredient */
   function handleChange(event: any) {
     event.preventDefault();
     const { name, value } = event.target;
     console.log(name, value)
-    setIngredient(i => (
+    setNewIngredient(i => (
       { ...i, [name]: value }
     ))
   }
 
   return (
     <div className="flex rounded-md border-2">
-      <DropDownWithSearch handleChange={handleChange} options={options} name={"quantityAmount"}/>
-      <DropDownWithSearch handleChange={handleChange} options={options} name={"quantityUnit"}/>
-      <DropDownWithSearch handleChange={handleChange} options={options} name={"name"}/>
+      <DropDownWithSearch handleChange={handleChange} options={quantityAmount} name={"quantityAmount"} />
+      <DropDownWithSearch handleChange={handleChange} options={quantityUnits} name={"quantityUnit"} />
+      <DropDownWithSearch handleChange={handleChange} options={liquids} name={"name"} />
     </div>
   )
 }
