@@ -1,5 +1,28 @@
 import SignUp from "../auth/SignUp";
 
+type RecipeData = Recipe & {
+  user_id: number,
+  book_id: number,
+}
+
+export type Recipe = {
+  name: string,
+  preparation: string[],
+  notes: string[],
+  ingredients: Ingredient[]
+}
+
+export type Ingredients = {
+  ingredients: Ingredient[]
+}
+
+export type Ingredient = {
+  id?: number;
+  name: string;
+  quantityAmount: number;
+  quantityUnit: number;
+}
+
 export type User = {
   userName: string;
   isAdmin: boolean;

@@ -1,22 +1,17 @@
 import { useState } from 'react';
 import DropDownWithSearch from './DropDownWithSearch';
+import { Ingredient } from '../../utils/types';
 
 const liquidsDB = [{ id: 1, name: "tequila" }, { id: 1, name: "whiskey"}]
 const quantityAmountsDB = [{ id: 3, name: "1 / 3" },  { id: 4, name: '4'}]
 const quantityUnitsDB = [{ id: 5, name: "oz"}]
 
-type Ingredient = {
-  id?: number;
-  name: string;
-  quantityAmount: number;
-  quantityUnit: number;
-}
 
 const defaultIngredient: Ingredient = { name: "", quantityAmount: 0, quantityUnit: 0 }
 
 /** Renders Comboboxes and processes data for newIngredient
  * 
- * Modal -> InputGroup
+ * Modal -> InputGroup -> DropDownWithSearch
 */
 function InputGroup() {
   const [newIngredient, setNewIngredient] = useState<Ingredient>(defaultIngredient);

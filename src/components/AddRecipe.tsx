@@ -5,13 +5,15 @@ import InputWithLabelTW from './common/InputWithLabelTW';
 import DropDownWithSearch from './common/DropDownWithSearch';
 import IngredientInput from './common/IngredientInput';
 import InputGroup from './common/InputGroup';
+import { Ingredient } from '../utils/types';
 
-type ModalProp = {
+type AddRecipeProps = {
   setShowing: any;
   isOpen: boolean;
 }
 
-function Modal({ setShowing, isOpen}: ModalProp) {
+function AddRecipe({ setShowing, isOpen}: AddRecipeProps) {
+  const [recipe, setRecipe] = useState();
 
   return (
     <Transition.Root show={isOpen} as={Fragment}>
@@ -74,4 +76,4 @@ function Modal({ setShowing, isOpen}: ModalProp) {
   )
 }
 
-export default Modal;
+export default AddRecipe;
