@@ -9,7 +9,7 @@ const quantityUnitsDB = [{ id: 5, name: "oz"}]
 
 const defaultIngredient: Ingredient = { name: "", quantityAmount: 0, quantityUnit: 0 }
 
-/** Renders Comboboxes and processes data for newIngredient
+/** Renders Combobox and processes data for new Ingredient
  * 
  * Modal -> IngredientInputGroup -> DropDownWithSearch
 */
@@ -21,8 +21,8 @@ function IngredientInputGroup() {
 
   /** Handles changes to newIngredient */
   function handleChange(event: any) {
-    event.preventDefault();
     const { name, value } = event.target;
+    console.log(event)
     console.log(name, value)
     setNewIngredient(i => (
       { ...i, [name]: value }
@@ -30,10 +30,10 @@ function IngredientInputGroup() {
   }
 
   return (
-    <div className="flex rounded-md border-2">
-      <DropDownWithSearch handleChange={handleChange} options={quantityAmount} name={"quantityAmount"} />
-      <DropDownWithSearch handleChange={handleChange} options={quantityUnits} name={"quantityUnit"} />
-      <DropDownWithSearch handleChange={handleChange} options={liquids} name={"name"} />
+    <div key={1} className="flex rounded-md border-2">
+      <DropDownWithSearch key={1} handleChange={handleChange} options={quantityAmount} name={"quantityAmount"} />
+      <DropDownWithSearch key={2} handleChange={handleChange} options={quantityUnits} name={"quantityUnit"} />
+      <DropDownWithSearch key={3} handleChange={handleChange} options={liquids} name={"name"} />
     </div>
   )
 }
