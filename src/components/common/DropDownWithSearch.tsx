@@ -15,7 +15,7 @@ type DropDownWithSearchProp = {
 
 /** Combobox component - ring is removed 
  * 
- * InputGroup -> DropDownWithSearch
+ * IngredientInputGroup -> DropDownWithSearch
  */
 
 function DropDownWithSearch({ name, handleChange, options }: DropDownWithSearchProp) {

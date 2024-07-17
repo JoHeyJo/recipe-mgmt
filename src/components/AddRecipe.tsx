@@ -4,13 +4,18 @@ import { CheckIcon } from '@heroicons/react/24/outline'
 import InputWithLabelTW from './common/InputWithLabelTW';
 import DropDownWithSearch from './common/DropDownWithSearch';
 import IngredientInput from './common/IngredientInput';
-import InputGroup from './common/InputGroup';
+import IngredientInputGroup from './common/IngredientInputGroup';
 import { Ingredient } from '../utils/types';
 
 type AddRecipeProps = {
   setShowing: any;
   isOpen: boolean;
 }
+
+/** Processes all recipe data
+ * 
+ * RecipeView -> AddRecipe -> IngredientInputGroup
+ */
 
 function AddRecipe({ setShowing, isOpen}: AddRecipeProps) {
   const [recipe, setRecipe] = useState();
@@ -57,7 +62,7 @@ function AddRecipe({ setShowing, isOpen}: AddRecipeProps) {
                     </div>
                   </div>
                 </div> */}
-                <InputGroup />
+                <IngredientInputGroup />
                 <div className="mt-5 sm:mt-6">
                   <button
                     type="button"

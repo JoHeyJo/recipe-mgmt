@@ -2,7 +2,7 @@ import "../styles/RecipeView.css"
 import { useState } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import Modal from "./AddRecipe"
+import AddRecipe from "./AddRecipe"
 
 function RecipeView() {
   const [open, setOpen] = useState(true)
@@ -14,7 +14,7 @@ function RecipeView() {
         <button onClick={() => setOpen(true)}>
           <FontAwesomeIcon icon={faPlus} />
         </button>
-        <Modal setShowing={setOpen} isOpen={open} />
+        <AddRecipe setShowing={setOpen} isOpen={open} />
       </div>
       <p >Recipe View</p>
     </div>

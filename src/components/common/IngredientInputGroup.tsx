@@ -11,9 +11,9 @@ const defaultIngredient: Ingredient = { name: "", quantityAmount: 0, quantityUni
 
 /** Renders Comboboxes and processes data for newIngredient
  * 
- * Modal -> InputGroup -> DropDownWithSearch
+ * Modal -> IngredientInputGroup -> DropDownWithSearch
 */
-function InputGroup() {
+function IngredientInputGroup() {
   const [newIngredient, setNewIngredient] = useState<Ingredient>(defaultIngredient);
   const [liquids, setLiquids] = useState(liquidsDB)
   const [quantityAmount, setQuantityAmounts] = useState(quantityAmountsDB)
@@ -38,4 +38,4 @@ function InputGroup() {
   )
 }
 
-export default InputGroup;
+export default IngredientInputGroup;

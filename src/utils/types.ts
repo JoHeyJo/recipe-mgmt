@@ -1,6 +1,6 @@
 import SignUp from "../auth/SignUp";
 
-type RecipeData = Recipe & {
+export type RecipeData = Recipe & {
   user_id: number,
   book_id: number,
 }
