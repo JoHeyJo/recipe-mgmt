@@ -17,7 +17,7 @@ type Option = {
 type DropDownWithSearchProp = {
   name: string | number;
   handleChange: (event: any) => void;
-  options: Option[];
+  options: any[];
   // onSelect: (option: DropdownOption) => void;
 }
 

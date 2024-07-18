@@ -24,11 +24,11 @@ function IngredientInputGroup() {
     console.log("event",event)
     // console.log("event.target.name",event.target.name)
     // console.log("event.target.value",event.target.value)
-    // const { id, name } = event
+    const { id, name } = event
     // console.log("event",id,name)
-    // setNewIngredient(i => (
-    //   { ...i, [name]: value }
-    // ))
+    setNewIngredient(i => (
+      { ...i, [name]: value }
+    ))
   }
 
   return (
