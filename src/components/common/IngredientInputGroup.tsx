@@ -3,8 +3,8 @@ import DropDownWithSearch from './DropDownWithSearch';
 import { Ingredient } from '../../utils/types';
 
 const liquidsDB = [{ id: 1, name: "tequila" }, { id: 2, name: "whiskey"}]
-const quantityAmountsDB = [{ id: 3, name: "1 / 3" },  { id: 4, name: '4'}]
-const quantityUnitsDB = [{ id: 5, name: "oz"}]
+const quantityAmountsDB = [{ id: 3, amount: "1 / 3" },  { id: 4, amount: '4'}]
+const quantityUnitsDB = [{ id: 5, unit: "oz"}]
 
 
 const defaultIngredient: Ingredient = { name: "", quantityAmount: 0, quantityUnit: 0 }
@@ -21,14 +21,14 @@ function IngredientInputGroup() {
 
   /** Handles changes to newIngredient */
   function handleChange(event: any) {
-    console.log("event.target.name",event.target.name)
-    console.log("event.target.value",event.target.value)
-    const { name, value } = event.target;
-    // console.log("event",event)
-    // console.log(name, value)
-    setNewIngredient(i => (
-      { ...i, [name]: value }
-    ))
+    console.log("event",event)
+    // console.log("event.target.name",event.target.name)
+    // console.log("event.target.value",event.target.value)
+    // const { id, name } = event
+    // console.log("event",id,name)
+    // setNewIngredient(i => (
+    //   { ...i, [name]: value }
+    // ))
   }
 
   return (

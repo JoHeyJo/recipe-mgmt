@@ -7,10 +7,17 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
 
+type Option = {
+  id: number;
+} & {
+  [key: string]: string;
+};
+
+
 type DropDownWithSearchProp = {
   name: string | number;
   handleChange: (event: any) => void;
-  options: { id: number, name: string }[];
+  options: Option[];
   // onSelect: (option: DropdownOption) => void;
 }
 
@@ -32,28 +39,24 @@ function DropDownWithSearch({ name, handleChange, options }: DropDownWithSearchP
 
       // handleChange(query)
 
-  // useEffect(() => {
-  //   onSelect(selected);
-  // }, [selected]);
+  useEffect(() => {
+    handleChange(selected);
+  }, [selected]);
   // selected = {id: 3, name: '1 / 3'}
+
   return (
-    <Combobox as="div" value={selected} onChange={(value)=>{
+    <Combobox as="div" 
+    value={selected} 
+    onChange={(value)=>{
       setQuery('')
-      console.log("value",value)
-      setSelected(value)
-      // handleChange(value)
+      setSelected(value) 
     }}>
       {/* <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">Assigned to</Combobox.Label> */}
       <div className="relative">
         <Combobox.Input
           className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          onChange={(event) => {
-            setQuery(event.target.value)
-            handleChange(event)
-          }}
-          // onChange={handleChange}
+          onChange={(event:any) => setQuery(event.target.value)}
           displayValue={(displayValue: { name: string }) => displayValue?.name}
-          // displayValue={(option: any) => option?.name}
           name={name as string}
         />
         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
