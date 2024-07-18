@@ -35,10 +35,11 @@ function DropDownWithSearch({ name, handleChange, options }: DropDownWithSearchP
   // useEffect(() => {
   //   onSelect(selected);
   // }, [selected]);
-
+  // selected = {id: 3, name: '1 / 3'}
   return (
     <Combobox as="div" value={selected} onChange={(value)=>{
       setQuery('')
+      console.log("value",value)
       setSelected(value)
       // handleChange(value)
     }}>
