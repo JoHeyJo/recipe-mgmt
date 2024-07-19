@@ -12,9 +12,9 @@ export type Recipe = {
   ingredients: Ingredient[]
 }
 
-export type Ingredients = {
-  ingredients: Ingredient[]
-}
+// export type Ingredients = {
+//   ingredients: Ingredient[]
+// }
 
 export type Ingredient = {
   id?: number;
