@@ -23,21 +23,32 @@ type DropDownWithSearchProp = {
 
 /** Combobox component - ring is removed 
  * 
- * IngredientInputGroup -> DropDownNumSearch
+ * IngredientInputGroup -> DropDownWithSearch
  */
 
-function DropDownNumSearch({ name, addIngredient, options }: DropDownWithSearchProp) {
+function DropDownWithSearch({ name, addIngredient, options }: DropDownWithSearchProp) {
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState(null)
 
-  const filteredOptions =
-    query === ''
-      ? options
-      : options.filter((option) => {
-        return option.name.includes(query)
-      })
+  let filteredOptions = undefined; 
+  console.log(name,options)
 
-      // addIngredient(query)
+  if (name === "liquid") {
+    filteredOptions =
+      query === ''
+        ? options
+        : options.filter((option) => {
+          return option.name.toLowerCase().includes(query.toLowerCase())
+        })
+
+  } else {
+    filteredOptions =
+      query === ''
+        ? options
+        : options.filter((option) => {
+          return option.name.includes(query)
+        })
+  }
 
   useEffect(() => {
     addIngredient(selected);
@@ -45,19 +56,19 @@ function DropDownNumSearch({ name, addIngredient, options }: DropDownWithSearchP
   // selected = {id: 3, name: '1 / 3'}
 
   return (
-    <Combobox as="div" value={selected} 
-    onChange={(value)=>{
-      setQuery('')
-      setSelected(value) 
-    }}>
+    <Combobox as="div" value={selected}
+      onChange={(value) => {
+        setQuery('')
+        setSelected(value)
+      }}>
       {/* <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">Assigned to</Combobox.Label> */}
       <div className="relative">
         <Combobox.Input
           className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          onChange={(event:any) => setQuery(event.target.value)}
-          displayValue={(displayValue: { name: string }) => displayValue?.name}
-          onBlur={() => setQuery('')}
-          name={name as string}
+          onChange={(event: any) => setQuery(event.target.value)}
+          // displayValue={(displayValue: { name: string }) => displayValue?.name}
+          // onBlur={() => setQuery('')}
+          // name={name as string}
         />
         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
           <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -78,7 +89,8 @@ function DropDownNumSearch({ name, addIngredient, options }: DropDownWithSearchP
               >
                 {({ active, selected }) => (
                   <>
-                    <span className={classNames('block truncate', selected && 'font-semibold')}>{option.name}</span>
+                  {console.log("'option'",option,name,option[name])}
+                    <span className={classNames('block truncate', selected && 'font-semibold')}>{option[name]}</span>
 
                     {selected && (
                       <span
@@ -101,4 +113,4 @@ function DropDownNumSearch({ name, addIngredient, options }: DropDownWithSearchP
   )
 }
 
-export default DropDownNumSearch;
+export default DropDownWithSearch;

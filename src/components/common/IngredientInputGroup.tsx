@@ -2,7 +2,7 @@ import { useState } from 'react';
 import DropDownWithSearch from './DropDownWithSearch';
 import { Ingredient } from '../../utils/types';
 
-const liquidsDB = [{ id: 1, name: "tequila" }, { id: 2, name: "whiskey"}]
+const liquidsDB = [{ id: 1, liquid: "tequila" }, { id: 2, liquid: "whiskey"}]
 const quantityAmountsDB = [{ id: 3, amount: "1 / 3" },  { id: 4, amount: '4'}]
 const quantityUnitsDB = [{ id: 5, unit: "oz"}]
 
@@ -28,9 +28,9 @@ function IngredientInputGroup() {
 
   return (
     <div className="flex rounded-md border-2">
-      {/* <DropDownWithSearch addIngredient={addIngredient} options={quantityAmount} name={"quantityAmount"} />
-      <DropDownWithSearch addIngredient={addIngredient} options={quantityUnits} name={"quantityUnit"} /> */}
-      <DropDownWithSearch addIngredient={addIngredient} options={liquids} name={"name"} />
+      <DropDownWithSearch addIngredient={addIngredient} options={quantityAmount} name={"amount"} />
+      <DropDownWithSearch addIngredient={addIngredient} options={quantityUnits} name={"unit"} />
+      <DropDownWithSearch addIngredient={addIngredient} options={liquids} name={"liquid"} />
     </div>
   )
 }
