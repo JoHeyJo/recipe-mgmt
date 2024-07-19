@@ -7,11 +7,6 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
 
-type Option = {
-  id: number;
-} & {
-  [key: string]: string;
-};
 
 
 type DropDownWithSearchProp = {
@@ -37,7 +32,7 @@ function DropDownNumSearch({ name, addIngredient, options }: DropDownWithSearchP
         return option.name.includes(query)
       })
 
-      // addIngredient(query)
+  // addIngredient(query)
 
   useEffect(() => {
     addIngredient(selected);
@@ -45,16 +40,16 @@ function DropDownNumSearch({ name, addIngredient, options }: DropDownWithSearchP
   // selected = {id: 3, name: '1 / 3'}
 
   return (
-    <Combobox as="div" value={selected} 
-    onChange={(value)=>{
-      setQuery('')
-      setSelected(value) 
-    }}>
+    <Combobox as="div" value={selected}
+      onChange={(value) => {
+        setQuery('')
+        setSelected(value)
+      }}>
       {/* <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">Assigned to</Combobox.Label> */}
       <div className="relative">
         <Combobox.Input
           className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          onChange={(event:any) => setQuery(event.target.value)}
+          onChange={(event: any) => setQuery(event.target.value)}
           displayValue={(displayValue: { name: string }) => displayValue?.name}
           onBlur={() => setQuery('')}
           name={name as string}
