@@ -1,7 +1,7 @@
 import InputWithLabelTW from './InputWithLabelTW';
 import DropDownWithSearch from './DropDownWithSearch';
 // REMOVE
-function IngredientInput() {
+function IngredientsInput() {
   return (
     <>
       <div >
@@ -12,4 +12,4 @@ function IngredientInput() {
   )
 }
 
-export default IngredientInput;
+export default IngredientsInput;

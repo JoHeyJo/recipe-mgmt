@@ -8,18 +8,10 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
 
-type Option = {
-  id: number;
-} & {
-  [key: string]: string;
-};
-
-
 type DropDownWithSearchProp = {
   name: string;
-  addIngredient: (event: any) => void;
+  addIngredient: any
   options: any[];
-  // onSelect: (option: DropdownOption) => void;
 }
 
 /** Combobox component - ring is removed 
@@ -32,14 +24,13 @@ function DropDownWithSearch({ name, addIngredient, options }: DropDownWithSearch
   const [selected, setSelected] = useState(null)
 
   let filteredOptions = undefined; 
-  console.log(name,options)
 
   if (name === "liquid") {
     filteredOptions =
       query === ''
         ? options
         : options.filter((option) => {
-          return option.name.toLowerCase().includes(query.toLowerCase())
+          return option[name].toLowerCase().includes(query.toLowerCase())
         })
 
   } else {
@@ -47,14 +38,14 @@ function DropDownWithSearch({ name, addIngredient, options }: DropDownWithSearch
       query === ''
         ? options
         : options.filter((option) => {
-          return option.name.includes(query)
+          return option[name].includes(query)
         })
   }
 
   useEffect(() => {
-    addIngredient(selected);
+    console.log(selected)
+    addIngredient(selected, name);
   }, [selected]);
-  // selected = {id: 3, name: '1 / 3'}
 
   return (
     <Combobox as="div" value={selected}
@@ -90,7 +81,6 @@ function DropDownWithSearch({ name, addIngredient, options }: DropDownWithSearch
               >
                 {({ active, selected }) => (
                   <>
-                  {console.log("'option'",option,name,option[name])}
                     <span className={classNames('block truncate', selected && 'font-semibold')}>{option[name]}</span>
 
                     {selected && (

@@ -3,7 +3,6 @@ import { Combobox, Dialog, Transition } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/24/outline'
 import InputWithLabelTW from './common/InputWithLabelTW';
 import DropDownWithSearch from './common/DropDownWithSearch';
-import IngredientInput from './common/IngredientInput';
 import IngredientInputGroup from './common/IngredientInputGroup';
 import { Ingredient } from '../utils/types';
 

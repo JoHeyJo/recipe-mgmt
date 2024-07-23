@@ -17,10 +17,9 @@ export type Recipe = {
 // }
 
 export type Ingredient = {
-  id?: number;
-  name: string;
-  quantityAmount: number;
-  quantityUnit: number;
+  liquid: object;
+  amount: object;
+  unit: object;
 }
 
 export type User = {
