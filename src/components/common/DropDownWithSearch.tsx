@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
+import { getByDisplayValue } from '@testing-library/react';
 
 
 function classNames(...classes: any) {
@@ -66,7 +67,7 @@ function DropDownWithSearch({ name, addIngredient, options }: DropDownWithSearch
         <Combobox.Input
           className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           onChange={(event: any) => setQuery(event.target.value)}
-          displayValue={(displayValue: {[key: string]: string}) => displayValue[name]}
+          displayValue={(displayValue: {[key: string]: string}) => displayValue?.[name]}
           onBlur={() => setQuery('')}
           name={name as string}
         />
