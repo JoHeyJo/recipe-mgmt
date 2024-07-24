@@ -23,7 +23,7 @@ function IngredientInputGroup() {
   const [quantityUnits, setQuantityUnits] = useState(quantityUnitsDB)
 
   /** Handles changes to newIngredient */
-  function addIngredient(ingredient: any, name:string) {
+  function addIngredient(ingredient: Ingredient, name:string) {
     setIngredient((i)=> (
       {...i, [name]: ingredient}
     ))
