@@ -24,9 +24,9 @@ function IngredientInputGroup() {
 
   /** Handles changes to newIngredient */
   function addIngredient(ingredient: any, name:string) {
-    // setIngredient((i)=> (
-    //   {...i, ingredient[name]: ingredient}
-    // ))
+    setIngredient((i)=> (
+      {...i, [name]: ingredient}
+    ))
   }
 
   return (

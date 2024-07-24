@@ -43,7 +43,7 @@ function DropDownWithSearch({ name, addIngredient, options }: DropDownWithSearch
   }
 
   useEffect(() => {
-    console.log(selected)
+    console.log(name, selected)
     addIngredient(selected, name);
   }, [selected]);
 
