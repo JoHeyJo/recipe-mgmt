@@ -14,7 +14,7 @@ const defaultIngredient: Ingredient = {
 
 /** Renders Combobox and processes data for new Ingredient
  * 
- * Modal -> IngredientInputGroup -> DropDownWithSearch
+ * IngredientGroup -> IngredientInputGroup -> DropDownWithSearch
 */
 function IngredientInputGroup() {
   const [Ingredient, setIngredient] = useState<Ingredient>(defaultIngredient)
