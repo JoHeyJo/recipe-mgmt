@@ -8,17 +8,21 @@ import { PillButton } from './PillButton';
  * AddRecipe -> IngredientsGroup -> IngredientInputGroup
  */
 function IngredientsGroup() {
-  const [ingredients, setIngredients] = useState<string[]>(['']);
+  const [ingredients, setIngredients] = useState<any[]>(['']);
 
   function addIngredient(){
     setIngredients(i => [...i,''])
+  }
+
+  function updateIngredients(newIngredient:any){
+    // setIngredients(i => [...i, newIngredient])
   }
 
   return (
     <>
     <button onClick={addIngredient}>add</button>
     {ingredients.map((i) => 
-      <IngredientInputGroup />
+      <IngredientInputGroup update={updateIngredients}/>
     )}
     
     </>

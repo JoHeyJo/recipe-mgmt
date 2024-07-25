@@ -16,8 +16,8 @@ const defaultIngredient: Ingredient = {
  * 
  * IngredientGroup -> IngredientInputGroup -> DropDownWithSearch
 */
-function IngredientInputGroup() {
-  const [Ingredient, setIngredient] = useState<Ingredient>(defaultIngredient)
+function IngredientInputGroup({update}: any) {
+  const [ingredient, setIngredient] = useState<Ingredient>(defaultIngredient)
   const [liquids, setLiquids] = useState(liquidsDB)
   const [quantityAmount, setQuantityAmounts] = useState(quantityAmountsDB)
   const [quantityUnits, setQuantityUnits] = useState(quantityUnitsDB)
@@ -27,6 +27,7 @@ function IngredientInputGroup() {
     setIngredient((i)=> (
       {...i, [name]: ingredient}
     ))
+    // update(ingredient)
   }
 
   return (
