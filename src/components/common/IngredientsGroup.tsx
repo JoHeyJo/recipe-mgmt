@@ -1,15 +1,26 @@
 import { useState } from 'react';
 import IngredientInputGroup from './IngredientInputGroup';
+import { Ingredient } from '../../utils/types';
+import { PillButton } from './PillButton';
 /** Contains a list of ingredients 
  * 
  * 
- * Modal -> IngredientsGroup -> IngredientInputGroup
+ * AddRecipe -> IngredientsGroup -> IngredientInputGroup
  */
 function IngredientsGroup() {
-  const [ingredients, setIngredients] = useState(<IngredientInputGroup/>);
+  const [ingredients, setIngredients] = useState<string[]>(['']);
+
+  function addIngredient(){
+    setIngredients(i => [...i,''])
+  }
+
   return (
     <>
-    {ingredients}
+    <button onClick={addIngredient}>add</button>
+    {ingredients.map((i) => 
+      <IngredientInputGroup />
+    )}
+    
     </>
   )
 }

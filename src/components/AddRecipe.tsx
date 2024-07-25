@@ -1,11 +1,7 @@
 import { Fragment, useState } from 'react'
 import { Combobox, Dialog, Transition } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/24/outline'
-import InputWithLabelTW from './common/InputWithLabelTW';
-import DropDownWithSearch from './common/DropDownWithSearch';
-import IngredientInputGroup from './common/IngredientInputGroup';
-import { Ingredient } from '../utils/types';
-
+import IngredientsGroup from './common/IngredientsGroup';
 type AddRecipeProps = {
   setShowing: any;
   isOpen: boolean;
@@ -13,7 +9,7 @@ type AddRecipeProps = {
 
 /** Processes all recipe data
  * 
- * RecipeView -> AddRecipe -> IngredientInputGroup
+ * RecipeView -> AddRecipe -> IngredientsGroup
  */
 
 function AddRecipe({ setShowing, isOpen}: AddRecipeProps) {
@@ -61,7 +57,7 @@ function AddRecipe({ setShowing, isOpen}: AddRecipeProps) {
                     </div>
                   </div>
                 </div> */}
-                <IngredientInputGroup />
+                <IngredientsGroup />
                 <div className="mt-5 sm:mt-6">
                   <button
                     type="button"
