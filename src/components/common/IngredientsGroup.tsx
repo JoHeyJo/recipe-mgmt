@@ -23,9 +23,6 @@ function IngredientsGroup() {
   }
 
   function updateIngredients(newIngredient: any, index: number) {
-    console.log("========")
-    console.log(index)
-    console.log("========")
     setIngredients((prevIngredients) =>  {
       const newIngredients = [...prevIngredients];
       newIngredients[index] = newIngredient
