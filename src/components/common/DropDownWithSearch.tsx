@@ -42,10 +42,9 @@ function DropDownWithSearch({ name, addIngredient, options }: DropDownWithSearch
         })
   }
 
-  // useEffect(() => {
-  //   console.log(name, selected)
-  //   addIngredient(selected, name);
-  // }, [selected]);
+  useEffect(() => {
+    addIngredient(selected, name);
+  }, [selected]);
 
   return (
     <Combobox as="div" value={selected}

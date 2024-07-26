@@ -11,6 +11,10 @@ const quantityUnitsDB = [{ id: 5, unit: "oz"}]
  * IngredientGroup -> IngredientInputGroup -> DropDownWithSearch
 */
 function IngredientInputGroup({update, ingredient}: any) {
+  const [liquid, setLiquid] = useState({ id: null, liquid: "" });
+  const [amount, setAmount] = useState({ id: null, amount: "" });
+  const [unit, setUnit] = useState({ id: null, unit: "" });
+
   const [liquids, setLiquids] = useState(liquidsDB)
   const [quantityAmount, setQuantityAmounts] = useState(quantityAmountsDB)
   const [quantityUnits, setQuantityUnits] = useState(quantityUnitsDB)
@@ -23,11 +27,16 @@ function IngredientInputGroup({update, ingredient}: any) {
     // update(ingredient)
   }
 
+  /** Calls parent callback to update ingredient */
+  function updateIngredient(ingredient: Ingredient, name: string){
+    console.log(ingredient)
+  }
+
   return (
     <div className="flex rounded-md border-2">
-      <DropDownWithSearch addIngredient={addIngredient} options={quantityAmount} name={"amount"} />
-      <DropDownWithSearch addIngredient={addIngredient} options={quantityUnits} name={"unit"} />
-      <DropDownWithSearch addIngredient={addIngredient} options={liquids} name={"liquid"} />
+      <DropDownWithSearch addIngredient={updateIngredient} options={quantityAmount} name={"amount"} />
+      <DropDownWithSearch addIngredient={updateIngredient} options={quantityUnits} name={"unit"} />
+      <DropDownWithSearch addIngredient={updateIngredient} options={liquids} name={"liquid"} />
     </div>
   )
 }

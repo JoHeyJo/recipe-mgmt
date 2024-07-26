@@ -22,12 +22,10 @@ function IngredientsGroup() {
     setIngredients(i => [...i, defaultIngredient])
   }
 
-  function updateIngredients(newIngredient: any) {
+  function updateIngredients(newIngredient: any, index: number) {
     setIngredients((ingredients) =>  {
-      console.log(ingredients[1])
-      const newI = newIngredient
-      const i = [...ingredients,newI]
-      return [i]
+      ingredients[index] = newIngredient
+      return [...ingredients]
     })
   }
 
