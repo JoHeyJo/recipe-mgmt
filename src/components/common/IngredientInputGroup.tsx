@@ -6,27 +6,20 @@ const liquidsDB = [{ id: 1, liquid: "tequila" }, { id: 2, liquid: "whiskey"}]
 const quantityAmountsDB = [{ id: 3, amount: "1 / 3" },  { id: 4, amount: '4'}]
 const quantityUnitsDB = [{ id: 5, unit: "oz"}]
 
-const defaultIngredient: Ingredient = {
-  liquid: { id: null, liquid: "" },
-  amount: { id: null, amount: "" },
-  unit: { id: null, unit: "" }
-}
-
 /** Renders Combobox and processes data for new Ingredient
  * 
  * IngredientGroup -> IngredientInputGroup -> DropDownWithSearch
 */
-function IngredientInputGroup({update}: any) {
-  const [ingredient, setIngredient] = useState<Ingredient>(defaultIngredient)
+function IngredientInputGroup({update, ingredient}: any) {
   const [liquids, setLiquids] = useState(liquidsDB)
   const [quantityAmount, setQuantityAmounts] = useState(quantityAmountsDB)
   const [quantityUnits, setQuantityUnits] = useState(quantityUnitsDB)
 
   /** Handles changes to newIngredient */
   function addIngredient(ingredient: Ingredient, name:string) {
-    setIngredient((i)=> (
-      {...i, [name]: ingredient}
-    ))
+    // setIngredient((i)=> (
+    //   {...i, [name]: ingredient}
+    // ))
     // update(ingredient)
   }
 
