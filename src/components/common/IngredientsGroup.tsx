@@ -23,9 +23,13 @@ function IngredientsGroup() {
   }
 
   function updateIngredients(newIngredient: any, index: number) {
-    setIngredients((ingredients) =>  {
-      ingredients[index] = newIngredient
-      return [...ingredients]
+    console.log("========")
+    console.log(index)
+    console.log("========")
+    setIngredients((prevIngredients) =>  {
+      const newIngredients = [...prevIngredients];
+      newIngredients[index] = newIngredient
+     return newIngredients
     })
   }
 
@@ -33,7 +37,7 @@ function IngredientsGroup() {
     <>
       <button onClick={addIngredient}>add</button>
       {ingredients.map((ingredient, i) =>
-        <IngredientInputGroup key={i} ingredient={ingredient} update={updateIngredients} />
+        <IngredientInputGroup key={i} index={i} ingredient={ingredient} update={updateIngredients} />
       )}
 
     </>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import DropDownWithSearch from './DropDownWithSearch';
 import { Ingredient } from '../../utils/types';
 
@@ -10,7 +10,7 @@ const quantityUnitsDB = [{ id: 5, unit: "oz" }]
  * 
  * IngredientGroup -> IngredientInputGroup -> DropDownWithSearch
 */
-function IngredientInputGroup({ update, ingredient }: any) {
+function IngredientInputGroup({ update, ingredient, index }: any) {
   const [liquid, setLiquid] = useState({ id: null, liquid: "" });
   const [amount, setAmount] = useState({ id: null, amount: "" });
   const [unit, setUnit] = useState({ id: null, unit: "" });
@@ -21,12 +21,16 @@ function IngredientInputGroup({ update, ingredient }: any) {
 
 
   /** Calls parent callback to update ingredient */
-  function updateIngredient(name: string) {
+  function updateIngredientList() {
     ingredient.liquid = liquid;
     ingredient.amount = amount;
     ingredient.unit = unit;
-    update(ingredient)
+    update(ingredient,index)
   }
+
+  useEffect(()=>{
+    updateIngredientList()
+  },[liquid,amount,unit])
 
   return (
     <div className="flex rounded-md border-2">
