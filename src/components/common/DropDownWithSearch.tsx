@@ -23,24 +23,37 @@ function DropDownWithSearch({ name, addIngredient, options }: DropDownWithSearch
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState(null)
 
-  let filteredOptions = undefined; 
+  // let filteredOptions = undefined; 
 
-  if (name === "liquid") {
-    filteredOptions =
-      query === ''
-        ? options
-        : options.filter((option) => {
-          return option[name].toLowerCase().includes(query.toLowerCase())
-        })
+  // if (name === "liquid") {
+  //   filteredOptions =
+  //     query === ''
+  //       ? options
+  //       : options.filter((option) => {
+  //         return option[name].toLowerCase().includes(query.toLowerCase())
+  //       })
 
-  } else {
-    filteredOptions =
-      query === ''
-        ? options
-        : options.filter((option) => {
-          return option[name].includes(query)
-        })
-  }
+  // } else {
+  //   filteredOptions =
+  //     query === ''
+  //       ? options
+  //       : options.filter((option) => {
+  //         return option[name].includes(query)
+  //       })
+  // }
+
+  const filteredOptions =
+    query === ''
+      ? options
+      : options.reduce<any[]>((currentOptions, option) => {
+        const isOptionAvailable = option[name].toLowerCase().includes(query.toLowerCase());
+        if (isOptionAvailable) currentOptions.push(option);
+
+        //renders "+ create" option if query value doesn't exist in the dropdown options
+        if (currentOptions.length < 1 && !isOptionAvailable)
+          currentOptions.push({ id: undefined, name: '+ create....' });
+        return currentOptions;
+      }, []);
 
   useEffect(() => {
     addIngredient(selected, name);
@@ -49,6 +62,7 @@ function DropDownWithSearch({ name, addIngredient, options }: DropDownWithSearch
   return (
     <Combobox as="div" value={selected}
       onChange={(value) => {
+        console.log(value)
         setQuery('')
         setSelected(value)
       }}>

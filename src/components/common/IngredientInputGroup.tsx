@@ -32,9 +32,9 @@
 
     return (
       <div className="flex rounded-md border-2">
-        <DropDownWithSearch addIngredient={setLiquid} options={quantityAmount} name={"amount"} />
-        <DropDownWithSearch addIngredient={setAmount} options={quantityUnits} name={"unit"} />
-        <DropDownWithSearch addIngredient={setUnit} options={liquids} name={"liquid"} />
+        <DropDownWithSearch addIngredient={setAmount} options={quantityAmount} name={"amount"} />
+        <DropDownWithSearch addIngredient={setUnit} options={quantityUnits} name={"unit"} />
+        <DropDownWithSearch addIngredient={setLiquid} options={liquids} name={"liquid"} />
       </div>
     )
   }
