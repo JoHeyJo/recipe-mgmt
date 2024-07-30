@@ -97,7 +97,15 @@ function DropDownWithSearch({ name, addIngredient, options }: DropDownWithSearch
             {filteredOptions.map((option) => (
               // option.id ?
                 <Combobox.Option
-                  onClick={()=>console.log("exisitng item")}
+                // onClick={() => console.log(option.id ? console.log("exisitng item") : console.log("create new item"))}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  if (option.id) {
+                    console.log("existing item");
+                  } else {
+                    console.log("create new item");
+                  }
+                }}
                   key={option.id}
                   value={option}
                   className={({ active }) =>
