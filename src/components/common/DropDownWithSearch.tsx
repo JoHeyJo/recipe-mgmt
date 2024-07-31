@@ -92,7 +92,7 @@ function DropDownWithSearch({ name, addIngredient, options }: DropDownWithSearch
           onChange={(event: any) => setQuery(event.target.value)}
           // onChange={(event: any) => console.log("selected", event.target.value)}
           displayValue={(displayValue: { [key: string]: string }) => displayValue?.[name]}
-          // onBlur={() => setQuery('')}
+          onBlur={() => setQuery('')}
           name={name as string}
         />
         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
