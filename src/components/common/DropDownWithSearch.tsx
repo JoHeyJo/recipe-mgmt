@@ -3,6 +3,11 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
 import { getByDisplayValue } from '@testing-library/react';
 
+function uniqueID() {
+  return Math.random();
+}
+
+const unique:any = () => Math.random()
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
@@ -52,6 +57,7 @@ function DropDownWithSearch({ name, addIngredient, options }: DropDownWithSearch
         //renders "+ create" option if query value doesn't exist in the dropdown options
         if (currentOptions.length < 1 && !isOptionAvailable)
           currentOptions.push({ id: undefined, [name]: '+ create...' });
+          // currentOptions = [{ id: uniqueID(), [name]: '+ create...' }, { id: uniqueID(), [name]: 'other..' }]
         return currentOptions;
       }, []);
 
@@ -64,6 +70,7 @@ function DropDownWithSearch({ name, addIngredient, options }: DropDownWithSearch
     } else {
       console.log('existing item', option);
     }
+    console.log(option);
     setSelected(option);
   };
 
@@ -85,7 +92,7 @@ function DropDownWithSearch({ name, addIngredient, options }: DropDownWithSearch
           onChange={(event: any) => setQuery(event.target.value)}
           // onChange={(event: any) => console.log("selected", event.target.value)}
           displayValue={(displayValue: { [key: string]: string }) => displayValue?.[name]}
-          onBlur={() => setQuery('')}
+          // onBlur={() => setQuery('')}
           name={name as string}
         />
         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
@@ -95,17 +102,11 @@ function DropDownWithSearch({ name, addIngredient, options }: DropDownWithSearch
         {filteredOptions.length > 0 && (
           <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
             {filteredOptions.map((option) => (
-              // option.id ?
+              option.id ?
                 <Combobox.Option
-                // onClick={() => console.log(option.id ? console.log("exisitng item") : console.log("create new item"))}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  if (option.id) {
-                    console.log("existing item");
-                  } else {
-                    console.log("create new item");
-                  }
-                }}
+                  // onClick={() => console.log(option.id ? console.log("exisitng item",option) : console.log("create new item",option))}
+                  onClick={() => console.log("exisitng item", option)}
+
                   key={option.id}
                   value={option}
                   className={({ active }) =>
@@ -132,35 +133,35 @@ function DropDownWithSearch({ name, addIngredient, options }: DropDownWithSearch
                     </>
                   )}
                 </Combobox.Option>
-                // :
-                // <Combobox.Option
-                //   onClick={()=>console.log("create new item")}
-                //   key={option.id}
-                //   value={option}
-                //   className={({ active }) =>
-                //     classNames(
-                //       'relative cursor-default select-none py-2 pl-3 pr-9',
-                //       active ? 'bg-indigo-600 text-white' : 'text-gray-900'
-                //     )
-                //   }
-                // >
-                //   {({ active, selected }) => (
-                //     <>
-                //       <span className={classNames('block truncate', selected && 'font-semibold')}>{option[name]}</span>
+                :
+                <Combobox.Option
+                  onClick={() => console.log("create new item", option)}
+                  key="create"
+                  value={option}
+                  className={({ active }) =>
+                    classNames(
+                      'relative cursor-default select-none py-2 pl-3 pr-9',
+                      active ? 'bg-indigo-600 text-white' : 'text-gray-900'
+                    )
+                  }
+                >
+                  {({ active, selected }) => (
+                    <>
+                      <span className={classNames('block truncate', selected && 'font-semibold')}>{option[name]}</span>
 
-                //       {selected && (
-                //         <span
-                //           className={classNames(
-                //             'absolute inset-y-0 right-0 flex items-center pr-4',
-                //             active ? 'text-white' : 'text-indigo-600'
-                //           )}
-                //         >
-                //           <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                //         </span>
-                //       )}
-                //     </>
-                //   )}
-                // </Combobox.Option>
+                      {selected && (
+                        <span
+                          className={classNames(
+                            'absolute inset-y-0 right-0 flex items-center pr-4',
+                            active ? 'text-white' : 'text-indigo-600'
+                          )}
+                        >
+                          <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                        </span>
+                      )}
+                    </>
+                  )}
+                </Combobox.Option>
             ))}
           </Combobox.Options>
         )}
