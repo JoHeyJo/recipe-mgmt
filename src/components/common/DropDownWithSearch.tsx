@@ -7,7 +7,7 @@ function uniqueID() {
   return Math.random();
 }
 
-const unique:any = () => Math.random()
+const unique: any = () => Math.random()
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
@@ -17,6 +17,7 @@ type DropDownWithSearchProp = {
   name: string;
   addIngredient: any
   options: any[];
+  updateOptions: any;
 }
 
 /** Combobox component - ring is removed 
@@ -24,29 +25,11 @@ type DropDownWithSearchProp = {
  * IngredientInputGroup -> DropDownWithSearch
  */
 
-function DropDownWithSearch({ name, addIngredient, options }: DropDownWithSearchProp) {
+function DropDownWithSearch({ name, addIngredient, options, updateOptions }: DropDownWithSearchProp) {
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState(null)
 
-  // let filteredOptions = undefined; 
-
-  // if (name === "liquid") {
-  //   filteredOptions =
-  //     query === ''
-  //       ? options
-  //       : options.filter((option) => {
-  //         return option[name].toLowerCase().includes(query.toLowerCase())
-  //       })
-
-  // } else {
-  //   filteredOptions =
-  //     query === ''
-  //       ? options
-  //       : options.filter((option) => {
-  //         return option[name].includes(query)
-  //       })
-  // }
-
+  /** Creates a list of filtered options based on search query */
   const filteredOptions =
     query === ''
       ? options
@@ -64,16 +47,20 @@ function DropDownWithSearch({ name, addIngredient, options }: DropDownWithSearch
   const handleChange = (option: any) => {
     if (option.id === undefined) {
       option[name] = query
-    } else {
-    }
+      updateOptions((options:any) => [...options,option])
+    } 
     setSelected(option);
   };
 
+
+/** Adds ingredient to parent component when an ingredient is selected  */
   useEffect(() => {
     addIngredient(selected);
   }, [selected]);
 
   return (
+    <div className='relative'>
+
     <Combobox as="div" value={selected}
       onChange={(value) => {
         setQuery('')
@@ -96,68 +83,69 @@ function DropDownWithSearch({ name, addIngredient, options }: DropDownWithSearch
           <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
             {filteredOptions.map((option) => (
               // option.id ?
-                <Combobox.Option
-                  onClick={() => console.log("exisitng item", option)}
-                  key={option.id}
-                  value={option}
-                  className={({ active }) =>
-                    classNames(
-                      'relative cursor-default select-none py-2 pl-3 pr-9',
-                      active ? 'bg-indigo-600 text-white' : 'text-gray-900'
-                    )
-                  }
-                >
-                  {({ active, selected }) => (
-                    <>
-                      <span className={classNames('block truncate', selected && 'font-semibold')}>{option[name]}</span>
+              <Combobox.Option
+                onClick={() => console.log("exisitng item", option)}
+                key={option.id}
+                value={option}
+                className={({ active }) =>
+                  classNames(
+                    'relative cursor-default select-none py-2 pl-3 pr-9',
+                    active ? 'bg-indigo-600 text-white' : 'text-gray-900'
+                  )
+                }
+              >
+                {({ active, selected }) => (
+                  <>
+                    <span className={classNames('block truncate', selected && 'font-semibold')}>{option[name]}</span>
 
-                      {selected && (
-                        <span
-                          className={classNames(
-                            'absolute inset-y-0 right-0 flex items-center pr-4',
-                            active ? 'text-white' : 'text-indigo-600'
-                          )}
-                        >
-                          <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                        </span>
-                      )}
-                    </>
-                  )}
-                </Combobox.Option>
-                // :
-                // <Combobox.Option
-                //   onClick={() => console.log("create new item", option)}
-                //   key="create"
-                //   value={option}
-                //   className={({ active }) =>
-                //     classNames(
-                //       'relative cursor-default select-none py-2 pl-3 pr-9',
-                //       active ? 'bg-indigo-600 text-white' : 'text-gray-900'
-                //     )
-                //   }
-                // >
-                //   {({ active, selected }) => (
-                //     <>
-                //       <span className={classNames('block truncate', selected && 'font-semibold')}>{option[name]}</span>
+                    {selected && (
+                      <span
+                        className={classNames(
+                          'absolute inset-y-0 right-0 flex items-center pr-4',
+                          active ? 'text-white' : 'text-indigo-600'
+                        )}
+                      >
+                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                      </span>
+                    )}
+                  </>
+                )}
+              </Combobox.Option>
+              // :
+              // <Combobox.Option
+              //   onClick={() => console.log("create new item", option)}
+              //   key="create"
+              //   value={option}
+              //   className={({ active }) =>
+              //     classNames(
+              //       'relative cursor-default select-none py-2 pl-3 pr-9',
+              //       active ? 'bg-indigo-600 text-white' : 'text-gray-900'
+              //     )
+              //   }
+              // >
+              //   {({ active, selected }) => (
+              //     <>
+              //       <span className={classNames('block truncate', selected && 'font-semibold')}>{option[name]}</span>
 
-                //       {selected && (
-                //         <span
-                //           className={classNames(
-                //             'absolute inset-y-0 right-0 flex items-center pr-4',
-                //             active ? 'text-white' : 'text-indigo-600'
-                //           )}
-                //         >
-                //           <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                //         </span>
-                //       )}
-                //     </>
-                //   )}
-                // </Combobox.Option>
+              //       {selected && (
+              //         <span
+              //           className={classNames(
+              //             'absolute inset-y-0 right-0 flex items-center pr-4',
+              //             active ? 'text-white' : 'text-indigo-600'
+              //           )}
+              //         >
+              //           <CheckIcon className="h-5 w-5" aria-hidden="true" />
+              //         </span>
+              //       )}
+              //     </>
+              //   )}
+              // </Combobox.Option>
             ))}
           </Combobox.Options>
         )}
       </div>
     </Combobox>
+    </div>
   )
 }
 
