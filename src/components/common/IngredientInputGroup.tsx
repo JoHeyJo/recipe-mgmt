@@ -31,7 +31,7 @@ function IngredientInputGroup({ update, ingredient, index }: any) {
   }, [liquid, amount, unit])
 
   return (
-    <div className="flex rounded-md border-2">
+    <div className="relative flex rounded-md border-2">
       <DropDownWithSearch addIngredient={setAmount} updateOptions={setQuantityAmounts} options={quantityAmount} name={"amount"} />
       <DropDownWithSearch addIngredient={setUnit} updateOptions={setQuantityUnits} options={quantityUnits} name={"unit"} />
       <DropDownWithSearch addIngredient={setLiquid} updateOptions={setLiquids} options={liquids} name={"liquid"} />
