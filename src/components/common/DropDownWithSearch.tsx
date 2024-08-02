@@ -56,7 +56,7 @@ function DropDownWithSearch({ name, addIngredient, options, updateOptions }: Dro
   /** Adds ingredient to parent component when an ingredient is selected  */
   useEffect(() => {
     addIngredient(selected);
-  }, [selected]);
+  }, [selected,options]);
 
   return (
     <Combobox as="div" value={selected}
