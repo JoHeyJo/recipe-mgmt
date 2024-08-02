@@ -59,7 +59,7 @@ function DropDownWithSearch({ name, addIngredient, options, updateOptions }: Dro
   }, [selected]);
 
   return (
-    <Combobox className="relative" as="div" value={selected}
+    <Combobox as="div" value={selected}
       onChange={(value) => {
         setQuery('')
         handleChange(value)
@@ -78,11 +78,9 @@ function DropDownWithSearch({ name, addIngredient, options, updateOptions }: Dro
         </Combobox.Button>
 
         {filteredOptions.length > 0 && (
-          <Combobox.Options className="absolute z-1000 mt-1 max-h-60 w-full rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+          <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
             {filteredOptions.map((option) => (
-              // option.id ?
               <Combobox.Option
-                onClick={() => console.log("exisitng item", option)}
                 key={option.id}
                 value={option}
                 className={({ active }) =>
@@ -109,35 +107,6 @@ function DropDownWithSearch({ name, addIngredient, options, updateOptions }: Dro
                   </>
                 )}
               </Combobox.Option>
-              // :
-              // <Combobox.Option
-              //   onClick={() => console.log("create new item", option)}
-              //   key="create"
-              //   value={option}
-              //   className={({ active }) =>
-              //     classNames(
-              //       'relative cursor-default select-none py-2 pl-3 pr-9',
-              //       active ? 'bg-indigo-600 text-white' : 'text-gray-900'
-              //     )
-              //   }
-              // >
-              //   {({ active, selected }) => (
-              //     <>
-              //       <span className={classNames('block truncate', selected && 'font-semibold')}>{option[name]}</span>
-
-              //       {selected && (
-              //         <span
-              //           className={classNames(
-              //             'absolute inset-y-0 right-0 flex items-center pr-4',
-              //             active ? 'text-white' : 'text-indigo-600'
-              //           )}
-              //         >
-              //           <CheckIcon className="h-5 w-5" aria-hidden="true" />
-              //         </span>
-              //       )}
-              //     </>
-              //   )}
-              // </Combobox.Option>
             ))}
           </Combobox.Options>
         )}

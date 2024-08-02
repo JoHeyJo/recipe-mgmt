@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import DropDownWithSearch from './DropDownWithSearch';
 import { Ingredient } from '../../utils/types';
 
-const liquidsDB = [{ id: 1, liquid: "tequila" }, { id: 2, liquid: "whiskey" }]
+const liquidsDB = [{ id: 1, liquid: "tequila" }, { id: 2, liquid: "whiskey" }, { id: 3, liquid: "gin" }, { id: 4, liquid: "rum" }]
 const quantityAmountsDB = [{ id: 3, amount: "1 / 3" }, { id: 4, amount: '4' }]
 const quantityUnitsDB = [{ id: 5, unit: "oz" }]
 
@@ -31,7 +31,7 @@ function IngredientInputGroup({ update, ingredient, index }: any) {
   }, [liquid, amount, unit])
 
   return (
-    <div className="relative flex rounded-md border-2">
+    <div className="flex rounded-md border-2">
       <DropDownWithSearch addIngredient={setAmount} updateOptions={setQuantityAmounts} options={quantityAmount} name={"amount"} />
       <DropDownWithSearch addIngredient={setUnit} updateOptions={setQuantityUnits} options={quantityUnits} name={"unit"} />
       <DropDownWithSearch addIngredient={setLiquid} updateOptions={setLiquids} options={liquids} name={"liquid"} />
