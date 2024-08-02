@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ChangeEvent } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
 import { getByDisplayValue } from '@testing-library/react';
@@ -45,13 +45,13 @@ function DropDownWithSearch({ name, addIngredient, options, updateOptions }: Dro
 
 
   const handleChange = (option: any) => {
-    if (option.id === undefined) {
+    console.log("handleChange option =>", option)
+    if (option.id === undefined && option[name] === '+ create...') {
       option[name] = query
       updateOptions((options: any) => [...options, option])
     }
     setSelected(option);
   };
-
 
   /** Adds ingredient to parent component when an ingredient is selected  */
   useEffect(() => {
@@ -68,7 +68,7 @@ function DropDownWithSearch({ name, addIngredient, options, updateOptions }: Dro
       <div className="relative">
         <Combobox.Input
           className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          onChange={(event: any) => setQuery(event.target.value)}
+          onChange={(event: ChangeEvent<HTMLInputElement>) => setQuery(event.target.value)}
           displayValue={(displayValue: { [key: string]: string }) => displayValue?.[name]}
           // onBlur={() => setQuery('')}
           name={name as string}
