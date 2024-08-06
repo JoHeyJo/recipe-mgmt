@@ -2,9 +2,48 @@ import { Fragment, useState } from 'react'
 import { Combobox, Dialog, Transition } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/24/outline'
 import IngredientsGroup from './common/IngredientsGroup';
+import { Recipe } from '../utils/types';
+import InputWithLabel  from './common/InputWithLabel'
 type AddRecipeProps = {
   setShowing: any;
   isOpen: boolean;
+}
+
+// {
+//   "user_id": 1,
+//     "book_id": 1,
+//       "recipe": {
+//     "name": "Manhattan",
+//       "preparation": ["Stir ingredients over ice", "strain in martini glass", "garnish with cherry"],
+//         "notes": ["Individual ingredients are potent and can cause the drink to be imbalanced if not properly measured."],
+//           "ingredients": [
+//             {
+//               "ingredient": "Rye Whiskey",
+//               "quantity_amount": "1.5",
+//               "quantity_unit": "oz"
+//             },
+
+//             {
+//               "ingredient": "sweet vermouth",
+//               "quantity_amount": ".5",
+//               "quantity_unit": "oz"
+//             },
+
+//             {
+//               "ingredient": "Angostura bitters",
+//               "quantity_amount": "2",
+//               "quantity_unit": "dashes"
+//             }
+//           ]
+//   }
+// }
+
+
+const recipeTemplate: Recipe = {
+  name: "",
+  preparation: [],
+  notes: [],
+  ingredients: []
 }
 
 /** Processes all recipe data
@@ -13,7 +52,7 @@ type AddRecipeProps = {
  */
 
 function AddRecipe({ setShowing, isOpen}: AddRecipeProps) {
-  const [recipe, setRecipe] = useState();
+  const [recipe, setRecipe] = useState<Recipe>(recipeTemplate);
 
   return (
     <Transition.Root show={isOpen} as={Fragment}>
@@ -41,7 +80,7 @@ function AddRecipe({ setShowing, isOpen}: AddRecipeProps) {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
+              <Dialog.Panel className="relative transform   rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
                 {/* <div>
                   <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
                     <CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
@@ -57,6 +96,7 @@ function AddRecipe({ setShowing, isOpen}: AddRecipeProps) {
                     </div>
                   </div>
                 </div> */}
+                <InputWithLabel />
                 <IngredientsGroup />
                 <div className="mt-5 sm:mt-6">
                   <button

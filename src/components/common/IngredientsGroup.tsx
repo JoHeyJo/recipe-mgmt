@@ -2,6 +2,8 @@ import { useState } from 'react';
 import IngredientInputGroup from './IngredientInputGroup';
 import { Ingredient } from '../../utils/types';
 import { PillButton } from './PillButton';
+import { PlusIcon } from '@heroicons/react/20/solid'
+
 
 const defaultIngredient: Ingredient = {
   liquid: { id: null, liquid: "" },
@@ -32,7 +34,13 @@ function IngredientsGroup() {
 
   return (
     <>
-      <button onClick={addIngredient}>add</button>
+      <button
+        onClick={addIngredient}
+        type="button"
+        className="rounded-full bg-indigo-600 p-1.5 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      >
+        <PlusIcon aria-hidden="true" className="h-5 w-5" />
+      </button>
       {ingredients.map((ingredient, i) =>
         <IngredientInputGroup key={i} index={i} ingredient={ingredient} update={updateIngredients} />
       )}
