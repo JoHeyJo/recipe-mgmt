@@ -45,7 +45,6 @@ function DropDownWithSearch({ name, addIngredient, options, updateOptions }: Dro
 
 
   const handleChange = (option: any) => {
-    console.log("handleChange option =>", option)
     if (option.id === undefined && option[name] === '+ create...') {
       option[name] = query
       updateOptions((options: any) => [...options, option])
@@ -56,6 +55,7 @@ function DropDownWithSearch({ name, addIngredient, options, updateOptions }: Dro
   /** Adds ingredient to parent component when an ingredient is selected  */
   useEffect(() => {
     addIngredient(selected);
+    console.log(selected)
   }, [selected,options]);
 
   return (
@@ -67,6 +67,7 @@ function DropDownWithSearch({ name, addIngredient, options, updateOptions }: Dro
       {/* <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">Assigned to</Combobox.Label> */}
       <div className="relative">
         <Combobox.Input
+          placeholder={name}
           className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           onChange={(event: ChangeEvent<HTMLInputElement>) => setQuery(event.target.value)}
           displayValue={(displayValue: { [key: string]: string }) => displayValue?.[name]}
