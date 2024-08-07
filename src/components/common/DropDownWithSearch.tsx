@@ -2,6 +2,7 @@ import { useState, useEffect, ChangeEvent } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
 import { getByDisplayValue } from '@testing-library/react';
+import { Ingredient } from '../../utils/types';
 
 function uniqueID() {
   return Math.random();
@@ -15,7 +16,7 @@ function classNames(...classes: any) {
 
 type DropDownWithSearchProp = {
   name: string;
-  addIngredient: any
+  addIngredient: React.Dispatch<React.SetStateAction<{ id: null;[key: string]: string | number | null; }>>;
   options: any[];
   updateOptions: any;
 }

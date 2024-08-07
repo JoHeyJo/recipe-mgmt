@@ -22,13 +22,13 @@ type IngredientsGroupProps = {
  * AddRecipe -> IngredientsGroup -> IngredientInputGroup
  */
 function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
-  const [ingredients, setIngredients] = useState<any[]>([defaultIngredient]);
+  const [ingredients, setIngredients] = useState<Ingredient[]>([defaultIngredient]);
 
   function addIngredient() {
     setIngredients(i => [...i, defaultIngredient])
   }
 
-  function updateIngredients(newIngredient: any, index: number) {
+  function updateIngredients(newIngredient: Ingredient, index: number) {
     setIngredients((prevIngredients) => {
       const newIngredients = [...prevIngredients];
       newIngredients[index] = newIngredient
