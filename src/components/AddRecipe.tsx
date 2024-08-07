@@ -4,40 +4,11 @@ import { CheckIcon } from '@heroicons/react/24/outline'
 import IngredientsGroup from './common/IngredientsGroup';
 import { Ingredient, Recipe } from '../utils/types';
 import InputWithLabel  from './common/InputWithLabel'
+
 type AddRecipeProps = {
   setShowing: any;
   isOpen: boolean;
 }
-
-// {
-//   "user_id": 1,
-//     "book_id": 1,
-//       "recipe": {
-//     "name": "Manhattan",
-//       "preparation": ["Stir ingredients over ice", "strain in martini glass", "garnish with cherry"],
-//         "notes": ["Individual ingredients are potent and can cause the drink to be imbalanced if not properly measured."],
-//           "ingredients": [
-//             {
-//               "ingredient": "Rye Whiskey",
-//               "quantity_amount": "1.5",
-//               "quantity_unit": "oz"
-//             },
-
-//             {
-//               "ingredient": "sweet vermouth",
-//               "quantity_amount": ".5",
-//               "quantity_unit": "oz"
-//             },
-
-//             {
-//               "ingredient": "Angostura bitters",
-//               "quantity_amount": "2",
-//               "quantity_unit": "dashes"
-//             }
-//           ]
-//   }
-// }
-
 
 const recipeTemplate: Recipe = {
   name: "",
@@ -55,12 +26,11 @@ function AddRecipe({ setShowing, isOpen}: AddRecipeProps) {
   const [recipe, setRecipe] = useState<Recipe>(recipeTemplate);
 
   function updateRecipe<T extends keyof Recipe>(data: Recipe[T], section: T) {
-    if (section === "name") {
-      setRecipe(prevRecipe => ({
-        ...prevRecipe,
-        [section]: data 
-      }));
-    }
+    // if (section === "name") {
+      setRecipe(prevRecipe => (
+        {...prevRecipe, [section]: data }
+      ));
+    // }
   }
 
   return (
@@ -105,7 +75,7 @@ function AddRecipe({ setShowing, isOpen}: AddRecipeProps) {
                     </div>
                   </div> */}
                 <InputWithLabel />
-                <IngredientsGroup />
+                <IngredientsGroup handleUpdate={updateRecipe} />
                 <div className="mt-5 sm:mt-6">
                   <button
                     type="button"

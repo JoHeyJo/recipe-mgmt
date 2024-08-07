@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import IngredientInputGroup from './IngredientInputGroup';
 import { Ingredient } from '../../utils/types';
 import { PillButton } from './PillButton';
@@ -11,13 +11,17 @@ const defaultIngredient: Ingredient = {
   unit: { id: null, unit: "" }
 }
 
+type IngredientsGroupProps = {
+  handleUpdate: any
+}
+
 
 /** Contains a list of ingredients 
  * 
  * 
  * AddRecipe -> IngredientsGroup -> IngredientInputGroup
  */
-function IngredientsGroup() {
+function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
   const [ingredients, setIngredients] = useState<any[]>([defaultIngredient]);
 
   function addIngredient() {
@@ -25,12 +29,16 @@ function IngredientsGroup() {
   }
 
   function updateIngredients(newIngredient: any, index: number) {
-    setIngredients((prevIngredients) =>  {
+    setIngredients((prevIngredients) => {
       const newIngredients = [...prevIngredients];
       newIngredients[index] = newIngredient
-     return newIngredients
+      return newIngredients
     })
   }
+
+  useEffect(()=>{
+    handleUpdate(ingredients, "ingredients")
+  },[ingredients])
 
   return (
     <>
@@ -44,7 +52,6 @@ function IngredientsGroup() {
       {ingredients.map((ingredient, i) =>
         <IngredientInputGroup key={i} index={i} ingredient={ingredient} update={updateIngredients} />
       )}
-
     </>
   )
 }
