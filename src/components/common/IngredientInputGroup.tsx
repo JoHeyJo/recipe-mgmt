@@ -3,8 +3,8 @@ import DropDownWithSearch from './DropDownWithSearch';
 import { Ingredient, Option } from '../../utils/types';
 
 const liquidsDB: Option[] = [{ id: 1, liquid: "tequila" }, { id: 2, liquid: "whiskey" }, { id: 3, liquid: "gin" }, { id: 4, liquid: "rum" }]
-const quantityAmountsDB = [{ id: 3, amount: "1 / 3" }, { id: 4, amount: '4' }]
-const quantityUnitsDB = [{ id: 5, unit: "oz" }]
+const quantityAmountsDB: Option[] = [{ id: 3, amount: "1 / 3" }, { id: 4, amount: '4' }]
+const quantityUnitsDB: Option[] = [{ id: 5, unit: "oz" }]
 
 type IngredientInputGroup = {
   handleUpdate: (newIngredient: Ingredient, index: number) => void;
@@ -42,8 +42,8 @@ function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInp
   /** Handles adding options to state */
   function addOptions(state: string, option: Option){
     if (state === "liquid") setLiquids((options: Option[]) => [...options, option])
-    if (state === "unit") setQuantityUnits(option)
-    if (state === "amount") setQuantityAmounts(option)
+    if (state === "unit") setQuantityUnits((options: Option[]) => [...options, option])
+    if (state === "amount") setQuantityAmounts((options: Option[]) => [...options, option])
   }
 
   useEffect(() => {
@@ -52,9 +52,9 @@ function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInp
 
   return (
     <div className="flex rounded-md my-2 border-2">
-      <DropDownWithSearch handleOptionChange={updateState} updateOptions={setQuantityAmounts} options={quantityAmount} name={"amount"} />
-      <DropDownWithSearch handleOptionChange={updateState} updateOptions={setQuantityUnits} options={quantityUnits} name={"unit"} />
-      <DropDownWithSearch handleOptionChange={updateState} updateOptions={setLiquids} options={liquids} name={"liquid"} />
+      <DropDownWithSearch handleOptionChange={updateState} handleAddOption={addOptions} options={quantityAmount} name={"amount"} />
+      <DropDownWithSearch handleOptionChange={updateState} handleAddOption={addOptions} options={quantityUnits} name={"unit"} />
+      <DropDownWithSearch handleOptionChange={updateState} handleAddOption={addOptions} options={liquids} name={"liquid"} />
     </div>
   )
 }

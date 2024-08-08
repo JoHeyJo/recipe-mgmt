@@ -53,12 +53,7 @@ type BaseOption = {
   id: number | null;
 };
 
-// DynamicProperties allowing for any other properties as string | null
-type DynamicProperties = {
-  [key: string]: string | null;
-};
-
-// Combine both to form the Option type - this allows type safety for Option & Option[]
+// Combine mapped type and intersection - this allows type safety for Option & Option[]
 export type Option = BaseOption & {
   [key: string]: string | number | null;
 };

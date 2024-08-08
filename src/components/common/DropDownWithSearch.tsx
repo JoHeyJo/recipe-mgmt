@@ -17,8 +17,8 @@ function classNames(...classes: any) {
 type DropDownWithSearchProp = {
   name: string;
   handleOptionChange: (state: string, option: Option) => void;
-  options: any[];
-  updateOptions: any;
+  options: { id: string, [key: string]: string }[];
+  handleAddOption: (state: string, option: Option) => void;
 }
 
 /** Combobox component - ring is removed 
@@ -26,7 +26,7 @@ type DropDownWithSearchProp = {
  * IngredientInputGroup -> DropDownWithSearch
  */
 
-function DropDownWithSearch({ name, handleOptionChange, options, updateOptions }: DropDownWithSearchProp) {
+function DropDownWithSearch({ name, handleOptionChange, options, handleAddOption }: DropDownWithSearchProp) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Option | null>(null)
 
@@ -48,7 +48,7 @@ function DropDownWithSearch({ name, handleOptionChange, options, updateOptions }
   const handleChange = (option: any) => {
     if (option.id === undefined && option[name] === '+ create...') {
       option[name] = query
-      updateOptions((options: any) => [...options, option])
+      handleAddOption(name, option)
     }
     setSelected(option);
   };
