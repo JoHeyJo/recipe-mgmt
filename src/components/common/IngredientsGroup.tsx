@@ -36,9 +36,9 @@ function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
     })
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     handleUpdate(ingredients, "ingredients")
-  },[ingredients])
+  }, [ingredients])
 
   return (
     <>
@@ -50,7 +50,7 @@ function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
         <PlusIcon aria-hidden="true" className="h-5 w-5" />
       </button>
       {ingredients.map((ingredient, i) =>
-        <IngredientInputGroup key={i} index={i} ingredient={ingredient} update={updateIngredients} />
+        <IngredientInputGroup key={i} index={i} ingredient={ingredient} handleUpdate={updateIngredients} />
       )}
     </>
   )

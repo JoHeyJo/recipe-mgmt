@@ -2,7 +2,7 @@ import { useState, useEffect, ChangeEvent } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
 import { getByDisplayValue } from '@testing-library/react';
-import { Ingredient } from '../../utils/types';
+import { Ingredient, Option } from '../../utils/types';
 
 function uniqueID() {
   return Math.random();
@@ -16,7 +16,7 @@ function classNames(...classes: any) {
 
 type DropDownWithSearchProp = {
   name: string;
-  addIngredient: React.Dispatch<React.SetStateAction<{ id: null;[key: string]: string | number | null; }>>;
+  handleAdd: (state: string, option: Option) => void;
   options: any[];
   updateOptions: any;
 }
@@ -26,9 +26,9 @@ type DropDownWithSearchProp = {
  * IngredientInputGroup -> DropDownWithSearch
  */
 
-function DropDownWithSearch({ name, addIngredient, options, updateOptions }: DropDownWithSearchProp) {
-  const [query, setQuery] = useState('')
-  const [selected, setSelected] = useState(null)
+function DropDownWithSearch({ name, handleAdd, options, updateOptions }: DropDownWithSearchProp) {
+  const [query, setQuery] = useState<string>('')
+  const [selected, setSelected] = useState<Option | null>(null)
 
   /** Creates a list of filtered options based on search query */
   const filteredOptions =
@@ -55,8 +55,7 @@ function DropDownWithSearch({ name, addIngredient, options, updateOptions }: Dro
 
   /** Adds ingredient to parent component when an ingredient is selected  */
   useEffect(() => {
-    addIngredient(selected);
-    console.log(selected)
+    selected && handleAdd(name, selected);
   }, [selected,options]);
 
   return (

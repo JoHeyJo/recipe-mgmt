@@ -5,7 +5,7 @@ import IngredientsGroup from './common/IngredientsGroup';
 import { Ingredient, Recipe } from '../utils/types';
 import InputWithLabel  from './common/InputWithLabel'
 
-type AddRecipeProps = {
+type AddRecipe = {
   setShowing: any;
   isOpen: boolean;
 }
@@ -22,7 +22,7 @@ const recipeTemplate: Recipe = {
  * RecipeView -> AddRecipe -> IngredientsGroup
  */
 
-function AddRecipe({ setShowing, isOpen}: AddRecipeProps) {
+function AddRecipe({ setShowing, isOpen}: AddRecipe) {
   const [recipe, setRecipe] = useState<Recipe>(recipeTemplate);
 
   function updateRecipe<T extends keyof Recipe>(data: Recipe[T], section: T) {

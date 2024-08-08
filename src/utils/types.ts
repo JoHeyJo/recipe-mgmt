@@ -11,11 +11,6 @@ export type Recipe = {
   notes: string[],
   ingredients: Ingredient[]
 }
-
-// export type Ingredients = {
-//   ingredients: Ingredient[]
-// }
-
 export type Ingredient = {
   liquid: object;
   amount: object;
@@ -53,3 +48,10 @@ export type JWTPayload = {
   sub: string | React.Dispatch<React.SetStateAction<string>>;
   is_admin: boolean;
 }
+
+export type Option = {
+  id: number | null;
+} & {
+  [key: string]: string | null;
+};
+

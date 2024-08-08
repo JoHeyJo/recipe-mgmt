@@ -1,18 +1,22 @@
 import { useState, useEffect } from 'react';
 import DropDownWithSearch from './DropDownWithSearch';
-import { Ingredient } from '../../utils/types';
+import { Ingredient, Option } from '../../utils/types';
 
 const liquidsDB = [{ id: 1, liquid: "tequila" }, { id: 2, liquid: "whiskey" }, { id: 3, liquid: "gin" }, { id: 4, liquid: "rum" }]
 const quantityAmountsDB = [{ id: 3, amount: "1 / 3" }, { id: 4, amount: '4' }]
 const quantityUnitsDB = [{ id: 5, unit: "oz" }]
 
-type Option = { id: null | number, liquid: string }
+type IngredientInputGroup = {
+  handleUpdate: (newIngredient: Ingredient, index: number) => void;
+  ingredient: Ingredient;
+  index: number;
+}
 
 /** Renders Combobox and processes data for new Ingredient
  * 
  * IngredientGroup -> IngredientInputGroup -> DropDownWithSearch
 */
-function IngredientInputGroup({ update, ingredient, index }: any) {
+function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInputGroup) {
   const [liquid, setLiquid] = useState<Option>({ id: null, liquid: "" });
   const [amount, setAmount] = useState<Option>({ id: null, amount: "" });
   const [unit, setUnit] = useState<Option>({ id: null, unit: "" });
@@ -22,10 +26,10 @@ function IngredientInputGroup({ update, ingredient, index }: any) {
   const [quantityUnits, setQuantityUnits] = useState(quantityUnitsDB)
 
 
-  /** Calls parent callback to update ingredient */
+  /** Calls parent callback to handleUpdate ingredient */
   function updateIngredientList() {
     const updatedIngredient = { ...ingredient, liquid, amount, unit };
-    update(updatedIngredient, index)
+    handleUpdate(updatedIngredient, index)
   }
 
   /** Handles changes made to state */
@@ -41,9 +45,9 @@ function IngredientInputGroup({ update, ingredient, index }: any) {
 
   return (
     <div className="flex rounded-md my-2 border-2">
-      <DropDownWithSearch addIngredient={setAmount} updateOptions={setQuantityAmounts} options={quantityAmount} name={"amount"} />
-      <DropDownWithSearch addIngredient={setUnit} updateOptions={setQuantityUnits} options={quantityUnits} name={"unit"} />
-      <DropDownWithSearch addIngredient={setLiquid} updateOptions={setLiquids} options={liquids} name={"liquid"} />
+      <DropDownWithSearch handleAdd={updateState} updateOptions={setQuantityAmounts} options={quantityAmount} name={"amount"} />
+      <DropDownWithSearch handleAdd={updateState} updateOptions={setQuantityUnits} options={quantityUnits} name={"unit"} />
+      <DropDownWithSearch handleAdd={updateState} updateOptions={setLiquids} options={liquids} name={"liquid"} />
     </div>
   )
 }
