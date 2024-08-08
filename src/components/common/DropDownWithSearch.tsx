@@ -16,7 +16,7 @@ function classNames(...classes: any) {
 
 type DropDownWithSearchProp = {
   name: string;
-  handleAdd: (state: string, option: Option) => void;
+  handleOptionChange: (state: string, option: Option) => void;
   options: any[];
   updateOptions: any;
 }
@@ -26,7 +26,7 @@ type DropDownWithSearchProp = {
  * IngredientInputGroup -> DropDownWithSearch
  */
 
-function DropDownWithSearch({ name, handleAdd, options, updateOptions }: DropDownWithSearchProp) {
+function DropDownWithSearch({ name, handleOptionChange, options, updateOptions }: DropDownWithSearchProp) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Option | null>(null)
 
@@ -55,7 +55,7 @@ function DropDownWithSearch({ name, handleAdd, options, updateOptions }: DropDow
 
   /** Adds ingredient to parent component when an ingredient is selected  */
   useEffect(() => {
-    selected && handleAdd(name, selected);
+    selected && handleOptionChange(name, selected);
   }, [selected,options]);
 
   return (
