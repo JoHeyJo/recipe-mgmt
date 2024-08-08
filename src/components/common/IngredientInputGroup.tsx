@@ -6,14 +6,16 @@ const liquidsDB = [{ id: 1, liquid: "tequila" }, { id: 2, liquid: "whiskey" }, {
 const quantityAmountsDB = [{ id: 3, amount: "1 / 3" }, { id: 4, amount: '4' }]
 const quantityUnitsDB = [{ id: 5, unit: "oz" }]
 
+type Option = { id: null | number, liquid: string }
+
 /** Renders Combobox and processes data for new Ingredient
  * 
  * IngredientGroup -> IngredientInputGroup -> DropDownWithSearch
 */
 function IngredientInputGroup({ update, ingredient, index }: any) {
-  const [liquid, setLiquid] = useState({ id: null, liquid: "" });
-  const [amount, setAmount] = useState({ id: null, amount: "" });
-  const [unit, setUnit] = useState({ id: null, unit: "" });
+  const [liquid, setLiquid] = useState<Option>({ id: null, liquid: "" });
+  const [amount, setAmount] = useState<Option>({ id: null, amount: "" });
+  const [unit, setUnit] = useState<Option>({ id: null, unit: "" });
 
   const [liquids, setLiquids] = useState(liquidsDB)
   const [quantityAmount, setQuantityAmounts] = useState(quantityAmountsDB)
@@ -24,6 +26,13 @@ function IngredientInputGroup({ update, ingredient, index }: any) {
   function updateIngredientList() {
     const updatedIngredient = { ...ingredient, liquid, amount, unit };
     update(updatedIngredient, index)
+  }
+
+  /** Handles changes made to state */
+  function updateState(state: string, option: Option) {
+    if (state === "liquid") setLiquid(option)
+    if (state === "unit") setLiquid(option)
+    if (state === "amount") setLiquid(option)
   }
 
   useEffect(() => {
