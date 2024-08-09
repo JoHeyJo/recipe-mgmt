@@ -48,11 +48,13 @@ function DropDownWithSearch({ name, handleOptionChange, options, handleAddOption
 
   /** Handles parent state update when changes are made to combobox */
   const handleChange = (option: any) => {
-    if (option.id === undefined && option[name] === '+ create...') {
+    if (option.id === null && option[name] === '+ create...') {
+      console.log("inside handle change")
       // new object needs to have query string injected as a value
       option[name] = query
       handleAddOption(name, option)
     }
+    console.log("set selected option")
     setSelected(option);
   };
 
