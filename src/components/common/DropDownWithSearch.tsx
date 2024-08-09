@@ -2,7 +2,7 @@ import { useState, useEffect, ChangeEvent } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
 import { getByDisplayValue } from '@testing-library/react';
-import { Ingredient, Option } from '../../utils/types';
+import { Option } from '../../utils/types';
 
 function uniqueID() {
   return Math.random();
@@ -14,7 +14,7 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
 
-type DropDownWithSearchProp = {
+type DropDownWithSearch = {
   name: string
   handleOptionChange: (state: string, option: Option) => void;
   options: Option[];
@@ -26,7 +26,7 @@ type DropDownWithSearchProp = {
  * IngredientInputGroup -> DropDownWithSearch
  */
 
-function DropDownWithSearch({ name, handleOptionChange, options, handleAddOption }: DropDownWithSearchProp) {
+function DropDownWithSearch({ name, handleOptionChange, options, handleAddOption }: DropDownWithSearch) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Option | null>(null)
 
@@ -49,19 +49,17 @@ function DropDownWithSearch({ name, handleOptionChange, options, handleAddOption
   /** Handles parent state update when changes are made to combobox */
   const handleChange = (option: any) => {
     if (option.id === null && option[name] === '+ create...') {
-      console.log("inside handle change")
       // new object needs to have query string injected as a value
       option[name] = query
       handleAddOption(name, option)
     }
-    console.log("set selected option")
     setSelected(option);
   };
 
   /** Adds ingredient to parent component when an ingredient is selected  */
   useEffect(() => {
     selected && handleOptionChange(name, selected);
-  }, [selected,options]);
+  }, [selected, options]);
 
   return (
     <Combobox as="div" value={selected}

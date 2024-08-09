@@ -25,12 +25,11 @@ const recipeTemplate: Recipe = {
 function AddRecipe({ setShowing, isOpen}: AddRecipe) {
   const [recipe, setRecipe] = useState<Recipe>(recipeTemplate);
 
-  function updateRecipe<T extends keyof Recipe>(data: Recipe[T], section: T) {
-    // if (section === "name") {
+  /** Updates recipe state */
+  function updateRecipe(data: string | Ingredient[], section: string) {
       setRecipe(prevRecipe => (
         {...prevRecipe, [section]: data }
       ));
-    // }
   }
 
   return (
@@ -74,7 +73,7 @@ function AddRecipe({ setShowing, isOpen}: AddRecipe) {
                       </p>
                     </div>
                   </div> */}
-                <InputWithLabel />
+                {/* <InputWithLabel handleUpdate={updateRecipe}/> */}
                 <IngredientsGroup handleUpdate={updateRecipe} />
                 <div className="mt-5 sm:mt-6">
                   <button

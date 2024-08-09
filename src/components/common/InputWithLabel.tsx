@@ -1,4 +1,6 @@
-
+type InputWithLabel = {
+  handleUpdate: any;
+}
 
 function InputWithLabel() {
   return (

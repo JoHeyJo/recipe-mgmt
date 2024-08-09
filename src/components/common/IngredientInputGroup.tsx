@@ -22,8 +22,8 @@ function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInp
   const [unit, setUnit] = useState<Option>({ id: null, unit: "" });
 
   const [liquids, setLiquids] = useState<Option[]>(liquidsDB)
-  const [quantityAmount, setQuantityAmounts] = useState(quantityAmountsDB)
-  const [quantityUnits, setQuantityUnits] = useState(quantityUnitsDB)
+  const [quantityAmount, setQuantityAmounts] = useState<Option[]>(quantityAmountsDB)
+  const [quantityUnits, setQuantityUnits] = useState<Option[]>(quantityUnitsDB)
 
 
   /** Calls parent callback to handleUpdate ingredient */

@@ -12,7 +12,7 @@ const defaultIngredient: Ingredient = {
 }
 
 type IngredientsGroupProps = {
-  handleUpdate: any
+  handleUpdate: (data: Ingredient[], section: string) => void;
 }
 
 
@@ -24,10 +24,12 @@ type IngredientsGroupProps = {
 function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
   const [ingredients, setIngredients] = useState<Ingredient[]>([defaultIngredient]);
 
+  /** Hanldles adding new ingredient to array of ingredients */
   function addIngredient() {
     setIngredients(i => [...i, defaultIngredient])
   }
 
+  /** Handles updates ingredient in array of ingredients */
   function updateIngredients(newIngredient: Ingredient, index: number) {
     setIngredients((prevIngredients) => {
       const newIngredients = [...prevIngredients];
@@ -36,6 +38,7 @@ function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
     })
   }
 
+  /** Updates parent state of ingredients when ingredient is added to state */
   useEffect(() => {
     handleUpdate(ingredients, "ingredients")
   }, [ingredients])
