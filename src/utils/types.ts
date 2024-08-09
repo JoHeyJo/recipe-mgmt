@@ -48,13 +48,10 @@ export type JWTPayload = {
   sub: string | React.Dispatch<React.SetStateAction<string>>;
   is_admin: boolean;
 }
-// BaseOption with a required id
-type BaseOption = {
-  id: number | null;
-};
 
-// Combine mapped type and intersection - this allows type safety for Option & Option[]
-export type Option = BaseOption & {
-  [key: string]: string | number | null;
-};
-// 
+export type Option = {
+  id: number | null;
+  liquid?: string;
+  amount? :string;
+  unit? :string;
+}

@@ -15,9 +15,9 @@ function classNames(...classes: any) {
 }
 
 type DropDownWithSearchProp = {
-  name: string;
+  name: string
   handleOptionChange: (state: string, option: Option) => void;
-  options: { id: string, [key: string]: string }[];
+  options: Option[];
   handleAddOption: (state: string, option: Option) => void;
 }
 
@@ -34,19 +34,22 @@ function DropDownWithSearch({ name, handleOptionChange, options, handleAddOption
   const filteredOptions =
     query === ''
       ? options
-      : options.reduce<any[]>((currentOptions, option) => {
-        const isOptionAvailable = option[name].toLowerCase().includes(query.toLowerCase());
+      : options.reduce<Option[]>((currentOptions, option) => {
+        console.log("option", option)
+        const isOptionAvailable = (option[name as keyof Option] as string).toLowerCase().includes(query.toLowerCase());
         if (isOptionAvailable) currentOptions.push(option);
 
         //renders "+ create" option if query value doesn't exist in the dropdown options
         if (currentOptions.length < 1 && !isOptionAvailable)
-          currentOptions.push({ id: undefined, [name]: '+ create...' });
+          currentOptions.push({ id: null, [name]: '+ create...' });
         return currentOptions;
       }, []);
 
 
+  /** Handles parent state update when changes are made to combobox */
   const handleChange = (option: any) => {
     if (option.id === undefined && option[name] === '+ create...') {
+      // new object needs to have query string injected as a value
       option[name] = query
       handleAddOption(name, option)
     }
@@ -93,7 +96,7 @@ function DropDownWithSearch({ name, handleOptionChange, options, handleAddOption
               >
                 {({ active, selected }) => (
                   <>
-                    <span className={classNames('block truncate', selected && 'font-semibold')}>{option[name]}</span>
+                    <span className={classNames('block truncate', selected && 'font-semibold')}>{option[name as keyof Option]}</span>
 
                     {selected && (
                       <span
