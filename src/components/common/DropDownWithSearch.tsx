@@ -3,6 +3,8 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
 import { getByDisplayValue } from '@testing-library/react';
 import { Option } from '../../utils/types';
+import API from '../../api';
+import { errorHandling } from './ErrorHandling';
 
 function uniqueID() {
   return Math.random();
@@ -47,14 +49,28 @@ function DropDownWithSearch({ name, handleOptionChange, options, handleAddOption
 
 
   /** Handles parent state update when changes are made to combobox */
-  const handleChange = (option: any) => {
+  async function handleChange(option: any) {
+    console.log("changing")
     if (option.id === null && option[name] === '+ create...') {
+      const id = await addOption(option);
       // new object needs to have query string injected as a value
-      option[name] = query
+      option[name] = query;
+      option.id = id;
       handleAddOption(name, option)
     }
     setSelected(option);
   };
+
+
+  /** Calls api to create new ingredient option */
+  async function addOption(option: Option) {
+    try {
+      const id = await API.postOption(option, name);
+      return id;
+    } catch (error: any) {
+      errorHandling("DropDownWithSearch - addOption",error)
+    }
+  }
 
   /** Adds ingredient to parent component when an ingredient is selected  */
   useEffect(() => {

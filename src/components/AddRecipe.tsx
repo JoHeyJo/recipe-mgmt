@@ -4,6 +4,8 @@ import { CheckIcon } from '@heroicons/react/24/outline'
 import IngredientsGroup from './common/IngredientsGroup';
 import { Ingredient, Recipe } from '../utils/types';
 import InputWithLabel  from './common/InputWithLabel'
+import API from '../api';
+import { errorHandling } from './common/ErrorHandling';
 
 type AddRecipe = {
   setShowing: any;
@@ -27,10 +29,20 @@ function AddRecipe({ setShowing, isOpen}: AddRecipe) {
 
   /** Updates recipe state */
   function updateRecipe(data: string | Ingredient[], section: string) {
-      console.log("upate", data, section)
       setRecipe(prevRecipe => (
         {...prevRecipe, [section]: data }
       ));
+  }
+
+  /** Calls api to send recipe data */
+  async function addRecipe(){
+    try {
+      const res = await API.postRecipe(recipe);
+      console.log(res)
+      
+    } catch (error: any) {
+      errorHandling("AddRecipe - addRecipe", error)
+    }
   }
 
   return (
@@ -83,6 +95,13 @@ function AddRecipe({ setShowing, isOpen}: AddRecipe) {
                     onClick={() => setShowing(false)}
                   >
                     Go back to dashboard
+                  </button>
+                  <button
+                    type="button"
+                    className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    // onClick={}
+                  >
+                    Submit
                   </button>
                 </div>
               </Dialog.Panel>

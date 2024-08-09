@@ -1,5 +1,5 @@
 import axios from "axios";
-import { UserLogin, UserSignUp } from "./utils/types";
+import { Recipe, UserLogin, UserSignUp, Option } from "./utils/types";
 
 const BASEURL = "http://127.0.0.1:5000"
 /** API class. 
@@ -34,6 +34,18 @@ class API {
   /**Authenticate user: returns token */
   static async login(data: UserLogin) {
     const res = await this.request("login", data, "POST");
+    return res;
+  }
+
+  /** Add recipe to database*/
+  static async postRecipe(data: Recipe){
+    const res = await this.request("add_recipe", data, "POST");
+    return res;
+  }
+
+  /** Add ingredient option to database */
+  static async postOption(data: Option, option: string){
+    const res = await this.request("add_option", data, "POST")
     return res;
   }
 }

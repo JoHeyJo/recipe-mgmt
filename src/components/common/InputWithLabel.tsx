@@ -1,4 +1,3 @@
-import { useState } from 'react';
 
 type InputWithLabel = {
   handleUpdate: (data: string, section: string) => void;
@@ -6,7 +5,6 @@ type InputWithLabel = {
 }
 
 function InputWithLabel({ handleUpdate, value }: InputWithLabel) {
-  const [title, setTitle] = useState<string>("");
 
   return (
     <div>
