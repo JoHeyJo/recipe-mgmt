@@ -15,7 +15,6 @@ type IngredientsGroupProps = {
   handleUpdate: (data: Ingredient[], section: string) => void;
 }
 
-
 /** Contains a list of ingredients 
  * 
  * 
@@ -24,7 +23,7 @@ type IngredientsGroupProps = {
 function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
   const [ingredients, setIngredients] = useState<Ingredient[]>([defaultIngredient]);
 
-  /** Hanldles adding new ingredient to array of ingredients */
+  /** Handles adding new ingredient to array of ingredients */
   function addIngredient() {
     setIngredients(i => [...i, defaultIngredient])
   }

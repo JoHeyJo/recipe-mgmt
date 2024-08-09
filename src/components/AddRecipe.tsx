@@ -27,6 +27,7 @@ function AddRecipe({ setShowing, isOpen}: AddRecipe) {
 
   /** Updates recipe state */
   function updateRecipe(data: string | Ingredient[], section: string) {
+      console.log("upate", data, section)
       setRecipe(prevRecipe => (
         {...prevRecipe, [section]: data }
       ));
@@ -73,7 +74,7 @@ function AddRecipe({ setShowing, isOpen}: AddRecipe) {
                       </p>
                     </div>
                   </div> */}
-                {/* <InputWithLabel handleUpdate={updateRecipe}/> */}
+                <InputWithLabel handleUpdate={updateRecipe} value={recipe.name}/>
                 <IngredientsGroup handleUpdate={updateRecipe} />
                 <div className="mt-5 sm:mt-6">
                   <button

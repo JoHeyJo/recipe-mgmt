@@ -1,8 +1,13 @@
+import { useState } from 'react';
+
 type InputWithLabel = {
-  handleUpdate: any;
+  handleUpdate: (data: string, section: string) => void;
+  value: string;
 }
 
-function InputWithLabel() {
+function InputWithLabel({ handleUpdate, value }: InputWithLabel) {
+  const [title, setTitle] = useState<string>("");
+
   return (
     <div>
       <label htmlFor="title" className="block text-sm font-medium leading-6 text-gray-900">
@@ -10,6 +15,8 @@ function InputWithLabel() {
       </label>
       <div className="mt-2">
         <input
+          onChange={(e)=>handleUpdate(e.target.value, "name")}
+          value={value}
           id="title"
           name="title"
           type="title"
