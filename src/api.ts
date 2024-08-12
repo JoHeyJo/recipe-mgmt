@@ -9,7 +9,7 @@ const BASEURL = "http://127.0.0.1:5000"
 class API {
   static token: string | null = null;
 
-  static async request(endpoint: string, data: object = {}, method = "GET") {
+  static async request(endpoint: string, data: object = {}, method: string = "GET") {
 
     const url = `${BASEURL}/${endpoint}`;
     const headers = {
@@ -17,6 +17,7 @@ class API {
     };
     const params = method === "GET" ? data : {}
     try {
+      console.log("url===", url, "method===", method, "data===", data, "params===", params, "headers===",headers)
       const res = (await axios({ url, method, data, params, headers })).data;
       return res
     } catch (error) {
@@ -27,6 +28,7 @@ class API {
 
   /** Register user: returns token */
   static async signUp(data: UserSignUp) {
+    console.log("data",data)
     const res = await this.request("signup", data, "POST");
     return res;
   }
@@ -45,7 +47,7 @@ class API {
 
   /** Add ingredient option to database */
   static async postOption(data: Option, option: string){
-    const res = await this.request("add_option", data, "POST")
+    const res = await this.request(`add_option/${option}`, data, "POST")
     return res;
   }
 }

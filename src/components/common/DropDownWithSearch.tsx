@@ -37,7 +37,6 @@ function DropDownWithSearch({ name, handleOptionChange, options, handleAddOption
     query === ''
       ? options
       : options.reduce<Option[]>((currentOptions, option) => {
-        console.log("option", option)
         const isOptionAvailable = (option[name as keyof Option] as string).toLowerCase().includes(query.toLowerCase());
         if (isOptionAvailable) currentOptions.push(option);
 
@@ -52,11 +51,12 @@ function DropDownWithSearch({ name, handleOptionChange, options, handleAddOption
   async function handleChange(option: any) {
     console.log("changing")
     if (option.id === null && option[name] === '+ create...') {
-      const id = await addOption(option);
-      // new object needs to have query string injected as a value
       option[name] = query;
-      option.id = id;
-      handleAddOption(name, option)
+      const id = await addOption(option);
+      console.log(id)
+      // new object needs to have query string injected as a value
+      // option.id = id;
+      // handleAddOption(name, option)
     }
     setSelected(option);
   };

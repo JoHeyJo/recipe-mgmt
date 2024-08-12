@@ -6,7 +6,7 @@ import { PlusIcon } from '@heroicons/react/20/solid'
 
 
 const defaultIngredient: Ingredient = {
-  liquid: { id: null, liquid: "" },
+  ingredient: { id: null, liquid: "" },
   amount: { id: null, amount: "" },
   unit: { id: null, unit: "" }
 }
@@ -52,7 +52,7 @@ function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
         <PlusIcon aria-hidden="true" className="h-5 w-5" />
       </button>
       {ingredients.map((ingredient, i) =>
-        <IngredientInputGroup key={i} index={i} ingredient={ingredient} handleUpdate={updateIngredients} />
+        <IngredientInputGroup key={i} index={i} ingredientTemplate={ingredient} handleUpdate={updateIngredients} />
       )}
     </>
   )

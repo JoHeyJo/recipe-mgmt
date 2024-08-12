@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import DropDownWithSearch from './DropDownWithSearch';
 import { Ingredient, Option } from '../../utils/types';
 
-const liquidsDB: Option[] = [{ id: 1, liquid: "tequila" }, { id: 2, liquid: "whiskey" }, { id: 3, liquid: "gin" }, { id: 4, liquid: "rum" }]
+const liquidsDB: Option[] = [{ id: 1, ingredient: "tequila" }, { id: 2, ingredient: "whiskey" }, { id: 3, ingredient: "gin" }, { id: 4, ingredient: "rum" }]
 const quantityAmountsDB: Option[] = [{ id: 3, amount: "1 / 3" }, { id: 4, amount: '4' }]
 const quantityUnitsDB: Option[] = [{ id: 5, unit: "oz" }]
 
 type IngredientInputGroup = {
   handleUpdate: (newIngredient: Ingredient, index: number) => void;
-  ingredient: Ingredient;
+  ingredientTemplate: Ingredient;
   index: number;
 }
 
@@ -16,8 +16,8 @@ type IngredientInputGroup = {
  * 
  * IngredientGroup -> IngredientInputGroup -> DropDownWithSearch
 */
-function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInputGroup) {
-  const [liquid, setLiquid] = useState<Option>({ id: null, liquid: "" });
+function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: IngredientInputGroup) {
+  const [ingredient, setLiquid] = useState<Option>({ id: null, ingredient: "" });
   const [amount, setAmount] = useState<Option>({ id: null, amount: "" });
   const [unit, setUnit] = useState<Option>({ id: null, unit: "" });
 
@@ -28,33 +28,33 @@ function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInp
 
   /** Calls parent callback to handleUpdate ingredient */
   function updateIngredientList() {
-    const updatedIngredient = { ...ingredient, liquid, amount, unit };
+    const updatedIngredient = { ...ingredientTemplate, ingredient, amount, unit };
     handleUpdate(updatedIngredient, index)
   }
 
   /** Handles changes made to option state */
   function updateState(state: string, option: Option) {
-    if (state === "liquid") setLiquid(option)
+    if (state === "ingredient") setLiquid(option)
     if (state === "unit") setUnit(option)
     if (state === "amount") setAmount(option)
   }
 
   /** Handles adding options to state */
   function addOptions(state: string, option: Option){
-    if (state === "liquid") setLiquids((options: Option[]) => [...options, option])
+    if (state === "ingredient") setLiquids((options: Option[]) => [...options, option])
     if (state === "unit") setQuantityUnits((options: Option[]) => [...options, option])
     if (state === "amount") setQuantityAmounts((options: Option[]) => [...options, option])
   }
 
   useEffect(() => {
     updateIngredientList()
-  }, [liquid, amount, unit])
+  }, [ingredient, amount, unit])
 
   return (
     <div className="flex rounded-md my-2 border-2">
       <DropDownWithSearch handleOptionChange={updateState} handleAddOption={addOptions} options={quantityAmount} name={"amount"} />
       <DropDownWithSearch handleOptionChange={updateState} handleAddOption={addOptions} options={quantityUnits} name={"unit"} />
-      <DropDownWithSearch handleOptionChange={updateState} handleAddOption={addOptions} options={liquids} name={"liquid"} />
+      <DropDownWithSearch handleOptionChange={updateState} handleAddOption={addOptions} options={liquids} name={"ingredient"} />
     </div>
   )
 }
