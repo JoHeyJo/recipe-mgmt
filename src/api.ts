@@ -17,7 +17,6 @@ class API {
     };
     const params = method === "GET" ? data : {}
     try {
-      console.log("url===", url, "method===", method, "data===", data, "params===", params, "headers===",headers)
       const res = (await axios({ url, method, data, params, headers })).data;
       return res
     } catch (error) {
@@ -41,13 +40,13 @@ class API {
 
   /** Add recipe to database*/
   static async postRecipe(data: Recipe){
-    const res = await this.request("add_recipe", data, "POST");
+    const res = await this.request("recipes", data, "POST");
     return res;
   }
 
   /** Add ingredient option to database */
   static async postOption(data: Option, option: string){
-    const res = await this.request(`add_option/${option}`, data, "POST")
+    const res = await this.request(`options/${option}`, data, "POST")
     return res;
   }
 }

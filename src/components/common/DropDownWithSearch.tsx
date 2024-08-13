@@ -51,12 +51,12 @@ function DropDownWithSearch({ name, handleOptionChange, options, handleAddOption
   async function handleChange(option: any) {
     console.log("changing")
     if (option.id === null && option[name] === '+ create...') {
+      // new object needs to have query string injected as a value
       option[name] = query;
       const id = await addOption(option);
       console.log(id)
-      // new object needs to have query string injected as a value
       // option.id = id;
-      // handleAddOption(name, option)
+      // handleAddOption(name, option)`
     }
     setSelected(option);
   };
