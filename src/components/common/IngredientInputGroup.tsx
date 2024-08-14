@@ -53,8 +53,12 @@ function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: Ingre
 
   useEffect(() => {
     async function fetchOptions(){
-      const res = await API.getOptions("ingredient")
-      setLiquids(res)
+      const amounts = await API.getOptions("amount")
+      const units = await API.getOptions("unit")
+      const ingredients = await API.getOptions("ingredient")
+      setLiquids(ingredients);
+      setQuantityUnits(units);
+      setQuantityAmounts(amounts);
     }
     fetchOptions()
   },[])
