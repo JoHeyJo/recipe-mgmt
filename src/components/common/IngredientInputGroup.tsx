@@ -3,10 +3,6 @@ import DropDownWithSearch from './DropDownWithSearch';
 import { Ingredient, Option } from '../../utils/types';
 import API from '../../api';
 
-// const liquidsDB: Option[] = [{ id: 1, ingredient: "tequila" }, { id: 2, ingredient: "whiskey" }, { id: 3, ingredient: "gin" }, { id: 4, ingredient: "rum" }]
-const quantityAmountsDB: Option[] = [{ id: 3, amount: "1 / 3" }, { id: 4, amount: '4' }]
-const quantityUnitsDB: Option[] = [{ id: 5, unit: "oz" }]
-
 type IngredientInputGroup = {
   handleUpdate: (newIngredient: Ingredient, index: number) => void;
   ingredientTemplate: Ingredient;
@@ -23,8 +19,8 @@ function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: Ingre
   const [unit, setUnit] = useState<Option>({ id: null, unit: "" });
 
   const [liquids, setLiquids] = useState<Option[]>([])
-  const [quantityAmount, setQuantityAmounts] = useState<Option[]>(quantityAmountsDB)
-  const [quantityUnits, setQuantityUnits] = useState<Option[]>(quantityUnitsDB)
+  const [quantityAmount, setQuantityAmounts] = useState<Option[]>([])
+  const [quantityUnits, setQuantityUnits] = useState<Option[]>([])
 
 
   /** Calls parent callback to handleUpdate ingredient */
@@ -47,10 +43,12 @@ function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: Ingre
     if (state === "amount") setQuantityAmounts((options: Option[]) => [...options, option])
   }
 
+  /** Maintains parent components state synced with latest selections */
   useEffect(() => {
     updateIngredientList()
   }, [ingredient, amount, unit])
 
+  /** Populate each instance of component with latest options */
   useEffect(() => {
     async function fetchOptions(){
       const amounts = await API.getOptions("amount")
