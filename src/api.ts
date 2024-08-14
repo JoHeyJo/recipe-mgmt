@@ -49,7 +49,17 @@ class API {
     const res = await this.request(`options/${option}`, data, "POST")
     return res;
   }
+  
+  /** Fetch options for ingredient components */
+  static async getOptions(component:string){
+    const res = await this.request(`/options/${component}`)
+    return res;
+  }
 }
+
+
+/** Fetch ingredient options  */
+// static async getOptions
 
 
 export default API;
