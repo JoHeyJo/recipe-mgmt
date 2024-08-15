@@ -1,5 +1,5 @@
 //components
-import InputWithLabel from '../components/InputWithLabel';
+import InputWithLabel from '../components/common/InputWithLabel';
 import Alert from '../components/common/Alert';
 //modules
 import { ChangeEvent, useState } from 'react';

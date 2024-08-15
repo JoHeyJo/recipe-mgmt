@@ -16,7 +16,7 @@ import './styles/dark.css';
 import { errorHandling } from "./components/common/ErrorHandling";
 import { extractAndSetUser } from "./utils/utilities";
 import useLocalStorage from "./hooks/useLocalStorage";
-import TopNav from "./components/TopNav";
+import TopNav from "./components/views/TopNav";
 
 const TOKEN_STORAGE_ID = "user-token"
 

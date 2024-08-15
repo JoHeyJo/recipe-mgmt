@@ -2,9 +2,9 @@ import { Fragment, useContext } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Eli from "../images/Eli.jpg"
-import { UserContext } from '../auth/UserContext';
+import { UserContext } from '../../auth/UserContext';
 import { useNavigate } from 'react-router-dom';
-import ToggleColorScheme from './ToggleColorScheme';
+import ToggleColorScheme from '../ToggleColorScheme';
 
 const navigation = [
   { name: 'Dashboard', href: '#', current: true },

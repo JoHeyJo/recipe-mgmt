@@ -1,28 +1,32 @@
+import { ChangeEvent } from "react";
 
 type InputWithLabel = {
-  handleUpdate: (data: string, section: string) => void;
+  type: string;
+  name: string
+  id: string;
+  className: string;
+  handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
   value: string;
+  required: boolean;
 }
 
-function InputWithLabel({ handleUpdate, value }: InputWithLabel) {
-
+/** Handles form input and label  
+ * 
+ * [Login, SignUp] -> InputWithLabel
+*/
+function InputWithLabel({ type, name, id, className, handleChange, value, required }: InputWithLabel) {
   return (
-    <div>
-      <label htmlFor="title" className="block text-sm font-medium leading-6 text-gray-900">
-        Recipe Name
-      </label>
-      <div className="mt-2">
-        <input
-          onChange={(e)=>handleUpdate(e.target.value, "name")}
-          value={value}
-          id="title"
-          name="title"
-          type="title"
-          placeholder=" Awesome recipe"
-          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-        />
-      </div>
-    </div>
+    <>
+      <label htmlFor={id} className={`${className}-label`}>{name}</label>
+      <input
+        type={type}
+        id={id}
+        className={`${className}-input`}
+        onChange={handleChange}
+        value={value}
+        required={required}
+      />
+    </>
   )
 }
 

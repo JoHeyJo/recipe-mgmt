@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 //components
 import { PillButton } from '../components/common/PillButton';
 import { errorHandling } from '../components/common/ErrorHandling';
-import InputWithLabel from '../components/InputWithLabel'
+import InputWithLabel from '../components/common/InputWithLabel'
 import Alert from '../components/common/Alert';
 //styles
 import '../styles/Login.css';
