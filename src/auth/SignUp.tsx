@@ -1,12 +1,12 @@
 //components
 import InputWithLabel from '../components/common/InputWithLabel';
-import Alert from '../components/common/Alert';
+import Alert from '../components/views/ui/common/Alert';
 //modules
 import { ChangeEvent, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 //styles
 import '../styles/SignUp.css'
-import { PillButton } from '../components/common/PillButton';
+import { PillButton } from '../components/views/ui/common/PillButton';
 import { SignUp as SignUpProps, UserSignUp } from '../utils/types';
 import { errorHandling } from '../components/common/ErrorHandling';
 

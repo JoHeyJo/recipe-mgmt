@@ -1,9 +1,9 @@
 
 import { Routes, Route } from "react-router-dom";
-import AuthTabs from "../components/AuthTabs";
-import NotFound from "../components/NotFound";
+import AuthTabs from "../components/views/ui/AuthTabs";
+import NotFound from "../views/NotFound";
 import { AuthProps } from "../utils/types";
-import Home from "../components/Home";
+import Home from "../views/Home";
 import { UserContext } from "../auth/UserContext";
 import { useContext } from "react";
 import MainContainer from "../components/MainContainer";
