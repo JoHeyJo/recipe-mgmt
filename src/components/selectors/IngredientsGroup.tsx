@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import IngredientInputGroup from './IngredientInputGroup';
 import { Ingredient } from '../../utils/types';
-import { PillButton } from '../views/ui/common/PillButton';
+import { PillButton } from '../ui/PillButton';
 import { PlusIcon } from '@heroicons/react/20/solid'
 
 

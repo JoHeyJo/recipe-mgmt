@@ -1,8 +1,8 @@
-import "../styles/RecipeView.css"
+import "../../styles/RecipeView.css"
 import { useState } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import AddRecipe from "../../requests/AddRecipe"
+import AddRecipe from "../requests/AddRecipe"
 
 function RecipeView() {
   const [open, setOpen] = useState(true)

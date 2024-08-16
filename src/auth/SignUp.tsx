@@ -1,14 +1,14 @@
 //components
-import InputWithLabel from '../components/common/InputWithLabel';
-import Alert from '../components/views/ui/common/Alert';
+import InputWithLabel from '../components/ui/InputWithLabelForm';
+import Alert from '../components/ui/Alert';
 //modules
 import { ChangeEvent, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 //styles
 import '../styles/SignUp.css'
-import { PillButton } from '../components/views/ui/common/PillButton';
+import { PillButton } from '../components/ui/PillButton';
 import { SignUp as SignUpProps, UserSignUp } from '../utils/types';
-import { errorHandling } from '../components/common/ErrorHandling';
+import { errorHandling } from '../utils/ErrorHandling';
 
 const defaultNew: UserSignUp = {
   firstName: "",

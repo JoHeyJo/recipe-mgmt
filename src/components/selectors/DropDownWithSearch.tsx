@@ -4,7 +4,7 @@ import { Combobox } from '@headlessui/react'
 import { getByDisplayValue } from '@testing-library/react';
 import { Option } from '../../utils/types';
 import API from '../../api';
-import { errorHandling } from './ErrorHandling';
+import { errorHandling } from '../../utils/ErrorHandling';
 
 function uniqueID() {
   return Math.random();

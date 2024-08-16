@@ -1,4 +1,4 @@
-import "../styles/Recipes.css";
+import "../../styles/Recipes.css";
 
 const items = [
   { id: 1, recipe: "item 1" },

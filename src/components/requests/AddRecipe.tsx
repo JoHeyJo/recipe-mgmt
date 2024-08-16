@@ -1,12 +1,12 @@
 import { Fragment, useState } from 'react'
 import { Combobox, Dialog, Transition } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/24/outline'
-import IngredientsGroup from '../common/IngredientsGroup';
+import IngredientsGroup from '../selectors/IngredientsGroup';
 import { Ingredient, Recipe } from '../../utils/types';
-import InputWithLabel from '../common/InputWithLabel'
+import InputWithLabel from '../ui/InputWithLabel'
 import API from '../../api';
-import { errorHandling } from '../common/ErrorHandling';
-import DropDownWithSearch from '../common/DropDownWithSearch';
+import { errorHandling } from '../../utils/ErrorHandling';
+import DropDownWithSearch from '../selectors/DropDownWithSearch';
 
 type AddRecipe = {
   setShowing: any;

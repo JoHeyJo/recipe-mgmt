@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import { Login, UserLogin } from '../utils/types';
 import { useNavigate } from 'react-router-dom';
 //components
-import { PillButton } from '../components/views/ui/common/PillButton';
-import { errorHandling } from '../components/common/ErrorHandling';
-import InputWithLabel from '../components/common/InputWithLabel'
-import Alert from '../components/views/ui/common/Alert';
+import { PillButton } from '../components/ui/PillButton';
+import { errorHandling } from '../utils/ErrorHandling';
+import InputWithLabel from '../components/ui/InputWithLabelForm'
+import Alert from '../components/ui/Alert';
 //styles
 import '../styles/Login.css';
 

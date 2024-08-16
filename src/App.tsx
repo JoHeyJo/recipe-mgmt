@@ -13,10 +13,10 @@ import './styles/App.css'
 import './styles/theme.css';
 import './styles/light.css';
 import './styles/dark.css';
-import { errorHandling } from "./components/common/ErrorHandling";
+import { errorHandling } from "./utils/ErrorHandling";
 import { extractAndSetUser } from "./utils/utilities";
 import useLocalStorage from "./hooks/useLocalStorage";
-import TopNav from "./components/views/TopNav";
+import TopNav from "./components/layout/TopNav";
 
 const TOKEN_STORAGE_ID = "user-token"
 

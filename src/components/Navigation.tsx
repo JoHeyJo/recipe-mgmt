@@ -1,4 +1,4 @@
-import { PillButton } from "./views/ui/common/PillButton";
+import { PillButton } from "./ui/PillButton";
 
 type Navigation = {
   logout: () => void;

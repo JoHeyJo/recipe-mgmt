@@ -1,12 +1,12 @@
 
 import { Routes, Route } from "react-router-dom";
-import AuthTabs from "../components/views/ui/AuthTabs";
-import NotFound from "../views/NotFound";
+import AuthTabs from "../components/ui/AuthTabs";
+import NotFound from "../components/pages/NotFound";
 import { AuthProps } from "../utils/types";
-import Home from "../views/Home";
+import Home from "../components/pages/Home";
 import { UserContext } from "../auth/UserContext";
 import { useContext } from "react";
-import MainContainer from "../components/MainContainer";
+import MainContainer from "../components/pages/MainContainer";
 
 function RoutesList({ signUp, login }: AuthProps) {
   const { user } = useContext(UserContext);

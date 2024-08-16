@@ -1,5 +1,5 @@
-import RecipeView from "./RecipeView";
-import Recipes from "./Recipes"
+import RecipeView from "../views/RecipeView";
+import Recipes from "../views/Recipes"
 // import "../styles/theme.css"
 
 /** Renders the main container housing list of recipes and individual recipe
