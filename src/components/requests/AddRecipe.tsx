@@ -8,6 +8,7 @@ import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
 import DropDownWithSearch from '../selectors/DropDownWithSearch';
 import { useMediaQuery } from 'react-responsive';
+import Textarea from '../ui/InstructionsArea';
 
 
 type AddRecipe = {
@@ -76,8 +77,7 @@ function AddRecipe({ setShowing, isOpen }: AddRecipe) {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              {/* <Dialog.Panel className="relative transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6"> */}
-              <Dialog.Panel className="relative transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6">
+              <Dialog.Panel className="relative h-full transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6">
               {/* On smaller displays revert to original settings  */}
               {/* <Dialog.Panel className="relative transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm md:max-w-sm lg:max-w-4xl sm:p-6"> */}
                 {/* Comment out and Image - Title - and Text */}
@@ -94,13 +94,13 @@ function AddRecipe({ setShowing, isOpen }: AddRecipe) {
                       </p>
                     </div>
                   </div> */}
-                <section id='AddRecipe-book' className='flex'>
+                <section id='AddRecipe-book' className='flex h-full'>
                   <section id='AddRecipe-left-page' className="flex-1 mr-4">
                     <InputWithLabel handleUpdate={updateRecipe} value={recipe.name} />
                     <IngredientsGroup handleUpdate={updateRecipe} />
                   </section>
-                  <section id='AddRecipe-right-page' className="flex-1 ml-4">
-                    <DropDownWithSearch name={'Ingredients'} handleOptionChange={() => { }} options={[]} handleAddOption={() => { }} />
+                  <section id='AddRecipe-right-page' className="flex-1 ml-4 ">
+                    <Textarea />
                   </section>
                 </section>
                 <div className="mt-5 sm:mt-6">
