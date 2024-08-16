@@ -7,6 +7,8 @@ import InputWithLabel from '../ui/InputWithLabel'
 import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
 import DropDownWithSearch from '../selectors/DropDownWithSearch';
+import { useMediaQuery } from 'react-responsive';
+
 
 type AddRecipe = {
   setShowing: any;
@@ -27,6 +29,8 @@ const recipeTemplate: Recipe = {
 
 function AddRecipe({ setShowing, isOpen }: AddRecipe) {
   const [recipe, setRecipe] = useState<Recipe>(recipeTemplate);
+
+  const isLargeScreen = useMediaQuery({ query: '(min-width: 1024px)' }); // lg breakpoint in Tailwind
 
   /** Updates recipe state */
   function updateRecipe(data: string | Ingredient[], section: string) {
@@ -74,6 +78,8 @@ function AddRecipe({ setShowing, isOpen }: AddRecipe) {
             >
               {/* <Dialog.Panel className="relative transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6"> */}
               <Dialog.Panel className="relative transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6">
+              {/* On smaller displays revert to original settings  */}
+              {/* <Dialog.Panel className="relative transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm md:max-w-sm lg:max-w-4xl sm:p-6"> */}
                 {/* Comment out and Image - Title - and Text */}
                 {/* <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
                     <CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
