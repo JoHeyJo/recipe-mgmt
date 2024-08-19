@@ -1,6 +1,6 @@
 import { ChangeEvent } from "react";
 
-type InputWithLabel = {
+type InputWithLabelForm = {
   type: string;
   name: string
   id: string;
@@ -12,9 +12,9 @@ type InputWithLabel = {
 
 /** Handles form input and label  
  * 
- * [Login, SignUp] -> InputWithLabel
+ * [Login, SignUp] -> InputWithLabelForm
 */
-function InputWithLabel({ type, name, id, className, handleChange, value, required }: InputWithLabel) {
+function InputWithLabelForm({ type, name, id, className, handleChange, value, required }: InputWithLabelForm) {
   return (
     <>
       <label htmlFor={id} className={`${className}-label`}>{name}</label>
@@ -30,4 +30,4 @@ function InputWithLabel({ type, name, id, className, handleChange, value, requir
   )
 }
 
-export default InputWithLabel;
+export default InputWithLabelForm;

@@ -1,7 +1,7 @@
 import { Option } from '../../utils/types';
 import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
-import DropdownWithSearch from '../ui/ComboboxWithSearch';
+import IngredientDropdownWithSearch from '../ui/IngredientComboboxWithSearch';
 
 function uniqueID() {
   return Math.random();
@@ -25,7 +25,7 @@ type OptionDropdown = {
  * Option input field with capability to create new options.
  * Makes API request to create new ingredient
  * 
- * IngredientInputGroup -> OptionDropdown -> DropdownWithSearch
+ * IngredientInputGroup -> OptionDropdown -> IngredientDropdownWithSearch
  */
 
 function OptionDropdown({ name, handleOptionChange, options, handleAddOption }: OptionDropdown) {
@@ -41,11 +41,11 @@ function OptionDropdown({ name, handleOptionChange, options, handleAddOption }: 
   }
 
   return (
-    <DropdownWithSearch
+    <IngredientDropdownWithSearch
       name={name}
       handleOptionChange={handleOptionChange}
       options={options}
-      handleAddOption={handleAddOption}
+      handleAdd={handleAddOption}
       postRequest={addOption} />
   )
 }

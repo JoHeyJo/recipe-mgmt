@@ -1,5 +1,5 @@
 //components
-import InputWithLabel from '../components/ui/InputWithLabelForm';
+import InputWithLabelForm from '../components/ui/InputWithLabelForm';
 import Alert from '../components/ui/Alert';
 //modules
 import { ChangeEvent, useState } from 'react';
@@ -56,7 +56,7 @@ function SignUp({ signUp }: SignUpProps) {
       <div className="SignUp-container">
         <form onSubmit={handleSubmit} className="SignUp">
           <div className="form-group">
-            <InputWithLabel
+            <InputWithLabelForm
               name={"First Name:"}
               id={"firstName"}
               type={"text"}
@@ -66,7 +66,7 @@ function SignUp({ signUp }: SignUpProps) {
               required={true} />
           </div>
           <div className="form-group">
-            <InputWithLabel
+            <InputWithLabelForm
               name={"Last Name:"}
               id={'lastName'}
               type={'text'}
@@ -76,7 +76,7 @@ function SignUp({ signUp }: SignUpProps) {
               required />
           </div>
           <div className='form-group'>
-            <InputWithLabel
+            <InputWithLabelForm
               id={'email'}
               name={'Email:'}
               className={'SignUp-email'}
@@ -86,7 +86,7 @@ function SignUp({ signUp }: SignUpProps) {
               required />
           </div>
           <div className='form-group'>
-            <InputWithLabel
+            <InputWithLabelForm
               id={'password'}
               name={'Password:'}
               className={'SignUp-pw'}
@@ -96,7 +96,7 @@ function SignUp({ signUp }: SignUpProps) {
               required />
           </div>
           <div className='form-group'>        
-            <InputWithLabel
+            <InputWithLabelForm
               id={'userName'}
               name={'User name:'}
               type={'text'}

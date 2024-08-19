@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 //components
 import { PillButton } from '../components/ui/PillButton';
 import { errorHandling } from '../utils/ErrorHandling';
-import InputWithLabel from '../components/ui/InputWithLabelForm'
+import InputWithLabelForm from '../components/ui/InputWithLabelForm'
 import Alert from '../components/ui/Alert';
 //styles
 import '../styles/Login.css';
@@ -58,7 +58,7 @@ function LoginForm({ login }: Login) {
     <div className="LoginForm-container">
       <form onSubmit={handleSubmit} className="LoginForm">
         <div className="form-group">
-          <InputWithLabel
+          <InputWithLabelForm
             name={"Username:"}
             id={"userName"}
             type={"text"}
@@ -68,7 +68,7 @@ function LoginForm({ login }: Login) {
             required={true} />
         </div>
         <div className="form-group">
-          <InputWithLabel
+          <InputWithLabelForm
             name={"Password:"}
             id={"password"}
             type={"password"}

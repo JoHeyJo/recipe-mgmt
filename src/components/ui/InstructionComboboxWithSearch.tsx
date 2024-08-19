@@ -1,7 +1,7 @@
 import { useState, useEffect, ChangeEvent } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
-import { Option } from '../../utils/types';
+import { Option, Instruction } from '../../utils/types';
 
 function uniqueID() {
   return Math.random();
@@ -13,26 +13,26 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
 
-type ComboboxWithSearch = {
+type InstructionComboboxWithSearch = {
   name: string
   handleOptionChange: (state: string, option: Option) => void;
   options: Option[];
-  handleAddOption: (state: string, option: Option) => void;
+  handleAdd: (instruction: Instruction, index: number) => void
   postRequest: (option: Option) => void;
 }
 
-/** ComboboxWithSearch - ring is removed 
+/** InstructionComboboxWithSearch - ring is removed 
  * 
  * Renders Input field and dropdown menu. Searches and filters existing options
  * 
- * DropdownWithSearch -> ComboboxWithSearch
+ * OptionWithSearch -> InstructionComboboxWithSearch
  */
 
-function ComboboxWithSearch({ name, handleOptionChange, options, handleAddOption, postRequest }: ComboboxWithSearch) {
+function InstructionComboboxWithSearch({ name, handleOptionChange, options, handleAdd, postRequest }: InstructionComboboxWithSearch) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Option | null>(null)
 
-  // /** Creates a list of filtered options based on search query */
+  /** Creates a list of filtered options based on search query */
   const filteredOptions =
     query === ''
       ? options
@@ -47,19 +47,19 @@ function ComboboxWithSearch({ name, handleOptionChange, options, handleAddOption
       }, []);
 
 
-  // /** Handles parent state update when changes are made to combobox */
+  /** Handles parent state update when changes are made to combobox */
   async function handleChange(option: any) {
     if (option.id === null && option[name] === '+ create...') {
       // new object needs to have query string injected as a value
       option[name] = query;
-      option = await postRequest(option);
-      handleAddOption(name, option)
+      option = postRequest(option);
+      handleAdd(name, option)
     }
     setSelected(option);
   };
 
 
-  // /** Adds ingredient to parent component when an ingredient is selected  */
+  /** Adds ingredient to parent component when an ingredient is selected  */
   useEffect(() => {
     selected && handleOptionChange(name, selected);
   }, [selected, options]);
@@ -122,4 +122,4 @@ function ComboboxWithSearch({ name, handleOptionChange, options, handleAddOption
   )
 }
 
-export default ComboboxWithSearch;
+export default InstructionComboboxWithSearch;
