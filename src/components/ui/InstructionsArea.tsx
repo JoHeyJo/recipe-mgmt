@@ -1,5 +1,5 @@
 import { useState } from "react";
-import DropDownWithSearch from "../selectors/IngredientSearch"
+import DropDownWithSearch from "../selectors/IngredientDropdown"
 import { Instruction, Instructions } from "../../utils/types";
 
 

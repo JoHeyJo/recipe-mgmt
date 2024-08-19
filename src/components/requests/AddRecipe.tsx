@@ -6,7 +6,7 @@ import { Ingredient, Recipe } from '../../utils/types';
 import InputWithLabel from '../ui/InputWithLabel'
 import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
-import DropDownWithSearch from '../selectors/IngredientSearch';
+import DropDownWithSearch from '../selectors/IngredientDropdown';
 import { useMediaQuery } from 'react-responsive';
 import Textarea from '../ui/InstructionsArea';
 

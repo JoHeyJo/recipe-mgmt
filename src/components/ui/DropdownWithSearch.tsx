@@ -16,22 +16,22 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
 
-type DropDownWithSearch = {
+type DropdownWithSearch = {
   name: string
   handleOptionChange: (state: string, option: Option) => void;
   options: Option[];
   handleAddOption: (state: string, option: Option) => void;
-  postRequest: () => void;
+  postRequest: (option: Option) => void;
 }
 
-/** DropDownWithSearch - ring is removed 
+/** DropdownWithSearch // ComboboxWithSearch- ring is removed 
  * 
- * Searches and filters existing options
+ * Renders Input field and dropdown menu. Searches and filters existing options
  * 
- * IngredientSearch -> DropDownWithSearch
+ * IngredientSearch -> DropdownWithSearch
  */
 
-function DropDownWithSearch({ name, handleOptionChange, options, handleAddOption, postRequest }: DropDownWithSearch) {
+function DropdownWithSearch({ name, handleOptionChange, options, handleAddOption, postRequest }: DropdownWithSearch) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Option | null>(null)
 
@@ -55,7 +55,7 @@ function DropDownWithSearch({ name, handleOptionChange, options, handleAddOption
     if (option.id === null && option[name] === '+ create...') {
       // new object needs to have query string injected as a value
       option[name] = query;
-      option = await postRequest(option); 
+      option = await postRequest(option);
       handleAddOption(name, option)
     }
     setSelected(option);
@@ -63,9 +63,9 @@ function DropDownWithSearch({ name, handleOptionChange, options, handleAddOption
 
 
   // /** Adds ingredient to parent component when an ingredient is selected  */
-  // useEffect(() => {
-  //   selected && handleOptionChange(name, selected);
-  // }, [selected, options]);
+  useEffect(() => {
+    selected && handleOptionChange(name, selected);
+  }, [selected, options]);
 
   return (
     <Combobox as="div" value={selected}
@@ -125,4 +125,4 @@ function DropDownWithSearch({ name, handleOptionChange, options, handleAddOption
   )
 }
 
-export default DropDownWithSearch;
+export default DropdownWithSearch;
