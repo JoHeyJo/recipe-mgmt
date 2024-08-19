@@ -1,16 +1,30 @@
+import { useState } from "react";
 import DropDownWithSearch from "../selectors/DropDownWithSearch"
+import { Instruction, Instructions } from "../../utils/types";
+
+
+
+const defaultInstruction = [
+  { id: undefined, instruction: "Add ingredients..." },
+  { id: undefined, instruction: "Add ice..." },
+  { id: undefined, instruction: "shake..." }
+]
+
+const InstructionsTemplate: Instructions = []
 
 export default function InstructionsArea() {
+  const [instructions, setInstructions] = useState<Instruction[]>(defaultInstruction);
+
+  /** Add additional instruction to state */
+  function addInstruction(instruction: Instruction, index: number) {
+    setInstructions((i: Instruction[]) => [...i, i[index] = instruction])
+  }
+
   return (
-    // <div>
-    //   <label htmlFor="comment" className="block text-sm font-medium leading-6 text-gray-900">
-    //     Add your comment
-    //   </label>
-      <div className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
-        <DropDownWithSearch name={'Ingredients'} handleOptionChange={() => { }} options={[]} handleAddOption={() => { }} />
-        <DropDownWithSearch name={'Ingredients'} handleOptionChange={() => { }} options={[]} handleAddOption={() => { }} />
-        <DropDownWithSearch name={'Ingredients'} handleOptionChange={() => { }} options={[]} handleAddOption={() => { }} />
-      </div>
-    // </div>
+    <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
+      {instructions.map((i, index) =>
+        <DropDownWithSearch key={index} name={i.instruction} handleOptionChange={() => { }} options={[]} handleAddOption={() => { }} />
+      )}
+    </div>
   )
 }

@@ -55,3 +55,7 @@ export type Option = {
   amount?: string;
   unit?: string;
 }
+
+export type Instruction = { id?: number, instruction: string }
+
+export type Instructions = Instruction[];
