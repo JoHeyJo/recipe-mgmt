@@ -16,19 +16,22 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
 
-type DropDownWithSearch = {
+type IngredientSearch = {
   name: string
   handleOptionChange: (state: string, option: Option) => void;
   options: Option[];
   handleAddOption: (state: string, option: Option) => void;
 }
 
-/** Combobox component - ring is removed 
+/** IngredientSearch
  * 
- * IngredientInputGroup -> DropDownWithSearch
+ * Ingredient input with capability to create new ingredients.
+ * Makes API request to create new ingredient
+ * 
+ * IngredientInputGroup -> IngredientSearch
  */
 
-function DropDownWithSearch({ name, handleOptionChange, options, handleAddOption }: DropDownWithSearch) {
+function IngredientSearch({ name, handleOptionChange, options, handleAddOption }: IngredientSearch) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Option | null>(null)
 
@@ -65,7 +68,7 @@ function DropDownWithSearch({ name, handleOptionChange, options, handleAddOption
       const id = await API.postOption(option, name);
       return id;
     } catch (error: any) {
-      errorHandling("DropDownWithSearch - addOption",error)
+      errorHandling("IngredientSearch - addOption",error)
     }
   }
 
@@ -132,4 +135,4 @@ function DropDownWithSearch({ name, handleOptionChange, options, handleAddOption
   )
 }
 
-export default DropDownWithSearch;
+export default IngredientSearch;

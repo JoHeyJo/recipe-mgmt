@@ -21,18 +21,21 @@ type DropDownWithSearch = {
   handleOptionChange: (state: string, option: Option) => void;
   options: Option[];
   handleAddOption: (state: string, option: Option) => void;
+  postRequest: () => void;
 }
 
-/** Combobox component - ring is removed 
+/** DropDownWithSearch - ring is removed 
  * 
- * IngredientInputGroup -> DropDownWithSearch
+ * Searches and filters existing options
+ * 
+ * IngredientSearch -> DropDownWithSearch
  */
 
-function DropDownWithSearch({ name, handleOptionChange, options, handleAddOption }: DropDownWithSearch) {
+function DropDownWithSearch({ name, handleOptionChange, options, handleAddOption, postRequest }: DropDownWithSearch) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Option | null>(null)
 
-  /** Creates a list of filtered options based on search query */
+  // /** Creates a list of filtered options based on search query */
   const filteredOptions =
     query === ''
       ? options
@@ -47,22 +50,22 @@ function DropDownWithSearch({ name, handleOptionChange, options, handleAddOption
       }, []);
 
 
-  /** Handles parent state update when changes are made to combobox */
+  // /** Handles parent state update when changes are made to combobox */
   async function handleChange(option: any) {
     if (option.id === null && option[name] === '+ create...') {
       // new object needs to have query string injected as a value
       option[name] = query;
-      option = await addOption(option);
+      option = await postRequest(option); 
       handleAddOption(name, option)
     }
     setSelected(option);
   };
 
 
-  /** Adds ingredient to parent component when an ingredient is selected  */
-  useEffect(() => {
-    selected && handleOptionChange(name, selected);
-  }, [selected, options]);
+  // /** Adds ingredient to parent component when an ingredient is selected  */
+  // useEffect(() => {
+  //   selected && handleOptionChange(name, selected);
+  // }, [selected, options]);
 
   return (
     <Combobox as="div" value={selected}
