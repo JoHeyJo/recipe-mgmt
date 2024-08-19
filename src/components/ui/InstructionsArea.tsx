@@ -1,5 +1,5 @@
 import { useState } from "react";
-import DropDownWithSearch from "../selectors/IngredientDropdown"
+import ComboboxWithSearch from "../selectors/OptionDropdown"
 import { Instruction, Instructions } from "../../utils/types";
 
 
@@ -23,7 +23,12 @@ export default function InstructionsArea() {
   return (
     <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
       {instructions.map((i, index) =>
-        <DropDownWithSearch key={index} name={i.instruction} handleOptionChange={() => { }} options={[]} handleAddOption={() => { }} />
+        <ComboboxWithSearch 
+          key={index} 
+          name={i.instruction} 
+          handleOptionChange={() => { }} 
+          options={[]} 
+          handleAddOption={() => { }} />
       )}
     </div>
   )

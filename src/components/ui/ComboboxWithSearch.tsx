@@ -1,10 +1,7 @@
 import { useState, useEffect, ChangeEvent } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
-import { getByDisplayValue } from '@testing-library/react';
 import { Option } from '../../utils/types';
-import API from '../../api';
-import { errorHandling } from '../../utils/ErrorHandling';
 
 function uniqueID() {
   return Math.random();
@@ -16,7 +13,7 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
 
-type DropdownWithSearch = {
+type ComboboxWithSearch = {
   name: string
   handleOptionChange: (state: string, option: Option) => void;
   options: Option[];
@@ -24,14 +21,14 @@ type DropdownWithSearch = {
   postRequest: (option: Option) => void;
 }
 
-/** DropdownWithSearch // ComboboxWithSearch- ring is removed 
+/** ComboboxWithSearch - ring is removed 
  * 
  * Renders Input field and dropdown menu. Searches and filters existing options
  * 
- * IngredientSearch -> DropdownWithSearch
+ * DropdownWithSearch -> ComboboxWithSearch
  */
 
-function DropdownWithSearch({ name, handleOptionChange, options, handleAddOption, postRequest }: DropdownWithSearch) {
+function ComboboxWithSearch({ name, handleOptionChange, options, handleAddOption, postRequest }: ComboboxWithSearch) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Option | null>(null)
 
@@ -125,4 +122,4 @@ function DropdownWithSearch({ name, handleOptionChange, options, handleAddOption
   )
 }
 
-export default DropdownWithSearch;
+export default ComboboxWithSearch;

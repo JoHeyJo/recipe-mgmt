@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import IngredientDropDown from './IngredientDropdown';
+import OptionDropDown from './OptionDropdown';
 import { Ingredient, Option } from '../../utils/types';
 import API from '../../api';
 
@@ -11,7 +11,7 @@ type IngredientInputGroup = {
 
 /** Renders Combobox and processes data for new Ingredient
  * 
- * IngredientGroup -> IngredientInputGroup -> IngredientDropDown
+ * IngredientGroup -> IngredientInputGroup -> OptionDropDown
 */
 function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: IngredientInputGroup) {
   const [ingredient, setLiquid] = useState<Option>({ id: null, ingredient: "" });
@@ -63,9 +63,9 @@ function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: Ingre
 
   return (
     <div className="flex rounded-md my-2 border-2">
-      <IngredientDropDown handleOptionChange={updateState} handleAddOption={addOptions} options={quantityAmount} name={"amount"} />
-      <IngredientDropDown handleOptionChange={updateState} handleAddOption={addOptions} options={quantityUnits} name={"unit"} />
-      <IngredientDropDown handleOptionChange={updateState} handleAddOption={addOptions} options={liquids} name={"ingredient"} />
+      <OptionDropDown handleOptionChange={updateState} handleAddOption={addOptions} options={quantityAmount} name={"amount"} />
+      <OptionDropDown handleOptionChange={updateState} handleAddOption={addOptions} options={quantityUnits} name={"unit"} />
+      <OptionDropDown handleOptionChange={updateState} handleAddOption={addOptions} options={liquids} name={"ingredient"} />
     </div>
   )
 }

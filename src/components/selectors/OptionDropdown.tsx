@@ -1,11 +1,7 @@
-import { useState, useEffect, ChangeEvent } from 'react'
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-import { Combobox } from '@headlessui/react'
-import { getByDisplayValue } from '@testing-library/react';
 import { Option } from '../../utils/types';
 import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
-import DropdownWithSearch from '../ui/DropdownWithSearch';
+import DropdownWithSearch from '../ui/ComboboxWithSearch';
 
 function uniqueID() {
   return Math.random();
@@ -17,22 +13,22 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
 
-type IngredientDropDown = {
+type OptionDropdown = {
   name: string
   handleOptionChange: (state: string, option: Option) => void;
   options: Option[];
   handleAddOption: (state: string, option: Option) => void;
 }
 
-/** IngredientDropDown 
+/** OptionDropdown 
  * 
- * Ingredient input field with capability to create new ingredients.
+ * Option input field with capability to create new options.
  * Makes API request to create new ingredient
  * 
- * IngredientInputGroup -> IngredientDropDown
+ * IngredientInputGroup -> OptionDropdown -> DropdownWithSearch
  */
 
-function IngredientDropDown({ name, handleOptionChange, options, handleAddOption }: IngredientDropDown) {
+function OptionDropdown({ name, handleOptionChange, options, handleAddOption }: OptionDropdown) {
 
   /** Calls api to create new ingredient option */
   async function addOption(option: Option) {
@@ -40,7 +36,7 @@ function IngredientDropDown({ name, handleOptionChange, options, handleAddOption
       const id = await API.postOption(option, name);
       return id;
     } catch (error: any) {
-      errorHandling("IngredientDropDown - addOption", error)
+      errorHandling("OptionDropdown - addOption", error)
     }
   }
 
@@ -54,4 +50,4 @@ function IngredientDropDown({ name, handleOptionChange, options, handleAddOption
   )
 }
 
-export default IngredientDropDown;
+export default OptionDropdown;
