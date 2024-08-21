@@ -31,7 +31,7 @@ type InstructionComboboxWithSearch = {
 
 function InstructionComboboxWithSearch({ index, name, handleOptionChange, options, handleAdd, postRequest }: InstructionComboboxWithSearch) {
   const [query, setQuery] = useState<string>('')
-  const [selected, setSelected] = useState<Option | null>(null)
+  const [selected, setSelected] = useState<Option>()
 
   /** Creates a list of filtered options based on search query */
   const filteredOptions =
@@ -59,6 +59,11 @@ function InstructionComboboxWithSearch({ index, name, handleOptionChange, option
     setSelected(option);
   };
 
+  /** Consolidates actions taken when dropdown value is selected  */
+  function onValueSelect(value: Option) {
+    setQuery('')
+    handleChange(value)
+  }
 
   /** Adds ingredient to parent component when an ingredient is selected  */
   useEffect(() => {
@@ -68,8 +73,7 @@ function InstructionComboboxWithSearch({ index, name, handleOptionChange, option
   return (
     <Combobox as="div" value={selected}
       onChange={(value) => {
-        setQuery('')
-        handleChange(value)
+        onValueSelect(value)
       }}>
       {/* <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">Assigned to</Combobox.Label> */}
       <div className="relative">

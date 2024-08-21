@@ -1,4 +1,4 @@
-import React from 'react'
+import { ChangeEvent } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
 
@@ -6,13 +6,20 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
 
-function ComboboxDropdown({ handleQuery, handleChange, filteredOptions }) {
-  
+type ComboBoxDropDown = {
+  handleQuery: any;
+  onValueSelect: any;
+  filteredOptions: any[];
+  selected: any;
+  name: string
+}
+
+function ComboboxDropdown({ name, handleQuery, onValueSelect, filteredOptions, selected }: ComboBoxDropDown) {
+
   return (
     <Combobox as="div" value={selected}
       onChange={(value) => {
-        handleQuery('')
-        handleChange(value)
+        onValueSelect(value)
       }}>
       {/* <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">Assigned to</Combobox.Label> */}
       <div className="relative">
@@ -20,7 +27,7 @@ function ComboboxDropdown({ handleQuery, handleChange, filteredOptions }) {
           placeholder={name}
           className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           onChange={(event: ChangeEvent<HTMLInputElement>) => handleQuery(event.target.value)}
-          displayValue={(displayValue: { [key: string]: string }) => displayValue?.[name]}
+          displayValue={(displayValue: { [key: string]: string }) => displayValue.instructions}
           // onBlur={() => handleQuery('')}
           name={name as string}
         />

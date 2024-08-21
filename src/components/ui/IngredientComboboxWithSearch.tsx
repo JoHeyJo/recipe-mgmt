@@ -67,6 +67,7 @@ function IngredientComboboxWithSearch({ name, handleOptionChange, options, handl
   return (
     <Combobox as="div" value={selected}
       onChange={(value) => {
+        console.log("triggered")
         setQuery('')
         handleChange(value)
       }}>
