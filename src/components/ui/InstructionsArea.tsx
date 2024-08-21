@@ -5,9 +5,9 @@ import InstructionComboboxWithSearch from "./InstructionComboboxWithSearch";
 
 
 const defaultInstruction = [
-  { id: undefined, instruction: "Add ingredients..." },
-  { id: undefined, instruction: "Add ice..." },
-  { id: undefined, instruction: "shake..." }
+  { id: null, instruction: "Add ingredients..." },
+  { id: null, instruction: "Add ice..." },
+  { id: null, instruction: "shake..." }
 ]
 
 const InstructionsTemplate: Instructions = []

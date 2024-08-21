@@ -56,6 +56,6 @@ export type Option = {
   unit?: string;
 }
 
-export type Instruction = { id?: number, instruction: string }
+export type Instruction = { id: number | null, instruction: string }
 
 export type Instructions = Instruction[];

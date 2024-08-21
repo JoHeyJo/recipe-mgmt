@@ -1,74 +1,17 @@
-import { useState, useEffect, ChangeEvent } from 'react'
+import React from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
-import { Option, Instruction, Instructions } from '../../utils/types';
-
-function uniqueID() {
-  return Math.random();
-}
-
-const unique: any = () => Math.random()
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
 
-type InstructionComboboxWithSearch = {
-  index: number;
-  name: string;
-  handleOptionChange: (state: string, option: Option) => void;
-  options: Instructions;
-  handleAdd: (instruction: Instruction, index: number) => void;
-  postRequest: (option: Option) => void;
-}
-
-/** InstructionComboboxWithSearch - ring is removed 
- * 
- * Renders Input field and dropdown menu. Searches and filters existing options
- * 
- * OptionWithSearch -> InstructionComboboxWithSearch
- */
-
-function InstructionComboboxWithSearch({ index, name, handleOptionChange, options, handleAdd, postRequest }: InstructionComboboxWithSearch) {
-  const [query, setQuery] = useState<string>('')
-  const [selected, setSelected] = useState<Option | null>(null)
-
-  /** Creates a list of filtered options based on search query */
-  const filteredOptions =
-    query === ''
-      ? options
-      : options.reduce<Instructions>((currentOptions, option) => {
-        const isOptionAvailable = option.instruction.toLowerCase().includes(query.toLowerCase());
-        if (isOptionAvailable) currentOptions.push(option);
-
-        //renders "+ create" option if query value doesn't exist in the dropdown options
-        if (currentOptions.length < 1 && !isOptionAvailable)
-          currentOptions.push({ id: null, instruction: '+ create...' });
-        return currentOptions;
-      }, []);
-
-
-  /** Handles parent state update when changes are made to combobox */
-  async function handleChange(option: any) {
-    if (option.id === null && option[name] === '+ create...') {
-      // new object needs to have query string injected as a value
-      option[name] = query;
-      option = postRequest(option);
-      handleAdd(option, index)
-    }
-    setSelected(option);
-  };
-
-
-  /** Adds ingredient to parent component when an ingredient is selected  */
-  useEffect(() => {
-    selected && handleOptionChange(name, selected);
-  }, [selected, options]);
-
+function ComboboxDropdown({ handleQuery, handleChange, filteredOptions }) {
+  
   return (
     <Combobox as="div" value={selected}
       onChange={(value) => {
-        setQuery('')
+        handleQuery('')
         handleChange(value)
       }}>
       {/* <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">Assigned to</Combobox.Label> */}
@@ -76,9 +19,9 @@ function InstructionComboboxWithSearch({ index, name, handleOptionChange, option
         <Combobox.Input
           placeholder={name}
           className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          onChange={(event: ChangeEvent<HTMLInputElement>) => setQuery(event.target.value)}
+          onChange={(event: ChangeEvent<HTMLInputElement>) => handleQuery(event.target.value)}
           displayValue={(displayValue: { [key: string]: string }) => displayValue?.[name]}
-          // onBlur={() => setQuery('')}
+          // onBlur={() => handleQuery('')}
           name={name as string}
         />
         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
@@ -123,4 +66,4 @@ function InstructionComboboxWithSearch({ index, name, handleOptionChange, option
   )
 }
 
-export default InstructionComboboxWithSearch;
+export default ComboboxDropdown
