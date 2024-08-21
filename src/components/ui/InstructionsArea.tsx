@@ -12,7 +12,12 @@ const defaultInstruction = [
 
 const InstructionsTemplate: Instructions = []
 
-export default function InstructionsArea() {
+/** Renders list of instructions 
+ * 
+ * 
+ * AddRecipe -> InstructionsArea -> InstructionsComboBoxArea (InstructionsManager)
+ */
+function InstructionsArea() {
   const [instructions, setInstructions] = useState<Instruction[]>(defaultInstruction);
 
   /** Add additional instruction to state */
@@ -37,3 +42,5 @@ export default function InstructionsArea() {
     </div>
   )
 }
+
+export default  InstructionsArea;

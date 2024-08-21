@@ -8,7 +8,7 @@ import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
 import DropDownWithSearch from '../selectors/OptionDropdown';
 import { useMediaQuery } from 'react-responsive';
-import Textarea from '../ui/InstructionsArea';
+import InstrcutionsArea from '../ui/InstructionsArea';
 
 
 type AddRecipe = {
@@ -100,7 +100,7 @@ function AddRecipe({ setShowing, isOpen }: AddRecipe) {
                     <IngredientsGroup handleUpdate={updateRecipe} />
                   </section>
                   <section id='AddRecipe-right-page' className="flex-1 ml-4 ">
-                    <Textarea />
+                    <InstrcutionsArea />
                   </section>
                 </section>
                 <div className="mt-5 sm:mt-6">

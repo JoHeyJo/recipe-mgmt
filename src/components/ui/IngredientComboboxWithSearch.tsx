@@ -21,7 +21,7 @@ type IngredientComboboxWithSearch = {
   postRequest: (option: Option) => void;
 }
 
-/** IngredientComboboxWithSearch - ring is removed 
+/** IngredientComboboxWithSearch IngredientManager- ring is removed 
  * 
  * Renders Input field and dropdown menu. Searches and filters existing options
  * 
@@ -67,7 +67,6 @@ function IngredientComboboxWithSearch({ name, handleOptionChange, options, handl
   return (
     <Combobox as="div" value={selected}
       onChange={(value) => {
-        console.log("triggered")
         setQuery('')
         handleChange(value)
       }}>

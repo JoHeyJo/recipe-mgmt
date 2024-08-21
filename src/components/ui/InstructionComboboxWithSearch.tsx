@@ -22,7 +22,7 @@ type InstructionComboboxWithSearch = {
   postRequest: (option: Option) => void;
 }
 
-/** InstructionComboboxWithSearch - ring is removed 
+/** InstructionComboboxWithSearch - // InstructionManager ring is removed 
  * 
  * Renders Input field and dropdown menu. Searches and filters existing options
  * 
