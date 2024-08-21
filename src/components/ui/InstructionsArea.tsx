@@ -20,15 +20,19 @@ export default function InstructionsArea() {
     setInstructions((i: Instruction[]) => [...i, i[index] = instruction])
   }
 
+  /**  */
+
   return (
     <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
       {instructions.map((i, index) =>
         <InstructionComboboxWithSearch 
-          key={index} 
+          key={index}
+          index={index} 
           name={i.instruction} 
           handleOptionChange={() => { }} 
-          options={[]} 
-          handleAdd={addInstruction} />
+          options={instructions} 
+          handleAdd={addInstruction} 
+          postRequest={()=>{}}/>
       )}
     </div>
   )

@@ -1,7 +1,7 @@
 import { useState, useEffect, ChangeEvent } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
-import { Option, Instruction } from '../../utils/types';
+import { Option, Instruction, Instructions } from '../../utils/types';
 
 function uniqueID() {
   return Math.random();
@@ -14,10 +14,11 @@ function classNames(...classes: any) {
 }
 
 type InstructionComboboxWithSearch = {
-  name: string
+  index: number;
+  name: string;
   handleOptionChange: (state: string, option: Option) => void;
-  options: Option[];
-  handleAdd: (instruction: Instruction, index: number) => void
+  options: Instructions[];
+  handleAdd: (instruction: Instruction, index: number) => void;
   postRequest: (option: Option) => void;
 }
 
@@ -28,7 +29,7 @@ type InstructionComboboxWithSearch = {
  * OptionWithSearch -> InstructionComboboxWithSearch
  */
 
-function InstructionComboboxWithSearch({ name, handleOptionChange, options, handleAdd, postRequest }: InstructionComboboxWithSearch) {
+function InstructionComboboxWithSearch({ index, name, handleOptionChange, options, handleAdd, postRequest }: InstructionComboboxWithSearch) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Option | null>(null)
 
@@ -36,8 +37,8 @@ function InstructionComboboxWithSearch({ name, handleOptionChange, options, hand
   const filteredOptions =
     query === ''
       ? options
-      : options.reduce<Option[]>((currentOptions, option) => {
-        const isOptionAvailable = (option[name as keyof Option] as string).toLowerCase().includes(query.toLowerCase());
+      : options.reduce<Instructions>((currentOptions, option) => {
+        const isOptionAvailable = option.instruction.toLowerCase().includes(query.toLowerCase());
         if (isOptionAvailable) currentOptions.push(option);
 
         //renders "+ create" option if query value doesn't exist in the dropdown options
@@ -53,7 +54,7 @@ function InstructionComboboxWithSearch({ name, handleOptionChange, options, hand
       // new object needs to have query string injected as a value
       option[name] = query;
       option = postRequest(option);
-      handleAdd(name, option)
+      handleAdd(option, index)
     }
     setSelected(option);
   };
