@@ -5,9 +5,9 @@ import InstructionManager from "./InstructionManager";
 
 
 const defaultInstruction = [
-  { id: null, instruction: "Add ingredients..." },
-  { id: null, instruction: "Add ice..." },
-  { id: null, instruction: "shake..." }
+  { id: "temp-1", instruction: "Add ingredients..." },
+  { id: "temp-2", instruction: "Add ice..." },
+  { id: "temp-3", instruction: "shake..." }
 ]
 
 // const placeHolder = ["Add ingredients...", "Add ice...", "shake..."]
@@ -32,6 +32,7 @@ function InstructionsArea() {
   return (
     <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
       {instructions.map((i, index) =>
+      typeof i.id === 'string' && i.id.startsWith("temp-") &&
         <InstructionManager 
           key={index}
           index={index} 

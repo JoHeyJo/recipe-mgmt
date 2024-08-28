@@ -45,7 +45,7 @@ function InstructionManager({ index, name, handleOptionChange, options, handleAd
 
         //renders "+ create" option if query value doesn't exist in the dropdown options
         if (currentOptions.length < 1 && !isOptionAvailable)
-          currentOptions.push({ id: null, instruction: '+ create...' });
+          currentOptions.push({ id: `create-${Math.random()}`, instruction: '+ create...' });
         return currentOptions;
       }, []);
 
@@ -53,7 +53,7 @@ function InstructionManager({ index, name, handleOptionChange, options, handleAd
   /** Handles parent state update when changes are made to combobox */
   async function handleChange(option: any) {
     console.log("option in handleChange", option)
-    if (option.id === null && option.instruction === '+ create...') {
+    if (option.id.startsWith("create-") && option.instruction === '+ create...') {
       // new object needs to have query string injected as a value
       option.instruction = query;
       // option = postRequest(option);
@@ -85,9 +85,7 @@ function InstructionManager({ index, name, handleOptionChange, options, handleAd
           placeholder={name}
           className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           onChange={(event: ChangeEvent<HTMLInputElement>) => setQuery(event.target.value)}
-          displayValue={(displayValue: any) => {
-            console.log(displayValue)
-            return displayValue?.instruction}}
+          displayValue={(displayValue: any) => displayValue.instruction}
           // onBlur={() => setQuery('')}
           name={name as string}
         />
@@ -98,6 +96,7 @@ function InstructionManager({ index, name, handleOptionChange, options, handleAd
         {filteredOptions.length > 0 && (
           <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
             {filteredOptions.map((option) => (
+              typeof option.id === 'string' && !option.id.startsWith('temp-') &&
               <Combobox.Option
                 key={option.id}
                 value={option}
