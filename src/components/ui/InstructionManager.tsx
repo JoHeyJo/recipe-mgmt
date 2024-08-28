@@ -96,6 +96,7 @@ function InstructionManager({ index, name, handleOptionChange, options, handleAd
         {filteredOptions.length > 0 && (
           <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
             {filteredOptions.map((option) => (
+              // prevents placeholder objects from rendering in dropdown
               typeof option.id === 'string' && !option.id.startsWith('temp-') &&
               <Combobox.Option
                 key={option.id}

@@ -24,7 +24,12 @@ function InstructionsArea() {
 
   /** Add additional instruction to state */
   function addInstruction(instruction: Instruction, index: number) {
-    setInstructions((i: Instruction[]) => [...i, i[index] = instruction])
+    setInstructions((i: Instruction[]) => {
+      const updatedInstructions = [...i];
+      updatedInstructions[index] = instruction;
+      return updatedInstructions;
+    }
+    )
   }
 
   /**  */
@@ -32,7 +37,8 @@ function InstructionsArea() {
   return (
     <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
       {instructions.map((i, index) =>
-      typeof i.id === 'string' && i.id.startsWith("temp-") &&
+      // will only render defaultInstruction objects that act as placeholder not newly created
+      // typeof i.id === 'string' && i.id.startsWith("temp-") &&
         <InstructionManager 
           key={index}
           index={index} 
