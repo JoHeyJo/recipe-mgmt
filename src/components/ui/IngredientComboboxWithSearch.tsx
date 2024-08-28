@@ -21,7 +21,7 @@ type IngredientComboboxWithSearch = {
   postRequest: (option: Option) => void;
 }
 
-/** IngredientComboboxWithSearch IngredientManager- ring is removed 
+/** IngredientComboboxWithSearch // IngredientManager- ring is removed 
  * 
  * Renders Input field and dropdown menu. Searches and filters existing options
  * 

@@ -13,7 +13,9 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
 
-type InstructionComboboxWithSearch = {
+const placeHolder = ["Add ingredients...", "Add ice...", "shake..."]
+
+type InstructionManager = {
   index: number;
   name: string;
   handleOptionChange: (state: string, option: Option) => void;
@@ -22,14 +24,14 @@ type InstructionComboboxWithSearch = {
   postRequest: (option: Option) => void;
 }
 
-/** InstructionComboboxWithSearch - // InstructionManager ring is removed 
+/** InstructionManager - ring is removed 
  * 
  * Renders Input field and dropdown menu. Searches and filters existing options
  * 
- * OptionWithSearch -> InstructionComboboxWithSearch
+ * OptionWithSearch -> InstructionManager
  */
 
-function InstructionComboboxWithSearch({ index, name, handleOptionChange, options, handleAdd, postRequest }: InstructionComboboxWithSearch) {
+function InstructionManager({ index, name, handleOptionChange, options, handleAdd, postRequest }: InstructionManager) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Option>()
 
@@ -50,10 +52,12 @@ function InstructionComboboxWithSearch({ index, name, handleOptionChange, option
 
   /** Handles parent state update when changes are made to combobox */
   async function handleChange(option: any) {
-    if (option.id === null && option[name] === '+ create...') {
+    console.log("option in handleChange", option)
+    if (option.id === null && option.instruction === '+ create...') {
       // new object needs to have query string injected as a value
-      option[name] = query;
-      option = postRequest(option);
+      option.instruction = query;
+      // option = postRequest(option);
+      console.log("option in handleChange conditional", option)
       handleAdd(option, index)
     }
     setSelected(option);
@@ -81,7 +85,9 @@ function InstructionComboboxWithSearch({ index, name, handleOptionChange, option
           placeholder={name}
           className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           onChange={(event: ChangeEvent<HTMLInputElement>) => setQuery(event.target.value)}
-          displayValue={(displayValue: { [key: string]: string }) => displayValue?.[name]}
+          displayValue={(displayValue: any) => {
+            console.log(displayValue)
+            return displayValue?.instruction}}
           // onBlur={() => setQuery('')}
           name={name as string}
         />
@@ -127,4 +133,4 @@ function InstructionComboboxWithSearch({ index, name, handleOptionChange, option
   )
 }
 
-export default InstructionComboboxWithSearch;
+export default InstructionManager;

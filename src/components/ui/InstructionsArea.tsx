@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Instruction, Instructions } from "../../utils/types";
-import InstructionComboboxWithSearch from "./InstructionComboboxWithSearch";
+import InstructionManager from "./InstructionManager";
 
 
 
@@ -9,6 +9,8 @@ const defaultInstruction = [
   { id: null, instruction: "Add ice..." },
   { id: null, instruction: "shake..." }
 ]
+
+// const placeHolder = ["Add ingredients...", "Add ice...", "shake..."]
 
 const InstructionsTemplate: Instructions = []
 
@@ -30,7 +32,7 @@ function InstructionsArea() {
   return (
     <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
       {instructions.map((i, index) =>
-        <InstructionComboboxWithSearch 
+        <InstructionManager 
           key={index}
           index={index} 
           name={i.instruction} 
