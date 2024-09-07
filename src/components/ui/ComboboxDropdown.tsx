@@ -14,8 +14,14 @@ type ComboBoxDropDown = {
   name: string
 }
 
+/** ComboBoxDropdown
+ * 
+ * Renders Input field and dropdown menu. 
+ * 
+ * InstructionManager -> ComboboxDropdown
+ */
 function ComboboxDropdown({ name, handleQuery, onValueSelect, filteredOptions, selected }: ComboBoxDropDown) {
-
+console.log("name",name)
   return (
     <Combobox as="div" value={selected}
       onChange={(value) => {
@@ -27,7 +33,7 @@ function ComboboxDropdown({ name, handleQuery, onValueSelect, filteredOptions, s
           placeholder={name}
           className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           onChange={(event: ChangeEvent<HTMLInputElement>) => handleQuery(event.target.value)}
-          displayValue={(displayValue: { [key: string]: string }) => displayValue.instructions}
+          displayValue={(displayValue: { [key: string]: string }) => displayValue?.[name]}
           // onBlur={() => handleQuery('')}
           name={name as string}
         />
