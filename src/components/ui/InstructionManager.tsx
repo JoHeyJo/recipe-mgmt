@@ -13,8 +13,6 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
 
-const placeHolder = ["Add ingredients...", "Add ice...", "shake..."]
-
 type InstructionManager = {
   index: number;
   name: string;
@@ -22,16 +20,17 @@ type InstructionManager = {
   options: Instructions;
   handleAdd: (instruction: Instruction, index: number) => void;
   postRequest: (option: Option) => void;
+  manageInstructions: any
 }
 
 /** InstructionManager - ring is removed 
  * 
  * Renders Input field and dropdown menu. Searches and filters existing options
  * 
- * OptionWithSearch -> InstructionManager
+ * InstructionsArea -> InstructionManager
  */
 
-function InstructionManager({ index, name, handleOptionChange, options, handleAdd, postRequest }: InstructionManager) {
+function InstructionManager({ index, name, handleOptionChange, options, handleAdd, postRequest, manageInstructions }: InstructionManager) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Option>()
 
@@ -51,13 +50,13 @@ function InstructionManager({ index, name, handleOptionChange, options, handleAd
 
 
   /** Handles parent state update when changes are made to combobox */
-  async function handleChange(option: any) {
-    console.log("option in handleChange", option)
+  function handleChange(option: any) {
     if (option.id.startsWith("create-") && option.instruction === '+ create...') {
+      // create new input field when only one input field is left
+      if(index === options.length - 2) manageInstructions.newInstructionInput()
       // new object needs to have query string injected as a value
       option.instruction = query;
       // option = postRequest(option);
-      console.log("option in handleChange conditional", option)
       handleAdd(option, index)
     }
     setSelected(option);

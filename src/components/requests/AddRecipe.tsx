@@ -8,7 +8,7 @@ import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
 import DropDownWithSearch from '../selectors/OptionDropdown';
 import { useMediaQuery } from 'react-responsive';
-import InstrcutionsArea from '../ui/InstructionsArea';
+import InstructionsArea from '../ui/InstructionsArea';
 
 
 type AddRecipe = {
@@ -25,7 +25,7 @@ const recipeTemplate: Recipe = {
 
 /** Processes all recipe data
  * 
- * RecipeView -> AddRecipe -> IngredientsGroup
+ * RecipeView -> AddRecipe -> [IngredientsGroup, InstructionsArea]
  */
 
 function AddRecipe({ setShowing, isOpen }: AddRecipe) {
@@ -100,7 +100,7 @@ function AddRecipe({ setShowing, isOpen }: AddRecipe) {
                     <IngredientsGroup handleUpdate={updateRecipe} />
                   </section>
                   <section id='AddRecipe-right-page' className="flex-1 ml-4 ">
-                    <InstrcutionsArea />
+                    <InstructionsArea />
                   </section>
                 </section>
                 <div className="mt-5 sm:mt-6">

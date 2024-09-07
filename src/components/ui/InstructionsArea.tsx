@@ -14,10 +14,11 @@ const defaultInstruction = [
 
 const InstructionsTemplate: Instructions = []
 
-/** Renders list of instructions 
+/** InstructionsArea
  * 
+ * Dynamically renders list of instructions 
  * 
- * AddRecipe -> InstructionsArea -> InstructionsComboBoxArea (InstructionsManager)
+ * AddRecipe -> InstructionsArea -> InstructionsManager
  */
 function InstructionsArea() {
   const [instructions, setInstructions] = useState<Instruction[]>(defaultInstruction);
@@ -28,28 +29,35 @@ function InstructionsArea() {
       const updatedInstructions = [...i];
       updatedInstructions[index] = instruction;
       return updatedInstructions;
-    }
-    )
+    })
   }
 
-  /**  */
+  /** Create additional input field for new instruction */
+  function createInstructionInput(){
+    setInstructions((i: Instruction[]) => [...i, { id: "temp-", instruction: "some other thing..." }])
+  }
+
+  /** Consolidates logic pertaining to adding instructions */
+  const manageInstructions = {
+    handleInstruction: addInstruction,
+    newInstructionInput: createInstructionInput
+  }
 
   return (
     <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
       {instructions.map((i, index) =>
-      // will only render defaultInstruction objects that act as placeholder not newly created
-      // typeof i.id === 'string' && i.id.startsWith("temp-") &&
-        <InstructionManager 
+        <InstructionManager
           key={index}
-          index={index} 
-          name={i.instruction} 
-          handleOptionChange={() => { }} 
-          options={instructions} 
-          handleAdd={addInstruction} 
-          postRequest={()=>{}}/>
+          index={index}
+          name={i.instruction}
+          handleOptionChange={() => { }}
+          options={instructions}
+          handleAdd={addInstruction}
+          postRequest={() => { }}
+          manageInstructions={manageInstructions} />
       )}
     </div>
   )
 }
 
-export default  InstructionsArea;
+export default InstructionsArea;
