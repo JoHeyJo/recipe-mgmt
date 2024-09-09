@@ -1,7 +1,7 @@
 import { Option } from '../../utils/types';
 import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
-import IngredientDropdownWithSearch from '../ui/IngredientComboboxWithSearch';
+import IngredientDropdownWithSearch from '../ui/IngredientManager';
 
 function uniqueID() {
   return Math.random();

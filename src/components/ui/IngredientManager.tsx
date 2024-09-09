@@ -1,7 +1,7 @@
 import { useState, useEffect, ChangeEvent } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
-import { Option, Instruction } from '../../utils/types';
+import { Option } from '../../utils/types';
 import ComboboxDropdown from './ComboboxDropdown';
 
 function uniqueID() {
@@ -14,7 +14,7 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
 
-type IngredientComboboxWithSearch = {
+type INgredientManager = {
   name: string
   handleOptionChange: (state: string, option: Option) => void;
   options: Option[];
@@ -22,14 +22,14 @@ type IngredientComboboxWithSearch = {
   postRequest: (option: Option) => void;
 }
 
-/** IngredientComboboxWithSearch // IngredientManager- ring is removed 
+/** INgredientManager - ring is removed 
  * 
- * Renders Input field and dropdown menu. Searches and filters existing options
+ * Searches and filters existing ingredient options
  * 
- * OptionWithSearch -> IngredientComboboxWithSearch
+ * OptionWithSearch -> INgredientManager
  */
 
-function IngredientComboboxWithSearch({ name, handleOptionChange, options, handleAdd, postRequest }: IngredientComboboxWithSearch) {
+function INgredientManager({ name, handleOptionChange, options, handleAdd, postRequest }: INgredientManager) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Option | null>(null)
 
@@ -75,7 +75,7 @@ function IngredientComboboxWithSearch({ name, handleOptionChange, options, handl
   )
 }
 
-export default IngredientComboboxWithSearch;
+export default INgredientManager;
 
 // USE THIS TEMPLATE SO THAT COMBOBOXDROPDOWN CAN BE ADJUST SO THAT IT CAN HANDLE BOTH INGREDIENT MANAGER AND INSTRUCTION MANAGER ()
 // {/* <Combobox as="div" value={selected}

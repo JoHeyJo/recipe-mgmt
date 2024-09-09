@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
-
+import { Option } from '../../utils/types';
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
@@ -10,7 +10,7 @@ type ComboBoxDropDown = {
   handleQuery: any;
   onValueSelect: any;
   filteredOptions: any[];
-  selected: any;
+  selected: Option | null | undefined;
   name: string
 }
 
@@ -21,7 +21,6 @@ type ComboBoxDropDown = {
  * InstructionManager -> ComboboxDropdown
  */
 function ComboboxDropdown({ name, handleQuery, onValueSelect, filteredOptions, selected }: ComboBoxDropDown) {
-console.log("name",name)
   return (
     <Combobox as="div" value={selected}
       onChange={(value) => {
@@ -33,7 +32,9 @@ console.log("name",name)
           placeholder={name}
           className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           onChange={(event: ChangeEvent<HTMLInputElement>) => handleQuery(event.target.value)}
-          displayValue={(displayValue: { [key: string]: string }) => displayValue?.[name]}
+          displayValue={(displayValue: { [key: string]: string }) => {
+            return displayValue?.[name] ? displayValue?.[name] : displayValue?.instruction
+          } }
           // onBlur={() => handleQuery('')}
           name={name as string}
         />
@@ -56,7 +57,10 @@ console.log("name",name)
               >
                 {({ active, selected }) => (
                   <>
-                    <span className={classNames('block truncate', selected && 'font-semibold')}>{option.instruction}</span>
+                    {option.instruction
+                      ? <span className={classNames('block truncate', selected && 'font-semibold')}>{option.instruction}</span>
+                      : <span className={classNames('block truncate', selected && 'font-semibold')}>{option[name as keyof Option]}</span>
+                    }
 
                     {selected && (
                       <span
