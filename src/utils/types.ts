@@ -59,3 +59,5 @@ export type Option = {
 export type Instruction = { id: string | number , instruction: string }
 
 export type Instructions = Instruction[];
+
+export type Manager = Option | Instruction

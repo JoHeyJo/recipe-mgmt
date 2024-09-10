@@ -60,7 +60,7 @@ function IngredientManager({ name, handleOptionChange, options, handleAdd, postR
   };
 
   /** Consolidates actions taken when dropdown value is selected  */
-  function onValueSelect(value: Option) {
+  function onValueSelect(value: any) {
     setQuery('')
     handleChange(value)
   }

@@ -1,16 +1,16 @@
 import { ChangeEvent } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
-import { Option, Instruction } from '../../utils/types';
+import { Option, Instruction, Manager } from '../../utils/types';
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
 
 type ComboBoxDropDown = {
   handleQuery: any;
-  onValueSelect: any;
+  onValueSelect: ((value: Instruction) => void) | ((value: Option) => void)
   filteredOptions: any[];
-  selected?: Option | Instruction | string;
+  selected?: Option | Instruction;
   name: string
 }
 
@@ -21,10 +21,23 @@ type ComboBoxDropDown = {
  * InstructionManager -> ComboboxDropdown
  */
 function ComboboxDropdown({ name, handleQuery, onValueSelect, filteredOptions, selected }: ComboBoxDropDown) {
+
+  const handleSelect = (value: Instruction | Option) => {
+    // Type narrowing with 'in' operator
+    if ('instruction' in value) {
+      // Now TypeScript knows `value` is of type `Instruction`
+      (onValueSelect as (value: Instruction) => void)(value);
+    } else {
+      // Now TypeScript knows `value` is of type `Option`
+      (onValueSelect as (value: Option) => void)(value);
+    }
+  };
+
+
   return (
-    <Combobox as="div" value={selected || ''}
+    <Combobox as="div" value={selected}
       onChange={(value) => {
-        onValueSelect(value)
+        handleSelect(value)
       }}>
       {/* <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">Assigned to</Combobox.Label> */}
       <div className="relative">
@@ -34,7 +47,7 @@ function ComboboxDropdown({ name, handleQuery, onValueSelect, filteredOptions, s
           onChange={(event: ChangeEvent<HTMLInputElement>) => handleQuery(event.target.value)}
           displayValue={(displayValue: { [key: string]: string }) => {
             return displayValue?.[name] ? displayValue?.[name] : displayValue?.instruction
-          } }
+          }}
           // onBlur={() => handleQuery('')}
           name={name as string}
         />
