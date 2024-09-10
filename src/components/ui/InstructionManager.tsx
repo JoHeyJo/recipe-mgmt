@@ -17,7 +17,7 @@ function classNames(...classes: any) {
 type InstructionManager = {
   index: number;
   name: string;
-  handleOptionChange: (state: string, option: Option) => void;
+  handleOptionChange: (state: string, option: Instruction | string) => void;
   options: Instructions;
   handleAdd: (instruction: Instruction, index: number) => void;
   postRequest: (option: Option) => void;
@@ -33,7 +33,7 @@ type InstructionManager = {
 
 function InstructionManager({ index, name, handleOptionChange, options, handleAdd, postRequest, manageInstructions }: InstructionManager) {
   const [query, setQuery] = useState<string>('')
-  const [selected, setSelected] = useState<Option>()
+  const [selected, setSelected] = useState<Instruction | string>('')
 
   /** Creates a list of filtered options based on search query */
   const filteredOptions =

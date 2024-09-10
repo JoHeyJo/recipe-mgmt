@@ -14,7 +14,7 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
 
-type INgredientManager = {
+type IngredientManager = {
   name: string
   handleOptionChange: (state: string, option: Option) => void;
   options: Option[];
@@ -29,9 +29,9 @@ type INgredientManager = {
  * OptionWithSearch -> INgredientManager
  */
 
-function INgredientManager({ name, handleOptionChange, options, handleAdd, postRequest }: INgredientManager) {
+function IngredientManager({ name, handleOptionChange, options, handleAdd, postRequest }: IngredientManager) {
   const [query, setQuery] = useState<string>('')
-  const [selected, setSelected] = useState<Option | null>(null)
+  const [selected, setSelected] = useState<Option>()
 
   /** Creates a list of filtered options based on search query */
   const filteredOptions =
@@ -75,7 +75,7 @@ function INgredientManager({ name, handleOptionChange, options, handleAdd, postR
   )
 }
 
-export default INgredientManager;
+export default IngredientManager;
 
 // USE THIS TEMPLATE SO THAT COMBOBOXDROPDOWN CAN BE ADJUST SO THAT IT CAN HANDLE BOTH INGREDIENT MANAGER AND INSTRUCTION MANAGER ()
 // {/* <Combobox as="div" value={selected}

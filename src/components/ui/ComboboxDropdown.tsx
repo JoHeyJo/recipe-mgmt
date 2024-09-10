@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
-import { Option } from '../../utils/types';
+import { Option, Instruction } from '../../utils/types';
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
@@ -10,7 +10,7 @@ type ComboBoxDropDown = {
   handleQuery: any;
   onValueSelect: any;
   filteredOptions: any[];
-  selected: Option | null | undefined;
+  selected?: Option | Instruction | string;
   name: string
 }
 
@@ -22,7 +22,7 @@ type ComboBoxDropDown = {
  */
 function ComboboxDropdown({ name, handleQuery, onValueSelect, filteredOptions, selected }: ComboBoxDropDown) {
   return (
-    <Combobox as="div" value={selected}
+    <Combobox as="div" value={selected || ''}
       onChange={(value) => {
         onValueSelect(value)
       }}>

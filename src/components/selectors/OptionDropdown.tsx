@@ -1,7 +1,7 @@
 import { Option } from '../../utils/types';
 import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
-import IngredientDropdownWithSearch from '../ui/IngredientManager';
+import IngredientManager from '../ui/IngredientManager';
 
 function uniqueID() {
   return Math.random();
@@ -25,7 +25,7 @@ type OptionDropdown = {
  * Option input field with capability to create new options.
  * Makes API request to create new ingredient
  * 
- * IngredientInputGroup -> OptionDropdown -> IngredientDropdownWithSearch
+ * IngredientInputGroup -> OptionDropdown -> IngredientManager
  */
 
 function OptionDropdown({ name, handleOptionChange, options, handleAddOption }: OptionDropdown) {
@@ -41,7 +41,7 @@ function OptionDropdown({ name, handleOptionChange, options, handleAddOption }: 
   }
 
   return (
-    <IngredientDropdownWithSearch
+    <IngredientManager
       name={name}
       handleOptionChange={handleOptionChange}
       options={options}
