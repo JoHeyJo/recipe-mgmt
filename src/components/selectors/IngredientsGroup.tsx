@@ -6,9 +6,9 @@ import { PlusIcon } from '@heroicons/react/20/solid'
 
 
 const defaultIngredient: Ingredient = {
-  ingredient: { id: null, liquid: "" },
-  amount: { id: null, amount: "" },
-  unit: { id: null, unit: "" }
+  amount: { id: null, value: "" },
+  unit: { id: null, type: "" },
+  item: { id: null, name: "" }
 }
 
 type IngredientsGroupProps = {

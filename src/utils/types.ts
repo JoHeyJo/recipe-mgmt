@@ -12,9 +12,9 @@ export type Recipe = {
   ingredients: Ingredient[]
 }
 export type Ingredient = {
-  ingredient: object;
-  amount: object;
-  unit: object;
+  amount: Option;
+  unit: Option;
+  item: Option;
 }
 
 export type User = {
@@ -51,9 +51,9 @@ export type JWTPayload = {
 
 export type Option = {
   id: number | null;
-  ingredient?: string;
-  amount?: string;
-  unit?: string;
+  name?: string;
+  value?: string;
+  type?: string;
 }
 
 export type Instruction = { id: string | number , instruction: string }

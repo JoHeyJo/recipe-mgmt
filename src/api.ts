@@ -43,10 +43,12 @@ class API {
     const res = await this.request("recipes", data, "POST");
     return res;
   }
-
+  
   /** Add ingredient option to database */
   static async postOption(data: Option, option: string){
+    console.log("IN:", data)
     const res = await this.request(`options/${option}`, data, "POST")
+    console.log("OUT:", res)
     return res;
   }
   
