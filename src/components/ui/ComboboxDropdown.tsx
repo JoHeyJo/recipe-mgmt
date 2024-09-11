@@ -2,9 +2,16 @@ import { ChangeEvent } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
 import { Option, Instruction, Manager } from '../../utils/types';
+
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
+
+function uniqueID() {
+  return Math.random();
+}
+
+const unique: any = () => Math.random()
 
 type ComboBoxDropDown = {
   handleQuery: any;
@@ -18,24 +25,23 @@ type ComboBoxDropDown = {
  * 
  * Renders Input field and dropdown menu. 
  * 
- * InstructionManager -> ComboboxDropdown
+ * [InstructionManager, IngredientManager] -> ComboboxDropdown
  */
 function ComboboxDropdown({ name, handleQuery, onValueSelect, filteredOptions, selected }: ComboBoxDropDown) {
 
-  const handleSelect = (value: Instruction | Option) => {
+  const handleSelect = (value: any) => {
     // Type narrowing with 'in' operator
     if ('instruction' in value) {
       // Now TypeScript knows `value` is of type `Instruction`
-      (onValueSelect as (value: Instruction) => void)(value);
+      (onValueSelect as (value: Instruction | string) => void)(value);
     } else {
       // Now TypeScript knows `value` is of type `Option`
-      (onValueSelect as (value: Option) => void)(value);
+      (onValueSelect as (value: Option | string) => void)(value);
     }
   };
 
-
   return (
-    <Combobox as="div" value={selected}
+    <Combobox as="div" value={selected || ""}
       onChange={(value) => {
         handleSelect(value)
       }}>

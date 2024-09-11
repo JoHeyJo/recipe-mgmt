@@ -4,12 +4,6 @@ import { Combobox } from '@headlessui/react'
 import { Option } from '../../utils/types';
 import ComboboxDropdown from './ComboboxDropdown';
 
-function uniqueID() {
-  return Math.random();
-}
-
-const unique: any = () => Math.random()
-
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
@@ -22,11 +16,11 @@ type IngredientManager = {
   postRequest: (option: Option) => void;
 }
 
-/** INgredientManager - ring is removed 
+/** IngredientManager - ring is removed 
  * 
  * Searches and filters existing ingredient options
  * 
- * OptionWithSearch -> INgredientManager
+ * OptionWithSearch -> IngredientManager
  */
 
 function IngredientManager({ name, handleOptionChange, options, handleAdd, postRequest }: IngredientManager) {
