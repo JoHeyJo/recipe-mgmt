@@ -20,7 +20,7 @@ type IngredientManager = {
  * 
  * Searches and filters existing ingredient options
  * 
- * OptionWithSearch -> IngredientManager
+ * OptionDropdown -> IngredientManager
  */
 
 function IngredientManager({ name, handleOptionChange, options, handleAdd, postRequest }: IngredientManager) {
@@ -31,19 +31,38 @@ function IngredientManager({ name, handleOptionChange, options, handleAdd, postR
   const filteredOptions =
     query === ''
       ? options
-      : options.reduce<Option[]>((currentOptions, option) => {
-        const isOptionAvailable = (option[name as keyof Option] as string).toLowerCase().includes(query.toLowerCase());
-        if (isOptionAvailable) currentOptions.push(option);
+      : dropDownSelection(options,query, name)
 
-        //renders "+ create" option if query value doesn't exist in the dropdown options
-        if (currentOptions.length < 1 && !isOptionAvailable)
-          currentOptions.push({ id: null, [name]: '+ create...' });
+  function dropDownSelection(options: Option[], query: string, name: string) {
+    if (options.length === 0) {
+      // Return the "+ create..." option if no options exist
+      return [{ id: null, [name]: '+ create...' }];
+    } else {
+      // Filter options based on query and handle the "+ create" option if no match is found
+      const filteredOptions = options.reduce<Option[]>((currentOptions, option) => {
+        const isOptionAvailable = (option[name as keyof Option] as string)
+          .toLowerCase()
+          .includes(query.toLowerCase());
+
+        // If the option matches the query, add it to the filtered options
+        if (isOptionAvailable) currentOptions.push(option);
+        // If no options match the query, add a "+ create..." option
+        if (filteredOptions.length === 0) 
+          filteredOptions.push({ id: null, [name]: '+ create...' });
+
         return currentOptions;
       }, []);
 
 
+      return filteredOptions;
+    }
+  }
+
+
+
   /** Handles parent state update when changes are made to combobox */
   async function handleChange(option: any) {
+    console.log("option",option)
     if (option.id === null && option[name] === '+ create...') {
       // new object needs to have query string injected as a value
       option[name] = query;
@@ -55,6 +74,7 @@ function IngredientManager({ name, handleOptionChange, options, handleAdd, postR
 
   /** Consolidates actions taken when dropdown value is selected  */
   function onValueSelect(value: any) {
+    console.log("onValueSelect",value)
     setQuery('')
     handleChange(value)
   }

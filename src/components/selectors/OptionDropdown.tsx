@@ -29,7 +29,6 @@ type OptionDropdown = {
  */
 
 function OptionDropdown({ name, handleOptionChange, options, handleAddOption }: OptionDropdown) {
-
   /** Calls api to create new ingredient option */
   async function addOption(option: Option) {
     try {
