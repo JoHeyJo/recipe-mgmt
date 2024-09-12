@@ -32,7 +32,9 @@ function OptionDropdown({ name, handleOptionChange, options, handleAddOption }: 
   /** Calls api to create new ingredient option */
   async function addOption(option: Option) {
     try {
+      console.log("add option", option)
       const id = await API.postOption(option, name);
+      console.log("res in ad option",id)
       return id;
     } catch (error: any) {
       errorHandling("OptionDropdown - addOption", error)
