@@ -34,7 +34,7 @@ function IngredientManager({ name, handleOptionChange, options, handleAdd, postR
       : dropDownSelection(options, query, name)
 
   function dropDownSelection(options: Option[], query: string, name: string) {
-    console.log("options",options)
+    console.log("options", options)
     let filteredOptions
     if (options.length === 0) {
       // Return the "+ create..." option if no options exist
@@ -59,13 +59,13 @@ function IngredientManager({ name, handleOptionChange, options, handleAdd, postR
     }
   }
 
-  /** Handles parent state update when changes are made to combobox */
-  function handleChange(option: any) {
+  /** Handles parent state update when selection is made in combobox */
+  async function handleChange(option: any) {
     console.log("option", option)
     if (option.id === null && option[name] === '+ create...') {
       // new object needs to have query string injected as a value
       option[name] = query;
-      option = postRequest(option);
+      option = await postRequest(option);
       console.log("handle change", option)
       handleAdd(name, option)
     }

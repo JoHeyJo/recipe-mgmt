@@ -56,7 +56,7 @@ function ComboboxDropdown({ name, handleQuery, onValueSelect, filteredOptions, s
           onChange={(event: ChangeEvent<HTMLInputElement>) => handleQuery(event.target.value)}
           // displayValue={(displayValue: { [key: string]: string }) => displayValue?.[name]}
           displayValue={(displayValue: { [key: string]: string }) => {
-            // console.log(displayValue)
+            console.log(displayValue,name)
             return displayValue?.[name] ? displayValue?.[name] : displayValue?.instruction
           }}
           // onBlur={() => handleQuery('')}
