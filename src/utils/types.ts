@@ -50,7 +50,7 @@ export type JWTPayload = {
 }
 
 export type Option = {
-  id: number | null;
+  id: string | number | null;
   name?: string;
   value?: string;
   type?: string;

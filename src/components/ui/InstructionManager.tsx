@@ -36,16 +36,15 @@ function InstructionManager({ index, name, handleOptionChange, options, handleAd
   const [selected, setSelected] = useState<Instruction>()
 
   /** Creates a list of filtered options based on search query */
-  /** Creates a list of filtered options based on search query */
   const filteredOptions: Instruction[] =
-    query === ''
+  query === ''
       ? options
       : filterOptions();
 
-  /** Filters options => all options / matching options / no match = create... */
+  /** Filters options => all options / matching options / no match or no options = create... */
   function filterOptions() {
     if (options.length === 0) {
-      return [{ id: null, instruction: '+ create...' }];
+      return [{ id: `create-${Math.random()}`, instruction: '+ create...' }];
     } else {
       return options.reduce<Instruction[]>((currentOptions, option) => {
         const isOptionAvailable = option.instruction.toLowerCase().includes(query.toLowerCase());
@@ -53,15 +52,15 @@ function InstructionManager({ index, name, handleOptionChange, options, handleAd
 
         //renders "+ create" option if query value doesn't exist in the dropdown options
         if (currentOptions.length < 1 && !isOptionAvailable)
-          currentOptions.push({ id: null, instruction: '+ create...' });
+          currentOptions.push({ id: `create-${Math.random()}`, instruction: '+ create...' });
         return currentOptions;
       }, []);
     }
   }
 
-
   /** Handles parent state update when changes are made to combobox */
   function handleChange(option: any) {
+    console.log("option handleChange",option)
     if (option.id.startsWith("create-") && option.instruction === '+ create...') {
       // create new input field when only one input field is left
       if (index === options.length - 2) manageInstructions.newInstructionInput()

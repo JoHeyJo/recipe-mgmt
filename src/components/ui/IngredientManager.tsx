@@ -36,7 +36,7 @@ function IngredientManager({ name, handleOptionChange, options, handleAdd, postR
   /** Filters options => all options / matching options / no match = create... */
   function filterOptions() {
     if (options.length === 0) {
-      return [{ id: null, [name]: '+ create...' }];
+      return [{ id: `create-${Math.random()}`, [name]: '+ create...' }];
     } else {
       return options.reduce<Option[]>((currentOptions, option) => {
         const isOptionAvailable = (option[name as keyof Option] as string).toLowerCase().includes(query.toLowerCase());
@@ -44,7 +44,7 @@ function IngredientManager({ name, handleOptionChange, options, handleAdd, postR
 
         //renders "+ create" option if query value doesn't exist in the dropdown options
         if (currentOptions.length < 1 && !isOptionAvailable)
-          currentOptions.push({ id: null, [name]: '+ create...' });
+          currentOptions.push({ id: `create-${Math.random()}`, [name]: '+ create...' });
         return currentOptions;
       }, []);
     }
@@ -53,7 +53,7 @@ function IngredientManager({ name, handleOptionChange, options, handleAdd, postR
   /** Handles parent state update when selection is made in combobox */
   async function handleChange(option: any) {
     console.log("option", option)
-    if (option.id === null && option[name] === '+ create...') {
+    if (option.id.startsWith("create-") && option[name] === '+ create...') {
       // new object needs to have query string injected as a value
       option[name] = query;
       option = await postRequest(option);
