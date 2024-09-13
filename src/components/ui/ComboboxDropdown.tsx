@@ -45,7 +45,7 @@ function ComboboxDropdown({ name, handleQuery, onValueSelect, filteredOptions, s
     <Combobox as="div" value={selected || ""}
       onChange={(value) => {
         // handleSelect(value)
-        onValueSelect(value)
+        // onValueSelect(value)
       }}>
       {/* <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">Assigned to</Combobox.Label> */}
       <div className="relative">
@@ -53,11 +53,9 @@ function ComboboxDropdown({ name, handleQuery, onValueSelect, filteredOptions, s
           placeholder={name}
           className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           onChange={(event: ChangeEvent<HTMLInputElement>) => handleQuery(event.target.value)}
-          // displayValue={(displayValue: { [key: string]: string }) => displayValue?.[name]}
           displayValue={(displayValue: { [key: string]: string }) => {
             return displayValue?.[name] ? displayValue?.[name] : displayValue?.instruction
           }}
-          // onBlur={() => handleQuery('')}
           name={name as string}
         />
         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
@@ -65,9 +63,10 @@ function ComboboxDropdown({ name, handleQuery, onValueSelect, filteredOptions, s
         </Combobox.Button>
 
         {filteredOptions.length > 0 && (
-          <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+          <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm overflow-y-auto">
             {filteredOptions.map((option) => (
               <Combobox.Option
+                onClick={(value) => onValueSelect(option)}
                 key={option.id}
                 value={option}
                 className={({ active }) =>
