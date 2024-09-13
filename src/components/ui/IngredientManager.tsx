@@ -28,34 +28,26 @@ function IngredientManager({ name, handleOptionChange, options, handleAdd, postR
   const [selected, setSelected] = useState<Option>()
 
   /** Creates a list of filtered options based on search query */
-  const filteredOptions =
+  const filteredOptions: Option[] =
     query === ''
       ? options
-      : dropDownSelection(options, query, name)
+      : filterOptions();
 
-  function dropDownSelection(options: Option[], query: string, name: string) {
-    console.log("options", options)
-    let filteredOptions
+  /** Filters options => all options / matching options / no match = create... */
+  function filterOptions() {
     if (options.length === 0) {
-      // Return the "+ create..." option if no options exist
       return [{ id: null, [name]: '+ create...' }];
     } else {
-      // Filter options based on query and handle the "+ create" option if no match is found
-      filteredOptions = options.reduce<Option[]>((currentOptions, option) => {
-        const isOptionAvailable = (option[name as keyof Option] as string)
-          .toLowerCase()
-          .includes(query.toLowerCase());
-
-        // If the option matches the query, add it to the filtered options
+      return options.reduce<Option[]>((currentOptions, option) => {
+        const isOptionAvailable = (option[name as keyof Option] as string).toLowerCase().includes(query.toLowerCase());
+        console.log("inside here", currentOptions)
         if (isOptionAvailable) currentOptions.push(option);
-        // If no options match the query, add a "+ create..." option
-        if (!isOptionAvailable)
-          currentOptions.push({ id: null, [name]: '+ create...' });
 
+        //renders "+ create" option if query value doesn't exist in the dropdown options
+        if (currentOptions.length < 1 && !isOptionAvailable)
+          currentOptions.push({ id: null, [name]: '+ create...' });
         return currentOptions;
       }, []);
-
-      return filteredOptions;
     }
   }
 
