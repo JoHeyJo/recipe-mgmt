@@ -10,7 +10,7 @@ const defaultInstruction = [
   { id: "temp-3", instruction: "shake..." }
 ]
 
-// const placeHolder = ["Add ingredients...", "Add ice...", "shake..."]
+const placeHolder = ["Add ingredients...", "Add ice...", "shake..."]
 
 const InstructionsTemplate: Instructions = []
 
@@ -49,9 +49,12 @@ function InstructionsArea() {
         <InstructionManager
           key={index}
           index={index}
-          name={i.instruction}
+          name={placeHolder[index]}
           handleOptionChange={() => { }}
-          options={instructions}
+          options={instructions.filter(i => {
+            if (!(i.id as string).startsWith("temp-"))
+              return i
+          })}
           handleAdd={addInstruction}
           postRequest={() => { }}
           manageInstructions={manageInstructions} />

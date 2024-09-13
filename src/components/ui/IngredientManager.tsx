@@ -40,7 +40,6 @@ function IngredientManager({ name, handleOptionChange, options, handleAdd, postR
     } else {
       return options.reduce<Option[]>((currentOptions, option) => {
         const isOptionAvailable = (option[name as keyof Option] as string).toLowerCase().includes(query.toLowerCase());
-        console.log("inside here", currentOptions)
         if (isOptionAvailable) currentOptions.push(option);
 
         //renders "+ create" option if query value doesn't exist in the dropdown options

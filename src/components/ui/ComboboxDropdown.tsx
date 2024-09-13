@@ -42,11 +42,7 @@ function ComboboxDropdown({ name, handleQuery, onValueSelect, filteredOptions, s
 //   };
 
   return (
-    <Combobox as="div" value={selected || ""}
-      onChange={(value) => {
-        // handleSelect(value)
-        // onValueSelect(value)
-      }}>
+    <Combobox as="div" value={selected || ""}>
       {/* <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">Assigned to</Combobox.Label> */}
       <div className="relative">
         <Combobox.Input
@@ -66,7 +62,7 @@ function ComboboxDropdown({ name, handleQuery, onValueSelect, filteredOptions, s
           <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm overflow-y-auto">
             {filteredOptions.map((option) => (
               <Combobox.Option
-                onClick={(value) => onValueSelect(option)}
+                onClick={() => onValueSelect(option)}
                 key={option.id}
                 value={option}
                 className={({ active }) =>

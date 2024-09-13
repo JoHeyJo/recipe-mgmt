@@ -56,7 +56,7 @@ export type Option = {
   type?: string;
 }
 
-export type Instruction = { id: string | number , instruction: string }
+export type Instruction = { id: string | number | null , instruction: string }
 
 export type Instructions = Instruction[];
 

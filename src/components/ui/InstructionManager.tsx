@@ -28,7 +28,7 @@ type InstructionManager = {
  * 
  * Searches and filters existing options
  * 
- * InstructionsArea -> InstructionManager
+ * InstructionsArea -> InstructionManager -> ComboboxDropdown
  */
 
 function InstructionManager({ index, name, handleOptionChange, options, handleAdd, postRequest, manageInstructions }: InstructionManager) {
@@ -36,18 +36,28 @@ function InstructionManager({ index, name, handleOptionChange, options, handleAd
   const [selected, setSelected] = useState<Instruction>()
 
   /** Creates a list of filtered options based on search query */
-  const filteredOptions =
+  /** Creates a list of filtered options based on search query */
+  const filteredOptions: Instruction[] =
     query === ''
       ? options
-      : options.reduce<Instructions>((currentOptions, option) => {
+      : filterOptions();
+
+  /** Filters options => all options / matching options / no match = create... */
+  function filterOptions() {
+    if (options.length === 0) {
+      return [{ id: null, instruction: '+ create...' }];
+    } else {
+      return options.reduce<Instruction[]>((currentOptions, option) => {
         const isOptionAvailable = option.instruction.toLowerCase().includes(query.toLowerCase());
         if (isOptionAvailable) currentOptions.push(option);
 
         //renders "+ create" option if query value doesn't exist in the dropdown options
         if (currentOptions.length < 1 && !isOptionAvailable)
-          currentOptions.push({ id: `create-${Math.random()}`, instruction: '+ create...' });
+          currentOptions.push({ id: null, instruction: '+ create...' });
         return currentOptions;
       }, []);
+    }
+  }
 
 
   /** Handles parent state update when changes are made to combobox */
