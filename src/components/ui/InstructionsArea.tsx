@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { Instruction, Instructions } from "../../utils/types";
+import { Ingredient, Instruction, Instructions } from "../../utils/types";
 import InstructionManager from "./InstructionManager";
+import API from "../../api";
+import { errorHandling } from '../../utils/ErrorHandling';
 
 
 
@@ -33,13 +35,24 @@ function InstructionsArea() {
   }
 
   /** Create additional input field for new instruction */
-  function createInstructionInput(){
+  function createInstructionInput() {
     setInstructions((i: Instruction[]) => [...i, { id: "temp-", instruction: "some other thing..." }])
+  }
+
+  /** Request to create new instruction */
+  async function addIngredient(ingredient: Ingredient) {
+    try{
+      const id = await API.postIngredient(ingredient);
+      return id
+    } catch (error: any) {
+      errorHandling("InstructionsArea - addIngredient", error)
+    }
   }
 
   /** Consolidates logic pertaining to adding instructions */
   const manageInstructions = {
-    handleInstruction: addInstruction,
+    postIngredient:addIngredient,
+    handleAdd: addInstruction,
     newInstructionInput: createInstructionInput
   }
 
@@ -52,6 +65,7 @@ function InstructionsArea() {
           name={placeHolder[index]}
           handleOptionChange={() => { }}
           options={instructions.filter(i => {
+            // console.log("instruction",i)
             if (!(i.id as string).startsWith("temp-"))
               return i
           })}

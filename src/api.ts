@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Recipe, UserLogin, UserSignUp, Option } from "./utils/types";
+import { Recipe, UserLogin, UserSignUp, Option, Ingredient } from "./utils/types";
 
 const BASEURL = "http://127.0.0.1:5000"
 /** API class. 
@@ -27,7 +27,7 @@ class API {
 
   /** Register user: returns token */
   static async signUp(data: UserSignUp) {
-    console.log("data",data)
+    console.log("data", data)
     const res = await this.request("signup", data, "POST");
     return res;
   }
@@ -39,23 +39,30 @@ class API {
   }
 
   /** Add recipe to database*/
-  static async postRecipe(data: Recipe){
+  static async postRecipe(data: Recipe) {
     const res = await this.request("recipes", data, "POST");
     return res;
   }
-  
+
   /** Add ingredient option to database */
-  static async postOption(data: Option, option: string){
+  static async postOption(data: Option, option: string) {
     console.log("IN:", data)
     const res = await this.request(`options/${option}`, data, "POST")
     console.log("OUT:", res)
     return res;
   }
-  
+
   /** Fetch options for ingredient components */
-  static async getOptions(component:string){
+  static async getOptions(component: string) {
     const res = await this.request(`/options/${component}`)
     return res;
+  }
+
+  /** Post ingredient to database */
+  static async postIngredient(ingredient: Ingredient) {
+    console.log("post ingredient", ingredient)
+    const res = await this.request("/instructions/instruction", ingredient, "POST")
+    return res
   }
 }
 

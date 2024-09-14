@@ -59,14 +59,14 @@ function InstructionManager({ index, name, handleOptionChange, options, handleAd
   }
 
   /** Handles parent state update when changes are made to combobox */
-  function handleChange(option: any) {
+  async function handleChange(option: any) {
     console.log("option handleChange",option)
     if (option.id.startsWith("create-") && option.instruction === '+ create...') {
       // create new input field when only one input field is left
       if (index === options.length - 2) manageInstructions.newInstructionInput()
       // new object needs to have query string injected as a value
       option.instruction = query;
-      // option = postRequest(option);
+      option = await manageInstructions.postIngredient(option)
       handleAdd(option, index)
     }
     setSelected(option);
