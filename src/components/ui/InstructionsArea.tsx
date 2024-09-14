@@ -49,6 +49,10 @@ function InstructionsArea() {
     }
   }
 
+  function filterPlaceHolderText(instruction: Instruction){
+    if ( typeof instruction.id === "number") return instruction
+  }
+
   /** Consolidates logic pertaining to adding instructions */
   const manageInstructions = {
     postIngredient:addIngredient,
@@ -65,9 +69,8 @@ function InstructionsArea() {
           name={placeHolder[index]}
           handleOptionChange={() => { }}
           options={instructions.filter(i => {
-            // console.log("instruction",i)
-            if (!(i.id as string).startsWith("temp-"))
-              return i
+            console.log("instruction",i)
+            if (typeof i.id === "number") return i
           })}
           handleAdd={addInstruction}
           postRequest={() => { }}
