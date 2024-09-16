@@ -1,16 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Ingredient, Instruction, Instructions } from "../../utils/types";
 import InstructionManager from "./InstructionManager";
 import API from "../../api";
 import { errorHandling } from '../../utils/ErrorHandling';
-
-
-
-const defaultInstruction = [
-  { id: "temp-1", instruction: "Add ingredients..." },
-  { id: "temp-2", instruction: "Add ice..." },
-  { id: "temp-3", instruction: "shake..." }
-]
 
 const placeHolder = ["Add ingredients...", "Add ice...", "shake..."]
 
@@ -23,9 +15,9 @@ const InstructionsTemplate: Instructions = []
  * AddRecipe -> InstructionsArea -> InstructionsManager
  */
 function InstructionsArea() {
-  const [instructions, setInstructions] = useState<Instruction[]>(defaultInstruction);
+  const [instructions, setInstructions] = useState<Instruction[]>([]);
 
-  /** Add additional instruction to state */
+  /** Add instruction to state */
   function addInstruction(instruction: Instruction, index: number) {
     setInstructions((i: Instruction[]) => {
       const updatedInstructions = [...i];
@@ -49,10 +41,6 @@ function InstructionsArea() {
     }
   }
 
-  function filterPlaceHolderText(instruction: Instruction){
-    if ( typeof instruction.id === "number") return instruction
-  }
-
   /** Consolidates logic pertaining to adding instructions */
   const manageInstructions = {
     postIngredient:addIngredient,
@@ -60,20 +48,27 @@ function InstructionsArea() {
     newInstructionInput: createInstructionInput
   }
 
+  // already add instructions should not be shown....
+
+  /** Populate instruction area on mount */
+  useEffect(() => {
+    async function fetchInstructions(){
+      const res = await API.getInstructions()
+      setInstructions(res);
+    }
+    fetchInstructions()
+  },[])
+
   return (
     <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
-      {instructions.map((i, index) =>
+      {placeHolder.map((i, index) =>
         <InstructionManager
           key={index}
           index={index}
-          name={placeHolder[index]}
+          name={i}
           handleOptionChange={() => { }}
-          options={instructions.filter(i => {
-            console.log("instruction",i)
-            if (typeof i.id === "number") return i
-          })}
+          options={instructions.filter(i => typeof i.id !== "number")}
           handleAdd={addInstruction}
-          postRequest={() => { }}
           manageInstructions={manageInstructions} />
       )}
     </div>

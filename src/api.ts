@@ -58,6 +58,12 @@ class API {
     return res;
   }
 
+  /** Get all instructions */
+  static async getInstructions() {
+    const res = await this.request("instructions")
+    return res;
+  }
+
   /** Post ingredient to database */
   static async postIngredient(ingredient: Ingredient) {
     console.log("post ingredient", ingredient)

@@ -60,6 +60,7 @@ function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: Ingre
     }
     fetchOptions()
   },[])
+  
 
   return (
     <div className="flex rounded-md my-2 border-2">

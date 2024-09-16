@@ -20,7 +20,6 @@ type InstructionManager = {
   handleOptionChange: (state: string, option: Instruction) => void;
   options: Instructions;
   handleAdd: (instruction: Instruction, index: number) => void;
-  postRequest: (option: Option) => void;
   manageInstructions: any
 }
 
@@ -31,7 +30,7 @@ type InstructionManager = {
  * InstructionsArea -> InstructionManager -> ComboboxDropdown
  */
 
-function InstructionManager({ index, name, handleOptionChange, options, handleAdd, postRequest, manageInstructions }: InstructionManager) {
+function InstructionManager({ index, name, handleOptionChange, options, handleAdd, manageInstructions }: InstructionManager) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Instruction>()
 
