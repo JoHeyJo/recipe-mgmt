@@ -39,9 +39,18 @@ function InstructionsArea() {
   }
 
   /** Consolidates selection functionality */
-  function handleSelected(instruction: Instruction, index: number){
-    addInstruction(instruction, index)
+  function handleSelected(instruction: Instruction, index: number) {
+    // addInstruction(instruction, index)
+    filterInstructions(index)
 
+  }
+
+  function filterInstructions(index: number) {
+    setInstructions(i => {
+      const updatedInstructions = [...i]
+      updatedInstructions.splice(index, 1)
+      return updatedInstructions
+    })
   }
 
   /** Create additional input field for new instruction */
@@ -51,7 +60,7 @@ function InstructionsArea() {
 
   /** Request to create new instruction */
   async function addIngredient(ingredient: Ingredient) {
-    try{
+    try {
       const id = await API.postIngredient(ingredient);
       return id
     } catch (error: any) {
@@ -61,7 +70,7 @@ function InstructionsArea() {
 
   /** Consolidates logic pertaining to adding instructions */
   const manageInstructions = {
-    postIngredient:addIngredient,
+    postIngredient: addIngredient,
     handleAdd: addInstruction,
     createInstructionInput,
     updateInstructionSelection,
@@ -72,12 +81,12 @@ function InstructionsArea() {
 
   /** Populate instruction area on mount */
   useEffect(() => {
-    async function fetchInstructions(){
+    async function fetchInstructions() {
       const res = await API.getInstructions()
       setInstructions(res);
     }
     fetchInstructions()
-  },[])
+  }, [])
 
   return (
     <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
@@ -87,7 +96,7 @@ function InstructionsArea() {
           index={index}
           name={i}
           handleOptionChange={() => { }}
-          options={instructions.filter(i => typeof i.id === "number")}
+          options={instructions}
           manageInstructions={manageInstructions} />
       )}
     </div>
