@@ -10,20 +10,38 @@ const InstructionsTemplate: Instructions = []
 
 /** InstructionsArea
  * 
- * Dynamically renders list of instructions 
+ * Dynamically renders list of instructions - filters out selected options
  * 
  * AddRecipe -> InstructionsArea -> InstructionsManager
  */
 function InstructionsArea() {
   const [instructions, setInstructions] = useState<Instruction[]>([]);
+  const [selectedInstructions, setSelectedInstructions] = useState<Instruction[]>([]);
 
-  /** Add instruction to state */
+  /** Add selected instruction to incoming data set  */
   function addInstruction(instruction: Instruction, index: number) {
     setInstructions((i: Instruction[]) => {
       const updatedInstructions = [...i];
-      updatedInstructions[index] = instruction;
+      updatedInstructions.push(instruction);
       return updatedInstructions;
     })
+  }
+
+  /** Update selected instructions */
+  function updateInstructionSelection(instruction: Instruction, index: number) {
+    setSelectedInstructions((i: Instruction[]) => {
+      const updatedInstructions = [...i];
+      // updatedInstructions.splice(index + 1, 1)
+      // console.log("updatedInstructions", updatedInstructions)
+      updatedInstructions.push(instruction);
+      return updatedInstructions;
+    })
+  }
+
+  /** Consolidates selection functionality */
+  function handleSelected(instruction: Instruction, index: number){
+    addInstruction(instruction, index)
+
   }
 
   /** Create additional input field for new instruction */
@@ -45,10 +63,12 @@ function InstructionsArea() {
   const manageInstructions = {
     postIngredient:addIngredient,
     handleAdd: addInstruction,
-    newInstructionInput: createInstructionInput
+    createInstructionInput,
+    updateInstructionSelection,
+    handleSelected
   }
 
-  // already add instructions should not be shown....
+  // already added instructions should not be shown....
 
   /** Populate instruction area on mount */
   useEffect(() => {
@@ -68,7 +88,6 @@ function InstructionsArea() {
           name={i}
           handleOptionChange={() => { }}
           options={instructions.filter(i => typeof i.id === "number")}
-          handleAdd={addInstruction}
           manageInstructions={manageInstructions} />
       )}
     </div>

@@ -19,7 +19,6 @@ type InstructionManager = {
   name: string;
   handleOptionChange: (state: string, option: Instruction) => void;
   options: Instructions;
-  handleAdd: (instruction: Instruction, index: number) => void;
   manageInstructions: any
 }
 
@@ -30,13 +29,13 @@ type InstructionManager = {
  * InstructionsArea -> InstructionManager -> ComboboxDropdown
  */
 
-function InstructionManager({ index, name, handleOptionChange, options, handleAdd, manageInstructions }: InstructionManager) {
+function InstructionManager({ index, name, handleOptionChange, options, manageInstructions }: InstructionManager) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Instruction>()
 
   /** Creates a list of filtered options based on search query */
   const filteredOptions: Instruction[] =
-  query === ''
+    query === ''
       ? options
       : filterOptions();
 
@@ -59,14 +58,17 @@ function InstructionManager({ index, name, handleOptionChange, options, handleAd
 
   /** Handles parent state update when changes are made to combobox */
   async function handleChange(option: any) {
-    console.log("option handleChange",option)
-    if (option.id.startsWith("create-") && option.instruction === '+ create...') {
+    console.log("option handleChange", option)
+    if (typeof option.id === "string" && option.instruction === '+ create...') {
       // create new input field when only one input field is left
-      if (index === options.length - 2) manageInstructions.newInstructionInput()
+      if (index === options.length - 2) manageInstructions.createInstructionInput()
       // new object needs to have query string injected as a value
       option.instruction = query;
       option = await manageInstructions.postIngredient(option)
-      handleAdd(option, index)
+      manageInstructions.handleSelected(option, index)
+    } else {
+      // manageInstructions.updateInstructionSelection(option, index)
+      manageInstructions.handleSelected(option, index)
     }
     setSelected(option);
   };
