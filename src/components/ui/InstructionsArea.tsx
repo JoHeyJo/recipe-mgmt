@@ -67,7 +67,7 @@ function InstructionsArea() {
           index={index}
           name={i}
           handleOptionChange={() => { }}
-          options={instructions.filter(i => typeof i.id !== "number")}
+          options={instructions.filter(i => typeof i.id === "number")}
           handleAdd={addInstruction}
           manageInstructions={manageInstructions} />
       )}
