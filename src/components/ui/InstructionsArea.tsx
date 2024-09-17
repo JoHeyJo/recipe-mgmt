@@ -15,7 +15,7 @@ const InstructionsTemplate: Instructions = []
  * AddRecipe -> InstructionsArea -> InstructionsManager
  */
 function InstructionsArea() {
-  const [instructions, setInstructions] = useState<Instruction[]>([]);
+  const [instructions, setInstructions] = useState({});
   const [selectedInstructions, setSelectedInstructions] = useState<Instruction[]>([]);
 
   /** Add selected instruction to incoming data set  */
@@ -39,16 +39,21 @@ function InstructionsArea() {
   }
 
   /** Consolidates selection functionality */
-  function handleSelected(instruction: Instruction, index: number) {
+  function handleSelected(instruction: Instruction, arrayKey: number, elementIndex: number) {
     // addInstruction(instruction, index)
-    filterInstructions(index)
+    filterInstructions(arrayKey, elementIndex)
 
   }
 
-  function filterInstructions(index: number) {
+  function filterInstructions(arrayKey: number, elementIndex: number) {
     setInstructions(i => {
-      const updatedInstructions = [...i]
-      updatedInstructions.splice(index, 1)
+      const updatedInstructions = {...i}
+      for(let key in updatedInstructions){
+        if(+key !== arrayKey){
+        updatedInstructions[key] = [...updatedInstructions[key]]
+          updatedInstructions[key].splice(elementIndex, 1)
+        }
+      }
       return updatedInstructions
     })
   }
@@ -77,18 +82,16 @@ function InstructionsArea() {
     handleSelected
   }
 
-  // already added instructions should not be shown....
-
   /** Populate instruction area on mount */
   useEffect(() => {
     async function fetchInstructions() {
       const res = await API.getInstructions()
       setInstructions((prevInstructions: any) => {
-        const newInstructions = { ...prevInstructions }; // Make a shallow copy of the previous state
+        const newInstructions = { ...prevInstructions }; 
         [1, 2, 3].forEach(i => {
-          newInstructions[i] = res; // Update the copied object
+          newInstructions[i] = res; 
         });
-        return newInstructions; // Return the new object
+        return newInstructions; 
       });
     }
     fetchInstructions()
@@ -99,10 +102,10 @@ function InstructionsArea() {
       {placeHolder.map((i, index) =>
         <InstructionManager
           key={index}
-          index={index}
+          arrayKey={index + 1}
           name={i}
           handleOptionChange={() => { }}
-          options={instructions}
+          options={instructions[index + 1] || []}
           manageInstructions={manageInstructions} />
       )}
     </div>

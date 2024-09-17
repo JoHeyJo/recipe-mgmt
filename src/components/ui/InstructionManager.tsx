@@ -15,7 +15,7 @@ function classNames(...classes: any) {
 }
 
 type InstructionManager = {
-  index: number;
+  arrayKey: number;
   name: string;
   // handleOptionChange: (state: string, option: Instruction) => void;
   handleOptionChange: any
@@ -30,10 +30,10 @@ type InstructionManager = {
  * InstructionsArea -> InstructionManager -> ComboboxDropdown
  */
 
-function InstructionManager({ index, name, handleOptionChange, options, manageInstructions }: InstructionManager) {
+function InstructionManager({ arrayKey, name, handleOptionChange, options, manageInstructions }: InstructionManager) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Instruction>()
-  console.log("options",options)
+
   /** Creates a list of filtered options based on search query */
   const filteredOptions: Instruction[] =
     query === ''
@@ -48,7 +48,6 @@ function InstructionManager({ index, name, handleOptionChange, options, manageIn
       return options.reduce<Instruction[]>((currentOptions, option) => {
         const isOptionAvailable = option.instruction.toLowerCase().includes(query.toLowerCase());
         if (isOptionAvailable) currentOptions.push(option);
-
         //renders "+ create" option if query value doesn't exist in the dropdown options
         if (currentOptions.length < 1 && !isOptionAvailable)
           currentOptions.push({ id: `create-${Math.random()}`, instruction: '+ create...' });
@@ -58,32 +57,32 @@ function InstructionManager({ index, name, handleOptionChange, options, manageIn
   }
 
   /** Handles parent state update when changes are made to combobox */
-  async function handleChange(option: any) {
+  async function handleChange(option: any, index: number) {
     if (typeof option.id === "string" && option.instruction === '+ create...') {
       // create new input field when only one input field is left
-      if (index === options.length - 2) manageInstructions.createInstructionInput()
-      // new object needs to have query string injected as a value
-      option.instruction = query;
-      option = await manageInstructions.postIngredient(option)
-      manageInstructions.handleSelected(option, index)
+      if (arrayKey === options.length - 2) manageInstructions.createInstructionInput()
+      // new object needs to have query string injected as a value«
+      const newOption = { ...option, instruction: query };
+      const createdOption = await manageInstructions.postIngredient(newOption);
+      // manageInstructions.handleSelected(createdOption, index)
+      setSelected(createdOption);
     } else {
-          console.log("option handleChange", option)
       // manageInstructions.updateInstructionSelection(option, index)
-      manageInstructions.handleSelected(option, index)
+      manageInstructions.handleSelected(option, arrayKey, index)
+      setSelected(option);
     }
-    setSelected(option);
   };
 
   /** Consolidates actions taken when dropdown value is selected  */
-  function onValueSelect(value: any) {
+  function onValueSelect(value: any, index: number) {
     setQuery('')
-    handleChange(value)
+    handleChange(value, index)
   }
 
   /** Adds ingredient to parent component when an ingredient is selected  */
   useEffect(() => {
     selected && handleOptionChange(name, selected);
-  }, [selected, options]);
+  }, [selected]);
 
   return (
     <>

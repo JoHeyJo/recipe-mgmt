@@ -60,9 +60,9 @@ function ComboboxDropdown({ name, handleQuery, onValueSelect, filteredOptions, s
 
         {filteredOptions.length > 0 && (
           <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm overflow-y-auto">
-            {filteredOptions.map((option) => (
+            {filteredOptions.map((option, index) => (
               <Combobox.Option
-                onClick={() => onValueSelect(option)}
+                onClick={() => onValueSelect(option, index)}
                 key={option.id}
                 value={option}
                 className={({ active }) =>
