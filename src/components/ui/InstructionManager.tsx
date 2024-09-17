@@ -17,7 +17,8 @@ function classNames(...classes: any) {
 type InstructionManager = {
   index: number;
   name: string;
-  handleOptionChange: (state: string, option: Instruction) => void;
+  // handleOptionChange: (state: string, option: Instruction) => void;
+  handleOptionChange: any
   options: Instructions;
   manageInstructions: any
 }
@@ -32,7 +33,7 @@ type InstructionManager = {
 function InstructionManager({ index, name, handleOptionChange, options, manageInstructions }: InstructionManager) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Instruction>()
-
+  console.log("options",options)
   /** Creates a list of filtered options based on search query */
   const filteredOptions: Instruction[] =
     query === ''
@@ -66,7 +67,7 @@ function InstructionManager({ index, name, handleOptionChange, options, manageIn
       option = await manageInstructions.postIngredient(option)
       manageInstructions.handleSelected(option, index)
     } else {
-      console.log("1. handle selected", option)
+          console.log("option handleChange", option)
       // manageInstructions.updateInstructionSelection(option, index)
       manageInstructions.handleSelected(option, index)
     }
