@@ -57,7 +57,7 @@ function InstructionManager({ arrayKey, name, handleOptionChange, options, manag
   }
 
   /** Handles parent state update when changes are made to combobox */
-  async function handleChange(option: any, index: number) {
+  async function handleChange(option: any) {
     if (typeof option.id === "string" && option.instruction === '+ create...') {
       // create new input field when only one input field is left
       if (arrayKey === options.length - 2) manageInstructions.createInstructionInput()
@@ -68,15 +68,15 @@ function InstructionManager({ arrayKey, name, handleOptionChange, options, manag
       setSelected(createdOption);
     } else {
       // manageInstructions.updateInstructionSelection(option, index)
-      manageInstructions.handleSelected(option, arrayKey, index)
+      manageInstructions.handleSelected(option, arrayKey, option.id)
       setSelected(option);
     }
   };
 
   /** Consolidates actions taken when dropdown value is selected  */
-  function onValueSelect(value: any, index: number) {
+  function onValueSelect(value: any) {
     setQuery('')
-    handleChange(value, index)
+    handleChange(value)
   }
 
   /** Adds ingredient to parent component when an ingredient is selected  */

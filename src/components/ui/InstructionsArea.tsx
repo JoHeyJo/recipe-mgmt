@@ -39,19 +39,19 @@ function InstructionsArea() {
   }
 
   /** Consolidates selection functionality */
-  function handleSelected(instruction: Instruction, arrayKey: number, elementIndex: number) {
+  function handleSelected(instruction: Instruction, arrayKey: number, ingredientId: number) {
     // addInstruction(instruction, index)
-    filterInstructions(arrayKey, elementIndex)
+    filterInstructions(arrayKey, ingredientId)
 
   }
 
-  function filterInstructions(arrayKey: number, elementIndex: number) {
+  /** Filter selected items from subsequent arrays */
+  function filterInstructions(arrayKey: number, ingredientId: number) {
     setInstructions(i => {
       const updatedInstructions = {...i}
       for(let key in updatedInstructions){
         if(+key !== arrayKey){
-        updatedInstructions[key] = [...updatedInstructions[key]]
-          updatedInstructions[key].splice(elementIndex, 1)
+          updatedInstructions[key] = updatedInstructions[key].filter(i => i.id !== ingredientId)
         }
       }
       return updatedInstructions
