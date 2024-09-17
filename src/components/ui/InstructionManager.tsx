@@ -58,7 +58,6 @@ function InstructionManager({ index, name, handleOptionChange, options, manageIn
 
   /** Handles parent state update when changes are made to combobox */
   async function handleChange(option: any) {
-    console.log("option handleChange", option)
     if (typeof option.id === "string" && option.instruction === '+ create...') {
       // create new input field when only one input field is left
       if (index === options.length - 2) manageInstructions.createInstructionInput()
@@ -67,6 +66,7 @@ function InstructionManager({ index, name, handleOptionChange, options, manageIn
       option = await manageInstructions.postIngredient(option)
       manageInstructions.handleSelected(option, index)
     } else {
+      console.log("1. handle selected", option)
       // manageInstructions.updateInstructionSelection(option, index)
       manageInstructions.handleSelected(option, index)
     }

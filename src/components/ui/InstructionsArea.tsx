@@ -8,6 +8,10 @@ const placeHolder = ["Add ingredients...", "Add ice...", "shake..."]
 
 const InstructionsTemplate: Instructions = []
 
+type StateType = {
+  [key: number]: Instruction[];
+};
+
 /** InstructionsArea
  * 
  * Dynamically renders list of instructions - filters out selected options
@@ -15,20 +19,20 @@ const InstructionsTemplate: Instructions = []
  * AddRecipe -> InstructionsArea -> InstructionsManager
  */
 function InstructionsArea() {
-  const [instructions, setInstructions] = useState<Instruction[]>([]);
+  const [instructions, setInstructions] = useState<StateType>();
   const [selectedInstructions, setSelectedInstructions] = useState<Instruction[]>([]);
 
   /** Add selected instruction to incoming data set  */
-  function addInstruction(instruction: Instruction, index: number) {
-    setInstructions((i: Instruction[]) => {
-      const updatedInstructions = [...i];
-      updatedInstructions.push(instruction);
-      return updatedInstructions;
-    })
+  function addInstruction(instruction: Instruction) {
+  //   setInstructions((i: Instruction[]) => {
+  //     const updatedInstructions = [...i];
+  //     updatedInstructions.push(instruction);
+  //     return updatedInstructions;
+  //   })
   }
 
   /** Update selected instructions */
-  function updateInstructionSelection(instruction: Instruction, index: number) {
+  function updateInstructionSelection(instruction: Instruction) {
     setSelectedInstructions((i: Instruction[]) => {
       const updatedInstructions = [...i];
       // updatedInstructions.splice(index + 1, 1)
@@ -38,24 +42,27 @@ function InstructionsArea() {
     })
   }
 
-  /** Consolidates selection functionality */
+  /** Consolidates selection functionality*/
   function handleSelected(instruction: Instruction, index: number) {
-    // addInstruction(instruction, index)
     filterInstructions(index)
-
+    updateInstructionSelection(instruction)
   }
 
+  /**Consolidates creation functionality */
+  function handleCreated(instruction: Instruction){}
+
   function filterInstructions(index: number) {
-    setInstructions(i => {
-      const updatedInstructions = [...i]
-      updatedInstructions.splice(index, 1)
-      return updatedInstructions
-    })
+    console.log("2. filter instruction", index)
+    // setInstructions(i => {
+    //   const updatedInstructions = [...i]
+    //   updatedInstructions.splice(index, 1)
+    //   return updatedInstructions
+    // })
   }
 
   /** Create additional input field for new instruction */
   function createInstructionInput() {
-    setInstructions((i: Instruction[]) => [...i, { id: "temp-", instruction: "some other thing..." }])
+  //   setInstructions((i: Instruction[]) => [...i, { id: "temp-", instruction: "some other thing..." }])
   }
 
   /** Request to create new instruction */
