@@ -17,6 +17,7 @@ const InstructionsTemplate: Instructions = []
 function InstructionsArea() {
   const [instructions, setInstructions] = useState({});
   const [selectedInstructions, setSelectedInstructions] = useState<Instruction[]>([]);
+  const [selectedIds, setSelectedIds] = useState([]);
 
   /** Add selected instruction to incoming data set  */
   function addInstruction(instruction: Instruction, index: number) {
@@ -41,7 +42,8 @@ function InstructionsArea() {
   /** Consolidates selection functionality */
   function handleSelected(instruction: Instruction, arrayKey: number, ingredientId: number) {
     // addInstruction(instruction, index)
-    filterInstructions(arrayKey, ingredientId)
+    setSelectedIds(ingredientIds => [...ingredientIds,ingredientId])
+    // filterInstructions(arrayKey, ingredientId)
 
   }
 
