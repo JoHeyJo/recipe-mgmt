@@ -15,9 +15,14 @@ const InstructionsTemplate: Instructions = []
  * AddRecipe -> InstructionsArea -> InstructionsManager
  */
 function InstructionsArea() {
-  const [instructions, setInstructions] = useState({});
+  const [instructions, setInstructions] = useState([]);
   const [selectedInstructions, setSelectedInstructions] = useState<Instruction[]>([]);
-  const [selectedIds, setSelectedIds] = useState([]);
+  const [filterKey, setFilterKeys] = useState({});
+  const [arrayKeys, setArrayKey] = useState({});
+
+  // function updateArrayKeys(){
+  //   setArrayKey()
+  // }
 
   /** Add selected instruction to incoming data set  */
   function addInstruction(instruction: Instruction, index: number) {
@@ -40,19 +45,20 @@ function InstructionsArea() {
   }
 
   /** Consolidates selection functionality */
-  function handleSelected(instruction: Instruction, arrayKey: number, ingredientId: number) {
-    // addInstruction(instruction, index)
-    setSelectedIds(ingredientIds => [...ingredientIds,ingredientId])
-    // filterInstructions(arrayKey, ingredientId)
-
+  function handleSelected(instruction: Instruction, keys, ingredientId: number) {
+    setFilterKeys(prevKeys => {
+      const updatedKeys = { ...prevKeys }
+      const newKeySet = { [keys[0]] : keys[1]}
+      return { ...updatedKeys, ...newKeySet }
+    })
   }
 
   /** Filter selected items from subsequent arrays */
   function filterInstructions(arrayKey: number, ingredientId: number) {
     setInstructions(i => {
-      const updatedInstructions = {...i}
-      for(let key in updatedInstructions){
-        if(+key !== arrayKey){
+      const updatedInstructions = { ...i }
+      for (let key in updatedInstructions) {
+        if (+key !== arrayKey) {
           updatedInstructions[key] = updatedInstructions[key].filter(i => i.id !== ingredientId)
         }
       }
@@ -88,13 +94,7 @@ function InstructionsArea() {
   useEffect(() => {
     async function fetchInstructions() {
       const res = await API.getInstructions()
-      setInstructions((prevInstructions: any) => {
-        const newInstructions = { ...prevInstructions }; 
-        [1, 2, 3].forEach(i => {
-          newInstructions[i] = res; 
-        });
-        return newInstructions; 
-      });
+      setInstructions(res)
     }
     fetchInstructions()
   }, [])
@@ -104,10 +104,14 @@ function InstructionsArea() {
       {placeHolder.map((i, index) =>
         <InstructionManager
           key={index}
-          arrayKey={index + 1}
+          arrayKey={index}
           name={i}
           handleOptionChange={() => { }}
-          options={instructions[index + 1] || []}
+          options={instructions.filter((i) => {
+            // if (!filterKey[index]) return
+            if(!filterKey[index])
+            return !filterKey[index]
+          })}
           manageInstructions={manageInstructions} />
       )}
     </div>

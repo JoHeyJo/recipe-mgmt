@@ -34,6 +34,7 @@ function InstructionManager({ arrayKey, name, handleOptionChange, options, manag
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Instruction>()
 
+
   /** Creates a list of filtered options based on search query */
   const filteredOptions: Instruction[] =
     query === ''
@@ -68,8 +69,9 @@ function InstructionManager({ arrayKey, name, handleOptionChange, options, manag
       setSelected(createdOption);
     } else {
       // manageInstructions.updateInstructionSelection(option, index)
-      manageInstructions.handleSelected(option, arrayKey, option.id)
-      setSelected(option);
+      // passing filters keys in array to later be constructed as key value pair
+      manageInstructions.handleSelected(option, [arrayKey, option.id ])
+      setSelected(option)
     }
   };
 
