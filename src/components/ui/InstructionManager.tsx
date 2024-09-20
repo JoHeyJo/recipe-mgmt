@@ -33,6 +33,10 @@ type InstructionManager = {
 function InstructionManager({ arrayKey, name, handleOptionChange, options, manageInstructions }: InstructionManager) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Instruction>()
+  console.log(arrayKey, options.length - 2)
+
+  if (arrayKey === options.length - 2) manageInstructions.createInstructionInput()
+
 
 
   /** Creates a list of filtered options based on search query */
@@ -61,22 +65,22 @@ function InstructionManager({ arrayKey, name, handleOptionChange, options, manag
   async function handleChange(option: any) {
     if (typeof option.id === "string" && option.instruction === '+ create...') {
       // create new input field when only one input field is left
-      if (arrayKey === options.length - 2) manageInstructions.createInstructionInput()
       // new object needs to have query string injected as a value«
       const newOption = { ...option, instruction: query };
       const createdOption = await manageInstructions.postIngredient(newOption);
-      // manageInstructions.handleSelected(createdOption, index)
+      manageInstructions.handleSelected(createdOption)
       setSelected(createdOption);
     } else {
       // manageInstructions.updateInstructionSelection(option, index)
       // passing filters keys in array to later be constructed as key value pair
-      manageInstructions.handleSelected(option, [arrayKey, option.id ])
+      manageInstructions.handleSelected(option, [arrayKey, option.id])
       setSelected(option)
     }
   };
 
   /** Consolidates actions taken when dropdown value is selected  */
   function onValueSelect(value: any) {
+    if (arrayKey === options.length - 2) manageInstructions.createInstructionInput()
     setQuery('')
     handleChange(value)
   }

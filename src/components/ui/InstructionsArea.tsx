@@ -20,10 +20,6 @@ function InstructionsArea() {
   const [filterKey, setFilterKeys] = useState({});
   const [arrayKeys, setArrayKey] = useState({});
 
-  // function updateArrayKeys(){
-  //   setArrayKey()
-  // }
-
   /** Add selected instruction to incoming data set  */
   function addInstruction(instruction: Instruction, index: number) {
     setInstructions((i: Instruction[]) => {
@@ -34,18 +30,24 @@ function InstructionsArea() {
   }
 
   /** Update selected instructions */
-  function updateInstructionSelection(instruction: Instruction, index: number) {
+  function updateInstructionSelection(instruction: Instruction) {
     setSelectedInstructions((i: Instruction[]) => {
       const updatedInstructions = [...i];
-      // updatedInstructions.splice(index + 1, 1)
-      // console.log("updatedInstructions", updatedInstructions)
       updatedInstructions.push(instruction);
       return updatedInstructions;
     })
   }
 
+  /** Remove unselected instruction */
+  function removeInstruction(removedInstruction: Instruction) {
+    setSelectedInstructions(instructions => 
+      instructions.filter(instruction => instruction.id === removedInstruction.id)
+    )
+  }
+
   /** Consolidates selection functionality */
   function handleSelected(instruction: Instruction, keys, ingredientId: number) {
+    // updateInstructionSelection(instruction)
     setFilterKeys(prevKeys => {
       const updatedKeys = { ...prevKeys }
       const newKeySet = { [keys[0]]: keys[1] }
@@ -101,6 +103,7 @@ function InstructionsArea() {
       // In other dropdowns (arrayKey !== current arrayKey), filter out the selected item
       // return filterKey[instruction.id]
     })
+    
   }
 
 
