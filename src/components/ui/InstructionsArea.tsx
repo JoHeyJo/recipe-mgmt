@@ -48,21 +48,8 @@ function InstructionsArea() {
   function handleSelected(instruction: Instruction, keys, ingredientId: number) {
     setFilterKeys(prevKeys => {
       const updatedKeys = { ...prevKeys }
-      const newKeySet = { [keys[0]] : keys[1]}
+      const newKeySet = { [keys[0]]: keys[1] }
       return { ...updatedKeys, ...newKeySet }
-    })
-  }
-
-  /** Filter selected items from subsequent arrays */
-  function filterInstructions(arrayKey: number, ingredientId: number) {
-    setInstructions(i => {
-      const updatedInstructions = { ...i }
-      for (let key in updatedInstructions) {
-        if (+key !== arrayKey) {
-          updatedInstructions[key] = updatedInstructions[key].filter(i => i.id !== ingredientId)
-        }
-      }
-      return updatedInstructions
     })
   }
 
@@ -99,6 +86,29 @@ function InstructionsArea() {
     fetchInstructions()
   }, [])
 
+  /** Filter selected items from subsequent arrays */
+  // filtered down to just the elements from the given array that pass the test 
+  function filterSelected(instructions: Instructions, arrayKey: number) {
+    // If no item is selected in this dropdown, show all options
+    if (!filterKey[arrayKey]) return instructions
+
+    return instructions.filter((instruction, index) => {
+
+      if(arrayKey !== index) return filterKey[arrayKey] !== instruction.id
+      // If we are rendering the dropdown with the selected item (arrayKey matches), show all options including the selected one
+      if (filterKey[arrayKey]) return true
+
+      // In other dropdowns (arrayKey !== current arrayKey), filter out the selected item
+      // return filterKey[instruction.id]
+    })
+  }
+
+
+  // CONDITION - TESTS
+  // No selection - Array index does not exist in filterKeys AND id doesn't match selection in filterKeys 
+  // Selection input. Render self(everything) - Array index matches filterKeys
+  // Other input. Don't render selected - Array key doesn't match current index(but it can exists) AND instruction id === id in filterKeys
+
   return (
     <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
       {placeHolder.map((i, index) =>
@@ -107,11 +117,7 @@ function InstructionsArea() {
           arrayKey={index}
           name={i}
           handleOptionChange={() => { }}
-          options={instructions.filter((i) => {
-            // if (!filterKey[index]) return
-            if(!filterKey[index])
-            return !filterKey[index]
-          })}
+          options={filterSelected(instructions, index)}
           manageInstructions={manageInstructions} />
       )}
     </div>
