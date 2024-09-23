@@ -59,6 +59,9 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
 
   /** Handles parent state update when changes are made to combobox */
   async function handleChange(option: any) {
+    // clears input when characters are deleted
+    if(!option) return setSelected(null) 
+      
     if (typeof option.id === "string" && option.instruction === '+ create...') {
       // create new input field when only one input field is left
       // new object needs to have query string injected as a value«
@@ -76,7 +79,6 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
 
   /** Consolidates actions taken when dropdown value is selected  */
   function onValueSelect(value: any) {
-    console.log("valuye",value)
     // if (arrayKey === options.length - 2) manageInstructions.createInstructionInput()
     setQuery('')
     handleChange(value)
