@@ -93,13 +93,13 @@ function IngredientManager({ name, handleOptionChange, options, handleAdd, postR
 
         {filteredOptions.length > 0 && (
           <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            {filteredOptions.map((person) => (
+            {filteredOptions.map((option) => (
               <ComboboxOption
-                key={person.id}
-                value={person}
+                key={option.id}
+                value={option}
                 className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-indigo-600 data-[focus]:text-white"
               >
-                <span className="block truncate group-data-[selected]:font-semibold">{person.name}</span>
+                <span className="block truncate group-data-[selected]:font-semibold">{option[name]}</span>
 
                 <span className="absolute inset-y-0 right-0 hidden items-center pr-4 text-indigo-600 group-data-[selected]:flex group-data-[focus]:text-white">
                   <CheckIcon className="h-5 w-5" aria-hidden="true" />

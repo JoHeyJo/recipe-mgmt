@@ -18,7 +18,7 @@ type AddRecipe = {
 
 const recipeTemplate: Recipe = {
   name: "",
-  preparation: [],
+  instructions: [],
   notes: [],
   ingredients: []
 }

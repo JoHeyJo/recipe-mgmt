@@ -7,7 +7,7 @@ export type RecipeData = Recipe & {
 
 export type Recipe = {
   name: string,
-  preparation: string[],
+  instructions: string[],
   notes: string[],
   ingredients: Ingredient[]
 }

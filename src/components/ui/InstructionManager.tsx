@@ -31,36 +31,53 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Instruction>()
 
+  if (arrayKey === options.length - 2) manageInstructions.createInstructionInput()
+
+
+
   /** Creates a list of filtered options based on search query */
-  const filteredOptions =
+  const filteredOptions: Instruction[] =
     query === ''
       ? options
-      : options.reduce<Instructions>((currentOptions, option) => {
+      : filterOptions();
+
+  /** Filters options => all options / matching options / no match or no options = create... */
+  function filterOptions() {
+    if (options.length === 0) {
+      return [{ id: `create-${Math.random()}`, instruction: '+ create...' }];
+    } else {
+      return options.reduce<Instruction[]>((currentOptions, option) => {
         const isOptionAvailable = option.instruction.toLowerCase().includes(query.toLowerCase());
         if (isOptionAvailable) currentOptions.push(option);
-
         //renders "+ create" option if query value doesn't exist in the dropdown options
         if (currentOptions.length < 1 && !isOptionAvailable)
           currentOptions.push({ id: `create-${Math.random()}`, instruction: '+ create...' });
         return currentOptions;
       }, []);
-
+    }
+  }
 
   /** Handles parent state update when changes are made to combobox */
-  function handleChange(option: any) {
-    if (option.id.startsWith("create-") && option.instruction === '+ create...') {
+  async function handleChange(option: any) {
+    if (typeof option.id === "string" && option.instruction === '+ create...') {
       // create new input field when only one input field is left
-      if (index === options.length - 2) manageInstructions.newInstructionInput()
-      // new object needs to have query string injected as a value
-      option.instruction = query;
-      // option = postRequest(option);
-      // handleAdd(option, index)
+      // new object needs to have query string injected as a value«
+      const newOption = { ...option, instruction: query };
+      const createdOption = await manageInstructions.postIngredient(newOption);
+      manageInstructions.handleSelected(createdOption)
+      setSelected(createdOption);
+    } else {
+      // manageInstructions.updateInstructionSelection(option, index)
+      // passing filters keys in array to later be constructed as key value pair
+      manageInstructions.handleSelected(option, [arrayKey, option.id])
+      setSelected(option)
     }
-    setSelected(option);
   };
 
   /** Consolidates actions taken when dropdown value is selected  */
   function onValueSelect(value: any) {
+    console.log("valuye",value)
+    // if (arrayKey === options.length - 2) manageInstructions.createInstructionInput()
     setQuery('')
     handleChange(value)
   }
@@ -68,17 +85,15 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
   /** Adds ingredient to parent component when an ingredient is selected  */
   useEffect(() => {
     selected && handleOptionChange(name, selected);
-  }, [selected, options]);
+  }, [selected]);
+
 
   return (
     <>
       <Combobox
         as="div"
-        value={selected}
-        onChange={(person) => {
-          setQuery('')
-          setSelected(person)
-        }}
+        value={selected || { id: null, instruction: '' }}
+        onChange={onValueSelect}
       >
         <div className="relative mt-2">
           <ComboboxInput
