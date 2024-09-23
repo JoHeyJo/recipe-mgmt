@@ -96,7 +96,7 @@ function InstructionsArea() {
 
     return instructions.filter((instruction, index) => {
 
-      if(arrayKey !== index) return filterKey[arrayKey] !== instruction.id
+      // if(arrayKey !== index) return filterKey[arrayKey] !== instruction.id
       // If we are rendering the dropdown with the selected item (arrayKey matches), show all options including the selected one
       if (filterKey[arrayKey]) return true
 
@@ -107,10 +107,7 @@ function InstructionsArea() {
   }
 
 
-  // CONDITION - TESTS
-  // No selection - Array index does not exist in filterKeys AND id doesn't match selection in filterKeys 
-  // Selection input. Render self(everything) - Array index matches filterKeys
-  // Other input. Don't render selected - Array key doesn't match current index(but it can exists) AND instruction id === id in filterKeys
+
 
   return (
     <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
