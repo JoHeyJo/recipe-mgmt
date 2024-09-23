@@ -11,10 +11,6 @@ function uniqueID() {
 
 const unique: any = () => Math.random()
 
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(' ')
-}
-
 type InstructionManager = {
   index: number;
   name: string;
@@ -76,7 +72,6 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
 
   return (
     <>
-      {/* <ComboboxDropdown name={name} handleQuery={setQuery} onValueSelect={onValueSelect} filteredOptions={filteredOptions} selected={selected} /> */}
       <Combobox
         as="div"
         value={selected}
