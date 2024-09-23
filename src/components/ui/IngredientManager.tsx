@@ -1,6 +1,4 @@
 import { useState, useEffect, ChangeEvent } from 'react'
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-import { Combobox } from '@headlessui/react'
 import { Option } from '../../utils/types';
 import ComboboxDropdown from './ComboboxDropdown';
 
