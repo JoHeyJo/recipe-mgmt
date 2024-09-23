@@ -114,11 +114,12 @@ function InstructionsArea() {
       {placeHolder.map((i, index) =>
         <InstructionManager
           key={index}
-          // arrayKey={index}
-          // name={i}
-          // handleOptionChange={() => { }}
-          // options={filterSelected(instructions, index)}
-          // manageInstructions={manageInstructions} 
+          index={index}
+          arrayKey={index}
+          name={i}
+          handleOptionChange={() => { }}
+          options={filterSelected(instructions, index)}
+          manageInstructions={manageInstructions} 
           />
       )}
     </div>

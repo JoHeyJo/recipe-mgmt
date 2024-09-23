@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-import { Combobox } from '@headlessui/react'
+import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions, Label } from '@headlessui/react'
 import { Option, Instruction, Manager } from '../../utils/types';
 
 function classNames(...classes: any) {
@@ -45,7 +45,7 @@ function ComboboxDropdown({ name, handleQuery, onValueSelect, filteredOptions, s
     <Combobox as="div" value={selected || ""}>
       {/* <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">Assigned to</Combobox.Label> */}
       <div className="relative">
-        <Combobox.Input
+        <ComboboxInput
           onBlur={() => handleQuery('')}
           placeholder={name}
           className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -56,14 +56,14 @@ function ComboboxDropdown({ name, handleQuery, onValueSelect, filteredOptions, s
           }}
           name={name as string}
         />
-        <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
+        <ComboboxButton className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
           <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-        </Combobox.Button>
+        </ComboboxButton>
 
         {filteredOptions.length > 0 && (
-          <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm overflow-y-auto">
+          <ComboboxOptions className="absolute z-20 mt-1 max-h-60 w-full rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm overflow-y-auto">
             {filteredOptions.map((option, index) => (
-              <Combobox.Option
+              <ComboboxOption
                 onClick={() => onValueSelect(option, index)}
                 key={option.id}
                 value={option}
@@ -93,9 +93,9 @@ function ComboboxDropdown({ name, handleQuery, onValueSelect, filteredOptions, s
                     )}
                   </>
                 )}
-              </Combobox.Option>
+              </ComboboxOption>
             ))}
-          </Combobox.Options>
+          </ComboboxOptions>
         )}
       </div>
     </Combobox>
