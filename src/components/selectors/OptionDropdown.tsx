@@ -30,12 +30,13 @@ type OptionDropdown = {
 
 function OptionDropdown({ name, handleOptionChange, options, handleAddOption }: OptionDropdown) {
   /** Request to create new ingredient option */
-  async function addOption(option: Option) {
+  async function addOption(option: Option): Promise<Option>   {
     try {
       const id = await API.postOption(option, name);
       return id;
     } catch (error: any) {
       errorHandling("OptionDropdown - addOption", error)
+      throw error
     }
   }
 

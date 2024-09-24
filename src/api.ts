@@ -46,9 +46,7 @@ class API {
 
   /** Add ingredient option to database */
   static async postOption(data: Option, option: string) {
-    console.log("IN:", data)
     const res = await this.request(`options/${option}`, data, "POST")
-    console.log("OUT:", res)
     return res;
   }
 
@@ -65,9 +63,8 @@ class API {
   }
 
   /** Post ingredient to database */
-  static async postIngredient(ingredient: Ingredient) {
-    console.log("post ingredient", ingredient)
-    const res = await this.request("/instructions/instruction", ingredient, "POST")
+  static async postIngredient(data: Ingredient) {
+    const res = await this.request("/instructions/instruction", data, "POST")
     return res
   }
 }

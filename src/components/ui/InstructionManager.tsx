@@ -50,6 +50,7 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
 
   /** Injects query string prior to POST request and updates parent state  */
   async function processNewOption(option: Instruction) {
+    // option id will need to be changed to null along with the query inject
     const newOption = { ...option, instruction: query };
     const createdOption = await handleInstructions.addIngredient(newOption);
     handleInstructions.addInstruction(createdOption)

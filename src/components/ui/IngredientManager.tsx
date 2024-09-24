@@ -8,7 +8,7 @@ type IngredientManager = {
   handleOptionChange: (state: string, option: Option) => void;
   options: Option[];
   handleAdd: (state: string, option: Option) => void
-  postRequest: (option: Option) => void;
+  postRequest: (option: Option) => Promise<Option>;
 }
 
 /** IngredientManager - ring is removed 
@@ -47,13 +47,10 @@ function IngredientManager({ name, handleOptionChange, options, handleAdd, postR
 
   /** Handles parent state update when selection is made in combobox */
   async function handleChange(option: any) {
-    console.log("option", option)
-    if (option.id.startsWith("create-") && option[name] === '+ create...') {
-      // new object needs to have query string injected as a value
-      option[name] = query;
-      option = await postRequest(option);
-      console.log("handle change", option)
-      handleAdd(name, option)
+    if (typeof option.id === "string" && option[name] === '+ create...') {
+      const newOption = {...option, id: null, [name]: query }
+      const createdOption = await postRequest(newOption);
+      handleAdd(name, createdOption)
     }
     setSelected(option);
   };
@@ -73,7 +70,7 @@ function IngredientManager({ name, handleOptionChange, options, handleAdd, postR
   return (
     <Combobox
       as="div"
-      value={selected}
+      value={selected || ""}
       onChange={onValueSelect}>
       <div className="relative mt-2">
         <ComboboxInput

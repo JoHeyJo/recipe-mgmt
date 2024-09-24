@@ -81,6 +81,7 @@ function InstructionsArea({ handleUpdate }: InstructionArea) {
       return id
     } catch (error: any) {
       errorHandling("InstructionsArea - addIngredient", error)
+      throw error
     }
   }
 
