@@ -4,9 +4,13 @@ import InstructionManager from "./InstructionManager";
 import API from "../../api";
 import { errorHandling } from '../../utils/ErrorHandling';
 
-const placeHolder = ["Add ingredients...", "Add ice...", "shake..."]
+const PLACE_HOLDER = ["Add ingredients...", "Add ice...", "shake..."]
 
 const InstructionsTemplate: Instructions = []
+
+type InstructionArea = {
+  handleUpdate: (instructions: Instructions, section: string) => void;
+}
 
 /** InstructionsArea
  * 
@@ -14,7 +18,7 @@ const InstructionsTemplate: Instructions = []
  * 
  * AddRecipe -> InstructionsArea -> InstructionsManager
  */
-function InstructionsArea() {
+function InstructionsArea({ handleUpdate }: InstructionArea) {
   const [instructions, setInstructions] = useState([]);
   const [selectedInstructions, setSelectedInstructions] = useState<Instruction[]>([]);
   const [filterKey, setFilterKeys] = useState({});
@@ -33,9 +37,9 @@ function InstructionsArea() {
     setSelectedInstructions((i: Instruction[]) => {
       const updatedInstructions = [...i];
       updatedInstructions[arrayKey] = instruction;
-      console.log(updatedInstructions)
       return updatedInstructions;
     })
+    if(selectedInstructions.length >= 2) createInstructionInput()
   }
 
   /** Remove unselected instruction */
@@ -65,7 +69,9 @@ function InstructionsArea() {
 
   /** Create additional input field for new instruction */
   function createInstructionInput() {
-    setInstructions((i: Instruction[]) => [...i, { id: "temp-", instruction: "some other thing..." }])
+    console.log("creating new input")
+    // setInstructions((i: Instruction[]) => [...i, { id: "temp-", instruction: "some other thing..." }])
+    PLACE_HOLDER.push("some other thing...")
   }
 
   /** Request to create new instruction */
@@ -116,9 +122,12 @@ function InstructionsArea() {
 
   }
 
+  useEffect(() =>{
+    handleUpdate(selectedInstructions, "instructions")
+  })
   return (
     <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
-      {placeHolder.map((i, index) =>
+      {PLACE_HOLDER.map((i, index) =>
         <InstructionManager
           key={index}
           index={index}

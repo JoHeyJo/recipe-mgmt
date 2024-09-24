@@ -2,7 +2,7 @@ import { Fragment, useState } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/24/outline'
 import IngredientsGroup from '../selectors/IngredientsGroup';
-import { Ingredient, Recipe } from '../../utils/types';
+import { Ingredient, Instructions, Recipe } from '../../utils/types';
 import InputWithLabel from '../ui/InputWithLabel'
 import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
@@ -34,7 +34,7 @@ function AddRecipe({ setShowing, isOpen }: AddRecipe) {
   const isLargeScreen = useMediaQuery({ query: '(min-width: 1024px)' }); // lg breakpoint in Tailwind
 
   /** Updates recipe state */
-  function updateRecipe(data: string | Ingredient[], section: string) {
+  function updateRecipe(data: string | Ingredient[] | Instructions, section: string) {
     setRecipe(prevRecipe => (
       { ...prevRecipe, [section]: data }
     ));
@@ -83,7 +83,7 @@ function AddRecipe({ setShowing, isOpen }: AddRecipe) {
                     <IngredientsGroup handleUpdate={updateRecipe} />
                   </section>
                   <section id='AddRecipe-right-page' className="flex-1 ml-4 ">
-                    <InstructionsArea />
+                    <InstructionsArea handleUpdate={updateRecipe}/>
                   </section>
                 </section>
               </div>

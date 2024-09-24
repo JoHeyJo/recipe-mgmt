@@ -1,15 +1,8 @@
 
 import { useState, useEffect, ChangeEvent } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions, Label } from '@headlessui/react'
-import { Option, Instruction, Instructions, Ingredient } from '../../utils/types';
-import ComboboxDropdown from './ComboboxDropdown';
-
-function uniqueID() {
-  return Math.random();
-}
-
-const unique: any = () => Math.random()
+import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions } from '@headlessui/react'
+import { Option, Instruction, Instructions } from '../../utils/types';
 
 type InstructionManager = {
   index: number;
@@ -31,7 +24,8 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Instruction>()
 
-  if (arrayKey === options.length - 2) handleInstructions.createInstructionInput()
+  const IS_NEW_OPTION = (option: Instruction) => typeof option.id === "string" && option.instruction === '+ create...'
+
 
   /** Creates a list of filtered options based on search query */
   const filteredOptions: Instruction[] =
@@ -54,8 +48,6 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
       }, []);
     }
   }
-
-  const IS_NEW_OPTION = (option: Instruction) => typeof option.id === "string" && option.instruction === '+ create...'
 
   /** Injects query string prior to POST request and updates parent state  */
   async function processNewOption(option: Instruction) {
