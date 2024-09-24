@@ -3,30 +3,29 @@ import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
 import IngredientManager from '../ui/IngredientManager';
 
-type OptionDropdown = {
+type OptionRequests = {
   name: string
   handleOptionChange: (state: string, option: Option) => void;
   options: Option[];
-  handleAddOption: (state: string, option: Option) => void;
   handleOptions: object
 }
 
-/** OptionDropdown 
+/** OptionRequests - Consider removing. Is intermediary component to house requests necessary?
  * 
- * Option input field with capability to create new options.
  * Makes API request to create new ingredient
  * 
- * IngredientInputGroup -> OptionDropdown -> IngredientManager
+ * IngredientInputGroup -> OptionRequests -> IngredientManager
  */
 
-function OptionDropdown({ name, handleOptionChange, options, handleAddOption, handleOptions }: OptionDropdown) {
+function OptionRequests({ name, handleOptionChange, options, handleOptions }: OptionRequests) {
+
   /** Request to create new ingredient option */
   async function addOption(option: Option): Promise<Option>   {
     try {
       const id = await API.postOption(option, name);
       return id;
     } catch (error: any) {
-      errorHandling("OptionDropdown - addOption", error)
+      errorHandling("OptionRequests - addOption", error)
       throw error
     }
   }
@@ -36,10 +35,9 @@ function OptionDropdown({ name, handleOptionChange, options, handleAddOption, ha
       name={name}
       handleOptionChange={handleOptionChange}
       options={options}
-      handleAdd={handleAddOption}
       postRequest={addOption}
       handleOptions={handleOptions} />
   )
 }
 
-export default OptionDropdown;
+export default OptionRequests;

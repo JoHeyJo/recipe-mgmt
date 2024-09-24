@@ -7,7 +7,6 @@ type IngredientManager = {
   name: string
   handleOptionChange: (state: string, option: Option) => void;
   options: Option[];
-  handleAdd: (state: string, option: Option) => void
   postRequest: (option: Option) => Promise<Option>;
   handleOptions: any
 }
@@ -15,14 +14,15 @@ type IngredientManager = {
 /** IngredientManager - ring is removed 
  * 
  * Searches and filters existing ingredient options
+ * Renders input field with capability to create new options.
  * 
- * OptionDropdown -> IngredientManager
+ * OptionRequests -> IngredientManager
  */
 
-function IngredientManager({ name, handleOptionChange, options, handleAdd, postRequest, handleOptions }: IngredientManager) {
+function IngredientManager({ name, handleOptionChange, options, postRequest, handleOptions }: IngredientManager) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Option>()
-
+//SHOULD REQUESTS AND STATE MANAGMENT BE SPLIT INTO TWO OBJECTS eg handleOptions & optionRequest....
   const IS_NEW_OPTION = (option: Option) => typeof option.id === "string" && option[name] === '+ create...'
 
   /** Creates a list of filtered options based on search query */
@@ -52,17 +52,17 @@ function IngredientManager({ name, handleOptionChange, options, handleAdd, postR
   async function processNewOption(option: Option) {
     const newOption = { ...option, id: null, [name]: query }
     const createdOption = await postRequest(newOption);
-    handleAdd(name, createdOption)
+    handleOptions.addOption(name, createdOption)
     setSelected(createdOption);
   }
 
   /** Updates parent state with selected option*/
-  function processExistingOption(option: Option){
+  function processExistingOption(option: Option) {
     setSelected(option);
   }
 
   /** Consolidates actions that deselect option */
-  function processDeselect(){
+  function processDeselect() {
     handleOptions.removeDeselected(name)
     setSelected(null)
   }
@@ -70,7 +70,7 @@ function IngredientManager({ name, handleOptionChange, options, handleAdd, postR
   /** Handles parent state update when selection is made in combobox */
   function handleChange(option: any) {
     if (!option) return processDeselect();
-    IS_NEW_OPTION(option) ? processNewOption(option) : processExistingOption(option)  
+    IS_NEW_OPTION(option) ? processNewOption(option) : processExistingOption(option)
   }
 
   /** Consolidates actions taken when dropdown value is selected  */

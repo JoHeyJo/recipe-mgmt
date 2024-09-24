@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import OptionDropDown from './OptionDropdown';
+import OptionRequests from './OptionDropdown';
 import { Ingredient, Option } from '../../utils/types';
 import API from '../../api';
 
@@ -15,7 +15,7 @@ const defaultUnit = { id: null, type: "" };
 
 /** Renders Combobox and processes data for new Ingredient
  * 
- * IngredientGroup -> IngredientInputGroup -> OptionDropDown
+ * IngredientGroup -> IngredientInputGroup -> OptionRequests
 */
 function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: IngredientInputGroup) {
   const [item, setItem] = useState<Option>(defaultItem);
@@ -41,7 +41,7 @@ function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: Ingre
   }
 
   /** Handles adding options to state */
-  function addOptions(state: string, option: Option) {
+  function addOption(state: string, option: Option) {
     if (state === "name") setItems((options: Option[]) => [...options, option])
     if (state === "type") setQuantityUnits((options: Option[]) => [...options, option])
     if (state === "value") setQuantityAmounts((options: Option[]) => [...options, option])
@@ -56,7 +56,7 @@ function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: Ingre
 
   const handleOptions = {
     removeDeselected,
-    addOptions
+    addOption
   }
 
   /** Maintains parent components state synced with latest selections */
@@ -80,9 +80,9 @@ function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: Ingre
 
   return (
     <div className="flex rounded-md my-2">
-      <OptionDropDown handleOptions={handleOptions} handleOptionChange={updateState} handleAddOption={addOptions} options={quantityAmount} name={"value"} />
-      <OptionDropDown handleOptions={handleOptions} handleOptionChange={updateState} handleAddOption={addOptions} options={quantityUnits} name={"type"} />
-      <OptionDropDown handleOptions={handleOptions} handleOptionChange={updateState} handleAddOption={addOptions} options={items} name={"name"} />
+      <OptionRequests handleOptions={handleOptions} handleOptionChange={updateState} options={quantityAmount} name={"value"} />
+      <OptionRequests handleOptions={handleOptions} handleOptionChange={updateState} options={quantityUnits} name={"type"} />
+      <OptionRequests handleOptions={handleOptions} handleOptionChange={updateState} options={items} name={"name"} />
     </div>
   )
 }
