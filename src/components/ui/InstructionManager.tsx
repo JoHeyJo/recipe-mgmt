@@ -17,7 +17,7 @@ type InstructionManager = {
   arrayKey: number;
   handleOptionChange: (state: string, option: Instruction) => void;
   options: Instructions;
-  manageInstructions: any
+  handleInstructions: any
 }
 
 /** InstructionManager - ring is removed 
@@ -27,11 +27,11 @@ type InstructionManager = {
  * InstructionsArea -> InstructionManager
  */
 
-function InstructionManager({ index, arrayKey, name, handleOptionChange, options, manageInstructions }: InstructionManager) {
+function InstructionManager({ index, arrayKey, name, handleOptionChange, options, handleInstructions }: InstructionManager) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Instruction>()
 
-  if (arrayKey === options.length - 2) manageInstructions.createInstructionInput()
+  if (arrayKey === options.length - 2) handleInstructions.createInstructionInput()
 
 
 
@@ -57,29 +57,33 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
     }
   }
 
+  const IS_NEW_OPTION = (option: Instruction) => typeof option.id === "string" && option.instruction === '+ create...'
+
+  /** Injects query string to created option and requests POST action */
+  async function processNewOption(option: Instruction){
+    const newOption = { ...option, instruction: query };
+    const createdOption = await handleInstructions.addIngredient(newOption);
+    handleInstructions.addInstruction(createdOption)
+    handleInstructions.updateFilterKeys([arrayKey, createdOption.id])
+    setSelected(createdOption);
+  }
+
   /** Handles parent state update when changes are made to combobox */
   async function handleChange(option: any) {
     // clears input when characters are deleted
     if(!option) return setSelected(null) 
-      
-    if (typeof option.id === "string" && option.instruction === '+ create...') {
-      // create new input field when only one input field is left
-      // new object needs to have query string injected as a value«
-      const newOption = { ...option, instruction: query };
-      const createdOption = await manageInstructions.postIngredient(newOption);
-      manageInstructions.handleSelected(createdOption)
-      setSelected(createdOption);
+
+    if (IS_NEW_OPTION(option)) {
+      processNewOption(option);
     } else {
-      // manageInstructions.updateInstructionSelection(option, index)
-      // passing filters keys in array to later be constructed as key value pair
-      manageInstructions.handleSelected(option, [arrayKey, option.id])
+      handleInstructions.updateInstructionSelection(option)
+      handleInstructions.updateFilterKeys([arrayKey, option.id])
       setSelected(option)
     }
   };
 
   /** Consolidates actions taken when dropdown value is selected  */
   function onValueSelect(value: any) {
-    // if (arrayKey === options.length - 2) manageInstructions.createInstructionInput()
     setQuery('')
     handleChange(value)
   }

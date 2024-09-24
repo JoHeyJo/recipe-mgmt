@@ -21,7 +21,7 @@ function InstructionsArea() {
   const [arrayKeys, setArrayKey] = useState({});
 
   /** Add selected instruction to incoming data set  */
-  function addInstruction(instruction: Instruction, index: number) {
+  function addInstruction(instruction: Instruction) {
     setInstructions((i: Instruction[]) => {
       const updatedInstructions = [...i];
       updatedInstructions.push(instruction);
@@ -45,9 +45,8 @@ function InstructionsArea() {
     )
   }
 
-  /** Consolidates selection functionality */
-  function handleSelected(instruction: Instruction, keys, ingredientId: number) {
-    // updateInstructionSelection(instruction)
+  /** Constructs key value pair of filters keys with array id & option id and updates filter keys */
+  function updateFilterKeys(keys: number[]) {
     setFilterKeys(prevKeys => {
       const updatedKeys = { ...prevKeys }
       const newKeySet = { [keys[0]]: keys[1] }
@@ -71,12 +70,12 @@ function InstructionsArea() {
   }
 
   /** Consolidates logic pertaining to adding instructions */
-  const manageInstructions = {
-    postIngredient: addIngredient,
-    handleAdd: addInstruction,
+  const handleInstructions = {
+    addIngredient,
+    addInstruction,
     createInstructionInput,
     updateInstructionSelection,
-    handleSelected
+    updateFilterKeys
   }
 
   /** Populate instruction area on mount */
@@ -106,9 +105,6 @@ function InstructionsArea() {
     
   }
 
-
-
-
   return (
     <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
       {placeHolder.map((i, index) =>
@@ -119,7 +115,7 @@ function InstructionsArea() {
           name={i}
           handleOptionChange={() => { }}
           options={filterSelected(instructions, index)}
-          manageInstructions={manageInstructions} 
+          handleInstructions={handleInstructions} 
           />
       )}
     </div>
