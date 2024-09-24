@@ -59,13 +59,20 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
 
   const IS_NEW_OPTION = (option: Instruction) => typeof option.id === "string" && option.instruction === '+ create...'
 
-  /** Injects query string to created option and requests POST action */
+  /** Injects query string prior to POST request and updates parent state  */
   async function processNewOption(option: Instruction){
     const newOption = { ...option, instruction: query };
     const createdOption = await handleInstructions.addIngredient(newOption);
     handleInstructions.addInstruction(createdOption)
     handleInstructions.updateFilterKeys([arrayKey, createdOption.id])
     setSelected(createdOption);
+  }
+
+  /** Updates parent state*/
+  function processExistingOption(option: Instruction){
+    handleInstructions.updateInstructionSelection(option)
+    handleInstructions.updateFilterKeys([arrayKey, option.id])
+    setSelected(option)
   }
 
   /** Handles parent state update when changes are made to combobox */
@@ -76,9 +83,7 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
     if (IS_NEW_OPTION(option)) {
       processNewOption(option);
     } else {
-      handleInstructions.updateInstructionSelection(option)
-      handleInstructions.updateFilterKeys([arrayKey, option.id])
-      setSelected(option)
+      processExistingOption(option)
     }
   };
 

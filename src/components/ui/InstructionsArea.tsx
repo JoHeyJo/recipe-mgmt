@@ -18,7 +18,6 @@ function InstructionsArea() {
   const [instructions, setInstructions] = useState([]);
   const [selectedInstructions, setSelectedInstructions] = useState<Instruction[]>([]);
   const [filterKey, setFilterKeys] = useState({});
-  const [arrayKeys, setArrayKey] = useState({});
 
   /** Add selected instruction to incoming data set  */
   function addInstruction(instruction: Instruction) {
@@ -39,9 +38,9 @@ function InstructionsArea() {
   }
 
   /** Remove unselected instruction */
-  function removeInstruction(removedInstruction: Instruction) {
+  function removeInstructionSelection(option: Instruction) {
     setSelectedInstructions(instructions => 
-      instructions.filter(instruction => instruction.id === removedInstruction.id)
+      instructions.filter(instruction => instruction.id === option.id)
     )
   }
 
