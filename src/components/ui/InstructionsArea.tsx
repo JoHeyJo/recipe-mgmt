@@ -12,6 +12,8 @@ type InstructionArea = {
   handleUpdate: (instructions: Instructions, section: string) => void;
 }
 
+const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs >= 2 && inputs === arrayKey
+
 /** InstructionsArea
  * 
  * Dynamically renders list of instructions - filters out selected options
@@ -39,7 +41,7 @@ function InstructionsArea({ handleUpdate }: InstructionArea) {
       updatedInstructions[arrayKey] = instruction;
       return updatedInstructions;
     })
-    if(selectedInstructions.length >= 2) createInstructionInput()
+    if (HAS_NO_REMAINING_INPUT(selectedInstructions.length, arrayKey)) createInstructionInput()
   }
 
   /** Remove unselected instruction */
@@ -69,8 +71,6 @@ function InstructionsArea({ handleUpdate }: InstructionArea) {
 
   /** Create additional input field for new instruction */
   function createInstructionInput() {
-    console.log("creating new input")
-    // setInstructions((i: Instruction[]) => [...i, { id: "temp-", instruction: "some other thing..." }])
     PLACE_HOLDER.push("some other thing...")
   }
 
@@ -122,7 +122,7 @@ function InstructionsArea({ handleUpdate }: InstructionArea) {
 
   }
 
-  useEffect(() =>{
+  useEffect(() => {
     handleUpdate(selectedInstructions, "instructions")
   })
   return (
