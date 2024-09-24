@@ -3,21 +3,12 @@ import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
 import IngredientManager from '../ui/IngredientManager';
 
-function uniqueID() {
-  return Math.random();
-}
-
-const unique: any = () => Math.random()
-
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(' ')
-}
-
 type OptionDropdown = {
   name: string
   handleOptionChange: (state: string, option: Option) => void;
   options: Option[];
   handleAddOption: (state: string, option: Option) => void;
+  handleOptions: object
 }
 
 /** OptionDropdown 
@@ -28,7 +19,7 @@ type OptionDropdown = {
  * IngredientInputGroup -> OptionDropdown -> IngredientManager
  */
 
-function OptionDropdown({ name, handleOptionChange, options, handleAddOption }: OptionDropdown) {
+function OptionDropdown({ name, handleOptionChange, options, handleAddOption, handleOptions }: OptionDropdown) {
   /** Request to create new ingredient option */
   async function addOption(option: Option): Promise<Option>   {
     try {
@@ -46,7 +37,8 @@ function OptionDropdown({ name, handleOptionChange, options, handleAddOption }: 
       handleOptionChange={handleOptionChange}
       options={options}
       handleAdd={handleAddOption}
-      postRequest={addOption} />
+      postRequest={addOption}
+      handleOptions={handleOptions} />
   )
 }
 

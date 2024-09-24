@@ -24,7 +24,7 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Instruction>()
 
-  const IS_NEW_OPTION = (option: Instruction) => typeof option.id === "string" && option.instruction === '+ create...'
+  const IS_NEW_INGREDIENT = (option: Instruction) => typeof option.id === "string" && option.instruction === '+ create...'
 
   /** Creates a list of filtered options based on search query */
   const filteredOptions: Instruction[] =
@@ -49,7 +49,7 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
   }
 
   /** Injects query string prior to POST request and updates parent state  */
-  async function processNewOption(option: Instruction) {
+  async function processNewIngredient(option: Instruction) {
     // option id will need to be changed to null along with the query inject
     const newOption = { ...option, instruction: query };
     const createdOption = await handleInstructions.addIngredient(newOption);
@@ -60,7 +60,7 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
   }
 
   /** Updates parent state with selected option*/
-  function processExistingOption(option: Instruction) {
+  function processExistingIngredient(option: Instruction) {
     handleInstructions.updateInstructionSelection(option, arrayKey)
     handleInstructions.updateFilterKeys([arrayKey, option.id])
     setSelected(option)
@@ -78,7 +78,7 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
     // clears input when characters are deleted
     if (!option) return processDeselect(selected)
 
-    IS_NEW_OPTION(option) ? processNewOption(option) : processExistingOption(option)
+    IS_NEW_INGREDIENT(option) ? processNewIngredient(option) : processExistingIngredient(option)
   };
 
   /** Consolidates actions taken when dropdown value is selected  */

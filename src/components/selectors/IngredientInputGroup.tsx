@@ -9,14 +9,18 @@ type IngredientInputGroup = {
   index: number;
 }
 
+const defaultItem = { id: null, name: "" };
+const defaultAmount = { id: null, value: "" };
+const defaultUnit = { id: null, type: "" };
+
 /** Renders Combobox and processes data for new Ingredient
  * 
  * IngredientGroup -> IngredientInputGroup -> OptionDropDown
 */
 function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: IngredientInputGroup) {
-  const [item, setItem] = useState<Option>({ id: null, name: "" });
-  const [amount, setAmount] = useState<Option>({ id: null, value: "" });
-  const [unit, setUnit] = useState<Option>({ id: null, type: "" });
+  const [item, setItem] = useState<Option>(defaultItem);
+  const [amount, setAmount] = useState<Option>(defaultAmount);
+  const [unit, setUnit] = useState<Option>(defaultUnit);
 
   const [items, setItems] = useState<Option[]>([])
   const [quantityAmount, setQuantityAmounts] = useState<Option[]>([])
@@ -37,10 +41,22 @@ function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: Ingre
   }
 
   /** Handles adding options to state */
-  function addOptions(state: string, option: Option){
+  function addOptions(state: string, option: Option) {
     if (state === "name") setItems((options: Option[]) => [...options, option])
     if (state === "type") setQuantityUnits((options: Option[]) => [...options, option])
     if (state === "value") setQuantityAmounts((options: Option[]) => [...options, option])
+  }
+
+  /** Removes deselected option */
+  function removeDeselected(state: string) {
+    if (state === "name") setItem(defaultItem);
+    if (state === "type") setUnit(defaultUnit);
+    if (state === "value") setAmount(defaultAmount);
+  }
+
+  const handleOptions = {
+    removeDeselected,
+    addOptions
   }
 
   /** Maintains parent components state synced with latest selections */
@@ -50,7 +66,7 @@ function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: Ingre
 
   /** Populate each instance of component with latest options */
   useEffect(() => {
-    async function fetchOptions(){
+    async function fetchOptions() {
       const amounts = await API.getOptions("amounts")
       const units = await API.getOptions("units")
       const items = await API.getOptions("items")
@@ -59,14 +75,14 @@ function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: Ingre
       setQuantityAmounts(amounts);
     }
     fetchOptions()
-  },[])
-  
+  }, [])
+
 
   return (
     <div className="flex rounded-md my-2">
-      <OptionDropDown handleOptionChange={updateState} handleAddOption={addOptions} options={quantityAmount} name={"value"} />
-      <OptionDropDown handleOptionChange={updateState} handleAddOption={addOptions} options={quantityUnits} name={"type"} />
-      <OptionDropDown handleOptionChange={updateState} handleAddOption={addOptions} options={items} name={"name"} />
+      <OptionDropDown handleOptions={handleOptions} handleOptionChange={updateState} handleAddOption={addOptions} options={quantityAmount} name={"value"} />
+      <OptionDropDown handleOptions={handleOptions} handleOptionChange={updateState} handleAddOption={addOptions} options={quantityUnits} name={"type"} />
+      <OptionDropDown handleOptions={handleOptions} handleOptionChange={updateState} handleAddOption={addOptions} options={items} name={"name"} />
     </div>
   )
 }
