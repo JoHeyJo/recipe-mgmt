@@ -38,10 +38,19 @@ function InstructionsArea() {
   }
 
   /** Remove unselected instruction */
-  function removeInstructionSelection(option: Instruction) {
-    setSelectedInstructions(instructions => 
-      instructions.filter(instruction => instruction.id === option.id)
+  function removeInstructionSelection(instructionId: number) {
+    setSelectedInstructions(instructions =>
+      instructions.filter(instruction => instruction.id !== instructionId)
     )
+  }
+
+  /** Remove unselected filter key */
+  function removeFilterKey(arrayKey: number) {
+    setFilterKeys(keys => {
+      const updatedKeys = { ...keys }
+      delete updatedKeys[arrayKey]
+      return updatedKeys;
+    })
   }
 
   /** Constructs key value pair of filters keys with array id & option id and updates filter keys */
@@ -74,7 +83,9 @@ function InstructionsArea() {
     addInstruction,
     createInstructionInput,
     updateInstructionSelection,
-    updateFilterKeys
+    updateFilterKeys,
+    removeInstructionSelection,
+    removeFilterKey
   }
 
   /** Populate instruction area on mount */
@@ -101,7 +112,7 @@ function InstructionsArea() {
       // In other dropdowns (arrayKey !== current arrayKey), filter out the selected item
       // return filterKey[instruction.id]
     })
-    
+
   }
 
   return (
@@ -114,8 +125,8 @@ function InstructionsArea() {
           name={i}
           handleOptionChange={() => { }}
           options={filterSelected(instructions, index)}
-          handleInstructions={handleInstructions} 
-          />
+          handleInstructions={handleInstructions}
+        />
       )}
     </div>
   )

@@ -2,7 +2,7 @@
 import { useState, useEffect, ChangeEvent } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions, Label } from '@headlessui/react'
-import { Option, Instruction, Instructions } from '../../utils/types';
+import { Option, Instruction, Instructions, Ingredient } from '../../utils/types';
 import ComboboxDropdown from './ComboboxDropdown';
 
 function uniqueID() {
@@ -60,7 +60,7 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
   const IS_NEW_OPTION = (option: Instruction) => typeof option.id === "string" && option.instruction === '+ create...'
 
   /** Injects query string prior to POST request and updates parent state  */
-  async function processNewOption(option: Instruction){
+  async function processNewOption(option: Instruction) {
     const newOption = { ...option, instruction: query };
     const createdOption = await handleInstructions.addIngredient(newOption);
     handleInstructions.addInstruction(createdOption)
@@ -68,23 +68,26 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
     setSelected(createdOption);
   }
 
-  /** Updates parent state*/
-  function processExistingOption(option: Instruction){
+  /** Updates parent state with selected option*/
+  function processExistingOption(option: Instruction) {
     handleInstructions.updateInstructionSelection(option)
     handleInstructions.updateFilterKeys([arrayKey, option.id])
     setSelected(option)
   }
 
+  /** Consolidates actions that deselect option */
+  function processDeselect(option: Instruction) {
+    handleInstructions.removeFilterKey(arrayKey)
+    handleInstructions.removeInstructionSelection(option.id)
+    setSelected(null)
+  }
+
   /** Handles parent state update when changes are made to combobox */
   async function handleChange(option: any) {
     // clears input when characters are deleted
-    if(!option) return setSelected(null) 
+    if (!option) return processDeselect(selected)
 
-    if (IS_NEW_OPTION(option)) {
-      processNewOption(option);
-    } else {
-      processExistingOption(option)
-    }
+    IS_NEW_OPTION(option) ? processNewOption(option) : processExistingOption(option)
   };
 
   /** Consolidates actions taken when dropdown value is selected  */
@@ -111,7 +114,7 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
             className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             onChange={(event) => setQuery(event.target.value)}
             onBlur={() => setQuery('')}
-            displayValue={(option: {instruction: string}) => option?.instruction}
+            displayValue={(option: { instruction: string }) => option?.instruction}
           />
           <ComboboxButton className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
             <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
