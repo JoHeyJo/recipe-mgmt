@@ -26,7 +26,6 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
 
   const IS_NEW_OPTION = (option: Instruction) => typeof option.id === "string" && option.instruction === '+ create...'
 
-
   /** Creates a list of filtered options based on search query */
   const filteredOptions: Instruction[] =
     query === ''
@@ -55,6 +54,7 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
     const createdOption = await handleInstructions.addIngredient(newOption);
     handleInstructions.addInstruction(createdOption)
     handleInstructions.updateFilterKeys([arrayKey, createdOption.id])
+    handleInstructions.updateInstructionSelection(createdOption, arrayKey)
     setSelected(createdOption);
   }
 

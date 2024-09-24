@@ -71,21 +71,17 @@ function IngredientManager({ name, handleOptionChange, options, handleAdd, postR
   }, [selected, options]);
 
   return (
-    // <ComboboxDropdown name={name} handleQuery={setQuery} onValueSelect={onValueSelect} filteredOptions={filteredOptions} selected={selected} />
     <Combobox
       as="div"
       value={selected}
-      onChange={(person) => {
-        setQuery('')
-        setSelected(person)
-      }}
-    >
+      onChange={onValueSelect}>
       <div className="relative mt-2">
         <ComboboxInput
+          placeholder={name}
           className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           onChange={(event) => setQuery(event.target.value)}
           onBlur={() => setQuery('')}
-          displayValue={(option: { [key:string]: string }) => option?.[name]}
+          displayValue={(option: { [key: string]: string }) => option?.[name]}
         />
         <ComboboxButton className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
           <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
