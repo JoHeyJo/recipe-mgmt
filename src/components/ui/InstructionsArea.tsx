@@ -29,10 +29,11 @@ function InstructionsArea() {
   }
 
   /** Update selected instructions */
-  function updateInstructionSelection(instruction: Instruction) {
+  function updateInstructionSelection(instruction: Instruction, arrayKey: number) {
     setSelectedInstructions((i: Instruction[]) => {
       const updatedInstructions = [...i];
-      updatedInstructions.push(instruction);
+      updatedInstructions[arrayKey] = instruction;
+      console.log(updatedInstructions)
       return updatedInstructions;
     })
   }

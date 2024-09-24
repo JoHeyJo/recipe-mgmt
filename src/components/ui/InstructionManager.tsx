@@ -33,8 +33,6 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
 
   if (arrayKey === options.length - 2) handleInstructions.createInstructionInput()
 
-
-
   /** Creates a list of filtered options based on search query */
   const filteredOptions: Instruction[] =
     query === ''
@@ -70,7 +68,7 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
 
   /** Updates parent state with selected option*/
   function processExistingOption(option: Instruction) {
-    handleInstructions.updateInstructionSelection(option)
+    handleInstructions.updateInstructionSelection(option, arrayKey)
     handleInstructions.updateFilterKeys([arrayKey, option.id])
     setSelected(option)
   }
@@ -83,7 +81,7 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
   }
 
   /** Handles parent state update when changes are made to combobox */
-  async function handleChange(option: any) {
+  async function handleChange(option: Instruction) {
     // clears input when characters are deleted
     if (!option) return processDeselect(selected)
 
