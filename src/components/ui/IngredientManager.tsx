@@ -23,7 +23,7 @@ function IngredientManager({ name, handleOptionChange, options, postRequest, han
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Option>()
 //SHOULD REQUESTS AND STATE MANAGMENT BE SPLIT INTO TWO OBJECTS eg handleOptions & optionRequest....
-  const IS_NEW_OPTION = (option: Option) => typeof option.id === "string" && option[name] === '+ create...'
+  const isNewOption = (option: Option) => typeof option.id === "string" && option[name] === '+ create...'
 
   /** Creates a list of filtered options based on search query */
   const filteredOptions: Option[] =
@@ -70,12 +70,11 @@ function IngredientManager({ name, handleOptionChange, options, postRequest, han
   /** Handles parent state update when selection is made in combobox */
   function handleChange(option: any) {
     if (!option) return processDeselect();
-    IS_NEW_OPTION(option) ? processNewOption(option) : processExistingOption(option)
+    isNewOption(option) ? processNewOption(option) : processExistingOption(option)
   }
 
   /** Consolidates actions taken when dropdown value is selected  */
   function onValueSelect(value: any) {
-    console.log("onValueSelect", value)
     setQuery('')
     handleChange(value)
   }

@@ -44,11 +44,13 @@ function AddRecipe({ setShowing, isOpen }: AddRecipe) {
   async function addRecipe() {
     try {
       const res = await API.postRecipe(recipe);
-      console.log(res)
-
     } catch (error: any) {
       errorHandling("AddRecipe - addRecipe", error)
     }
+  }
+
+  function handleSubmit(){
+    addRecipe()
   }
 
   return (
@@ -83,7 +85,7 @@ function AddRecipe({ setShowing, isOpen }: AddRecipe) {
                     <IngredientsGroup handleUpdate={updateRecipe} />
                   </section>
                   <section id='AddRecipe-right-page' className="flex-1 ml-4 ">
-                    <InstructionsArea handleUpdate={updateRecipe}/>
+                    <InstructionsArea handleUpdate={updateRecipe} />
                   </section>
                 </section>
               </div>
@@ -92,9 +94,8 @@ function AddRecipe({ setShowing, isOpen }: AddRecipe) {
               <button
                 type="button"
                 onClick={() => setShowing(false)}
-                className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Go back to dashboard
+                className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                Submit
               </button>
             </div>
           </DialogPanel>

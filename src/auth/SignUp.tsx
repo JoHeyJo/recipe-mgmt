@@ -24,6 +24,7 @@ const defaultNew: UserSignUp = {
  * New user by default is not an admin. Admin privileges are granted to user
  * when "Recipe Book" is created at time of creation to corresponding book.
 */
+
 function SignUp({ signUp }: SignUpProps) {
   const [newUser, setNewUser] = useState(defaultNew);
   const [alert, setAlert] = useState(undefined); 

@@ -10,7 +10,7 @@ type OptionRequests = {
   handleOptions: object
 }
 
-/** OptionRequests - Consider removing. Is intermediary component to house requests necessary?
+/** OptionRequests - Consider removing. Is intermediary component to hold requests necessary?
  * 
  * Makes API request to create new ingredient
  * 

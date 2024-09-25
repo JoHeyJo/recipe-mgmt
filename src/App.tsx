@@ -23,6 +23,7 @@ const TOKEN_STORAGE_ID = "user-token"
 function App() {
   const [currentUser, setCurrentUser] = useState<User | undefined>(undefined);
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
+  
 
   const UserData: UserContextType = {
     user: currentUser?.userName,

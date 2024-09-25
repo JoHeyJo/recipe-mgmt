@@ -4,6 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import AddRecipe from "../requests/AddRecipe"
 
+/** Renders recipe "book"
+ * 
+ * 
+ * MainContainer -> RecipeView -> AddRecipe
+ */
+
 function RecipeView() {
   const [open, setOpen] = useState(true)
 
