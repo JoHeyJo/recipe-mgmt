@@ -19,7 +19,7 @@ export type Ingredient = {
 
 export type User = {
   userName: string;
-  userId: number;
+  userId?: number;
   isAdmin: boolean;
 }
 

@@ -1,6 +1,5 @@
 import { Fragment, useState } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
-import { CheckIcon } from '@heroicons/react/24/outline'
 import IngredientsGroup from '../selectors/IngredientsGroup';
 import { Ingredient, Instructions, Recipe } from '../../utils/types';
 import InputWithLabel from '../ui/InputWithLabel'

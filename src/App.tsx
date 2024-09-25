@@ -27,8 +27,8 @@ function App() {
 
   const UserData: UserContextType = {
     user: currentUser?.userName,
-    isAdmin: currentUser?.isAdmin
-    // userId: currentUser
+    isAdmin: currentUser?.isAdmin,
+    userId: currentUser?.userId
   }
 
   /** User sign up - returns token and auth credentials - saved to local storage */
