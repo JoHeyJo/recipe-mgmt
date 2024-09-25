@@ -19,6 +19,7 @@ export type Ingredient = {
 
 export type User = {
   userName: string;
+  userId: number;
   isAdmin: boolean;
 }
 
@@ -45,7 +46,8 @@ export type Login = {
 export type AuthProps = Login & SignUp
 
 export type JWTPayload = {
-  sub: string | React.Dispatch<React.SetStateAction<string>>;
+  user: string;
+  user_id: number;
   is_admin: boolean;
 }
 
