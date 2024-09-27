@@ -5,13 +5,17 @@ import TextInputTitle from '../ui/common/TextInputTitle';
 import TextInputDescription from '../ui/common/TextInputDescription';
 import { Book } from '../../utils/types';
 import { ChangeEvent } from "react"
+import API from '../../api';
+import { errorHandling } from '../../utils/ErrorHandling';
+import { useContext } from 'react';
+import { UserContext } from '../../auth/UserContext';
 
 type CreateBook = {
   isOpen: boolean;
   setOpen: () => void;
 }
 
-const defaultBook = {id: null, title: "", description: ""}
+const defaultBook = { id: null, title: "", description: "" }
 
 /** Renders modal that holds book information 
  * Request book creation associated to user
@@ -19,28 +23,44 @@ const defaultBook = {id: null, title: "", description: ""}
  * 
  * TopNav -> CreateBook -> [TextInputTitle, TextInputDescription]
  */
-function CreateBook({isOpen, setOpen}) {
+function CreateBook({ isOpen, setOpen }) {
   const [bookData, setBookData] = useState<Book>(defaultBook);
 
+  const { userId } = useContext(UserContext);
+
   /** Handles changes to book data form */
-  function handleChange(event: ChangeEvent<HTMLTextAreaElement>){
-    const {name, value} = event.target
+  function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
+    const { name, value } = event.target
     setBookData(bookData => {
-      const updatedBook = {...bookData}
+      const updatedBook = { ...bookData }
       updatedBook[name] = value;
       return updatedBook
     })
   }
 
   /** Consolidate modal closing actions */
-  function handleClosingActions(){
+  function handleClosingActions() {
     setBookData(defaultBook)
     setOpen(false);
-
   }
 
-  // if(!isOpen) setBookData(defaultBook);
-  
+  /** Post request to create new book */
+  async function createBook(bookData: Book, userId: number) {
+    try {
+      const res = await API.postBook(bookData, userId)
+      console.log("create book res", res)
+    } catch (error: any) {
+      errorHandling("CreateBook - createBook", error)
+    }
+  }
+
+  /** Handle submitting action */
+  function handleSubmit(bookData: Book, userId: number) {
+    createBook(bookData, userId)
+    setBookData(defaultBook)
+    setOpen(false);
+  }
+
   return (
     <Dialog open={isOpen} onClose={handleClosingActions} className="relative z-10">
       <DialogBackdrop
@@ -60,20 +80,20 @@ function CreateBook({isOpen, setOpen}) {
               </div>
               <div className="mt-3 text-center sm:mt-5">
                 <DialogTitle as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                  <TextInputTitle handleChange={handleChange} title={bookData.title}/>
+                  <TextInputTitle handleChange={handleChange} title={bookData.title} />
                 </DialogTitle>
                 <div className="CreateBook-description mt-6">
-                  <TextInputDescription handleChange={handleChange}/>
+                  <TextInputDescription handleChange={handleChange} />
                 </div>
               </div>
             </div>
             <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
               <button
                 type="button"
-                onClick={() => handleClosingActions()}
+                onClick={() => handleSubmit(bookData, userId)}
                 className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
               >
-                Deactivate
+                Submit
               </button>
               <button
                 type="button"

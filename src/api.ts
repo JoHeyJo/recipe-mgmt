@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Recipe, UserLogin, UserSignUp, Option, Ingredient } from "./utils/types";
+import { Recipe, UserLogin, UserSignUp, Option, Ingredient, Book } from "./utils/types";
 
 const BASEURL = "http://127.0.0.1:5000"
 /** API class. 
@@ -67,11 +67,13 @@ class API {
     const res = await this.request("/instructions/instruction", data, "POST")
     return res
   }
+
+  /** Post new book */
+  static async postBook(data: Book, userId: number) {
+    const res = await this.request(`/books/users/${userId}`, data, "POST")
+    return res
+  }
 }
-
-
-/** Fetch ingredient options  */
-// static async getOptions
 
 
 export default API;
