@@ -6,12 +6,12 @@ type TextInputTitle = {
 }
 
 function TextInputTitle({handleChange, title}: TextInputTitle) {
-  const initials = `${title[0]}, ${title[1]}`
+  const initials = (title[0] && title[1]) && `${title[0]}${title[1]}`
   return (
     <div className="flex items-start space-x-4">
       <div className="flex-shrink-0">
         <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gray-100">
-          {initials || ""}
+          {initials || title[0]}
         </div>
       </div>
       <div className="min-w-0 flex-1">

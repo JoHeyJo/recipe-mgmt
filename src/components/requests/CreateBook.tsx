@@ -6,6 +6,11 @@ import TextInputDescription from '../ui/common/TextInputDescription';
 import { Book } from '../../utils/types';
 import { ChangeEvent } from "react"
 
+type CreateBook = {
+  isOpen: boolean;
+  setOpen: () => void;
+}
+
 const defaultBook = {id: null, title: "", description: ""}
 
 /** Renders modal that holds book information 
@@ -14,7 +19,7 @@ const defaultBook = {id: null, title: "", description: ""}
  * 
  * TopNav -> CreateBook -> [TextInputTitle, TextInputDescription]
  */
-function CreateBook({open, setOpen}) {
+function CreateBook({isOpen, setOpen}) {
   const [bookData, setBookData] = useState<Book>(defaultBook);
 
   /** Handles changes to book data form */
@@ -26,9 +31,18 @@ function CreateBook({open, setOpen}) {
       return updatedBook
     })
   }
+
+  /** Consolidate modal closing actions */
+  function handleClosingActions(){
+    setBookData(defaultBook)
+    setOpen(false);
+
+  }
+
+  // if(!isOpen) setBookData(defaultBook);
   
   return (
-    <Dialog open={open} onClose={setOpen} className="relative z-10">
+    <Dialog open={isOpen} onClose={handleClosingActions} className="relative z-10">
       <DialogBackdrop
         transition
         className="CreateBook-container fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
@@ -56,7 +70,7 @@ function CreateBook({open, setOpen}) {
             <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
               <button
                 type="button"
-                onClick={() => setOpen(false)}
+                onClick={() => handleClosingActions()}
                 className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
               >
                 Deactivate
@@ -64,7 +78,7 @@ function CreateBook({open, setOpen}) {
               <button
                 type="button"
                 data-autofocus
-                onClick={() => setOpen(false)}
+                onClick={() => handleClosingActions()}
                 className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
               >
                 Cancel

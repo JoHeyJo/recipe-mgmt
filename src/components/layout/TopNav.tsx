@@ -33,7 +33,7 @@ function TopNav({ logout }: TopNavProps) {
 
   return (
     <>
-   <CreateBook open={isModalOpen} setOpen={setIsModalOpen}/> 
+   <CreateBook isOpen={isModalOpen} setOpen={setIsModalOpen}/> 
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
         <>
