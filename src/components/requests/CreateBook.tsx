@@ -1,19 +1,37 @@
 import { useState } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
-import { CheckIcon } from '@heroicons/react/24/outline'
+import { BookOpenIcon } from '@heroicons/react/24/outline'
+import TextInputTitle from '../ui/common/TextInputTitle';
+import TextInputDescription from '../ui/common/TextInputDescription';
+import { Book } from '../../utils/types';
+import { ChangeEvent } from "react"
 
-/** Requests to create book associated with a User
+const defaultBook = {id: null, title: "", description: ""}
+
+/** Renders modal that holds book information 
+ * Request book creation associated to user
  * 
  * 
+ * TopNav -> CreateBook -> [TextInputTitle, TextInputDescription]
  */
 function CreateBook({open, setOpen}) {
-  
+  const [bookData, setBookData] = useState<Book>(defaultBook);
 
+  /** Handles changes to book data form */
+  function handleChange(event: ChangeEvent<HTMLTextAreaElement>){
+    const {name, value} = event.target
+    setBookData(bookData => {
+      const updatedBook = {...bookData}
+      updatedBook[name] = value;
+      return updatedBook
+    })
+  }
+  
   return (
     <Dialog open={open} onClose={setOpen} className="relative z-10">
       <DialogBackdrop
         transition
-        className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
+        className="CreateBook-container fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
       />
 
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -23,18 +41,15 @@ function CreateBook({open, setOpen}) {
             className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg sm:p-6 data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
           >
             <div>
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-                <CheckIcon aria-hidden="true" className="h-6 w-6 text-green-600" />
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full">
+                <BookOpenIcon aria-hidden="true" className="h-6 w-6 text-blue-600" />
               </div>
               <div className="mt-3 text-center sm:mt-5">
                 <DialogTitle as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                  Payment successful
+                  <TextInputTitle handleChange={handleChange} title={bookData.title}/>
                 </DialogTitle>
-                <div className="mt-2">
-                  <p className="text-sm text-gray-500">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eius aliquam laudantium explicabo pariatur
-                    iste dolorem animi vitae error totam. At sapiente aliquam accusamus facere veritatis.
-                  </p>
+                <div className="CreateBook-description mt-6">
+                  <TextInputDescription handleChange={handleChange}/>
                 </div>
               </div>
             </div>

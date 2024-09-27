@@ -63,3 +63,9 @@ export type Instruction = { id: string | number | null , instruction: string }
 export type Instructions = Instruction[];
 
 export type Manager = Option | Instruction
+
+export type Book = {
+  id: null | number;
+  title: string;
+  description: string;
+}

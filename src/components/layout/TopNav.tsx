@@ -127,7 +127,8 @@ function TopNav({ logout }: TopNavProps) {
                             </a>
                           </MenuItem>
                           <MenuItem>
-                            <a
+                            <a 
+                              onClick={()=>setIsModalOpen(true)}
                               href="#"
                               className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
                               Create Book
