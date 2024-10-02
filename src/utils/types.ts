@@ -21,6 +21,8 @@ export type User = {
   userName: string;
   userId?: number;
   isAdmin: boolean;
+  currentBook?: undefined;
+  books?: number[];
 }
 
 export type UserLogin = User & {

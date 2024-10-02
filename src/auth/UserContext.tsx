@@ -1,4 +1,5 @@
 import { createContext } from "react";
+import { User } from "../utils/types";
 
 export type UserContextType = {
   user: string | undefined;
@@ -6,9 +7,7 @@ export type UserContextType = {
   isAdmin: boolean | undefined;
   currentBook?: number;
   books?: [];
-  setBook: () => void;
-  setBooks: () => void;
-  // token: string;
+  setCurrentUser: React.Dispatch<React.SetStateAction<User>>
 }
 
 export const UserContext = createContext<UserContextType>({
@@ -17,7 +16,5 @@ export const UserContext = createContext<UserContextType>({
   isAdmin: false,
   currentBook: undefined,
   books: [],
-  setBooks: () => {},
-  setBook: () => {},
-  // token: ''
+  setCurrentUser: () => {},
 })  
