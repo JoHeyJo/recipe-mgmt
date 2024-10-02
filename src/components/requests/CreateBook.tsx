@@ -26,7 +26,7 @@ const defaultBook = { id: null, title: "", description: "" }
 function CreateBook({ isOpen, setOpen }) {
   const [bookData, setBookData] = useState<Book>(defaultBook);
 
-  const { userId } = useContext(UserContext);
+  const { userId, setCurrentUser, currentBook } = useContext(UserContext);
 
   /** Handles changes to book data form */
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
@@ -48,7 +48,12 @@ function CreateBook({ isOpen, setOpen }) {
   async function createBook(bookData: Book, userId: number) {
     try {
       const res = await API.postBook(bookData, userId)
-      console.log("create book res", res)
+      setCurrentUser(user => {
+        const updatedUser = {...user}
+        updatedUser.books.push(res.bookData.id)
+        updatedUser.currentBook = res
+        return updatedUser;
+      })
     } catch (error: any) {
       errorHandling("CreateBook - createBook", error)
     }
@@ -60,7 +65,8 @@ function CreateBook({ isOpen, setOpen }) {
     setBookData(defaultBook)
     setOpen(false);
   }
-
+  const user = useContext(UserContext)
+  console.log("useContext(UserContext)", user )
   return (
     <Dialog open={isOpen} onClose={handleClosingActions} className="relative z-10">
       <DialogBackdrop

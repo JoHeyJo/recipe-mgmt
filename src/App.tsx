@@ -47,9 +47,20 @@ function App() {
   async function userLogin(loginData: UserLogin) {
     try {
       const res = await API.login(loginData);
-      extractAndSetUser(res.token, setCurrentUser)
+      const userId = extractAndSetUser(res.token, setCurrentUser)
       API.token = res.token;
       localStorage.setItem("user-token", res.token);
+      if(userId) {
+        try {
+          setCurrentUser(user => {
+            const updateUser = {...user}
+            const res = await fetchBooks()
+            updateUser.books = res
+          })
+        } catch (error) {
+          
+        }
+      }
     } catch (error: any) {
       errorHandling("App->userLogin", error)
       throw error;
