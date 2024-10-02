@@ -26,6 +26,8 @@ const defaultBook = { id: null, title: "", description: "" }
 function CreateBook({ isOpen, setOpen }) {
   const [bookData, setBookData] = useState<Book>(defaultBook);
 
+  const UserData
+
   const { userId } = useContext(UserContext);
 
   /** Handles changes to book data form */
