@@ -73,6 +73,12 @@ class API {
     const res = await this.request(`/books/users/${userId}`, data, "POST")
     return res
   }
+
+  /** Fetch user books */
+  static async getUserBooks(userId: number){
+    const res = await this.request(`/books/${userId}`)
+    return res 
+  }
 }
 
 
