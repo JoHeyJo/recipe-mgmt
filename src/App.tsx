@@ -7,14 +7,13 @@ import API from "./api";
 import { UserContext, UserContextType } from "./auth/UserContext";
 import { User } from "./utils/types";
 import { BrowserRouter } from "react-router-dom";
-// import { toggleDarkMode } from "./utils/utilities";
 //styles
 import './styles/App.css'
 import './styles/theme.css';
 import './styles/light.css';
 import './styles/dark.css';
 import { errorHandling } from "./utils/ErrorHandling";
-import { extractAndSetUser } from "./utils/utilities";
+import { extractAndSetUser, validateUserFetchBooks } from "./utils/utilities";
 import useLocalStorage from "./hooks/useLocalStorage";
 import TopNav from "./components/layout/TopNav";
 
@@ -50,17 +49,7 @@ function App() {
       const userId = extractAndSetUser(res.token, setCurrentUser)
       API.token = res.token;
       localStorage.setItem("user-token", res.token);
-      // if(userId) {
-      //   try {
-      //     setCurrentUser(user => {
-      //       const updateUser = {...user}
-      //       const res = await fetchBooks()
-      //       updateUser.books = res
-      //     })
-      //   } catch (error) {
-          
-      //   }
-      // }
+      validateUserFetchBooks(userId, setCurrentUser);
     } catch (error: any) {
       errorHandling("App->userLogin", error)
       throw error;

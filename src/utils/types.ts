@@ -21,6 +21,7 @@ export type User = {
   userName: string;
   userId?: number;
   isAdmin: boolean;
+  defaultBookId: number;
   currentBook?: undefined;
   books?: number[];
 }
@@ -51,6 +52,7 @@ export type JWTPayload = {
   user: string;
   user_id: number;
   is_admin: boolean;
+  book_id: number;
 }
 
 export type Option = {
