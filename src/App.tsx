@@ -25,9 +25,10 @@ function App() {
   
 
   const UserData: UserContextType = {
-    user: currentUser?.userName,
-    isAdmin: currentUser?.isAdmin,
-    userId: currentUser?.userId,
+    user: currentUser.userName,
+    isAdmin: currentUser.isAdmin,
+    userId: currentUser.userId,
+    defaultBookId: currentUser.defaultBookId,
     setCurrentUser
   }
 

@@ -25,6 +25,17 @@ export async function validateUserFetchBooks(userId: number, setBooks: Dispatch<
   }
 }
 
+export function ensureDefaultBook(defaultBookId: number, setId: Dispatch<React.SetStateAction<User>>, defaultId: number) {
+  if (!defaultBookId) {
+    setId(user => {
+      const updatedUser = { ...user };
+      updatedUser.defaultBookId = defaultId
+      return updatedUser;
+    })
+  }
+}
+
+
 // export function toggleColorScheme() {
 //   document.documentElement.classList.toggle('dark');
 //   console.log("toggled")

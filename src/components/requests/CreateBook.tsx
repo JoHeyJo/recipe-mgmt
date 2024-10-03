@@ -9,6 +9,7 @@ import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
 import { useContext } from 'react';
 import { UserContext } from '../../auth/UserContext';
+import { ensureDefaultBook } from '../../utils/utilities';
 
 type CreateBook = {
   isOpen: boolean;
@@ -26,7 +27,7 @@ const defaultBook = { id: null, title: "", description: "" }
 function CreateBook({ isOpen, setOpen }) {
   const [bookData, setBookData] = useState<Book>(defaultBook);
 
-  const { userId, setCurrentUser, currentBook } = useContext(UserContext);
+  const { userId, setCurrentUser, currentBook, defaultBookId } = useContext(UserContext);
 
   /** Handles changes to book data form */
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
@@ -48,10 +49,12 @@ function CreateBook({ isOpen, setOpen }) {
   async function createBook(bookData: Book, userId: number) {
     try {
       const res = await API.postBook(bookData, userId)
+      const newId = res.bookData.id
       setCurrentUser(user => {
         const updatedUser = {...user}
-        updatedUser.books.push(res.bookData.id)
+        updatedUser.books.push(newId)
         updatedUser.currentBook = res
+        ensureDefaultBook(defaultBookId, setCurrentUser, newId)
         return updatedUser;
       })
     } catch (error: any) {
