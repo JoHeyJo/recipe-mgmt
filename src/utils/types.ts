@@ -21,7 +21,7 @@ export type User = {
   userName: string;
   userId?: number;
   isAdmin: boolean;
-  defaultBookId: number;
+  defaultBookId?: number;
   currentBook?: undefined;
   books?: number[];
 }

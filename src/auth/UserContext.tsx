@@ -8,7 +8,7 @@ export type UserContextType = {
   currentBook?: number;
   books?: [];
   setCurrentUser: React.Dispatch<React.SetStateAction<User>>
-  defaultBookId: number;
+  defaultBookId: number | undefined;
 }
 
 export const UserContext = createContext<UserContextType>({
