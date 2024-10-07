@@ -21,7 +21,7 @@ function classNames(...classes: any) {
 type TopNavProps = { logout: () => void }
 
 function TopNav({ logout }: TopNavProps) {
-  const [isModalOpen, setIsModalOpen] = useState(true)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const { user } = useContext(UserContext);
   const navigate = useNavigate();

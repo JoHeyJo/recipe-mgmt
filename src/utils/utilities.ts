@@ -16,7 +16,7 @@ export async function validateUserFetchBooks(userId: number, setBooks: Dispatch<
       const bookIds = await API.getUserBooks(userId);
       setBooks((books) => {
         const userBooks = { ...books };
-        userBooks.books = bookIds;
+        userBooks.books = bookIds.books;
         return userBooks
       })
     } catch (error: any) {
@@ -25,11 +25,12 @@ export async function validateUserFetchBooks(userId: number, setBooks: Dispatch<
   }
 }
 
-export function ensureDefaultBook(defaultBookId: number, setId: Dispatch<React.SetStateAction<User>>, defaultId: number) {
-  if (!defaultBookId) {
+/** Sets first book created as default */
+export function ensureDefaultBook(currentDefaultBookId: number, setId: Dispatch<React.SetStateAction<User>>, defaultBookId: number) {
+  if (!currentDefaultBookId) {
     setId(user => {
       const updatedUser = { ...user };
-      updatedUser.defaultBookId = defaultId
+      updatedUser.defaultBookId = defaultBookId
       return updatedUser;
     })
   }

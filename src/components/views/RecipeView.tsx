@@ -11,7 +11,7 @@ import AddRecipe from "../requests/AddRecipe"
  */
 
 function RecipeView() {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
 
   return (
     <div id="RecipeView-container" className="divide-y border-2 border-blue-900 container mx-auto px-4 sm:px-6 lg:px-8 flex-1">

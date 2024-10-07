@@ -17,7 +17,6 @@ type CreateBook = {
 }
 
 const defaultBook = { id: null, title: "", description: "" }
-
 /** Renders modal that holds book information 
  * Request book creation associated to user
  * 
@@ -69,7 +68,6 @@ function CreateBook({ isOpen, setOpen }) {
     setOpen(false);
   }
   const user = useContext(UserContext)
-  console.log("useContext(UserContext)", user )
   return (
     <Dialog open={isOpen} onClose={handleClosingActions} className="relative z-10">
       <DialogBackdrop
