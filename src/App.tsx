@@ -19,9 +19,19 @@ import TopNav from "./components/layout/TopNav";
 
 const TOKEN_STORAGE_ID = "user-token"
 
+const defaultUser = {
+  userName: "",
+  id: undefined,
+  isAdmin: undefined, 
+  defaultBookId: undefined,
+  booksIds: []
+}
+
 function App() {
-  const [currentUser, setCurrentUser] = useState<User | undefined>(undefined);
+  const [currentUser, setCurrentUser] = useState<User>(defaultUser);
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
+
+  console.log("user in App from state", currentUser)
   
 
   const UserData: UserContextType = {
@@ -29,6 +39,8 @@ function App() {
     isAdmin: currentUser?.isAdmin,
     userId: currentUser?.userId,
     defaultBookId: currentUser?.defaultBookId,
+    currentBook: currentUser?.defaultBookId,
+    booksIds: currentUser?.booksIds,
     setCurrentUser
   }
 

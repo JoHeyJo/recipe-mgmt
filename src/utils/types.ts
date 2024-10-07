@@ -23,7 +23,7 @@ export type User = {
   isAdmin: boolean;
   defaultBookId?: number;
   currentBook?: undefined;
-  books?: number[];
+  booksIds?: number[];
 }
 
 export type UserLogin = User & {

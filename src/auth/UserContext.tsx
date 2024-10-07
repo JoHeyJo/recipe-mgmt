@@ -6,7 +6,7 @@ export type UserContextType = {
   userId: number | undefined;
   isAdmin: boolean | undefined;
   currentBook?: number;
-  books?: [];
+  booksIds: number[];
   setCurrentUser: React.Dispatch<React.SetStateAction<User>>
   defaultBookId: number | undefined;
 }
@@ -16,7 +16,7 @@ export const UserContext = createContext<UserContextType>({
   userId: undefined,
   isAdmin: false,
   currentBook: undefined,
-  books: [],
+  booksIds: [],
   setCurrentUser: () => {},
   defaultBookId: undefined
 })  

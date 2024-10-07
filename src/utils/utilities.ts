@@ -6,7 +6,7 @@ import { errorHandling } from "./ErrorHandling";
 
 export function extractAndSetUser(token: string, setUser: (user: User) => void) {
   const { user, user_id, is_admin, book_id }: JWTPayload = jwtDecode(token);
-  setUser({ userName: user, userId: user_id, defaultBookId: book_id, isAdmin: is_admin, currentBook: undefined, books: [] })
+  setUser({ userName: user, userId: user_id, defaultBookId: book_id, isAdmin: is_admin, currentBook: undefined, booksIds: [] })
   return user_id
 }
 
@@ -16,7 +16,7 @@ export async function validateUserFetchBooks(userId: number, setBooks: Dispatch<
       const bookIds = await API.getUserBooks(userId);
       setBooks((books) => {
         const userBooks = { ...books };
-        userBooks.books = bookIds.books;
+        userBooks.booksIds = bookIds.books;
         return userBooks
       })
     } catch (error: any) {
