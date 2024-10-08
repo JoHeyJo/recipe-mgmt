@@ -18,6 +18,7 @@ import useLocalStorage from "./hooks/useLocalStorage";
 import TopNav from "./components/layout/TopNav";
 
 const TOKEN_STORAGE_ID = "user-token"
+const USER_STORAGE_ID = "user-data"
 
 const defaultUser = {
   userName: "",
@@ -28,27 +29,27 @@ const defaultUser = {
 }
 
 function App() {
-  const [currentUser, setCurrentUser] = useState<User>(defaultUser);
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
+  const [userData, setUserData] = useLocalStorage<User>(USER_STORAGE_ID);
 
-  console.log("user in App from state", currentUser)
+  console.log("user in App from state", userData)
   
-
   const UserData: UserContextType = {
-    user: currentUser?.userName,
-    isAdmin: currentUser?.isAdmin,
-    userId: currentUser?.userId,
-    defaultBookId: currentUser?.defaultBookId,
-    currentBook: currentUser?.defaultBookId,
-    booksIds: currentUser?.booksIds,
-    setCurrentUser
+    user: userData?.userName,
+    isAdmin: userData?.isAdmin,
+    userId: userData?.userId,
+    defaultBookId: userData?.defaultBookId,
+    currentBook: userData?.defaultBookId,
+    booksIds: userData?.booksIds,
+    setUserData
   }
 
   /** User sign up - returns token and auth credentials - saved to local storage */
   async function userSignUp(signUpData: SignUpData) {
     try {
       const credentials = await API.signUp(signUpData);
-      console.log('credentials token', credentials)
+      // currently local storage is not being set
+      // setToken(res.token);
     } catch (error: any) {
       errorHandling("App->userSignUp", error)
       throw error;
@@ -59,10 +60,10 @@ function App() {
   async function userLogin(loginData: UserLogin) {
     try {
       const res = await API.login(loginData);
-      const userId = extractAndSetUser(res.token, setCurrentUser)
+      const userId = extractAndSetUser(res.token, setUserData)
       API.token = res.token;
-      localStorage.setItem("user-token", res.token);
-      validateUserFetchBooks(userId, setCurrentUser);
+      setToken(res.token);
+      validateUserFetchBooks(userId, setUserData);
     } catch (error: any) {
       errorHandling("App->userLogin", error)
       throw error;
@@ -71,15 +72,16 @@ function App() {
 
   /** Removes token and user data */
   function logout() {
-    setCurrentUser(undefined);
+    setUserData(undefined);
     setToken(null);
+    setUserData(null);
   }
 
   /** persist state on refresh */
   useEffect(() => {
     if (token) {
-      extractAndSetUser(token as string, setCurrentUser)
-      API.token = token;
+      extractAndSetUser(token as string, setUserData)
+      API.token = token as string;
     }
   }, [token])
 
