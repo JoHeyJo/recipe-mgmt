@@ -29,8 +29,8 @@ const defaultUser = {
 }
 
 function App() {
-  const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID, null);
-  const [userData, setUserData] = useLocalStorage<User>(USER_STORAGE_ID, null);
+  const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
+  const [userData, setUserData] = useState<User>(defaultUser);
 
   console.log("user in App from state", userData)
   
@@ -77,13 +77,14 @@ function App() {
     setUserData(null);
   }
 
-  /** persist state on refresh - this was actually overwriting my context local storage on refresh */
-  // useEffect(() => {
-    // if (token) {
-      // extractAndSetUser(token as string, setUserData)
-      // API.token = token as string;
-    // }
-  // }, [token])
+  /** persist user data state on refresh */
+  useEffect(() => {
+    if (token) {
+      const userId = extractAndSetUser(token as string, setUserData)
+      validateUserFetchBooks(userId, setUserData);
+      API.token = token as string;
+    }
+  }, [token])
 
   // class="bg-[var(--background-color)] text-[var(--text-color)]"
 
