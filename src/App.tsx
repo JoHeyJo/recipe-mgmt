@@ -78,12 +78,12 @@ function App() {
   }
 
   /** persist state on refresh - this was actually overwriting my context local storage on refresh */
-  useEffect(() => {
-    if (token) {
+  // useEffect(() => {
+    // if (token) {
       // extractAndSetUser(token as string, setUserData)
       // API.token = token as string;
-    }
-  }, [token])
+    // }
+  // }, [token])
 
   // class="bg-[var(--background-color)] text-[var(--text-color)]"
 

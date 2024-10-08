@@ -31,6 +31,7 @@ export function extractAndSetUserOnLogin(token: string, setUser: (user: User) =>
   return user_id
 }
 
+/** On successful auth populate user's books ids */
 export async function validateUserFetchBooks(userId: number, setBooks: Dispatch<React.SetStateAction<User>>) {
   if (userId) {
     try {
