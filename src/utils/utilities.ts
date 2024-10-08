@@ -6,7 +6,28 @@ import { errorHandling } from "./ErrorHandling";
 
 export function extractAndSetUser(token: string, setUser: (user: User) => void) {
   const { user, user_id, is_admin, book_id }: JWTPayload = jwtDecode(token);
-  setUser({ userName: user, userId: user_id, defaultBookId: book_id, isAdmin: is_admin, currentBook: undefined, booksIds: [] })
+  setUser({
+    userName: user,
+    userId: user_id,
+    defaultBookId: book_id,
+    isAdmin: is_admin,
+    currentBook: undefined,
+    booksIds: [1]
+  })
+  return user_id
+}
+
+
+export function extractAndSetUserOnLogin(token: string, setUser: (user: User) => void) {
+  const { user, user_id, is_admin, book_id }: JWTPayload = jwtDecode(token);
+  setUser({
+    userName: user,
+    userId: user_id,
+    defaultBookId: book_id,
+    isAdmin: is_admin,
+    currentBook: book_id,
+    booksIds: []
+  })
   return user_id
 }
 

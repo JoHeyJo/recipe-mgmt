@@ -75,6 +75,7 @@ function App() {
     setToken(null);
   }
 
+  /** persist state on refresh */
   useEffect(() => {
     if (token) {
       extractAndSetUser(token as string, setCurrentUser)

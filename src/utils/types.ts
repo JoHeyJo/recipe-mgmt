@@ -22,7 +22,7 @@ export type User = {
   userId?: number;
   isAdmin: boolean;
   defaultBookId?: number;
-  currentBook?: undefined;
+  currentBook?: number;
   booksIds?: number[];
 }
 
