@@ -1,5 +1,4 @@
 import { useEffect, useState, Dispatch, SetStateAction } from "react";
-import { User } from "../utils/types";
 
 /** Custom hook to sync state user data with localStorage
  * 
@@ -9,11 +8,18 @@ import { User } from "../utils/types";
  *
  * Explicitly annotate return type of hook, otherwise React infers incorrect types for return value token
  */
-function useLocalStorage<T>( key: string ): [T, Dispatch<SetStateAction<T>>] {
-  const initialValue = localStorage.getItem(key) || null;
-  const [storage, setStorage] = useState(initialValue ? JSON.parse(initialValue) : initialValue);
+function useLocalStorage<T>(key: string, initialValue: T ): [T, Dispatch<SetStateAction<T>>] {
+  const storedValue = localStorage.getItem(key) || null;
+  const [storage, setStorage] = useState<T>(() => {
+    try {
+      return storedValue ? JSON.parse(storedValue) as T : initialValue;
+    } catch (error) {
+      console.error('Error parsing stored value', error);
+      return initialValue;
+    }
+  });
 
-  
+
   /** Removes storage when state is null. Else sets current user storage */
   useEffect(function setKeyInLocalStorage() {
     if (storage === null) {

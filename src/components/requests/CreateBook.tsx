@@ -26,7 +26,7 @@ const defaultBook = { id: null, title: "", description: "" }
 function CreateBook({ isOpen, setOpen }) {
   const [bookData, setBookData] = useState<Book>(defaultBook);
 
-  const { userId, setCurrentUser, currentBook, defaultBookId } = useContext(UserContext);
+  const { userId, setUserData, currentBook, defaultBookId } = useContext(UserContext);
 
   /** Handles changes to book data form */
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
@@ -49,11 +49,11 @@ function CreateBook({ isOpen, setOpen }) {
     try {
       const res = await API.postBook(bookData, userId)
       const newId = res.bookData.id
-      setCurrentUser(user => {
+      setUserData(user => {
         const updatedUser = {...user}
         updatedUser.booksIds.push(newId)
         updatedUser.currentBook = res
-        ensureDefaultBook(defaultBookId, setCurrentUser, newId)
+        ensureDefaultBook(defaultBookId, setUserData, newId)
         return updatedUser;
       })
     } catch (error: any) {
