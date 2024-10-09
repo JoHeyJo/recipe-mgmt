@@ -26,7 +26,7 @@ const defaultBook = { id: null, title: "", description: "" }
 function CreateBook({ isOpen, setOpen }) {
   const [bookData, setBookData] = useState<Book>(defaultBook);
 
-  const { userId, setUserData, currentBook, defaultBookId } = useContext(UserContext);
+  const { userId, setUserData, currentBookId, defaultBookId } = useContext(UserContext);
 
   /** Handles changes to book data form */
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
@@ -52,7 +52,7 @@ function CreateBook({ isOpen, setOpen }) {
       setUserData(user => {
         const updatedUser = {...user}
         updatedUser.booksIds.push(newId)
-        updatedUser.currentBook = res
+        updatedUser.currentBookId = res
         ensureDefaultBook(defaultBookId, setUserData, newId)
         return updatedUser;
       })

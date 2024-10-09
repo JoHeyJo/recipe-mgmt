@@ -11,7 +11,7 @@ export function extractAndSetUser(token: string, setUser: (user: User) => void) 
     userId: user_id,
     defaultBookId: book_id,
     isAdmin: is_admin,
-    currentBook: book_id,
+    currentBookId: book_id,
     booksIds: []
   })
   return user_id
@@ -25,7 +25,7 @@ export function extractAndSetUserOnLogin(token: string, setUser: (user: User) =>
     userId: user_id,
     defaultBookId: book_id,
     isAdmin: is_admin,
-    currentBook: book_id,
+    currentBookId: book_id,
     booksIds: []
   })
   return user_id

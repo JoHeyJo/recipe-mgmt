@@ -39,7 +39,7 @@ function App() {
     isAdmin: userData?.isAdmin,
     userId: userData?.userId,
     defaultBookId: userData?.defaultBookId,
-    currentBook: userData?.defaultBookId,
+    currentBookId: userData?.defaultBookId,
     booksIds: userData?.booksIds,
     setUserData
   }

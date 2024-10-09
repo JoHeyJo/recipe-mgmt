@@ -38,9 +38,9 @@ class API {
     return res;
   }
 
-  /** Add recipe to database*/
-  static async postRecipe(data: Recipe) {
-    const res = await this.request("recipes", data, "POST");
+  /** Add user recipe to corresponding book*/
+  static async postUserRecipe(data: Recipe, bookId: number) {
+    const res = await this.request(`recipes/books/${bookId}`, data, "POST");
     return res;
   }
 
@@ -78,6 +78,12 @@ class API {
   static async getUserBooks(userId: number){
     const res = await this.request(`/books/users/${userId}`)
     return res 
+  }
+
+  /** Fetch user recipes */
+  static async getUserRecipes(userId: number){
+    const res = await this.request(`recipes/users/${userId}`)
+    return res
   }
 }
 

@@ -1,13 +1,13 @@
-import { Fragment, useState } from 'react'
-import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
+import { useState, useContext } from 'react'
+import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
 import IngredientsGroup from '../selectors/IngredientsGroup';
 import { Ingredient, Instructions, Recipe } from '../../utils/types';
 import InputWithLabel from '../ui/InputWithLabel'
 import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
-import DropDownWithSearch from '../selectors/OptionDropdown';
 import { useMediaQuery } from 'react-responsive';
 import InstructionsArea from '../ui/InstructionsArea';
+import { UserContext } from '../../auth/UserContext';
 
 
 type AddRecipe = {
@@ -30,10 +30,12 @@ const recipeTemplate: Recipe = {
 function AddRecipe({ setShowing, isOpen }: AddRecipe) {
   const [recipe, setRecipe] = useState<Recipe>(recipeTemplate);
 
+  const { currentBookId } = useContext(UserContext);
+
   const isLargeScreen = useMediaQuery({ query: '(min-width: 1024px)' }); // lg breakpoint in Tailwind
 
   /** Updates recipe state */
-  function updateRecipe(data: string | Ingredient[] | Instructions, section: string) {
+  function handleRecipe(data: string | Ingredient[] | Instructions, section: string) {
     setRecipe(prevRecipe => (
       { ...prevRecipe, [section]: data }
     ));
@@ -42,7 +44,7 @@ function AddRecipe({ setShowing, isOpen }: AddRecipe) {
   /** Calls api to send recipe data */
   async function addRecipe() {
     try {
-      const res = await API.postRecipe(recipe);
+      const res = await API.postUserRecipe(recipe, currentBookId);
     } catch (error: any) {
       errorHandling("AddRecipe - addRecipe", error)
     }
@@ -80,11 +82,11 @@ function AddRecipe({ setShowing, isOpen }: AddRecipe) {
                 </div> */}
                 <section id='AddRecipe-book' className='flex h-full'>
                   <section id='AddRecipe-left-page' className="flex-1 mr-4">
-                    <InputWithLabel handleUpdate={updateRecipe} value={recipe.name} />
-                    <IngredientsGroup handleUpdate={updateRecipe} />
+                    <InputWithLabel handleUpdate={handleRecipe} value={recipe.name} />
+                    <IngredientsGroup handleUpdate={handleRecipe} />
                   </section>
                   <section id='AddRecipe-right-page' className="flex-1 ml-4 ">
-                    <InstructionsArea handleUpdate={updateRecipe} />
+                    <InstructionsArea handleUpdate={handleRecipe} />
                   </section>
                 </section>
               </div>
