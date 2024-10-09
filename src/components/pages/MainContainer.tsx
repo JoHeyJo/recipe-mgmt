@@ -11,7 +11,6 @@ import { useContext } from "react";
 function MainContainer() {
 
   const userData = useContext(UserContext);
-  console.log("user data in main container from context",userData)
   return (
 
     <div className="border-2 mt-7 border-red-900 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

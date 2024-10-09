@@ -4,7 +4,6 @@ const items = [
   { id: 1, recipe: "item 1" },
   { id: 2, recipe: "item 2" },
   { id: 3, recipe: "item 3" },
-  // More items...
 ]
 //  border-red-500
 function Recipes() {
