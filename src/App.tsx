@@ -47,9 +47,11 @@ function App() {
   /** User sign up - returns token and auth credentials - saved to local storage */
   async function userSignUp(signUpData: SignUpData) {
     try {
-      const credentials = await API.signUp(signUpData);
-      // currently local storage is not being set
-      // setToken(res.token);
+      const res = await API.signUp(signUpData);
+      const userId = extractAndSetUser(res.token, setUserData)
+      API.token = res.token;
+      setToken(res.token);
+      validateUserFetchBooks(userId, setUserData);
     } catch (error: any) {
       errorHandling("App->userSignUp", error)
       throw error;
