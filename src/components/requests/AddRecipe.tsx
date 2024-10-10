@@ -50,8 +50,8 @@ function AddRecipe({ setShowing, isOpen }: AddRecipe) {
     }
   }
 
-  function handleSubmit(){
-    console.log("recipe",recipe)
+  function handleSubmit() {
+    console.log("recipe", recipe)
     setShowing(false)
     addRecipe()
   }

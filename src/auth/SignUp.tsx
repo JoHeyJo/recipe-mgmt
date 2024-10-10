@@ -27,7 +27,7 @@ const defaultNew: UserSignUp = {
 
 function SignUp({ signUp }: SignUpProps) {
   const [newUser, setNewUser] = useState(defaultNew);
-  const [alert, setAlert] = useState(undefined); 
+  const [alert, setAlert] = useState(undefined);
   const navigate = useNavigate();
 
   /** Handle changes to sign up form */
@@ -40,14 +40,14 @@ function SignUp({ signUp }: SignUpProps) {
   }
 
   /** Submits new user data for */
-  async function handleSubmit(event:any) {
+  async function handleSubmit(event: any) {
     event.preventDefault();
     try {
       await signUp(newUser);
       setNewUser(defaultNew);
       navigate("/home")
     } catch (error: any) {
-      errorHandling("SignUp",error)
+      errorHandling("SignUp", error)
       setAlert(error.response.data.error)
     }
   }
@@ -96,7 +96,7 @@ function SignUp({ signUp }: SignUpProps) {
               handleChange={handleChange}
               required />
           </div>
-          <div className='form-group'>        
+          <div className='form-group'>
             <InputWithLabelForm
               id={'userName'}
               name={'User name:'}
