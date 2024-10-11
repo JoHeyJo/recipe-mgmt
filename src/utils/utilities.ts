@@ -6,6 +6,7 @@ import { errorHandling } from "./ErrorHandling";
 
 export function extractAndSetUser(token: string, setUser: (user: User) => void) {
   const { user, user_id, is_admin, book_id }: JWTPayload = jwtDecode(token);
+  console.log(user, user_id, is_admin, book_id)
   setUser({
     userName: user,
     userId: user_id,
