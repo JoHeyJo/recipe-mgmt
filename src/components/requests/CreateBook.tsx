@@ -9,7 +9,6 @@ import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
 import { useContext } from 'react';
 import { UserContext } from '../../auth/UserContext';
-import { ensureDefaultBook } from '../../utils/utilities';
 
 type CreateBook = {
   isOpen: boolean;
