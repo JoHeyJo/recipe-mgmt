@@ -48,12 +48,13 @@ function CreateBook({ isOpen, setOpen }) {
   async function createBook(bookData: Book, userId: number) {
     try {
       const res = await API.postBook(bookData, userId)
-      const newId = res.bookData.id
+      const newId = res.id
       setUserData(user => {
-        const updatedUser = {...user}
+        const updatedUser = { ...user }
         updatedUser.booksIds.push(newId)
-        updatedUser.currentBookId = res
-        ensureDefaultBook(defaultBookId, setUserData, newId)
+        updatedUser.currentBookId = newId
+        // ensure default book id
+        if(!updatedUser.defaultBookId) updatedUser.defaultBookId = newId;
         return updatedUser;
       })
     } catch (error: any) {

@@ -39,8 +39,8 @@ class API {
   }
 
   /** Add user recipe to corresponding book*/
-  static async postUserRecipe(data: Recipe, bookId: number) {
-    const res = await this.request(`recipes/books/${bookId}`, data, "POST");
+  static async postUserRecipe(data: Recipe, bookId: number, userId: number) {
+    const res = await this.request(`users/${userId}/books/${bookId}/recipes`, data, "POST");
     return res;
   }
 

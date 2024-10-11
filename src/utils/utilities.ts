@@ -47,6 +47,8 @@ export async function validateUserFetchBooks(userId: number, setBooks: Dispatch<
   }
 }
 
+
+// DEPRECATED
 /** Sets first book created as default */
 export function ensureDefaultBook(currentDefaultBookId: number, setId: Dispatch<React.SetStateAction<User>>, defaultBookId: number) {
   if (!currentDefaultBookId) {

@@ -30,7 +30,7 @@ const recipeTemplate: Recipe = {
 function AddRecipe({ setShowing, isOpen }: AddRecipe) {
   const [recipe, setRecipe] = useState<Recipe>(recipeTemplate);
 
-  const { currentBookId } = useContext(UserContext);
+  const { currentBookId, userId } = useContext(UserContext);
 
   const isLargeScreen = useMediaQuery({ query: '(min-width: 1024px)' }); // lg breakpoint in Tailwind
 
@@ -44,7 +44,7 @@ function AddRecipe({ setShowing, isOpen }: AddRecipe) {
   /** Calls api to send recipe data */
   async function addRecipe() {
     try {
-      const res = await API.postUserRecipe(recipe, currentBookId);
+      const res = await API.postUserRecipe(recipe, currentBookId, userId);
     } catch (error: any) {
       errorHandling("AddRecipe - addRecipe", error)
     }
