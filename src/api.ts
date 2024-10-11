@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Recipe, UserLogin, UserSignUp, Option, Ingredient, Book } from "./utils/types";
 
-const BASEURL = "http://127.0.0.1:5000"
+const BASEURL = "http://127.0.0.1:5000/"
 /** API class. 
  * 
  * Static class - Contains methods that facilitate communications between client
@@ -38,6 +38,12 @@ class API {
     return res;
   }
 
+  /** Fetch specific user */
+  static async getUser(userId: number){
+    const res = await this.request(`users/${userId}`);
+    return res;
+  }
+
   /** Add user recipe to corresponding book*/
   static async postUserRecipe(data: Recipe, bookId: number, userId: number) {
     const res = await this.request(`users/${userId}/books/${bookId}/recipes`, data, "POST");
@@ -52,7 +58,7 @@ class API {
 
   /** Fetch options for ingredient components */
   static async getOptions(component: string) {
-    const res = await this.request(`/options/${component}`)
+    const res = await this.request(`options/${component}`)
     return res;
   }
 
@@ -64,19 +70,19 @@ class API {
 
   /** Post ingredient to database */
   static async postIngredient(data: Ingredient) {
-    const res = await this.request("/instructions/instruction", data, "POST")
+    const res = await this.request("instructions/instruction", data, "POST")
     return res
   }
 
   /** Post new book */
   static async postBook(data: Book, userId: number) {
-    const res = await this.request(`/books/users/${userId}`, data, "POST")
+    const res = await this.request(`books/users/${userId}`, data, "POST")
     return res
   }
 
   /** Fetch user books */
   static async getUserBooks(userId: number){
-    const res = await this.request(`/books/users/${userId}`)
+    const res = await this.request(`books/users/${userId}`)
     return res 
   }
 

@@ -4,32 +4,22 @@ import { JWTPayload, User } from "../utils/types";
 import API from "../api";
 import { errorHandling } from "./ErrorHandling";
 
-export function extractAndSetUser(token: string, setUser: (user: User) => void) {
-  const { user, user_id, is_admin, book_id }: JWTPayload = jwtDecode(token);
-  console.log(user, user_id, is_admin, book_id)
-  setUser({
-    userName: user,
-    userId: user_id,
-    defaultBookId: book_id,
-    isAdmin: is_admin,
-    currentBookId: book_id,
-    booksIds: []
-  })
-  return user_id
-}
-
-
-export function extractAndSetUserOnLogin(token: string, setUser: (user: User) => void) {
-  const { user, user_id, is_admin, book_id }: JWTPayload = jwtDecode(token);
-  setUser({
-    userName: user,
-    userId: user_id,
-    defaultBookId: book_id,
-    isAdmin: is_admin,
-    currentBookId: book_id,
-    booksIds: []
-  })
-  return user_id
+/** Fetches specific user and updates state used by context */
+export async function extractAndSetUser(token: string, setUser: (user: User) => void) {
+  console.log("token",token)
+  const { sub }: JWTPayload = jwtDecode(token);
+  console.log("sub",sub)
+  if(sub){
+    try {
+      const res = await API.getUser(sub);
+      console.log("response in extractAndSetUser", res)
+      setUser(res)
+      return sub
+    } catch (error: any) {
+      errorHandling("Utilities -> extractAndSetUser", error)
+      throw error;
+    }
+  }
 }
 
 /** On successful auth populate user's books ids */

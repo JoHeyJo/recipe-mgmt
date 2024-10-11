@@ -48,7 +48,7 @@ function App() {
   async function userSignUp(signUpData: SignUpData) {
     try {
       const res = await API.signUp(signUpData);
-      const userId = extractAndSetUser(res.token, setUserData)
+      const userId = await extractAndSetUser(res.token, setUserData)
       API.token = res.token;
       setToken(res.token);
       validateUserFetchBooks(userId, setUserData);
@@ -62,7 +62,7 @@ function App() {
   async function userLogin(loginData: UserLogin) {
     try {
       const res = await API.login(loginData);
-      const userId = extractAndSetUser(res.token, setUserData)
+      const userId = await extractAndSetUser(res.token, setUserData)
       API.token = res.token;
       setToken(res.token);
       validateUserFetchBooks(userId, setUserData);
@@ -81,10 +81,13 @@ function App() {
 
   /** persist user data state on refresh */
   useEffect(() => {
-    if (token) {
-      const userId = extractAndSetUser(token as string, setUserData)
+    async function persistUser(){
+      const userId = await extractAndSetUser(token as string, setUserData)
       validateUserFetchBooks(userId, setUserData);
       API.token = token as string;
+    }
+    if (token) {
+      persistUser();
     }
   }, [token])
 

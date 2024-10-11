@@ -48,10 +48,7 @@ export type Login = {
 export type AuthProps = Login & SignUp
 
 export type JWTPayload = {
-  user: string;
-  user_id: number;
-  is_admin: boolean;
-  book_id: number;
+  sub: number;
 }
 
 export type Option = {
