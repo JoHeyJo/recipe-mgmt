@@ -16,7 +16,6 @@ const defaultNew: UserSignUp = {
   email: "",
   password: "",
   userName: "",
-  isAdmin: false
 }
 
 /** Render SignUp form - handles SignUp logic 

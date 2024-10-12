@@ -6,14 +6,22 @@ import { errorHandling } from "./ErrorHandling";
 
 /** Fetches specific user and updates state used by context */
 export async function extractAndSetUser(token: string, setUser: (user: User) => void) {
-  console.log("token",token)
+  console.log("token", token)
   const { sub }: JWTPayload = jwtDecode(token);
-  console.log("sub",sub)
-  if(sub){
+  console.log("sub", sub)
+  if (sub) {
     try {
       const res = await API.getUser(sub);
       console.log("response in extractAndSetUser", res)
-      setUser(res)
+
+      setUser({ 
+        userName: res.user_name, 
+        id: res.id, 
+        defaultBookId: res.book_id,
+        booksIds: res.book_ids,
+
+      })
+      console.log("set user")
       return sub
     } catch (error: any) {
       errorHandling("Utilities -> extractAndSetUser", error)

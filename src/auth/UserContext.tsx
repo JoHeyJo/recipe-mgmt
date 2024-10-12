@@ -4,7 +4,6 @@ import { User } from "../utils/types";
 export type UserContextType = {
   user: string | undefined;
   userId: number | undefined;
-  isAdmin: boolean | undefined;
   currentBookId: number;
   booksIds: number[];
   setUserData: React.Dispatch<React.SetStateAction<User>>
@@ -14,7 +13,6 @@ export type UserContextType = {
 export const UserContext = createContext<UserContextType>({
   user: '',
   userId: undefined,
-  isAdmin: false,
   currentBookId: undefined,
   booksIds: [],
   setUserData: () => {},

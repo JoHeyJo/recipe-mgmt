@@ -19,8 +19,7 @@ export type Ingredient = {
 
 export type User = {
   userName: string;
-  userId?: number;
-  isAdmin: boolean;
+  id?: number;
   defaultBookId?: number;
   currentBookId?: number;
   booksIds?: number[];

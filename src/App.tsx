@@ -36,14 +36,15 @@ function App() {
   
   const UserData: UserContextType = {
     user: userData?.userName,
-    isAdmin: userData?.isAdmin,
-    userId: userData?.userId,
+    userId: userData?.id,
     defaultBookId: userData?.defaultBookId,
     currentBookId: userData?.defaultBookId,
     booksIds: userData?.booksIds,
     setUserData
   }
 
+  console.log("user data", userData)
+  console.log("user data", UserData)
   /** User sign up - returns token and auth credentials - saved to local storage */
   async function userSignUp(signUpData: SignUpData) {
     try {

@@ -10,7 +10,7 @@ import Alert from '../components/ui/Alert';
 //styles
 import '../styles/Login.css';
 
-const defaultCredentials: UserLogin = { userName: "", password: "", isAdmin: false };
+const defaultCredentials: UserLogin = { userName: "", password: ""};
 
 /** Renders login form
  * 

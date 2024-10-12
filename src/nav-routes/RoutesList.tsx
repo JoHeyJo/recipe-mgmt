@@ -10,6 +10,7 @@ import MainContainer from "../components/pages/MainContainer";
 
 function RoutesList({ signUp, login }: AuthProps) {
   const { user } = useContext(UserContext);
+  console.log("user id", user)
   return (
     <>
       {user ?
