@@ -76,13 +76,13 @@ class API {
 
   /** Post new book */
   static async postBook(data: Book, userId: number) {
-    const res = await this.request(`books/users/${userId}`, data, "POST")
+    const res = await this.request(`users/${userId}/books`, data, "POST")
     return res
   }
 
   /** Fetch user books */
   static async getUserBooks(userId: number){
-    const res = await this.request(`books/users/${userId}`)
+    const res = await this.request(`users/${userId}/books`)
     return res 
   }
 

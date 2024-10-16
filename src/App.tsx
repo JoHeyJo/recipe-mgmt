@@ -43,8 +43,6 @@ function App() {
     setUserData
   }
 
-  console.log("user data", userData)
-  console.log("user data", UserData)
   /** User sign up - returns token and auth credentials - saved to local storage */
   async function userSignUp(signUpData: SignUpData) {
     try {
