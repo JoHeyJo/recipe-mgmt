@@ -69,7 +69,9 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
   /** Consolidates actions that deselect option */
   function processDeselect(option: Instruction) {
     handleInstructions.removeFilterKey(arrayKey)
-    handleInstructions.removeInstructionSelection(option.id)
+    // option = undefined for pending instructions. Will break without this check
+    // Only created instructions will trigger this action
+    if(option) handleInstructions.removeInstructionSelection(option.id)
     setSelected(null)
   }
 
