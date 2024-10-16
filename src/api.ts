@@ -39,7 +39,7 @@ class API {
   }
 
   /** Fetch specific user */
-  static async getUser(userId: number){
+  static async getUser(userId: number) {
     const res = await this.request(`users/${userId}`);
     return res;
   }
@@ -81,14 +81,14 @@ class API {
   }
 
   /** Fetch user books */
-  static async getUserBooks(userId: number){
+  static async getUserBooks(userId: number) {
     const res = await this.request(`users/${userId}/books`)
-    return res 
+    return res
   }
 
   /** Fetch user recipes */
-  static async getUserRecipes(userId: number){
-    const res = await this.request(`recipes/users/${userId}`)
+  static async getUserRecipes(userId: number, bookId: number) {
+    const res = await this.request(`users/${userId}/books/${bookId}/recipes`)
     return res
   }
 }

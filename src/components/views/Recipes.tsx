@@ -1,20 +1,23 @@
 import "../../styles/Recipes.css";
 
-const items = [
-  { id: 1, recipe: "item 1" },
-  { id: 2, recipe: "item 2" },
-  { id: 3, recipe: "item 3" },
-]
+
+
+type RecipesProps = {
+  id: number;
+  name: string;
+}
+
 //  border-red-500
-function Recipes() {
+/** Renders recipes 
+ * 
+ * 
+ * MainContainer -> Recipes
+ */
+function Recipes({id, name}) {
   return (
-    <ul role="list" id="Recipes-container" className="border-2 border-blue-900 divide-y divide-gray-200 flex-1">
-      {items.map((item) => (
-        <li key={item.id} className="border-1 pt-6 py-4">
-          {item.recipe}
-        </li>
-      ))}
-    </ul>
+    <li key={id} className="border-1 pt-6 py-4">
+      {name}
+    </li>
   )
 }
 
