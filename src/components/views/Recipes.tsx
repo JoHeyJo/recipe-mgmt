@@ -13,7 +13,7 @@ type RecipesProps = {
  * 
  * MainContainer -> Recipes
  */
-function Recipes({id, name}) {
+function Recipes({ id, name }: RecipesProps) {
   return (
     <li key={id} className="border-1 pt-6 py-4">
       {name}

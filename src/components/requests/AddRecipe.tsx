@@ -10,9 +10,10 @@ import InstructionsArea from '../ui/InstructionsArea';
 import { UserContext } from '../../auth/UserContext';
 
 
-type AddRecipe = {
+type AddRecipeProps = {
   setShowing: any;
   isOpen: boolean;
+  handleRecipesUpdate: (recipe: Recipe) => void;
 }
 
 const recipeTemplate: Recipe = {
@@ -20,6 +21,7 @@ const recipeTemplate: Recipe = {
   instructions: [],
   notes: [],
   ingredients: []
+
 }
 
 /** Processes all recipe data
@@ -27,7 +29,7 @@ const recipeTemplate: Recipe = {
  * RecipeView -> AddRecipe -> [IngredientsGroup, InstructionsArea]
  */
 
-function AddRecipe({ setShowing, isOpen }: AddRecipe) {
+function AddRecipe({ setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) {
   const [recipe, setRecipe] = useState<Recipe>(recipeTemplate);
 
   const { currentBookId, userId } = useContext(UserContext);
@@ -45,6 +47,8 @@ function AddRecipe({ setShowing, isOpen }: AddRecipe) {
   async function addRecipe() {
     try {
       const res = await API.postUserRecipe(recipe, currentBookId, userId);
+      console.log("adRecipe res",res)
+      handleRecipesUpdate(res)
     } catch (error: any) {
       errorHandling("AddRecipe - addRecipe", error)
     }

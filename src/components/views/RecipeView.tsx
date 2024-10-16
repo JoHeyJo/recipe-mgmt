@@ -3,6 +3,11 @@ import { useState } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import AddRecipe from "../requests/AddRecipe"
+import { Recipe } from "../../utils/types"
+
+type RecipeViewProps = {
+  handleRecipesUpdate: (recipe: Recipe) => void;
+}
 
 /** Renders recipe "book"
  * 
@@ -10,7 +15,7 @@ import AddRecipe from "../requests/AddRecipe"
  * MainContainer -> RecipeView -> AddRecipe
  */
 
-function RecipeView() {
+function RecipeView({ handleRecipesUpdate }: RecipeViewProps) {
   const [open, setOpen] = useState(false)
 
   return (
@@ -20,7 +25,7 @@ function RecipeView() {
         <button onClick={() => setOpen(true)}>
           <FontAwesomeIcon icon={faPlus} />
         </button>
-        <AddRecipe setShowing={setOpen} isOpen={open} />
+        <AddRecipe handleRecipesUpdate={handleRecipesUpdate} setShowing={setOpen} isOpen={open} />
       </div>
       <p >Recipe View</p>
     </div>
