@@ -1,19 +1,16 @@
 import "../../styles/Recipes.css";
 
-
-
-type RecipeProps = {
+type IndexProps = {
   id: number;
   name: string;
 }
 
-//  border-red-500
-/** Renders recipes 
+/** Renders recipe
  * 
  * 
  * MainContainer -> Recipes
  */
-function Recipe({ id, name }: RecipeProps) {
+function Index({ id, name }: IndexProps) {
   return (
     <li key={id} className="m-5 text-gray-700 hover:bg-gray-50 hover:text-gray-600">
       {name}
@@ -21,4 +18,4 @@ function Recipe({ id, name }: RecipeProps) {
   )
 }
 
-export default Recipe
+export default Index
