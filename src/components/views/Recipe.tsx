@@ -2,7 +2,7 @@ import "../../styles/Recipes.css";
 
 
 
-type RecipesProps = {
+type RecipeProps = {
   id: number;
   name: string;
 }
@@ -13,12 +13,12 @@ type RecipesProps = {
  * 
  * MainContainer -> Recipes
  */
-function Recipes({ id, name }: RecipesProps) {
+function Recipe({ id, name }: RecipeProps) {
   return (
-    <li key={id} className="border-1 pt-6 py-4">
+    <li key={id} className="m-5 text-gray-700 hover:bg-gray-50 hover:text-gray-600">
       {name}
     </li>
   )
 }
 
-export default Recipes
+export default Recipe

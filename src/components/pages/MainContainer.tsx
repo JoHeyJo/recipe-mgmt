@@ -1,5 +1,5 @@
 import RecipeView from "../views/RecipeView";
-import Recipes from "../views/Recipes"
+import Recipes from "../views/Recipe"
 import { UserContext } from "../../auth/UserContext";
 import { useContext, useEffect, useState } from "react";
 import API from "../../api";

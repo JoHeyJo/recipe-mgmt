@@ -21,7 +21,6 @@ const recipeTemplate: Recipe = {
   instructions: [],
   notes: [],
   ingredients: []
-
 }
 
 /** Processes all recipe data

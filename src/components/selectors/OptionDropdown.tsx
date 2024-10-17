@@ -3,7 +3,7 @@ import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
 import IngredientManager from '../ui/IngredientManager';
 
-type OptionRequests = {
+type OptionRequestsProps = {
   name: string
   handleOptionChange: (state: string, option: Option) => void;
   options: Option[];
@@ -17,7 +17,7 @@ type OptionRequests = {
  * IngredientInputGroup -> OptionRequests -> IngredientManager
  */
 
-function OptionRequests({ name, handleOptionChange, options, handleOptions }: OptionRequests) {
+function OptionRequests({ name, handleOptionChange, options, handleOptions }: OptionRequestsProps) {
 
   /** Request to create new ingredient option */
   async function addOption(option: Option): Promise<Option>   {
