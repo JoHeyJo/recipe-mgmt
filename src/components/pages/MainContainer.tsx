@@ -1,5 +1,5 @@
 import RecipeView from "../views/RecipeContainer";
-import Recipes from "../views/Index"
+import Index from "../views/Index"
 import { UserContext } from "../../auth/UserContext";
 import { useContext, useEffect, useState } from "react";
 import API from "../../api";
@@ -39,7 +39,7 @@ function MainContainer() {
       <div className="border-2 border-black-500 h-[75vh] mx-auto max-w-1xl flex">
         <ul role="list" id="Recipes-container" className="border-2 border-blue-900 divide-y divide-gray-200 flex-1">
           {recipes.map((recipe) => (
-            <Recipes id={recipe.id} name={recipe.name} />
+            <Index id={recipe.id} name={recipe.name} />
           ))}
         </ul>
         <RecipeView handleRecipesUpdate={updateRecipes}/>
