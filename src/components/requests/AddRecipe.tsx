@@ -8,24 +8,14 @@ import { errorHandling } from '../../utils/ErrorHandling';
 import { useMediaQuery } from 'react-responsive';
 import InstructionsArea from '../ui/InstructionsArea';
 import { UserContext } from '../../auth/UserContext';
+import { recipeTemplate } from '../../utils/templates';
+import { AddRecipeProps } from '../../utils/props';
 
 
-type AddRecipeProps = {
-  setShowing: any;
-  isOpen: boolean;
-  handleRecipesUpdate: (recipe: Recipe) => void;
-}
-
-const recipeTemplate: Recipe = {
-  name: "",
-  instructions: [],
-  notes: [],
-  ingredients: []
-}
 
 /** Processes all recipe data
  * 
- * RecipeView -> AddRecipe -> [IngredientsGroup, InstructionsArea]
+ * RecipeContainer -> AddRecipe -> [IngredientsGroup, InstructionsArea]
  */
 
 function AddRecipe({ setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) {

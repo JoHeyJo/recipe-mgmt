@@ -3,7 +3,7 @@
   color: var(--text-color);
 }
 
-#RecipeView-container,
+#RecipeContainer-container,
 #Recipes-container {
   background-color: var(--background-color);
 } 

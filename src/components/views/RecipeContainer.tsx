@@ -5,10 +5,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import AddRecipe from "../requests/AddRecipe"
 import { Recipe } from "../../utils/types"
 import RecipeView from "./RecipeView"
-
-type RecipeViewProps = {
-  handleRecipesUpdate: (recipe: Recipe) => void;
-}
+import { RecipeViewProps } from "../../utils/props"
 
 /** Renders recipe "book"
  * 
@@ -16,7 +13,7 @@ type RecipeViewProps = {
  * MainContainer -> RecipeContainer -> AddRecipe
  */
 
-function RecipeContainer({ handleRecipesUpdate }: RecipeViewProps) {
+function RecipeContainer({ handleRecipesUpdate, recipe }: RecipeViewProps) {
   const [open, setOpen] = useState(false)
 
   return (
@@ -29,8 +26,8 @@ function RecipeContainer({ handleRecipesUpdate }: RecipeViewProps) {
           </button>
         </div>
         <AddRecipe handleRecipesUpdate={handleRecipesUpdate} setShowing={setOpen} isOpen={open} />
+        <RecipeView recipe={recipe} />
       </div>
-      <RecipeView />
     </div>
   )
 }

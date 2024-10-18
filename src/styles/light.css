@@ -8,6 +8,6 @@
   /* Define other variables for light mode */
 }
 
-#RecipeView-container, #Recipes-container {
+#RecipeContainer-container, #Recipes-container {
   --background-color: #F3F4F6;
 }

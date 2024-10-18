@@ -1,5 +1,10 @@
+import { Recipe } from "../../utils/types";
 
-function RecipeView() {
+type RecipeViewProps = {
+  recipe: Recipe;
+}
+
+function RecipeView({ recipe }: RecipeViewProps) {
   return (
     <div className=''>
       <div className="">
