@@ -18,8 +18,7 @@ function RecipeContainer({ handleRecipesUpdate, recipe }: RecipeViewProps) {
 
   return (
     <div id="RecipeContainer-container" className="divide-y border-2 border-blue-900 container mx-auto flex-1">
-      <div id="RecipeContainer-header">
-        <div id="RecipeContainer-top-nav" className="flex justify-between p-4">
+      <div id="RecipeContainer-header" className="flex text-gray-900 bg-white justify-between p-4">
           <h3>Recipe</h3>
           <button onClick={() => setOpen(true)}>
             <FontAwesomeIcon icon={faPlus} />
@@ -27,7 +26,6 @@ function RecipeContainer({ handleRecipesUpdate, recipe }: RecipeViewProps) {
         </div>
         <AddRecipe handleRecipesUpdate={handleRecipesUpdate} setShowing={setOpen} isOpen={open} />
         <RecipeView recipe={recipe} />
-      </div>
     </div>
   )
 }

@@ -1,4 +1,8 @@
-import { Recipe } from "./types";
+import { Recipe, Ingredient } from "./types";
+
+export type IngredientsViewProp = {
+  ingredients: Ingredient[];
+}
 
 export type AddRecipeProps = {
   setShowing: any;
