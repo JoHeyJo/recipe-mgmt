@@ -1,6 +1,7 @@
 import { Recipe } from "../../utils/types";
 import IngredientsView from "./IngredientsView";
 import InstructionsView from "./InstructionsView";
+import NotesView from "./NotesView";
 
 type RecipeViewProps = {
   recipe: Recipe;
@@ -24,10 +25,7 @@ function RecipeView({ recipe }: RecipeViewProps) {
         <section className="divide-y divide-gray-100">
           <IngredientsView ingredients={ingredients} />
           <InstructionsView instructions={instructions}/>
-          <div className="bg-white px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
-            <dt className="text-sm font-medium leading-6 text-gray-900">Notes:</dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">$120,000</dd>
-          </div>
+          <NotesView notes={notes}/>
         </section>
       </div>
     </>

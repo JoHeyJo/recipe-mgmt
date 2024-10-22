@@ -7,6 +7,10 @@ export type InstructionsViewProp = {
   instructions: Instructions;
 }
 
+export type NotesViewProp = {
+  notes: string[];
+}
+
 export type AddRecipeProps = {
   setShowing: any;
   isOpen: boolean;
