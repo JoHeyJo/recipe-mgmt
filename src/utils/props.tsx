@@ -1,7 +1,10 @@
-import { Recipe, Ingredient } from "./types";
+import { Recipe, Ingredient, Instructions } from "./types";
 
 export type IngredientsViewProp = {
   ingredients: Ingredient[];
+}
+export type InstructionsViewProp = {
+  instructions: Instructions;
 }
 
 export type AddRecipeProps = {

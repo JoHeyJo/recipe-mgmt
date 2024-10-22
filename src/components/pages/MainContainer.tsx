@@ -46,7 +46,7 @@ function MainContainer() {
       <div className="border-2 border-black-500 h-[75vh] mx-auto max-w-1xl flex">
         <ul role="list" id="Recipes-container" className="border-2 border-blue-900 divide-y divide-gray-200 flex-1">
           {recipes.map((recipe, index) => (
-            <Index id={recipe.id} index={index} name={recipe.name} handleSelect={selectRecipe} />
+            <Index key={recipe.id} id={recipe.id} index={index} name={recipe.name} handleSelect={selectRecipe} />
           ))}
         </ul>
         <RecipeContainer recipe={selectedRecipe} handleRecipesUpdate={updateRecipes} />
