@@ -3,6 +3,7 @@ import { Ingredient, Instruction, Instructions } from "../../utils/types";
 import InstructionManager from "./InstructionManager";
 import API from "../../api";
 import { errorHandling } from '../../utils/ErrorHandling';
+import TextInputDescription from "./common/TextInputDescription";
 
 const PLACE_HOLDER = ["Add ingredients...", "Add ice...", "shake..."]
 
@@ -139,6 +140,7 @@ function InstructionsArea({ handleUpdate }: InstructionArea) {
           handleInstructions={handleInstructions}
         />
       )}
+      <TextInputDescription handleChange={()=>{}} />
     </div>
   )
 }

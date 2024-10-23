@@ -21,3 +21,7 @@ export type RecipeViewProps = {
   recipe: Recipe;
   handleRecipesUpdate: (recipe: Recipe) => void;
 }
+
+export type IngredientsGroupProps = {
+  handleUpdate: (data: Ingredient[], section: string) => void;
+}

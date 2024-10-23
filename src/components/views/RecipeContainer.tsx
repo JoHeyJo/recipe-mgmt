@@ -14,7 +14,7 @@ import { RecipeViewProps } from "../../utils/props"
  */
 
 function RecipeContainer({ handleRecipesUpdate, recipe }: RecipeViewProps) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(true)
 
   return (
     <div id="RecipeContainer-container" className="divide-y border-2 border-blue-900 container mx-auto flex-1">

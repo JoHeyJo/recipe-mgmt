@@ -10,6 +10,7 @@ import InstructionsArea from '../ui/InstructionsArea';
 import { UserContext } from '../../auth/UserContext';
 import { recipeTemplate } from '../../utils/templates';
 import { AddRecipeProps } from '../../utils/props';
+import TextInputDescription from '../ui/common/TextInputDescription';
 
 
 
@@ -33,10 +34,11 @@ function AddRecipe({ setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) 
   }
 
   /** Calls api to send recipe data */
+  // ADD A CHECK TO FILTER OUT EMPTY FIELDS E.G. ingredient without values
   async function addRecipe() {
     try {
       const res = await API.postUserRecipe(recipe, currentBookId, userId);
-      console.log("adRecipe res",res)
+      console.log("adRecipe res", res)
       handleRecipesUpdate(res)
     } catch (error: any) {
       errorHandling("AddRecipe - addRecipe", error)
@@ -76,11 +78,11 @@ function AddRecipe({ setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) 
                   </p>
                 </div> */}
                 <section id='AddRecipe-book' className='flex h-full'>
-                  <section id='AddRecipe-left-page' className="flex-1 mr-4">
-                    <InputWithLabel handleUpdate={handleRecipe} value={recipe.name} />
+                  <section id='AddRecipe-left-side' className="flex-1 mr-4">
+                    <InputWithLabel {...{ id: "title", name: "title", type: "title" }} handleUpdate={handleRecipe} value={recipe.name} placeholder={"Awesome recipe name!"} />
                     <IngredientsGroup handleUpdate={handleRecipe} />
                   </section>
-                  <section id='AddRecipe-right-page' className="flex-1 ml-4 ">
+                  <section id='AddRecipe-right-side' className="flex-1 ml-4 ">
                     <InstructionsArea handleUpdate={handleRecipe} />
                   </section>
                 </section>
