@@ -25,3 +25,11 @@ export type RecipeViewProps = {
 export type IngredientsGroupProps = {
   handleUpdate: (data: Ingredient[], section: string) => void;
 }
+
+export type FaPlusButtonProp = {
+  onAction: () => void;
+}
+
+export type FaMinusButtonProp = {
+  onAction: () => void;
+}

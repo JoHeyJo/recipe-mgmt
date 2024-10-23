@@ -79,7 +79,7 @@ function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: Ingre
 
 
   return (
-    <div className="flex rounded-md my-2">
+    <div className="flex rounded-md">
       <OptionRequests handleOptions={handleOptions} handleOptionChange={updateState} options={quantityAmount} name={"value"} />
       <OptionRequests handleOptions={handleOptions} handleOptionChange={updateState} options={quantityUnits} name={"type"} />
       <OptionRequests handleOptions={handleOptions} handleOptionChange={updateState} options={items} name={"name"} />

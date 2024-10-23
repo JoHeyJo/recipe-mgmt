@@ -2,8 +2,11 @@ import { useState, useEffect } from 'react';
 import IngredientInputGroup from './IngredientInputGroup';
 import { Ingredient } from '../../utils/types';
 import { IngredientsGroupProps } from '../../utils/props';
+import FaPlusButton from '../ui/common/FaPlusButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faMinus } from '@fortawesome/free-solid-svg-icons'
+import FaMinusButton from '../ui/common/FaMinusButton';
+
 
 
 const defaultIngredient: Ingredient = {
@@ -22,7 +25,15 @@ function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
 
   /** Handles adding new ingredient to array of ingredients */
   function addIngredient() {
-    setIngredients(i => [...i, defaultIngredient])
+    setIngredients(prevIngredients => [...prevIngredients, defaultIngredient])
+  }
+
+  /** Handles removing ingredient object from array of ingredients */
+  function removeIngredient(ingredient: Ingredient) {
+   const {amount, item, unit } = ingredient;
+    setIngredients(prevIngredients => {
+      return prevIngredients.filter({amount, item, unit}) => i !== ingredient)
+    })
   }
 
   /** Handles updates ingredient in array of ingredients */
@@ -35,23 +46,16 @@ function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
   }
 
   /** Updates parent state of ingredients when ingredient is added to state */
-  useEffect(() => {
-    handleUpdate(ingredients, "ingredients")
-  }, [ingredients])
+  // useEffect(() => {
+  //   handleUpdate(ingredients, "ingredients")
+  // }, [ingredients])
 
   return (
     <div id='IngredientsGroup-main'>
       {ingredients.map((ingredient, i) =>
-        <div className='flex items-center justify-center'>
-          <IngredientInputGroup key={i} index={i} ingredientTemplate={ingredient} handleUpdate={updateIngredients} />
-          {i === ingredients.length - 1
-            &&
-            <button
-              onClick={addIngredient}
-              className="font-semibold leading-7 ml-1 text-gray-900 hover:text-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-zinc-600"              >
-              <FontAwesomeIcon icon={faPlus} />
-            </button>
-          }
+        <div key={i} className='flex items-center justify-center'>
+          <IngredientInputGroup index={i} ingredientTemplate={ingredient} handleUpdate={updateIngredients} />
+          {i === ingredients.length - 1 ? <FaPlusButton onAction={addIngredient} /> : <FaMinusButton onAction={() => removeIngredient(ingredient)} />}
         </div>
       )}
     </div>
