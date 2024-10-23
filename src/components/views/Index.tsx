@@ -15,7 +15,7 @@ type IndexProps = {
  */
 function Index({ id, name, index, handleSelect }: IndexProps) {
   return (
-    <li key={id} onClick={()=>handleSelect(index)} className="m-5 text-gray-700 hover:bg-gray-50 hover:text-gray-600">
+    <li key={id} onClick={()=>handleSelect(index)} className="p-2 text-gray-700 hover:bg-gray-50 hover:text-gray-600">
       {name}
     </li>
   )

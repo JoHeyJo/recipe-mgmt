@@ -7,7 +7,7 @@ import { NotesViewProp } from "../../utils/props";
  */
 function NotesView({ notes }: NotesViewProp) {
   return (
-    <div className="flex px-4 py-6 sm:gap-4 sm:px-3">
+    <div className="flex bg-white px-4 py-6 sm:gap-4 sm:px-3">
       <div className="basis-1/3 self-center text-sm font-medium leading-6 text-gray-900">Notes:</div>
       <div className="basis-2/3 space-y-4 ml-4">
         {notes.map((notes, id) =>
