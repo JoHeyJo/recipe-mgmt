@@ -6,7 +6,6 @@ import FaPlusButton from '../ui/common/FaPlusButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMinus } from '@fortawesome/free-solid-svg-icons'
 import FaMinusButton from '../ui/common/FaMinusButton';
-import { v4 as uuidv4 } from 'uuid';
 
 
 
@@ -48,14 +47,10 @@ function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
   }
 
   /** Updates parent state of ingredients when ingredient is added to state */
-  // useEffect(() => {
-  //   handleUpdate(ingredients, "ingredients")
-  // }, [ingredients])
+  useEffect(() => {
+    handleUpdate(ingredients, "ingredients")
+  }, [ingredients])
 
- function uniqueKey(){
-   const num = Math.random()
-  return num;
- }
   return (
     <div id='IngredientsGroup-main'>
       {ingredients.map((ingredient, i) =>

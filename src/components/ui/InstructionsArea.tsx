@@ -140,7 +140,6 @@ function InstructionsArea({ handleUpdate }: InstructionArea) {
           handleInstructions={handleInstructions}
         />
       )}
-      <TextInputDescription handleChange={()=>{}} />
     </div>
   )
 }

@@ -1,4 +1,5 @@
 import { Recipe, Ingredient, Instructions } from "./types";
+import { ChangeEvent } from "react";
 
 export type IngredientsViewProp = {
   ingredients: Ingredient[];
@@ -32,4 +33,8 @@ export type FaPlusButtonProp = {
 
 export type FaMinusButtonProp = {
   onAction: () => void;
+}
+
+export type NotesInputProps = {
+  handleUpdate: (data: string, section: string) => void;
 }

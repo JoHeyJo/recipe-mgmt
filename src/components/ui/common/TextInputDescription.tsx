@@ -4,7 +4,7 @@ type TextInputDescription = {
   handleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-function TextInputDescription({handleChange}: TextInputDescription) {
+function TextInputDescription({ handleChange }: TextInputDescription) {
 
   return (
     <div className="flex items-start space-x-4">

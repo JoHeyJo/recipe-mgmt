@@ -10,7 +10,7 @@ import InstructionsArea from '../ui/InstructionsArea';
 import { UserContext } from '../../auth/UserContext';
 import { recipeTemplate } from '../../utils/templates';
 import { AddRecipeProps } from '../../utils/props';
-import TextInputDescription from '../ui/common/TextInputDescription';
+import NotesInput from '../ui/NotesInput';
 
 
 
@@ -27,7 +27,7 @@ function AddRecipe({ setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) 
   const isLargeScreen = useMediaQuery({ query: '(min-width: 1024px)' }); // lg breakpoint in Tailwind
 
   /** Updates recipe state */
-  function handleRecipe(data: string | Ingredient[] | Instructions, section: string) {
+  function handleRecipeUpdate(data: string | Ingredient[] | Instructions, section: string) {
     setRecipe(prevRecipe => (
       { ...prevRecipe, [section]: data }
     ));
@@ -62,8 +62,7 @@ function AddRecipe({ setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) 
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
             transition
-            className="relative h-full transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"
-          >
+            className="relative h-full transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6">
             <div>
               {/* <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
                 <CheckIcon aria-hidden="true" className="h-6 w-6 text-green-600" />
@@ -78,14 +77,17 @@ function AddRecipe({ setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) 
                   </p>
                 </div> */}
                 <section id='AddRecipe-book' className='flex h-full'>
-                  <section id='AddRecipe-left-side' className="flex-1 mr-4">
-                    <InputWithLabel {...{ id: "title", name: "title", type: "title" }} handleUpdate={handleRecipe} value={recipe.name} placeholder={"Awesome recipe name!"} />
-                    <IngredientsGroup handleUpdate={handleRecipe} />
+                  <section id='AddRecipe-ingredients' className="flex-1 mr-4">
+                    <InputWithLabel {...{ id: "title", name: "title", type: "title" }} handleUpdate={handleRecipeUpdate} value={recipe.name} placeholder={"Awesome recipe name!"} />
+                    <IngredientsGroup handleUpdate={handleRecipeUpdate} />
                   </section>
-                  <section id='AddRecipe-right-side' className="flex-1 ml-4 ">
-                    <InstructionsArea handleUpdate={handleRecipe} />
+                  <section id='AddRecipe-instructions' className="flex-1 ml-4 ">
+                    <InstructionsArea handleUpdate={handleRecipeUpdate} />
                   </section>
                 </section>
+                  <section id='AddRecipe-notes' className='flex-1'>
+                  <NotesInput handleUpdate={handleRecipeUpdate} />
+                  </section>
               </div>
             </div>
             <div className="mt-5 sm:mt-6">
