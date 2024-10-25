@@ -9,7 +9,7 @@ export type InstructionsViewProp = {
 }
 
 export type NotesViewProp = {
-  notes: string[];
+  notes: string;
 }
 
 export type AddRecipeProps = {

@@ -1,4 +1,4 @@
-import { useState, ChangeEventHandler, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import { NotesInputProps } from "../../utils/props"
 
 function NotesInput({ handleUpdate }: NotesInputProps) {
@@ -9,6 +9,10 @@ function NotesInput({ handleUpdate }: NotesInputProps) {
     setNotes(event.target.value)
     handleUpdate(event.target.value, "notes")
   }
+
+  useEffect(()=>{
+    handleUpdate(notes, "notes")
+  },[notes])
 
   return (
     <div className="flex items-start space-x-4">
@@ -24,7 +28,7 @@ function NotesInput({ handleUpdate }: NotesInputProps) {
               rows={1}
               placeholder="Notes..."
               className="block w-full pt-9 resize-none border-0 border-b border-transparent p-0 pb-2 text-gray-900 placeholder:text-gray-400 focus:border-gray-800 focus:ring-0 sm:text-sm sm:leading-6"
-              defaultValue={''}
+              defaultValue={""}
             />
           </div>
         </form>
