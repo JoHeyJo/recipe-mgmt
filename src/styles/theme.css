@@ -5,5 +5,33 @@
 
 #RecipeContainer-container,
 #Recipes-container {
-  background-color: var(--background-color);
-} 
+  background-color: var(--container-background-color);
+}
+
+form {
+  background-color: var(--form-background-color);
+  color: var(--form-text-color);
+  border: 1px solid var(--form-border-color);
+}
+
+form input,
+form textarea,
+form select {
+  background-color: var(--input-background-color);
+  color: var(--form-text-color);
+  border: 1px solid var(--input-border-color);
+}
+
+form input::placeholder,
+form textarea::placeholder {
+  color: #9ca3af;
+}
+
+form button {
+  background-color: var(--button-background-color);
+  color: var(--button-text-color);
+}
+
+form button:hover {
+  background-color: var(--button-hover-color);
+}

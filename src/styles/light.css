@@ -6,8 +6,9 @@
   --text-color: #1a202c;
   /* Dark text */
   /* Define other variables for light mode */
-}
 
-#RecipeContainer-container, #Recipes-container {
-  --background-color: #F3F4F6;
+  --container-background-color: #F3F4F6;
+  /* Custom color for containers */
+  --sign-up-background-color: #ffffff;
+  /* Custom color for SignUp */
 }

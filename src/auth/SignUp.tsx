@@ -6,6 +6,7 @@ import { ChangeEvent, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 //styles
 import '../styles/SignUp.css'
+import '../styles/theme.css'
 import { PillButton } from '../components/ui/PillButton';
 import { SignUp as SignUpProps, UserSignUp } from '../utils/types';
 import { errorHandling } from '../utils/ErrorHandling';

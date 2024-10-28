@@ -12,7 +12,7 @@ import FaPlusButton from "../ui/common/FaPlusButton"
  */
 
 function RecipeContainer({ handleRecipesUpdate, recipe }: RecipeViewProps) {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
 
   return (
     <div id="RecipeContainer-container" className="divide-y border-2 border-blue-900 container mx-auto flex-1">
