@@ -16,8 +16,8 @@ function RecipeContainer({ handleRecipesUpdate, recipe }: RecipeViewProps) {
 
   return (
     <div id="RecipeContainer-container" className="divide-y border-2 border-blue-900 container mx-auto flex-1">
-      <div id="RecipeContainer-header" className="flex text-gray-900 justify-between p-4">
-        <h3 className="font-semibold leading-7 text-gray-900">Recipe:</h3>
+      <div id="RecipeContainer-header" className="flex justify-between p-4">
+        <h3 className="font-semibold leading-7">Recipe:</h3>
         <h2>{recipe.name}</h2>
         <FaPlusButton onAction={() => setOpen(true)} />
       </div>

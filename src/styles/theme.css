@@ -27,7 +27,6 @@ form,
   transition: background-color 0.2s ease;
 }
 
-
 #PillButton:hover {
   background-color: var(--background-button-hover);
 }
@@ -44,27 +43,22 @@ form,
   background-color: var(--naveItem-active)
 }
 
+/*Hover effect handled inline */
 #TopNav-Items, .TopNav-Items {
   background-color: var(--background-secondary);
+  /* color: var(--text-color); */
+
 }
 
-#TopNav-Items:hover, .TopNav-Items:hover {
+/* #TopNav-Items:hover, .TopNav-Items:hover {
   background-color: var(--background-button-hover);
-}
-
-/* form input,
-form textarea,
-form select {
-  background-color: var(--input-background-color);
-  color: var(--form-text-color);
-  border: 1px solid var(--input-border-color);
 } */
 
-/* 
 #RecipeContainer-container,
 #Recipes-container {
-  background-color: var(--container-background-color);
+  /* background-color: var(--container-background-color); */
 }
+/* 
 
 
 
