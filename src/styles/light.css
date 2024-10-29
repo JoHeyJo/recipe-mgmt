@@ -1,14 +1,13 @@
 :root {
-  /* --background-color: #F9FAFB80; */
-  --background-color: #E5E7EB;
-  /* --background-color: rgb(31, 41, 55) */
-  /* Light background */
+  --primary-color: #1f2937;
+  --secondary-color: #e5e7eb;
   --text-color: #1a202c;
-  /* Dark text */
-  /* Define other variables for light mode */
+  --primary-card: #fff;
 
-  --container-background-color: #F3F4F6;
+
+  /*  Variables for light mode */
+  --background-primary: var(--primary-color);
+  --background-secondary: var(--secondary-color);
+  --card-background: var(--primary-card)
   /* Custom color for containers */
-  --sign-up-background-color: #ffffff;
-  /* Custom color for SignUp */
 }

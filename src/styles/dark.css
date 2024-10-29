@@ -1,20 +1,39 @@
 :root.dark {
+  --primary-color: #1f2937;
+  --secondary-color: #1a202c;
   --background-color: #1a202c;
-  /* Dark background */
-  --text-color: #f0f2f4;
-  /* Light text */
-  /* Override other variables for dark mode */
+  --text-color: #E5E7EB;
+  --primary-card: #1f2937;
+
   --container-background-color: #2c2c2c;
-  /* Dark mode color for containers */
   --sign-up-background-color: #333333;
-  /* Dark mode color for SignUp */
-  /* Form-specific dark mode variables */
   --form-background-color: #1f2937;
-    --form-text-color: #e5e7eb;
-    --form-border-color: #4b5563;
-    --input-background-color: #374151;
-    --input-border-color: #4b5563;
-    --button-background-color: #3b82f6;
-    --button-hover-color: #2563eb;
-    --button-text-color: #ffffff;
+  --form-text-color: #e5e7eb;
+  --form-border-color: #4b5563;
+  --input-background-color: #374151;
+  --input-border-color: #4b5563;
+  --button-background-color: #3b82f6;
+  --button-hover-color: #2563eb;
+  --button-text-color: #ffffff;
+
 }
+
+/* overwrites plugin styles necessary for other forms to work  */
+html.dark input[type='text'],
+html.dark input[type='email'],
+html.dark input[type='url'],
+html.dark input[type='password'],
+html.dark input[type='number'],
+html.dark input[type='date'],
+html.dark input[type='datetime-local'],
+html.dark input[type='month'],
+html.dark input[type='search'],
+html.dark input[type='tel'],
+html.dark input[type='time'],
+html.dark input[type='week'],
+html.dark textarea,
+html.dark select {
+  background-color: var(--primary-color);
+  color: var(--form-text-color);
+  border-color: var(--input-border-color); 
+ } 

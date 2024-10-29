@@ -9,7 +9,7 @@ function AuthTabs({ signUp, login }: AuthProps) {
 
   return (
     <div className="cardContainer">
-      <nav>
+      <nav id='AuthTabs-container'>
         <ul className="navList">
           <li className={`navItem ${activeTab === 'login' ? 'navItemActive' : ''}`} onClick={() => setActiveTab('login')}>
             Login

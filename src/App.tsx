@@ -90,12 +90,10 @@ function App() {
     }
   }, [token])
 
-  // class="bg-[var(--background-color)] text-[var(--text-color)]"
 
   return (
     <BrowserRouter>
-      {/* <div className="App bg-blue-900 dark:bg-slate-800"> */}
-        <div className="bg-[var(--background-color)] text-[var(--text-color)]">
+      <div id="App-container">
         <UserContext.Provider value={UserData}>
           <TopNav logout={logout} />
           <RoutesList signUp={userSignUp} login={userLogin} />
