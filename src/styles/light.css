@@ -12,9 +12,12 @@
   --background-button-hover: #f9fafb;
 
 
+
+
   /*  Variables for light mode */
   --background-primary: var(--primary-color);
   --background-secondary: var(--secondary-color);
-  --card-background: var(--primary-card)
+  --card-background: var(--primary-card);
+  --view-container:var(--primary-card);
     /* Custom color for containers */
 }

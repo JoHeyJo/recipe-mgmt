@@ -86,7 +86,7 @@ function CreateBook({ isOpen, setOpen }) {
                 <BookOpenIcon aria-hidden="true" className="h-6 w-6 text-blue-600" />
               </div>
               <div className="mt-3 text-center sm:mt-5">
-                <DialogTitle as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                <DialogTitle as="h3" className="text-base font-semibold leading-6">
                   <TextInputTitle handleChange={handleChange} title={bookData.title} />
                 </DialogTitle>
                 <div className="CreateBook-description mt-6">
@@ -106,7 +106,7 @@ function CreateBook({ isOpen, setOpen }) {
                 type="button"
                 data-autofocus
                 onClick={() => handleClosingActions()}
-                className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
+                className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
               >
                 Cancel
               </button>

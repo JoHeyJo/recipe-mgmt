@@ -56,10 +56,9 @@ form,
 
 #RecipeContainer-container,
 #Recipes-container {
-  /* background-color: var(--container-background-color); */
+  background-color: var(--container-background-color);
 }
-/* 
 
-
-
-  */
+#NotesView-container, #IngredientsView-container {
+  background-color: var(--view-container);
+}
