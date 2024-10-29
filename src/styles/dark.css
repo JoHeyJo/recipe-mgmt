@@ -5,6 +5,14 @@
   --text-color: #E5E7EB;
   --primary-card: #1f2937;
   --navItem-color: #2e2e2e;
+  --navItem-color: hsl(210, 10%, 62%);
+  --navItem-hover: #3a3a3a;
+  --navItem-active: #4a4a4a;
+  --background-button-color: #1f2937;
+  --darker-border: 1px inset #3a3a3a;
+  --background-button-hover: #374151;
+
+
 
   --background: #121926;
   --card-background: #1E293B;
@@ -18,7 +26,8 @@
   --form-background-color: #1f2937;
   --form-text-color: #e5e7eb;
   --form-border-color: #4b5563;
-  --input-background-color: #374151;
+  --input-background-color: #9aa3b6;
+  /* --input-background-color: hsl(210, 10%, 62%); */
   --input-border-color: #4b5563;
   --button-background-color: #3b82f6;
   --button-hover-color: #2563eb;
@@ -43,5 +52,5 @@ html.dark textarea,
 html.dark select {
   background-color: var(--input-background-color);
   /* color: var(--form-text-color); */
-  border-color: var(--input-border-color);
+  /* border-color: var(--input-border-color); */
 }

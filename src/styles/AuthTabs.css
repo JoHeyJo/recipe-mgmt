@@ -6,7 +6,7 @@
   width: 30vw;
   margin: auto;
   overflow: hidden;
-  height: 65vh;
+  height: 75vh;
   margin-top: 10%;
 }
 
@@ -27,17 +27,13 @@
   transition: background-color 0.3s;
 }
 
-.navItem:hover {
-  background-color: #e9e9e9;
-}
-
 .navItemActive {
   font-weight: bold;
-  background-color: #e0e0e0;
 }
 
 .formContent {
   padding: 1.25rem;
+  /* padding-bottom: 3.25rem; */
 }
 
 /* For medium screens, increase width */

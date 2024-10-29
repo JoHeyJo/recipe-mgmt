@@ -113,16 +113,15 @@ function TopNav({ logout }: TopNavProps) {
                     enterTo="transform opacity-100 scale-100"
                     leave="transition ease-in duration-75"
                     leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    leaveTo="transform opacity-0 scale-95">
+                    <MenuItems id="TopNav-Items" className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       {user
                         ?
                         <>
                           <MenuItem>
                             <a
                               href="#"
-                              className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
+                              className="TopNav-Item block px-4 py-2 text-sm text-gray-700">
                               Your Profile
                             </a>
                           </MenuItem>
@@ -130,14 +129,14 @@ function TopNav({ logout }: TopNavProps) {
                             <a 
                               onClick={()=>setIsModalOpen(true)}
                               href="#"
-                              className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
+                              className="TopNav-Item block px-4 py-2 text-sm text-gray-700">
                               Create Book
                             </a>
                           </MenuItem>
                           <MenuItem>
                             <a
                               href="#"
-                              className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
+                              className="TopNav-Item block px-4 py-2 text-sm text-gray-700">
                               Settings
                             </a>
                           </MenuItem>
@@ -145,7 +144,7 @@ function TopNav({ logout }: TopNavProps) {
                             <a
                               onClick={logOutAndRedirect}
                               href="#"
-                              className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
+                              className="TopNav-Item block px-4 py-2 text-sm text-gray-700">
                               Logout
                             </a>
                           </MenuItem>
@@ -155,7 +154,7 @@ function TopNav({ logout }: TopNavProps) {
                           <a
                             href="#"
                             onClick={() => navigate("/auth")}
-                            className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
+                            className="TopNav-Item block px-4 py-2 text-sm text-gray-700">
                             Login
                           </a>
                         </MenuItem>

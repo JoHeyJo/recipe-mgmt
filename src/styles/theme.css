@@ -12,14 +12,44 @@
   background-color: var(--background-primary);
 }
 
-form, .formContent, #AuthTabs-container {
+form,
+.formContent,
+#AuthTabs-container {
   background-color: var(--card-background);
   /* color: var(--form-text-color); */
   /* border: 1px solid var(--form-border-color); */
 }
 
+#PillButton {
+  background-color: var(--background-button-color);
+  color: var(--text-color);
+  border: var(--darker-border);
+  transition: background-color 0.2s ease;
+}
+
+
+#PillButton:hover {
+  background-color: var(--background-button-hover);
+}
+
 .navItem {
   background-color: var(--navItem-color);
+}
+
+.navItem:hover {
+  background-color: var(--navItem-hover)
+}
+
+.navItemActive {
+  background-color: var(--naveItem-active)
+}
+
+#TopNav-Items, .TopNav-Items {
+  background-color: var(--background-secondary);
+}
+
+#TopNav-Items:hover, .TopNav-Items:hover {
+  background-color: var(--background-button-hover);
 }
 
 /* form input,
