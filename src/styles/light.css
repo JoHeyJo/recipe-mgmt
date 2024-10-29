@@ -10,6 +10,7 @@
   --background-button-color: white;
   /* --darker-border: 1px inset #3a3a3a; */
   --background-button-hover: #f9fafb;
+  --background-modal: var(--background-button-color);
 
 
 

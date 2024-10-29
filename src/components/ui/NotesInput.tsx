@@ -27,7 +27,7 @@ function NotesInput({ handleUpdate }: NotesInputProps) {
               name="notes"
               rows={1}
               placeholder="Notes..."
-              className="block w-full pt-9 resize-none border-0 border-b border-transparent p-0 pb-2 text-gray-900 placeholder:text-gray-400 focus:border-gray-800 focus:ring-0 sm:text-sm sm:leading-6"
+              className="block w-full pt-9 resize-none border-0 border-b border-transparent p-0 pb-2 placeholder:text-gray-400 focus:border-gray-800 focus:ring-0 sm:text-sm sm:leading-6"
               defaultValue={""}
             />
           </div>
@@ -37,4 +37,4 @@ function NotesInput({ handleUpdate }: NotesInputProps) {
   )
 }
 
-export default NotesInput
+export default NotesInput;

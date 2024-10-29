@@ -62,3 +62,7 @@ form,
 #NotesView-container, #IngredientsView-container {
   background-color: var(--view-container);
 }
+
+#CreateBook-DialogPanel{
+background-color: var(--background-modal);
+}

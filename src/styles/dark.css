@@ -13,6 +13,7 @@
   --darker-border: 1px inset #3a3a3a;
   --background-button-hover: #374151;
   --container-background-color: var(--background-button-hover);
+  --background-modal: var(var(--secondary-color))
 
 
   --background: #121926;
