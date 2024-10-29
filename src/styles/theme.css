@@ -18,13 +18,17 @@ form, .formContent, #AuthTabs-container {
   /* border: 1px solid var(--form-border-color); */
 }
 
-form input,
+.navItem {
+  background-color: var(--navItem-color);
+}
+
+/* form input,
 form textarea,
 form select {
   background-color: var(--input-background-color);
   color: var(--form-text-color);
   border: 1px solid var(--input-border-color);
-}
+} */
 
 /* 
 #RecipeContainer-container,
