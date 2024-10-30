@@ -20,6 +20,8 @@ export type AddRecipeProps = {
 
 export type RecipeViewProps = {
   recipe: Recipe;
+  handleModal: any;
+  isOpen: boolean;
   handleRecipesUpdate: (recipe: Recipe) => void;
 }
 

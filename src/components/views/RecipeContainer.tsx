@@ -1,6 +1,6 @@
 // import "../../styles/RecipeContainer.css"
 import { useState } from "react"
-import AddRecipe from "../requests/AddRecipe"
+
 import RecipeView from "./RecipeView"
 import { RecipeViewProps } from "../../utils/props"
 import FaPlusButton from "../ui/common/FaPlusButton"
@@ -11,17 +11,16 @@ import FaPlusButton from "../ui/common/FaPlusButton"
  * MainContainer -> RecipeContainer -> AddRecipe
  */
 
-function RecipeContainer({ handleRecipesUpdate, recipe }: RecipeViewProps) {
-  const [open, setOpen] = useState(false)
+function RecipeContainer({ handleRecipesUpdate, recipe}: RecipeViewProps) {
+
 
   return (
     <div id="RecipeContainer-container" className="divide-y border-2 border-blue-900 mx-auto flex-1">
       <div id="RecipeContainer-header" className="flex justify-between p-4">
         <h3 className="font-semibold leading-7">Recipe:</h3>
         <h2>{recipe.name}</h2>
-        <FaPlusButton onAction={() => setOpen(true)} />
+        {/* <FaPlusButton onAction={() => setOpen(true)} /> */}
       </div>
-      <AddRecipe handleRecipesUpdate={handleRecipesUpdate} setShowing={setOpen} isOpen={open} />
       <RecipeView recipe={recipe} />
     </div>
   )

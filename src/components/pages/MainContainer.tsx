@@ -6,7 +6,8 @@ import { errorHandling } from "../../utils/ErrorHandling";
 import { Recipe } from "../../utils/types";
 import RecipeContainer from "../views/RecipeContainer";
 import { recipeTemplate } from "../../utils/templates";
-
+import FaPlusButton from "../ui/common/FaPlusButton"
+import AddRecipe from "../requests/AddRecipe";
 /** Renders the main container housing list of recipes and individual recipe
  * 
  * RoutesList -> MainContainer -> [Recipes, RecipeContainer]
@@ -14,8 +15,9 @@ import { recipeTemplate } from "../../utils/templates";
 
 function MainContainer() {
   const [recipes, setRecipes] = useState([]);
-  console.log("recipes",recipes)
+  console.log("recipes", recipes)
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate)
+  const [open, setOpen] = useState(false)
 
   const { userId, currentBookId } = useContext(UserContext);
 
@@ -45,8 +47,17 @@ function MainContainer() {
     <div className="border-2 mt-7 border-red-900 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       {/* We've used 3xl here, but feel free to try other max-widths based on your needs */}
       <div className="border-2 border-black-500 h-[75vh] mx-auto max-w-1xl flex">
-        <RecipesList recipes={recipes} handleSelect={selectRecipe} />
-        <RecipeContainer recipe={selectedRecipe} handleRecipesUpdate={updateRecipes} />
+        {/* Does recipes need to be reduced to just ids and title??? */}
+        <section id="RecipesList-container" className="flex-1">
+            <AddRecipe handleRecipesUpdate={updateRecipes} setShowing={setOpen} isOpen={open} />
+          <div className="flex justify-between m-1">
+            <div>Recipes</div>
+            <FaPlusButton onAction={() => setOpen(true)} />
+          </div>
+          <RecipesList recipes={recipes} handleSelect={selectRecipe} />
+        </section>
+
+        <RecipeContainer recipe={selectedRecipe} handleRecipesUpdate={updateRecipes} handleModal={setOpen} isOpen={open} />
       </div>
     </div>
   )
