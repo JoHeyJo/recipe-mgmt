@@ -53,7 +53,7 @@ function CreateBook({ isOpen, setOpen }) {
         updatedUser.booksIds.push(newId)
         updatedUser.currentBookId = newId
         // ensure default book id
-        if(!updatedUser.defaultBookId) updatedUser.defaultBookId = newId;
+        if (!updatedUser.defaultBookId) updatedUser.defaultBookId = newId;
         return updatedUser;
       })
     } catch (error: any) {
@@ -97,6 +97,7 @@ function CreateBook({ isOpen, setOpen }) {
             </div>
             <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
               <button
+                id='submit-button'
                 type="button"
                 onClick={() => handleSubmit(bookData, userId)}
                 className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
@@ -104,6 +105,7 @@ function CreateBook({ isOpen, setOpen }) {
                 Submit
               </button>
               <button
+                id='cancel-button'
                 type="button"
                 data-autofocus
                 onClick={() => handleClosingActions()}

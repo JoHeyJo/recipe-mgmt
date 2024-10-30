@@ -13,7 +13,16 @@
   --darker-border: 1px inset #3a3a3a;
   --background-button-hover: #374151;
   --container-background-color: var(--background-button-hover);
-  --background-modal: var(var(--secondary-color))
+  --background-modal: var(var(--secondary-color));
+  --text-placeholder: #4b5563;
+
+  --submit-button-color: #4a4a4a;
+  --submit-button-border: 1px solid #3a3a3a;
+  --submit-button-hover: #374151;
+
+  --cancel-button-color: #2e2e2e;
+  --cancel-button-border: 1px solid #4a4a4a;
+  --cancel-button-hover: #3a3a3a;
 
 
   --background: #121926;
@@ -49,7 +58,7 @@ html.dark input[type='search'],
 html.dark input[type='tel'],
 html.dark input[type='time'],
 html.dark input[type='week'],
-html.dark textarea,
+/* html.dark textarea, */
 html.dark select {
   background-color: var(--input-background-color);
   /* color: var(--form-text-color); */

@@ -19,7 +19,7 @@ function TextInputDescription({ handleChange }: TextInputDescription) {
               name="description"
               rows={1}
               placeholder="Book Description..."
-              className="block w-full resize-none border-0 border-b border-transparent p-0 pb-2 text-gray-900 placeholder:text-gray-400 focus:border-indigo-600 focus:ring-0 sm:text-sm sm:leading-6"
+              className="block w-full resize-none border-0 border-b border-transparent p-0 pb-2 focus:border-indigo-600 focus:ring-0 sm:text-sm sm:leading-6"
               defaultValue={''}
             />
           </div>

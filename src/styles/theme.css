@@ -63,6 +63,31 @@ form,
   background-color: var(--view-container);
 }
 
-#CreateBook-DialogPanel{
+#CreateBook-DialogPanel, textarea{
 background-color: var(--background-modal);
 }
+
+textarea::placeholder {
+  color: var(--text-placeholder);
+}
+
+#TextInputTitle-badge {
+  background-color: var(--background-secondary);
+}
+
+#submit-button{
+  background-color: var(--submit-button-color);
+}
+
+#submit-button:hover{
+  background-color: var(--submit-button-hover);
+}
+
+ #cancel-button {
+  background-color: var(--cancel-button-color);
+ }
+
+ #cancel-button:hover {
+  background-color: var(--cancel-button-hover);
+ }
+
