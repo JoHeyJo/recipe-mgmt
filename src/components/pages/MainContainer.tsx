@@ -1,4 +1,4 @@
-import Index from "../views/Index"
+import RecipesList from "../views/RecipesList"
 import { UserContext } from "../../auth/UserContext";
 import { useContext, useEffect, useState } from "react";
 import API from "../../api";
@@ -14,6 +14,7 @@ import { recipeTemplate } from "../../utils/templates";
 
 function MainContainer() {
   const [recipes, setRecipes] = useState([]);
+  console.log("recipes",recipes)
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate)
 
   const { userId, currentBookId } = useContext(UserContext);
@@ -44,11 +45,7 @@ function MainContainer() {
     <div className="border-2 mt-7 border-red-900 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       {/* We've used 3xl here, but feel free to try other max-widths based on your needs */}
       <div className="border-2 border-black-500 h-[75vh] mx-auto max-w-1xl flex">
-        <ul role="list" id="Recipes-container" className="border-2 border-blue-900 divide-y divide-gray-200 flex-1">
-          {recipes.map((recipe, index) => (
-            <Index key={recipe.id} id={recipe.id} index={index} name={recipe.name} handleSelect={selectRecipe} />
-          ))}
-        </ul>
+        <RecipesList recipes={recipes} handleSelect={selectRecipe} />
         <RecipeContainer recipe={selectedRecipe} handleRecipesUpdate={updateRecipes} />
       </div>
     </div>

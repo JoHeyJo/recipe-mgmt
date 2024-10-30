@@ -4,6 +4,12 @@ import SignUp from '../../auth/SignUp';
 import '../../styles/AuthTabs.css'; 
 import { AuthProps } from '../../utils/types';
 
+
+/** Displays user auth forms
+ * 
+ * 
+ * RoutesList -> AuthTabs -> [Login, SignUp]
+ */
 function AuthTabs({ signUp, login }: AuthProps) {
   const [activeTab, setActiveTab] = useState('login');
 

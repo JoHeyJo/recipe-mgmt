@@ -15,7 +15,7 @@ function RecipeContainer({ handleRecipesUpdate, recipe }: RecipeViewProps) {
   const [open, setOpen] = useState(false)
 
   return (
-    <div id="RecipeContainer-container" className="divide-y border-2 border-blue-900 container mx-auto flex-1">
+    <div id="RecipeContainer-container" className="divide-y border-2 border-blue-900 mx-auto flex-1">
       <div id="RecipeContainer-header" className="flex justify-between p-4">
         <h3 className="font-semibold leading-7">Recipe:</h3>
         <h2>{recipe.name}</h2>

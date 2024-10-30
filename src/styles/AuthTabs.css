@@ -7,7 +7,8 @@
   margin: auto;
   overflow: hidden;
   height: 75vh;
-  margin-top: 10%;
+  /* Temp patch to center container. There is additional spacing provided to bottom of page through tailwind...is that necessary??? */
+  margin-top: 5%;
 }
 
 .navList {

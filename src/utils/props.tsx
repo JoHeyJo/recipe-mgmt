@@ -38,3 +38,11 @@ export type FaMinusButtonProp = {
 export type NotesInputProps = {
   handleUpdate: (data: string, section: string) => void;
 }
+
+export type RecipesListProps = {
+  // id: number;
+  // name: string;
+  // index: number;
+  recipes: Recipe[]
+  handleSelect: (index: number) => void;
+}
