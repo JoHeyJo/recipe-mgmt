@@ -1,9 +1,8 @@
 // import "../../styles/RecipeContainer.css"
-import { useState } from "react"
-
 import RecipeView from "./RecipeView"
 import { RecipeViewProps } from "../../utils/props"
-import FaPlusButton from "../ui/common/FaPlusButton"
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 /** Renders recipe "book"
  * 
@@ -11,7 +10,7 @@ import FaPlusButton from "../ui/common/FaPlusButton"
  * MainContainer -> RecipeContainer -> AddRecipe
  */
 
-function RecipeContainer({ handleRecipesUpdate, recipe}: RecipeViewProps) {
+function RecipeContainer({ handleRecipesUpdate, recipe }: RecipeViewProps) {
 
 
   return (
@@ -19,7 +18,7 @@ function RecipeContainer({ handleRecipesUpdate, recipe}: RecipeViewProps) {
       <div id="RecipeContainer-header" className="flex justify-between p-4">
         <h3 className="font-semibold leading-7">Recipe:</h3>
         <h2>{recipe.name}</h2>
-        {/* <FaPlusButton onAction={() => setOpen(true)} /> */}
+        <FontAwesomeIcon onClick={() => { }} icon={faPenToSquare} />
       </div>
       <RecipeView recipe={recipe} />
     </div>
