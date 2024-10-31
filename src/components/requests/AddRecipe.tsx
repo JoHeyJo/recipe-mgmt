@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
 import IngredientsGroup from '../selectors/IngredientsGroup';
 import { Ingredient, Instructions, Recipe } from '../../utils/types';
@@ -8,7 +8,7 @@ import { errorHandling } from '../../utils/ErrorHandling';
 import { useMediaQuery } from 'react-responsive';
 import InstructionsArea from '../ui/InstructionsArea';
 import { UserContext } from '../../auth/UserContext';
-import { recipeTemplate } from '../../utils/templates';
+import { recipeTemplate as template } from '../../utils/templates';
 import { AddRecipeProps } from '../../utils/props';
 import NotesInput from '../ui/NotesInput';
 
@@ -19,8 +19,9 @@ import NotesInput from '../ui/NotesInput';
  * RecipeContainer -> AddRecipe -> [IngredientsGroup, InstructionsArea]
  */
 
-function AddRecipe({ setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) {
+function AddRecipe({ recipeTemplate, setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) {
   const [recipe, setRecipe] = useState<Recipe>(recipeTemplate);
+  console.log("recipeTemplate", recipeTemplate)
 
   const { currentBookId, userId } = useContext(UserContext);
 
@@ -50,6 +51,10 @@ function AddRecipe({ setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) 
     setShowing(false)
     addRecipe()
   }
+
+  useEffect(()=>{
+    setRecipe(recipeTemplate)
+  },[])
 
   return (
     <Dialog open={isOpen} onClose={setShowing} className="relative z-10">

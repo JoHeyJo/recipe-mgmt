@@ -13,6 +13,7 @@ export type NotesViewProp = {
 }
 
 export type AddRecipeProps = {
+  recipeTemplate: Recipe;
   setShowing: any;
   isOpen: boolean;
   handleRecipesUpdate: (recipe: Recipe) => void;
@@ -20,7 +21,7 @@ export type AddRecipeProps = {
 
 export type RecipeViewProps = {
   recipe: Recipe;
-  handleModal: any;
+  handleModal: () => void;
   isOpen: boolean;
   handleRecipesUpdate: (recipe: Recipe) => void;
 }
@@ -42,9 +43,6 @@ export type NotesInputProps = {
 }
 
 export type RecipesListProps = {
-  // id: number;
-  // name: string;
-  // index: number;
   recipes: Recipe[]
   handleSelect: (index: number) => void;
 }

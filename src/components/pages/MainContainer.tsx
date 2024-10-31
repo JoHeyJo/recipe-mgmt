@@ -15,7 +15,6 @@ import AddRecipe from "../requests/AddRecipe";
 
 function MainContainer() {
   const [recipes, setRecipes] = useState([]);
-  console.log("recipes", recipes)
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate)
   const [open, setOpen] = useState(false)
 
@@ -31,13 +30,18 @@ function MainContainer() {
     setSelectedRecipe(recipes[index])
   }
 
+  /** Handles model toggle */
+  function toggleModel() {
+    setOpen(!open);
+  }
+
   useEffect(() => {
     async function fetchUserRecipes() {
       try {
         const res = await API.getUserRecipes(userId, currentBookId);
         setRecipes(res);
       } catch (error: any) {
-        errorHandling("MainContainer->fetchUserRecipes", error);
+        errorHandling("MainContainer -> fetchUserRecipes", error);
       }
     }
     fetchUserRecipes();
@@ -49,15 +53,20 @@ function MainContainer() {
       <div className="border-2 border-black-500 h-[75vh] mx-auto max-w-1xl flex">
         {/* Does recipes need to be reduced to just ids and title??? */}
         <section id="RecipesList-container" className="flex-1">
-            <AddRecipe handleRecipesUpdate={updateRecipes} setShowing={setOpen} isOpen={open} />
+          {false
+            ?
+            <AddRecipe recipeTemplate={recipeTemplate} handleRecipesUpdate={updateRecipes} setShowing={toggleModel} isOpen={open} />
+            :
+            <AddRecipe recipeTemplate={selectedRecipe} handleRecipesUpdate={updateRecipes} setShowing={toggleModel} isOpen={open} />
+          }
           <div className="flex justify-between m-1">
             <div>Recipes</div>
-            <FaPlusButton onAction={() => setOpen(true)} />
+            <FaPlusButton onAction={toggleModel} />
           </div>
           <RecipesList recipes={recipes} handleSelect={selectRecipe} />
         </section>
 
-        <RecipeContainer recipe={selectedRecipe} handleRecipesUpdate={updateRecipes} handleModal={setOpen} isOpen={open} />
+        <RecipeContainer recipe={selectedRecipe} handleRecipesUpdate={updateRecipes} handleModal={toggleModel} isOpen={open} />
       </div>
     </div>
   )
