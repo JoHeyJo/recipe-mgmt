@@ -10,6 +10,8 @@ import InstructionsArea from '../ui/InstructionsArea';
 import { UserContext } from '../../auth/UserContext';
 import { AddRecipeProps } from '../../utils/props';
 import NotesInput from '../ui/NotesInput';
+import { recipeTemplate as template } from "../../utils/templates";
+import { REFUSED } from 'dns';
 
 
 
@@ -19,8 +21,8 @@ import NotesInput from '../ui/NotesInput';
  */
 
 function AddRecipe({ recipeTemplate, setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) {
-  const [recipe, setRecipe] = useState<Recipe>(recipeTemplate);
-  console.log("recipeTemplate", recipeTemplate)
+  const [recipe, setRecipe] = useState<Recipe>(template);
+  console.log("RECIPE", recipe.name)
 
   const { currentBookId, userId } = useContext(UserContext);
 
@@ -53,8 +55,9 @@ function AddRecipe({ recipeTemplate, setShowing, isOpen, handleRecipesUpdate }: 
 
   useEffect(() => {
     setRecipe(recipeTemplate)
-  }, [])
+  }, [recipeTemplate])
 
+  console.log("AddRecipe notes", recipe.name, recipe.notes)
   return (
     <Dialog open={isOpen} onClose={setShowing} className="relative z-10">
       <DialogBackdrop
@@ -82,7 +85,7 @@ function AddRecipe({ recipeTemplate, setShowing, isOpen, handleRecipesUpdate }: 
                   </p>
                 </div> */}
                 <section id='AddRecipe-book' className='flex h-full'>
-                  
+
                   <section id='AddRecipe-ingredients' className="flex-1 mr-4">
                     <InputWithLabel {...{ id: "title", name: "title", type: "title" }} handleUpdate={handleRecipeUpdate} value={recipe.name} placeholder={"Awesome recipe name!"} />
                     <IngredientsGroup handleUpdate={handleRecipeUpdate} />
@@ -92,11 +95,11 @@ function AddRecipe({ recipeTemplate, setShowing, isOpen, handleRecipesUpdate }: 
                     <InstructionsArea handleUpdate={handleRecipeUpdate} />
                   </section>
                 </section>
-                
+
                 <section id='AddRecipe-notes' className='flex-1'>
-                  <NotesInput handleUpdate={handleRecipeUpdate} />
+                  <NotesInput notes={recipe.notes} handleUpdate={handleRecipeUpdate} />
                 </section>
-              
+
               </div>
             </div>
             <div className="mt-5 sm:mt-6">

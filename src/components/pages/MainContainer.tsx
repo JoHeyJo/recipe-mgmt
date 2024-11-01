@@ -34,6 +34,8 @@ function MainContainer() {
   /** Model toggle function for children components */
   function toggleModel() {
     setOpen(!isOpen);
+    // ensures AddRecipe doesn't needlessly render in background
+    setRequestAction("")
   }
 
   /** Triggers actions that render AddRecipe with appropriate data set - no recipe data*/

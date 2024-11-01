@@ -10,7 +10,7 @@ type RecipeViewProps = {
 /** Renders view of entire recipe.
  * 
  * 
- * RecipeContainer -> RecipeView ->
+ * RecipeContainer -> RecipeView -> [IngredientsView, InstructionsView, NotesView]
  */
 
 function RecipeView({ recipe }: RecipeViewProps) {
@@ -20,8 +20,8 @@ function RecipeView({ recipe }: RecipeViewProps) {
       <div className="border-t border-gray-100">
         <section className="divide-y divide-gray-100">
           <IngredientsView ingredients={ingredients} />
-          <InstructionsView instructions={instructions}/>
-          <NotesView notes={notes}/>
+          <InstructionsView instructions={instructions} />
+          <NotesView notes={notes} />
         </section>
       </div>
     </>
