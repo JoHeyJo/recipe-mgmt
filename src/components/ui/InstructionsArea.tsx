@@ -126,7 +126,8 @@ function InstructionsArea({ handleUpdate }: InstructionArea) {
 
   useEffect(() => {
     handleUpdate(selectedInstructions, "instructions")
-  })
+  }, [selectedInstructions])
+
   return (
     <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
       {PLACE_HOLDER.map((i, index) =>
