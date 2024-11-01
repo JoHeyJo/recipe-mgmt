@@ -2,16 +2,9 @@
 import { useState, useEffect, ChangeEvent } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions } from '@headlessui/react'
-import { Option, Instruction, Instructions } from '../../utils/types';
+import { Instruction } from '../../utils/types';
+import { InstructionManagerProps } from '../../utils/props';
 
-type InstructionManager = {
-  index: number;
-  name: string;
-  arrayKey: number;
-  handleOptionChange: (state: string, option: Instruction) => void;
-  options: Instructions;
-  handleInstructions: any
-}
 
 /** InstructionManager - ring is removed 
  * 
@@ -20,7 +13,7 @@ type InstructionManager = {
  * InstructionsArea -> InstructionManager
  */
 
-function InstructionManager({ index, arrayKey, name, handleOptionChange, options, handleInstructions }: InstructionManager) {
+function InstructionManager({ value, arrayKey, name, handleOptionChange, options, handleInstructions }: InstructionManagerProps) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Instruction>()
 
@@ -94,6 +87,9 @@ function InstructionManager({ index, arrayKey, name, handleOptionChange, options
     selected && handleOptionChange(name, selected);
   }, [selected]);
 
+  useEffect(()=> {
+    setSelected(value);
+  })
 
   return (
     <>

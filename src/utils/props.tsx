@@ -1,5 +1,14 @@
-import { Recipe, Ingredient, Instructions } from "./types";
+import { Recipe, Ingredient, Instructions, Instruction } from "./types";
 import { ChangeEvent } from "react";
+
+export type InstructionManagerProps = {
+  value: Instruction;
+  name: string;
+  arrayKey: number;
+  handleOptionChange: (state: string, option: Instruction) => void;
+  options: Instructions;
+  handleInstructions: any
+}
 
 export type IngredientsViewProp = {
   ingredients: Ingredient[];
@@ -28,7 +37,14 @@ export type RecipeViewProps = {
 
 export type IngredientsGroupProps = {
   handleUpdate: (data: Ingredient[], section: string) => void;
+  // value: Ingredient[];
 }
+
+export type InstructionAreaProps = {
+  handleUpdate: (instructions: Instructions, section: string) => void;
+  values: Instructions;
+}
+
 
 export type FaPlusButtonProp = {
   onAction: () => void;
@@ -40,7 +56,7 @@ export type FaMinusButtonProp = {
 
 export type NotesInputProps = {
   handleUpdate: (data: string, section: string) => void;
-  existingNotes: string;
+  value: string;
 }
 
 export type RecipesListProps = {

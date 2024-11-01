@@ -22,7 +22,6 @@ import { REFUSED } from 'dns';
 
 function AddRecipe({ recipeTemplate, setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) {
   const [recipe, setRecipe] = useState<Recipe>(template);
-  console.log("RECIPE", recipe.name)
 
   const { currentBookId, userId } = useContext(UserContext);
 
@@ -92,23 +91,33 @@ function AddRecipe({ recipeTemplate, setShowing, isOpen, handleRecipesUpdate }: 
                   </section>
 
                   <section id='AddRecipe-instructions' className="flex-1 ml-4 ">
-                    <InstructionsArea handleUpdate={handleRecipeUpdate} />
+                    <InstructionsArea values={recipe.instructions} handleUpdate={handleRecipeUpdate} />
                   </section>
                 </section>
 
                 <section id='AddRecipe-notes' className='flex-1'>
-                  <NotesInput existingNotes={recipe.notes} handleUpdate={handleRecipeUpdate} />
+                  <NotesInput value={recipe.notes} handleUpdate={handleRecipeUpdate} />
                 </section>
 
               </div>
             </div>
             <div className="mt-5 sm:mt-6">
-              <button
-                type="button"
-                onClick={handleSubmit}
-                className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                Submit
-              </button>
+              {!recipe.id
+                ?
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                  Submit
+                </button>
+                :
+                <button
+                  type="button"
+                  onClick={()=>{}}
+                  className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                  Update
+                </button>
+              }
             </div>
           </DialogPanel>
         </div>

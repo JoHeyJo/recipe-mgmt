@@ -3,15 +3,12 @@ import { Ingredient, Instruction, Instructions } from "../../utils/types";
 import InstructionManager from "./InstructionManager";
 import API from "../../api";
 import { errorHandling } from '../../utils/ErrorHandling';
-import TextInputDescription from "./common/TextInputDescription";
+import { InstructionAreaProps } from "../../utils/props";
 
 const PLACE_HOLDER = ["Add ingredients...", "Add ice...", "shake..."]
 
 const InstructionsTemplate: Instructions = []
 
-type InstructionArea = {
-  handleUpdate: (instructions: Instructions, section: string) => void;
-}
 
 const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs >= 2 && inputs === arrayKey
 
@@ -21,7 +18,7 @@ const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs >= 2
  * 
  * AddRecipe -> InstructionsArea -> InstructionsManager
  */
-function InstructionsArea({ handleUpdate }: InstructionArea) {
+function InstructionsArea({ values,  handleUpdate }: InstructionAreaProps) {
   const [instructions, setInstructions] = useState([]);
   const [selectedInstructions, setSelectedInstructions] = useState<Instruction[]>([]);
   const [filterKey, setFilterKeys] = useState({});
@@ -130,16 +127,19 @@ function InstructionsArea({ handleUpdate }: InstructionArea) {
 
   return (
     <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
-      {PLACE_HOLDER.map((i, index) =>
+      {(values.length === 0 ? PLACE_HOLDER : values).map((value, index) =>
+      <>
+          {console.log("values",value)}
         <InstructionManager
+          value={value}
           key={index}
-          index={index}
           arrayKey={index}
-          name={i}
+          name={value}
           handleOptionChange={() => { }}
           options={filterSelected(instructions, index)}
           handleInstructions={handleInstructions}
-        />
+          />
+          </>
       )}
     </div>
   )
