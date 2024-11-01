@@ -97,7 +97,7 @@ function AddRecipe({ recipeTemplate, setShowing, isOpen, handleRecipesUpdate }: 
                 </section>
 
                 <section id='AddRecipe-notes' className='flex-1'>
-                  <NotesInput notes={recipe.notes} handleUpdate={handleRecipeUpdate} />
+                  <NotesInput existingNotes={recipe.notes} handleUpdate={handleRecipeUpdate} />
                 </section>
 
               </div>
