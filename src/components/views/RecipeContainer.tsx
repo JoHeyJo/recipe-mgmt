@@ -11,7 +11,7 @@ import AddRecipe from "../requests/AddRecipe";
  * MainContainer -> RecipeContainer -> AddRecipe
  */
 
-function RecipeContainer({ handleRecipesUpdate, recipe, handleModal, isOpen }: RecipeViewProps) {
+function RecipeContainer({ handleRecipesUpdate, recipe, handleModalToggle, isOpen }: RecipeViewProps) {
 
 
   return (
@@ -20,7 +20,7 @@ function RecipeContainer({ handleRecipesUpdate, recipe, handleModal, isOpen }: R
         <h3 className="font-semibold leading-7">Recipe:</h3>
         <h2>{recipe.name}</h2>
         <button
-          onClick={handleModal}
+          onClick={handleModalToggle}
           className="font-semibold leading-7 ml-1 hover:text-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-zinc-600"              >
           <FontAwesomeIcon icon={faPenToSquare} />
         </button>

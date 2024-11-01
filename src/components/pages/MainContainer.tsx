@@ -17,6 +17,7 @@ function MainContainer() {
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate)
   const [open, setOpen] = useState(false)
+  const [action, setAction] = useState<string>()
 
   const { userId, currentBookId } = useContext(UserContext);
 
@@ -33,6 +34,16 @@ function MainContainer() {
   /** Handles model toggle */
   function toggleModel() {
     setOpen(!open);
+  }
+
+  function renderAddTemplate() {  
+    setAction("add")
+    setOpen(!open);
+  }
+
+  function renderEditTemplate() {  
+    setAction("edit")
+    toggleModel();
   }
 
   useEffect(() => {
@@ -53,7 +64,7 @@ function MainContainer() {
       <div className="border-2 border-black-500 h-[75vh] mx-auto max-w-1xl flex">
         {/* Does recipes need to be reduced to just ids and title??? */}
         <section id="RecipesList-container" className="flex-1">
-          {false
+          {action === "add"
             ?
             <AddRecipe recipeTemplate={recipeTemplate} handleRecipesUpdate={updateRecipes} setShowing={toggleModel} isOpen={open} />
             :
@@ -61,12 +72,12 @@ function MainContainer() {
           }
           <div className="flex justify-between m-1">
             <div>Recipes</div>
-            <FaPlusButton onAction={toggleModel} />
+            <FaPlusButton onAction={renderAddTemplate} />
           </div>
           <RecipesList recipes={recipes} handleSelect={selectRecipe} />
         </section>
 
-        <RecipeContainer recipe={selectedRecipe} handleRecipesUpdate={updateRecipes} handleModal={toggleModel} isOpen={open} />
+        <RecipeContainer recipe={selectedRecipe} handleRecipesUpdate={updateRecipes} handleModalToggle={renderEditTemplate} isOpen={open} />
       </div>
     </div>
   )
