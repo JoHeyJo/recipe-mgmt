@@ -16,8 +16,8 @@ import AddRecipe from "../requests/AddRecipe";
 function MainContainer() {
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate)
-  const [open, setOpen] = useState(false)
-  const [action, setAction] = useState<string>()
+  const [isOpen, setOpen] = useState(false)
+  const [requestAction, setRequestAction] = useState<string>("")
 
   const { userId, currentBookId } = useContext(UserContext);
 
@@ -31,19 +31,28 @@ function MainContainer() {
     setSelectedRecipe(recipes[index])
   }
 
-  /** Handles model toggle */
+  /** Model toggle function for children components */
   function toggleModel() {
-    setOpen(!open);
+    setOpen(!isOpen);
   }
 
-  function renderAddTemplate() {  
-    setAction("add")
-    setOpen(!open);
+  /** Triggers actions that render AddRecipe with appropriate data set - no recipe data*/
+  function renderAddTemplate() {
+    setRequestAction("add")
+    setOpen(!isOpen);
   }
 
-  function renderEditTemplate() {  
-    setAction("edit")
-    toggleModel();
+  /** Triggers actions that render AddRecipe with appropriate data set - current recipe */
+  function renderEditTemplate() {
+    setRequestAction("edit")
+    setOpen(!isOpen);
+  }
+
+  /** Renders AddRecipe with appropriate data set */
+  function renderRecipeRequestForm(action: string) {
+    if (!action) return null;
+    if (action === "add") return <AddRecipe recipeTemplate={recipeTemplate} handleRecipesUpdate={updateRecipes} setShowing={toggleModel} isOpen={isOpen} />
+    if (action === "edit") return <AddRecipe recipeTemplate={selectedRecipe} handleRecipesUpdate={updateRecipes} setShowing={toggleModel} isOpen={isOpen} />
   }
 
   useEffect(() => {
@@ -64,12 +73,7 @@ function MainContainer() {
       <div className="border-2 border-black-500 h-[75vh] mx-auto max-w-1xl flex">
         {/* Does recipes need to be reduced to just ids and title??? */}
         <section id="RecipesList-container" className="flex-1">
-          {action === "add"
-            ?
-            <AddRecipe recipeTemplate={recipeTemplate} handleRecipesUpdate={updateRecipes} setShowing={toggleModel} isOpen={open} />
-            :
-            <AddRecipe recipeTemplate={selectedRecipe} handleRecipesUpdate={updateRecipes} setShowing={toggleModel} isOpen={open} />
-          }
+          {renderRecipeRequestForm(requestAction)}
           <div className="flex justify-between m-1">
             <div>Recipes</div>
             <FaPlusButton onAction={renderAddTemplate} />
@@ -77,7 +81,7 @@ function MainContainer() {
           <RecipesList recipes={recipes} handleSelect={selectRecipe} />
         </section>
 
-        <RecipeContainer recipe={selectedRecipe} handleRecipesUpdate={updateRecipes} handleModalToggle={renderEditTemplate} isOpen={open} />
+        <RecipeContainer recipe={selectedRecipe} handleRecipesUpdate={updateRecipes} handleModalToggle={renderEditTemplate} isOpen={isOpen} />
       </div>
     </div>
   )
