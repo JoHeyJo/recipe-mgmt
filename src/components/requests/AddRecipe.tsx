@@ -11,7 +11,6 @@ import { UserContext } from '../../auth/UserContext';
 import { AddRecipeProps } from '../../utils/props';
 import NotesInput from '../ui/NotesInput';
 import { recipeTemplate as template } from "../../utils/templates";
-import { REFUSED } from 'dns';
 
 
 
@@ -53,10 +52,12 @@ function AddRecipe({ recipeTemplate, setShowing, isOpen, handleRecipesUpdate }: 
   }
 
   useEffect(() => {
+    console.log("recipeTemplate>>>>",recipeTemplate)
     setRecipe(recipeTemplate)
   }, [recipeTemplate])
 
-  console.log("AddRecipe notes", recipe.name, recipe.notes)
+  // console.log("AddRecipe notes", recipe.name, recipe.notes)
+  console.log("ingredients", recipe.ingredients,recipe.instructions) 
   return (
     <Dialog open={isOpen} onClose={setShowing} className="relative z-10">
       <DialogBackdrop
@@ -87,7 +88,8 @@ function AddRecipe({ recipeTemplate, setShowing, isOpen, handleRecipesUpdate }: 
 
                   <section id='AddRecipe-ingredients' className="flex-1 mr-4">
                     <InputWithLabel {...{ id: "title", name: "title", type: "title" }} handleUpdate={handleRecipeUpdate} value={recipe.name} placeholder={"Awesome recipe name!"} />
-                    <IngredientsGroup handleUpdate={handleRecipeUpdate} />
+                    
+                    <IngredientsGroup values={recipe.ingredients} handleUpdate={handleRecipeUpdate} />
                   </section>
 
                   <section id='AddRecipe-instructions' className="flex-1 ml-4 ">
@@ -113,7 +115,7 @@ function AddRecipe({ recipeTemplate, setShowing, isOpen, handleRecipesUpdate }: 
                 :
                 <button
                   type="button"
-                  onClick={()=>{}}
+                  onClick={() => { }}
                   className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                   Update
                 </button>

@@ -4,6 +4,7 @@ import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOption
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 
 type IngredientManager = {
+  value: Option;
   name: string
   handleOptionChange: (state: string, option: Option) => void;
   options: Option[];
@@ -19,9 +20,9 @@ type IngredientManager = {
  * OptionRequests -> IngredientManager
  */
 
-function IngredientManager({ name, handleOptionChange, options, postRequest, handleOptions }: IngredientManager) {
+function IngredientManager({ value, name, handleOptionChange, options, postRequest, handleOptions }: IngredientManager) {
   const [query, setQuery] = useState<string>('')
-  const [selected, setSelected] = useState<Option>()
+  const [selected, setSelected] = useState<Option>(value)
 //SHOULD REQUESTS AND STATE MANAGMENT BE SPLIT INTO TWO OBJECTS eg handleOptions & optionRequest....
   const isNewOption = (option: Option) => typeof option.id === "string" && option[name] === '+ create...'
 

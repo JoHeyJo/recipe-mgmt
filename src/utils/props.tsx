@@ -1,4 +1,4 @@
-import { Recipe, Ingredient, Instructions, Instruction } from "./types";
+import { Recipe, Ingredient, Instructions, Instruction, Ingredients } from "./types";
 import { ChangeEvent } from "react";
 
 export type InstructionManagerProps = {
@@ -37,7 +37,7 @@ export type RecipeViewProps = {
 
 export type IngredientsGroupProps = {
   handleUpdate: (data: Ingredient[], section: string) => void;
-  // value: Ingredient[];
+  values: Ingredients;
 }
 
 export type InstructionAreaProps = {

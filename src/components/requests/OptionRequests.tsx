@@ -4,6 +4,7 @@ import { errorHandling } from '../../utils/ErrorHandling';
 import IngredientManager from '../ui/IngredientManager';
 
 type OptionRequestsProps = {
+  value: any;
   name: string
   handleOptionChange: (state: string, option: Option) => void;
   options: Option[];
@@ -17,8 +18,8 @@ type OptionRequestsProps = {
  * IngredientInputGroup -> OptionRequests -> IngredientManager
  */
 
-function OptionRequests({ name, handleOptionChange, options, handleOptions }: OptionRequestsProps) {
-
+function OptionRequests({ value, name, handleOptionChange, options, handleOptions }: OptionRequestsProps) {
+  console.log("OPtionRequest", name, value)
   /** Request to create new ingredient option */
   async function addOption(option: Option): Promise<Option>   {
     try {
@@ -32,6 +33,7 @@ function OptionRequests({ name, handleOptionChange, options, handleOptions }: Op
 
   return (
     <IngredientManager
+      value={value}
       name={name}
       handleOptionChange={handleOptionChange}
       options={options}

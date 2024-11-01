@@ -1,13 +1,8 @@
 import { useState, useEffect } from 'react';
-import OptionRequests from './OptionDropdown';
+import OptionRequests from '../requests/OptionRequests';
 import { Ingredient, Option } from '../../utils/types';
 import API from '../../api';
-
-type IngredientInputGroup = {
-  handleUpdate: (newIngredient: Ingredient, index: number) => void;
-  ingredientTemplate: Ingredient;
-  index: number;
-}
+import { IngredientInputGroupProps } from '../../utils/types';
 
 const defaultItem = { id: null, name: "" };
 const defaultAmount = { id: null, value: "" };
@@ -17,7 +12,7 @@ const defaultUnit = { id: null, type: "" };
  * 
  * IngredientGroup -> IngredientInputGroup -> OptionRequests
 */
-function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: IngredientInputGroup) {
+function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: IngredientInputGroupProps) {
   const [item, setItem] = useState<Option>(defaultItem);
   const [amount, setAmount] = useState<Option>(defaultAmount);
   const [unit, setUnit] = useState<Option>(defaultUnit);
@@ -80,9 +75,9 @@ function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: Ingre
 
   return (
     <div className="flex rounded-md">
-      <OptionRequests handleOptions={handleOptions} handleOptionChange={updateState} options={quantityAmount} name={"value"} />
-      <OptionRequests handleOptions={handleOptions} handleOptionChange={updateState} options={quantityUnits} name={"type"} />
-      <OptionRequests handleOptions={handleOptions} handleOptionChange={updateState} options={items} name={"name"} />
+      <OptionRequests value={ingredientTemplate.amount} handleOptions={handleOptions} handleOptionChange={updateState} options={quantityAmount} name={"value"} />
+      <OptionRequests value={ingredientTemplate.unit} handleOptions={handleOptions} handleOptionChange={updateState} options={quantityUnits} name={"type"} />
+      <OptionRequests value={ingredientTemplate.item} handleOptions={handleOptions} handleOptionChange={updateState} options={items} name={"name"} />
     </div>
   )
 }

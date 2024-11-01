@@ -3,8 +3,6 @@ import IngredientInputGroup from './IngredientInputGroup';
 import { Ingredient } from '../../utils/types';
 import { IngredientsGroupProps } from '../../utils/props';
 import FaPlusButton from '../ui/common/FaPlusButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMinus } from '@fortawesome/free-solid-svg-icons'
 import FaMinusButton from '../ui/common/FaMinusButton';
 
 
@@ -20,8 +18,9 @@ const defaultIngredient: Ingredient = {
  * 
  * AddRecipe -> IngredientsGroup -> IngredientInputGroup
  */
-function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
+function IngredientsGroup({ values, handleUpdate }: IngredientsGroupProps) {
   const [ingredients, setIngredients] = useState<Ingredient[]>([defaultIngredient]);
+  // const [ingredients, setIngredients] = useState<Ingredient[]>(values.length === 0 ? [defaultIngredient] : values);
   const [ingredientKeys, setIngredientKeys] = useState<number[]>([Date.now()]); // Generate unique key on first render
 
   /** Handles adding new ingredient to array of ingredients */
@@ -49,11 +48,12 @@ function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
   /** Updates parent state of ingredients when ingredient is added to state */
   useEffect(() => {
     handleUpdate(ingredients, "ingredients")
-  }, [ingredients])
+    // removed ingredients dependency so that recipe in parent doesn't get overwritten 
+  }, [])
 
   return (
     <div id='IngredientsGroup-main'>
-      {ingredients.map((ingredient, i) =>
+      {(values.length === 0 ? ingredients : values).map((ingredient, i) =>
         <div key={ingredientKeys[i]} className='flex items-center justify-center'>
           <IngredientInputGroup index={i} ingredientTemplate={ingredient} handleUpdate={updateIngredients} />
           {i === ingredients.length - 1 ? <FaPlusButton onAction={addIngredient} /> : <FaMinusButton onAction={() => removeIngredient(i)} />}
