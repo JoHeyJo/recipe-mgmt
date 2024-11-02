@@ -50,11 +50,21 @@ function IngredientsGroup({ values, handleUpdate }: IngredientsGroupProps) {
     handleUpdate(ingredients, "ingredients")
     // removed ingredients dependency so that recipe in parent doesn't get overwritten 
   }, [])
-
+  console.log("values",values)
   return (
     <div id='IngredientsGroup-main'>
-      {(values.length === 0 ? ingredients : values).map((ingredient, i) =>
+      {values.length === 0
+      ?
+      ingredients.map((ingredient, i) =>
         <div key={ingredientKeys[i]} className='flex items-center justify-center'>
+          <IngredientInputGroup index={i} ingredientTemplate={ingredient} handleUpdate={updateIngredients} />
+          {i === ingredients.length - 1 ? <FaPlusButton onAction={addIngredient} /> : <FaMinusButton onAction={() => removeIngredient(i)} />}
+        </div>
+      )
+      :
+      values.map((ingredient, i) =>
+        <div key={ingredientKeys[i]} className='flex items-center justify-center'>
+          
           <IngredientInputGroup index={i} ingredientTemplate={ingredient} handleUpdate={updateIngredients} />
           {i === ingredients.length - 1 ? <FaPlusButton onAction={addIngredient} /> : <FaMinusButton onAction={() => removeIngredient(i)} />}
         </div>
