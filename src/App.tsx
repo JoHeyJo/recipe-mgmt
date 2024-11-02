@@ -4,7 +4,7 @@ import RoutesList from "./nav-routes/RoutesList";
 import { useState, useEffect } from 'react';
 import { UserSignUp as SignUpData, UserLogin } from './utils/types';
 import API from "./api";
-import { UserContext, UserContextType } from "./auth/UserContext";
+import { UserContext, UserContextType } from "./context/UserContext";
 import { User } from "./utils/types";
 import { BrowserRouter } from "react-router-dom";
 //styles
@@ -34,7 +34,7 @@ function App() {
 
   console.log("user in App from state", userData)
   
-  const UserData: UserContextType = {
+  const UserDataFromContext: UserContextType = {
     user: userData?.userName,
     userId: userData?.id,
     defaultBookId: userData?.defaultBookId,
@@ -94,7 +94,7 @@ function App() {
   return (
     <BrowserRouter>
       <div id="App-container">
-        <UserContext.Provider value={UserData}>
+        <UserContext.Provider value={UserDataFromContext}>
           <TopNav logout={logout} />
           <RoutesList signUp={userSignUp} login={userLogin} />
         </UserContext.Provider>

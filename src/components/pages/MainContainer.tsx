@@ -1,5 +1,5 @@
 import RecipesList from "../views/RecipesList"
-import { UserContext } from "../../auth/UserContext";
+import { UserContext } from "../../context/UserContext";
 import { useContext, useEffect, useState } from "react";
 import API from "../../api";
 import { errorHandling } from "../../utils/ErrorHandling";

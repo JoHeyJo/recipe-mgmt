@@ -7,10 +7,11 @@ import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
 import { useMediaQuery } from 'react-responsive';
 import InstructionsArea from '../ui/InstructionsArea';
-import { UserContext } from '../../auth/UserContext';
+import { UserContext } from '../../context/UserContext';
 import { AddRecipeProps } from '../../utils/props';
 import NotesInput from '../ui/NotesInput';
 import { recipeTemplate as template } from "../../utils/templates";
+import { RecipeContextType } from '../../context/RecipeContext';
 
 
 
@@ -23,6 +24,13 @@ function AddRecipe({ recipeTemplate, setShowing, isOpen, handleRecipesUpdate }: 
   const [recipe, setRecipe] = useState<Recipe>(template);
 
   const { currentBookId, userId } = useContext(UserContext);
+  const recipeData: RecipeContextType = {
+    id: recipe.id,
+    name: recipe.name,
+    ingredients: recipe.ingredients,
+    instructions: recipe.instructions,
+    notes: recipe.notes
+  }
 
   const isLargeScreen = useMediaQuery({ query: '(min-width: 1024px)' }); // lg breakpoint in Tailwind
 

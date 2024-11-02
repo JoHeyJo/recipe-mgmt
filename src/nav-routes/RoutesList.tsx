@@ -4,7 +4,7 @@ import AuthTabs from "../components/ui/AuthTabs";
 import NotFound from "../components/pages/NotFound";
 import { AuthProps } from "../utils/types";
 import Home from "../components/pages/Home";
-import { UserContext } from "../auth/UserContext";
+import { UserContext } from "../context/UserContext";
 import { useContext } from "react";
 import MainContainer from "../components/pages/MainContainer";
 
