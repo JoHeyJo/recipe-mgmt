@@ -10,7 +10,7 @@ import FaPlusButton from "../ui/common/FaPlusButton"
 import AddRecipe from "../requests/AddRecipe";
 /** Renders the main container housing list of recipes and individual recipe
  * 
- * RoutesList -> MainContainer -> [Recipes, RecipeContainer]
+ * RoutesList -> MainContainer -> [AddRecipe(RecipeRequests), RecipeContainer, RecipesList]
  */
 
 function MainContainer() {

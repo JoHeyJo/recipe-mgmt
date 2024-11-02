@@ -11,7 +11,7 @@ import { UserContext } from '../../context/UserContext';
 import { AddRecipeProps } from '../../utils/props';
 import NotesInput from '../ui/NotesInput';
 import { recipeTemplate as template } from "../../utils/templates";
-import { RecipeContextType } from '../../context/RecipeContext';
+import { RecipeContext, RecipeContextType } from '../../context/RecipeContext';
 
 
 
@@ -24,7 +24,8 @@ function AddRecipe({ recipeTemplate, setShowing, isOpen, handleRecipesUpdate }: 
   const [recipe, setRecipe] = useState<Recipe>(template);
 
   const { currentBookId, userId } = useContext(UserContext);
-  const recipeData: RecipeContextType = {
+
+  const recipeData = {
     id: recipe.id,
     name: recipe.name,
     ingredients: recipe.ingredients,
@@ -60,12 +61,12 @@ function AddRecipe({ recipeTemplate, setShowing, isOpen, handleRecipesUpdate }: 
   }
 
   useEffect(() => {
-    console.log("recipeTemplate>>>>",recipeTemplate)
+    console.log("recipeTemplate>>>>", recipeTemplate)
     setRecipe(recipeTemplate)
   }, [recipeTemplate])
 
   // console.log("AddRecipe notes", recipe.name, recipe.notes)
-  console.log("ingredients", recipe.ingredients,recipe.instructions) 
+  console.log("ingredients", recipe.ingredients, recipe.instructions)
   return (
     <Dialog open={isOpen} onClose={setShowing} className="relative z-10">
       <DialogBackdrop
@@ -92,22 +93,24 @@ function AddRecipe({ recipeTemplate, setShowing, isOpen, handleRecipesUpdate }: 
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet labore.
                   </p>
                 </div> */}
-                <section id='AddRecipe-book' className='flex h-full'>
+                <RecipeContext.Provider value={recipeData}>
+                  <section id='AddRecipe-book' className='flex h-full'>
 
-                  <section id='AddRecipe-ingredients' className="flex-1 mr-4">
-                    <InputWithLabel {...{ id: "title", name: "title", type: "title" }} handleUpdate={handleRecipeUpdate} value={recipe.name} placeholder={"Awesome recipe name!"} />
-                    
-                    <IngredientsGroup values={recipe.ingredients} handleUpdate={handleRecipeUpdate} />
+                    <section id='AddRecipe-ingredients' className="flex-1 mr-4">
+                      <InputWithLabel {...{ id: "title", name: "title", type: "title" }} handleUpdate={handleRecipeUpdate} value={recipe.name} placeholder={"Awesome recipe name!"} />
+
+                      <IngredientsGroup values={recipe.ingredients} handleUpdate={handleRecipeUpdate} />
+                    </section>
+
+                    <section id='AddRecipe-instructions' className="flex-1 ml-4 ">
+                      <InstructionsArea values={recipe.instructions} handleUpdate={handleRecipeUpdate} />
+                    </section>
                   </section>
 
-                  <section id='AddRecipe-instructions' className="flex-1 ml-4 ">
-                    <InstructionsArea values={recipe.instructions} handleUpdate={handleRecipeUpdate} />
+                  <section id='AddRecipe-notes' className='flex-1'>
+                    <NotesInput value={recipe.notes} handleUpdate={handleRecipeUpdate} />
                   </section>
-                </section>
-
-                <section id='AddRecipe-notes' className='flex-1'>
-                  <NotesInput value={recipe.notes} handleUpdate={handleRecipeUpdate} />
-                </section>
+                </RecipeContext.Provider>
 
               </div>
             </div>
