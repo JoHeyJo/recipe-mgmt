@@ -25,14 +25,6 @@ function AddRecipe({ recipeTemplate, setShowing, isOpen, handleRecipesUpdate }: 
 
   const { currentBookId, userId } = useContext(UserContext);
 
-  const recipeData = {
-    id: recipe.id,
-    name: recipe.name,
-    ingredients: recipe.ingredients,
-    instructions: recipe.instructions,
-    notes: recipe.notes
-  }
-
   const isLargeScreen = useMediaQuery({ query: '(min-width: 1024px)' }); // lg breakpoint in Tailwind
 
   /** Updates recipe state */
@@ -93,7 +85,6 @@ function AddRecipe({ recipeTemplate, setShowing, isOpen, handleRecipesUpdate }: 
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet labore.
                   </p>
                 </div> */}
-                <RecipeContext.Provider value={recipeData}>
                   <section id='AddRecipe-book' className='flex h-full'>
 
                     <section id='AddRecipe-ingredients' className="flex-1 mr-4">
@@ -108,9 +99,8 @@ function AddRecipe({ recipeTemplate, setShowing, isOpen, handleRecipesUpdate }: 
                   </section>
 
                   <section id='AddRecipe-notes' className='flex-1'>
-                    <NotesInput value={recipe.notes} handleUpdate={handleRecipeUpdate} />
+                    <NotesInput handleUpdate={handleRecipeUpdate} />
                   </section>
-                </RecipeContext.Provider>
 
               </div>
             </div>

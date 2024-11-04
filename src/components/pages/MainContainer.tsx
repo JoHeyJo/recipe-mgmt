@@ -8,6 +8,7 @@ import RecipeContainer from "../views/RecipeContainer";
 import { recipeTemplate } from "../../utils/templates";
 import FaPlusButton from "../ui/common/FaPlusButton"
 import AddRecipe from "../requests/AddRecipe";
+import { RecipeContext } from "../../context/RecipeContext";
 /** Renders the main container housing list of recipes and individual recipe
  * 
  * RoutesList -> MainContainer -> [AddRecipe(RecipeRequests), RecipeContainer, RecipesList]
@@ -20,6 +21,14 @@ function MainContainer() {
   const [requestAction, setRequestAction] = useState<string>("")
 
   const { userId, currentBookId } = useContext(UserContext);
+
+  const recipeData = {
+    id: selectedRecipe.id,
+    name: selectedRecipe.name,
+    ingredients: selectedRecipe.ingredients,
+    instructions: selectedRecipe.instructions,
+    selectedNotes: selectedRecipe.notes
+  }
 
   /**Update rendered recipes after creation */
   function updateRecipes(recipe: Recipe) {
@@ -75,7 +84,9 @@ function MainContainer() {
       <div className="border-2 border-black-500 h-[75vh] mx-auto max-w-1xl flex">
         {/* Does recipes need to be reduced to just ids and title??? */}
         <section id="RecipesList-container" className="flex-1">
-          {renderRecipeRequestForm(requestAction)}
+          <RecipeContext.Provider value={recipeData}>
+            {renderRecipeRequestForm(requestAction)}
+          </RecipeContext.Provider >
           <div className="flex justify-between m-1">
             <div>Recipes</div>
             <FaPlusButton onAction={renderAddTemplate} />

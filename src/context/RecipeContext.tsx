@@ -5,7 +5,7 @@ export type RecipeContextType = {
   id: number;
   name: string,
   instructions: Instructions,
-  notes: string,
+  selectedNotes: string,
   ingredients: Ingredients;
 }
 
@@ -13,6 +13,6 @@ export const RecipeContext = createContext<RecipeContextType>({
   id: 0,
   name: '',
   instructions: [],
-  notes: "",
+  selectedNotes: "",
   ingredients: []
 })

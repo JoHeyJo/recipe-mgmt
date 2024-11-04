@@ -19,7 +19,6 @@ type OptionRequestsProps = {
  */
 
 function OptionRequests({ value, name, handleOptionChange, options, handleOptions }: OptionRequestsProps) {
-  // console.log("OPtionRequest", name, value)
   /** Request to create new ingredient option */
   async function addOption(option: Option): Promise<Option>   {
     try {

@@ -56,7 +56,6 @@ export type FaMinusButtonProp = {
 
 export type NotesInputProps = {
   handleUpdate: (data: string, section: string) => void;
-  value: string;
 }
 
 export type RecipesListProps = {
