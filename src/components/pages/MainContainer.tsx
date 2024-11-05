@@ -26,7 +26,7 @@ function MainContainer() {
     id: selectedRecipe.id,
     name: selectedRecipe.name,
     ingredients: selectedRecipe.ingredients,
-    instructions: selectedRecipe.instructions,
+    contextInstructions: selectedRecipe.instructions,
     selectedNotes: selectedRecipe.notes
   }
 

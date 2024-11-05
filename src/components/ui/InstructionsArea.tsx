@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Ingredient, Instruction, Instructions } from "../../utils/types";
 import InstructionManager from "./InstructionManager";
 import API from "../../api";
 import { errorHandling } from '../../utils/ErrorHandling';
-import { InstructionAreaProps } from "../../utils/props";
+import { InstructionsAreaProps } from "../../utils/props";
+import { RecipeContext } from "../../context/RecipeContext";
 
 const PLACE_HOLDER = ["Add ingredients...", "Add ice...", "shake..."]
 
@@ -12,16 +13,18 @@ const InstructionsTemplate: Instructions = []
 
 const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs >= 2 && inputs === arrayKey
 
-/** InstructionsArea
+/** InstructionsArea - Makes requests for instructions
  * 
  * Dynamically renders list of instructions - filters out selected options
  * 
  * AddRecipe -> InstructionsArea -> InstructionsManager
  */
-function InstructionsArea({ values, handleUpdate }: InstructionAreaProps) {
+function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   const [instructions, setInstructions] = useState([]);
   const [selectedInstructions, setSelectedInstructions] = useState<Instruction[]>([]);
   const [filterKey, setFilterKeys] = useState({});
+
+  const { contextInstructions } = useContext(RecipeContext);
 
   /** Add selected instruction to incoming data set  */
   function addInstruction(instruction: Instruction) {
@@ -124,10 +127,9 @@ function InstructionsArea({ values, handleUpdate }: InstructionAreaProps) {
   useEffect(() => {
     handleUpdate(selectedInstructions, "instructions")
   }, [selectedInstructions])
-
   return (
     <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
-      {(values.length === 0 ? PLACE_HOLDER : values).map((value, index) =>
+      {(contextInstructions.length === 0 ? PLACE_HOLDER : contextInstructions).map((value, index) =>
         <InstructionManager
           value={value}
           key={index}

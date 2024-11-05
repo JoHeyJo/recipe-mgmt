@@ -6,7 +6,7 @@ export type RecipeData = Recipe & {
 }
 
 export type Recipe = {
-  id: number;
+  id: number | undefined;
   name: string,
   instructions: Instructions,
   notes: string,

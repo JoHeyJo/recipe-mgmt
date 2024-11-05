@@ -2,10 +2,20 @@ import { useState, useEffect, ChangeEvent, useContext } from "react";
 import { NotesInputProps } from "../../utils/props"
 import { RecipeContext } from "../../context/RecipeContext";
 
+
+/** Render Notes 
+ * 
+ * 
+ * AddRecipe -> NotesInput
+ */
 function NotesInput({ handleUpdate }: NotesInputProps) {
   const [notes, setNotes] = useState<string>();
 
   const { selectedNotes } = useContext(RecipeContext)
+
+    useEffect(()=>{
+      setNotes(selectedNotes);
+    },[])
 
   /** handles changes in notes */
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
@@ -31,7 +41,7 @@ function NotesInput({ handleUpdate }: NotesInputProps) {
               rows={1}
               placeholder="Notes..."
               className="block w-full pt-9 resize-none border-0 border-b border-transparent p-0 pb-2 placeholder:text-gray-400 focus:border-gray-800 focus:ring-0 sm:text-sm sm:leading-6"
-              defaultValue={selectedNotes || notes}
+              defaultValue={notes}
             />
           </div>
         </form>

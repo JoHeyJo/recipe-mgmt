@@ -4,15 +4,17 @@ import { Instructions, Ingredients } from "../utils/types";
 export type RecipeContextType = {
   id: number;
   name: string,
-  instructions: Instructions,
+  contextInstructions: Instructions,
   selectedNotes: string,
   ingredients: Ingredients;
+  ifSelected: boolean;
 }
 
 export const RecipeContext = createContext<RecipeContextType>({
   id: 0,
   name: '',
-  instructions: [],
+  contextInstructions: [],
   selectedNotes: "",
-  ingredients: []
+  ingredients: [],
+  ifSelected: false
 })

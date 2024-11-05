@@ -40,9 +40,8 @@ export type IngredientsGroupProps = {
   values: Ingredients;
 }
 
-export type InstructionAreaProps = {
+export type InstructionsAreaProps = {
   handleUpdate: (instructions: Instructions, section: string) => void;
-  values: Instructions;
 }
 
 

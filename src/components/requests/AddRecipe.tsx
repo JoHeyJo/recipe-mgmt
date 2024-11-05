@@ -17,7 +17,7 @@ import { RecipeContext, RecipeContextType } from '../../context/RecipeContext';
 
 /** Processes all recipe data
  * 
- * RecipeContainer -> AddRecipe -> [IngredientsGroup, InstructionsArea]
+ * RecipeContainer -> AddRecipe -> [IngredientsGroup, InstructionsArea, NotesInput, InputWithLabel]
  */
 
 function AddRecipe({ recipeTemplate, setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) {
@@ -29,6 +29,7 @@ function AddRecipe({ recipeTemplate, setShowing, isOpen, handleRecipesUpdate }: 
 
   /** Updates recipe state */
   function handleRecipeUpdate(data: string | Ingredient[] | Instructions, section: string) {
+    console.log(data, section)
     setRecipe(prevRecipe => (
       { ...prevRecipe, [section]: data }
     ));
@@ -39,7 +40,6 @@ function AddRecipe({ recipeTemplate, setShowing, isOpen, handleRecipesUpdate }: 
   async function addRecipe() {
     try {
       const res = await API.postUserRecipe(recipe, currentBookId, userId);
-      console.log("adRecipe res", res)
       handleRecipesUpdate(res)
     } catch (error: any) {
       errorHandling("AddRecipe - addRecipe", error)
@@ -47,15 +47,13 @@ function AddRecipe({ recipeTemplate, setShowing, isOpen, handleRecipesUpdate }: 
   }
 
   function handleSubmit() {
-    console.log("recipe", recipe)
     setShowing(false)
     addRecipe()
   }
 
-  useEffect(() => {
-    console.log("recipeTemplate>>>>", recipeTemplate)
-    setRecipe(recipeTemplate)
-  }, [recipeTemplate])
+  // useEffect(() => {
+  //   setRecipe(recipeTemplate)
+  // }, [recipeTemplate])
 
   // console.log("AddRecipe notes", recipe.name, recipe.notes)
   console.log("ingredients", recipe.ingredients, recipe.instructions)
@@ -94,7 +92,7 @@ function AddRecipe({ recipeTemplate, setShowing, isOpen, handleRecipesUpdate }: 
                     </section>
 
                     <section id='AddRecipe-instructions' className="flex-1 ml-4 ">
-                      <InstructionsArea values={recipe.instructions} handleUpdate={handleRecipeUpdate} />
+                      <InstructionsArea handleUpdate={handleRecipeUpdate} />
                     </section>
                   </section>
 
