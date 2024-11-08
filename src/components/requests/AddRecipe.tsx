@@ -20,7 +20,7 @@ import { RecipeContext, RecipeContextType } from '../../context/RecipeContext';
  * RecipeContainer -> AddRecipe -> [IngredientsGroup, InstructionsArea, NotesInput, InputWithLabel]
  */
 
-function AddRecipe({ recipeTemplate, setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) {
+function AddRecipe({setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) {
   const [recipe, setRecipe] = useState<Recipe>(template);
 
   const { currentBookId, userId } = useContext(UserContext);

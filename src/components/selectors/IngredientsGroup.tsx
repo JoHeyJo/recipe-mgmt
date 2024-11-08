@@ -49,8 +49,7 @@ function IngredientsGroup({ values, handleUpdate }: IngredientsGroupProps) {
   useEffect(() => {
     handleUpdate(ingredients, "ingredients")
     // removed ingredients dependency so that recipe in parent doesn't get overwritten 
-  }, [])
-  console.log("values",values)
+  }, [ingredients])
   return (
     <div id='IngredientsGroup-main'>
       {values.length === 0

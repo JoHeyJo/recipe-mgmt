@@ -13,7 +13,7 @@ import { InstructionManagerProps } from '../../utils/props';
  * InstructionsArea -> InstructionManager
  */
 
-function InstructionManager({ value, arrayKey, name, handleOptionChange, options, handleInstructions }: InstructionManagerProps) {
+function InstructionManager({ arrayKey, name, handleOptionChange, options, handleInstructions }: InstructionManagerProps) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Instruction>()
 
@@ -86,10 +86,6 @@ function InstructionManager({ value, arrayKey, name, handleOptionChange, options
   useEffect(() => {
     selected && handleOptionChange(name, selected);
   }, [selected]);
-
-  useEffect(()=> {
-    setSelected(value);
-  })
 
   return (
     <>

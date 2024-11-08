@@ -2,7 +2,6 @@ import { Recipe, Ingredient, Instructions, Instruction, Ingredients } from "./ty
 import { ChangeEvent } from "react";
 
 export type InstructionManagerProps = {
-  value: Instruction;
   name: string;
   arrayKey: number;
   handleOptionChange: (state: string, option: Instruction) => void;

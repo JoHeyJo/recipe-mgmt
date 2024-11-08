@@ -131,7 +131,6 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
     <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
       {(contextInstructions.length === 0 ? PLACE_HOLDER : contextInstructions).map((value, index) =>
         <InstructionManager
-          value={value}
           key={index}
           arrayKey={index}
           name={value}
