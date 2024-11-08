@@ -29,7 +29,6 @@ function AddRecipe({setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) {
 
   /** Updates recipe state */
   function handleRecipeUpdate(data: string | Ingredient[] | Instructions, section: string) {
-    console.log(data, section)
     setRecipe(prevRecipe => (
       { ...prevRecipe, [section]: data }
     ));
@@ -55,8 +54,6 @@ function AddRecipe({setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) {
   //   setRecipe(recipeTemplate)
   // }, [recipeTemplate])
 
-  // console.log("AddRecipe notes", recipe.name, recipe.notes)
-  console.log("ingredients", recipe.ingredients, recipe.instructions)
   return (
     <Dialog open={isOpen} onClose={setShowing} className="relative z-10">
       <DialogBackdrop

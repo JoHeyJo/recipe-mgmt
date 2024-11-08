@@ -13,7 +13,6 @@ import { RecipeContext } from "../../context/RecipeContext";
  * 
  * RoutesList -> MainContainer -> [AddRecipe(RecipeRequests), RecipeContainer, RecipesList]
  */
-
 function MainContainer() {
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate)
@@ -23,7 +22,7 @@ function MainContainer() {
   const { userId, currentBookId } = useContext(UserContext);
 
   const recipeData = {
-    id: selectedRecipe.id,
+    recipeId: selectedRecipe.id,
     name: selectedRecipe.name,
     ingredients: selectedRecipe.ingredients,
     contextInstructions: selectedRecipe.instructions,

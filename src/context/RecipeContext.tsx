@@ -2,7 +2,7 @@ import { createContext } from "react";
 import { Instructions, Ingredients } from "../utils/types";
 
 export type RecipeContextType = {
-  id: number;
+  recipeId: number;
   name: string,
   contextInstructions: Instructions,
   selectedNotes: string,
@@ -10,7 +10,7 @@ export type RecipeContextType = {
 }
 
 export const RecipeContext = createContext<RecipeContextType>({
-  id: 0,
+  recipeId: 0,
   name: '',
   contextInstructions: [],
   selectedNotes: "",
