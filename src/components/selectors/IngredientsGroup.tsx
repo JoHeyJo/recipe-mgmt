@@ -25,7 +25,7 @@ function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
 
   const { requestAction, contextIngredients } = useContext(RecipeContext);
 
-  /** Populate recipe from with with current recipe ingredients on EDIT */
+  /** Populate recipe from with with current recipe ingredients on EDIT or set default template*/
   useEffect(() => {
     (requestAction === "edit") ? setIngredients(contextIngredients) : setIngredients([defaultIngredient])
   }, [])

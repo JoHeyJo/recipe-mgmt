@@ -23,7 +23,7 @@ function MainContainer() {
 
   const recipeData = {
     recipeId: selectedRecipe.id,
-    name: selectedRecipe.name,
+    recipeName: selectedRecipe.name,
     contextIngredients: selectedRecipe.ingredients,
     contextInstructions: selectedRecipe.instructions,
     selectedNotes: selectedRecipe.notes,
@@ -48,10 +48,10 @@ function MainContainer() {
   }
 
   /** Triggers actions that render AddRecipe with appropriate data set - no recipe data*/
-  function renderAddTemplate() {
-    setRequestAction("add")
-    setOpen(!isOpen);
-  }
+  // function renderAddTemplate() {
+  //   setRequestAction("add")
+  //   setOpen(!isOpen);
+  // }
 
   /** Triggers actions that renders AddRecipe with appropriate data set - current recipe */
   function toggleEditTemplate() {

@@ -11,7 +11,7 @@ import { UserContext } from '../../context/UserContext';
 import { AddRecipeProps } from '../../utils/props';
 import NotesInput from '../ui/NotesInput';
 import { recipeTemplate as template } from "../../utils/templates";
-import { RecipeContext, RecipeContextType } from '../../context/RecipeContext';
+import { RecipeContext } from '../../context/RecipeContext';
 
 
 
@@ -20,11 +20,11 @@ import { RecipeContext, RecipeContextType } from '../../context/RecipeContext';
  * RecipeContainer -> AddRecipe -> [IngredientsGroup, InstructionsArea, NotesInput, InputWithLabel]
  */
 
-function AddRecipe({setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) {
+function AddRecipe({ setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) {
   const [recipe, setRecipe] = useState<Recipe>(template);
 
   const { currentBookId, userId } = useContext(UserContext);
-  const { recipeId } = useContext(RecipeContext);
+  const { recipeId, recipeName, requestAction } = useContext(RecipeContext);
 
   const isLargeScreen = useMediaQuery({ query: '(min-width: 1024px)' }); // lg breakpoint in Tailwind
 
@@ -51,9 +51,18 @@ function AddRecipe({setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) {
     addRecipe()
   }
 
-  // useEffect(() => {
-  //   setRecipe(recipeTemplate)
-  // }, [recipeTemplate])
+  // On mount, populate recipe name if recipe is selected
+  useEffect(() => {
+    if (requestAction === "edit") {
+      setRecipe(recipe => {
+        console.log("recipe", recipeName)
+        const updatedRecipe = { ...recipe };
+        updatedRecipe.name = recipeName;
+        updatedRecipe.id = recipeId;
+        return updatedRecipe;
+      })
+    }
+  }, [requestAction])
 
   return (
     <Dialog open={isOpen} onClose={setShowing} className="relative z-10">
@@ -61,7 +70,6 @@ function AddRecipe({setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) {
         transition
         className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
       />
-
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
@@ -81,22 +89,22 @@ function AddRecipe({setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) {
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet labore.
                   </p>
                 </div> */}
-                  <section id='AddRecipe-book' className='flex h-full'>
+                <section id='AddRecipe-book' className='flex h-full'>
 
-                    <section id='AddRecipe-ingredients' className="flex-1 mr-4">
-                      <InputWithLabel {...{ id: "title", name: "title", type: "title" }} handleUpdate={handleRecipeUpdate} value={recipe.name} placeholder={"Awesome recipe name!"} />
+                  <section id='AddRecipe-ingredients' className="flex-1 mr-4">
+                    <InputWithLabel {...{ id: "title", name: "title", type: "title" }} handleUpdate={handleRecipeUpdate} value={recipe.name} placeholder={"Awesome recipe name!"} />
 
-                      <IngredientsGroup values={recipe.ingredients} handleUpdate={handleRecipeUpdate} />
-                    </section>
-
-                    <section id='AddRecipe-instructions' className="flex-1 ml-4 ">
-                      <InstructionsArea handleUpdate={handleRecipeUpdate} />
-                    </section>
+                    <IngredientsGroup values={recipe.ingredients} handleUpdate={handleRecipeUpdate} />
                   </section>
 
-                  <section id='AddRecipe-notes' className='flex-1'>
-                    <NotesInput handleUpdate={handleRecipeUpdate} />
+                  <section id='AddRecipe-instructions' className="flex-1 ml-4 ">
+                    <InstructionsArea handleUpdate={handleRecipeUpdate} />
                   </section>
+                </section>
+
+                <section id='AddRecipe-notes' className='flex-1'>
+                  <NotesInput handleUpdate={handleRecipeUpdate} />
+                </section>
 
               </div>
             </div>

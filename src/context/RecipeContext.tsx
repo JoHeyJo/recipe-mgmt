@@ -3,7 +3,7 @@ import { Instructions, Ingredients } from "../utils/types";
 
 export type RecipeContextType = {
   recipeId: number;
-  name: string,
+  recipeName: string,
   contextInstructions: Instructions,
   selectedNotes: string,
   contextIngredients: Ingredients;
@@ -12,7 +12,7 @@ export type RecipeContextType = {
 
 export const RecipeContext = createContext<RecipeContextType>({
   recipeId: 0,
-  name: '',
+  recipeName: '',
   contextInstructions: [],
   selectedNotes: "",
   contextIngredients: [],
