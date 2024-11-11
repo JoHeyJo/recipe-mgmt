@@ -10,8 +10,8 @@ const PLACE_HOLDER = ["Add ingredients...", "Add ice...", "shake..."]
 
 const InstructionsTemplate: Instructions = []
 
-
-const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs >= 2 && inputs === arrayKey
+/**  Triggers creation of input if num of inputs = array index & more than 2 are needed*/
+const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs >= 2 && inputs - 1  === arrayKey
 
 /** InstructionsArea - Makes requests for instructions
  * 
@@ -24,11 +24,11 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   const [selectedInstructions, setSelectedInstructions] = useState<any>(PLACE_HOLDER);
   const [filterKey, setFilterKeys] = useState({});
 
-  const { recipeId, contextInstructions } = useContext(RecipeContext);
+  const { requestAction, contextInstructions } = useContext(RecipeContext);
 
   // On mount, populate instructions if recipe is selected
   useEffect(() => {
-    if (recipeId) {
+    if (requestAction === "edit") {
       setSelectedInstructions(contextInstructions);
     }
   }, [])
@@ -49,7 +49,6 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
       updatedInstructions[arrayKey] = instruction;
       return updatedInstructions;
     })
-    console.log("updaing selected ")
     if (HAS_NO_REMAINING_INPUT(selectedInstructions.length, arrayKey)) createInstructionInput()
   }
 
@@ -80,7 +79,6 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
 
   /** Create additional input field for new instruction */
   function createInstructionInput() {
-    console.log("instructions area create")
     setSelectedInstructions(selected => [...selected, "some other thing..."])
     // PLACE_HOLDER.push("some other thing...")
   }

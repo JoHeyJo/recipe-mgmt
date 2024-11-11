@@ -24,6 +24,7 @@ function AddRecipe({setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) {
   const [recipe, setRecipe] = useState<Recipe>(template);
 
   const { currentBookId, userId } = useContext(UserContext);
+  const { recipeId } = useContext(RecipeContext);
 
   const isLargeScreen = useMediaQuery({ query: '(min-width: 1024px)' }); // lg breakpoint in Tailwind
 
@@ -100,7 +101,7 @@ function AddRecipe({setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) {
               </div>
             </div>
             <div className="mt-5 sm:mt-6">
-              {!recipe.id
+              {!recipeId
                 ?
                 <button
                   type="button"

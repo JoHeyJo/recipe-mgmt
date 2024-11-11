@@ -26,7 +26,8 @@ function MainContainer() {
     name: selectedRecipe.name,
     ingredients: selectedRecipe.ingredients,
     contextInstructions: selectedRecipe.instructions,
-    selectedNotes: selectedRecipe.notes
+    selectedNotes: selectedRecipe.notes,
+    requestAction
   }
 
   /**Update rendered recipes after creation */
@@ -42,7 +43,7 @@ function MainContainer() {
   /** Model toggle function for children components */
   function toggleModel() {
     setOpen(!isOpen);
-    // ensures AddRecipe doesn't needlessly render in background
+    // resets action when modal is closed 
     setRequestAction("")
   }
 
@@ -52,17 +53,10 @@ function MainContainer() {
     setOpen(!isOpen);
   }
 
-  /** Triggers actions that render AddRecipe with appropriate data set - current recipe */
-  function renderEditTemplate() {
+  /** Triggers actions that renders AddRecipe with appropriate data set - current recipe */
+  function toggleEditTemplate() {
     setRequestAction("edit")
     setOpen(!isOpen);
-  }
-
-  /** Renders AddRecipe with appropriate data set */
-  function renderRecipeRequestForm(action: string) {
-    if (!action) return null;
-    if (action === "add") return <AddRecipe recipeTemplate={recipeTemplate} handleRecipesUpdate={updateRecipes} setShowing={toggleModel} isOpen={isOpen} />
-    if (action === "edit") return <AddRecipe recipeTemplate={selectedRecipe} handleRecipesUpdate={updateRecipes} setShowing={toggleModel} isOpen={isOpen} />
   }
 
   useEffect(() => {
@@ -84,16 +78,16 @@ function MainContainer() {
         {/* Does recipes need to be reduced to just ids and title??? */}
         <section id="RecipesList-container" className="flex-1">
           <RecipeContext.Provider value={recipeData}>
-            {renderRecipeRequestForm(requestAction)}
+            <AddRecipe recipeTemplate={recipeTemplate} handleRecipesUpdate={updateRecipes} setShowing={toggleModel} isOpen={isOpen} />
           </RecipeContext.Provider >
           <div className="flex justify-between m-1">
             <div>Recipes</div>
-            <FaPlusButton onAction={renderAddTemplate} />
+            <FaPlusButton onAction={()=>setOpen(true)} />
           </div>
           <RecipesList recipes={recipes} handleSelect={selectRecipe} />
         </section>
 
-        <RecipeContainer recipe={selectedRecipe} handleRecipesUpdate={updateRecipes} handleModalToggle={renderEditTemplate} isOpen={isOpen} />
+        <RecipeContainer recipe={selectedRecipe} handleRecipesUpdate={updateRecipes} handleModalToggle={toggleEditTemplate} isOpen={isOpen} />
       </div>
     </div>
   )

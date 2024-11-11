@@ -3,7 +3,6 @@ import RecipeView from "./RecipeView"
 import { RecipeViewProps } from "../../utils/props"
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import AddRecipe from "../requests/AddRecipe";
 
 /** Renders recipe "book"
  * 

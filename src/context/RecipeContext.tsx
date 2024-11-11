@@ -7,6 +7,7 @@ export type RecipeContextType = {
   contextInstructions: Instructions,
   selectedNotes: string,
   ingredients: Ingredients;
+  requestAction: string;
 }
 
 export const RecipeContext = createContext<RecipeContextType>({
@@ -14,5 +15,6 @@ export const RecipeContext = createContext<RecipeContextType>({
   name: '',
   contextInstructions: [],
   selectedNotes: "",
-  ingredients: []
+  ingredients: [],
+  requestAction: ""
 })
