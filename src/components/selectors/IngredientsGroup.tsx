@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import IngredientInputGroup from './IngredientInputGroup';
 import { Ingredient } from '../../utils/types';
 import { IngredientsGroupProps } from '../../utils/props';
 import FaPlusButton from '../ui/common/FaPlusButton';
 import FaMinusButton from '../ui/common/FaMinusButton';
+import { RecipeContext } from '../../context/RecipeContext';
 
 
 
@@ -18,10 +19,24 @@ const defaultIngredient: Ingredient = {
  * 
  * AddRecipe -> IngredientsGroup -> IngredientInputGroup
  */
-function IngredientsGroup({ values, handleUpdate }: IngredientsGroupProps) {
+function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
   const [ingredients, setIngredients] = useState<Ingredient[]>([defaultIngredient]);
-  // const [ingredients, setIngredients] = useState<Ingredient[]>(values.length === 0 ? [defaultIngredient] : values);
   const [ingredientKeys, setIngredientKeys] = useState<number[]>([Date.now()]); // Generate unique key on first render
+
+  const { requestAction, contextIngredients } = useContext(RecipeContext);
+
+  useEffect(() => {
+
+    console.log("BEFORE", ingredients)
+    if (requestAction === "edit") setIngredients((i)=>{
+      console.log("before set ingredients", i)
+      i = contextIngredients
+      console.log("after set ingredients", i)
+      return i
+    }
+  );
+  console.log("AFTER", ingredients)
+  }, [])
 
   /** Handles adding new ingredient to array of ingredients */
   function addIngredient() {
@@ -33,7 +48,7 @@ function IngredientsGroup({ values, handleUpdate }: IngredientsGroupProps) {
   /** Handles removing ingredient object from array of ingredients */
   function removeIngredient(index: number) {
     setIngredients(prevIngredients => prevIngredients.filter((_, i) => i !== index));
-    setIngredientKeys(prevKeys => prevKeys.filter((_, i) => i !== index)); 
+    setIngredientKeys(prevKeys => prevKeys.filter((_, i) => i !== index));
   }
 
   /** Handles updates ingredient in array of ingredients */
@@ -48,22 +63,12 @@ function IngredientsGroup({ values, handleUpdate }: IngredientsGroupProps) {
   /** Updates parent state of ingredients when ingredient is added to state */
   useEffect(() => {
     handleUpdate(ingredients, "ingredients")
-    // removed ingredients dependency so that recipe in parent doesn't get overwritten 
   }, [ingredients])
+  console.log("ingredients", ingredients)
   return (
     <div id='IngredientsGroup-main'>
-      {values.length === 0
-      ?
-      ingredients.map((ingredient, i) =>
+      {ingredients.map((ingredient, i) =>
         <div key={ingredientKeys[i]} className='flex items-center justify-center'>
-          <IngredientInputGroup index={i} ingredientTemplate={ingredient} handleUpdate={updateIngredients} />
-          {i === ingredients.length - 1 ? <FaPlusButton onAction={addIngredient} /> : <FaMinusButton onAction={() => removeIngredient(i)} />}
-        </div>
-      )
-      :
-      values.map((ingredient, i) =>
-        <div key={ingredientKeys[i]} className='flex items-center justify-center'>
-          
           <IngredientInputGroup index={i} ingredientTemplate={ingredient} handleUpdate={updateIngredients} />
           {i === ingredients.length - 1 ? <FaPlusButton onAction={addIngredient} /> : <FaMinusButton onAction={() => removeIngredient(i)} />}
         </div>

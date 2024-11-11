@@ -24,7 +24,7 @@ function MainContainer() {
   const recipeData = {
     recipeId: selectedRecipe.id,
     name: selectedRecipe.name,
-    ingredients: selectedRecipe.ingredients,
+    contextIngredients: selectedRecipe.ingredients,
     contextInstructions: selectedRecipe.instructions,
     selectedNotes: selectedRecipe.notes,
     requestAction
