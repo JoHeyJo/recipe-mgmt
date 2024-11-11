@@ -20,22 +20,14 @@ const defaultIngredient: Ingredient = {
  * AddRecipe -> IngredientsGroup -> IngredientInputGroup
  */
 function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
-  const [ingredients, setIngredients] = useState<Ingredient[]>([defaultIngredient]);
+  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [ingredientKeys, setIngredientKeys] = useState<number[]>([Date.now()]); // Generate unique key on first render
 
   const { requestAction, contextIngredients } = useContext(RecipeContext);
 
+  /** Populate recipe from with with current recipe ingredients on EDIT */
   useEffect(() => {
-
-    console.log("BEFORE", ingredients)
-    if (requestAction === "edit") setIngredients((i)=>{
-      console.log("before set ingredients", i)
-      i = contextIngredients
-      console.log("after set ingredients", i)
-      return i
-    }
-  );
-  console.log("AFTER", ingredients)
+    (requestAction === "edit") ? setIngredients(contextIngredients) : setIngredients([defaultIngredient])
   }, [])
 
   /** Handles adding new ingredient to array of ingredients */
@@ -64,7 +56,7 @@ function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
   useEffect(() => {
     handleUpdate(ingredients, "ingredients")
   }, [ingredients])
-  console.log("ingredients", ingredients)
+
   return (
     <div id='IngredientsGroup-main'>
       {ingredients.map((ingredient, i) =>
