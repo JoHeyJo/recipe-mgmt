@@ -11,16 +11,16 @@ import { RecipeContext } from "../../context/RecipeContext";
 function NotesInput({ handleUpdate }: NotesInputProps) {
   const [notes, setNotes] = useState<string>();
 
-  const { selectedNotes } = useContext(RecipeContext)
+  const { requestAction, selectedNotes } = useContext(RecipeContext);
 
     useEffect(()=>{
-      setNotes(selectedNotes);
-    },[])
+      if(requestAction === "edit") setNotes(selectedNotes);
+    },[]);
 
   /** handles changes in notes */
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
-    setNotes(event.target.value)
-    handleUpdate(event.target.value, "notes")
+    setNotes(event.target.value);
+    handleUpdate(event.target.value, "notes");
   }
 
   useEffect(() => {

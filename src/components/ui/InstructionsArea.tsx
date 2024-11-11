@@ -11,7 +11,7 @@ const PLACE_HOLDER = ["Add ingredients...", "Add ice...", "shake..."]
 const InstructionsTemplate: Instructions = []
 
 /**  Triggers creation of input if num of inputs = array index & more than 2 are needed*/
-const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs >= 2 && inputs - 1  === arrayKey
+const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs >= 2 && inputs - 1 === arrayKey
 
 /** InstructionsArea - Makes requests for instructions
  * 
@@ -28,9 +28,7 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
 
   // On mount, populate instructions if recipe is selected
   useEffect(() => {
-    if (requestAction === "edit") {
-      setSelectedInstructions(contextInstructions);
-    }
+    if (requestAction === "edit") setSelectedInstructions(contextInstructions);
   }, [])
 
   /** Add selected instruction to incoming data set  */
@@ -141,7 +139,7 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
       {selectedInstructions.map((value, index) =>
         <InstructionManager
           key={index}
-          arrayKey={index}  
+          arrayKey={index}
           name={value.instruction}
           handleOptionChange={() => { }}
           options={filterSelected(instructions, index)}
