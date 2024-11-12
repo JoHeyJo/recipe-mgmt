@@ -15,20 +15,22 @@ const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs >= 2
 
 /** InstructionsArea - Makes requests for instructions
  * 
+ * #### Need loading state for instructions. There is visible lag
+ * 
  * Dynamically renders list of instructions - filters out selected options
  * 
  * AddRecipe -> InstructionsArea -> InstructionsManager
  */
 function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   const [instructions, setInstructions] = useState([]);
-  const [selectedInstructions, setSelectedInstructions] = useState<any>(PLACE_HOLDER);
+  const [selectedInstructions, setSelectedInstructions] = useState<any>([]);
   const [filterKey, setFilterKeys] = useState({});
 
   const { requestAction, contextInstructions } = useContext(RecipeContext);
 
   // On mount, populate instructions if recipe is selected
   useEffect(() => {
-    if (requestAction === "edit") setSelectedInstructions(contextInstructions);
+    (requestAction === "edit") ? setSelectedInstructions(contextInstructions) : setSelectedInstructions(PLACE_HOLDER)
   }, [])
 
   /** Add selected instruction to incoming data set  */
@@ -78,7 +80,6 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   /** Create additional input field for new instruction */
   function createInstructionInput() {
     setSelectedInstructions(selected => [...selected, "some other thing..."])
-    // PLACE_HOLDER.push("some other thing...")
   }
 
   /** Request to create new instruction */
@@ -133,14 +134,14 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   useEffect(() => {
     handleUpdate(selectedInstructions, "instructions")
   }, [selectedInstructions])
-
+console.log("selected instructions", selectedInstructions)
   return (
     <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
       {selectedInstructions.map((value, index) =>
         <InstructionManager
           key={index}
           arrayKey={index}
-          name={value.instruction}
+          instruction={value}
           handleOptionChange={() => { }}
           options={filterSelected(instructions, index)}
           handleInstructions={handleInstructions}

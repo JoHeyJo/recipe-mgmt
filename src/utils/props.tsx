@@ -1,8 +1,8 @@
-import { Recipe, Ingredient, Instructions, Instruction, Ingredients } from "./types";
+import { Recipe, Ingredient, Instructions, Instruction, Ingredients, Option } from "./types";
 import { ChangeEvent } from "react";
 
 export type InstructionManagerProps = {
-  name: string;
+  instruction: Instruction;
   arrayKey: number;
   handleOptionChange: (state: string, option: Instruction) => void;
   options: Instructions;

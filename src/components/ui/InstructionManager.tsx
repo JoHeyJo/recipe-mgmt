@@ -13,9 +13,9 @@ import { InstructionManagerProps } from '../../utils/props';
  * InstructionsArea -> InstructionManager
  */
 
-function InstructionManager({ arrayKey, name, handleOptionChange, options, handleInstructions }: InstructionManagerProps) {
+function InstructionManager({ arrayKey, instruction, handleOptionChange, options, handleInstructions }: InstructionManagerProps) {
   const [query, setQuery] = useState<string>('')
-  const [selected, setSelected] = useState<Instruction>()
+  const [selected, setSelected] = useState<Instruction>(instruction)
 
   const IS_NEW_INGREDIENT = (option: Instruction) => typeof option.id === "string" && option.instruction === '+ create...'
 
@@ -82,9 +82,12 @@ function InstructionManager({ arrayKey, name, handleOptionChange, options, handl
     handleChange(value)
   }
 
-  /** Adds ingredient to parent component when an ingredient is selected  */
+  /** Adds instruction to parent component when an instruction is selected 
+   * 
+   * ######## CONSIDER REMOVING HAS NO PURPOSE ########
+   */
   useEffect(() => {
-    selected && handleOptionChange(name, selected);
+    selected && handleOptionChange(instruction.instruction, selected);
   }, [selected]);
 
   return (
@@ -96,7 +99,7 @@ function InstructionManager({ arrayKey, name, handleOptionChange, options, handl
       >
         <div className="relative mt-2">
           <ComboboxInput
-            placeholder={name}
+            // placeholder={name}
             className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             onChange={(event) => setQuery(event.target.value)}
             onBlur={() => setQuery('')}
