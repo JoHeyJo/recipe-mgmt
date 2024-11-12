@@ -5,6 +5,7 @@ import { IngredientsGroupProps } from '../../utils/props';
 import FaPlusButton from '../ui/common/FaPlusButton';
 import FaMinusButton from '../ui/common/FaMinusButton';
 import { RecipeContext } from '../../context/RecipeContext';
+import { v4 as uuidv4 } from 'uuid';
 
 
 
@@ -16,18 +17,26 @@ const defaultIngredient: Ingredient = {
 
 /** Contains a list of ingredients 
  * 
+ * Need to choose between using DATE or UUID
  * 
  * AddRecipe -> IngredientsGroup -> IngredientInputGroup
  */
 function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
-  const [ingredientKeys, setIngredientKeys] = useState<number[]>([Date.now()]); // Generate unique key on first render
+  const [ingredientKeys, setIngredientKeys] = useState<any>([Date.now()]); // Generate unique key on first render
 
   const { requestAction, contextIngredients } = useContext(RecipeContext);
 
-  /** Populate recipe from with with current recipe ingredients on EDIT or set default template*/
+  /** Populate recipe form with current ingredients on EDIT or set blank default*/
   useEffect(() => {
-    (requestAction === "edit") ? setIngredients(contextIngredients) : setIngredients([defaultIngredient])
+    if (requestAction === "edit") {
+      setIngredients(contextIngredients)
+      setIngredientKeys(keys => {
+        return contextIngredients.map(() => uuidv4())
+      })
+    } else {
+      setIngredients([defaultIngredient])
+    }
   }, [])
 
   /** Handles adding new ingredient to array of ingredients */
