@@ -15,7 +15,7 @@ const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs >= 2
 
 /** InstructionsArea - Makes requests for instructions
  * 
- * #### Need loading state for instructions. There is visible lag
+ * #### Need loading state for instructions. There is visible lag...it first loads the empty array so that needs to be address first..
  * 
  * Dynamically renders list of instructions - filters out selected options
  * 

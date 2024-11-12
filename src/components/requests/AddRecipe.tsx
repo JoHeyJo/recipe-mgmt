@@ -52,6 +52,7 @@ function AddRecipe({ setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) 
   }
 
   // On mount, populate recipe name if recipe is selected
+  // #### This needs to be fix.. not sure if this is the correct way to reset form to empty fields
   useEffect(() => {
     if (requestAction === "edit") {
       setRecipe(recipe => {
@@ -60,6 +61,8 @@ function AddRecipe({ setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) 
         updatedRecipe.id = recipeId;
         return updatedRecipe;
       })
+    } else {
+      setRecipe(template)
     }
   }, [requestAction])
 
@@ -108,7 +111,7 @@ function AddRecipe({ setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) 
               </div>
             </div>
             <div className="mt-5 sm:mt-6">
-              {!recipeId
+              {requestAction !== "edit"
                 ?
                 <button
                   type="button"
