@@ -3,6 +3,8 @@ import RecipeView from "./RecipeView"
 import { RecipeViewProps } from "../../utils/props"
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useContext } from "react"
+import { RecipeContext } from "../../context/RecipeContext"
 
 /** Renders recipe "book"
  * 
@@ -12,6 +14,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function RecipeContainer({ handleRecipesUpdate, recipe, handleModalToggle, isOpen }: RecipeViewProps) {
 
+  const { recipeId } = useContext(RecipeContext);
 
   return (
     <div id="RecipeContainer-container" className="divide-y border-2 border-blue-900 mx-auto flex-1">
@@ -21,7 +24,7 @@ function RecipeContainer({ handleRecipesUpdate, recipe, handleModalToggle, isOpe
         <button
           onClick={handleModalToggle}
           className="font-semibold leading-7 ml-1 hover:text-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-zinc-600"              >
-          <FontAwesomeIcon icon={faPenToSquare} />
+          {recipeId !== 0 ? <FontAwesomeIcon icon={faPenToSquare}/> : <></> }
         </button>
       </div>
       <RecipeView recipe={recipe} />

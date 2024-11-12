@@ -55,7 +55,6 @@ function AddRecipe({ setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) 
   useEffect(() => {
     if (requestAction === "edit") {
       setRecipe(recipe => {
-        console.log("recipe", recipeName)
         const updatedRecipe = { ...recipe };
         updatedRecipe.name = recipeName;
         updatedRecipe.id = recipeId;

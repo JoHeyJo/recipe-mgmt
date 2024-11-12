@@ -47,12 +47,6 @@ function MainContainer() {
     setRequestAction("")
   }
 
-  /** Triggers actions that render AddRecipe with appropriate data set - no recipe data*/
-  // function renderAddTemplate() {
-  //   setRequestAction("add")
-  //   setOpen(!isOpen);
-  // }
-
   /** Triggers actions that renders AddRecipe with appropriate data set - current recipe */
   function toggleEditTemplate() {
     setRequestAction("edit")
@@ -76,18 +70,18 @@ function MainContainer() {
       {/* We've used 3xl here, but feel free to try other max-widths based on your needs */}
       <div className="border-2 border-black-500 h-[75vh] mx-auto max-w-1xl flex">
         {/* Does recipes need to be reduced to just ids and title??? */}
-        <section id="RecipesList-container" className="flex-1">
-          <RecipeContext.Provider value={recipeData}>
+        <RecipeContext.Provider value={recipeData}>
+          <section id="RecipesList-container" className="flex-1">
             <AddRecipe recipeTemplate={recipeTemplate} handleRecipesUpdate={updateRecipes} setShowing={toggleModel} isOpen={isOpen} />
-          </RecipeContext.Provider >
-          <div className="flex justify-between m-1">
-            <div>Recipes</div>
-            <FaPlusButton onAction={()=>setOpen(true)} />
-          </div>
-          <RecipesList recipes={recipes} handleSelect={selectRecipe} />
-        </section>
+            <div className="flex justify-between m-1">
+              <div>Recipes</div>
+              <FaPlusButton onAction={() => setOpen(true)} />
+            </div>
+            <RecipesList recipes={recipes} handleSelect={selectRecipe} />
+          </section>
 
-        <RecipeContainer recipe={selectedRecipe} handleRecipesUpdate={updateRecipes} handleModalToggle={toggleEditTemplate} isOpen={isOpen} />
+          <RecipeContainer recipe={selectedRecipe} handleRecipesUpdate={updateRecipes} handleModalToggle={toggleEditTemplate} isOpen={isOpen} />
+        </RecipeContext.Provider >
       </div>
     </div>
   )
