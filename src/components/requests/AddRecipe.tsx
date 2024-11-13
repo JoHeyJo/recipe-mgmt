@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
 import IngredientsGroup from '../selectors/IngredientsGroup';
-import { Ingredient, Instructions, Recipe } from '../../utils/types';
+import { Ingredient, Instruction, Instructions, Recipe } from '../../utils/types';
 import InputWithLabel from '../ui/InputWithLabel'
 import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
@@ -29,10 +29,19 @@ function AddRecipe({ setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) 
   const isLargeScreen = useMediaQuery({ query: '(min-width: 1024px)' }); // lg breakpoint in Tailwind
 
   /** Updates recipe state */
-  function handleRecipeUpdate(data: string | Ingredient[] | Instructions, section: string) {
-    setRecipe(prevRecipe => (
-      { ...prevRecipe, [section]: data }
-    ));
+  function handleRecipeUpdate(data: string | Ingredient[] | Instruction | Instructions, section: string) {
+    if(section === "instruction"){
+      setRecipe(prevRecipe => {
+        console.log("prevRecipe", prevRecipe)
+        const update = {...prevRecipe};
+        update.instructions.push(data as Instruction)
+        return update
+      }) 
+    } else {
+      setRecipe(prevRecipe => (
+        { ...prevRecipe, [section]: data }
+      ));
+    }
   }
 
   /** Calls api to send recipe data */

@@ -19,7 +19,7 @@ const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs >= 2
  * 
  * Dynamically renders list of instructions - filters out selected options
  * 
- * AddRecipe -> InstructionsArea -> InstructionsManager
+ * AddRecipe -> InstructionsArea -> InstructionManager
  */
 function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   const [instructions, setInstructions] = useState([]);
@@ -30,10 +30,15 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
 
   // On mount, populate instructions if recipe is selected
   useEffect(() => {
-    (requestAction === "edit") ? setSelectedInstructions(contextInstructions) : setSelectedInstructions(PLACE_HOLDER)
+    if (requestAction === "edit") {
+      setSelectedInstructions(contextInstructions)
+      handleUpdate(contextInstructions, "instructions")
+    } else {
+      setSelectedInstructions(PLACE_HOLDER)
+    }
   }, [])
 
-  /** Add selected instruction to incoming data set  */
+  /** Add selected instruction to incoming data set from db  */
   function addInstruction(instruction: Instruction) {
     setInstructions((i: Instruction[]) => {
       const updatedInstructions = [...i];
@@ -42,13 +47,14 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
     })
   }
 
-  /** Update selected instructions */
+  /** Update selected instructions, update parent state*/
   function updateInstructionSelection(instruction: Instruction, arrayKey: number) {
     setSelectedInstructions((i: Instruction[]) => {
       const updatedInstructions = [...i];
       updatedInstructions[arrayKey] = instruction;
       return updatedInstructions;
     })
+    handleUpdate(instruction, "instruction")
     if (HAS_NO_REMAINING_INPUT(selectedInstructions.length, arrayKey)) createInstructionInput()
   }
 
@@ -131,10 +137,6 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
 
   }
 
-  useEffect(() => {
-    handleUpdate(selectedInstructions, "instructions")
-  }, [selectedInstructions])
-console.log("selected instructions", selectedInstructions)
   return (
     <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
       {selectedInstructions.map((value, index) =>

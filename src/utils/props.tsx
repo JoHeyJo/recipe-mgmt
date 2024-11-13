@@ -40,7 +40,7 @@ export type IngredientsGroupProps = {
 }
 
 export type InstructionsAreaProps = {
-  handleUpdate: (instructions: Instructions, section: string) => void;
+  handleUpdate: (data: Instruction | Instructions, section: string) => void;
 }
 
 
