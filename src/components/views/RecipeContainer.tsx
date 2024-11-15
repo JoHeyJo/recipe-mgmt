@@ -9,7 +9,7 @@ import { RecipeContext } from "../../context/RecipeContext"
 /** Renders recipe "book"
  * 
  * 
- * MainContainer -> RecipeContainer -> AddRecipe
+ * MainContainer -> RecipeContainer -> RecipeRequests
  */
 
 function RecipeContainer({ handleRecipesUpdate, recipe, handleModalToggle, isOpen }: RecipeViewProps) {

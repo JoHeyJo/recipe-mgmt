@@ -6,7 +6,7 @@ import { RecipeContext } from "../../context/RecipeContext";
 /** Render Notes 
  * 
  * 
- * AddRecipe -> NotesInput
+ * RecipeRequests -> NotesInput
  */
 function NotesInput({ handleUpdate }: NotesInputProps) {
   const [notes, setNotes] = useState<string>();

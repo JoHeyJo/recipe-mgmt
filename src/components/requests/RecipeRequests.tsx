@@ -17,10 +17,10 @@ import { RecipeContext } from '../../context/RecipeContext';
 
 /** Processes all recipe data
  * 
- * RecipeContainer -> AddRecipe -> [IngredientsGroup, InstructionsArea, NotesInput, InputWithLabel]
+ * RecipeContainer -> RecipeRequests -> [IngredientsGroup, InstructionsArea, NotesInput, InputWithLabel]
  */
 
-function AddRecipe({ setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) {
+function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) {
   const [recipe, setRecipe] = useState<Recipe>(template);
 
   const { currentBookId, userId } = useContext(UserContext);
@@ -51,7 +51,7 @@ function AddRecipe({ setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) 
       const res = await API.postUserRecipe(recipe, currentBookId, userId);
       handleRecipesUpdate(res)
     } catch (error: any) {
-      errorHandling("AddRecipe - addRecipe", error)
+      errorHandling("RecipeRequests - addRecipe", error)
     }
   }
 
@@ -84,7 +84,7 @@ function AddRecipe({ setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) 
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
-            id='AddRecipe-DialogPanel'
+            id='RecipeRequests-DialogPanel'
             transition
             className="relative h-full transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6">
             <div>
@@ -100,20 +100,20 @@ function AddRecipe({ setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) 
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet labore.
                   </p>
                 </div> */}
-                <section id='AddRecipe-book' className='flex h-full'>
+                <section id='RecipeRequests-book' className='flex h-full'>
 
-                  <section id='AddRecipe-ingredients' className="flex-1 mr-4">
+                  <section id='RecipeRequests-ingredients' className="flex-1 mr-4">
                     <InputWithLabel {...{ id: "title", name: "title", type: "title" }} handleUpdate={handleRecipeUpdate} value={recipe.name} placeholder={"Awesome recipe name!"} />
 
                     <IngredientsGroup values={recipe.ingredients} handleUpdate={handleRecipeUpdate} />
                   </section>
 
-                  <section id='AddRecipe-instructions' className="flex-1 ml-4 ">
+                  <section id='RecipeRequests-instructions' className="flex-1 ml-4 ">
                     <InstructionsArea handleUpdate={handleRecipeUpdate} />
                   </section>
                 </section>
 
-                <section id='AddRecipe-notes' className='flex-1'>
+                <section id='RecipeRequests-notes' className='flex-1'>
                   <NotesInput handleUpdate={handleRecipeUpdate} />
                 </section>
 
@@ -144,4 +144,4 @@ function AddRecipe({ setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) 
   )
 }
 
-export default AddRecipe;
+export default RecipeRequests;

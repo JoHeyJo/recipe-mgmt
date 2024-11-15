@@ -19,7 +19,7 @@ const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs >= 2
  * 
  * Dynamically renders list of instructions - filters out selected options
  * 
- * AddRecipe -> InstructionsArea -> InstructionManager
+ * RecipeRequests -> InstructionsArea -> InstructionManager
  */
 function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   const [instructions, setInstructions] = useState([]);

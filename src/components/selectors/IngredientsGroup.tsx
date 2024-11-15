@@ -19,7 +19,7 @@ const defaultIngredient: Ingredient = {
  * 
  * Need to choose between using DATE or UUID
  * 
- * AddRecipe -> IngredientsGroup -> IngredientInputGroup
+ * RecipeRequests -> IngredientsGroup -> IngredientInputGroup
  */
 function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);

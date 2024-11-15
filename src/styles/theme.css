@@ -63,7 +63,7 @@ form,
   background-color: var(--view-container);
 }
 
-#CreateBook-DialogPanel, textarea, #AddRecipe-DialogPanel{
+#CreateBook-DialogPanel, textarea, #RecipeRequests-DialogPanel{
 background-color: var(--background-modal);
 }
 

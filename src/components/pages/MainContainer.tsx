@@ -7,11 +7,11 @@ import { Recipe } from "../../utils/types";
 import RecipeContainer from "../views/RecipeContainer";
 import { recipeTemplate } from "../../utils/templates";
 import FaPlusButton from "../ui/common/FaPlusButton"
-import AddRecipe from "../requests/AddRecipe";
+import RecipeRequests from "../requests/RecipeRequests";
 import { RecipeContext } from "../../context/RecipeContext";
 /** Renders the main container housing list of recipes and individual recipe
  * 
- * RoutesList -> MainContainer -> [AddRecipe(RecipeRequests), RecipeContainer, RecipesList]
+ * RoutesList -> MainContainer -> [RecipeRequests(RecipeRequests), RecipeContainer, RecipesList]
  */
 function MainContainer() {
   const [recipes, setRecipes] = useState([]);
@@ -47,7 +47,7 @@ function MainContainer() {
     setRequestAction("")
   }
 
-  /** Triggers actions that renders AddRecipe with appropriate data set - current recipe */
+  /** Triggers actions that renders RecipeRequests with appropriate data set - current recipe */
   function toggleEditTemplate() {
     setRequestAction("edit")
     setOpen(!isOpen);
@@ -72,7 +72,7 @@ function MainContainer() {
         {/* Does recipes need to be reduced to just ids and title??? */}
         <RecipeContext.Provider value={recipeData}>
           <section id="RecipesList-container" className="flex-1">
-            <AddRecipe recipeTemplate={recipeTemplate} handleRecipesUpdate={updateRecipes} setShowing={toggleModel} isOpen={isOpen} />
+            <RecipeRequests recipeTemplate={recipeTemplate} handleRecipesUpdate={updateRecipes} setShowing={toggleModel} isOpen={isOpen} />
             <div className="flex justify-between m-1">
               <div>Recipes</div>
               <FaPlusButton onAction={() => setOpen(true)} />
