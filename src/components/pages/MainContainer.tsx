@@ -11,7 +11,7 @@ import RecipeRequests from "../requests/RecipeRequests";
 import { RecipeContext } from "../../context/RecipeContext";
 /** Renders the main container housing list of recipes and individual recipe
  * 
- * RoutesList -> MainContainer -> [RecipeRequests(RecipeRequests), RecipeContainer, RecipesList]
+ * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList]
  */
 function MainContainer() {
   const [recipes, setRecipes] = useState([]);
@@ -33,6 +33,13 @@ function MainContainer() {
   /**Update rendered recipes after creation */
   function updateRecipes(recipe: Recipe) {
     setRecipes(recipes => [...recipes, recipe])
+  }
+
+  /**Update rendered recipes after deletion */
+  function updateDeleteRecipe(){
+    const id = selectedRecipe.id;
+    const updatedRecipes = recipes.filter((recipe) => recipe.id !== id)
+    setRecipes(updatedRecipes);
   }
 
   /** Change selected recipe */
@@ -72,7 +79,7 @@ function MainContainer() {
         {/* Does recipes need to be reduced to just ids and title??? */}
         <RecipeContext.Provider value={recipeData}>
           <section id="RecipesList-container" className="flex-1">
-            <RecipeRequests recipeTemplate={recipeTemplate} handleRecipesUpdate={updateRecipes} setShowing={toggleModel} isOpen={isOpen} />
+            <RecipeRequests recipeTemplate={recipeTemplate} handleRecipesUpdate={updateRecipes} handleRecipeDelete={updateDeleteRecipe} setShowing={toggleModel} isOpen={isOpen} />
             <div className="flex justify-between m-1">
               <div>Recipes</div>
               <FaPlusButton onAction={() => setOpen(true)} />

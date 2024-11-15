@@ -20,11 +20,12 @@ export type NotesViewProp = {
   notes: string;
 }
 
-export type AddRecipeProps = {
+export type RecipeRequestsProps = {
   recipeTemplate: Recipe;
   setShowing: any;
   isOpen: boolean;
   handleRecipesUpdate: (recipe: Recipe) => void;
+  handleRecipeDelete: () => void;
 }
 
 export type RecipeViewProps = {

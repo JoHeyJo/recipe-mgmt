@@ -8,17 +8,17 @@ import { errorHandling } from '../../utils/ErrorHandling';
 import { useMediaQuery } from 'react-responsive';
 import InstructionsArea from '../ui/InstructionsArea';
 import { UserContext } from '../../context/UserContext';
-import { AddRecipeProps } from '../../utils/props';
+import { RecipeRequestsProps } from '../../utils/props';
 import NotesInput from '../ui/NotesInput';
 import { recipeTemplate as template } from "../../utils/templates";
 import { RecipeContext } from '../../context/RecipeContext';
 
 /** Processes all recipe data
  * 
- * RecipeContainer -> RecipeRequests -> [IngredientsGroup, InstructionsArea, NotesInput, InputWithLabel]
+ * MainContainer -> RecipeRequests -> [IngredientsGroup, InstructionsArea, NotesInput, InputWithLabel]
  */
 
-function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) {
+function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeDelete }: RecipeRequestsProps) {
   const [recipe, setRecipe] = useState<Recipe>(template);
   const [error, setError] = useState()
 
@@ -58,6 +58,7 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate }: AddRecipePr
   async function deleteRecipe(userId: number, bookId: number, recipeId: number){
     try {
       const res = API.deleteUserRecipe(userId, currentBookId, recipeId)
+      handleRecipeDelete()
     } catch (error:any) {
       setError(error.msg)
       errorHandling("RecipeRequests - addRecipe", error)
