@@ -13,8 +13,6 @@ import NotesInput from '../ui/NotesInput';
 import { recipeTemplate as template } from "../../utils/templates";
 import { RecipeContext } from '../../context/RecipeContext';
 
-
-
 /** Processes all recipe data
  * 
  * RecipeContainer -> RecipeRequests -> [IngredientsGroup, InstructionsArea, NotesInput, InputWithLabel]
@@ -22,6 +20,7 @@ import { RecipeContext } from '../../context/RecipeContext';
 
 function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate }: AddRecipeProps) {
   const [recipe, setRecipe] = useState<Recipe>(template);
+  const [error, setError] = useState()
 
   const { currentBookId, userId } = useContext(UserContext);
   const { recipeId, recipeName, requestAction } = useContext(RecipeContext);
@@ -30,13 +29,13 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate }: AddRecipePr
 
   /** Updates recipe state */
   function handleRecipeUpdate(data: string | Ingredient[] | Instruction | Instructions, section: string) {
-    if(section === "instruction"){
+    if (section === "instruction") {
       setRecipe(prevRecipe => {
         console.log("prevRecipe", prevRecipe)
-        const update = {...prevRecipe};
+        const update = { ...prevRecipe };
         update.instructions.push(data as Instruction)
         return update
-      }) 
+      })
     } else {
       setRecipe(prevRecipe => (
         { ...prevRecipe, [section]: data }
@@ -44,7 +43,7 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate }: AddRecipePr
     }
   }
 
-  /** Calls api to send recipe data */
+  /** Calls API - sends post request with recipe data */
   // ADD A CHECK TO FILTER OUT EMPTY FIELDS E.G. ingredient without values
   async function addRecipe() {
     try {
@@ -53,6 +52,21 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate }: AddRecipePr
     } catch (error: any) {
       errorHandling("RecipeRequests - addRecipe", error)
     }
+  }
+
+  /** Calls API - sends delete request for recipe */
+  async function deleteRecipe(userId: number, bookId: number, recipeId: number){
+    try {
+      const res = API.deleteUserRecipe(userId, currentBookId, recipeId)
+    } catch (error:any) {
+      setError(error.msg)
+      errorHandling("RecipeRequests - addRecipe", error)
+    }
+  }
+
+  function handleDelete(){
+    setShowing(false)
+    deleteRecipe(userId, currentBookId, recipeId)
   }
 
   function handleSubmit() {
@@ -129,12 +143,20 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate }: AddRecipePr
                   Submit
                 </button>
                 :
-                <button
-                  type="button"
-                  onClick={() => { }}
-                  className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                  Update
-                </button>
+                <div className='flex'>
+                  <button
+                    type="button"
+                    onClick={() => { }}
+                    className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                    Update
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleDelete}
+                    className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                    delete
+                  </button>
+                </div>
               }
             </div>
           </DialogPanel>
