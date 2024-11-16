@@ -40,6 +40,7 @@ function MainContainer() {
     const id = selectedRecipe.id;
     const updatedRecipes = recipes.filter((recipe) => recipe.id !== id)
     setRecipes(updatedRecipes);
+    setSelectedRecipe(recipeTemplate);
   }
 
   /** Change selected recipe */
