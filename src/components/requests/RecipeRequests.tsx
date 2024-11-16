@@ -74,6 +74,33 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
     setShowing(false)
     addRecipe()
   }
+  
+  /** Renders request buttons */
+  function renderRequestButtons(){
+    return requestAction !== "edit"
+      ?
+      <button
+        type="button"
+        onClick={handleSubmit}
+        className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+        Submit
+      </button>
+      :
+      <div className='flex'>
+        <button
+          type="button"
+          onClick={() => { }}
+          className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+          Update
+        </button>
+        <button
+          type="button"
+          onClick={handleDelete}
+          className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+          delete
+        </button>
+      </div>
+  }
 
   // On mount, populate recipe name if recipe is selected
   // #### This needs to be fix.. not sure if this is the correct way to reset form to empty fields
@@ -135,30 +162,7 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
               </div>
             </div>
             <div className="mt-5 sm:mt-6">
-              {requestAction !== "edit"
-                ?
-                <button
-                  type="button"
-                  onClick={handleSubmit}
-                  className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                  Submit
-                </button>
-                :
-                <div className='flex'>
-                  <button
-                    type="button"
-                    onClick={() => { }}
-                    className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                    Update
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleDelete}
-                    className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                    delete
-                  </button>
-                </div>
-              }
+              {renderRequestButtons()}
             </div>
           </DialogPanel>
         </div>
