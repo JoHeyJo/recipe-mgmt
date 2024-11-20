@@ -11,7 +11,7 @@ import { UserContext } from '../../context/UserContext';
 import { RecipeRequestsProps } from '../../utils/props';
 import NotesInput from '../ui/NotesInput';
 import { recipeTemplate as template } from "../../utils/templates";
-import { RecipeContext } from '../../context/RecipeContext';
+import { RecipeContext, RecipeContextType } from '../../context/RecipeContext';
 
 /** Processes all recipe data
  * 
@@ -63,7 +63,7 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   }
 
   /** Calls API - sends patch request with only mutated recipe data */
-  async function editRecipe(originalRecipe: Recipe, recipe: Recipe) {
+  async function editRecipe(originalRecipe: RecipeContextType, recipe: Recipe) {
     try {
       const mutatedData = filterRecipe(originalRecipe, recipe);
       console.log(mutatedData);
@@ -73,10 +73,10 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   }
 
   /** Filters out recipe data that hasn't changed */
-  function filterRecipe(originalRecipe: Recipe, recipe: Recipe) {
+  function filterRecipe(originalRecipe: RecipeContextType, recipe: Recipe) {
     const filteredData = {
       "name": recipe.name !== recipeName ? null : recipe.name,
-      ingredients: filterIngredients(originalRecipe.ingredients, recipe.ingredients),
+      ingredients: filterIngredients(originalRecipe.contextIngredients, recipe.ingredients),
     }
     return filteredData;
   }
