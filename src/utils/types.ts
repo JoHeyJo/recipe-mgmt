@@ -13,6 +13,7 @@ export type Recipe = {
   ingredients: Ingredient[]
 }
 export type Ingredient = {
+  id: number
   amount: Option;
   unit: Option;
   item: Option;

@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 const defaultIngredient: Ingredient = {
+  id: 0,
   amount: { id: null, value: "" },
   unit: { id: null, type: "" },
   item: { id: null, name: "" }

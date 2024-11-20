@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
 import IngredientsGroup from '../selectors/IngredientsGroup';
-import { Ingredient, Instruction, Instructions, Recipe } from '../../utils/types';
+import { Ingredient, Instruction, Instructions, Recipe, Ingredients } from '../../utils/types';
 import InputWithLabel from '../ui/InputWithLabel'
 import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
@@ -19,11 +19,19 @@ import { RecipeContext } from '../../context/RecipeContext';
  */
 
 function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeDelete }: RecipeRequestsProps) {
+  const [originalRecipe, setOriginalRecipe] = useState<any>();
   const [recipe, setRecipe] = useState<Recipe>(template);
   const [error, setError] = useState()
 
   const { currentBookId, userId } = useContext(UserContext);
-  const { recipeId, recipeName, requestAction } = useContext(RecipeContext);
+  const {
+    recipeId,
+    recipeName,
+    requestAction,
+    contextIngredients,
+    contextInstructions,
+    selectedNotes
+  } = useContext(RecipeContext);
 
   const isLargeScreen = useMediaQuery({ query: '(min-width: 1024px)' }); // lg breakpoint in Tailwind
 
@@ -54,18 +62,51 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
     }
   }
 
+  /** Calls API - sends patch request with only mutated recipe data */
+  async function editRecipe(originalRecipe: Recipe, recipe: Recipe) {
+    try {
+      const mutatedData = filterRecipe(originalRecipe, recipe);
+      console.log(mutatedData);
+    } catch (error: any) {
+      errorHandling("RecipeRequests - addRecipe", error)
+    }
+  }
+
+  /** Filters out recipe data that hasn't changed */
+  function filterRecipe(originalRecipe: Recipe, recipe: Recipe) {
+    const filteredData = {
+      "name": recipe.name !== recipeName ? null : recipe.name,
+      ingredients: filterIngredients(originalRecipe.ingredients, recipe.ingredients),
+    }
+    return filteredData;
+  }
+
+  /** Filters out non-mutated ingredients */
+  function filterIngredients(original: Ingredients, edited: Ingredients) {
+    return original.reduce((alteredIngredients, ingredient, index) => {
+      const alteredIngredient = {
+        "id": ingredient.id,
+        "amount": ingredient.amount === edited[index].amount ? null : edited[index].amount,
+        "item": ingredient.item === edited[index].item ? null : edited[index].item,
+        "unit": ingredient.unit === edited[index].unit ? null : edited[index].unit,
+      };
+      alteredIngredients.push(alteredIngredient)
+      return alteredIngredients;
+    }, [])
+  }
+
   /** Calls API - sends delete request for recipe */
-  async function deleteRecipe(userId: number, bookId: number, recipeId: number){
+  async function deleteRecipe(userId: number, bookId: number, recipeId: number) {
     try {
       const res = API.deleteUserRecipe(userId, currentBookId, recipeId)
       handleRecipeDelete()
-    } catch (error:any) {
+    } catch (error: any) {
       setError(error.msg)
       errorHandling("RecipeRequests - addRecipe", error)
     }
   }
 
-  function handleDelete(){
+  function handleDelete() {
     setShowing(false)
     deleteRecipe(userId, currentBookId, recipeId)
   }
@@ -74,9 +115,9 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
     setShowing(false)
     addRecipe()
   }
-  
+
   /** Renders request buttons */
-  function renderRequestButtons(){
+  function renderRequestButtons() {
     return requestAction !== "edit"
       ?
       <button
@@ -89,7 +130,7 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
       <div className='flex'>
         <button
           type="button"
-          onClick={() => { }}
+          onClick={() => editRecipe(originalRecipe, recipe)}
           className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
           Update
         </button>
@@ -111,6 +152,12 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
         updatedRecipe.name = recipeName;
         updatedRecipe.id = recipeId;
         return updatedRecipe;
+      })
+      setOriginalRecipe({
+        recipeName,
+        contextIngredients,
+        contextInstructions,
+        selectedNotes
       })
     } else {
       setRecipe(template)
