@@ -75,17 +75,18 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   /** Filters out recipe data that hasn't changed */
   function filterRecipe(originalRecipe: RecipeContextType, recipe: Recipe) {
     const filteredData = {
-      "name": recipe.name !== recipeName ? null : recipe.name,
+      "name": originalRecipe.recipeName === recipe.name ? null : recipe.name,
       ingredients: filterIngredients(originalRecipe.contextIngredients, recipe.ingredients),
     }
     return filteredData;
   }
 
   /** Filters out non-mutated ingredients */
-  function filterIngredients(original: Ingredients, edited: Ingredients) {
+  function filterIngredients(original, edited) {
     return original.reduce((alteredIngredients, ingredient, index) => {
+      console.log("ingredient", ingredient)
       const alteredIngredient = {
-        "id": ingredient.id,
+        "id": ingredient.ingredient_id,
         "amount": ingredient.amount === edited[index].amount ? null : edited[index].amount,
         "item": ingredient.item === edited[index].item ? null : edited[index].item,
         "unit": ingredient.unit === edited[index].unit ? null : edited[index].unit,
