@@ -81,19 +81,23 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
     return filteredData;
   }
 
-  /** Filters out non-mutated ingredients */
+  /** Filters edited ingredients */
   function filterIngredients(original, edited) {
-    return original.reduce((alteredIngredients, ingredient, index) => {
+    const alteredIngredients = original.reduce((alteredIngredients, ingredient, index) => {
       console.log("ingredient", ingredient)
+      const amount = ingredient.amount === edited[index].amount ? null : edited[index].amount;
+      const item = ingredient.item === edited[index].item ? null : edited[index].item;
+      const unit = ingredient.unit === edited[index].unit ? null : edited[index].unit;
       const alteredIngredient = {
         "id": ingredient.ingredient_id,
-        "amount": ingredient.amount === edited[index].amount ? null : edited[index].amount,
-        "item": ingredient.item === edited[index].item ? null : edited[index].item,
-        "unit": ingredient.unit === edited[index].unit ? null : edited[index].unit,
+        "amount": amount,
+        "item": item,
+        "unit": unit
       };
-      alteredIngredients.push(alteredIngredient)
+      if(amount || item || unit) alteredIngredients.push(alteredIngredient);
       return alteredIngredients;
     }, [])
+    return alteredIngredients.length === 0 ? null : alteredIngredients;
   }
 
   /** Calls API - sends delete request for recipe */
