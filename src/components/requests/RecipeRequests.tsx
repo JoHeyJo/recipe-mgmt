@@ -66,9 +66,8 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   async function editRecipe(originalRecipe: RecipeContextType, recipe: Recipe) {
     try {
       const mutatedData = filterRecipe(originalRecipe, recipe);
-      console.log(mutatedData);
     } catch (error: any) {
-      errorHandling("RecipeRequests - addRecipe", error)
+      errorHandling("RecipeRequests - editRecipe", error)
     }
   }
 
@@ -84,9 +83,8 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
 
   /** Compares edited to original instructions and filters out non-edited fields */
   function filterInstructions(original, edited){
-    return original.filter((instruction,index) => {
-      console.log("filter instructions",instruction, edited)
-      return instruction.instruction !== edited[index].instruction
+    return edited.filter((instruction,index) => {
+      return instruction.instruction !== original[index].instruction
     })
   }
 

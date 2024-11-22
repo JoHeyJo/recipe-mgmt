@@ -85,7 +85,7 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
 
   /** Create additional input field for new instruction */
   function createInstructionInput() {
-    setSelectedInstructions(selected => [...selected, "some other thing..."])
+    setSelectedInstructions(selected => [...selected, { "id": null, "instruction": "some other thing..." }])
   }
 
   /** Request to create new instruction */
