@@ -37,18 +37,18 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
 
   /** Updates recipe state */
   function handleRecipeUpdate(data: string | Ingredient[] | Instruction | Instructions, section: string) {
-    if (section === "instruction") {
-      setRecipe(prevRecipe => {
-        console.log("prevRecipe", prevRecipe)
-        const update = { ...prevRecipe };
-        update.instructions.push(data as Instruction)
-        return update
-      })
-    } else {
+    // if (section === "instruction") {
+    //   setRecipe(prevRecipe => {
+    //     console.log("prevRecipe", prevRecipe)
+    //     const update = { ...prevRecipe };
+    //     update.instructions.push(data as Instruction)
+    //     return update
+    //   })
+    // } else {
       setRecipe(prevRecipe => (
         { ...prevRecipe, [section]: data }
       ));
-    }
+    // }
   }
 
   /** Calls API - sends post request with recipe data */
@@ -62,7 +62,7 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
     }
   }
 
-  /** Calls API - sends patch request with only mutated recipe data */
+  /** Calls API - sends patch request with only edited recipe data */
   async function editRecipe(originalRecipe: RecipeContextType, recipe: Recipe) {
     try {
       const mutatedData = filterRecipe(originalRecipe, recipe);
@@ -76,15 +76,23 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   function filterRecipe(originalRecipe: RecipeContextType, recipe: Recipe) {
     const filteredData = {
       "name": originalRecipe.recipeName === recipe.name ? null : recipe.name,
-      ingredients: filterIngredients(originalRecipe.contextIngredients, recipe.ingredients),
+      "ingredients": filterIngredients(originalRecipe.contextIngredients, recipe.ingredients),
+      "instructions": filterInstructions(originalRecipe.contextInstructions, recipe.instructions)
     }
     return filteredData;
   }
 
-  /** Filters edited ingredients */
+  /** Compares edited to original instructions and filters out non-edited fields */
+  function filterInstructions(original, edited){
+    return original.filter((instruction,index) => {
+      console.log("filter instructions",instruction, edited)
+      return instruction.instruction !== edited[index].instruction
+    })
+  }
+
+  /** Compares edited to original ingredients and filters out non-edited fields */
   function filterIngredients(original, edited) {
     const alteredIngredients = original.reduce((alteredIngredients, ingredient, index) => {
-      console.log("ingredient", ingredient)
       const amount = ingredient.amount === edited[index].amount ? null : edited[index].amount;
       const item = ingredient.item === edited[index].item ? null : edited[index].item;
       const unit = ingredient.unit === edited[index].unit ? null : edited[index].unit;

@@ -24,7 +24,7 @@ const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs >= 2
  */
 function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   const [instructions, setInstructions] = useState([]);
-  const [selectedInstructions, setSelectedInstructions] = useState<any>([]);
+  const [selectedInstructions, setSelectedInstructions] = useState<any>([]); //This reflects the correct set of selected instructions
   const [filterKey, setFilterKeys] = useState({});
 
   const { requestAction, contextInstructions } = useContext(RecipeContext);
@@ -55,7 +55,6 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
       updatedInstructions[arrayKey] = instruction;
       return updatedInstructions;
     })
-    handleUpdate(instruction, "instruction")
     if (HAS_NO_REMAINING_INPUT(selectedInstructions.length, arrayKey)) createInstructionInput()
   }
 
@@ -137,6 +136,11 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
     })
 
   }
+
+  /** Updates parent state of instructions when instructions is changed and on mount */
+  useEffect(() => {
+    handleUpdate(selectedInstructions, "instructions")
+  }, [selectedInstructions])
 
   return (
     <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
