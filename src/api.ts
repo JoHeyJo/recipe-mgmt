@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Recipe, UserLogin, UserSignUp, Option, Ingredient, Book } from "./utils/types";
 
-const BASEURL = "http://127.0.0.1:5000/"
+const BASEURL = "http://127.0.0.1:5000"
 /** API class. 
  * 
  * Static class - Contains methods that facilitate communications between client

@@ -37,18 +37,9 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
 
   /** Updates recipe state */
   function handleRecipeUpdate(data: string | Ingredient[] | Instruction | Instructions, section: string) {
-    // if (section === "instruction") {
-    //   setRecipe(prevRecipe => {
-    //     console.log("prevRecipe", prevRecipe)
-    //     const update = { ...prevRecipe };
-    //     update.instructions.push(data as Instruction)
-    //     return update
-    //   })
-    // } else {
       setRecipe(prevRecipe => (
         { ...prevRecipe, [section]: data }
       ));
-    // }
   }
 
   /** Calls API - sends post request with recipe data */
@@ -66,6 +57,7 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   async function editRecipe(originalRecipe: RecipeContextType, recipe: Recipe) {
     try {
       const mutatedData = filterRecipe(originalRecipe, recipe);
+      console.log("edited data", mutatedData)
     } catch (error: any) {
       errorHandling("RecipeRequests - editRecipe", error)
     }
@@ -84,6 +76,7 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   /** Compares edited to original instructions and filters out non-edited fields */
   function filterInstructions(original, edited){
     return edited.filter((instruction,index) => {
+      console.log(instruction,original[index])
       return instruction.instruction !== original[index].instruction
     })
   }

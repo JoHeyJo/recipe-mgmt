@@ -48,7 +48,7 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
     })
   }
 
-  /** Update selected instructions, update parent state*/
+  /** Update selected instructions */
   function updateInstructionSelection(instruction: Instruction, arrayKey: number) {
     setSelectedInstructions((i: Instruction[]) => {
       const updatedInstructions = [...i];
@@ -139,7 +139,7 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
 
   /** Updates parent state of instructions when instructions is changed and on mount */
   useEffect(() => {
-    handleUpdate(selectedInstructions, "instructions")
+    handleUpdate(selectedInstructions.filter((i => i.id !== null)), "instructions")
   }, [selectedInstructions])
 
   return (
