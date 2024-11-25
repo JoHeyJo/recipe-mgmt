@@ -37,9 +37,9 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
 
   /** Updates recipe state */
   function handleRecipeUpdate(data: string | Ingredient[] | Instruction | Instructions, section: string) {
-      setRecipe(prevRecipe => (
-        { ...prevRecipe, [section]: data }
-      ));
+    setRecipe(prevRecipe => (
+      { ...prevRecipe, [section]: data }
+    ));
   }
 
   /** Calls API - sends post request with recipe data */
@@ -74,11 +74,12 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   }
 
   /** Compares edited to original instructions and filters out non-edited fields */
-  function filterInstructions(original, edited){
-    return edited.filter((instruction,index) => {
-      console.log(instruction,original[index])
-      return instruction.instruction !== original[index].instruction
+  function filterInstructions(original, edited) {
+    const alteredInstructions = edited.filter((instruction, index) => {
+      // accounts for additional instructions 
+      return instruction.instruction !== (original[index] ? original[index].instruction : "")
     })
+    return alteredInstructions.length === 0 ? null : alteredInstructions;
   }
 
   /** Compares edited to original ingredients and filters out non-edited fields */
@@ -93,7 +94,7 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
         "item": item,
         "unit": unit
       };
-      if(amount || item || unit) alteredIngredients.push(alteredIngredient);
+      if (amount || item || unit) alteredIngredients.push(alteredIngredient);
       return alteredIngredients;
     }, [])
     return alteredIngredients.length === 0 ? null : alteredIngredients;
