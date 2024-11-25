@@ -68,9 +68,15 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
     const filteredData = {
       "name": originalRecipe.recipeName === recipe.name ? null : recipe.name,
       "ingredients": filterIngredients(originalRecipe.contextIngredients, recipe.ingredients),
-      "instructions": filterInstructions(originalRecipe.contextInstructions, recipe.instructions)
+      "instructions": filterInstructions(originalRecipe.contextInstructions, recipe.instructions),
+      "notes": filterNotes(originalRecipe.selectedNotes, recipe.notes)
     }
     return filteredData;
+  }
+
+  /** Compares edited to original notes, returns edited notes */
+  function filterNotes(original, edited){
+    return original === edited ? null : edited;
   }
 
   /** Compares edited to original instructions and filters out non-edited fields */
