@@ -84,10 +84,16 @@ class API {
     const res = await this.request(`users/${userId}/books`)
     return res
   }
-
+ 
   /** Fetch user recipes */
   static async getUserRecipes(userId: number, bookId: number) {
     const res = await this.request(`users/${userId}/books/${bookId}/recipes`)
+    return res
+  }
+
+  /** Edit user recipe */
+  static async editBookRecipe(userId: number, bookId: number, recipeId: number, data){
+    const res = await this.request(`users/${userId}/books/${bookId}/recipes/${recipeId}`, data, "PATCH")
     return res
   }
 

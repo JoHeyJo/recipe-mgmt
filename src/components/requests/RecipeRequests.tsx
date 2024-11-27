@@ -57,10 +57,12 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   /** Calls API - sends patch request with only edited recipe data */
   async function editRecipe(originalRecipe: RecipeContextType, recipe: Recipe) {
     try {
-      const mutatedData = filterRecipe(originalRecipe, recipe);
-      console.log("edited data", mutatedData)
+      const editedData = filterRecipe(originalRecipe, recipe);
+      console.log("edited", editedData)
+      // const res = API.editBookRecipe(userId, currentBookId, recipeId, editedData);
+      // return res;  
     } catch (error: any) {
-      errorHandling("RecipeRequests - editRecipe", error)
+      errorHandling("RecipeRequests - editRecipe", error);
     }
   }
 
@@ -82,10 +84,19 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
 
   /** Compares edited to original instructions and filters out non-edited fields */
   function filterInstructions(original, edited) {
-    const alteredInstructions = edited.filter((instruction, index) => {
-      // accounts for additional instructions 
-      return instruction.instruction !== (original[index] ? original[index].instruction : "")
-    })
+    const alteredInstructions = edited.reduce((instructions, instruction, index) => {
+      // handles indexing an empty element slot when an additional instruction is created
+      // if edited doesn't === original return edited (first check that there is an original instructions on the same index)
+      if (instruction.instruction !== (original[index] ? original[index].instruction : "")){
+        const editedInstruction = {
+          "prev_association_id": original[index].association_id,
+          "id": instruction.id,
+          "instruction": instruction.instruction  
+        }
+        instructions.push(editedInstruction);
+      }
+      return instructions;
+    },[])
     return alteredInstructions.length === 0 ? null : alteredInstructions;
   }
 
