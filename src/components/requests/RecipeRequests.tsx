@@ -103,22 +103,19 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   }
 
   // Applies when additional ingredient fields are added. Prevents reading undefined prop 
-  function checkOutOfBounds(original, edited, property: string, index: number){
-    if(!edited) return "";
-    if(edited) edited.property === original[index][property] ? null : original[index][property]
+  function checkOutOfBounds(edited, originals,  property: string, index){
+    if (!originals[index]) return edited[property];
+    if (edited) return edited[property] === originals[index][property] ? null : edited[property]
   }
   /** Compares edited to original ingredients and filters out non-edited fields */
-  function filterIngredients(original, edited) {
-    const alteredIngredients = edited.reduce((alteredIngredients, ingredient, index) => {
-      {console.log("edited",ingredient.amount)}
-      { console.log("original ", original[index])}
-
-      const amount = ingredient.amount === original[index].amount ? null : original[index].amount;
-      const item = ingredient.item === original[index].item ? null : original[index].item;
-      const unit = ingredient.unit === original[index].unit ? null : original[index].unit;
+  function filterIngredients(originalIngredients, edited) {
+    const alteredIngredients = edited.reduce((alteredIngredients, editedIngredient, index) => {
+      const amount = checkOutOfBounds(editedIngredient, originalIngredients, "amount", index)
+      const item = checkOutOfBounds(editedIngredient, originalIngredients, "item", index)
+      const unit = checkOutOfBounds(editedIngredient, originalIngredients, "unit", index)
       const alteredIngredient = {
-        "id": ingredient.ingredient_id,
-        // can be refactored to only send id instead of entire object
+        "id": editedIngredient.ingredient_id,
+        // below  can be refactored to only send id instead of entire object
         "amount": amount,
         "item": item,
         "unit": unit
