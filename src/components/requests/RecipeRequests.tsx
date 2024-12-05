@@ -58,8 +58,9 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   async function editRecipe(originalRecipe: RecipeContextType, recipe: Recipe) {
     try {
       const editedData = filterRecipe(originalRecipe, recipe);
-      console.log("edited", editedData)
-      // const res = API.editBookRecipe(userId, currentBookId, recipeId, editedData);
+      console.log("patch data", editedData)
+      // const res = await API.editBookRecipe(userId, currentBookId, recipeId, editedData);
+      // setShowing();
       // return res;  
     } catch (error: any) {
       errorHandling("RecipeRequests - editRecipe", error);
@@ -89,9 +90,10 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
       // if edited doesn't === original return edited (first check that there is an original instructions on the same index)
       if (instruction.instruction !== (original[index] ? original[index].instruction : "")){
         const editedInstruction = {
-          "prev_association_id": original[index].association_id,
-          "id": instruction.id,
-          "instruction": instruction.instruction  
+          // assocaite id = PK of association table
+          "associationId": original[index].association_id,
+          "newId": instruction.id,
+          // "instruction": instruction.instruction  
         }
         instructions.push(editedInstruction);
       }
@@ -100,14 +102,23 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
     return alteredInstructions.length === 0 ? null : alteredInstructions;
   }
 
+  // Applies when additional ingredient fields are added. Prevents reading undefined prop 
+  function checkOutOfBounds(original, edited, property: string, index: number){
+    if(!edited) return "";
+    if(edited) edited.property === original[index][property] ? null : original[index][property]
+  }
   /** Compares edited to original ingredients and filters out non-edited fields */
   function filterIngredients(original, edited) {
-    const alteredIngredients = original.reduce((alteredIngredients, ingredient, index) => {
-      const amount = ingredient.amount === edited[index].amount ? null : edited[index].amount;
-      const item = ingredient.item === edited[index].item ? null : edited[index].item;
-      const unit = ingredient.unit === edited[index].unit ? null : edited[index].unit;
+    const alteredIngredients = edited.reduce((alteredIngredients, ingredient, index) => {
+      {console.log("edited",ingredient.amount)}
+      { console.log("original ", original[index])}
+
+      const amount = ingredient.amount === original[index].amount ? null : original[index].amount;
+      const item = ingredient.item === original[index].item ? null : original[index].item;
+      const unit = ingredient.unit === original[index].unit ? null : original[index].unit;
       const alteredIngredient = {
         "id": ingredient.ingredient_id,
+        // can be refactored to only send id instead of entire object
         "amount": amount,
         "item": item,
         "unit": unit
