@@ -23,6 +23,21 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   const [recipe, setRecipe] = useState<Recipe>(template);
   const [error, setError] = useState()
 
+  function initializeState(action:string){
+    setRecipe(recipe => {
+      const updatedRecipe = { ...recipe };
+      updatedRecipe.name = recipeName;
+      updatedRecipe.id = recipeId;
+      return updatedRecipe;
+    })
+    setOriginalRecipe({
+      recipeName,
+      contextIngredients,
+      contextInstructions,
+      selectedNotes
+    })
+  }
+
   const { currentBookId, userId } = useContext(UserContext);
   const {
     recipeId,
@@ -117,18 +132,7 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   // #### This needs to be fix.. not sure if this is the correct way to reset form to empty fields
   useEffect(() => {
     if (requestAction === "edit") {
-      setRecipe(recipe => {
-        const updatedRecipe = { ...recipe };
-        updatedRecipe.name = recipeName;
-        updatedRecipe.id = recipeId;
-        return updatedRecipe;
-      })
-      setOriginalRecipe({
-        recipeName,
-        contextIngredients,
-        contextInstructions,
-        selectedNotes
-      })
+
     } else {
       setRecipe(template)
     }
