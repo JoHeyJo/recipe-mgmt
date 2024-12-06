@@ -37,7 +37,6 @@ export type RecipeViewProps = {
 
 export type IngredientsGroupProps = {
   handleUpdate: (data: Ingredient[], section: string) => void;
-  values: Ingredients;
 }
 
 export type InstructionsAreaProps = {

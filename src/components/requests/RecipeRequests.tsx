@@ -38,8 +38,8 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   function initializeRecipeState(action: string) {
     if (action === "edit"){
       return  {
-      recipeName,
-      recipeId
+      // recipeName,
+      // recipeId
     }
   } else {
     return template;
@@ -176,9 +176,9 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
                 <section id='RecipeRequests-book' className='flex h-full'>
 
                   <section id='RecipeRequests-ingredients' className="flex-1 mr-4">
-                    <InputWithLabel {...{ id: "title", name: "title", type: "title" }} handleUpdate={handleRecipeUpdate} value={recipe.name} placeholder={"Awesome recipe name!"} />
+                    <InputWithLabel type={"title"} handleUpdate={handleRecipeUpdate} placeholder={"Awesome recipe name!"} />
 
-                    <IngredientsGroup values={recipe.ingredients} handleUpdate={handleRecipeUpdate} />
+                    <IngredientsGroup handleUpdate={handleRecipeUpdate} />
                   </section>
 
                   <section id='RecipeRequests-instructions' className="flex-1 ml-4 ">
