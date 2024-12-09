@@ -60,3 +60,16 @@ export type RecipesListProps = {
   recipes: Recipe[]
   handleSelect: (index: number) => void;
 }
+
+export type InputWithLabelProps = {
+  handleUpdate: (data: string, section: string) => void;
+  id: string;
+  name: string;
+  value: string;
+  type: string
+  placeholder: string;
+}
+
+export type RecipeInfoProp = {
+  handleUpdate: (data: string, section: string) => void;
+}

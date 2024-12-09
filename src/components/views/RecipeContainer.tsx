@@ -1,4 +1,3 @@
-// import "../../styles/RecipeContainer.css"
 import RecipeView from "./RecipeView"
 import { RecipeViewProps } from "../../utils/props"
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'

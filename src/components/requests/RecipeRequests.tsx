@@ -13,6 +13,7 @@ import NotesInput from '../ui/NotesInput';
 import { recipeTemplate as template } from "../../utils/templates";
 import { RecipeContext, RecipeContextType } from '../../context/RecipeContext';
 import { filterRecipe } from '../../utils/filters';
+import RecipeInfo from '../ui/RecipeInfo';
 
 
 
@@ -30,32 +31,41 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
     contextInstructions,
     selectedNotes
   } = useContext(RecipeContext);
-  const [originalRecipe, setOriginalRecipe] = useState<any>(initializeOriginalState(requestAction));
-  const [recipe, setRecipe] = useState<any>(initializeRecipeState(requestAction));
+  const [originalRecipe, setOriginalRecipe] = useState<any>();
+  const [recipe, setRecipe] = useState<any>(template);
   const [error, setError] = useState()
 
-  // Initializing recipe state with editable data or empty
-  function initializeRecipeState(action: string) {
-    if (action === "edit"){
-      return  {
-      // recipeName,
-      // recipeId
-    }
-  } else {
-    return template;
-  }
-}
 
-/** Initializes originalRecipe state with un-mutable recipe data */
-  function initializeOriginalState(action: string) {
-    if (action === "edit") {
-      return {
+  // On mount, populate recipe form if edit is selected or leave fields blank
+  useEffect(() => {
+    const initialRecipe = getInitialRecipe(requestAction);
+    setRecipe(initialRecipe);
+    // `setOriginalRecipe` logic is kept inline because:
+    // - It handles a single, straightforward case (`requestAction === "edit"`).
+    // - It sets a snapshot of the current recipe state.
+    // - Unlike `recipe`, it doesn't require complex logic or reusability.
+    if (requestAction === "edit") {
+      setOriginalRecipe({
         recipeName,
         contextIngredients,
         contextInstructions,
         selectedNotes
+      })
+    }
+  }, [requestAction])
+
+  // Retrieves existing data or default template 
+  function getInitialRecipe(action: string) {
+    if (action === "edit") {
+      return {
+        name: recipeName,
+        id: recipeId,
+        ingredients: contextIngredients,
+        instructions: contextInstructions,
+        notes: selectedNotes,
       }
-    } 
+    }
+    return template;
   }
 
   const isLargeScreen = useMediaQuery({ query: '(min-width: 1024px)' }); // lg breakpoint in Tailwind
@@ -138,16 +148,6 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
       </div>
   }
 
-  // On mount, populate recipe name if recipe is selected
-  // #### This needs to be fix.. not sure if this is the correct way to reset form to empty fields
-  // useEffect(() => {
-  //   if (requestAction === "edit") {
-
-  //   } else {
-  //     setRecipe(template)
-  //   }
-  // }, [requestAction])
-
   return (
     <Dialog open={isOpen} onClose={setShowing} className="relative z-10">
       <DialogBackdrop
@@ -176,7 +176,7 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
                 <section id='RecipeRequests-book' className='flex h-full'>
 
                   <section id='RecipeRequests-ingredients' className="flex-1 mr-4">
-                    <InputWithLabel type={"title"} handleUpdate={handleRecipeUpdate} placeholder={"Awesome recipe name!"} />
+                    <RecipeInfo handleUpdate={handleRecipeUpdate}/>
 
                     <IngredientsGroup handleUpdate={handleRecipeUpdate} />
                   </section>
