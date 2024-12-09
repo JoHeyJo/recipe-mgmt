@@ -24,7 +24,7 @@ function filterInstructions(original, edited) {
     // if edited doesn't === original return edited (first check that there is an original instructions on the same index)
     if (instruction.instruction !== (original[index] ? original[index].instruction : "")) {
       const editedInstruction = {
-        // assocaite id = PK of association table
+        // association id = PK of association table
         "associationId": original[index].association_id,
         "newId": instruction.id,
         // "instruction": instruction.instruction  
@@ -62,7 +62,7 @@ function filterIngredients(originalIngredients, edited) {
 
   // removes empty ingredient inputs that user left 
   const shouldInclude = alteredIngredients.filter((ingredient) => {
-    return (ingredient.amount.id || ingredient.amount.id || ingredient.unit.id)
+    return (ingredient.item.id || ingredient.amount.id || ingredient.unit.id)
   })
 
   return shouldInclude.length === 0 ? null : alteredIngredients;
