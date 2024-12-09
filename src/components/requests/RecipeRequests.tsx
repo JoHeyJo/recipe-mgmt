@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
 import IngredientsGroup from '../selectors/IngredientsGroup';
 import { Ingredient, Instruction, Instructions, Recipe, Ingredients } from '../../utils/types';
-import InputWithLabel from '../ui/InputWithLabel'
+import InputWithLabel from '../ui/common/InputWithLabel'
 import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
 import { useMediaQuery } from 'react-responsive';
@@ -13,8 +13,7 @@ import NotesInput from '../ui/NotesInput';
 import { recipeTemplate as template } from "../../utils/templates";
 import { RecipeContext, RecipeContextType } from '../../context/RecipeContext';
 import { filterRecipe } from '../../utils/filters';
-import RecipeInfo from '../ui/RecipeInfo';
-
+import TitleInput from '../ui/TitleInput';
 
 
 /** Processes all recipe data
@@ -176,7 +175,7 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
                 <section id='RecipeRequests-book' className='flex h-full'>
 
                   <section id='RecipeRequests-ingredients' className="flex-1 mr-4">
-                    <RecipeInfo handleUpdate={handleRecipeUpdate}/>
+                    <TitleInput handleUpdate={handleRecipeUpdate} />
 
                     <IngredientsGroup handleUpdate={handleRecipeUpdate} />
                   </section>

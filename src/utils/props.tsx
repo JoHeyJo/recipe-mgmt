@@ -62,7 +62,7 @@ export type RecipesListProps = {
 }
 
 export type InputWithLabelProps = {
-  handleUpdate: (data: string, section: string) => void;
+  handleUpdate: (e:any) => void;
   id: string;
   name: string;
   value: string;

@@ -1,16 +1,16 @@
 
-import { InputWithLabelProps } from "../../utils/props";
+import { InputWithLabelProps } from "../../../utils/props";
 
 function InputWithLabel({ id, name, value, handleUpdate, type, placeholder }: InputWithLabelProps) {
 
 
   return (
-        <div>
+    <div>
       <label htmlFor="title" className="block text-sm font-medium leading-6 text-gray-900">
       </label>
       <div className="mt-2">
         <input
-          onChange={(e) => handleUpdate(e.target.value, "name")}
+          onChange={handleUpdate}
           value={value}
           id={id}
           name={name}
