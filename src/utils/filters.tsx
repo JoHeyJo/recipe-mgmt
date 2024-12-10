@@ -2,7 +2,7 @@ import { RecipeContextType } from "../context/RecipeContext";
 import { Recipe } from './types';
 
 /** Compares titles */
-export function compareNames(original, edited){
+export function compareNames(original, edited) {
   return original === edited ? null : edited;
 }
 
@@ -19,7 +19,7 @@ export function filterRecipe(originalRecipe: RecipeContextType, recipe: Recipe) 
 
 /** Compares edited to original notes, returns edited notes */
 function filterNotes(original, edited) {
-  console.log("notes", original, "edited==",edited)
+  console.log("notes", original, "edited==", edited)
   if (edited === "") return edited
   return original === edited ? null : edited;
 }
@@ -30,7 +30,7 @@ function filterInstructions(original, edited) {
     // handles indexing an empty element slot when an additional instruction is created
     // if edited doesn't === original return edited - first check that there is an original instructions on the same index
     if (instruction.instruction !== (original[index] ? original[index].instruction : "")) {
-      
+
       const editedInstruction = {
         // association id = PK of association table
         // catches error if an additional input was created rather than replacing one
@@ -52,15 +52,17 @@ function handleAdditionalInput(edited, originals, property: string, index) {
 }
 
 /** Executes quick comparison of ingredients */
-export function compareIngredients(original, edited){
-  const alteredIngredients = edited.reduce((alteredIngredients, editedIngredient, index) => {
-    const amount = handleAdditionalInput(editedIngredient, original, "amount", index)
-    const item = handleAdditionalInput(editedIngredient, original, "item", index)
-    const unit = handleAdditionalInput(editedIngredient, original, "unit", index)
-    if(!amount.value || !item.name || !unit.type) return "altered"
-    return null;
-  }, [])
-  console.log("alteredIngredients",alteredIngredients);
+export function compareIngredients(originals, edited) {
+  const alteredIngredient = edited.find((editedIngredient, index) => {
+    console.log(editedIngredient.amount , originals[index]?.amount)
+    const isAltered =
+      editedIngredient.amount.id !== originals[index]?.amount.id ||
+      editedIngredient.unit.id !== originals[index]?.unit.id ||
+      editedIngredient.item.id !== originals[index]?.item.id;
+
+    return isAltered; // Exit only if the ingredient is truly altered
+  });
+  console.log("altered", alteredIngredient)
 }
 
 /** Compares edited to original ingredients and filters out non-edited fields */

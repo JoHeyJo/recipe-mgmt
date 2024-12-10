@@ -16,7 +16,7 @@ function InputWithLabel({ id, name, value, handleUpdate, type, placeholder }: In
       <div className="mt-2">
         <input
           onChange={handleUpdate}
-          value={value}
+          value={value || ""}
           id={id}
           name={name}
           type={type}

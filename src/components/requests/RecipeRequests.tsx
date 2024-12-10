@@ -37,9 +37,11 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
     
 
   useEffect(()=>{
-    const name = compareNames(originalRecipe.recipeName, recipe.name);
-    const ingredients = compareIngredients(originalRecipe.recipeName, recipe.name)
-
+    if(originalRecipe && recipe.id){
+      console.log("useEffect", originalRecipe,recipe.id)
+      const name = compareNames(originalRecipe.recipeName, recipe.name);
+      const ingredients = compareIngredients(originalRecipe.contextIngredients, recipe.ingredients)
+    }
   },[recipe])
 
   // On mount, populate recipe form if edit is selected or leave fields blank
