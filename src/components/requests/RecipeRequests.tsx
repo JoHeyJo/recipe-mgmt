@@ -37,7 +37,6 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
 
   useEffect(()=>{
     const isUpdateDisabled = !recipe.name && !recipe.notes && !recipe.ingredients && !recipe.instructions
-
   },[recipe])
 
   // On mount, populate recipe form if edit is selected or leave fields blank
