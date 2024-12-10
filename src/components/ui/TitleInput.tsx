@@ -5,7 +5,7 @@ import { RecipeContext } from "../../context/RecipeContext";
 
 /** Consolidations recipe data and logic
  * 
- * 
+ * RecipeRequests -> TitleInput -> InputWithLabel
  */
 function TitleInput({ handleUpdate }: RecipeInfoProp) {
   const { recipeId, recipeName, requestAction } = useContext(RecipeContext);

@@ -1,6 +1,11 @@
 
 import { InputWithLabelProps } from "../../../utils/props";
 
+
+/** Renders Input
+ * 
+ * TitleInput ->InputWithLabel
+ */
 function InputWithLabel({ id, name, value, handleUpdate, type, placeholder }: InputWithLabelProps) {
 
 

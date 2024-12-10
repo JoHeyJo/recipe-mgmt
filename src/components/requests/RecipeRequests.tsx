@@ -12,7 +12,7 @@ import { RecipeRequestsProps } from '../../utils/props';
 import NotesInput from '../ui/NotesInput';
 import { recipeTemplate as template } from "../../utils/templates";
 import { RecipeContext, RecipeContextType } from '../../context/RecipeContext';
-import { filterRecipe } from '../../utils/filters';
+import { compareIngredients, compareNames, filterRecipe } from '../../utils/filters';
 import TitleInput from '../ui/TitleInput';
 
 
@@ -33,10 +33,13 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   const [originalRecipe, setOriginalRecipe] = useState<any>();
   const [recipe, setRecipe] = useState<any>(template);
   const [error, setError] = useState()
-  const [isDisabled, setIsDisabled] = useState(true);  
+  const [isDisabled, setIsDisabled] = useState(true);
+    
 
   useEffect(()=>{
-    const isUpdateDisabled = !recipe.name && !recipe.notes && !recipe.ingredients && !recipe.instructions
+    const name = compareNames(originalRecipe.recipeName, recipe.name);
+    const ingredients = compareIngredients(originalRecipe.recipeName, recipe.name)
+
   },[recipe])
 
   // On mount, populate recipe form if edit is selected or leave fields blank

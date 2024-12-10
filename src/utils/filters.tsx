@@ -1,10 +1,15 @@
 import { RecipeContextType } from "../context/RecipeContext";
 import { Recipe } from './types';
 
+/** Compares titles */
+export function compareNames(original, edited){
+  return original === edited ? null : edited;
+}
+
 /** Filters out recipe data that hasn't changed */
 export function filterRecipe(originalRecipe: RecipeContextType, recipe: Recipe) {
   const filteredData = {
-    "name": originalRecipe.recipeName === recipe.name ? null : recipe.name,
+    "name": compareNames(originalRecipe.recipeName, recipe.name),
     "ingredients": filterIngredients(originalRecipe.contextIngredients, recipe.ingredients),
     "instructions": filterInstructions(originalRecipe.contextInstructions, recipe.instructions),
     "notes": filterNotes(originalRecipe.selectedNotes, recipe.notes)
@@ -44,6 +49,18 @@ function filterInstructions(original, edited) {
 function handleAdditionalInput(edited, originals, property: string, index) {
   if (!originals[index]) return edited[property];
   if (edited) return edited[property] === originals[index][property] ? null : edited[property]
+}
+
+/** Executes quick comparison of ingredients */
+export function compareIngredients(original, edited){
+  const alteredIngredients = edited.reduce((alteredIngredients, editedIngredient, index) => {
+    const amount = handleAdditionalInput(editedIngredient, original, "amount", index)
+    const item = handleAdditionalInput(editedIngredient, original, "item", index)
+    const unit = handleAdditionalInput(editedIngredient, original, "unit", index)
+    if(!amount.value || !item.name || !unit.type) return "altered"
+    return null;
+  }, [])
+  console.log("alteredIngredients",alteredIngredients);
 }
 
 /** Compares edited to original ingredients and filters out non-edited fields */
