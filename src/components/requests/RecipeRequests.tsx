@@ -38,9 +38,10 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
 
   useEffect(()=>{
     if(originalRecipe && recipe.id){
-      console.log("useEffect", originalRecipe,recipe.id)
       const name = compareNames(originalRecipe.recipeName, recipe.name);
+      console.log("recipes", originalRecipe.contextIngredients, recipe.ingredients)
       const ingredients = compareIngredients(originalRecipe.contextIngredients, recipe.ingredients)
+      console.log("results", ingredients)
     }
   },[recipe])
 

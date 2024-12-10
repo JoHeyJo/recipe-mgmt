@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { RecipeContext } from '../../context/RecipeContext';
 import OptionRequests from '../requests/OptionRequests';
 import { Ingredient, Option } from '../../utils/types';
 import API from '../../api';
@@ -21,6 +22,7 @@ function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: Ingre
   const [quantityAmount, setQuantityAmounts] = useState<Option[]>([])
   const [quantityUnits, setQuantityUnits] = useState<Option[]>([])
 
+  const { requestAction, contextIngredients } = useContext(RecipeContext);
 
   /** Calls parent callback to handleUpdate name */
   function updateIngredientList() {
@@ -56,7 +58,8 @@ function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: Ingre
 
   /** Maintains parent components state synced with latest selections */
   useEffect(() => {
-    updateIngredientList()
+    // prevents temporary replacement of item,amount,unit state with default template 
+    if(!ingredientTemplate) updateIngredientList()
   }, [item, amount, unit])
 
   /** Populate each instance of component with latest options */

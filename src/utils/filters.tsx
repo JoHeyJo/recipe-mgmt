@@ -19,7 +19,6 @@ export function filterRecipe(originalRecipe: RecipeContextType, recipe: Recipe) 
 
 /** Compares edited to original notes, returns edited notes */
 function filterNotes(original, edited) {
-  console.log("notes", original, "edited==", edited)
   if (edited === "") return edited
   return original === edited ? null : edited;
 }
@@ -53,16 +52,14 @@ function handleAdditionalInput(edited, originals, property: string, index) {
 
 /** Executes quick comparison of ingredients */
 export function compareIngredients(originals, edited) {
-  const alteredIngredient = edited.find((editedIngredient, index) => {
-    console.log(editedIngredient.amount , originals[index]?.amount)
-    const isAltered =
-      editedIngredient.amount.id !== originals[index]?.amount.id ||
-      editedIngredient.unit.id !== originals[index]?.unit.id ||
-      editedIngredient.item.id !== originals[index]?.item.id;
-
-    return isAltered; // Exit only if the ingredient is truly altered
+  const isAltered = edited.find((editedIngredient, index) => {
+   return (
+     editedIngredient.amount.id !== originals[index]?.amount.id ||
+     editedIngredient.unit.id !== originals[index]?.unit.id ||
+     editedIngredient.item.id !== originals[index]?.item.id
+    ) 
   });
-  console.log("altered", alteredIngredient)
+  return isAltered ? "altered" : null;
 }
 
 /** Compares edited to original ingredients and filters out non-edited fields */
