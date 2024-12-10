@@ -34,6 +34,7 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
     if (requestAction === "edit") {
       setSelectedInstructions(contextInstructions)
       handleUpdate(contextInstructions, "instructions")
+      createInstructionInput()
     } else {
       setSelectedInstructions(PLACE_HOLDER)
     }

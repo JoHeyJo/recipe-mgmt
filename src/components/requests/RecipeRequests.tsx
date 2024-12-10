@@ -33,7 +33,12 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   const [originalRecipe, setOriginalRecipe] = useState<any>();
   const [recipe, setRecipe] = useState<any>(template);
   const [error, setError] = useState()
+  const [isDisabled, setIsDisabled] = useState(true);  
 
+  useEffect(()=>{
+    const isUpdateDisabled = !recipe.name && !recipe.notes && !recipe.ingredients && !recipe.instructions
+
+  },[recipe])
 
   // On mount, populate recipe form if edit is selected or leave fields blank
   useEffect(() => {
@@ -135,7 +140,8 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
         <button
           type="button"
           onClick={() => editRecipe(originalRecipe, recipe)}
-          className="inline-flex w-full justify-center rounded-md  px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 bg-indigo-600">
+          disabled={isDisabled}
+          className={`${isDisabled ? "bg-gray-600" : "bg-indigo-600 hover:bg-indigo-500"} inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}>
           Update
         </button>
         <button

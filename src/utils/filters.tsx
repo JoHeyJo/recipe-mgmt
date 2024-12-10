@@ -14,6 +14,8 @@ export function filterRecipe(originalRecipe: RecipeContextType, recipe: Recipe) 
 
 /** Compares edited to original notes, returns edited notes */
 function filterNotes(original, edited) {
+  console.log("notes", original, "edited==",edited)
+  if (edited === "") return edited
   return original === edited ? null : edited;
 }
 
@@ -21,11 +23,13 @@ function filterNotes(original, edited) {
 function filterInstructions(original, edited) {
   const alteredInstructions = edited.reduce((instructions, instruction, index) => {
     // handles indexing an empty element slot when an additional instruction is created
-    // if edited doesn't === original return edited (first check that there is an original instructions on the same index)
+    // if edited doesn't === original return edited - first check that there is an original instructions on the same index
     if (instruction.instruction !== (original[index] ? original[index].instruction : "")) {
+      
       const editedInstruction = {
         // association id = PK of association table
-        "associationId": original[index].association_id,
+        // catches error if an additional input was created rather than replacing one
+        "associationId": original[index] ? original[index].association_id : undefined,
         "newId": instruction.id,
         // "instruction": instruction.instruction  
       }
