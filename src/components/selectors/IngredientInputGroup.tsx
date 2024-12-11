@@ -56,7 +56,6 @@ function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: Ingre
 
   /** Maintains parent components state synced with latest selections */
   useEffect(() => {
-    console.log("changes", ingredientTemplate)
     // prevents temporary replacement of item,amount,unit state with default template 
     if (amount.id && item.id && unit.id) {
       updateIngredientList()

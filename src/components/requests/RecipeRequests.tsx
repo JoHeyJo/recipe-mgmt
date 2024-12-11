@@ -103,7 +103,6 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   async function editRecipe(originalRecipe: RecipeContextType, recipe: Recipe) {
     try {
       const editedData = filterRecipe(originalRecipe, recipe);
-      console.log("patch data", editedData)
       // const res = await API.editBookRecipe(userId, currentBookId, recipeId, editedData);
       // setShowing();
       // return res;  
@@ -205,7 +204,23 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
               </div>
             </div>
             <div className="mt-5 sm:mt-6">
-              {renderRequestButtons()}
+              <div className='flex'>
+                <button
+                  type="button"
+                  onClick={() => editRecipe(originalRecipe, recipe)}
+                  disabled={true}
+                  // className={`${isDisabled ? "bg-gray-600" : "bg-indigo-600 hover:bg-indigo-500"} inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
+                  className="bg-gray-600 inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                  Update
+                </button>
+                <button
+                  type="button"
+                  onClick={handleDelete}
+                  className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                  delete
+                </button>
+              </div>
             </div>
           </DialogPanel>
         </div>
