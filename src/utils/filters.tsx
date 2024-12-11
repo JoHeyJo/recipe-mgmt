@@ -1,9 +1,26 @@
 import { RecipeContextType } from "../context/RecipeContext";
-import { Recipe } from './types';
+import { Ingredients, Instructions, Recipe, Ingredient } from './types';
 
 /** Compares titles */
-export function compareNames(original, edited) {
+export function compareNames(original: string, edited: string) {
   return original === edited ? null : edited;
+}
+
+/** Executes quick comparison of ingredients */
+export function compareIngredients(originals: Ingredients, edited: Ingredients) {
+  const isAltered = edited.find((editedIngredient, index) => {
+    return (
+      editedIngredient.amount.id !== originals[index]?.amount.id ||
+      editedIngredient.unit.id !== originals[index]?.unit.id ||
+      editedIngredient.item.id !== originals[index]?.item.id
+    )
+  });
+  return isAltered ? "altered" : null;
+}
+
+/** Executes quick comparison of instructions */
+export function compareInstructions(original: Instructions, edited: Instructions) {
+  
 }
 
 /** Filters out recipe data that hasn't changed */
@@ -18,13 +35,13 @@ export function filterRecipe(originalRecipe: RecipeContextType, recipe: Recipe) 
 }
 
 /** Compares edited to original notes, returns edited notes */
-function filterNotes(original, edited) {
+function filterNotes(original: string, edited: string) {
   if (edited === "") return edited
   return original === edited ? null : edited;
 }
 
 /** Compares edited to original instructions and filters out non-edited fields */
-function filterInstructions(original, edited) {
+function filterInstructions(original: Instructions, edited: Instructions) {
   const alteredInstructions = edited.reduce((instructions, instruction, index) => {
     // handles indexing an empty element slot when an additional instruction is created
     // if edited doesn't === original return edited - first check that there is an original instructions on the same index
@@ -45,25 +62,13 @@ function filterInstructions(original, edited) {
 }
 
 // Applies when additional ingredient fields are added. Prevents reading undefined prop 
-function handleAdditionalInput(edited, originals, property: string, index) {
+function handleAdditionalInput(edited: Ingredient, originals: Ingredients, property: string, index: number) {
   if (!originals[index]) return edited[property];
   if (edited) return edited[property] === originals[index][property] ? null : edited[property]
 }
 
-/** Executes quick comparison of ingredients */
-export function compareIngredients(originals, edited) {
-  const isAltered = edited.find((editedIngredient, index) => {
-   return (
-     editedIngredient.amount.id !== originals[index]?.amount.id ||
-     editedIngredient.unit.id !== originals[index]?.unit.id ||
-     editedIngredient.item.id !== originals[index]?.item.id
-    ) 
-  });
-  return isAltered ? "altered" : null;
-}
-
 /** Compares edited to original ingredients and filters out non-edited fields */
-function filterIngredients(originalIngredients, edited) {
+function filterIngredients(originalIngredients: Ingredients, edited: Ingredients) {
   const alteredIngredients = edited.reduce((alteredIngredients, editedIngredient, index) => {
     const amount = handleAdditionalInput(editedIngredient, originalIngredients, "amount", index)
     const item = handleAdditionalInput(editedIngredient, originalIngredients, "item", index)

@@ -13,6 +13,7 @@ export type Recipe = {
   ingredients: Ingredient[]
 }
 export type Ingredient = {
+  ingredient_id?: number;
   id: number
   amount: Option;
   unit: Option;
@@ -67,7 +68,7 @@ export type Option = {
   type?: string;
 }
 
-export type Instruction = { id: string | number | null , instruction: string }
+export type Instruction = { association_id?: number, id: string | number | null , instruction: string }
 
 export type Instructions = Instruction[];
 

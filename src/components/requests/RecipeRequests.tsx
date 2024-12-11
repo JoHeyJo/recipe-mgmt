@@ -34,16 +34,18 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   const [recipe, setRecipe] = useState<any>(template);
   const [error, setError] = useState()
   const [isDisabled, setIsDisabled] = useState(true);
-    
 
-  useEffect(()=>{
-    if(originalRecipe && recipe.id){
+
+  /** Enables/disables update submit */
+  useEffect(() => {
+    if (originalRecipe && recipe.id) {
       const name = compareNames(originalRecipe.recipeName, recipe.name);
       const ingredients = compareIngredients(originalRecipe.contextIngredients, recipe.ingredients)
+      
       const isAltered = name || ingredients
       setIsDisabled(!isAltered)
     }
-  },[recipe])
+  }, [recipe])
 
   // On mount, populate recipe form if edit is selected or leave fields blank
   useEffect(() => {
