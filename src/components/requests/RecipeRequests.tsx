@@ -40,8 +40,7 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
     if(originalRecipe && recipe.id){
       const name = compareNames(originalRecipe.recipeName, recipe.name);
       const ingredients = compareIngredients(originalRecipe.contextIngredients, recipe.ingredients)
-      console.log("results", name, ingredients)
-      const isAltered = !!name && !!ingredients
+      const isAltered = name || ingredients
       setIsDisabled(!isAltered)
     }
   },[recipe])
