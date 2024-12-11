@@ -15,9 +15,9 @@ import { RecipeContext } from "../../context/RecipeContext";
  */
 function MainContainer() {
   const [recipes, setRecipes] = useState([]);
-  const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate)
-  const [isOpen, setOpen] = useState(false)
-  const [requestAction, setRequestAction] = useState<string>("")
+  const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate);
+  const [isOpen, setOpen] = useState(false);
+  const [requestAction, setRequestAction] = useState<string>("");
 
   const { userId, currentBookId } = useContext(UserContext);
 
@@ -80,7 +80,7 @@ function MainContainer() {
         {/* Does recipes need to be reduced to just ids and title??? */}
         <RecipeContext.Provider value={recipeData}>
           <section id="RecipesList-container" className="flex-1">
-            <RecipeRequests selectedRecipe={selectedRecipe} recipeTemplate={recipeTemplate} handleRecipesUpdate={updateRecipes} handleRecipeDelete={updateDeleteRecipe} setShowing={toggleModel} isOpen={isOpen} />
+            <RecipeRequests selectedRecipe={selectedRecipe} handleRecipesUpdate={updateRecipes} handleRecipeDelete={updateDeleteRecipe} setShowing={toggleModel} isOpen={isOpen} />
             <div className="flex justify-between m-1">
               <div>Recipes</div>
               <FaPlusButton onAction={() => setOpen(true)} />

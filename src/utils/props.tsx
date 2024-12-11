@@ -1,5 +1,4 @@
 import { Recipe, Ingredient, Instructions, Instruction, Ingredients, Option } from "./types";
-import { ChangeEvent } from "react";
 
 export type InstructionManagerProps = {
   instruction: Instruction;
@@ -22,7 +21,6 @@ export type NotesViewProp = {
 
 export type RecipeRequestsProps = {
   selectedRecipe:Recipe;
-  recipeTemplate: Recipe;
   setShowing: any;
   isOpen: boolean;
   handleRecipesUpdate: (recipe: Recipe) => void;

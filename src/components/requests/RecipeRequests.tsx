@@ -17,7 +17,7 @@ import TitleInput from '../ui/TitleInput';
 
 /** Processes all recipe data
  * 
- * MainContainer -> RecipeRequests -> [IngredientsGroup, InstructionsArea, NotesInput, InputWithLabel]
+ * MainContainer -> RecipeRequests -> [IngredientsGroup, InstructionsArea, NotesInput, TitleInput]
  */
 function RecipeRequests({ selectedRecipe, setShowing, isOpen, handleRecipesUpdate, handleRecipeDelete }: RecipeRequestsProps) {
   const { currentBookId, userId } = useContext(UserContext);
@@ -29,43 +29,38 @@ function RecipeRequests({ selectedRecipe, setShowing, isOpen, handleRecipesUpdat
     contextInstructions,
     selectedNotes
   } = useContext(RecipeContext);
-  const [originalRecipe, setOriginalRecipe] = useState<any>(selectedRecipe);
-  // on select update original recipe instead of when opening ....
-  const [recipe, setRecipe] = useState<any>(template);
+  const [recipe, setRecipe] = useState<any>({});
   const [error, setError] = useState()
   const [isDisabled, setIsDisabled] = useState(true);
 
 
   /** Enables/disables update submit */
   useEffect(() => {
+    console.log("initial recipes", selectedRecipe, recipe)
     if (selectedRecipe && recipe.id) {
-      console.log("inistial recipes",selectedRecipe, recipe)
       const name = compareNames(selectedRecipe.name, recipe.name);
       const ingredients = compareIngredients(selectedRecipe.ingredients, recipe.ingredients)
       const instructions = compareInstructions(selectedRecipe.instructions, recipe.instructions)
       const notes = compareNotes(selectedRecipe.notes, recipe.notes)
-      const isAltered = name || ingredients || instructions || notes
+      const isAltered = name || ingredients || instructions || notes;
       setIsDisabled(!isAltered)
     }
   }, [recipe])
 
   // On mount, populate recipe form if edit is selected or leave fields blank
+  // useEffect(() => {
+  //   const initialRecipe = getInitialRecipe(requestAction);
+  //   setRecipe(initialRecipe);
+  // }, [requestAction])
   useEffect(() => {
-    const initialRecipe = getInitialRecipe(requestAction);
-    setRecipe(initialRecipe);
-    // `setOriginalRecipe` logic is kept inline because:
-    // - It handles a single, straightforward case (`requestAction === "edit"`).
-    // - It sets a snapshot of the current recipe state.
-    // - Unlike `recipe`, it doesn't require complex logic or reusability.
-    // if (requestAction === "edit") {
-    //   setOriginalRecipe({
-    //     recipeName,
-    //     contextIngredients,
-    //     contextInstructions,
-    //     selectedNotes
-    //   })
-    // }
-  }, [requestAction])
+    setRecipe({
+      name: recipeName,
+      id: recipeId,
+      ingredients: contextIngredients,
+      instructions: contextInstructions,
+      notes: selectedNotes,
+    })
+  }, [])
 
   // Retrieves existing data or default template 
   function getInitialRecipe(action: string) {
@@ -85,9 +80,9 @@ function RecipeRequests({ selectedRecipe, setShowing, isOpen, handleRecipesUpdat
 
   /** Updates recipe state */
   function handleRecipeUpdate(data: string | Ingredient[] | Instruction | Instructions, section: string) {
-    setRecipe(prevRecipe => (
-      { ...prevRecipe, [section]: data }
-    ));
+      setRecipe(prevRecipe => (
+        { ...prevRecipe, [section]: data }
+      ));
   }
 
   /** Calls API - sends post request with recipe data */
@@ -137,12 +132,14 @@ function RecipeRequests({ selectedRecipe, setShowing, isOpen, handleRecipesUpdat
   function renderRequestButtons() {
     return requestAction !== "edit"
       ?
-      <button
-        type="button"
-        onClick={handleSubmit}
-        className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-        Submit
-      </button>
+      <div className='flex'>
+        <button
+          type="button"
+          onClick={handleSubmit}
+          className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+          Submit
+        </button>
+      </div>
       :
       <div className='flex'>
         <button
@@ -206,23 +203,7 @@ function RecipeRequests({ selectedRecipe, setShowing, isOpen, handleRecipesUpdat
               </div>
             </div>
             <div className="mt-5 sm:mt-6">
-              <div className='flex'>
-                <button
-                  type="button"
-                  onClick={() => editRecipe(originalRecipe, recipe)}
-                  disabled={true}
-                  className={`${isDisabled ? "bg-gray-600" : "bg-indigo-600 hover:bg-indigo-500"} inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
-                // className="bg-gray-600 inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Update
-                </button>
-                <button
-                  type="button"
-                  onClick={handleDelete}
-                  className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                  delete
-                </button>
-              </div>
+              {renderRequestButtons()}
             </div>
           </DialogPanel>
         </div>
