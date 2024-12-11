@@ -22,8 +22,6 @@ function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: Ingre
   const [quantityAmount, setQuantityAmounts] = useState<Option[]>([])
   const [quantityUnits, setQuantityUnits] = useState<Option[]>([])
 
-  const { requestAction, contextIngredients } = useContext(RecipeContext);
-
   /** Calls parent callback to handleUpdate name */
   function updateIngredientList() {
     const updatedIngredient = { ...ingredientTemplate, item, amount, unit };
@@ -58,8 +56,11 @@ function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: Ingre
 
   /** Maintains parent components state synced with latest selections */
   useEffect(() => {
+    console.log("changes", ingredientTemplate)
     // prevents temporary replacement of item,amount,unit state with default template 
-    if(!ingredientTemplate) updateIngredientList()
+    if (amount.id && item.id && unit.id) {
+      updateIngredientList()
+    }
   }, [item, amount, unit])
 
   /** Populate each instance of component with latest options */
@@ -74,7 +75,6 @@ function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: Ingre
     }
     fetchOptions()
   }, [])
-
 
   return (
     <div className="flex rounded-md">
