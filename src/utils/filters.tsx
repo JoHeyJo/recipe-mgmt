@@ -21,7 +21,8 @@ export function compareIngredients(originals: Ingredients, edited: Ingredients) 
 /** Executes quick comparison of instructions */
 export function compareInstructions(original: Instructions, edited: Instructions) {
   const isAltered = edited.find((editedInstruction, index) => {
-    return editedInstruction.instruction !== original[index].instruction
+    // check out of bounds
+    return editedInstruction.instruction !== (original[index] ? original[index].instruction : '')
   })
   return isAltered ? "altered" : null;
 }
