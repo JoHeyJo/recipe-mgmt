@@ -12,7 +12,7 @@ import { RecipeRequestsProps } from '../../utils/props';
 import NotesInput from '../ui/NotesInput';
 import { recipeTemplate as template } from "../../utils/templates";
 import { RecipeContext, RecipeContextType } from '../../context/RecipeContext';
-import { compareIngredients, compareNames, filterRecipe } from '../../utils/filters';
+import { compareIngredients, compareInstructions, compareNames, filterRecipe } from '../../utils/filters';
 import TitleInput from '../ui/TitleInput';
 
 
@@ -41,8 +41,8 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
     if (originalRecipe && recipe.id) {
       const name = compareNames(originalRecipe.recipeName, recipe.name);
       const ingredients = compareIngredients(originalRecipe.contextIngredients, recipe.ingredients)
-      
-      const isAltered = name || ingredients
+      const instructions = compareInstructions(originalRecipe.contextInstructions, recipe.instructions)
+      const isAltered = name || ingredients || instructions
       setIsDisabled(!isAltered)
     }
   }, [recipe])
