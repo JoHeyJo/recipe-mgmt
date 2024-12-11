@@ -1,8 +1,7 @@
 import { useState, useContext, useEffect } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
 import IngredientsGroup from '../selectors/IngredientsGroup';
-import { Ingredient, Instruction, Instructions, Recipe, Ingredients } from '../../utils/types';
-import InputWithLabel from '../ui/common/InputWithLabel'
+import { Ingredient, Instruction, Instructions, Recipe } from '../../utils/types';
 import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
 import { useMediaQuery } from 'react-responsive';
@@ -12,7 +11,7 @@ import { RecipeRequestsProps } from '../../utils/props';
 import NotesInput from '../ui/NotesInput';
 import { recipeTemplate as template } from "../../utils/templates";
 import { RecipeContext, RecipeContextType } from '../../context/RecipeContext';
-import { compareIngredients, compareInstructions, compareNames, filterRecipe } from '../../utils/filters';
+import { compareIngredients, compareInstructions, compareNames, filterRecipe, compareNotes } from '../../utils/filters';
 import TitleInput from '../ui/TitleInput';
 
 
@@ -42,7 +41,8 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
       const name = compareNames(originalRecipe.recipeName, recipe.name);
       const ingredients = compareIngredients(originalRecipe.contextIngredients, recipe.ingredients)
       const instructions = compareInstructions(originalRecipe.contextInstructions, recipe.instructions)
-      const isAltered = name || ingredients || instructions
+      const notes = compareNotes(originalRecipe.selectedNotes, recipe.notes)
+      const isAltered = name || ingredients || instructions || notes
       setIsDisabled(!isAltered)
     }
   }, [recipe])

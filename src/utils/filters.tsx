@@ -27,6 +27,11 @@ export function compareInstructions(original: Instructions, edited: Instructions
   return isAltered ? "altered" : null;
 }
 
+/** Executes quick comparison of notes */
+export function compareNotes(original: string, edited: string){
+  return original === edited ? null : "altered";
+}
+
 /** Filters out recipe data that hasn't changed */
 export function filterRecipe(originalRecipe: RecipeContextType, recipe: Recipe) {
   const filteredData = {
