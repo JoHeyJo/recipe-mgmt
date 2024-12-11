@@ -21,6 +21,7 @@ export type NotesViewProp = {
 }
 
 export type RecipeRequestsProps = {
+  selectedRecipe:Recipe;
   recipeTemplate: Recipe;
   setShowing: any;
   isOpen: boolean;

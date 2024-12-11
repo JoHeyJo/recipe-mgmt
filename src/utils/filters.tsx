@@ -9,7 +9,7 @@ export function compareNames(original: string, edited: string) {
 /** Executes quick comparison of ingredients */
 export function compareIngredients(originals: Ingredients, edited: Ingredients) {
   const isAltered = edited.find((editedIngredient, index) => {
-    console.log("edited", editedIngredient)
+    console.log("recipes",originals, edited)
     // if (!editedIngredient.amount.id || !editedIngredient.unit.id || !editedIngredient.item.id) return true
     return (
       editedIngredient.amount.id !== originals[index]?.amount.id ||
@@ -35,12 +35,12 @@ export function compareNotes(original: string, edited: string){
 }
 
 /** Filters out recipe data that hasn't changed */
-export function filterRecipe(originalRecipe: RecipeContextType, recipe: Recipe) {
+export function filterRecipe(originalRecipe: Recipe, recipe: Recipe) {
   const filteredData = {
-    "name": compareNames(originalRecipe.recipeName, recipe.name),
-    "ingredients": filterIngredients(originalRecipe.contextIngredients, recipe.ingredients),
-    "instructions": filterInstructions(originalRecipe.contextInstructions, recipe.instructions),
-    "notes": filterNotes(originalRecipe.selectedNotes, recipe.notes)
+    "name": compareNames(originalRecipe.name, recipe.name),
+    "ingredients": filterIngredients(originalRecipe.ingredients, recipe.ingredients),
+    "instructions": filterInstructions(originalRecipe.instructions, recipe.instructions),
+    "notes": filterNotes(originalRecipe.notes, recipe.notes)
   }
   return filteredData;
 }

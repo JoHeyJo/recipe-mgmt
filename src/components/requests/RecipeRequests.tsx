@@ -19,7 +19,7 @@ import TitleInput from '../ui/TitleInput';
  * 
  * MainContainer -> RecipeRequests -> [IngredientsGroup, InstructionsArea, NotesInput, InputWithLabel]
  */
-function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeDelete }: RecipeRequestsProps) {
+function RecipeRequests({ selectedRecipe, setShowing, isOpen, handleRecipesUpdate, handleRecipeDelete }: RecipeRequestsProps) {
   const { currentBookId, userId } = useContext(UserContext);
   const {
     recipeId,
@@ -29,7 +29,8 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
     contextInstructions,
     selectedNotes
   } = useContext(RecipeContext);
-  const [originalRecipe, setOriginalRecipe] = useState<any>();
+  const [originalRecipe, setOriginalRecipe] = useState<any>(selectedRecipe);
+  // on select update original recipe instead of when opening ....
   const [recipe, setRecipe] = useState<any>(template);
   const [error, setError] = useState()
   const [isDisabled, setIsDisabled] = useState(true);
@@ -37,11 +38,12 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
 
   /** Enables/disables update submit */
   useEffect(() => {
-    if (originalRecipe && recipe.id) {
-      const name = compareNames(originalRecipe.recipeName, recipe.name);
-      const ingredients = compareIngredients(originalRecipe.contextIngredients, recipe.ingredients)
-      const instructions = compareInstructions(originalRecipe.contextInstructions, recipe.instructions)
-      const notes = compareNotes(originalRecipe.selectedNotes, recipe.notes)
+    if (selectedRecipe && recipe.id) {
+      console.log("inistial recipes",selectedRecipe, recipe)
+      const name = compareNames(selectedRecipe.name, recipe.name);
+      const ingredients = compareIngredients(selectedRecipe.ingredients, recipe.ingredients)
+      const instructions = compareInstructions(selectedRecipe.instructions, recipe.instructions)
+      const notes = compareNotes(selectedRecipe.notes, recipe.notes)
       const isAltered = name || ingredients || instructions || notes
       setIsDisabled(!isAltered)
     }
@@ -55,14 +57,14 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
     // - It handles a single, straightforward case (`requestAction === "edit"`).
     // - It sets a snapshot of the current recipe state.
     // - Unlike `recipe`, it doesn't require complex logic or reusability.
-    if (requestAction === "edit") {
-      setOriginalRecipe({
-        recipeName,
-        contextIngredients,
-        contextInstructions,
-        selectedNotes
-      })
-    }
+    // if (requestAction === "edit") {
+    //   setOriginalRecipe({
+    //     recipeName,
+    //     contextIngredients,
+    //     contextInstructions,
+    //     selectedNotes
+    //   })
+    // }
   }, [requestAction])
 
   // Retrieves existing data or default template 
@@ -100,7 +102,7 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   }
 
   /** Calls API - sends patch request with only edited recipe data */
-  async function editRecipe(originalRecipe: RecipeContextType, recipe: Recipe) {
+  async function editRecipe(originalRecipe: Recipe, recipe: Recipe) {
     try {
       const editedData = filterRecipe(originalRecipe, recipe);
       // const res = await API.editBookRecipe(userId, currentBookId, recipeId, editedData);
@@ -145,7 +147,7 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
       <div className='flex'>
         <button
           type="button"
-          onClick={() => editRecipe(originalRecipe, recipe)}
+          onClick={() => editRecipe(selectedRecipe, recipe)}
           disabled={isDisabled}
           className={`${isDisabled ? "bg-gray-600" : "bg-indigo-600 hover:bg-indigo-500"} inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}>
           Update
@@ -209,9 +211,9 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
                   type="button"
                   onClick={() => editRecipe(originalRecipe, recipe)}
                   disabled={true}
-                  // className={`${isDisabled ? "bg-gray-600" : "bg-indigo-600 hover:bg-indigo-500"} inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
-                  className="bg-gray-600 inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
+                  className={`${isDisabled ? "bg-gray-600" : "bg-indigo-600 hover:bg-indigo-500"} inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
+                // className="bg-gray-600 inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
                   Update
                 </button>
                 <button

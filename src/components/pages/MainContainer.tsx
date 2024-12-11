@@ -36,7 +36,7 @@ function MainContainer() {
   }
 
   /**Update rendered recipes after deletion */
-  function updateDeleteRecipe(){
+  function updateDeleteRecipe() {
     const id = selectedRecipe.id;
     const updatedRecipes = recipes.filter((recipe) => recipe.id !== id)
     setRecipes(updatedRecipes);
@@ -80,7 +80,7 @@ function MainContainer() {
         {/* Does recipes need to be reduced to just ids and title??? */}
         <RecipeContext.Provider value={recipeData}>
           <section id="RecipesList-container" className="flex-1">
-            <RecipeRequests recipeTemplate={recipeTemplate} handleRecipesUpdate={updateRecipes} handleRecipeDelete={updateDeleteRecipe} setShowing={toggleModel} isOpen={isOpen} />
+            <RecipeRequests selectedRecipe={selectedRecipe} recipeTemplate={recipeTemplate} handleRecipesUpdate={updateRecipes} handleRecipeDelete={updateDeleteRecipe} setShowing={toggleModel} isOpen={isOpen} />
             <div className="flex justify-between m-1">
               <div>Recipes</div>
               <FaPlusButton onAction={() => setOpen(true)} />
