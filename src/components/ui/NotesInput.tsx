@@ -10,12 +10,12 @@ import { RecipeContext } from "../../context/RecipeContext";
  */
 function NotesInput({ handleUpdate }: NotesInputProps) {
   const { requestAction, selectedNotes } = useContext(RecipeContext);
-  const [notes, setNotes] = useState<string>(selectedNotes);
+  const [notes, setNotes] = useState<string>();
 
-
-    // useEffect(()=>{
-    //   if(requestAction === "edit") setNotes(selectedNotes);
-    // },[]);
+    /** On mount injects editable data if applicable */
+    useEffect(()=>{
+      if(requestAction === "edit") setNotes(selectedNotes);
+    },[]);
 
   /** handles changes in notes */
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
@@ -23,6 +23,7 @@ function NotesInput({ handleUpdate }: NotesInputProps) {
     handleUpdate(event.target.value, "notes");
   }
 
+  /** handles parent state changes */
   useEffect(() => {
     handleUpdate(notes, "notes")
   }, [notes])
