@@ -41,29 +41,29 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
     contextInstructions,
     selectedNotes
   }
-  
+
   useEffect(() => {
-    console.log("*****",recipeId)
-    if(recipeId !== 0){
-      setRecipe({
-        name: recipeName,
-        id: recipeId,
-        ingredients: contextIngredients,
-        instructions: contextInstructions,
-        notes: selectedNotes,
-      })
-    }
+    // if single source or truth recipe and editable recipe is truly synced there
+    // doesn't need to be a check here .....
+    setRecipe({
+      name: recipeName,
+      id: recipeId,
+      ingredients: contextIngredients,
+      instructions: contextInstructions,
+      notes: selectedNotes,
+    })
   }, [recipeId])
 
   /** Enables/disables update submit */
   useEffect(() => {
-    console.log("initial recipes",  recipe)
-    if (recipeId && recipe.id) {
+    // This should only be triggered during editing 
+    if (recipeId) {
       const name = compareNames(recipeName, recipe.name);
       const ingredients = compareIngredients(contextIngredients, recipe.ingredients)
       const instructions = compareInstructions(contextInstructions, recipe.instructions)
       const notes = compareNotes(selectedNotes, recipe.notes)
       console.log("shouldDIsable", name || ingredients || instructions || notes)
+      console.log("name", name, "ingredients", ingredients, "instructions", instructions, "notes", notes)
       const isAltered = name || ingredients || instructions || notes;
       setIsDisabled(!isAltered)
     }
@@ -73,9 +73,9 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
 
   /** Updates recipe state */
   function handleRecipeUpdate(data: string | Ingredient[] | Instruction | Instructions, section: string) {
-      // setRecipe(prevRecipe => (
-      //   { ...prevRecipe, [section]: data }
-      // ));
+    setRecipe(prevRecipe => (
+      { ...prevRecipe, [section]: data }
+    ));
   }
 
   /** Calls API - sends post request with recipe data */
