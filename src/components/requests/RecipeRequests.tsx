@@ -56,14 +56,11 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
 
   /** Enables/disables update submit */
   useEffect(() => {
-    // This should only be triggered during editing 
-    if (recipeId) {
+    if (requestAction === "edit") {
       const name = compareNames(recipeName, recipe.name);
       const ingredients = compareIngredients(contextIngredients, recipe.ingredients)
       const instructions = compareInstructions(contextInstructions, recipe.instructions)
       const notes = compareNotes(selectedNotes, recipe.notes)
-      console.log("shouldDIsable", name || ingredients || instructions || notes)
-      console.log("name", name, "ingredients", ingredients, "instructions", instructions, "notes", notes)
       const isAltered = name || ingredients || instructions || notes;
       setIsDisabled(!isAltered)
     }

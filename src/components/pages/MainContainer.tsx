@@ -9,6 +9,7 @@ import { recipeTemplate } from "../../utils/templates";
 import FaPlusButton from "../ui/common/FaPlusButton"
 import RecipeRequests from "../requests/RecipeRequests";
 import { RecipeContext } from "../../context/RecipeContext";
+
 /** Renders the main container housing list of recipes and individual recipe
  * 
  * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList]
@@ -50,13 +51,16 @@ function MainContainer() {
   /** Model toggle function for children components */
   function toggleModel() {
     setOpen(!isOpen);
-    // resets action when modal is closed 
-    setRequestAction("")
   }
 
   /** Triggers actions that renders RecipeRequests with appropriate data set - current recipe */
   function toggleEditTemplate() {
     setRequestAction("edit")
+    setOpen(!isOpen);
+  }
+
+  function toggleCreateForm(){
+    setRequestAction("")
     setOpen(!isOpen);
   }
 
@@ -82,11 +86,10 @@ function MainContainer() {
             <RecipeRequests handleRecipesUpdate={updateRecipes} handleRecipeDelete={updateDeleteRecipe} setShowing={toggleModel} isOpen={isOpen} />
             <div className="flex justify-between m-1">
               <div>Recipes</div>
-              <FaPlusButton onAction={() => setOpen(true)} />
+              <FaPlusButton onAction={toggleCreateForm  } />
             </div>
             <RecipesList recipes={recipes} handleSelect={selectRecipe} />
           </section>
-
           <RecipeContainer recipe={selectedRecipe} handleRecipesUpdate={updateRecipes} handleModalToggle={toggleEditTemplate} isOpen={isOpen} />
         </RecipeContext.Provider >
       </div>

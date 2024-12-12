@@ -22,7 +22,7 @@ function TitleInput({ handleUpdate }: RecipeInfoProp) {
     setTitle(value)
   }
 
-  /** Updates parent state with current changes to title state */
+  /** handles parent state changes */
   useEffect(()=>{
     updateTitle()
   },[title])

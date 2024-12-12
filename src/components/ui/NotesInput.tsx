@@ -2,20 +2,13 @@ import { useState, useEffect, ChangeEvent, useContext } from "react";
 import { NotesInputProps } from "../../utils/props"
 import { RecipeContext } from "../../context/RecipeContext";
 
-
 /** Render Notes 
- * 
  * 
  * RecipeRequests -> NotesInput
  */
 function NotesInput({ handleUpdate }: NotesInputProps) {
   const { requestAction, selectedNotes } = useContext(RecipeContext);
   const [notes, setNotes] = useState<string>(selectedNotes);
-
-    /** On mount injects editable data if applicable */
-    // useEffect(()=>{
-    //   if(requestAction === "edit") setNotes(selectedNotes);
-    // },[]);
 
   /** handles changes in notes */
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
