@@ -21,7 +21,6 @@ import TitleInput from '../ui/TitleInput';
  */
 function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeDelete }: RecipeRequestsProps) {
   const { currentBookId, userId } = useContext(UserContext);
-  const selectedRecipe = useContext(RecipeContext)
   const {
     recipeId,
     recipeName,
@@ -34,9 +33,17 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   const [error, setError] = useState()
   const [isDisabled, setIsDisabled] = useState(true);
 
-
+  const selectedRecipe = {
+    recipeId,
+    recipeName,
+    requestAction,
+    contextIngredients,
+    contextInstructions,
+    selectedNotes
+  }
   
   useEffect(() => {
+    console.log("*****",recipeId)
     if(recipeId !== 0){
       setRecipe({
         name: recipeName,
@@ -46,7 +53,7 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
         notes: selectedNotes,
       })
     }
-  }, [])
+  }, [recipeId])
 
   /** Enables/disables update submit */
   useEffect(() => {
