@@ -19,8 +19,9 @@ import TitleInput from '../ui/TitleInput';
  * 
  * MainContainer -> RecipeRequests -> [IngredientsGroup, InstructionsArea, NotesInput, TitleInput]
  */
-function RecipeRequests({ selectedRecipe, setShowing, isOpen, handleRecipesUpdate, handleRecipeDelete }: RecipeRequestsProps) {
+function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeDelete }: RecipeRequestsProps) {
   const { currentBookId, userId } = useContext(UserContext);
+  const selectedRecipe = useContext(RecipeContext)
   const {
     recipeId,
     recipeName,
@@ -34,55 +35,40 @@ function RecipeRequests({ selectedRecipe, setShowing, isOpen, handleRecipesUpdat
   const [isDisabled, setIsDisabled] = useState(true);
 
 
-  /** Enables/disables update submit */
+  
   useEffect(() => {
-    console.log("initial recipes", selectedRecipe, recipe)
-    if (selectedRecipe && recipe.id) {
-      const name = compareNames(selectedRecipe.name, recipe.name);
-      const ingredients = compareIngredients(selectedRecipe.ingredients, recipe.ingredients)
-      const instructions = compareInstructions(selectedRecipe.instructions, recipe.instructions)
-      const notes = compareNotes(selectedRecipe.notes, recipe.notes)
-      const isAltered = name || ingredients || instructions || notes;
-      setIsDisabled(!isAltered)
-    }
-  }, [recipe])
-
-  // On mount, populate recipe form if edit is selected or leave fields blank
-  // useEffect(() => {
-  //   const initialRecipe = getInitialRecipe(requestAction);
-  //   setRecipe(initialRecipe);
-  // }, [requestAction])
-  useEffect(() => {
-    setRecipe({
-      name: recipeName,
-      id: recipeId,
-      ingredients: contextIngredients,
-      instructions: contextInstructions,
-      notes: selectedNotes,
-    })
-  }, [])
-
-  // Retrieves existing data or default template 
-  function getInitialRecipe(action: string) {
-    if (action === "edit") {
-      return {
+    if(recipeId !== 0){
+      setRecipe({
         name: recipeName,
         id: recipeId,
         ingredients: contextIngredients,
         instructions: contextInstructions,
         notes: selectedNotes,
-      }
+      })
     }
-    return template;
-  }
+  }, [])
+
+  /** Enables/disables update submit */
+  useEffect(() => {
+    console.log("initial recipes",  recipe)
+    if (recipeId && recipe.id) {
+      const name = compareNames(recipeName, recipe.name);
+      const ingredients = compareIngredients(contextIngredients, recipe.ingredients)
+      const instructions = compareInstructions(contextInstructions, recipe.instructions)
+      const notes = compareNotes(selectedNotes, recipe.notes)
+      console.log("shouldDIsable", name || ingredients || instructions || notes)
+      const isAltered = name || ingredients || instructions || notes;
+      setIsDisabled(!isAltered)
+    }
+  }, [recipe])
 
   const isLargeScreen = useMediaQuery({ query: '(min-width: 1024px)' }); // lg breakpoint in Tailwind
 
   /** Updates recipe state */
   function handleRecipeUpdate(data: string | Ingredient[] | Instruction | Instructions, section: string) {
-      setRecipe(prevRecipe => (
-        { ...prevRecipe, [section]: data }
-      ));
+      // setRecipe(prevRecipe => (
+      //   { ...prevRecipe, [section]: data }
+      // ));
   }
 
   /** Calls API - sends post request with recipe data */
@@ -97,7 +83,7 @@ function RecipeRequests({ selectedRecipe, setShowing, isOpen, handleRecipesUpdat
   }
 
   /** Calls API - sends patch request with only edited recipe data */
-  async function editRecipe(originalRecipe: Recipe, recipe: Recipe) {
+  async function editRecipe(originalRecipe: RecipeContextType, recipe: Recipe) {
     try {
       const editedData = filterRecipe(originalRecipe, recipe);
       // const res = await API.editBookRecipe(userId, currentBookId, recipeId, editedData);

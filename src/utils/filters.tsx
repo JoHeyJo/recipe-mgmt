@@ -34,12 +34,12 @@ export function compareNotes(original: string, edited: string){
 }
 
 /** Filters out recipe data that hasn't changed */
-export function filterRecipe(originalRecipe: Recipe, recipe: Recipe) {
+export function filterRecipe(originalRecipe: RecipeContextType, recipe: Recipe) {
   const filteredData = {
-    "name": compareNames(originalRecipe.name, recipe.name),
-    "ingredients": filterIngredients(originalRecipe.ingredients, recipe.ingredients),
-    "instructions": filterInstructions(originalRecipe.instructions, recipe.instructions),
-    "notes": filterNotes(originalRecipe.notes, recipe.notes)
+    "name": compareNames(originalRecipe.recipeName, recipe.name),
+    "ingredients": filterIngredients(originalRecipe.contextIngredients, recipe.ingredients),
+    "instructions": filterInstructions(originalRecipe.contextInstructions, recipe.instructions),
+    "notes": filterNotes(originalRecipe.selectedNotes, recipe.notes)
   }
   return filteredData;
 }

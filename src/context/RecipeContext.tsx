@@ -10,11 +10,4 @@ export type RecipeContextType = {
   requestAction: string;
 }
 
-export const RecipeContext = createContext<RecipeContextType>({
-  recipeId: 0,
-  recipeName: '',
-  contextInstructions: [],
-  selectedNotes: "",
-  contextIngredients: [],
-  requestAction: ""
-})
+export const RecipeContext = createContext<RecipeContextType | null>(null)

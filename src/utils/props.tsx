@@ -20,7 +20,6 @@ export type NotesViewProp = {
 }
 
 export type RecipeRequestsProps = {
-  selectedRecipe:Recipe;
   setShowing: any;
   isOpen: boolean;
   handleRecipesUpdate: (recipe: Recipe) => void;
