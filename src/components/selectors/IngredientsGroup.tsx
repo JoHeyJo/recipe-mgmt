@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import IngredientInputGroup from './IngredientInputGroup';
-import { Ingredients } from '../../utils/types';
+import { Ingredients, Ingredient } from '../../utils/types';
 import { IngredientsGroupProps } from '../../utils/props';
 import FaPlusButton from '../ui/common/FaPlusButton';
 import FaMinusButton from '../ui/common/FaMinusButton';
@@ -9,25 +9,23 @@ import { v4 as uuidv4 } from 'uuid';
 import { defaultIngredient, recipeTemplate } from '../../utils/templates';
 
 /** Contains a list of ingredients 
- * 
+ * Refactor: IngredientKeys can be removed and id associated with ingredient can now be used.
  * Need to choose between using DATE or UUID
  * 
  * RecipeRequests -> IngredientsGroup -> IngredientInputGroup
  */
 function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
-  const { requestAction, contextIngredients } = useContext(RecipeContext );
+  const { requestAction, contextIngredients } = useContext(RecipeContext);
   const [ingredients, setIngredients] = useState<Ingredients>(contextIngredients || recipeTemplate.ingredients);
   const [ingredientKeys, setIngredientKeys] = useState<any>([Date.now()]); // Generate unique key on first render
 
 
-  /** Populate recipe form with current ingredients on EDIT or set blank default*/
+  /** Create unique keys array needed for children components */
   useEffect(() => {
     if (requestAction === "edit") {
       setIngredientKeys(keys => {
         return contextIngredients.map(() => uuidv4())
       })
-    } else {
-      setIngredients([defaultIngredient])
     }
   }, [])
 
