@@ -14,9 +14,9 @@ const defaultUnit = { id: null, type: "" };
  * IngredientGroup -> IngredientInputGroup -> OptionRequests
 */
 function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: IngredientInputGroupProps) {
-  const [item, setItem] = useState<Option>(defaultItem);
-  const [amount, setAmount] = useState<Option>(defaultAmount);
-  const [unit, setUnit] = useState<Option>(defaultUnit);
+  const [item, setItem] = useState<Option>();
+  const [amount, setAmount] = useState<Option>();
+  const [unit, setUnit] = useState<Option>();
 
   const [items, setItems] = useState<Option[]>([])
   const [quantityAmount, setQuantityAmounts] = useState<Option[]>([])
@@ -56,10 +56,7 @@ function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: Ingre
 
   /** Maintains parent components state synced with latest selections */
   useEffect(() => {
-    // prevents temporary replacement of item,amount,unit state with default template 
-    if (amount.id && item.id && unit.id) {
       updateIngredientList()
-    }
   }, [item, amount, unit])
 
   /** Populate each instance of component with latest options */

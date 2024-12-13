@@ -25,13 +25,14 @@ function TitleInput({ handleUpdate }: RecipeInfoProp) {
   /** handles parent state changes */
   useEffect(()=>{
     updateTitle()
-  },[title])
+  },[title])  
 
   return (
     <InputWithLabel
       id={recipeId.toString()}
       name={recipeName}
-      value={requestAction === "edit" ? title : null}
+      // value={requestAction === "edit" ? title : null}
+      value={title}
       type={"title"}
       handleUpdate={handleChange}
       placeholder={"Awesome recipe name!"} />

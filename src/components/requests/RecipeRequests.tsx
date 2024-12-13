@@ -93,6 +93,7 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
       // const res = await API.editBookRecipe(userId, currentBookId, recipeId, editedData);
       // setShowing();
       // return res;  
+      console.log("mutated data", editedData)
     } catch (error: any) {
       errorHandling("RecipeRequests - editRecipe", error);
     }
