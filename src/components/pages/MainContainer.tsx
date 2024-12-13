@@ -29,7 +29,7 @@ function MainContainer() {
     selectedNotes: selectedRecipe.notes,
     requestAction
   }
-
+console.log("selected",selectedRecipe)
   /**Update rendered recipes after creation */
   function updateRecipes(recipe: Recipe) {
     setRecipes(recipes => [...recipes, recipe])
@@ -59,7 +59,9 @@ function MainContainer() {
     setOpen(!isOpen);
   }
 
+  /** Triggers actions that renders RecipeRequests with empty data - no recipe */
   function toggleCreateForm(){
+    setSelectedRecipe(recipeTemplate);
     setRequestAction("")
     setOpen(!isOpen);
   }
@@ -86,7 +88,7 @@ function MainContainer() {
             <RecipeRequests handleRecipesUpdate={updateRecipes} handleRecipeDelete={updateDeleteRecipe} setShowing={toggleModel} isOpen={isOpen} />
             <div className="flex justify-between m-1">
               <div>Recipes</div>
-              <FaPlusButton onAction={toggleCreateForm  } />
+              <FaPlusButton onAction={toggleCreateForm} />
             </div>
             <RecipesList recipes={recipes} handleSelect={selectRecipe} />
           </section>
