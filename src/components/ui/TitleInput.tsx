@@ -8,7 +8,7 @@ import { RecipeContext } from "../../context/RecipeContext";
  * RecipeRequests -> TitleInput -> InputWithLabel
  */
 function TitleInput({ handleUpdate }: RecipeInfoProp) {
-  const { recipeId, recipeName, requestAction } = useContext(RecipeContext);
+  const { recipeId, recipeName } = useContext(RecipeContext);
   const [title, setTitle] = useState(recipeName);
 
   /** Updates parent component with title data */
@@ -31,7 +31,6 @@ function TitleInput({ handleUpdate }: RecipeInfoProp) {
     <InputWithLabel
       id={recipeId.toString()}
       name={recipeName}
-      // value={requestAction === "edit" ? title : null}
       value={title}
       type={"title"}
       handleUpdate={handleChange}

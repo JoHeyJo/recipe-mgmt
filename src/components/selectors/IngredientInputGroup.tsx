@@ -14,9 +14,9 @@ const defaultUnit = { id: null, type: "" };
  * IngredientGroup -> IngredientInputGroup -> OptionRequests
 */
 function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: IngredientInputGroupProps) {
-  const [item, setItem] = useState<Option>(defaultItem);
-  const [amount, setAmount] = useState<Option>(defaultAmount);
-  const [unit, setUnit] = useState<Option>(defaultUnit);
+  const [item, setItem] = useState<Option>(ingredientTemplate.item);
+  const [amount, setAmount] = useState<Option>(ingredientTemplate.amount);
+  const [unit, setUnit] = useState<Option>(ingredientTemplate.unit);
 
   const [items, setItems] = useState<Option[]>([])
   const [quantityAmount, setQuantityAmounts] = useState<Option[]>([])
