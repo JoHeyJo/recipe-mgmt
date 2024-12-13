@@ -20,12 +20,6 @@ export type Ingredient = {
   item: Option;
 }
 
-export type IngredientInputGroupProps = {
-  handleUpdate: (newIngredient: Ingredient, index: number) => void;
-  ingredientTemplate: Ingredient;
-  index: number;
-}
-
 export type Ingredients = Ingredient[];
 
 export type User = {

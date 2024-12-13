@@ -3,7 +3,7 @@ import { RecipeContext } from '../../context/RecipeContext';
 import OptionRequests from '../requests/OptionRequests';
 import { Ingredient, Option } from '../../utils/types';
 import API from '../../api';
-import { IngredientInputGroupProps } from '../../utils/types';
+import { IngredientInputGroupProps } from '../../utils/props';
 
 const defaultItem = { id: null, name: "" };
 const defaultAmount = { id: null, value: "" };
@@ -13,10 +13,10 @@ const defaultUnit = { id: null, type: "" };
  * 
  * IngredientGroup -> IngredientInputGroup -> OptionRequests
 */
-function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: IngredientInputGroupProps) {
-  const [item, setItem] = useState<Option>(ingredientTemplate.item);
-  const [amount, setAmount] = useState<Option>(ingredientTemplate.amount);
-  const [unit, setUnit] = useState<Option>(ingredientTemplate.unit);
+function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInputGroupProps) {
+  const [item, setItem] = useState<Option>(ingredient.item);
+  const [amount, setAmount] = useState<Option>(ingredient.amount);
+  const [unit, setUnit] = useState<Option>(ingredient.unit);
 
   const [items, setItems] = useState<Option[]>([])
   const [quantityAmount, setQuantityAmounts] = useState<Option[]>([])
@@ -24,7 +24,7 @@ function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: Ingre
 
   /** Calls parent callback to handleUpdate name */
   function updateIngredientList() {
-    const updatedIngredient = { ...ingredientTemplate, item, amount, unit };
+    const updatedIngredient = { ...ingredient, item, amount, unit };
     handleUpdate(updatedIngredient, index)
   }
 
@@ -74,9 +74,9 @@ function IngredientInputGroup({ handleUpdate, ingredientTemplate, index }: Ingre
 
   return (
     <div className="flex rounded-md">
-      <OptionRequests value={ingredientTemplate.amount} handleOptions={handleOptions} handleOptionChange={updateState} options={quantityAmount} name={"value"} />
-      <OptionRequests value={ingredientTemplate.unit} handleOptions={handleOptions} handleOptionChange={updateState} options={quantityUnits} name={"type"} />
-      <OptionRequests value={ingredientTemplate.item} handleOptions={handleOptions} handleOptionChange={updateState} options={items} name={"name"} />
+      <OptionRequests value={ingredient.amount} handleOptions={handleOptions} handleOptionChange={updateState} options={quantityAmount} name={"value"} />
+      <OptionRequests value={ingredient.unit} handleOptions={handleOptions} handleOptionChange={updateState} options={quantityUnits} name={"type"} />
+      <OptionRequests value={ingredient.item} handleOptions={handleOptions} handleOptionChange={updateState} options={items} name={"name"} />
     </div>
   )
 }

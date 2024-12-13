@@ -1,20 +1,12 @@
 import { useState, useEffect, useContext } from 'react';
 import IngredientInputGroup from './IngredientInputGroup';
-import { Ingredient } from '../../utils/types';
+import { Ingredients } from '../../utils/types';
 import { IngredientsGroupProps } from '../../utils/props';
 import FaPlusButton from '../ui/common/FaPlusButton';
 import FaMinusButton from '../ui/common/FaMinusButton';
 import { RecipeContext } from '../../context/RecipeContext';
 import { v4 as uuidv4 } from 'uuid';
-
-
-
-const defaultIngredient: Ingredient = {
-  id: 0,
-  amount: { id: null, value: "" },
-  unit: { id: null, type: "" },
-  item: { id: null, name: "" }
-}
+import { defaultIngredient, recipeTemplate } from '../../utils/templates';
 
 /** Contains a list of ingredients 
  * 
@@ -23,15 +15,14 @@ const defaultIngredient: Ingredient = {
  * RecipeRequests -> IngredientsGroup -> IngredientInputGroup
  */
 function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
-  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+  const { requestAction, contextIngredients } = useContext(RecipeContext );
+  const [ingredients, setIngredients] = useState<Ingredients>(contextIngredients || recipeTemplate.ingredients);
   const [ingredientKeys, setIngredientKeys] = useState<any>([Date.now()]); // Generate unique key on first render
 
-  const { requestAction, contextIngredients } = useContext(RecipeContext);
 
   /** Populate recipe form with current ingredients on EDIT or set blank default*/
   useEffect(() => {
     if (requestAction === "edit") {
-      setIngredients(contextIngredients)
       setIngredientKeys(keys => {
         return contextIngredients.map(() => uuidv4())
       })
@@ -71,7 +62,7 @@ function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
     <div id='IngredientsGroup-main'>
       {ingredients.map((ingredient, i) =>
         <div key={ingredientKeys[i]} className='flex items-center justify-center'>
-          <IngredientInputGroup index={i} ingredientTemplate={ingredient} handleUpdate={updateIngredients} />
+          <IngredientInputGroup index={i} ingredient={ingredient} handleUpdate={updateIngredients} />
           {i === ingredients.length - 1 ? <FaPlusButton onAction={addIngredient} /> : <FaMinusButton onAction={() => removeIngredient(i)} />}
         </div>
       )}

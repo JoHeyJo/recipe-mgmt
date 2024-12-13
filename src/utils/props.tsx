@@ -8,6 +8,12 @@ export type InstructionManagerProps = {
   handleInstructions: any
 }
 
+export type IngredientInputGroupProps = {
+  handleUpdate: (newIngredient: Ingredient, index: number) => void;
+  ingredient: Ingredient;
+  index: number;
+}
+
 export type IngredientsViewProp = {
   ingredients: Ingredient[];
 }

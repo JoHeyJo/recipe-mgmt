@@ -15,7 +15,8 @@ import { compareIngredients, compareInstructions, compareNames, filterRecipe, co
 import TitleInput from '../ui/TitleInput';
 
 
-/** Processes all recipe data
+/** Processes recipe data. Context data is passed through here on edit. Else template 
+ * RecipeRequests data is mutable while context data is not
  * 
  * MainContainer -> RecipeRequests -> [IngredientsGroup, InstructionsArea, NotesInput, TitleInput]
  */
@@ -29,7 +30,13 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
     contextInstructions,
     selectedNotes
   } = useContext(RecipeContext);
-  const [recipe, setRecipe] = useState<any>({});
+  const [recipe, setRecipe] = useState<any>({
+    name: recipeName,
+    id: recipeId,
+    ingredients: contextIngredients,
+    instructions: contextInstructions,
+    notes: selectedNotes,
+  });
   const [error, setError] = useState()
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -42,17 +49,16 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
     selectedNotes
   }
 
-  useEffect(() => {
-    // if single source or truth recipe and editable recipe is truly synced there
-    // doesn't need to be a check here .....
-    setRecipe({
-      name: recipeName,
-      id: recipeId,
-      ingredients: contextIngredients,
-      instructions: contextInstructions,
-      notes: selectedNotes,
-    })
-  }, [recipeId])
+  // syncs selection: original recipe with mutable recipe
+    useEffect(() => {
+      setRecipe({
+        name: recipeName,
+        id: recipeId,
+        ingredients: contextIngredients,
+        instructions: contextInstructions,
+        notes: selectedNotes,
+      })
+    }, [recipeId])
 
   /** Enables/disables update submit */
   useEffect(() => {
@@ -87,9 +93,9 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   }
 
   /** Calls API - sends patch request with only edited recipe data */
-  async function editRecipe(originalRecipe: RecipeContextType, recipe: Recipe) {
+  async function editRecipe(originalRecipe: RecipeContextType, mutableRecipe: Recipe) {
     try {
-      const editedData = filterRecipe(originalRecipe, recipe);
+      const editedData = filterRecipe(originalRecipe, mutableRecipe);
       // const res = await API.editBookRecipe(userId, currentBookId, recipeId, editedData);
       // setShowing();
       // return res;  

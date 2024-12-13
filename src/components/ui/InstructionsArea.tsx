@@ -23,17 +23,15 @@ const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs >= 2
  * RecipeRequests -> InstructionsArea -> InstructionManager
  */
 function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
+  const { requestAction, contextInstructions } = useContext(RecipeContext);
   const [instructions, setInstructions] = useState([]);
-  const [selectedInstructions, setSelectedInstructions] = useState<any>([]); //This reflects the correct set of selected instructions
+  const [selectedInstructions, setSelectedInstructions] = useState<any>(contextInstructions); 
   const [filterKey, setFilterKeys] = useState({});
 
-  const { requestAction, contextInstructions } = useContext(RecipeContext);
 
   // On mount, populate instructions if recipe is selected
   useEffect(() => {
     if (requestAction === "edit") {
-      setSelectedInstructions(contextInstructions)
-      handleUpdate(contextInstructions, "instructions")
       createInstructionInput()
     } else {
       setSelectedInstructions(PLACE_HOLDER)
@@ -135,7 +133,6 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
       // In other dropdowns (arrayKey !== current arrayKey), filter out the selected item
       // return filterKey[instruction.id]
     })
-
   }
 
   /** Updates parent state of instructions when instructions is changed and on mount */
