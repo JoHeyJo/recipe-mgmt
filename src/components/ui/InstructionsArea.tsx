@@ -36,7 +36,7 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
     } else {
       setSelectedInstructions(PLACE_HOLDER)
     }
-  }, [])
+  }, [requestAction])
 
   /** Add selected instruction to incoming data set from db  */
   function addInstruction(instruction: Instruction) {
@@ -133,6 +133,7 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
       // In other dropdowns (arrayKey !== current arrayKey), filter out the selected item
       // return filterKey[instruction.id]
     })
+
   }
 
   /** Updates parent state of instructions when instructions is changed and on mount */
