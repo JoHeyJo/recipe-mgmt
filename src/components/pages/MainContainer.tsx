@@ -29,7 +29,7 @@ function MainContainer() {
     selectedNotes: selectedRecipe.notes,
     requestAction
   }
-console.log("selected",selectedRecipe)
+  
   /**Update rendered recipes after creation */
   function updateRecipes(recipe: Recipe) {
     setRecipes(recipes => [...recipes, recipe])

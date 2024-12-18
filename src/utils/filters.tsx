@@ -9,7 +9,7 @@ export function compareNames(original: string, edited: string) {
 /** Executes quick comparison of ingredients */
 export function compareIngredients(originals: Ingredients, edited: Ingredients) {
   const isAltered = edited.find((editedIngredient, index) => {
-    // if (!editedIngredient.amount.id || !editedIngredient.unit.id || !editedIngredient.item.id) return true
+    // if (!editedIngredient.amount.id || !editedIngredient.unit.id || !editedIngredient.item.id) return
     return (
       editedIngredient.amount.id !== originals[index]?.amount.id ||
       editedIngredient.unit.id !== originals[index]?.unit.id ||
@@ -29,7 +29,7 @@ export function compareInstructions(original: Instructions, edited: Instructions
 }
 
 /** Executes quick comparison of notes */
-export function compareNotes(original: string, edited: string){
+export function compareNotes(original: string, edited: string) {
   return original === edited ? null : "altered";
 }
 
@@ -90,12 +90,19 @@ function filterIngredients(originalIngredients: Ingredients, edited: Ingredients
       "item": item,
       "unit": unit
     };
-    // catches empty ingredient 
-    if (amount || item || unit) alteredIngredients.push(alteredIngredient);
+    const isInputModified = amount || item || unit;
+    // adds only modified ingredients
+    if (isInputModified) {
+      console.log("###",amount, unit, item)
+      const isIngredientModified = amount.id || unit.id || item.id
+      if(isIngredientModified){
+        alteredIngredients.push(alteredIngredient);
+      }
+    }
     return alteredIngredients;
   }, [])
 
-  // removes empty ingredient inputs that user left 
+  // removes empty ingredient inputs from mutated data that user left 
   const shouldInclude = alteredIngredients.filter((ingredient) => {
     return (ingredient.item.id || ingredient.amount.id || ingredient.unit.id)
   })

@@ -64,9 +64,9 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   useEffect(() => {
     if (requestAction === "edit") {
       const name = compareNames(recipeName, recipe.name);
-      const ingredients = compareIngredients(contextIngredients, recipe.ingredients)
-      const instructions = compareInstructions(contextInstructions, recipe.instructions)
-      const notes = compareNotes(selectedNotes, recipe.notes)
+      const ingredients = compareIngredients(contextIngredients, recipe.ingredients);
+      const instructions = compareInstructions(contextInstructions, recipe.instructions);
+      const notes = compareNotes(selectedNotes, recipe.notes);
       const isAltered = name || ingredients || instructions || notes;
       setIsDisabled(!isAltered)
     }

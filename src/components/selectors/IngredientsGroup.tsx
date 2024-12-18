@@ -59,7 +59,7 @@ function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
   return (
     <div id='IngredientsGroup-main'>
       {ingredients.map((ingredient, i) =>
-        <div key={ingredientKeys[i]} className='flex items-center justify-center'>
+        <div key={ingredient.ingredient_id || ingredientKeys[i] } className='flex items-center justify-center'>
           <IngredientInputGroup index={i} ingredient={ingredient} handleUpdate={updateIngredients} />
           {i === ingredients.length - 1 ? <FaPlusButton onAction={addIngredient} /> : <FaMinusButton onAction={() => removeIngredient(i)} />}
         </div>

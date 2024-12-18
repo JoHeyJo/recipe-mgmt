@@ -28,7 +28,6 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   const [selectedInstructions, setSelectedInstructions] = useState<any>([]); 
   const [filterKey, setFilterKeys] = useState({});
 
-
   // On mount, populate instructions if recipe is selected
   useEffect(() => {
     if (requestAction === "edit") {
