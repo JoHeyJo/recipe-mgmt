@@ -8,13 +8,17 @@ export function compareNames(original: string, edited: string) {
 
 /** Executes quick comparison of ingredients */
 export function compareIngredients(originals: Ingredients, edited: Ingredients) {
+  console.log("#############")
   const isAltered = edited.find((editedIngredient, index) => {
-    // if (!editedIngredient.amount.id || !editedIngredient.unit.id || !editedIngredient.item.id) return
+    console.log(editedIngredient.amount.id, editedIngredient.unit.id, editedIngredient.item.id)
+    // if (editedIngredient.amount.id || editedIngredient.unit.id || editedIngredient.item.id) return
+
     return (
-      editedIngredient.amount.id !== originals[index]?.amount.id ||
+      (editedIngredient.amount.id !== null || editedIngredient.unit.id !== null || editedIngredient.item.id !== null) &&
+      (editedIngredient.amount.id !== originals[index]?.amount.id ||
       editedIngredient.unit.id !== originals[index]?.unit.id ||
-      editedIngredient.item.id !== originals[index]?.item.id
-    )
+        editedIngredient.item.id !== originals[index]?.item.id) 
+      )
   });
   return isAltered ? "altered" : null;
 }
