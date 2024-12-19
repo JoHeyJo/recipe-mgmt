@@ -91,13 +91,16 @@ function filterIngredients(originalIngredients: Ingredients, edited: Ingredients
       "unit": unit
     };
     const isInputModified = amount || item || unit;
-    // adds only modified ingredients
+    // adds only modified ingredients and not newly created empty ingredient input 
     if (isInputModified) {
-      console.log("###",amount, unit, item)
-      const isIngredientModified = amount.id || unit.id || item.id
-      if(isIngredientModified){
-        alteredIngredients.push(alteredIngredient);
-      }
+      // differentiates between an empty ingredient input and modified ingredient
+      const isAmountModified = amount ? amount.id : false;
+      const isUnitModified  = unit ? unit.id : false;
+      const isItemModified = item ? item.id : false;
+      
+      const isIngredientModified = isAmountModified || isUnitModified || isItemModified; 
+
+      if(isIngredientModified) alteredIngredients.push(alteredIngredient);
     }
     return alteredIngredients;
   }, [])
