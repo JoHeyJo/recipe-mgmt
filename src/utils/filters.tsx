@@ -8,13 +8,12 @@ export function compareNames(original: string, edited: string) {
 
 /** Executes quick comparison of ingredients */
 export function compareIngredients(originals: Ingredients, edited: Ingredients) {
-  console.log("#############")
   const isAltered = edited.find((editedIngredient, index) => {
-    console.log(editedIngredient.amount.id, editedIngredient.unit.id, editedIngredient.item.id)
-    // if (editedIngredient.amount.id || editedIngredient.unit.id || editedIngredient.item.id) return
 
     return (
+      // checks for empty ingredient input
       (editedIngredient.amount.id !== null || editedIngredient.unit.id !== null || editedIngredient.item.id !== null) &&
+      //checks for differences between original and mutable ingredient
       (editedIngredient.amount.id !== originals[index]?.amount.id ||
       editedIngredient.unit.id !== originals[index]?.unit.id ||
         editedIngredient.item.id !== originals[index]?.item.id) 

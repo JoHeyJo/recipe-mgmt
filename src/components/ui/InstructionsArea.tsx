@@ -10,8 +10,8 @@ const PLACE_HOLDER = ["Add ingredients...", "Add ice...", "shake..."]
 
 const InstructionsTemplate: Instructions = []
 
-/**  Triggers creation of input if num of inputs = array index & more than 2 are needed*/
-const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs >= 2 && inputs - 1 === arrayKey
+/** Triggers creation of input if there are no inputs left (num of inputs = array index) */
+const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs - 1 === arrayKey
 
 /** InstructionsArea - Makes requests for instructions
  * 

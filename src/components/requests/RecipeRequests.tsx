@@ -9,7 +9,6 @@ import InstructionsArea from '../ui/InstructionsArea';
 import { UserContext } from '../../context/UserContext';
 import { RecipeRequestsProps } from '../../utils/props';
 import NotesInput from '../ui/NotesInput';
-import { recipeTemplate as template } from "../../utils/templates";
 import { RecipeContext, RecipeContextType } from '../../context/RecipeContext';
 import { compareIngredients, compareInstructions, compareNames, filterRecipe, compareNotes } from '../../utils/filters';
 import TitleInput from '../ui/TitleInput';
@@ -49,7 +48,7 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
     selectedNotes
   }
 
-  // syncs selection: original recipe with mutable recipe
+  // syncs selected original recipe with mutable recipe
     useEffect(() => {
       setRecipe({
         name: recipeName,
