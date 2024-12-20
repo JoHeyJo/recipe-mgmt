@@ -88,7 +88,7 @@ function filterIngredients(originalIngredients: Ingredients, edited: Ingredients
     const unit = handleAdditionalInput(editedIngredient, originalIngredients, "unit", index)
     const alteredIngredient = {
       "id": editedIngredient.ingredient_id,
-      // below  can be refactored to only send id instead of entire object
+      // below can be refactored to only send id instead of entire object
       "amount": amount,
       "item": item,
       "unit": unit
@@ -110,7 +110,7 @@ function filterIngredients(originalIngredients: Ingredients, edited: Ingredients
 
   // removes empty ingredient inputs from mutated data that user left 
   const shouldInclude = alteredIngredients.filter((ingredient) => {
-    return (ingredient.item.id || ingredient.amount.id || ingredient.unit.id)
+    return (ingredient.item || ingredient.amount || ingredient.unit)
   })
 
   return shouldInclude.length === 0 ? null : alteredIngredients;
