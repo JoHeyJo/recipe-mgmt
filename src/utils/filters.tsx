@@ -115,34 +115,3 @@ function filterIngredients(originalIngredients: Ingredients, edited: Ingredients
 
   return shouldInclude.length === 0 ? null : alteredIngredients;
 }
-// {
-//   ingredients:
-//   [
-//     {
-//       amount: { id: 1, value: '1.5' },
-//       id: 52,
-//       item: { id: 2, name: 'lime' },
-//       unit: { id: 2, type: 'dash' }
-//     },
-//     {
-//       amount: { id: 3, value: '2' },
-//       id: 53,
-//       item: null,
-//       unit: null,
-//     },  
-//     {
-//       amount: { id: 3, value: '2' },
-//       id: undefined,
-//       item: null,
-//       unit: null,
-//     },
-//   ]
-//   instructions:
-//   [
-//     { associationId: 55, newId: 2 },
-//     { associationId: 56, newId: 4 },
-//     { associationId: undefined, newId: 2 }
-//   ]
-//   name: null,
-//   notes: null
-// }

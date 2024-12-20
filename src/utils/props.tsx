@@ -26,10 +26,13 @@ export type NotesViewProp = {
 }
 
 export type RecipeRequestsProps = {
+  recipeActions: {
+    updateRecipes: (recipe: Recipe) => void;
+    deleteRecipe: () => void;
+    editRecipe: () => void;
+  }
   setShowing: any;
   isOpen: boolean;
-  handleRecipesUpdate: (recipe: Recipe) => void;
-  handleRecipeDelete: () => void;
 }
 
 export type RecipeViewProps = {

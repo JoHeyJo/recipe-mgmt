@@ -19,7 +19,7 @@ import TitleInput from '../ui/TitleInput';
  * 
  * MainContainer -> RecipeRequests -> [IngredientsGroup, InstructionsArea, NotesInput, TitleInput]
  */
-function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeDelete }: RecipeRequestsProps) {
+function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsProps) {
   const { currentBookId, userId } = useContext(UserContext);
   const {
     recipeId,
@@ -85,7 +85,7 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   async function addRecipe() {
     try {
       const res = await API.postUserRecipe(recipe, currentBookId, userId);
-      handleRecipesUpdate(res)
+      recipeActions.updateRecipes(res)
     } catch (error: any) {
       errorHandling("RecipeRequests - addRecipe", error)
     }
@@ -95,10 +95,9 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   async function editRecipe(originalRecipe: RecipeContextType, mutableRecipe: Recipe) {
     try {
       const editedData = filterRecipe(originalRecipe, mutableRecipe);
-      // const res = await API.editBookRecipe(userId, currentBookId, recipeId, editedData);
-      // setShowing();
-      // return res;  
-      console.log("mutated data", editedData)
+      const res = await API.editBookRecipe(userId, currentBookId, recipeId, editedData);
+      recipeActions.editRecipe()
+      return res;  
     } catch (error: any) {
       errorHandling("RecipeRequests - editRecipe", error);
     }
@@ -107,7 +106,7 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   async function deleteRecipe(userId: number, bookId: number, recipeId: number) {
     try {
       const res = API.deleteUserRecipe(userId, currentBookId, recipeId)
-      handleRecipeDelete()
+      recipeActions.deleteRecipe()
     } catch (error: any) {
       setError(error.msg)
       errorHandling("RecipeRequests - addRecipe", error)
@@ -115,12 +114,12 @@ function RecipeRequests({ setShowing, isOpen, handleRecipesUpdate, handleRecipeD
   }
 
   function handleDelete() {
-    setShowing(false)
+    setShowing()
     deleteRecipe(userId, currentBookId, recipeId)
   }
 
   function handleSubmit() {
-    setShowing(false)
+    setShowing()
     addRecipe()
   }
 

@@ -29,14 +29,21 @@ function MainContainer() {
     selectedNotes: selectedRecipe.notes,
     requestAction
   }
-  
-  /**Update rendered recipes after creation */
+
+  /** Updates rendered recipes after creation */
   function updateRecipes(recipe: Recipe) {
     setRecipes(recipes => [...recipes, recipe])
   }
 
-  /**Update rendered recipes after deletion */
-  function updateDeleteRecipe() {
+  /** Handles recipe edit action & requests updated list of recipes. */
+  async function editRecipe(){
+    setOpen(false)
+    const res = await API.getUserRecipes(userId, currentBookId);
+    setRecipes(res);
+  }
+
+  /** Removes recipe from list after deletion */
+  function deleteRecipe() {
     const id = selectedRecipe.id;
     const updatedRecipes = recipes.filter((recipe) => recipe.id !== id)
     setRecipes(updatedRecipes);
@@ -60,10 +67,16 @@ function MainContainer() {
   }
 
   /** Triggers actions that renders RecipeRequests with empty data - no recipe */
-  function toggleCreateForm(){
+  function toggleCreateForm() {
     setSelectedRecipe(recipeTemplate);
     setRequestAction("")
     setOpen(!isOpen);
+  }
+
+  const recipeActions = {
+    updateRecipes,
+    deleteRecipe,
+    editRecipe
   }
 
   useEffect(() => {
@@ -85,7 +98,7 @@ function MainContainer() {
         {/* Does recipes need to be reduced to just ids and title??? */}
         <RecipeContext.Provider value={recipeData}>
           <section id="RecipesList-container" className="flex-1">
-            <RecipeRequests handleRecipesUpdate={updateRecipes} handleRecipeDelete={updateDeleteRecipe} setShowing={toggleModel} isOpen={isOpen} />
+            <RecipeRequests recipeActions={recipeActions} setShowing={toggleModel} isOpen={isOpen} />
             <div className="flex justify-between m-1">
               <div>Recipes</div>
               <FaPlusButton onAction={toggleCreateForm} />
