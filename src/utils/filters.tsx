@@ -15,9 +15,9 @@ export function compareIngredients(originals: Ingredients, edited: Ingredients) 
       (editedIngredient.amount.id !== null || editedIngredient.unit.id !== null || editedIngredient.item.id !== null) &&
       //checks for differences between original and mutable ingredient
       (editedIngredient.amount.id !== originals[index]?.amount.id ||
-      editedIngredient.unit.id !== originals[index]?.unit.id ||
-        editedIngredient.item.id !== originals[index]?.item.id) 
-      )
+        editedIngredient.unit.id !== originals[index]?.unit.id ||
+        editedIngredient.item.id !== originals[index]?.item.id)
+    )
   });
   return isAltered ? "altered" : null;
 }
@@ -98,12 +98,12 @@ function filterIngredients(originalIngredients: Ingredients, edited: Ingredients
     if (isInputModified) {
       // differentiates between an empty ingredient input and modified ingredient
       const isAmountModified = amount ? amount.id : false;
-      const isUnitModified  = unit ? unit.id : false;
+      const isUnitModified = unit ? unit.id : false;
       const isItemModified = item ? item.id : false;
-      
-      const isIngredientModified = isAmountModified || isUnitModified || isItemModified; 
 
-      if(isIngredientModified) alteredIngredients.push(alteredIngredient);
+      const isIngredientModified = isAmountModified || isUnitModified || isItemModified;
+
+      if (isIngredientModified) alteredIngredients.push(alteredIngredient);
     }
     return alteredIngredients;
   }, [])
@@ -115,3 +115,34 @@ function filterIngredients(originalIngredients: Ingredients, edited: Ingredients
 
   return shouldInclude.length === 0 ? null : alteredIngredients;
 }
+// {
+//   ingredients:
+//   [
+//     {
+//       amount: { id: 1, value: '1.5' },
+//       id: 52,
+//       item: { id: 2, name: 'lime' },
+//       unit: { id: 2, type: 'dash' }
+//     },
+//     {
+//       amount: { id: 3, value: '2' },
+//       id: 53,
+//       item: null,
+//       unit: null,
+//     },  
+//     {
+//       amount: { id: 3, value: '2' },
+//       id: undefined,
+//       item: null,
+//       unit: null,
+//     },
+//   ]
+//   instructions:
+//   [
+//     { associationId: 55, newId: 2 },
+//     { associationId: 56, newId: 4 },
+//     { associationId: undefined, newId: 2 }
+//   ]
+//   name: null,
+//   notes: null
+// }
