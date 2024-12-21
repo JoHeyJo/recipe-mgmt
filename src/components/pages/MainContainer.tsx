@@ -105,7 +105,7 @@ function MainContainer() {
             </div>
             <RecipesList recipes={recipes} handleSelect={selectRecipe} />
           </section>
-          <RecipeContainer recipe={selectedRecipe} handleRecipesUpdate={updateRecipes} handleModalToggle={toggleEditTemplate} isOpen={isOpen} />
+          <RecipeContainer recipe={selectedRecipe} handleModalToggle={toggleEditTemplate} />
         </RecipeContext.Provider >
       </div>
     </div>
