@@ -10,7 +10,7 @@ import FaPlusButton from "../ui/common/FaPlusButton"
 import RecipeRequests from "../requests/RecipeRequests";
 import { RecipeContext } from "../../context/RecipeContext";
 
-/** Renders the main container housing list of recipes and individual recipe
+/** Renders the main container (book) housing list of recipes and individual recipe
  * 
  * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList]
  */
@@ -105,7 +105,7 @@ function MainContainer() {
             </div>
             <RecipesList recipes={recipes} handleSelect={selectRecipe} />
           </section>
-          <RecipeContainer recipe={selectedRecipe} handleModalToggle={toggleEditTemplate} />
+          <RecipeContainer recipe={selectedRecipe} handleModalToggle={toggleEditTemplate} isOpen={isOpen}/>
         </RecipeContext.Provider >
       </div>
     </div>

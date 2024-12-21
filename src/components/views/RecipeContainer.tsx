@@ -5,13 +5,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext } from "react"
 import { RecipeContext } from "../../context/RecipeContext"
 
-/** Renders recipe "book"
+/** Renders recipe 
  * 
  * 
  * MainContainer -> RecipeContainer -> RecipeRequests
  */
 
-function RecipeContainer({ recipe, handleModalToggle }: RecipeViewProps) {
+function RecipeContainer({ recipe, handleModalToggle, isOpen }: RecipeViewProps) {
 
   const { recipeId } = useContext(RecipeContext);
 

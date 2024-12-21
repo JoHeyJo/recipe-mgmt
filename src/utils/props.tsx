@@ -38,6 +38,7 @@ export type RecipeRequestsProps = {
 export type RecipeViewProps = {
   recipe: Recipe;
   handleModalToggle: () => void;
+  isOpen: boolean;
 }
 
 export type IngredientsGroupProps = {
