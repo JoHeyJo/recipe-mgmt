@@ -35,10 +35,13 @@ function MainContainer() {
     setRecipes(recipes => [...recipes, recipe])
   }
 
-  /** Handles recipe edit action & requests updated list of recipes. */
+  /** Handles recipe edit action: requests updated recipes, re-selects updated recipe. */
   async function editRecipe(){
     setOpen(false)
     const res = await API.getUserRecipes(userId, currentBookId);
+    for (let recipe of res){
+      if (recipe.id === selectedRecipe.id) setSelectedRecipe(recipe)
+    }
     setRecipes(res);
   }
 

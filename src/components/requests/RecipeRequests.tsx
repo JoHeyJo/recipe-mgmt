@@ -14,8 +14,8 @@ import { compareIngredients, compareInstructions, compareNames, filterRecipe, co
 import TitleInput from '../ui/TitleInput';
 
 
-/** Processes recipe data. Context data is passed through here on edit. Else template 
- * RecipeRequests data is mutable while context data is not
+/** Processes recipe data. Context data is passed through here on edit. Else template data.
+ * RecipeRequests data is mutable while context data(reference data) is not
  * 
  * MainContainer -> RecipeRequests -> [IngredientsGroup, InstructionsArea, NotesInput, TitleInput]
  */
