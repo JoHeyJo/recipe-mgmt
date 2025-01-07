@@ -94,8 +94,9 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
   /** Calls API - sends patch request with only edited recipe data */
   async function editRecipe(originalRecipe: RecipeContextType, mutableRecipe: Recipe) {
     try {
-      const editedData = filterRecipe(originalRecipe, mutableRecipe);
-      const res = await API.editBookRecipe(userId, currentBookId, recipeId, editedData);
+      const mutatedData = filterRecipe(originalRecipe, mutableRecipe);
+      console.log("mutated data", mutatedData)
+      const res = await API.editBookRecipe(userId, currentBookId, recipeId, mutatedData);
       recipeActions.editRecipe()
       return res;  
     } catch (error: any) {

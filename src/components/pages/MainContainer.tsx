@@ -9,6 +9,7 @@ import { recipeTemplate } from "../../utils/templates";
 import FaPlusButton from "../ui/common/FaPlusButton"
 import RecipeRequests from "../requests/RecipeRequests";
 import { RecipeContext } from "../../context/RecipeContext";
+import BookView from "../views/BookView";
 
 /** Renders the main container (book) housing list of recipes and individual recipe
  * 
@@ -103,7 +104,8 @@ function MainContainer() {
           <section id="RecipesList-container" className="flex-1">
             <RecipeRequests recipeActions={recipeActions} setShowing={toggleModel} isOpen={isOpen} />
             <div className="flex justify-between m-1">
-              <div>Recipes</div>
+              <div>Recipes for:</div>
+              <BookView />
               <FaPlusButton onAction={toggleCreateForm} />
             </div>
             <RecipesList recipes={recipes} handleSelect={selectRecipe} />

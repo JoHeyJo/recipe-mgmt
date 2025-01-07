@@ -59,11 +59,10 @@ function filterInstructions(original: Instructions, edited: Instructions) {
     // handles indexing an empty element slot when an additional instruction is created
     // if edited doesn't === original return edited - first check that there is an original instructions on the same index
     if (instruction.instruction !== (original[index] ? original[index].instruction : "")) {
-
       const editedInstruction = {
         // association id = PK of association table
         // catches error if an additional input was created rather than replacing one
-        "associationId": original[index] ? original[index].association_id : undefined,
+        "associationId": original[index] ? original[index].association_id : null,
         "newId": instruction.id,
         // "instruction": instruction.instruction  
       }
@@ -87,7 +86,7 @@ function filterIngredients(originalIngredients: Ingredients, edited: Ingredients
     const item = handleAdditionalInput(editedIngredient, originalIngredients, "item", index)
     const unit = handleAdditionalInput(editedIngredient, originalIngredients, "unit", index)
     const alteredIngredient = {
-      "id": editedIngredient.ingredient_id,
+      "id": editedIngredient.ingredient_id || null,
       // below can be refactored to only send id instead of entire object
       "amount": amount,
       "item": item,

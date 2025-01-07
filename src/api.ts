@@ -93,6 +93,7 @@ class API {
 
   /** Edit user recipe */
   static async editBookRecipe(userId: number, bookId: number, recipeId: number, data){
+    console.log("mutated data in api",data )
     const res = await this.request(`users/${userId}/books/${bookId}/recipes/${recipeId}`, data, "PATCH")
     return res
   }
