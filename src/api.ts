@@ -13,13 +13,15 @@ class API {
 
     const url = `${BASEURL}/${endpoint}`;
     const headers = {
-      Authorization: `Bearer ${API.token}`
+      Authorization: `Bearer ${this.token}`
     };
     const params = method === "GET" ? data : {}
     try {
+      console.log("HEADERS", headers.Authorization)
       const res = (await axios({ url, method, data, params, headers })).data;
       return res
     } catch (error) {
+      console.log(error)
       console.error(`Error in ${endpoint} API => ${error}`)
       throw error
     }
@@ -93,7 +95,6 @@ class API {
 
   /** Edit user recipe */
   static async editBookRecipe(userId: number, bookId: number, recipeId: number, data){
-    console.log("mutated data in api",data )
     const res = await this.request(`users/${userId}/books/${bookId}/recipes/${recipeId}`, data, "PATCH")
     return res
   }
