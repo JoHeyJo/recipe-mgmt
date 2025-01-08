@@ -25,7 +25,7 @@ const defaultUser = {
   id: undefined,
   isAdmin: undefined, 
   defaultBookId: undefined,
-  booksIds: []
+  books: []
 }
 
 function App() {
@@ -39,7 +39,7 @@ function App() {
     userId: userData?.id,
     defaultBookId: userData?.defaultBookId,
     currentBookId: userData?.defaultBookId,
-    booksIds: userData?.booksIds,
+    books: userData?.books,
     setUserData
   }
 
@@ -84,7 +84,6 @@ function App() {
     async function persistUser(){
       const userId = await extractAndSetUser(token as string, setUserData)
       validateUserFetchBooks(userId, setUserData);
-      // API.token = token as string;
     }
     if (token) {
       persistUser();

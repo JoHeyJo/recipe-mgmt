@@ -50,7 +50,7 @@ function CreateBook({ isOpen, setOpen }) {
       const newId = res.id
       setUserData(user => {
         const updatedUser = { ...user }
-        updatedUser.booksIds.push(newId)
+        updatedUser.books.push(newId)
         updatedUser.currentBookId = newId
         // ensure default book id
         if (!updatedUser.defaultBookId) updatedUser.defaultBookId = newId;

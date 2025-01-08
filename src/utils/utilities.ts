@@ -13,12 +13,11 @@ export async function extractAndSetUser(token: string, setUser: (user: User) => 
     try {
       const res = await API.getUser(sub);
       console.log("response in extractAndSetUser", res)
-
       setUser({ 
         userName: res.user_name, 
         id: res.id, 
         defaultBookId: res.book_id,
-        booksIds: res.book_ids,
+        books: res.book_ids,
 
       })
       console.log("set user")
@@ -30,14 +29,14 @@ export async function extractAndSetUser(token: string, setUser: (user: User) => 
   }
 }
 
-/** On successful auth populate user's books ids */
+/** On successful auth populate user's books */
 export async function validateUserFetchBooks(userId: number, setBooks: Dispatch<React.SetStateAction<User>>) {
   if (userId) {
     try {
-      const bookIds = await API.getUserBooks(userId);
+      const res = await API.getUserBooks(userId);
       setBooks((books) => {
         const userBooks = { ...books };
-        userBooks.booksIds = bookIds.books;
+        userBooks.books = res;
         return userBooks
       })
     } catch (error: any) {

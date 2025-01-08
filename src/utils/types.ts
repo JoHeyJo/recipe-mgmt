@@ -27,7 +27,7 @@ export type User = {
   id?: number;
   defaultBookId?: number;
   currentBookId?: number;
-  booksIds?: number[];
+  books?: Book[];
 }
 
 export type UserLogin = User & {
@@ -69,7 +69,7 @@ export type Instructions = Instruction[];
 export type Manager = Option | Instruction
 
 export type Book = {
-  id: null | number;
+  id: number;
   title: string;
   description: string;
 }
