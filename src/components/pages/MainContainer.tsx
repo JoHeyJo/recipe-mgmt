@@ -16,6 +16,7 @@ import BookView from "../views/BookView";
  * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList]
  */
 function MainContainer() {
+  const [ selectedBook, setSelectedBook] = useState<Number>();
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate);
   const [isOpen, setOpen] = useState(false);
