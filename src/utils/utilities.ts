@@ -17,10 +17,9 @@ export async function extractAndSetUser(token: string, setUser: (user: User) => 
         userName: res.user_name, 
         id: res.id, 
         defaultBookId: res.book_id,
-        books: res.book_ids,
+        books: [],
 
       })
-      console.log("set user")
       return sub
     } catch (error: any) {
       errorHandling("Utilities -> extractAndSetUser", error)

@@ -25,7 +25,7 @@ const defaultUser = {
   id: undefined,
   isAdmin: undefined, 
   defaultBookId: undefined,
-  books: undefined,
+  books: [],
 }
 
 function App() {

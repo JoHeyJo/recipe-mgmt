@@ -81,5 +81,5 @@ export type RecipeInfoProp = {
 }
 
 export type MultiSelectProp = {
-  books: Book[];
+  options: Book[];
 }

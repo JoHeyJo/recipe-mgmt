@@ -4,10 +4,14 @@ import MultiSelect from "../ui/common/MultiSelect";
 
 function BookView() {
   const { books } = useContext(UserContext);
-  console.log("bboks", books)
+
+  /** Get book request */
+  function fetchBook(userId, BookId){
+
+  }
   return (
     <section>
-      <MultiSelect books={books} />
+      <MultiSelect options={books} />
     </section>
   )
 }
