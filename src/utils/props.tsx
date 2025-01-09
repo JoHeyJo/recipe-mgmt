@@ -1,4 +1,4 @@
-import { Recipe, Ingredient, Instructions, Instruction, Ingredients, Option } from "./types";
+import { Recipe, Ingredient, Instructions, Instruction, Ingredients, Option, Book } from "./types";
 
 export type InstructionManagerProps = {
   instruction: Instruction;
@@ -78,4 +78,8 @@ export type InputWithLabelProps = {
 
 export type RecipeInfoProp = {
   handleUpdate: (data: string, section: string) => void;
+}
+
+export type MultiSelectProp = {
+  books: Book[];
 }
