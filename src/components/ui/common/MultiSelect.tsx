@@ -4,7 +4,7 @@ import { MultiSelectProp } from '../../../utils/props';
 
 
 function MultiSelect({ options }: MultiSelectProp) {
-  console.log("bboks", options)
+  console.log("books", options)
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
