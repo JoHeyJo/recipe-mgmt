@@ -7,23 +7,18 @@ import { errorHandling } from "../../utils/ErrorHandling";
 function BookView() {
   const { books, setUserData } = useContext(UserContext);
 
-  /** Get book request */
-  async function fetchBook(userId: number, bookId: number) {
-    try {
-      const res = await API.getBookRecipe(userId, bookId)
-      setUserData((user) => {
-        const userData = {...user};
-        userData.books = res;
-        return userData
-      })
-    } catch (error) {
-      errorHandling("BookView -> fetchBook", error)
-    }
-
+  /** Set current book id */
+  function selectBook(id: number){
+    setUserData(user => {
+      const userData = {...user};
+      userData.currentBookId = id;
+      return userData;
+    });
   }
+
   return (
     <section>
-      <MultiSelect options={books} />
+      <MultiSelect options={books} setOption={selectBook} />
     </section>
   )
 }

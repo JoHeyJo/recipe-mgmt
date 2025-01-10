@@ -82,4 +82,5 @@ export type RecipeInfoProp = {
 
 export type MultiSelectProp = {
   options: Book[];
+  setOption: (id: number) => void;
 }

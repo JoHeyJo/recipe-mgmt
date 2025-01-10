@@ -13,7 +13,7 @@ import './styles/light.css';
 import './styles/dark.css';
 import './styles/theme.css';
 import { errorHandling } from "./utils/ErrorHandling";
-import { extractAndSetUser, validateUserFetchBooks } from "./utils/utilities";
+import { extractAndSetUser, validateUserFetchBooks } from "./utils/fetchRequests";
 import useLocalStorage from "./hooks/useLocalStorage";
 import TopNav from "./components/layout/TopNav";
 
@@ -37,8 +37,8 @@ function App() {
   const UserDataFromContext: UserContextType = {
     user: userData?.userName,
     userId: userData?.id,
-    defaultBookId: userData?.defaultBookId,
-    currentBookId: userData?.defaultBookId, //this could be removed 
+    defaultBookId: userData.defaultBookId,
+    currentBookId: userData.currentBookId, //this could be removed 
     books: userData?.books,
     setUserData
   }

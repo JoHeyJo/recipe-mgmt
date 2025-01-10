@@ -16,8 +16,9 @@ import BookView from "../views/BookView";
  * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList]
  */
 function MainContainer() {
-  const { userId, defaultBookId } = useContext(UserContext);
-  const [selectedBookId, setSelectedBookId] = useState<number>(defaultBookId);
+  const { userId, defaultBookId, currentBookId } = useContext(UserContext);
+  console.log("ids", currentBookId, defaultBookId)
+  const [selectedBookId, setSelectedBookId] = useState<number>();
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate);
   const [isOpen, setOpen] = useState(false);
@@ -32,6 +33,10 @@ function MainContainer() {
     requestAction
   }
 
+  useEffect(()=>{
+    setSelectedBookId(currentBookId || defaultBookId)
+  },[currentBookId])
+
   /** Updates rendered recipes after creation */
   function updateRecipes(recipe: Recipe) {
     setRecipes(recipes => [...recipes, recipe])
@@ -40,7 +45,7 @@ function MainContainer() {
   /** Handles recipe edit action: requests updated recipes, re-selects updated recipe. */
   async function editRecipe(){
     setOpen(false)
-    const res = await API.getBookRecipe(userId, selectedBookId);
+    const res = await API.getBookRecipes(userId, selectedBookId);
     for (let recipe of res){
       if (recipe.id === selectedRecipe.id) setSelectedRecipe(recipe)
     }
@@ -87,7 +92,7 @@ function MainContainer() {
   useEffect(() => {
     async function fetchUserRecipes() {
       try {
-        const res = await API.getBookRecipe(userId, selectedBookId);
+        const res = await API.getBookRecipes(userId, selectedBookId);
         setRecipes(res);
       } catch (error: any) {
         errorHandling("MainContainer -> fetchUserRecipes", error);

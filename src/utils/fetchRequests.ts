@@ -1,6 +1,6 @@
 import { Dispatch } from "react";
 import { jwtDecode } from "jwt-decode";
-import { JWTPayload, User } from "../utils/types";
+import { JWTPayload, User } from "./types";
 import API from "../api";
 import { errorHandling } from "./ErrorHandling";
 
@@ -41,6 +41,16 @@ export async function validateUserFetchBooks(userId: number, setBooks: Dispatch<
     } catch (error: any) {
       errorHandling("utilities - validateUserFetchBooks", error)
     }
+  }
+}
+
+/** Get book request */
+async function fetchBookRecipes(userId: number, bookId: number) {
+  try {
+    const recipes = await API.getBookRecipes(userId, bookId)
+    return recipes
+  } catch (error) {
+    errorHandling("BookView -> fetchBook", error)
   }
 }
 
