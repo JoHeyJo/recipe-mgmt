@@ -38,7 +38,7 @@ function App() {
     user: userData?.userName,
     userId: userData?.id,
     defaultBookId: userData?.defaultBookId,
-    currentBookId: userData?.defaultBookId,//this could be removed 
+    currentBookId: userData?.defaultBookId, //this could be removed 
     books: userData?.books,
     setUserData
   }
