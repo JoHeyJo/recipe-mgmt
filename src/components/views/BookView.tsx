@@ -1,9 +1,11 @@
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import MultiSelect from "../ui/common/MultiSelect";
-import API from "../../api";
-import { errorHandling } from "../../utils/ErrorHandling";
 
+/** Facilitates rendering books & selection of book
+ * 
+ * MainContainer -> BookView
+  */
 function BookView() {
   const { books, setUserData } = useContext(UserContext);
 

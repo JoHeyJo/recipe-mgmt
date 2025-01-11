@@ -17,7 +17,6 @@ import BookView from "../views/BookView";
  */
 function MainContainer() {
   const { userId, defaultBookId, currentBookId } = useContext(UserContext);
-  console.log("ids", currentBookId, defaultBookId)
   const [selectedBookId, setSelectedBookId] = useState<number>();
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate);
@@ -32,10 +31,6 @@ function MainContainer() {
     selectedNotes: selectedRecipe.notes,
     requestAction
   }
-
-  useEffect(()=>{
-    setSelectedBookId(currentBookId || defaultBookId)
-  },[currentBookId])
 
   /** Updates rendered recipes after creation */
   function updateRecipes(recipe: Recipe) {
@@ -89,9 +84,11 @@ function MainContainer() {
     editRecipe
   }
 
+  /**  */
   useEffect(() => {
     async function fetchUserRecipes() {
       try {
+        console.log("book id",selectedBookId)
         const res = await API.getBookRecipes(userId, selectedBookId);
         setRecipes(res);
       } catch (error: any) {
@@ -100,6 +97,11 @@ function MainContainer() {
     }
     fetchUserRecipes();
   }, [])
+
+  /** Updates current book selection */
+  useEffect(() => {
+    setSelectedBookId(currentBookId || defaultBookId)
+  }, [currentBookId])
 
   return (
     <div className="border-2 mt-7 border-red-900 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

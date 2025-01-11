@@ -31,14 +31,15 @@ const defaultUser = {
 function App() {
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
   const [userData, setUserData] = useState<User>(defaultUser);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   console.log("user in App from state", userData)
   
   const UserDataFromContext: UserContextType = {
     user: userData?.userName,
     userId: userData?.id,
-    defaultBookId: userData.defaultBookId,
-    currentBookId: userData.currentBookId, //this could be removed 
+    defaultBookId: userData?.defaultBookId,
+    currentBookId: userData?.currentBookId,
     books: userData?.books,
     setUserData
   }
@@ -54,7 +55,7 @@ function App() {
     } catch (error: any) {
       errorHandling("App->userSignUp", error)
       throw error;
-    }
+    } 
   }
 
   /** User login - returns token */
@@ -68,6 +69,8 @@ function App() {
     } catch (error: any) {
       errorHandling("App->userLogin", error)
       throw error;
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -84,12 +87,17 @@ function App() {
     async function persistUser(){
       const userId = await extractAndSetUser(token as string, setUserData)
       validateUserFetchBooks(userId, setUserData);
+      setIsLoading(false)
     }
     if (token) {
       persistUser();
     }
   }, [token])
 
+  if (!isLoading) {
+    console.log("=====",isLoading)
+    return <div>Loading...</div>
+  };
 
   return (
     <BrowserRouter>

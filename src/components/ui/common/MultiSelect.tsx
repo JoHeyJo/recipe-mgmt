@@ -2,9 +2,11 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { MultiSelectProp } from '../../../utils/props';
 
-
+/** Renders dropdown multiselect
+ * 
+ * BookView -> MultiSelect
+ */
 function MultiSelect({ options, setOption }: MultiSelectProp) {
-  console.log("books", options)
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
