@@ -22,6 +22,7 @@ function MainContainer() {
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate);
   const [isOpen, setOpen] = useState(false);
   const [requestAction, setRequestAction] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const recipeData = {
     recipeId: selectedRecipe.id,
@@ -88,20 +89,27 @@ function MainContainer() {
   useEffect(() => {
     async function fetchUserRecipes() {
       try {
-        console.log("book id",selectedBookId)
         const res = await API.getBookRecipes(userId, selectedBookId);
+        console.log("inbound recipes=====", res)
         setRecipes(res);
       } catch (error: any) {
         errorHandling("MainContainer -> fetchUserRecipes", error);
+      } finally {
+        setIsLoading(false);
       }
     }
-    fetchUserRecipes();
-  }, [])
+    if(selectedBookId){
+      fetchUserRecipes();
+    }
+  }, [selectedBookId, userId])
 
   /** Updates current book selection */
   useEffect(() => {
     setSelectedBookId(currentBookId || defaultBookId)
   }, [currentBookId])
+
+  if (!isLoading) (<div>Loading...</div>);
+
 
   return (
     <div className="border-2 mt-7 border-red-900 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

@@ -94,10 +94,6 @@ function App() {
     }
   }, [token])
 
-  if (!isLoading) {
-    console.log("=====",isLoading)
-    return <div>Loading...</div>
-  };
 
   return (
     <BrowserRouter>
