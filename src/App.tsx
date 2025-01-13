@@ -31,7 +31,6 @@ const defaultUser = {
 function App() {
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
   const [userData, setUserData] = useState<User>(defaultUser);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   console.log("user in App from state", userData)
   
@@ -69,8 +68,6 @@ function App() {
     } catch (error: any) {
       errorHandling("App->userLogin", error)
       throw error;
-    } finally {
-      setIsLoading(false);
     }
   }
 
@@ -87,7 +84,6 @@ function App() {
     async function persistUser(){
       const userId = await extractAndSetUser(token as string, setUserData)
       validateUserFetchBooks(userId, setUserData);
-      setIsLoading(false)
     }
     if (token) {
       persistUser();

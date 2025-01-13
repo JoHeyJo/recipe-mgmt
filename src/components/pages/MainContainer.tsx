@@ -90,7 +90,6 @@ function MainContainer() {
     async function fetchUserRecipes() {
       try {
         const res = await API.getBookRecipes(userId, selectedBookId);
-        console.log("inbound recipes=====", res)
         setRecipes(res);
       } catch (error: any) {
         errorHandling("MainContainer -> fetchUserRecipes", error);
@@ -101,7 +100,7 @@ function MainContainer() {
     if(selectedBookId){
       fetchUserRecipes();
     }
-  }, [selectedBookId, userId])
+  }, [selectedBookId, userId,])
 
   /** Updates current book selection */
   useEffect(() => {

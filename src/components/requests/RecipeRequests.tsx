@@ -84,6 +84,7 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
   // ADD A CHECK TO FILTER OUT EMPTY FIELDS E.G. ingredient without values
   async function addRecipe() {
     try {
+      console.log("POST", recipe, currentBookId, userId)
       const res = await API.postUserRecipe(recipe, currentBookId, userId);
       recipeActions.updateRecipes(res)
     } catch (error: any) {

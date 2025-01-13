@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { MultiSelectProp } from '../../../utils/props';
@@ -6,12 +7,20 @@ import { MultiSelectProp } from '../../../utils/props';
  * 
  * BookView -> MultiSelect
  */
-function MultiSelect({ options, setOption }: MultiSelectProp) {
+function MultiSelect({ options, selectOption }: MultiSelectProp) {
+  const [option, setOption] = useState<string>();
+  
+  /** Selects option and sets option title for display */
+  function onSelect(id: number, title: string){
+    selectOption(id);
+    setOption(title)
+  }
+
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-          Options
+          {option}
           <ChevronDownIcon aria-hidden="true" className="-mr-1 size-5 text-gray-400" />
         </MenuButton>
       </div>
@@ -21,7 +30,7 @@ function MultiSelect({ options, setOption }: MultiSelectProp) {
         <div className="py-1">
           {options.map(option =>
             <MenuItem key={option.id} >
-              <li onClick={()=>setOption(option.id)} className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none">
+              <li onClick={() => onSelect(option.id, option.title)} className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none">
                 {option.title}
               </li>
             </MenuItem>

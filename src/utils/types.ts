@@ -2,7 +2,7 @@ import SignUp from "../auth/SignUp";
 
 export type RecipeData = Recipe & {
   user_id: number,
-  book_id: number,
+  default_book_id: number,
 }
 
 export type Recipe = {

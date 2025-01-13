@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import MultiSelect from "../ui/common/MultiSelect";
 
-/** Facilitates rendering books & selection of book
+/** Facilitates rendering books & book selection
  * 
  * MainContainer -> BookView
   */
@@ -20,7 +20,7 @@ function BookView() {
 
   return (
     <section>
-      <MultiSelect options={books} setOption={selectBook} />
+      <MultiSelect options={books} selectOption={selectBook} />
     </section>
   )
 }
