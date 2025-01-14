@@ -31,6 +31,7 @@ const defaultUser = {
 
 function App() {
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
+  const [bookId, setBookId] = useLocalStorage("current-book-id");
   const [userData, setUserData] = useState<User>(defaultUser);
 
   console.log("user in App from state", userData)
@@ -38,7 +39,7 @@ function App() {
   const UserDataFromContext: UserContextType = {
     user: userData?.userName,
     userId: userData?.id,
-    defaultBook: userData.defaultBook,
+    defaultBook: userData?.defaultBook,
     defaultBookId: userData?.defaultBookId, // remove?
     currentBookId: userData?.currentBookId || userData?.defaultBookId,
     books: userData?.books,
@@ -75,8 +76,8 @@ function App() {
 
   /** Removes token and user data */
   function logout() {
-    setUserData(undefined);
     setToken(null);
+    setBookId(null);
     setUserData(null);
   }
 

@@ -11,14 +11,18 @@ import { useEffect, useState } from "react";
 function useLocalStorage(key: string): [string | null, React.Dispatch<React.SetStateAction<string | null | number>>] {
   const initialValue = localStorage.getItem(key) || null;
   const [storage, setStorage] = useState(initialValue);
+  const [keys, setKeys] = useState([]);
+  console.log("keys in storage",keys)
 
 
   /** Removes storage when state is null. Else sets current user storage */
   useEffect(function setKeyInLocalStorage() {
     if (storage === null) {
-      localStorage.removeItem(key)
+      console.log("keys to remove", keys)
+      keys.forEach(key => localStorage.removeItem(key))
     } else {
       localStorage.setItem(key, storage)
+      setKeys(keys => [...keys,key])
     }
   }, [storage, key])
 
