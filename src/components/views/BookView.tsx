@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import MultiSelect from "../ui/common/MultiSelect";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 /** Facilitates rendering books & book selection
  * 
@@ -8,6 +9,7 @@ import MultiSelect from "../ui/common/MultiSelect";
   */
 function BookView() {
   const { defaultBook, books, setUserData } = useContext(UserContext);
+  const [bookId, setBookId] = useLocalStorage("current-book-id");
 
   console.log("default book", defaultBook)
 
@@ -16,6 +18,7 @@ function BookView() {
     setUserData(user => {
       const userData = {...user};
       userData.currentBookId = id;
+      setBookId(id);
       return userData;
     });
   }

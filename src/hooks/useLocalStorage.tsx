@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
  *
  * Explicitly annotate return type of hook, otherwise React infers incorrect types for return value storage
  */
-function useLocalStorage(key: string): [string | null, React.Dispatch<React.SetStateAction<string | null>>] {
+function useLocalStorage(key: string): [string | null, React.Dispatch<React.SetStateAction<string | null | number>>] {
   const initialValue = localStorage.getItem(key) || null;
   const [storage, setStorage] = useState(initialValue);
 
