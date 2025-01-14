@@ -85,10 +85,11 @@ function MainContainer() {
     editRecipe
   }
 
-  /**  */
+  /** Loads user recipes when user data is populated */
   useEffect(() => {
     async function fetchUserRecipes() {
       try {
+        console.log("checking default id",selectedBookId)
         const res = await API.getBookRecipes(userId, selectedBookId);
         setRecipes(res);
       } catch (error: any) {
@@ -100,10 +101,11 @@ function MainContainer() {
     if(selectedBookId){
       fetchUserRecipes();
     }
-  }, [selectedBookId, userId,])
+  }, [selectedBookId, userId])
 
   /** Updates current book selection */
   useEffect(() => {
+    console.log("checking current id set",currentBookId, defaultBookId)
     setSelectedBookId(currentBookId || defaultBookId)
   }, [currentBookId])
 

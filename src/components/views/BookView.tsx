@@ -7,7 +7,9 @@ import MultiSelect from "../ui/common/MultiSelect";
  * MainContainer -> BookView
   */
 function BookView() {
-  const { defaultBookId, books, setUserData } = useContext(UserContext);
+  const { defaultBook, books, setUserData } = useContext(UserContext);
+
+  console.log("default book", defaultBook)
 
   /** Set current book id */
   function selectBook(id: number){
@@ -18,11 +20,9 @@ function BookView() {
     });
   }
 
-  /**  */
-
   return (
     <section>
-      <MultiSelect defaultOptionId={defaultBookId} options={books} selectOption={selectBook} />
+      <MultiSelect defaultOption={defaultBook} options={books} selectOption={selectBook} />
     </section>
   )
 }

@@ -7,8 +7,8 @@ import { MultiSelectProp } from '../../../utils/props';
  * 
  * BookView -> MultiSelect
  */
-function MultiSelect({ defaultOptionId, options, selectOption }: MultiSelectProp) {
-  const [option, setOption] = useState<string>();
+function MultiSelect({ defaultOption, options, selectOption }: MultiSelectProp) {
+  const [option, setOption] = useState<string>(defaultOption.title);
   
   /** Selects option and sets option title for display */
   function onSelect(id: number, title: string){
@@ -16,12 +16,11 @@ function MultiSelect({ defaultOptionId, options, selectOption }: MultiSelectProp
     setOption(title)
   }
 
-  /** set default option title. This could be removed => either fetch the option or return the 
-   * book object with id and title...
+  /** set default option title. This could be removed => either fetch the option 
+   * or return the book object with id and title...
    */
   useEffect(()=>{
-    const match = options.filter((option)=> option.id === defaultOptionId)
-    console.log("option selected",match)
+
   },[])
 
   return (
