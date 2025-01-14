@@ -11,8 +11,6 @@ function BookView() {
   const { defaultBook, books, setUserData } = useContext(UserContext);
   const [bookId, setBookId] = useLocalStorage("current-book-id");
 
-  console.log("default book", defaultBook)
-
   /** Set current book id */
   function selectBook(id: number){
     setUserData(user => {

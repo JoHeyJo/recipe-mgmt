@@ -8,7 +8,6 @@ import { errorHandling } from "./ErrorHandling";
 export async function extractAndSetUser(token: string, setUser: (user: User) => void) {
   console.log("token", token)
   const { sub }: JWTPayload = jwtDecode(token);
-  console.log("sub", sub)
   if (sub) {
     try {
       const res = await API.getUser(sub);

@@ -9,22 +9,41 @@ import { useEffect, useState } from "react";
  * Explicitly annotate return type of hook, otherwise React infers incorrect types for return value storage
  */
 function useLocalStorage(key: string): [string | null, React.Dispatch<React.SetStateAction<string | null | number>>] {
-  const initialValue = localStorage.getItem(key) || null;
+  const initialValue = localStorage.getItem(key) || undefined;
   const [storage, setStorage] = useState(initialValue);
-  const [keys, setKeys] = useState([]);
-  console.log("keys in storage",keys)
 
+  /**  */
+  // useEffect(() => {
+  //   // Initialize "keys" array once
+  //   const storedKeys = JSON.parse(localStorage.getItem("keys") || "[]");
+  //   console.log("STORED KEYS", storedKeys)
+  //   if (storedKeys.length === 0) {
+  //     storedKeys.push(key);
+  //     localStorage.setItem("keys", JSON.stringify(storedKeys));
+  //     console.log("!!!!!!!!", localStorage.getItem("keys"))
+  //   }
+  // }, []);
 
-  /** Removes storage when state is null. Else sets current user storage */
-  useEffect(function setKeyInLocalStorage() {
+  console.log("intiate storage hook", key, storage)
+  useEffect(() => {
     if (storage === null) {
-      console.log("keys to remove", keys)
-      keys.forEach(key => localStorage.removeItem(key))
-    } else {
-      localStorage.setItem(key, storage)
-      setKeys(keys => [...keys,key])
+      // Remove all keys tracked in "keys" from localStorage
+      const storedKeys = JSON.parse(localStorage.getItem("keys") || "[]");
+      storedKeys.forEach((trackedKey: string) => {
+        localStorage.removeItem(trackedKey);
+      });
+      // Clear the "keys" array from localStorage
+      localStorage.removeItem("keys");
+    } else if (storage) {
+      // Update the specific key's value in localStorage
+      localStorage.setItem(key, storage);
+      const storedKeys = JSON.parse(localStorage.getItem("keys") || "[]");
+      if (!storedKeys.includes(key)) {
+        storedKeys.push(key);
+        localStorage.setItem("keys", JSON.stringify(storedKeys));
+      }
     }
-  }, [storage, key])
+  }, [storage, key]);
 
   return [storage, setStorage];
 }
