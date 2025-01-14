@@ -12,19 +12,6 @@ function useLocalStorage(key: string): [string | null, React.Dispatch<React.SetS
   const initialValue = localStorage.getItem(key) || undefined;
   const [storage, setStorage] = useState(initialValue);
 
-  /**  */
-  // useEffect(() => {
-  //   // Initialize "keys" array once
-  //   const storedKeys = JSON.parse(localStorage.getItem("keys") || "[]");
-  //   console.log("STORED KEYS", storedKeys)
-  //   if (storedKeys.length === 0) {
-  //     storedKeys.push(key);
-  //     localStorage.setItem("keys", JSON.stringify(storedKeys));
-  //     console.log("!!!!!!!!", localStorage.getItem("keys"))
-  //   }
-  // }, []);
-
-  console.log("intiate storage hook", key, storage)
   useEffect(() => {
     if (storage === null) {
       // Remove all keys tracked in "keys" from localStorage
@@ -37,7 +24,9 @@ function useLocalStorage(key: string): [string | null, React.Dispatch<React.SetS
     } else if (storage) {
       // Update the specific key's value in localStorage
       localStorage.setItem(key, storage);
+      // create keys
       const storedKeys = JSON.parse(localStorage.getItem("keys") || "[]");
+      //add to keys array if property does't exists
       if (!storedKeys.includes(key)) {
         storedKeys.push(key);
         localStorage.setItem("keys", JSON.stringify(storedKeys));
