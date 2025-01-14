@@ -5,7 +5,7 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 
 /** Facilitates rendering books & book selection
  * 
- * MainContainer -> BookView
+ * MainContainer -> BookView -> MultiSelect
   */
 function BookView() {
   const { defaultBook, books, setUserData } = useContext(UserContext);

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 /** Custom hook to sync state user data with localStorage
+ * Can handle multiple keys in localStorage
  * 
  * When `storage` changes, effect re-runs:
  * - if new state is null, removes from localStorage

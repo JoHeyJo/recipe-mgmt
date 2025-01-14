@@ -16,7 +16,7 @@ const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs - 1 
 /** InstructionsArea - Makes requests for instructions
  * 
  * #### Need loading state for instructions. There is visible lag...it first loads the empty array so that needs to be address first..
- * Could need to inject selectedInstruction in parent so when an empty array isn't rendered first
+ * Could need to inject selectedInstruction in parent so when empty array isn't rendered first
  * 
  * Dynamically renders list of instructions - filters out selected options
  * 
@@ -54,7 +54,7 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
       updatedInstructions[arrayKey] = instruction;
       return updatedInstructions;
     })
-    if (HAS_NO_REMAINING_INPUT(selectedInstructions.length, arrayKey)) createInstructionInput()
+    if (HAS_NO_REMAINING_INPUT(selectedInstructions.length, arrayKey)) createInstructionInput();
   }
 
   /** Remove unselected instruction */
@@ -138,7 +138,7 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
 
   /** Updates parent state of instructions when instructions is changed and on mount */
   useEffect(() => {
-    handleUpdate(selectedInstructions.filter((i => i.id !== null)), "instructions")
+    handleUpdate(selectedInstructions.filter((i => i.id)), "instructions")
   }, [selectedInstructions])
 
   return (

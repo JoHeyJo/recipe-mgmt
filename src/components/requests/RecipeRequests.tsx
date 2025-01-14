@@ -81,9 +81,10 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
   }
 
   /** Calls API - sends post request with recipe data */
-  // ADD A CHECK TO FILTER OUT EMPTY FIELDS E.G. ingredient without values
+  // ADD A CHECK TO FILTER OUT EMPTY FIELDS E.G. ingredient/instructions without values
   async function addRecipe() {
     try {
+      const filteredRecipe = 
       console.log("POST", recipe, currentBookId, userId)
       const res = await API.postUserRecipe(recipe, currentBookId, userId);
       recipeActions.updateRecipes(res)
