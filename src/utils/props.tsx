@@ -81,6 +81,7 @@ export type RecipeInfoProp = {
 }
 
 export type MultiSelectProp = {
+  defaultOptionId: number;
   options: Book[];
   selectOption: (id: number) => void;
 }

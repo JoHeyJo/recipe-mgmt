@@ -5,6 +5,7 @@ export type UserContextType = {
   user: string | undefined;
   userId: number | undefined;
   currentBookId: number;
+  defaultBook;
   books: Book[];
   setUserData: React.Dispatch<React.SetStateAction<User>>
   defaultBookId: number | undefined;
@@ -14,6 +15,7 @@ export const UserContext = createContext<UserContextType>({
   user: '',
   userId: undefined,
   currentBookId: undefined,
+  defaultBook: {},
   books: [],
   setUserData: () => {},
   defaultBookId: undefined

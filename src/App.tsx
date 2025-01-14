@@ -37,6 +37,7 @@ function App() {
   const UserDataFromContext: UserContextType = {
     user: userData?.userName,
     userId: userData?.id,
+    defaultBook: userData.defaultBook,
     defaultBookId: userData?.defaultBookId,
     currentBookId: userData?.currentBookId,
     books: userData?.books,

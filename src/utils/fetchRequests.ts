@@ -16,7 +16,8 @@ export async function extractAndSetUser(token: string, setUser: (user: User) => 
       setUser({ 
         userName: res.user_name, 
         id: res.id, 
-        defaultBookId: res.default_book_id,
+        defaultBookId:res.default_book.id,
+        defaultBook: res.default_book,
         books: [],
 
       })
@@ -61,7 +62,7 @@ export function ensureDefaultBook(currentDefaultBookId: number, setId: Dispatch<
   if (!currentDefaultBookId) {
     setId(user => {
       const updatedUser = { ...user };
-      updatedUser.defaultBookId = defaultBookId
+      // updatedUser.defaultBook = defaultBook
       return updatedUser;
     })
   }

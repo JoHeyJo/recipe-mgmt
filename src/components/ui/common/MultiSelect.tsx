@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { MultiSelectProp } from '../../../utils/props';
@@ -7,7 +7,7 @@ import { MultiSelectProp } from '../../../utils/props';
  * 
  * BookView -> MultiSelect
  */
-function MultiSelect({ options, selectOption }: MultiSelectProp) {
+function MultiSelect({ defaultOptionId, options, selectOption }: MultiSelectProp) {
   const [option, setOption] = useState<string>();
   
   /** Selects option and sets option title for display */
@@ -15,6 +15,14 @@ function MultiSelect({ options, selectOption }: MultiSelectProp) {
     selectOption(id);
     setOption(title)
   }
+
+  /** set default option title. This could be removed => either fetch the option or return the 
+   * book object with id and title...
+   */
+  useEffect(()=>{
+    const match = options.filter((option)=> option.id === defaultOptionId)
+    console.log("option selected",match)
+  },[])
 
   return (
     <Menu as="div" className="relative inline-block text-left">
