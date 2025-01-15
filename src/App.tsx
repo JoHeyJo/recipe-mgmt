@@ -81,8 +81,7 @@ function App() {
 
   /** persist user data state on refresh */
   useEffect(() => {
-    // API.token = token;
-    // console.log("TOEKM",API.token)
+    API.token = token;
     async function persistUser(){
       const userId = await extractAndSetUser(token as string, setUserData)
       validateUserFetchBooks(userId, setUserData);
