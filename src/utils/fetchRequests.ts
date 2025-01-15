@@ -7,6 +7,7 @@ import { errorHandling } from "./ErrorHandling";
 /** Fetches specific user and updates state used by context */
 export async function extractAndSetUser(token: string, setUser: (user: User) => void) {
   console.log("token", token)
+  API.token = token;
   const { sub }: JWTPayload = jwtDecode(token);
   if (sub) {
     try {

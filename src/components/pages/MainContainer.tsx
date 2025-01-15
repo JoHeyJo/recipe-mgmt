@@ -89,7 +89,6 @@ function MainContainer() {
   useEffect(() => {
     async function fetchUserRecipes() {
       try {
-        console.log("checking default id",selectedBookId)
         const res = await API.getBookRecipes(userId, selectedBookId);
         setRecipes(res);
       } catch (error: any) {
@@ -105,13 +104,11 @@ function MainContainer() {
 
   /** Updates current book selection */
   useEffect(() => {
-    console.log("checking current id set",currentBookId, defaultBookId)
     setSelectedBookId(currentBookId || defaultBookId)
   }, [currentBookId])
 
   if (!isLoading) (<div>Loading...</div>);
-
-
+  
   return (
     <div className="border-2 mt-7 border-red-900 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       {/* We've used 3xl here, but feel free to try other max-widths based on your needs */}

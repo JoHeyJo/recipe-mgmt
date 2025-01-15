@@ -18,6 +18,7 @@ class API {
     };
     const params = method === "GET" ? data : {}
     try {
+      console.log("HEADERS", headers.Authorization)
       const res = (await axios({ url, method, data, params, headers })).data;
       return res
     } catch (error) {
