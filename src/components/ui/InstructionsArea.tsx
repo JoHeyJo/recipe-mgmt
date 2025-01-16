@@ -5,6 +5,7 @@ import API from "../../api";
 import { errorHandling } from '../../utils/ErrorHandling';
 import { InstructionsAreaProps } from "../../utils/props";
 import { RecipeContext } from "../../context/RecipeContext";
+import { UserContext } from "../../context/UserContext";
 
 const PLACE_HOLDER = ["Add ingredients...", "Add ice...", "shake..."]
 
@@ -23,9 +24,10 @@ const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs - 1 
  * RecipeRequests -> InstructionsArea -> InstructionManager
  */
 function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
+  const { userId, currentBookId } = useContext(UserContext)
   const { requestAction, contextInstructions } = useContext(RecipeContext);
   const [instructions, setInstructions] = useState([]);
-  const [selectedInstructions, setSelectedInstructions] = useState<any>([]); 
+  const [selectedInstructions, setSelectedInstructions] = useState<any>([]);
   const [filterKey, setFilterKeys] = useState({});
 
   // On mount, populate instructions if recipe is selected
@@ -90,7 +92,7 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   /** Request to create new instruction */
   async function addIngredient(ingredient: Ingredient) {
     try {
-      const id = await API.postIngredient(ingredient);
+      const id = await API.postIngredient(userId, currentBookId, ingredient);
       return id
     } catch (error: any) {
       errorHandling("InstructionsArea - addIngredient", error)

@@ -71,8 +71,8 @@ class API {
   }
 
   /** Post ingredient to database */
-  static async postIngredient(data: Ingredient) {
-    const res = await this.request("instructions/instruction", data, "POST")
+  static async postIngredient(userId: number, bookId: number, data: Ingredient) {
+    const res = await this.request(`users/${userId}/books/${bookId}/instructions`, data, "POST")
     return res
   }
 
@@ -87,7 +87,7 @@ class API {
     const res = await this.request(`users/${userId}/books`)
     return res
   }
- 
+
   /** Fetch user recipes */
   static async getBookRecipes(userId: number, bookId: number) {
     const res = await this.request(`users/${userId}/books/${bookId}/recipes`)
@@ -95,13 +95,13 @@ class API {
   }
 
   /** Edit user recipe */
-  static async editBookRecipe(userId: number, bookId: number, recipeId: number, data){
+  static async editBookRecipe(userId: number, bookId: number, recipeId: number, data) {
     const res = await this.request(`users/${userId}/books/${bookId}/recipes/${recipeId}`, data, "PATCH")
     return res
   }
 
   /** Delete book recipe */
-  static async deleteUserRecipe(userId: number, bookId: number, recipeId: number){
+  static async deleteUserRecipe(userId: number, bookId: number, recipeId: number) {
     const res = await this.request(`users/${userId}/books/${bookId}/recipes/${recipeId}`, {}, "DELETE")
     return res
   }
