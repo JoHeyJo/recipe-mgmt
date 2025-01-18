@@ -83,7 +83,7 @@ class API {
   }
 
   /** Post ingredient to database */
-  static async postIngredient(userId: number, bookId: number, data: Ingredient) {
+  static async postInstruction(userId: number, bookId: number, data: Ingredient) {
     const res = await this.request(`users/${userId}/books/${bookId}/instructions`, data, "POST")
     return res
   }

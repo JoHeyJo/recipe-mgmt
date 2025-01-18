@@ -41,8 +41,10 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
     }
   }, [])
 
-  /** Add selected instruction to incoming data set from db  */
-  function addInstruction(instruction: Instruction) {
+  /** Add selected instruction to incoming data set from db
+   * Should this array of instructions be fetched entirely instead of adding the return object of new instruction from the database
+    */
+  function addToInstructionState(instruction: Instruction) {
     setInstructions((i: Instruction[]) => {
       const updatedInstructions = [...i];
       updatedInstructions.push(instruction);
@@ -91,20 +93,20 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   }
 
   /** Request to create new instruction */
-  async function addIngredient(ingredient: Ingredient) {
+  async function addInstruction(ingredient: Ingredient) {
     try {
-      const id = await API.postIngredient(userId, currentBookId, ingredient);
+      const id = await API.postInstruction(userId, currentBookId, ingredient);
       return id
     } catch (error: any) {
-      errorHandling("InstructionsArea - addIngredient", error)
+      errorHandling("InstructionsArea - addInstruction", error)
       throw error
     }
   }
 
   /** Consolidates logic pertaining to adding instructions */
   const handleInstructions = {
-    addIngredient,
     addInstruction,
+    addToInstructionState,
     createInstructionInput,
     updateInstructionSelection,
     updateFilterKeys,
