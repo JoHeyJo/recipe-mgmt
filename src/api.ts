@@ -90,7 +90,7 @@ class API {
 
   /** Post instruction associate */
   static async postInstructionAssociation(userId: number, bookId: number, instructionId: number){
-    const res = await this.request(`users/${userId}/books/${bookId}/instructions/${instructionId}`)
+    const res = await this.request(`users/${userId}/books/${bookId}/instructions/${instructionId}`,{},"POST")
     return res
   }
 
