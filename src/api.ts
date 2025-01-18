@@ -70,6 +70,18 @@ class API {
     return res;
   }
 
+  /** Get user instructions */
+  static async getUserInstructions(userId: number){
+    const res = await this.request(`/users/${userId}/instructions`)
+    return res;
+  }
+
+  /** Get book instructions */
+  static async getBookInstructions(userId: number, bookId: number){
+    const res = await this.request(`/users/${userId}/books/${bookId}/instructions`)
+    return res;
+  }
+
   /** Post ingredient to database */
   static async postIngredient(userId: number, bookId: number, data: Ingredient) {
     const res = await this.request(`users/${userId}/books/${bookId}/instructions`, data, "POST")

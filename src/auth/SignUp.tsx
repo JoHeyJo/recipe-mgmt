@@ -1,5 +1,5 @@
 //components
-import InputWithLabelForm from '../components/ui/InputWithLabelForm';
+import InputWithLabelForm from '../components/views/InputWithLabelForm';
 import Alert from '../components/ui/Alert';
 //modules
 import { ChangeEvent, useState } from 'react';

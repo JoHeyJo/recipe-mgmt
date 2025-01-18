@@ -1,7 +1,7 @@
 import { Option } from '../../utils/types';
 import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
-import IngredientManager from '../ui/IngredientManager';
+import IngredientManager from '../views/IngredientManager';
 
 type OptionRequestsProps = {
   value: any;

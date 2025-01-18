@@ -1,6 +1,6 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, ChangeEventHandler, ChangeEvent } from "react";
 import { Ingredient, Instruction, Instructions } from "../../utils/types";
-import InstructionManager from "./InstructionManager";
+import InstructionManager from "../views/InstructionManager";
 import API from "../../api";
 import { errorHandling } from '../../utils/ErrorHandling';
 import { InstructionsAreaProps } from "../../utils/props";
@@ -29,6 +29,8 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   const [instructions, setInstructions] = useState([]);
   const [selectedInstructions, setSelectedInstructions] = useState<any>([]);
   const [filterKey, setFilterKeys] = useState({});
+  const [whichInstructions, setWhichInstructions] = useState("book");
+  console.log("INSTRUCTIONS", whichInstructions, instructions)
 
   // On mount, populate instructions if recipe is selected
   useEffect(() => {
@@ -111,14 +113,19 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
     removeFilterKey
   }
 
+  async function fetchBookInstructions() {
+    const res = await API.getBookInstructions(userId, currentBookId)
+    setInstructions(res)
+  }
+  async function fetchUserInstructions() {
+    const res = await API.getUserInstructions(userId);
+    setInstructions(res)
+  }
+
   /** Populate instruction area on mount */
   useEffect(() => {
-    async function fetchInstructions() {
-      const res = await API.getInstructions()
-      setInstructions(res)
-    }
-    fetchInstructions()
-  }, [])
+    whichInstructions == "book" ? fetchBookInstructions() : fetchUserInstructions()
+  }, [whichInstructions])
 
   /** Filter selected items from subsequent arrays */
   // filtered down to just the elements from the given array that pass the test 
@@ -138,6 +145,11 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
 
   }
 
+  function handleRadio(event: ChangeEvent<HTMLInputElement>) {
+    console.log("------", event.target.value)
+    setWhichInstructions(event.target.value)
+  }
+
   /** Updates parent state of instructions when instructions is changed and on mount */
   useEffect(() => {
     handleUpdate(selectedInstructions.filter((i => i.id)), "instructions")
@@ -145,6 +157,24 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
 
   return (
     <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
+      <form>
+        <div className="InstructionsArea-radio-buttons flex justify-center">
+          <div className="InstructionsArea-radio">
+            <label>
+              <input type="radio" value="user" onChange={handleRadio}
+                checked={whichInstructions === "user"} />
+              User
+            </label>
+          </div>
+          <div className="InstructionsArea-radio">
+            <label>
+              <input type="radio" value="book" onChange={handleRadio}
+                checked={whichInstructions === "book"} />
+              Book
+            </label>
+          </div>
+        </div>
+      </form>
       {selectedInstructions.map((value, index) =>
         <InstructionManager
           key={index}
