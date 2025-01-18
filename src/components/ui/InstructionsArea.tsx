@@ -30,7 +30,6 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   const [selectedInstructions, setSelectedInstructions] = useState<any>([]);
   const [filterKey, setFilterKeys] = useState({});
   const [whichInstructions, setWhichInstructions] = useState("book");
-  console.log("INSTRUCTIONS", whichInstructions, instructions)
 
   // On mount, populate instructions if recipe is selected
   useEffect(() => {
@@ -132,7 +131,7 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   function filterSelected(instructions: Instructions, arrayKey: number) {
     // If no item is selected in this dropdown, show all options
     if (!filterKey[arrayKey]) return instructions
-
+    console.log("instructions",instructions)
     return instructions.filter((instruction, index) => {
 
       // if(arrayKey !== index) return filterKey[arrayKey] !== instruction.id
@@ -145,8 +144,8 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
 
   }
 
+  /** handle state change for whichInstruction */
   function handleRadio(event: ChangeEvent<HTMLInputElement>) {
-    console.log("------", event.target.value)
     setWhichInstructions(event.target.value)
   }
 
