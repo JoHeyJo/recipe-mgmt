@@ -71,13 +71,13 @@ class API {
   }
 
   /** Get user instructions */
-  static async getUserInstructions(userId: number){
+  static async getUserInstructions(userId: number) {
     const res = await this.request(`/users/${userId}/instructions`)
     return res;
   }
 
   /** Get book instructions */
-  static async getBookInstructions(userId: number, bookId: number){
+  static async getBookInstructions(userId: number, bookId: number) {
     const res = await this.request(`/users/${userId}/books/${bookId}/instructions`)
     return res;
   }
@@ -85,6 +85,12 @@ class API {
   /** Post ingredient to database */
   static async postInstruction(userId: number, bookId: number, data: Ingredient) {
     const res = await this.request(`users/${userId}/books/${bookId}/instructions`, data, "POST")
+    return res
+  }
+
+  /** Post instruction associate */
+  static async postInstructionAssociation(userId: number, bookId: number, instructionId: number){
+    const res = await this.request(`users/${userId}/books/${bookId}/instructions/${instructionId}`)
     return res
   }
 

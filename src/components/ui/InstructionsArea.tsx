@@ -59,6 +59,9 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
       updatedInstructions[arrayKey] = instruction;
       return updatedInstructions;
     })
+
+    if (whichInstructions === "user") associateInstructionToBook(userId, currentBookId, +instruction.id)
+
     if (HAS_NO_REMAINING_INPUT(selectedInstructions.length, arrayKey)) createInstructionInput();
   }
 
@@ -133,7 +136,7 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   function filterSelected(instructions: Instructions, arrayKey: number) {
     // If no item is selected in this dropdown, show all options
     if (!filterKey[arrayKey]) return instructions
-    console.log("instructions",instructions)
+    console.log("instructions", instructions)
     return instructions.filter((instruction, index) => {
 
       // if(arrayKey !== index) return filterKey[arrayKey] !== instruction.id
@@ -155,6 +158,15 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   useEffect(() => {
     handleUpdate(selectedInstructions.filter((i => i.id)), "instructions")
   }, [selectedInstructions])
+
+  async function associateInstructionToBook(userId: number, currentBookId: number, selectInstruction: number) {
+    try {
+      const res = await API.postInstructionAssociation(userId, currentBookId, selectInstruction)
+    } catch (error: any) {
+      errorHandling("InstructionsArea - associateInstructionToBook", error)
+      throw error
+    }
+  }
 
   return (
     <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
