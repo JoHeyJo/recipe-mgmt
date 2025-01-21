@@ -52,15 +52,15 @@ class API {
     return res;
   }
 
-  /** Add ingredient option to database */
-  static async postOption(data: Option, option: string) {
-    const res = await this.request(`options/${option}`, data, "POST")
+  /** Add ingredient to database */
+  static async postIngredient(data: Option, option: string) {
+    const res = await this.request(`ingredients/${option}`, data, "POST")
     return res;
   }
 
-  /** Fetch options for ingredient components */
-  static async getOptions(component: string) {
-    const res = await this.request(`options/${component}`)
+  /** Get all ingredients  */
+  static async getIngredients(component: string) {
+    const res = await this.request(`ingredients/${component}`)
     return res;
   }
 
