@@ -54,6 +54,8 @@ class API {
 
   /** Add ingredient to database */
   static async postIngredient(data: Option, option: string) {
+    console.log("triggered",data, option)
+    return
     const res = await this.request(`ingredients/${option}`, data, "POST")
     return res;
   }

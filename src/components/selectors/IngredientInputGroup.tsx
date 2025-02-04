@@ -62,9 +62,9 @@ function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInp
   /** Populate each instance of component with latest options */
   useEffect(() => {
     async function fetchOptions() {
-      const amounts = await API.getOptions("amounts")
-      const units = await API.getOptions("units")
-      const items = await API.getOptions("items")
+      const amounts = await API.getIngredients("amounts")
+      const units = await API.getIngredients("units")
+      const items = await API.getIngredients("items")
       setItems(items);
       setQuantityUnits(units);
       setQuantityAmounts(amounts);

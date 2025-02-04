@@ -22,7 +22,7 @@ function OptionRequests({ value, name, handleOptionChange, options, handleOption
   /** Request to create new ingredient option */
   async function addOption(option: Option): Promise<Option>   {
     try {
-      const id = await API.postOption(option, name);
+      const id = await API.postIngredient(option, name);
       return id;
     } catch (error: any) {
       errorHandling("OptionRequests - addOption", error)
