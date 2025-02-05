@@ -8,7 +8,8 @@ type OptionRequestsProps = {
   name: string
   handleOptionChange: (state: string, option: Attribute) => void;
   options: Attribute[];
-  handleOptions: object
+  handleOptions: object;
+  attribute: string
 }
 
 /** OptionRequests - Consider removing. Is intermediary component to hold requests necessary?
@@ -18,10 +19,12 @@ type OptionRequestsProps = {
  * IngredientInputGroup -> OptionRequests -> IngredientManager
  */
 
-function OptionRequests({ value, name, handleOptionChange, options, handleOptions }: OptionRequestsProps) {
+function OptionRequests({ value, name, handleOptionChange, options, handleOptions, attribute}: OptionRequestsProps) {
+
   /** Request to create new ingredient option */
   async function addOption(option: Attribute): Promise<Attribute>   {
     try {
+      console.log("option",option)
       const id = await API.postIngredient(option, name);
       return id;
     } catch (error: any) {
@@ -33,7 +36,7 @@ function OptionRequests({ value, name, handleOptionChange, options, handleOption
   return (
     <IngredientManager
       value={value}
-      name={name}
+      name={attribute} 
       handleOptionChange={handleOptionChange}
       options={options}
       postRequest={addOption}

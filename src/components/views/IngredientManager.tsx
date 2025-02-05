@@ -38,6 +38,7 @@ function IngredientManager({ value, name, handleOptionChange, options, postReque
       return [{ id: `create-${Math.random()}`, [name]: '+ create...' }];
     } else {
       return options.reduce<Attribute[]>((currentOptions, option) => {
+        console.log("optionnnnnn",option)
         const isOptionAvailable = (option[name as keyof Attribute] as string).toLowerCase().includes(query.toLowerCase());
         if (isOptionAvailable) currentOptions.push(option);
 

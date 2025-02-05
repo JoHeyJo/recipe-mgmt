@@ -32,21 +32,21 @@ function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInp
   function updateState(state: string, option: Attribute) {
     if (state === "name") setItem(option)
     if (state === "type") setUnit(option)
-    if (state === "value") setAmount(option)
+    if (state === "amount") setAmount(option)
   }
 
   /** Handles adding options to state */
   function addOption(state: string, option: Attribute) {
     if (state === "name") setItems((options: Attribute[]) => [...options, option])
     if (state === "type") setQuantityUnits((options: Attribute[]) => [...options, option])
-    if (state === "value") setQuantityAmounts((options: Attribute[]) => [...options, option])
+    if (state === "amount") setQuantityAmounts((options: Attribute[]) => [...options, option])
   }
 
   /** Removes deselected option */
   function removeDeselected(state: string) {
     if (state === "name") setItem(defaultItem);
     if (state === "type") setUnit(defaultUnit);
-    if (state === "value") setAmount(defaultAmount);
+    if (state === "amount") setAmount(defaultAmount);
   }
 
   const handleOptions = {
@@ -74,9 +74,9 @@ function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInp
 
   return (
     <div className="flex rounded-md">
-      <OptionRequests value={ingredient.amount} handleOptions={handleOptions} handleOptionChange={updateState} options={quantityAmount} name={"amount"} />
-      <OptionRequests value={ingredient.unit} handleOptions={handleOptions} handleOptionChange={updateState} options={quantityUnits} name={"unit"} />
-      <OptionRequests value={ingredient.item} handleOptions={handleOptions} handleOptionChange={updateState} options={items} name={"item"} />
+      <OptionRequests value={ingredient.amount} handleOptions={handleOptions} handleOptionChange={updateState} options={quantityAmount} name={"amount"} attribute={"value"} />
+      <OptionRequests value={ingredient.unit} handleOptions={handleOptions} handleOptionChange={updateState} options={quantityUnits} name={"type"} attribute={"unit"} />
+      <OptionRequests value={ingredient.item} handleOptions={handleOptions} handleOptionChange={updateState} options={items} name={"name"} attribute={"item"} />
     </div>
   )
 }
