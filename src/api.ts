@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Recipe, UserLogin, UserSignUp, Option, Ingredient, Book } from "./utils/types";
+import { Recipe, UserLogin, UserSignUp, Ingredient, Book, Attribute } from "./utils/types";
 
 const BASEURL = "http://127.0.0.1:5000"
 // const BASEURL = "localhost://127.0.0.1.5000"
@@ -53,7 +53,7 @@ class API {
   }
 
   /** Add ingredient to database */
-  static async postIngredient(data: Option, option: string) {
+  static async postIngredient(data: Attribute, option: string) {
     console.log("triggered",data, option)
     return
     const res = await this.request(`ingredients/${option}`, data, "POST")

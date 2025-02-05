@@ -15,9 +15,9 @@ export type Recipe = {
 export type Ingredient = {
   ingredient_id?: number;
   id: number
-  amount: Option;
-  unit: Option;
-  item: Option;
+  amount: Attribute;
+  unit: Attribute;
+  item: Attribute;
 }
 
 export type Ingredients = Ingredient[];
@@ -56,7 +56,7 @@ export type JWTPayload = {
   sub: number;
 }
 
-export type Option = {
+export type Attribute = {
   id: string | number | null;
   name?: string;
   value?: string;
@@ -67,7 +67,7 @@ export type Instruction = { association_id?: number, id: string | number | null,
 
 export type Instructions = Instruction[];
 
-export type Manager = Option | Instruction
+export type Manager = Attribute | Instruction
 
 export type Book = {
   id: number;

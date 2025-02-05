@@ -1,4 +1,4 @@
-import { Recipe, Ingredient, Instructions, Instruction, Ingredients, Option, Book } from "./types";
+import { Recipe, Ingredient, Instructions, Instruction, Ingredients, Book } from "./types";
 
 export type InstructionManagerProps = {
   instruction: Instruction;

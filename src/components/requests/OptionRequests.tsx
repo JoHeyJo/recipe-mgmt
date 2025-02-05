@@ -1,13 +1,13 @@
-import { Option } from '../../utils/types';
 import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
 import IngredientManager from '../views/IngredientManager';
+import { Attribute } from '../../utils/types';
 
 type OptionRequestsProps = {
   value: any;
   name: string
-  handleOptionChange: (state: string, option: Option) => void;
-  options: Option[];
+  handleOptionChange: (state: string, option: Attribute) => void;
+  options: Attribute[];
   handleOptions: object
 }
 
@@ -20,7 +20,7 @@ type OptionRequestsProps = {
 
 function OptionRequests({ value, name, handleOptionChange, options, handleOptions }: OptionRequestsProps) {
   /** Request to create new ingredient option */
-  async function addOption(option: Option): Promise<Option>   {
+  async function addOption(option: Attribute): Promise<Attribute>   {
     try {
       const id = await API.postIngredient(option, name);
       return id;
