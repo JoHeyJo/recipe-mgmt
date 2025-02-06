@@ -24,8 +24,7 @@ function OptionRequests({ value, name, handleOptionChange, options, handleOption
   /** Request to create new ingredient option */
   async function addOption(option: Attribute): Promise<Attribute>   {
     try {
-      console.log("option",option)
-      const id = await API.postIngredient(option, name);
+      const id = await API.postBookIngredient(option, attribute);
       return id;
     } catch (error: any) {
       errorHandling("OptionRequests - addOption", error)
@@ -36,7 +35,7 @@ function OptionRequests({ value, name, handleOptionChange, options, handleOption
   return (
     <IngredientManager
       value={value}
-      name={attribute} 
+      name={name} 
       handleOptionChange={handleOptionChange}
       options={options}
       postRequest={addOption}

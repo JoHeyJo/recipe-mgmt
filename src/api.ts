@@ -54,9 +54,13 @@ class API {
 
   /** Add ingredient to database */
   static async postIngredient(data: Attribute, option: string) {
-    console.log("triggered",data, option)
-    return
     const res = await this.request(`ingredients/${option}`, data, "POST")
+    return res;
+  }
+
+  /** Add book ingredient */
+  static async postBookIngredient(data: Attribute, bookId: number, userId: number, attribute: string) {
+    const res = await this.request(`/users/${userId}/books/${bookId}/ingredients/${attribute}`, data, "POST")
     return res;
   }
 
@@ -91,8 +95,8 @@ class API {
   }
 
   /** Post instruction associate */
-  static async postInstructionAssociation(userId: number, bookId: number, instructionId: number){
-    const res = await this.request(`users/${userId}/books/${bookId}/instructions/${instructionId}`,{},"POST")
+  static async postInstructionAssociation(userId: number, bookId: number, instructionId: number) {
+    const res = await this.request(`users/${userId}/books/${bookId}/instructions/${instructionId}`, {}, "POST")
     return res
   }
 

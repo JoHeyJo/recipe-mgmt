@@ -74,7 +74,7 @@ function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInp
 
   return (
     <div className="flex rounded-md">
-      <OptionRequests value={ingredient.amount} handleOptions={handleOptions} handleOptionChange={updateState} options={quantityAmount} name={"amount"} attribute={"value"} />
+      <OptionRequests value={ingredient.amount} handleOptions={handleOptions} handleOptionChange={updateState} options={quantityAmount} name={"value"} attribute={"amount"} />
       <OptionRequests value={ingredient.unit} handleOptions={handleOptions} handleOptionChange={updateState} options={quantityUnits} name={"type"} attribute={"unit"} />
       <OptionRequests value={ingredient.item} handleOptions={handleOptions} handleOptionChange={updateState} options={items} name={"name"} attribute={"item"} />
     </div>
