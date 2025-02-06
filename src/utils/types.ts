@@ -56,7 +56,7 @@ export type JWTPayload = {
   sub: number;
 }
 
-export type Attribute = {
+export type AttributeData = {
   id: string | number | null;
   name?: string;
   value?: string;
@@ -67,7 +67,7 @@ export type Instruction = { association_id?: number, id: string | number | null,
 
 export type Instructions = Instruction[];
 
-export type Manager = Attribute | Instruction
+export type Manager = AttributeData | Instruction
 
 export type Book = {
   id: number;
