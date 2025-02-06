@@ -1,5 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
-import { RecipeContext } from '../../context/RecipeContext';
+import { useState, useEffect } from 'react';
 import OptionRequests from '../requests/OptionRequests';
 import { AttributeData } from '../../utils/types';
 import API from '../../api';
@@ -37,9 +36,10 @@ function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInp
 
   /** Handles adding options to state */
   function addOption(state: string, option: AttributeData) {
+    // setQuantityAmounts expects attribute value no attribute name unlike setItems & setQuantityUnits - inconsistent....
     if (state === "name") setItems((options: AttributeData[]) => [...options, option])
     if (state === "type") setQuantityUnits((options: AttributeData[]) => [...options, option])
-    if (state === "amount") setQuantityAmounts((options: AttributeData[]) => [...options, option])
+    if (state === "value") setQuantityAmounts((options: AttributeData[]) => [...options, option])
   }
 
   /** Removes deselected option */

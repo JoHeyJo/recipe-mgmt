@@ -23,7 +23,7 @@ type IngredientManager = {
 function IngredientManager({ value, name, handleOptionChange, options, postRequest, handleOptions }: IngredientManager) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<AttributeData>(value)
-//SHOULD REQUESTS AND STATE MANAGMENT BE SPLIT INTO TWO OBJECTS eg handleOptions & optionRequest....
+  //SHOULD REQUESTS AND STATE MANAGMENT BE SPLIT INTO TWO OBJECTS eg handleOptions & optionRequest....
   const isNewOption = (option: AttributeData) => typeof option.id === "string" && option[name] === '+ create...'
 
   /** Creates a list of filtered options based on search query */
@@ -38,7 +38,6 @@ function IngredientManager({ value, name, handleOptionChange, options, postReque
       return [{ id: `create-${Math.random()}`, [name]: '+ create...' }];
     } else {
       return options.reduce<AttributeData[]>((currentOptions, option) => {
-        console.log("optionnnnnn",option)
         const isOptionAvailable = (option[name as keyof AttributeData] as string).toLowerCase().includes(query.toLowerCase());
         if (isOptionAvailable) currentOptions.push(option);
 
@@ -54,11 +53,12 @@ function IngredientManager({ value, name, handleOptionChange, options, postReque
   async function processNewOption(option: AttributeData) {
     const newOption = { ...option, id: null, [name]: query }
     const createdOption = await postRequest(newOption);
+    console.log(">>>>>>",createdOption)
     handleOptions.addOption(name, createdOption)
     setSelected(createdOption);
   }
 
-  /** Updates parent state with selected option*/
+  /** Updates parent state with selected option */
   function processExistingOption(option: AttributeData) {
     setSelected(option);
   }
