@@ -2,6 +2,8 @@ import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
 import IngredientManager from '../views/IngredientManager';
 import { AttributeData } from '../../utils/types';
+import { useContext } from 'react';
+import { UserContext } from '../../context/UserContext';
 
 type OptionRequestsProps = {
   value: any;
@@ -19,13 +21,14 @@ type OptionRequestsProps = {
  * IngredientInputGroup -> OptionRequests -> IngredientManager
  */
 
-function OptionRequests({ value, name, handleOptionChange, options, handleOptions, attribute}: OptionRequestsProps) {
-  
+function OptionRequests({ value, name, handleOptionChange, options, handleOptions, attribute }: OptionRequestsProps) {
+
+  const { currentBookId, userId } = useContext(UserContext);
 
   /** Request to create new ingredient option */
-  async function addOption(attributeObject: AttributeData): Promise<AttributeData>   {
+  async function addOption(attributeObject: AttributeData): Promise<AttributeData> {
     try {
-      const id = await API.postBookIngredient(attributeObject, bookId, userId, attribute);
+      const id = await API.postBookIngredient(attributeObject, currentBookId, userId, attribute);
       return id;
     } catch (error: any) {
       errorHandling("OptionRequests - addOption", error)
@@ -36,7 +39,7 @@ function OptionRequests({ value, name, handleOptionChange, options, handleOption
   return (
     <IngredientManager
       value={value}
-      name={name} 
+      name={name}
       handleOptionChange={handleOptionChange}
       options={options}
       postRequest={addOption}
