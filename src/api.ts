@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Recipe, UserLogin, UserSignUp, Ingredient, Book, Attribute } from "./utils/types";
+import { Recipe, UserLogin, UserSignUp, Ingredient, Book, AttributeData } from "./utils/types";
 
 const BASEURL = "http://127.0.0.1:5000"
 // const BASEURL = "localhost://127.0.0.1.5000"
@@ -53,13 +53,13 @@ class API {
   }
 
   /** Add ingredient to database */
-  static async postIngredient(data: Attribute, option: string) {
+  static async postIngredient(data: AttributeData, option: string) {
     const res = await this.request(`ingredients/${option}`, data, "POST")
     return res;
   }
 
   /** Add book ingredient */
-  static async postBookIngredient(data: Attribute, bookId: number, userId: number, attribute: string) {
+  static async postBookIngredient(data: AttributeData, bookId: number, userId: number, attribute: string) {
     const res = await this.request(`/users/${userId}/books/${bookId}/ingredients/${attribute}`, data, "POST")
     return res;
   }

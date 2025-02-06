@@ -15,9 +15,9 @@ export type Recipe = {
 export type Ingredient = {
   ingredient_id?: number;
   id: number
-  amount: Attribute;
-  unit: Attribute;
-  item: Attribute;
+  amount: AttributeData;
+  unit: AttributeData;
+  item: AttributeData;
 }
 
 export type Ingredients = Ingredient[];

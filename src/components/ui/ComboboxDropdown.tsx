@@ -3,7 +3,7 @@
 import { ChangeEvent } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions, Label } from '@headlessui/react'
-import { Attribute, Instruction, Manager } from '../../utils/types';
+import { AttributeData, Instruction, Manager } from '../../utils/types';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
@@ -20,7 +20,7 @@ type ComboBoxDropDown = {
   // onValueSelect: ((value: Instruction) => void) | ((value: Option) => void)
   onValueSelect: any
   filteredOptions: any[];
-  selected?: Attribute | Instruction;
+  selected?: AttributeData | Instruction;
   name: string
 }
 
@@ -80,7 +80,7 @@ function ComboboxDropdown({ name, handleQuery, onValueSelect, filteredOptions, s
                   <>
                     {option.instruction
                       ? <span className={classNames('block truncate', selected && 'font-semibold')}>{option.instruction}</span>
-                      : <span className={classNames('block truncate', selected && 'font-semibold')}>{option[name as keyof Attribute]}</span>
+                      : <span className={classNames('block truncate', selected && 'font-semibold')}>{option[name as keyof AttributeData]}</span>
                     }
 
                     {selected && (

@@ -1,14 +1,14 @@
 import { useState, useEffect, ChangeEvent } from 'react'
-import { Attribute } from '../../utils/types'
+import { AttributeData } from '../../utils/types'
 import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions, Label } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 
 type IngredientManager = {
-  value: Attribute;
+  value: AttributeData;
   name: string
-  handleOptionChange: (state: string, option: Attribute) => void;
-  options: Attribute[];
-  postRequest: (option: Attribute) => Promise<Attribute>;
+  handleOptionChange: (state: string, option: AttributeData) => void;
+  options: AttributeData[];
+  postRequest: (option: AttributeData) => Promise<AttributeData>;
   handleOptions: any
 }
 
@@ -22,12 +22,12 @@ type IngredientManager = {
 
 function IngredientManager({ value, name, handleOptionChange, options, postRequest, handleOptions }: IngredientManager) {
   const [query, setQuery] = useState<string>('')
-  const [selected, setSelected] = useState<Attribute>(value)
+  const [selected, setSelected] = useState<AttributeData>(value)
 //SHOULD REQUESTS AND STATE MANAGMENT BE SPLIT INTO TWO OBJECTS eg handleOptions & optionRequest....
-  const isNewOption = (option: Attribute) => typeof option.id === "string" && option[name] === '+ create...'
+  const isNewOption = (option: AttributeData) => typeof option.id === "string" && option[name] === '+ create...'
 
   /** Creates a list of filtered options based on search query */
-  const filteredOptions: Attribute[] =
+  const filteredOptions: AttributeData[] =
     query === ''
       ? options
       : filterOptions();
@@ -37,9 +37,9 @@ function IngredientManager({ value, name, handleOptionChange, options, postReque
     if (options.length === 0) {
       return [{ id: `create-${Math.random()}`, [name]: '+ create...' }];
     } else {
-      return options.reduce<Attribute[]>((currentOptions, option) => {
+      return options.reduce<AttributeData[]>((currentOptions, option) => {
         console.log("optionnnnnn",option)
-        const isOptionAvailable = (option[name as keyof Attribute] as string).toLowerCase().includes(query.toLowerCase());
+        const isOptionAvailable = (option[name as keyof AttributeData] as string).toLowerCase().includes(query.toLowerCase());
         if (isOptionAvailable) currentOptions.push(option);
 
         //renders "+ create" option if query value doesn't exist in the dropdown options
@@ -51,7 +51,7 @@ function IngredientManager({ value, name, handleOptionChange, options, postReque
   }
 
   /** Injects query string prior to POST request and updates parent state  */
-  async function processNewOption(option: Attribute) {
+  async function processNewOption(option: AttributeData) {
     const newOption = { ...option, id: null, [name]: query }
     const createdOption = await postRequest(newOption);
     handleOptions.addOption(name, createdOption)
@@ -59,7 +59,7 @@ function IngredientManager({ value, name, handleOptionChange, options, postReque
   }
 
   /** Updates parent state with selected option*/
-  function processExistingOption(option: Attribute) {
+  function processExistingOption(option: AttributeData) {
     setSelected(option);
   }
 

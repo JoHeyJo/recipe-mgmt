@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { RecipeContext } from '../../context/RecipeContext';
 import OptionRequests from '../requests/OptionRequests';
-import { Attribute } from '../../utils/types';
+import { AttributeData } from '../../utils/types';
 import API from '../../api';
 import { IngredientInputGroupProps } from '../../utils/props';
 
@@ -14,13 +14,13 @@ const defaultUnit = { id: null, type: "" };
  * IngredientGroup -> IngredientInputGroup -> OptionRequests
 */
 function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInputGroupProps) {
-  const [item, setItem] = useState<Attribute>(ingredient.item);
-  const [amount, setAmount] = useState<Attribute>(ingredient.amount);
-  const [unit, setUnit] = useState<Attribute>(ingredient.unit);
+  const [item, setItem] = useState<AttributeData>(ingredient.item);
+  const [amount, setAmount] = useState<AttributeData>(ingredient.amount);
+  const [unit, setUnit] = useState<AttributeData>(ingredient.unit);
 
-  const [items, setItems] = useState<Attribute[]>([])
-  const [quantityAmount, setQuantityAmounts] = useState<Attribute[]>([])
-  const [quantityUnits, setQuantityUnits] = useState<Attribute[]>([])
+  const [items, setItems] = useState<AttributeData[]>([])
+  const [quantityAmount, setQuantityAmounts] = useState<AttributeData[]>([])
+  const [quantityUnits, setQuantityUnits] = useState<AttributeData[]>([])
 
   /** Calls parent callback to handleUpdate name */
   function updateIngredientList() {
@@ -29,17 +29,17 @@ function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInp
   }
 
   /** Handles changes made to option state */
-  function updateState(state: string, option: Attribute) {
+  function updateState(state: string, option: AttributeData) {
     if (state === "name") setItem(option)
     if (state === "type") setUnit(option)
     if (state === "amount") setAmount(option)
   }
 
   /** Handles adding options to state */
-  function addOption(state: string, option: Attribute) {
-    if (state === "name") setItems((options: Attribute[]) => [...options, option])
-    if (state === "type") setQuantityUnits((options: Attribute[]) => [...options, option])
-    if (state === "amount") setQuantityAmounts((options: Attribute[]) => [...options, option])
+  function addOption(state: string, option: AttributeData) {
+    if (state === "name") setItems((options: AttributeData[]) => [...options, option])
+    if (state === "type") setQuantityUnits((options: AttributeData[]) => [...options, option])
+    if (state === "amount") setQuantityAmounts((options: AttributeData[]) => [...options, option])
   }
 
   /** Removes deselected option */
