@@ -1,24 +1,25 @@
-import { useState, ChangeEvent } from "react";
+import { ChangeEvent } from "react";
 
 type RadioSwitchProps = {
-  handleSwitch: (event: ChangeEvent<HTMLInputElement>) => void
+  handleSwitch: (event: ChangeEvent<HTMLInputElement>) => void;
+  selection: string
 }
 
-function RadioSwitch({ handleSwitch }: RadioSwitchProps) {
-  const [whichInstructions, setWhichInstructions] = useState("book");
+function RadioSwitch({ handleSwitch, selection }: RadioSwitchProps) {
+
   return (
     <div className="RadioSwitch-radio-buttons flex justify-center">
       <div className="RadioSwitch-radio">
         <label>
           <input type="radio" value="user" onChange={handleSwitch}
-            checked={whichInstructions === "user"} />
+            checked={selection === "user"} />
           User
         </label>
       </div>
       <div className="RadioSwitch-radio">
         <label>
           <input type="radio" value="book" onChange={handleSwitch}
-            checked={whichInstructions === "book"} />
+            checked={selection === "book"} />
           Book
         </label>
       </div>

@@ -6,6 +6,7 @@ import { errorHandling } from '../../utils/ErrorHandling';
 import { InstructionsAreaProps } from "../../utils/props";
 import { RecipeContext } from "../../context/RecipeContext";
 import { UserContext } from "../../context/UserContext";
+import RadioSwitch from "./common/RadioSwitch";
 
 const PLACE_HOLDER = ["Add ingredients...", "Add ice...", "shake..."]
 
@@ -149,7 +150,7 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
 
   }
 
-  /** handle state change for whichInstruction */
+  /** handle state change for whichInstructions */
   function handleRadio(event: ChangeEvent<HTMLInputElement>) {
     setWhichInstructions(event.target.value)
   }
@@ -170,22 +171,7 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
 
   return (
     <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
-        <div className="InstructionsArea-radio-buttons flex justify-center">
-          <div className="InstructionsArea-radio">
-            <label>
-              <input type="radio" value="user" onChange={handleRadio}
-                checked={whichInstructions === "user"} />
-              User
-            </label>
-          </div>
-          <div className="InstructionsArea-radio">
-            <label>
-              <input type="radio" value="book" onChange={handleRadio}
-                checked={whichInstructions === "book"} />
-              Book
-            </label>
-          </div>
-        </div>
+      <RadioSwitch handleSwitch={handleRadio} selection={whichInstructions} />
       {selectedInstructions.map((value, index) =>
         <InstructionManager
           key={index}
