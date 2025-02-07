@@ -58,6 +58,7 @@ function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
 
   return (
     <div id='IngredientsGroup-main'>
+      {/* <Radio */}
       {ingredients.map((ingredient, i) =>
         <div key={ingredient.ingredient_id || ingredientKeys[i] } className='flex items-center justify-center'>
           <IngredientInputGroup index={i} ingredient={ingredient} handleUpdate={updateIngredients} />

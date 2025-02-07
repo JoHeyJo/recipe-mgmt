@@ -170,7 +170,6 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
 
   return (
     <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
-      <form>
         <div className="InstructionsArea-radio-buttons flex justify-center">
           <div className="InstructionsArea-radio">
             <label>
@@ -187,7 +186,6 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
             </label>
           </div>
         </div>
-      </form>
       {selectedInstructions.map((value, index) =>
         <InstructionManager
           key={index}
