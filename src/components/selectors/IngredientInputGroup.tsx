@@ -36,7 +36,6 @@ function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInp
 
   /** Handles adding options to state */
   function addOption(state: string, option: AttributeData) {
-    // setQuantityAmounts expects attribute value no attribute name unlike setItems & setQuantityUnits - inconsistent....
     if (state === "name") setItems((options: AttributeData[]) => [...options, option])
     if (state === "type") setQuantityUnits((options: AttributeData[]) => [...options, option])
     if (state === "value") setQuantityAmounts((options: AttributeData[]) => [...options, option])
@@ -74,9 +73,9 @@ function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInp
 
   return (
     <div className="flex rounded-md">
-      <OptionRequests value={ingredient.amount} handleOptions={handleOptions} handleOptionChange={updateState} options={quantityAmount} name={"value"} attribute={"amount"} />
-      <OptionRequests value={ingredient.unit} handleOptions={handleOptions} handleOptionChange={updateState} options={quantityUnits} name={"type"} attribute={"unit"} />
-      <OptionRequests value={ingredient.item} handleOptions={handleOptions} handleOptionChange={updateState} options={items} name={"name"} attribute={"item"} />
+      <OptionRequests value={ingredient.amount} handleOptions={handleOptions} handleOptionChange={updateState} options={quantityAmount} attribute={"value"} entity={"amount"} />
+      <OptionRequests value={ingredient.unit} handleOptions={handleOptions} handleOptionChange={updateState} options={quantityUnits} attribute={"type"} entity={"unit"} />
+      <OptionRequests value={ingredient.item} handleOptions={handleOptions} handleOptionChange={updateState} options={items} attribute={"name"} entity={"item"} />
     </div>
   )
 }

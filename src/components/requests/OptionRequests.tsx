@@ -7,7 +7,7 @@ import { UserContext } from '../../context/UserContext';
 
 type OptionRequestsProps = {
   value: any;
-  name: string
+  entity: string
   handleOptionChange: (state: string, attributeObject: AttributeData) => void;
   options: AttributeData[];
   handleOptions: object;
@@ -21,8 +21,7 @@ type OptionRequestsProps = {
  * IngredientInputGroup -> OptionRequests -> IngredientManager
  */
 
-function OptionRequests({ value, name, handleOptionChange, options, handleOptions, attribute }: OptionRequestsProps) {
-
+function OptionRequests({ value, entity, handleOptionChange, options, handleOptions, attribute }: OptionRequestsProps) {
   const { currentBookId, userId } = useContext(UserContext);
 
   /** Request to create new ingredient option */
@@ -39,7 +38,8 @@ function OptionRequests({ value, name, handleOptionChange, options, handleOption
   return (
     <IngredientManager
       value={value}
-      name={name}
+      attribute={attribute}
+      entity={entity}
       handleOptionChange={handleOptionChange}
       options={options}
       postRequest={addOption}
