@@ -21,6 +21,7 @@ function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInp
   const [quantityAmount, setQuantityAmounts] = useState<AttributeData[]>([])
   const [quantityUnits, setQuantityUnits] = useState<AttributeData[]>([])
 
+
   /** Calls parent callback to handleUpdate name */
   function updateIngredientList() {
     const updatedIngredient = { ...ingredient, item, amount, unit };
