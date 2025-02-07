@@ -3,6 +3,7 @@ import OptionRequests from '../requests/OptionRequests';
 import { AttributeData } from '../../utils/types';
 import API from '../../api';
 import { IngredientInputGroupProps } from '../../utils/props';
+import { stat } from 'fs';
 
 const defaultItem = { id: null, name: "" };
 const defaultAmount = { id: null, value: "" };
@@ -30,23 +31,25 @@ function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInp
 
   /** Handles changes made to option state */
   function updateState(state: string, option: AttributeData) {
-    if (state === "item") setItem(option)
-    if (state === "unit") setUnit(option)
-    if (state === "amount") setAmount(option)
+    console.log(">>>>>>>>>$$$$",state, option)
+    if (state === "name") setItem(option)
+    if (state === "type") setUnit(option)
+    if (state === "value") setAmount(option)
   }
 
   /** Handles adding options to state */
   function addOption(state: string, option: AttributeData) {
-    if (state === "item") setItems((options: AttributeData[]) => [...options, option])
-    if (state === "unit") setQuantityUnits((options: AttributeData[]) => [...options, option])
-    if (state === "amount") setQuantityAmounts((options: AttributeData[]) => [...options, option])
+    console.log("$>>>>>>>>",state, option)
+    if (state === "name") setItems((options: AttributeData[]) => [...options, option])
+    if (state === "type") setQuantityUnits((options: AttributeData[]) => [...options, option])
+    if (state === "value") setQuantityAmounts((options: AttributeData[]) => [...options, option])
   }
 
   /** Removes deselected option */
   function removeDeselected(state: string) {
-    if (state === "item") setItem(defaultItem);
-    if (state === "unit") setUnit(defaultUnit);
-    if (state === "amount") setAmount(defaultAmount);
+    if (state === "name") setItem(defaultItem);
+    if (state === "type") setUnit(defaultUnit);
+    if (state === "value") setAmount(defaultAmount);
   }
 
   const handleOptions = {
