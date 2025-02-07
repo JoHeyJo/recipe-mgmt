@@ -56,7 +56,7 @@ function IngredientManager({ value, attribute, entity, handleOptionChange, optio
   async function processNewOption(option: AttributeData) {
     const newOption = { ...option, id: null, [attribute]: query }
     const createdOption = await postRequest(newOption);
-    handleOptions.addOption(attribute, createdOption)
+    handleOptions.addOption(entity, createdOption)
     setSelected(createdOption);
   }
 
@@ -67,7 +67,7 @@ function IngredientManager({ value, attribute, entity, handleOptionChange, optio
 
   /** Consolidates actions that deselect option */
   function processDeselect() {
-    handleOptions.removeDeselected(attribute)
+    handleOptions.removeDeselected(entity)
     setSelected(null)
   }
 

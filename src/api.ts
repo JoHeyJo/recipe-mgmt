@@ -59,8 +59,8 @@ class API {
   }
 
   /** Add book ingredient */
-  static async postBookIngredient(data: AttributeData, bookId: number, userId: number, attribute: string) {
-    const res = await this.request(`/users/${userId}/books/${bookId}/ingredients/${attribute}`, data, "POST")
+  static async postBookIngredient(data: AttributeData, bookId: number, userId: number, entity: string) {
+    const res = await this.request(`/users/${userId}/books/${bookId}/ingredients/${entity}`, data, "POST")
     return res;
   }
 

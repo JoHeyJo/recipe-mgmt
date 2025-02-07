@@ -29,22 +29,22 @@ function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInp
 
   /** Handles changes made to option state */
   function updateState(state: string, option: AttributeData) {
-    if (state === "name") setItem(option)
-    if (state === "type") setUnit(option)
+    if (state === "item") setItem(option)
+    if (state === "unit") setUnit(option)
     if (state === "amount") setAmount(option)
   }
 
   /** Handles adding options to state */
   function addOption(state: string, option: AttributeData) {
-    if (state === "name") setItems((options: AttributeData[]) => [...options, option])
-    if (state === "type") setQuantityUnits((options: AttributeData[]) => [...options, option])
-    if (state === "value") setQuantityAmounts((options: AttributeData[]) => [...options, option])
+    if (state === "item") setItems((options: AttributeData[]) => [...options, option])
+    if (state === "unit") setQuantityUnits((options: AttributeData[]) => [...options, option])
+    if (state === "amount") setQuantityAmounts((options: AttributeData[]) => [...options, option])
   }
 
   /** Removes deselected option */
   function removeDeselected(state: string) {
-    if (state === "name") setItem(defaultItem);
-    if (state === "type") setUnit(defaultUnit);
+    if (state === "item") setItem(defaultItem);
+    if (state === "unit") setUnit(defaultUnit);
     if (state === "amount") setAmount(defaultAmount);
   }
 

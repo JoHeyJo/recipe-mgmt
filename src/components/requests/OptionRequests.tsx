@@ -27,7 +27,7 @@ function OptionRequests({ value, entity, handleOptionChange, options, handleOpti
   /** Request to create new ingredient option */
   async function addOption(attributeObject: AttributeData): Promise<AttributeData> {
     try {
-      const id = await API.postBookIngredient(attributeObject, currentBookId, userId, attribute);
+      const id = await API.postBookIngredient(attributeObject, currentBookId, userId, entitygit);
       return id;
     } catch (error: any) {
       errorHandling("OptionRequests - addOption", error)
