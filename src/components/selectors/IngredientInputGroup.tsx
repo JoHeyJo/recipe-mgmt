@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import OptionRequests from '../requests/OptionRequests';
-import { AttributeData } from '../../utils/types';
+import { AttributeData, Ingredients } from '../../utils/types';
 import API from '../../api';
 import { IngredientInputGroupProps } from '../../utils/props';
 import { UserContext } from '../../context/UserContext';
@@ -9,7 +9,9 @@ const defaultItem = { id: null, name: "" };
 const defaultAmount = { id: null, value: "" };
 const defaultUnit = { id: null, type: "" };
 
-/** Renders Combobox and processes data for new Ingredient
+/** Creates individual Ingredient object - requests ingredients from db
+ * 
+ * Can be split into two components
  * 
  * IngredientGroup -> IngredientInputGroup -> OptionRequests
 */
@@ -21,6 +23,8 @@ function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInp
   const [items, setItems] = useState<AttributeData[]>([])
   const [quantityAmount, setQuantityAmounts] = useState<AttributeData[]>([])
   const [quantityUnits, setQuantityUnits] = useState<AttributeData[]>([])
+
+  const [whichIngredients, setWhichIngredients] = useState<string>("book")
 
   const { userId, currentBookId } = useContext(UserContext);
 

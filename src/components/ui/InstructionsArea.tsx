@@ -15,7 +15,9 @@ const InstructionsTemplate: Instructions = []
 /** Triggers creation of input if there are no inputs left (num of inputs = array index) */
 const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs - 1 === arrayKey
 
-/** InstructionsArea - Makes requests for instructions
+/** InstructionsArea handles instructions array mutation - Makes requests for instructions
+ * 
+ * Needs to be refactored into two components
  * 
  * #### Need loading state for instructions. There is visible lag...it first loads the empty array so that needs to be address first..
  * Could need to inject selectedInstruction in parent so when empty array isn't rendered first
