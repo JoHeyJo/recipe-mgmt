@@ -116,7 +116,6 @@ class API {
   /** Fetch user recipes */
   static async getBookRecipes(userId: number, bookId: number) {
     const res = await this.request(`users/${userId}/books/${bookId}/recipes`)
-    console.log("!!!!",res)
     return res
   }
 

@@ -160,6 +160,7 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
     handleUpdate(selectedInstructions.filter((i => i.id)), "instructions")
   }, [selectedInstructions])
 
+  /** Automatically associates "global user" instructions to current book on switch */
   async function associateInstructionToBook(userId: number, currentBookId: number, selectInstruction: number) {
     try {
       const res = await API.postInstructionAssociation(userId, currentBookId, selectInstruction)

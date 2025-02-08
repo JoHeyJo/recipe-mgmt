@@ -62,7 +62,6 @@ function IngredientManager({ value, attribute, entity, handleOptionChange, optio
 
   /** Updates parent state with selected option */
   function processExistingOption(option: AttributeData) {
-    console.log("existing", option)
     setSelected(option);
   }
 
@@ -74,7 +73,6 @@ function IngredientManager({ value, attribute, entity, handleOptionChange, optio
 
   /** Handles parent state update when selection is made in combobox */
   function handleChange(option: any) {
-    console.log("option",option)
     if (!option) return processDeselect();
     isNewOption(option) ? processNewOption(option) : processExistingOption(option)
   }

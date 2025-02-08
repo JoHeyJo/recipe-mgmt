@@ -31,7 +31,6 @@ function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInp
 
   /** Handles changes made to option state */
   function updateState(state: string, option: AttributeData) {
-    console.log(">>>>>>>>>$$$$",state, option)
     if (state === "name") setItem(option)
     if (state === "type") setUnit(option)
     if (state === "value") setAmount(option)
@@ -39,7 +38,6 @@ function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInp
 
   /** Handles adding options to state */
   function addOption(state: string, option: AttributeData) {
-    console.log("$>>>>>>>>",state, option)
     if (state === "name") setItems((options: AttributeData[]) => [...options, option])
     if (state === "type") setQuantityUnits((options: AttributeData[]) => [...options, option])
     if (state === "value") setQuantityAmounts((options: AttributeData[]) => [...options, option])
