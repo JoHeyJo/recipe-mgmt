@@ -4,6 +4,8 @@ import { AttributeData, Ingredients } from '../../utils/types';
 import API from '../../api';
 import { IngredientInputGroupProps } from '../../utils/props';
 import { UserContext } from '../../context/UserContext';
+import FaPlusButton from '../ui/common/FaPlusButton';
+import FaMinusButton from '../ui/common/FaMinusButton';
 
 const defaultItem = { id: null, name: "" };
 const defaultAmount = { id: null, value: "" };
@@ -80,11 +82,15 @@ function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInp
   }, [])
 
   return (
+    <>
     <div className="flex rounded-md">
       <OptionRequests value={ingredient.amount} handleOptions={handleOptions} handleOptionChange={updateState} options={quantityAmount} attribute={"value"} entity={"amount"} />
       <OptionRequests value={ingredient.unit} handleOptions={handleOptions} handleOptionChange={updateState} options={quantityUnits} attribute={"type"} entity={"unit"} />
       <OptionRequests value={ingredient.item} handleOptions={handleOptions} handleOptionChange={updateState} options={items} attribute={"name"} entity={"item"} />
     </div>
+      {/* {i === ingredients.length - 1 ? <FaPlusButton onAction={addIngredient} /> : <FaMinusButton onAction={() => removeIngredient(i)} />} */}
+
+    </>
   )
 }
 

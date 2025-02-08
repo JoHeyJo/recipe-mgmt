@@ -2,12 +2,10 @@ import { useState, useEffect, useContext, ChangeEvent } from 'react';
 import IngredientInputGroup from './IngredientInputGroup';
 import { Ingredients, Ingredient } from '../../utils/types';
 import { IngredientsGroupProps } from '../../utils/props';
-import FaPlusButton from '../ui/common/FaPlusButton';
-import FaMinusButton from '../ui/common/FaMinusButton';
 import { RecipeContext } from '../../context/RecipeContext';
 import { v4 as uuidv4 } from 'uuid';
 import { defaultIngredient, recipeTemplate } from '../../utils/templates';
-import RadioSwitch from '../ui/common/RadioSwitch';
+import IngredientRequests from '../requests/IngredientRequests';
 
 /** Contains grouped ingredients for processing - handles mutation of ingredient's array 
  * Refactor: IngredientKeys can be removed and id associated with ingredient can now be used.
@@ -19,8 +17,6 @@ function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
   const { requestAction, contextIngredients } = useContext(RecipeContext);
   const [ingredients, setIngredients] = useState<Ingredients>(contextIngredients || recipeTemplate.ingredients);
   const [ingredientKeys, setIngredientKeys] = useState<any>([Date.now()]); // Generate unique key on first render
-  const [whichIngredients, setWhichIngredients] = useState<string>("book");
-
 
   /** Create unique keys array needed for children components */
   useEffect(() => {
@@ -53,11 +49,6 @@ function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
     })
   }
 
-  /** handle state change for whichIngredients */
-  function handleRadio(event: ChangeEvent<HTMLInputElement>) {
-    setWhichIngredients(event.target.value)
-  }
-
   /** Updates parent state of ingredients when ingredient is added to state */
   useEffect(() => {
     handleUpdate(ingredients, "ingredients")
@@ -65,13 +56,8 @@ function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
 
   return (
     <div id='IngredientsGroup-main'>
-      <RadioSwitch handleSwitch={handleRadio} selection={whichIngredients}/>
-      {ingredients.map((ingredient, i) =>
-        <div key={ingredient.ingredient_id || ingredientKeys[i] } className='flex items-center justify-center'>
-          <IngredientInputGroup index={i} ingredient={ingredient} handleUpdate={updateIngredients} />
-          {i === ingredients.length - 1 ? <FaPlusButton onAction={addIngredient} /> : <FaMinusButton onAction={() => removeIngredient(i)} />}
-        </div>
-      )}
+      <IngredientRequests ingredients={ingredients} ingredientKeys={ingredientKeys} updateIngredients={updateIngredients} />
+
     </div>
   )
 }
