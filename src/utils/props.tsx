@@ -3,7 +3,6 @@ import { Recipe, Ingredient, Instructions, Instruction, Ingredients, Book } from
 export type InstructionManagerProps = {
   instruction: Instruction;
   arrayKey: number;
-  handleOptionChange: (state: string, option: Instruction) => void;
   options: Instructions;
   handleInstructions: any
 }

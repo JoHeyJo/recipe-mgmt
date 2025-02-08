@@ -178,7 +178,6 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
           key={index}
           arrayKey={index}
           instruction={value}
-          handleOptionChange={() => { }}
           options={filterSelected(instructions, index)}
           handleInstructions={handleInstructions}
         />

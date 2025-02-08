@@ -13,7 +13,7 @@ import { InstructionManagerProps } from '../../utils/props';
  * InstructionsArea -> InstructionManager
  */
 
-function InstructionManager({ arrayKey, instruction, handleOptionChange, options, handleInstructions }: InstructionManagerProps) {
+function InstructionManager({ arrayKey, instruction, options, handleInstructions }: InstructionManagerProps) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Instruction>(instruction)
 
@@ -86,9 +86,9 @@ function InstructionManager({ arrayKey, instruction, handleOptionChange, options
    * 
    * ######## CONSIDER REMOVING HAS NO PURPOSE ########
    */
-  useEffect(() => {
-    selected && handleOptionChange(instruction.instruction, selected);
-  }, [selected]);
+  // useEffect(() => {
+  //   selected && handleOptionChange(instruction.instruction, selected);
+  // }, [selected]);
 
   return (
     <>

@@ -18,7 +18,7 @@ export async function extractAndSetUser(token: string, setUser: (user: User) => 
         id: res.id, 
         defaultBookId: res.default_book_id,
         defaultBook: res.default_book,
-        currentBookId: +localStorage.getItem("current-book-id") | res.default_book_id,
+        currentBookId: +localStorage.getItem("current-book-id") || res.default_book_id,
         books: [],
 
       })
