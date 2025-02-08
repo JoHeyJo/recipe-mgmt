@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import OptionRequests from '../requests/OptionRequests';
 import { AttributeData } from '../../utils/types';
 import API from '../../api';
 import { IngredientInputGroupProps } from '../../utils/props';
-import { stat } from 'fs';
+import { UserContext } from '../../context/UserContext';
 
 const defaultItem = { id: null, name: "" };
 const defaultAmount = { id: null, value: "" };
@@ -21,6 +21,8 @@ function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInp
   const [items, setItems] = useState<AttributeData[]>([])
   const [quantityAmount, setQuantityAmounts] = useState<AttributeData[]>([])
   const [quantityUnits, setQuantityUnits] = useState<AttributeData[]>([])
+
+  const { userId, currentBookId } = useContext(UserContext);
 
 
   /** Calls parent callback to handleUpdate name */
@@ -63,9 +65,9 @@ function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInp
   /** Populate each instance of component with latest options */
   useEffect(() => {
     async function fetchOptions() {
-      const amounts = await API.getIngredients("amounts")
-      const units = await API.getIngredients("units")
-      const items = await API.getIngredients("items")
+      const amounts = await API.getBookIngredients(userId, currentBookId, "amount")
+      const units = await API.getBookIngredients(userId, currentBookId, "unit")
+      const items = await API.getBookIngredients(userId, currentBookId, "name")
       setItems(items);
       setQuantityUnits(units);
       setQuantityAmounts(amounts);
