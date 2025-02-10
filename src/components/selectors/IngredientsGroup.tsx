@@ -49,6 +49,12 @@ function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
     })
   }
 
+  const handleIngredient = {
+    add: addIngredient,
+    remove: removeIngredient,
+    update: updateIngredients
+  };
+
   /** Updates parent state of ingredients when ingredient is added to state */
   useEffect(() => {
     handleUpdate(ingredients, "ingredients")
@@ -56,8 +62,7 @@ function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
 
   return (
     <div id='IngredientsGroup-main'>
-      <IngredientRequests ingredients={ingredients} ingredientKeys={ingredientKeys} updateIngredients={updateIngredients} />
-
+      <IngredientRequests ingredients={ingredients} ingredientKeys={ingredientKeys} handleIngredient={handleIngredient} />
     </div>
   )
 }

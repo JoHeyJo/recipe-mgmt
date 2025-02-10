@@ -6,10 +6,14 @@ import { Ingredients } from "../../utils/types";
 type IngredientRequestsProps = {
   ingredients: Ingredients;
   ingredientKeys: number[];
-  updateIngredients: () => {}
+  handleIngredient: {
+    add: ()=> void,
+    remove: ()=> void,
+    update: ()=> void
+  }
 }
 
-function IngredientRequests({ ingredients, ingredientKeys, updateIngredients }) {
+function IngredientRequests({ ingredients, ingredientKeys, handleIngredient }) {
   const [whichAttributes, setWhichAttributes] = useState<string>("book");
 
   /** handle state change for whichIngredients */
@@ -22,7 +26,7 @@ function IngredientRequests({ ingredients, ingredientKeys, updateIngredients }) 
       <RadioSwitch handleSwitch={handleRadio} selection={whichAttributes} />
       {ingredients.map((ingredient, i) =>
         <div key={ingredient.ingredient_id || ingredientKeys[i]} className='flex items-center justify-center'>
-          <IngredientInputGroup index={i} ingredient={ingredient} handleUpdate={updateIngredients} />
+          <IngredientInputGroup index={i} ingredient={ingredient} handleUpdate={handleIngredient.update} />
         </div>
       )}
     </>
