@@ -8,10 +8,15 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 type IngredientManagerProps = {
   value: AttributeData;
   attribute: string
-  handleOptionChange: (state: string, option: AttributeData) => void;
   options: AttributeData[];
-  postRequest: (option: AttributeData) => Promise<AttributeData>;
-  handleOptions: any;
+  handleOption: {
+    post: (entity: string, attributeObject: AttributeData) => Promise<AttributeData>;
+    set: (state: string, option: AttributeData) => void
+  }
+  handleSelected: {
+    update: (state: string, option: AttributeData) => void;
+    remove: (state: string) => void;
+  }
   entity: string
 }
 
@@ -20,13 +25,13 @@ type IngredientManagerProps = {
  * Searches and filters existing ingredient options
  * Renders input field with capability to create new options.
  * 
- * OptionRequests -> IngredientManager
+ * IngredientInputGroup -> IngredientManager
  */
 
-function IngredientManager({ value, attribute, entity, handleOptionChange, options, postRequest, handleOptions }: IngredientManagerProps) {
+function IngredientManager({ value, attribute, entity, options, handleOption, handleSelected }: IngredientManagerProps) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<AttributeData>(value)
-  //SHOULD REQUESTS AND STATE MANAGMENT BE SPLIT INTO TWO OBJECTS eg handleOptions & optionRequest....
+  //SHOULD REQUESTS AND STATE MANAGMENT BE SPLIT INTO TWO OBJECTS eg handleSelected & optionRequest....
   const isNewOption = (option: AttributeData) => typeof option.id === "string" && option[attribute] === '+ create...'
 
   /** Creates a list of filtered options based on search query */
@@ -55,8 +60,8 @@ function IngredientManager({ value, attribute, entity, handleOptionChange, optio
   /** Injects query string prior to POST request and updates parent state  */
   async function processNewOption(option: AttributeData) {
     const newOption = { ...option, id: null, [attribute]: query }
-    const createdOption = await postRequest(newOption);
-    handleOptions.addOption(entity, createdOption)
+    const createdOption = await handleOption.post(entity, newOption);
+    handleOption.set(entity, createdOption) // add option to ingredientRequests state array 
     setSelected(createdOption);
   }
 
@@ -67,7 +72,7 @@ function IngredientManager({ value, attribute, entity, handleOptionChange, optio
 
   /** Consolidates actions that deselect option */
   function processDeselect() {
-    handleOptions.removeDeselected(entity)
+    handleSelected.remove(entity)
     setSelected(null)
   }
 
@@ -82,11 +87,6 @@ function IngredientManager({ value, attribute, entity, handleOptionChange, optio
     setQuery('')
     handleChange(value)
   }
-
-  /** Adds ingredient to parent component when an ingredient is selected  */
-  useEffect(() => {
-    selected && handleOptionChange(attribute, selected);
-  }, [selected, options]);
 
   return (
     <Combobox

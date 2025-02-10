@@ -1,4 +1,4 @@
-import { Recipe, Ingredient, Instructions, Instruction, Ingredients, Book } from "./types";
+import { Recipe, Ingredient, Instructions, Instruction, Ingredients, Book, AttributeData } from "./types";
 
 export type InstructionManagerProps = {
   instruction: Instruction;
@@ -8,12 +8,21 @@ export type InstructionManagerProps = {
 }
 
 export type IngredientInputGroupProps = {
+  options: {
+    items: AttributeData[]
+    amounts: AttributeData[]
+    units: AttributeData[]
+  }
   ingredient: Ingredient;
   index: number;
   handleIngredient: {
     add: () => void,
     remove: (index: number) => void,
     update: (newIngredient: Ingredient, index: number) => void
+  }
+  handleOption: {
+    post: (entity: string, attributeObject: AttributeData) => Promise<AttributeData>;
+    set: (state: string, option: AttributeData) => void
   }
 }
 
@@ -26,9 +35,6 @@ export type IngredientRequestsProps = {
     update: (newIngredient: Ingredient, index: number) => void
   }
 }
-
-
-
 
 export type IngredientsViewProp = {
   ingredients: Ingredient[];

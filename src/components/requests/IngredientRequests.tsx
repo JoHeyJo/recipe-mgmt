@@ -7,6 +7,7 @@ import FaMinusButton from '../ui/common/FaMinusButton';
 import API from "../../api";
 import { UserContext } from '../../context/UserContext';
 import { AttributeData } from "../../utils/types";
+import { errorHandling } from '../../utils/ErrorHandling';
 
 /** Manages ingredient requests and attributes
  * 
@@ -25,11 +26,33 @@ function IngredientRequests({ ingredients, ingredientKeys, handleIngredient }: I
     setWhichAttributes(event.target.value)
   }
 
+  /** Request to create new ingredient option */
+  async function postOption(entity: string, attributeObject: AttributeData): Promise<AttributeData> {
+    try {
+      const id = await API.postBookIngredient(attributeObject, currentBookId, userId, entity);
+      return id;
+    } catch (error: any) {
+      errorHandling("IngredientRequests - addOption", error)
+      throw error
+    }
+  }
+
   /** Handles adding options to state */
-  function addOption(state: string, option: AttributeData) {
+  function setOptions(state: string, option: AttributeData) {
     if (state === "name") setItems((options: AttributeData[]) => [...options, option])
     if (state === "type") setQuantityUnits((options: AttributeData[]) => [...options, option])
     if (state === "value") setQuantityAmounts((options: AttributeData[]) => [...options, option])
+  }
+
+  const handleOption = {
+    post: postOption,
+    set: setOptions
+  }
+
+  const options = {
+    items,
+    amounts: quantityAmount,
+    units: quantityUnits
   }
 
   /** Populate each instance of component with latest options */
@@ -50,7 +73,7 @@ function IngredientRequests({ ingredients, ingredientKeys, handleIngredient }: I
       <RadioSwitch handleSwitch={handleRadio} selection={whichAttributes} />
       {ingredients.map((ingredient, i) =>
         <div key={ingredient.ingredient_id || ingredientKeys[i]} className='flex items-center justify-center'>
-          <IngredientInputGroup index={i} ingredient={ingredient} handleIngredient={handleIngredient} />
+          <IngredientInputGroup index={i} ingredient={ingredient} handleIngredient={handleIngredient} handleOption={handleOption} options={options}/>
           {i === ingredients.length - 1 ? <FaPlusButton onAction={handleIngredient.add} /> : <FaMinusButton onAction={() => handleIngredient.remove(i)} />}
         </div>
       )}
