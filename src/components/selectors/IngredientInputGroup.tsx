@@ -7,7 +7,7 @@ const defaultItem = { id: null, name: "" };
 const defaultAmount = { id: null, value: "" };
 const defaultUnit = { id: null, type: "" };
 
-/** Manages individual Ingredient object 
+/** Manages individual components of Ingredient object 
  * 
  * IngredientRequests -> IngredientInputGroup -> IngredientManager
 */

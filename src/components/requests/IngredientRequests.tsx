@@ -9,7 +9,7 @@ import { UserContext } from '../../context/UserContext';
 import { AttributeData } from "../../utils/types";
 import { errorHandling } from '../../utils/ErrorHandling';
 
-/** Manages ingredient requests and attributes
+/** Manages ingredient requests and dropdown options
  * 
  * IngredientsGroup -> ingredientRequests -> IngredientInputGroup
  */
@@ -39,6 +39,7 @@ function IngredientRequests({ ingredients, ingredientKeys, handleIngredient }: I
 
   /** Handles adding options to state */
   function setOptions(state: string, option: AttributeData) {
+    console.log("SET>>>", state, option)
     if (state === "name") setItems((options: AttributeData[]) => [...options, option])
     if (state === "type") setQuantityUnits((options: AttributeData[]) => [...options, option])
     if (state === "value") setQuantityAmounts((options: AttributeData[]) => [...options, option])

@@ -60,6 +60,7 @@ function IngredientManager({ value, attribute, entity, options, handleOption, ha
   /** Injects query string prior to POST request and updates parent state  */
   async function processNewOption(option: AttributeData) {
     const newOption = { ...option, id: null, [attribute]: query }
+    console.log(">>>>>>", newOption)
     const createdOption = await handleOption.post(entity, newOption);
     handleOption.set(entity, createdOption) // add option to ingredientRequests state array 
     setSelected(createdOption);
