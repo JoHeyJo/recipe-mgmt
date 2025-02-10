@@ -1,40 +1,43 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import OptionRequests from '../requests/OptionRequests';
-import { AttributeData, Ingredients } from '../../utils/types';
-import API from '../../api';
+import { AttributeData } from '../../utils/types';
 import { IngredientInputGroupProps } from '../../utils/props';
+import { useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
-import FaPlusButton from '../ui/common/FaPlusButton';
-import FaMinusButton from '../ui/common/FaMinusButton';
+import API from '../../api';
+import { errorHandling } from '../../utils/ErrorHandling';
+import IngredientManager from '../views/IngredientManager';
 
 const defaultItem = { id: null, name: "" };
 const defaultAmount = { id: null, value: "" };
 const defaultUnit = { id: null, type: "" };
 
-/** Creates individual Ingredient object - requests ingredients from db
+/** Creates individual Ingredient object 
  * 
- * Can be split into two components
- * 
- * IngredientGroup -> IngredientInputGroup -> OptionRequests
+ * IngredientRequests -> IngredientInputGroup -> OptionRequests
 */
-function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInputGroupProps) {
+function IngredientInputGroup({ handleIngredient, ingredient, index }: IngredientInputGroupProps) {
   const [item, setItem] = useState<AttributeData>(ingredient.item);
   const [amount, setAmount] = useState<AttributeData>(ingredient.amount);
   const [unit, setUnit] = useState<AttributeData>(ingredient.unit);
 
-  const [items, setItems] = useState<AttributeData[]>([])
-  const [quantityAmount, setQuantityAmounts] = useState<AttributeData[]>([])
-  const [quantityUnits, setQuantityUnits] = useState<AttributeData[]>([])
+  const { currentBookId, userId } = useContext(UserContext);
 
-  const [whichIngredients, setWhichIngredients] = useState<string>("book")
-
-  const { userId, currentBookId } = useContext(UserContext);
-
+  /** Request to create new ingredient option */
+  async function addOption(entity: string, attributeObject: AttributeData): Promise<AttributeData> {
+    try {
+      const id = await API.postBookIngredient(attributeObject, currentBookId, userId, entity);
+      return id;
+    } catch (error: any) {
+      errorHandling("IngredientRequests - addOption", error)
+      throw error
+    }
+  }
 
   /** Calls parent callback to handleUpdate name */
   function updateIngredientList() {
     const updatedIngredient = { ...ingredient, item, amount, unit };
-    handleUpdate(updatedIngredient, index)
+    handleIngredient.update(updatedIngredient, index)
   }
 
   /** Handles changes made to option state */
@@ -44,22 +47,15 @@ function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInp
     if (state === "value") setAmount(option)
   }
 
-  /** Handles adding options to state */
-  function addOption(state: string, option: AttributeData) {
-    if (state === "name") setItems((options: AttributeData[]) => [...options, option])
-    if (state === "type") setQuantityUnits((options: AttributeData[]) => [...options, option])
-    if (state === "value") setQuantityAmounts((options: AttributeData[]) => [...options, option])
-  }
-
   /** Removes deselected option */
-  function removeDeselected(state: string) {
+  function removeDeselectedInput(state: string) {
     if (state === "name") setItem(defaultItem);
     if (state === "type") setUnit(defaultUnit);
     if (state === "value") setAmount(defaultAmount);
   }
 
   const handleOptions = {
-    removeDeselected,
+    removeDeselectedInput,
     addOption
   }
 
@@ -68,29 +64,15 @@ function IngredientInputGroup({ handleUpdate, ingredient, index }: IngredientInp
     updateIngredientList()
   }, [item, amount, unit])
 
-  /** Populate each instance of component with latest options */
-  useEffect(() => {
-    async function fetchOptions() {
-      const amounts = await API.getBookIngredients(userId, currentBookId, "amount")
-      const units = await API.getBookIngredients(userId, currentBookId, "unit")
-      const items = await API.getBookIngredients(userId, currentBookId, "name")
-      setItems(items);
-      setQuantityUnits(units);
-      setQuantityAmounts(amounts);
-    }
-    fetchOptions()
-  }, [])
-
   return (
-    <>
     <div className="flex rounded-md">
-      <OptionRequests value={ingredient.amount} handleOptions={handleOptions} handleOptionChange={updateState} options={quantityAmount} attribute={"value"} entity={"amount"} />
+      <IngredientManager value={ingredient.amount} attribute={"value"} entity={"amount"} handleOptionChange={updateState} options={quantityAmount} postRequest={addOption} handleOptions={handleOptions} />
+      <IngredientManager value={ingredient.amount} attribute={"type"} entity={"unit"} handleOptionChange={updateState} options={quantityUnits} postRequest={addOption} handleOptions={handleOptions} />
+      <IngredientManager value={ingredient.amount} attribute={"name"} entity={"item"} handleOptionChange={updateState} options={items} postRequest={addOption} handleOptions={handleOptions} />
+      {/* <OptionRequests value={ingredient.amount} handleOptions={handleOptions} handleOptionChange={updateState} options={quantityAmount} attribute={"value"} entity={"amount"} />
       <OptionRequests value={ingredient.unit} handleOptions={handleOptions} handleOptionChange={updateState} options={quantityUnits} attribute={"type"} entity={"unit"} />
-      <OptionRequests value={ingredient.item} handleOptions={handleOptions} handleOptionChange={updateState} options={items} attribute={"name"} entity={"item"} />
+      <OptionRequests value={ingredient.item} handleOptions={handleOptions} handleOptionChange={updateState} options={items} attribute={"name"} entity={"item"} /> */}
     </div>
-      {/* {i === ingredients.length - 1 ? <FaPlusButton onAction={addIngredient} /> : <FaMinusButton onAction={() => removeIngredient(i)} />} */}
-
-    </>
   )
 }
 
