@@ -39,10 +39,11 @@ function IngredientRequests({ ingredients, ingredientKeys, handleIngredient }: I
 
   /** Handles adding options to state */
   function setOptions(state: string, option: AttributeData) {
+    // should this only be called on newly created items
     console.log("SET>>>", state, option)
-    if (state === "name") setItems((options: AttributeData[]) => [...options, option])
-    if (state === "type") setQuantityUnits((options: AttributeData[]) => [...options, option])
-    if (state === "value") setQuantityAmounts((options: AttributeData[]) => [...options, option])
+    if (state === "item") setItems((options: AttributeData[]) => [...options, option])
+    if (state === "unit") setQuantityUnits((options: AttributeData[]) => [...options, option])
+    if (state === "amount") setQuantityAmounts((options: AttributeData[]) => [...options, option])
   }
 
   const handleOption = {

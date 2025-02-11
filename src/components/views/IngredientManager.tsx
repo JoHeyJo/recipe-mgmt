@@ -89,6 +89,12 @@ function IngredientManager({ value, attribute, entity, options, handleOption, ha
     handleChange(value)
   }
 
+  /** Adds ingredient to parent component when an ingredient is selected  */
+  useEffect(() => {
+    selected && handleSelected.update(entity, selected);
+  }, [selected, options]);
+
+
   return (
     <Combobox
       as="div"

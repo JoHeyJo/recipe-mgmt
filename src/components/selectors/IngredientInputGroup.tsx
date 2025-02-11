@@ -7,7 +7,7 @@ const defaultItem = { id: null, name: "" };
 const defaultAmount = { id: null, value: "" };
 const defaultUnit = { id: null, type: "" };
 
-/** Manages individual components of Ingredient object 
+/** Manages individual components of Ingredient object
  * 
  * IngredientRequests -> IngredientInputGroup -> IngredientManager
 */
@@ -24,16 +24,17 @@ function IngredientInputGroup({ handleIngredient, ingredient, index, handleOptio
 
   /** Changes selected attribute */
   function updateSelected(state: string, option: AttributeData) {
-    if (state === "name") setItem(option)
-    if (state === "type") setUnit(option)
-    if (state === "value") setAmount(option)
+    console.log("!!!!",state, option)
+    if (state === "item") setItem(option)
+    if (state === "unit") setUnit(option)
+    if (state === "amount") setAmount(option)
   }
 
   /** Unselects option */
   function unSelectInput(state: string) {
-    if (state === "name") setItem(defaultItem);
-    if (state === "type") setUnit(defaultUnit);
-    if (state === "value") setAmount(defaultAmount);
+    if (state === "item") setItem(defaultItem);
+    if (state === "unit") setUnit(defaultUnit);
+    if (state === "amount") setAmount(defaultAmount);
   }
 
   const handleSelected = {
