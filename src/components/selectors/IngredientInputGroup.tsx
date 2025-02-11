@@ -24,7 +24,6 @@ function IngredientInputGroup({ handleIngredient, ingredient, index, handleOptio
 
   /** Changes selected attribute */
   function updateSelected(state: string, option: AttributeData) {
-    console.log("!!!!",state, option)
     if (state === "item") setItem(option)
     if (state === "unit") setUnit(option)
     if (state === "amount") setAmount(option)
