@@ -11,7 +11,7 @@ import IngredientRequests from '../requests/ComponentsOptionsRequests';
  * Refactor: IngredientKeys can be removed and id associated with ingredient can now be used.
  * Need to choose between using DATE or UUID
  * 
- * RecipeRequests -> IngredientsGroup -> IngredientInputGroup
+ * RecipeRequests -> IngredientsGroup -> ComponentsOptionsRequests
  */
 function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
   const { requestAction, contextIngredients } = useContext(RecipeContext);

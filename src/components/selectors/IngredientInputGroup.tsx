@@ -9,7 +9,7 @@ const defaultUnit = { id: null, type: "" };
 
 /** Manages individual components of Ingredient object
  * 
- * IngredientRequests -> IngredientInputGroup -> IngredientManager
+ * ComponentsOptionsRequests -> IngredientInputGroup -> IngredientManager
 */
 function IngredientInputGroup({ handleIngredient, ingredient, index, handleOption, options }: IngredientInputGroupProps) {
   const [item, setItem] = useState<AttributeData>(ingredient.item);

@@ -107,10 +107,11 @@ class API {
   }
 
   /** Add book ingredient */
-  static async postBookIngredient(data: AttributeData, bookId: number, userId: number, entity: string) {
-    const res = await this.request(`/users/${userId}/books/${bookId}/ingredients/${entity}`, data, "POST")
+  static async postComponentOption(option: AttributeData, bookId: number, userId: number, component: string) {
+    const res = await this.request(`/users/${userId}/books/${bookId}/ingredients/${component}`, option, "POST")
     return res;
   }
+
   // ########### INSTRUCTIONS ###########
 
   /** Fetch all instructions */

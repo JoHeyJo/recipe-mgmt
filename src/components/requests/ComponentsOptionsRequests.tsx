@@ -29,7 +29,7 @@ function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleIngredie
   /** Request to create new ingredient option */
   async function postOption(entity: string, attributeObject: AttributeData): Promise<AttributeData> {
     try {
-      const id = await API.postBookIngredient(attributeObject, currentBookId, userId, entity);
+      const id = await API.postComponentOption(attributeObject, currentBookId, userId, entity);
       return id;
     } catch (error: any) {
       errorHandling("ComponentsOptionsRequests - addOption", error)
