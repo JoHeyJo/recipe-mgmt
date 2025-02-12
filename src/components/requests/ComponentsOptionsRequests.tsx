@@ -55,20 +55,23 @@ function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleIngredie
     units: quantityUnits
   }
 
-  async function fetchBookIngredients(){
-    const {amounts, units, items} = await API.getBookIngredients(userId, currentBookId)
+  async function fetchBookComponentsOptions(){
+    const { amounts, units, items } = await API.getBookComponentsOptions(userId, currentBookId)
+    setItems(items);
+    setQuantityUnits(units);
+    setQuantityAmounts(amounts);
+  }
+  
+  async function fetchUserComponentsOptions(){
+    const {amounts, units, items} = await API.getUserComponentsOptions(userId);
     setItems(items);
     setQuantityUnits(units);
     setQuantityAmounts(amounts);
   }
 
-  async function fetchUserIngredients(){
-    const res = await API.getUserIngredients(userId, )
-  }
-
   /** Populate each instance of component with latest options */
   useEffect(() => {
-    whichAttributes == "book" ? fetchBookIngredients() : fetchBookIngredients()
+    whichAttributes == "book" ? fetchBookComponentsOptions() : fetchUserComponentsOptions()
   }, [whichAttributes])
 
   return (

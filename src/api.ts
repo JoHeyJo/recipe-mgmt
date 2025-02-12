@@ -86,16 +86,16 @@ class API {
     return res
   }
 
-  // ########### INGREDIENTS ###########
+  // ########### COMPONENTOPTIONS = {amount, unit, item} = INGREDIENT ###########
 
   /** Fetch all ingredients  */
-  static async getUserComponentOptions(userId: number) {
+  static async getUserComponentsOptions(userId: number) {
     const res = await this.request(`/users/${userId}/ingredients/components`)
     return res;
   }
 
   /** Fetch book ingredients */
-  static async getBookComponentOptions(userId: number, bookId: number) {
+  static async getBookComponentsOptions(userId: number, bookId: number) {
     const res = await this.request(`/users/${userId}/books/${bookId}/ingredients/components`)
     return res;
   }
