@@ -11,9 +11,9 @@ import { errorHandling } from '../../utils/ErrorHandling';
 
 /** Manages ingredient requests and dropdown options
  * 
- * IngredientsGroup -> ingredientRequests -> IngredientInputGroup
+ * IngredientsGroup -> ComponentsOptionsRequests -> IngredientInputGroup
  */
-function IngredientRequests({ ingredients, ingredientKeys, handleIngredient }: IngredientRequestsProps) {
+function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleIngredient }: IngredientRequestsProps) {
   const [items, setItems] = useState<AttributeData[]>([])
   const [quantityAmount, setQuantityAmounts] = useState<AttributeData[]>([])
   const [quantityUnits, setQuantityUnits] = useState<AttributeData[]>([])
@@ -32,7 +32,7 @@ function IngredientRequests({ ingredients, ingredientKeys, handleIngredient }: I
       const id = await API.postBookIngredient(attributeObject, currentBookId, userId, entity);
       return id;
     } catch (error: any) {
-      errorHandling("IngredientRequests - addOption", error)
+      errorHandling("ComponentsOptionsRequests - addOption", error)
       throw error
     }
   }
@@ -55,23 +55,21 @@ function IngredientRequests({ ingredients, ingredientKeys, handleIngredient }: I
     units: quantityUnits
   }
 
-  async function fetchBookIngredient(){
+  async function fetchBookIngredients(){
     const {amounts, units, items} = await API.getBookIngredients(userId, currentBookId)
-    console.log(">>>>",amounts, units, items)
     setItems(items);
     setQuantityUnits(units);
     setQuantityAmounts(amounts);
   }
 
-
+  async function fetchUserIngredients(){
+    const res = await API.getUserIngredients(userId, )
+  }
 
   /** Populate each instance of component with latest options */
   useEffect(() => {
-    async function fetchOptions() {
-
-    }
-    fetchOptions()
-  }, [])
+    whichAttributes == "book" ? fetchBookIngredients() : fetchBookIngredients()
+  }, [whichAttributes])
 
   return (
     <>
@@ -86,4 +84,4 @@ function IngredientRequests({ ingredients, ingredientKeys, handleIngredient }: I
   )
 }
 
-export default IngredientRequests;
+export default ComponentsOptionsRequests;

@@ -89,22 +89,21 @@ class API {
   // ########### INGREDIENTS ###########
 
   /** Fetch all ingredients  */
-  static async getUserIngredients(userId: number, entity) {
-    const res = await this.request(`/users/${userId}/ingredients/${entity}`)
+  static async getUserComponentOptions(userId: number) {
+    const res = await this.request(`/users/${userId}/ingredients/components`)
     return res;
   }
 
   /** Fetch book ingredients */
-  static async getBookIngredients(userId: number, bookId: number) {
+  static async getBookComponentOptions(userId: number, bookId: number) {
     const res = await this.request(`/users/${userId}/books/${bookId}/ingredients/components`)
     return res;
   }
 
-  /** Add ingredient */
+  /** Add ingredient - NOT IN USE*/
   static async postIngredient(data: AttributeData, option: string) {
     const res = await this.request(`ingredients/${option}`, data, "POST")
     return res;
-
   }
 
   /** Add book ingredient */

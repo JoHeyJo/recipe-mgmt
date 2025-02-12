@@ -5,7 +5,7 @@ import { IngredientsGroupProps } from '../../utils/props';
 import { RecipeContext } from '../../context/RecipeContext';
 import { v4 as uuidv4 } from 'uuid';
 import { defaultIngredient, recipeTemplate } from '../../utils/templates';
-import IngredientRequests from '../requests/IngredientRequests';
+import IngredientRequests from '../requests/ComponentsOptionsRequests';
 
 /** Contains grouped ingredients for processing - handles mutation of ingredient's array 
  * Refactor: IngredientKeys can be removed and id associated with ingredient can now be used.
