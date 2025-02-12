@@ -149,7 +149,6 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
       // In other dropdowns (arrayKey !== current arrayKey), filter out the selected item
       // return filterKey[instruction.id]
     })
-
   }
 
   /** handle state change for whichInstructions */

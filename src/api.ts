@@ -86,7 +86,7 @@ class API {
     return res
   }
 
-  // ########### COMPONENTOPTIONS = {amount, unit, item} = INGREDIENT ###########
+  // ########### COMPONENT OPTIONS = {amount, unit, item} = INGREDIENT ###########
 
   /** Fetch all ingredients  */
   static async getUserComponentsOptions(userId: number) {
@@ -109,6 +109,12 @@ class API {
   /** Add book ingredient */
   static async postComponentOption(option: AttributeData, bookId: number, userId: number, component: string) {
     const res = await this.request(`/users/${userId}/books/${bookId}/ingredients/${component}`, option, "POST")
+    return res;
+  }
+
+  /** Post option association */
+  static async postOptionAssociation(userId: number, bookId: number, optionId: number, component: string) {
+    const res = await this.request(`/users/${userId}/books/${bookId}/components/${component}/options/${optionId}`)
     return res;
   }
 
@@ -138,7 +144,7 @@ class API {
     return res
   }
 
-  /** Post instruction associate */
+  /** Post instruction association */
   static async postInstructionAssociation(userId: number, bookId: number, instructionId: number) {
     const res = await this.request(`users/${userId}/books/${bookId}/instructions/${instructionId}`, {}, "POST")
     return res
