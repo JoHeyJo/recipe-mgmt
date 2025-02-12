@@ -54,6 +54,7 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
 
   /** Updates parent state with selected option*/
   function processExistingInstruction(option: Instruction) {
+    console.log("in heeeerererere")
     handleInstructions.updateInstructionSelection(option, arrayKey)
     handleInstructions.updateFilterKeys([arrayKey, option.id])
     setSelected(option)
