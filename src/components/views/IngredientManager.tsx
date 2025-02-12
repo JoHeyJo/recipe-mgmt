@@ -53,7 +53,6 @@ function IngredientManager({ value, attribute, entity, options, handleOption, ha
 
   /** Updates parent state with selected option */
   function processExistingOption(option: AttributeData) {
-    console.log("treiggered")
     setSelected(option);
     handleOption.associate(userId, currentBookId, +option.id, entity)
   }

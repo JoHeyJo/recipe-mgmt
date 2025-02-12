@@ -115,7 +115,6 @@ class API {
   /** Post option association */
   static async postOptionAssociation(userId: number, bookId: number, optionId: number, component: string) {
     const res = await this.request(`/users/${userId}/books/${bookId}/components/${component}/options/${optionId}`, {}, "POST")
-    console.log("!!!", res)
     return res;
   }
 

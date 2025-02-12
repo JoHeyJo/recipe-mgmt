@@ -72,7 +72,6 @@ function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleIngredie
 
   /** Automatically associates "global user" option to current book on select - could this be better on switch?*/
   async function associateOptionToBook(userId: number, currentBookId: number, optionId: number, component: string) {
-    console.log("treiggered", component)
     try {
       const res = await API.postOptionAssociation(userId, currentBookId, optionId, component)
     } catch (error: any) {

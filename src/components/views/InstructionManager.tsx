@@ -8,6 +8,8 @@ import { InstructionManagerProps } from '../../utils/props';
 
 /** InstructionManager - renders instructions - ring is removed 
  * 
+ * NOTES TO BE ADDRESSED
+ * 
  * Searches and filters existing options
  * 
  * InstructionsArea -> InstructionManager
@@ -54,8 +56,7 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
 
   /** Updates parent state with selected option*/
   function processExistingInstruction(option: Instruction) {
-    console.log("in heeeerererere")
-    handleInstructions.updateInstructionSelection(option, arrayKey)
+    handleInstructions.updateInstructionSelection(option, arrayKey) // Does this need to be here? Do an exisiting instruciton need to be added to parent state?
     handleInstructions.updateFilterKeys([arrayKey, option.id])
     setSelected(option)
   }
@@ -84,7 +85,7 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
   }
 
   /** Adds instruction to parent component when an instruction is selected 
-   * 
+   * WHY IS THIS NOT NEEDED HERE BUT NEEDED IN INGREDIENTMANAGER 
    * ######## CONSIDER REMOVING HAS NO PURPOSE ########
    */
   // useEffect(() => {
