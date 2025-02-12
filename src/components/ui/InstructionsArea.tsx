@@ -56,14 +56,14 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   }
 
   /** Update selected instructions */
-  function updateInstructionSelection(instruction: Instruction, arrayKey: number) {
+  async function updateInstructionSelection(instruction: Instruction, arrayKey: number) {
     setSelectedInstructions((i: Instruction[]) => {
       const updatedInstructions = [...i];
       updatedInstructions[arrayKey] = instruction;
       return updatedInstructions;
     })
 
-    if (whichInstructions === "user") associateInstructionToBook(userId, currentBookId, +instruction.id)
+    if (whichInstructions === "user") await associateInstructionToBook(userId, currentBookId, +instruction.id)
 
     if (HAS_NO_REMAINING_INPUT(selectedInstructions.length, arrayKey)) createInstructionInput();
   }
@@ -161,10 +161,10 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
     handleUpdate(selectedInstructions.filter((i => i.id)), "instructions")
   }, [selectedInstructions])
 
-  /** Automatically associates "global user" instructions to current book on switch */
-  async function associateInstructionToBook(userId: number, currentBookId: number, selectInstruction: number) {
+  /** Automatically associates "global user" instructions to current book on select */
+  async function associateInstructionToBook(userId: number, currentBookId: number, instructionId: number) {
     try {
-      const res = await API.postInstructionAssociation(userId, currentBookId, selectInstruction)
+      const res = await API.postInstructionAssociation(userId, currentBookId, instructionId)
     } catch (error: any) {
       errorHandling("InstructionsArea - associateInstructionToBook", error)
       throw error

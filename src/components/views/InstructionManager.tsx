@@ -17,7 +17,7 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Instruction>(instruction)
 
-  const IS_NEW_INGREDIENT = (option: Instruction) => typeof option.id === "string" && option.instruction === '+ create...'
+  const IS_NEW_INSTRUCTION = (option: Instruction) => typeof option.id === "string" && option.instruction === '+ create...'
 
   /** Creates a list of filtered options based on search query */
   const filteredOptions: Instruction[] =
@@ -42,18 +42,18 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
   }
 
   /** Injects query string prior to POST request and updates parent state  */
-  async function processNewIngredient(option: Instruction) {
+  async function processNewInstruction(option: Instruction) {
     // option id will need to be changed to null along with the query inject
     const newOption = { ...option, instruction: query };
     const createdOption = await handleInstructions.addInstruction(newOption);
     handleInstructions.addToInstructionState(createdOption)
     handleInstructions.updateFilterKeys([arrayKey, createdOption.id])
-    handleInstructions.updateInstructionSelection(createdOption, arrayKey)
+    // handleInstructions.updateInstructionSelection(createdOption, arrayKey) // association already happens when new instruction is procesesd
     setSelected(createdOption);
   }
 
   /** Updates parent state with selected option*/
-  function processExistingIngredient(option: Instruction) {
+  function processExistingInstruction(option: Instruction) {
     handleInstructions.updateInstructionSelection(option, arrayKey)
     handleInstructions.updateFilterKeys([arrayKey, option.id])
     setSelected(option)
@@ -73,7 +73,7 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
     // clears input when characters are deleted
     if (!option) return processDeselect(selected)
 
-    IS_NEW_INGREDIENT(option) ? processNewIngredient(option) : processExistingIngredient(option)
+    IS_NEW_INSTRUCTION(option) ? processNewInstruction(option) : processExistingInstruction(option)
   };
 
   /** Consolidates actions taken when dropdown value is selected  */

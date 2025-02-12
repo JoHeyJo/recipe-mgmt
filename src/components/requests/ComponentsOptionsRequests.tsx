@@ -38,7 +38,7 @@ function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleIngredie
   }
 
   /** Handles adding options to state */
-  function setOptions(state: string, option: AttributeData) {
+  async function setOptions(state: string, option: AttributeData) {
     if (state === "item") setItems((options: AttributeData[]) => [...options, option])
     if (state === "unit") setQuantityUnits((options: AttributeData[]) => [...options, option])
     if (state === "amount") setQuantityAmounts((options: AttributeData[]) => [...options, option])
@@ -46,7 +46,8 @@ function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleIngredie
 
   const handleOption = {
     post: postOption,
-    set: setOptions
+    set: setOptions,
+    associate: associateOptionToBook
   }
 
   const options = {
@@ -55,18 +56,29 @@ function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleIngredie
     units: quantityUnits
   }
 
-  async function fetchBookComponentsOptions(){
+  async function fetchBookComponentsOptions() {
     const { amounts, units, items } = await API.getBookComponentsOptions(userId, currentBookId)
     setItems(items);
     setQuantityUnits(units);
     setQuantityAmounts(amounts);
   }
-  
-  async function fetchUserComponentsOptions(){
-    const {amounts, units, items} = await API.getUserComponentsOptions(userId);
+
+  async function fetchUserComponentsOptions() {
+    const { amounts, units, items } = await API.getUserComponentsOptions(userId);
     setItems(items);
     setQuantityUnits(units);
     setQuantityAmounts(amounts);
+  }
+
+  /** Automatically associates "global user" option to current book on select - could this be better on switch?*/
+  async function associateOptionToBook(userId: number, currentBookId: number, optionId: number, component: string) {
+    console.log("treiggered")
+    try {
+      const res = await API.postOptionAssociation(userId, currentBookId, optionId, component)
+    } catch (error: any) {
+      errorHandling("ComponentsOptionsRequests - associateOptionToBook", error)
+      throw error
+    }
   }
 
   /** Populate each instance of component with latest options */
@@ -79,7 +91,7 @@ function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleIngredie
       <RadioSwitch handleSwitch={handleRadio} selection={whichAttributes} />
       {ingredients.map((ingredient, i) =>
         <div key={ingredient.ingredient_id || ingredientKeys[i]} className='flex items-center justify-center'>
-          <IngredientInputGroup index={i} ingredient={ingredient} handleIngredient={handleIngredient} handleOption={handleOption} options={options}/>
+          <IngredientInputGroup index={i} ingredient={ingredient} handleIngredient={handleIngredient} handleOption={handleOption} options={options} />
           {i === ingredients.length - 1 ? <FaPlusButton onAction={handleIngredient.add} /> : <FaMinusButton onAction={() => handleIngredient.remove(i)} />}
         </div>
       )}

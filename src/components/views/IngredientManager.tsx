@@ -1,25 +1,9 @@
-import { useState, useEffect, ChangeEvent } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { AttributeData } from '../../utils/types'
 import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions, Label } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-
-
-// type can be joined with OptionRequestsProps
-type IngredientManagerProps = {
-  value: AttributeData;
-  attribute: string
-  options: AttributeData[];
-  handleOption: {
-    post: (entity: string, attributeObject: AttributeData) => Promise<AttributeData>;
-    set: (state: string, option: AttributeData) => void
-  }
-  handleSelected: {
-    update: (state: string, option: AttributeData) => void;
-    remove: (state: string) => void;
-  }
-  entity: string
-}
-
+import { IngredientManagerProps } from '../../utils/props'
+import { UserContext } from '../../context/UserContext';
 /** IngredientManager - ring is removed 
  * 
  * Searches and filters existing ingredient options
@@ -31,6 +15,8 @@ type IngredientManagerProps = {
 function IngredientManager({ value, attribute, entity, options, handleOption, handleSelected }: IngredientManagerProps) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<AttributeData>(value)
+
+  const { userId, currentBookId } = useContext(UserContext);
   //SHOULD REQUESTS AND STATE MANAGMENT BE SPLIT INTO TWO OBJECTS eg handleSelected & optionRequest....
   const isNewOption = (option: AttributeData) => typeof option.id === "string" && option[attribute] === '+ create...'
 
@@ -61,13 +47,15 @@ function IngredientManager({ value, attribute, entity, options, handleOption, ha
   async function processNewOption(option: AttributeData) {
     const newOption = { ...option, id: null, [attribute]: query }
     const createdOption = await handleOption.post(entity, newOption);
-    handleOption.set(entity, createdOption) // add option to ingredientRequests state array 
+    handleOption.set(entity, createdOption)
     setSelected(createdOption);
   }
 
   /** Updates parent state with selected option */
   function processExistingOption(option: AttributeData) {
+    console.log("treiggered")
     setSelected(option);
+    handleOption.associate(userId, currentBookId, +option.id, entity)
   }
 
   /** Consolidates actions that deselect option */
