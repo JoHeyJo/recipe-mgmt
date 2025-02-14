@@ -67,7 +67,7 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
     // option = null for pending instructions. Will break without this check
     // Only created instructions will trigger this action
     console.log("processDeselect",option)
-    if (option.id) handleInstructions.removeInstructionSelection(option.id)
+    if ((option.id as string).includes("create")) handleInstructions.removeInstructionSelection(option.id)
     setSelected(null)
   }
 
@@ -85,8 +85,11 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
     handleChange(value)
   }
 
+  /** Facilitates if a created value or template value is rendered */
   function displayInitialValue(value: Instruction){
-    return value.instruction.includes("create") ? value : value.instruction
+    // don't do anything for null value
+    if(!value) return 
+    return typeof(value.id) === "string" ? value.instruction : value;
   }
 
   /** Adds instruction to parent component when an instruction is selected 
@@ -101,6 +104,7 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
     <>
       <Combobox
         as="div"
+        // value={displayInitialValue(selected || { instruction: '', id: ''})}
         value={displayInitialValue(selected)}
         onChange={onValueSelect}
       >
