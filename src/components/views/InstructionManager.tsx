@@ -85,8 +85,8 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
     handleChange(value)
   }
 
-  function displayInitialValue(value){
-    if(va)
+  function displayInitialValue(value: Instruction){
+    return value.instruction.includes("create") ? value : value.instruction
   }
 
   /** Adds instruction to parent component when an instruction is selected 
@@ -101,7 +101,7 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
     <>
       <Combobox
         as="div"
-        value={"selected"}
+        value={displayInitialValue(selected)}
         onChange={onValueSelect}
       >
         <div className="relative mt-2">
