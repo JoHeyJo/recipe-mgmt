@@ -1,7 +1,7 @@
 import { Recipe, Ingredient, Instructions, Instruction, Ingredients, Book, AttributeData } from "./types";
 
 export type InstructionManagerProps = {
-  instruction: Instruction;
+  instruction: Instruction | string;
   arrayKey: number;
   options: Instructions;
   handleInstructions: any

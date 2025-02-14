@@ -16,8 +16,9 @@ import { InstructionManagerProps } from '../../utils/props';
  */
 
 function InstructionManager({ arrayKey, instruction, options, handleInstructions }: InstructionManagerProps) {
+  console.log("Instruction Manger",instruction)
   const [query, setQuery] = useState<string>('')
-  const [selected, setSelected] = useState<Instruction>(instruction)
+  const [selected, setSelected] = useState<Instruction>(instruction as Instruction)
 
   const IS_NEW_INSTRUCTION = (option: Instruction) => typeof option.id === "string" && option.instruction === '+ create...'
 
@@ -101,7 +102,7 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
       >
         <div className="relative mt-2">
           <ComboboxInput
-            placeholder={"something"}
+            placeholder={instruction as string} 
             className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             onChange={(event) => setQuery(event.target.value)}
             onBlur={() => setQuery('')}
