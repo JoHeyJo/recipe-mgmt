@@ -8,7 +8,11 @@ import { RecipeContext } from "../../context/RecipeContext";
 import { UserContext } from "../../context/UserContext";
 import RadioSwitch from "./common/RadioSwitch";
 
-const PLACE_HOLDER = ["Add ingredients...", "Add ice...", "shake..."]
+const PLACE_HOLDER: Instructions = [
+  { instruction: "Add ingredients...", id: `create-${Math.random()}` },
+  { instruction: "Add ice...", id: `create-${Math.random()}` },
+  { instruction: "Shake...", id: `create-${Math.random()}` }
+]
 
 const InstructionsTemplate: Instructions = []
 
@@ -19,9 +23,7 @@ const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs - 1 
  * 
  * Needs to be refactored into two components
  * 
- * #### Need loading state for instructions. There is visible lag...it first loads the empty array so that needs to be address first..
- * Could need to inject selectedInstruction in parent so when empty array isn't rendered first
- * 
+ *
  * Dynamically renders list of instructions - filters out selected options
  * 
  * RecipeRequests -> InstructionsArea -> InstructionManager
@@ -30,7 +32,7 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   const { userId, currentBookId } = useContext(UserContext)
   const { requestAction, contextInstructions } = useContext(RecipeContext);
   const [instructions, setInstructions] = useState([]);
-  const [selectedInstructions, setSelectedInstructions] = useState<any>([]);
+  const [selectedInstructions, setSelectedInstructions] = useState<Instructions>(PLACE_HOLDER);
   const [filterKey, setFilterKeys] = useState({});
   const [whichInstructions, setWhichInstructions] = useState("book");
 
@@ -95,7 +97,7 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
 
   /** Create additional input field for new instruction */
   function createInstructionInput() {
-    setSelectedInstructions(selected => [...selected, { "id": null, "instruction": "some other thing..." }])
+    setSelectedInstructions(selected => [...selected, { id: null, "instruction": "some other thing..." }])
   }
 
   /** Request to create new instruction */
@@ -139,7 +141,6 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   function filterSelected(instructions: Instructions, arrayKey: number) {
     // If no item is selected in this dropdown, show all options
     if (!filterKey[arrayKey]) return instructions
-    console.log("instructions", instructions)
     return instructions.filter((instruction, index) => {
 
       // if(arrayKey !== index) return filterKey[arrayKey] !== instruction.id

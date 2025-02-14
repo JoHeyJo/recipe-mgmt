@@ -16,9 +16,8 @@ import { InstructionManagerProps } from '../../utils/props';
  */
 
 function InstructionManager({ arrayKey, instruction, options, handleInstructions }: InstructionManagerProps) {
-  console.log("Instruction Manger",instruction)
   const [query, setQuery] = useState<string>('')
-  const [selected, setSelected] = useState<Instruction>(instruction as Instruction)
+  const [selected, setSelected] = useState<Instruction>(instruction)
 
   const IS_NEW_INSTRUCTION = (option: Instruction) => typeof option.id === "string" && option.instruction === '+ create...'
 
@@ -65,9 +64,10 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
   /** Consolidates actions that deselect option */
   function processDeselect(option: Instruction) {
     handleInstructions.removeFilterKey(arrayKey)
-    // option = undefined for pending instructions. Will break without this check
+    // option = null for pending instructions. Will break without this check
     // Only created instructions will trigger this action
-    if (option) handleInstructions.removeInstructionSelection(option.id)
+    console.log("processDeselect",option)
+    if (option.id) handleInstructions.removeInstructionSelection(option.id)
     setSelected(null)
   }
 
@@ -85,6 +85,10 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
     handleChange(value)
   }
 
+  function displayInitialValue(value){
+    if(va)
+  }
+
   /** Adds instruction to parent component when an instruction is selected 
    * WHY IS THIS NOT NEEDED HERE BUT NEEDED IN INGREDIENTMANAGER 
    * ######## CONSIDER REMOVING HAS NO PURPOSE ########
@@ -97,16 +101,16 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
     <>
       <Combobox
         as="div"
-        value={selected || { id: null, instruction: '' }}
+        value={"selected"}
         onChange={onValueSelect}
       >
         <div className="relative mt-2">
           <ComboboxInput
-            placeholder={instruction as string} 
+            placeholder={instruction.instruction} 
             className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             onChange={(event) => setQuery(event.target.value)}
             onBlur={() => setQuery('')}
-            displayValue={(option: { instruction: string }) => option?.instruction}
+            displayValue={(option: { instruction: string }) => option.instruction}
           />
           <ComboboxButton className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
             <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
