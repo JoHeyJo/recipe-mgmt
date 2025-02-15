@@ -67,7 +67,6 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
     // selectedOption = null for pending creation of instructions. Will break without this check
     if(!selectedOption) return
     // Only created instructions will trigger this action
-    // if (typeof (selectedOption.id) === "number") handleInstructions.removeSelected(arrayKey)
     if (!isNewInstruction(selectedOption)) handleInstructions.removeSelected(arrayKey)
     setSelected(null)
   }
@@ -91,14 +90,6 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
     if(!value) return 
     return typeof(value.id) === "string" ? value.instruction : value;
   }
-
-  /** Adds instruction to parent component when an instruction is selected 
-   * WHY IS THIS NOT NEEDED HERE BUT NEEDED IN INGREDIENTMANAGER 
-   * ######## CONSIDER REMOVING HAS NO PURPOSE ########
-   */
-  // useEffect(() => {
-  //   selected && handleOptionChange(instruction.instruction, selected);
-  // }, [selected]);
 
   return (
     <>

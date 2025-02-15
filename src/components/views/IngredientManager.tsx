@@ -48,13 +48,15 @@ function IngredientManager({ value, attribute, entity, options, handleOption, ha
     const newOption = { ...option, id: null, [attribute]: query }
     const createdOption = await handleOption.post(entity, newOption);
     handleOption.set(entity, createdOption)
+    handleSelected.update(entity, createdOption);
     setSelected(createdOption);
   }
 
   /** Updates parent state with selected option */
   function processExistingOption(option: AttributeData) {
-    setSelected(option);
+    handleSelected.update(entity, option)
     handleOption.associate(userId, currentBookId, +option.id, entity)
+    setSelected(option);
   }
 
   /** Consolidates actions that deselect option */
@@ -74,12 +76,6 @@ function IngredientManager({ value, attribute, entity, options, handleOption, ha
     setQuery('')
     handleChange(value)
   }
-
-  /** Adds ingredient to parent component when an ingredient is selected  */
-  useEffect(() => {
-    selected && handleSelected.update(entity, selected);
-  }, [selected, options]);
-
 
   return (
     <Combobox
