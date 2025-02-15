@@ -62,12 +62,13 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
   }
 
   /** Consolidates actions that deselect option */
-  function processDeselect(option: Instruction) {
+  function processDeselect(selectedOption: Instruction) {
     handleInstructions.removeFilterKey(arrayKey)
-    // option = null for pending instructions. Will break without this check
+    // selectedOption = null for pending instructions. Will break without this check
+    if(!selectedOption) return
     // Only created instructions will trigger this action
-    console.log("processDeselect",option)
-    if ((option.id as string).includes("create")) handleInstructions.removeInstructionSelection(option.id)
+    console.log("processDeselect",selectedOption)
+    if (typeof(selectedOption.id) === "number") handleInstructions.removeInstructionSelection(selectedOption.id)
     setSelected(null)
   }
 
@@ -104,8 +105,7 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
     <>
       <Combobox
         as="div"
-        // value={displayInitialValue(selected || { instruction: '', id: ''})}
-        value={displayInitialValue(selected)}
+        value={displayInitialValue(selected || { instruction: '', id: ''})}
         onChange={onValueSelect}
       >
         <div className="relative mt-2">
