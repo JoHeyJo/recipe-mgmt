@@ -71,10 +71,13 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   }
 
   /** Remove unselected instruction */
-  function removeInstructionSelection(instructionId: number) {
-    setSelectedInstructions(instructions =>
-      instructions.filter(instruction => instruction.id !== instructionId)
-    )
+  function removeSelected(instructionKey: number) {
+    setSelectedInstructions(instructions => {
+      const alteredInstructions = [...instructions];
+      alteredInstructions[instructionKey] = PLACE_HOLDER[instructionKey] || { id: null, "instruction": "some other thing..." }
+      console.log("alteredInstructions", alteredInstructions)
+      return alteredInstructions
+    })
   }
 
   /** Remove unselected filter key */
@@ -97,7 +100,7 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
 
   /** Create additional input field for new instruction */
   function createInstructionInput() {
-    setSelectedInstructions(selected => [...selected, { id: null, "instruction": "some other thing..." }])
+    setSelectedInstructions(selected => [...selected, { id: `create-${Math.random()}`, "instruction": "some other thing..." }])
   }
 
   /** Request to create new instruction */
@@ -118,7 +121,7 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
     createInstructionInput,
     updateInstructionSelection,
     updateFilterKeys,
-    removeInstructionSelection,
+    removeSelected,
     removeFilterKey
   }
 

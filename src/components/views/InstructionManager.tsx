@@ -67,8 +67,7 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
     // selectedOption = null for pending instructions. Will break without this check
     if(!selectedOption) return
     // Only created instructions will trigger this action
-    console.log("processDeselect",selectedOption)
-    if (typeof(selectedOption.id) === "number") handleInstructions.removeInstructionSelection(selectedOption.id)
+    if (typeof (selectedOption.id) === "number") handleInstructions.removeSelected(arrayKey)
     setSelected(null)
   }
 
@@ -76,7 +75,6 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
   async function handleChange(option: Instruction) {
     // clears input when characters are deleted
     if (!option) return processDeselect(selected)
-
     IS_NEW_INSTRUCTION(option) ? processNewInstruction(option) : processExistingInstruction(option)
   };
 
