@@ -49,6 +49,7 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
     const newOption = { ...option, instruction: query };
     const createdOption = await handleInstructions.addInstruction(newOption);
     handleInstructions.addCreated(createdOption)
+    handleInstructions.updateSelected(createdOption, arrayKey)
     handleInstructions.updateFilterKeys([arrayKey, createdOption.id])
     setSelected(createdOption);
   }
