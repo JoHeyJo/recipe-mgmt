@@ -16,7 +16,9 @@ const PLACE_HOLDER: Instructions = [
 
 const InstructionsTemplate: Instructions = []
 
-/** Triggers creation of input if there are no inputs left (num of inputs = array index) */
+/** Triggers creation of input if there are no inputs left (num of inputs = array index)
+ * This doesn't work with refactoring of PLACE_HOLDER instructions
+ */
 const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs - 1 === arrayKey
 
 /** InstructionsArea handles instructions array mutation - Makes requests for instructions
@@ -46,10 +48,8 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
     }
   }, [])
 
-  /** Add selected instruction to incoming data set from db
-   * Should this array of instructions be fetched entirely instead of adding the return object of new instruction from the database
-    */
-  function addToInstructionState(instruction: Instruction) {
+  /** Add newly created instruction (DB return object) to list of available instructions */
+  function addCreated(instruction: Instruction) {
     setInstructions((i: Instruction[]) => {
       const updatedInstructions = [...i];
       updatedInstructions.push(instruction);
@@ -57,8 +57,8 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
     })
   }
 
-  /** Update selected instructions */
-  async function updateInstructionSelection(instruction: Instruction, arrayKey: number) {
+  /** Update list of selected instructions */
+  async function updateSelected(instruction: Instruction, arrayKey: number) {
     setSelectedInstructions((i: Instruction[]) => {
       const updatedInstructions = [...i];
       updatedInstructions[arrayKey] = instruction;
@@ -117,9 +117,9 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   /** Consolidates logic pertaining to adding instructions */
   const handleInstructions = {
     addInstruction,
-    addToInstructionState,
+    addCreated,
     createInstructionInput,
-    updateInstructionSelection,
+    updateSelected,
     updateFilterKeys,
     removeSelected,
     removeFilterKey

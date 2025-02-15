@@ -1,5 +1,5 @@
 
-import { useState, useEffect, ChangeEvent } from 'react'
+import { useState } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions } from '@headlessui/react'
 import { Instruction } from '../../utils/types';
@@ -19,7 +19,7 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Instruction>(instruction)
 
-  const IS_NEW_INSTRUCTION = (option: Instruction) => typeof option.id === "string" && option.instruction === '+ create...'
+  const isNewInstruction = (option: Instruction) => typeof option.id === "string" && option.instruction === '+ create...'
 
   /** Creates a list of filtered options based on search query */
   const filteredOptions: Instruction[] =
@@ -48,15 +48,14 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
     // option id will need to be changed to null along with the query inject
     const newOption = { ...option, instruction: query };
     const createdOption = await handleInstructions.addInstruction(newOption);
-    handleInstructions.addToInstructionState(createdOption)
+    handleInstructions.addCreated(createdOption)
     handleInstructions.updateFilterKeys([arrayKey, createdOption.id])
-    // handleInstructions.updateInstructionSelection(createdOption, arrayKey) // association already happens when new instruction is procesesd
     setSelected(createdOption);
   }
 
   /** Updates parent state with selected option*/
   function processExistingInstruction(option: Instruction) {
-    handleInstructions.updateInstructionSelection(option, arrayKey) // Does this need to be here? Do an exisiting instruciton need to be added to parent state?
+    handleInstructions.updateSelected(option, arrayKey)
     handleInstructions.updateFilterKeys([arrayKey, option.id])
     setSelected(option)
   }
@@ -64,10 +63,11 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
   /** Consolidates actions that deselect option */
   function processDeselect(selectedOption: Instruction) {
     handleInstructions.removeFilterKey(arrayKey)
-    // selectedOption = null for pending instructions. Will break without this check
+    // selectedOption = null for pending creation of instructions. Will break without this check
     if(!selectedOption) return
     // Only created instructions will trigger this action
-    if (typeof (selectedOption.id) === "number") handleInstructions.removeSelected(arrayKey)
+    // if (typeof (selectedOption.id) === "number") handleInstructions.removeSelected(arrayKey)
+    if (!isNewInstruction(selectedOption)) handleInstructions.removeSelected(arrayKey)
     setSelected(null)
   }
 
@@ -75,11 +75,11 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
   async function handleChange(option: Instruction) {
     // clears input when characters are deleted
     if (!option) return processDeselect(selected)
-    IS_NEW_INSTRUCTION(option) ? processNewInstruction(option) : processExistingInstruction(option)
+    isNewInstruction(option) ? processNewInstruction(option) : processExistingInstruction(option)
   };
 
   /** Consolidates actions taken when dropdown value is selected  */
-  function onValueSelect(value: any) {
+  function onValueSelect(value: Instruction) {
     setQuery('')
     handleChange(value)
   }
