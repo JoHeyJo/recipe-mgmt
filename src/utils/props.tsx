@@ -10,7 +10,8 @@ export type InstructionManagerProps = {
 type Options = {
   items: AttributeData[];
   amounts: AttributeData[];
-  units: AttributeData[]
+  units: AttributeData[];
+  selected: string;
 }
 
 type HandleIngredient = {

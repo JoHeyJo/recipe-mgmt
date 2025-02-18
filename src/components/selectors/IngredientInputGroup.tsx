@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { AttributeData } from '../../utils/types';
 import { IngredientInputGroupProps } from '../../utils/props';
 import IngredientManager from '../views/IngredientManager';
+import { UserContext } from '../../context/UserContext';
 
 const defaultItem = { id: null, name: "" };
 const defaultAmount = { id: null, value: "" };
@@ -16,6 +17,8 @@ function IngredientInputGroup({ handleIngredient, ingredient, index, handleOptio
   const [amount, setAmount] = useState<AttributeData>(ingredient.amount);
   const [unit, setUnit] = useState<AttributeData>(ingredient.unit);
 
+  const { userId, currentBookId } = useContext(UserContext);
+
   /** Calls parent callback to handleUpdate name */
   function updateIngredientList() {
     const updatedIngredient = { ...ingredient, item, amount, unit };
@@ -28,7 +31,7 @@ function IngredientInputGroup({ handleIngredient, ingredient, index, handleOptio
     if (state === "unit") setUnit(option)
     if (state === "amount") setAmount(option)
 
-    
+    if (options.selected === "user") handleOption.associate(userId, currentBookId, +option.id, state)
   }
 
   /** Removes selected option */

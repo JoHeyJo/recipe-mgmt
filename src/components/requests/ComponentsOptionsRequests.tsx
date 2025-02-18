@@ -17,13 +17,13 @@ function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleIngredie
   const [items, setItems] = useState<AttributeData[]>([])
   const [quantityAmount, setQuantityAmounts] = useState<AttributeData[]>([])
   const [quantityUnits, setQuantityUnits] = useState<AttributeData[]>([])
-  const [whichAttributes, setWhichAttributes] = useState<string>("book");
+  const [whichOptions, setWhichOptions] = useState<string>("book");
 
   const { userId, currentBookId } = useContext(UserContext);
 
   /** handle state change for whichIngredients */
   function handleRadio(event: ChangeEvent<HTMLInputElement>) {
-    setWhichAttributes(event.target.value)
+    setWhichOptions(event.target.value)
   }
 
   /** Request to create new ingredient option */
@@ -53,7 +53,8 @@ function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleIngredie
   const options = {
     items,
     amounts: quantityAmount,
-    units: quantityUnits
+    units: quantityUnits,
+    selected: whichOptions
   }
 
   async function fetchBookComponentsOptions() {
@@ -82,12 +83,12 @@ function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleIngredie
 
   /** Populate each instance of component with latest options */
   useEffect(() => {
-    whichAttributes == "book" ? fetchBookComponentsOptions() : fetchUserComponentsOptions()
-  }, [whichAttributes])
+    whichOptions == "book" ? fetchBookComponentsOptions() : fetchUserComponentsOptions()
+  }, [whichOptions])
 
   return (
     <>
-      <RadioSwitch handleSwitch={handleRadio} selection={whichAttributes} />
+      <RadioSwitch handleSwitch={handleRadio} selection={whichOptions} />
       {ingredients.map((ingredient, i) =>
         <div key={ingredient.ingredient_id || ingredientKeys[i]} className='flex items-center justify-center'>
           <IngredientInputGroup index={i} ingredient={ingredient} handleIngredient={handleIngredient} handleOption={handleOption} options={options} />
