@@ -67,7 +67,6 @@ function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleIngredie
 
   async function fetchBookComponentsOptions() {
     const { amounts, units, items } = await API.getBookComponentsOptions(userId, currentBookId)
-    console.log("!!!!",{amounts, units, items})
     setOptionsReferences({ "amount": amounts, "unit": units, "item": items }) ///does this need to me memoized  
     setItems(items);
     setQuantityUnits(units);

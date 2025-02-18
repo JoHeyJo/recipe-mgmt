@@ -30,26 +30,10 @@ function IngredientInputGroup({ handleIngredient, ingredient, index, handleOptio
     if (state === "item") setItem(option)
     if (state === "unit") setUnit(option)
     if (state === "amount") setAmount(option)
-    console.log("REFERENCES>>>", options.references)
-    console.log("COMPONENT>>>", state)
-    console.log("OPTION>>>", option)
     if (options.selected === "user" && isOptionNotAssociated(option, options, state)) handleOption.associate(userId, currentBookId, +option.id, state)
   }
 
   function isOptionNotAssociated(option: AttributeData, options: Options, state: string) {
-    // let attribute = undefined;
-
-    // switch (state) {
-    //   case "amount":
-    //     attribute = "value";
-    //     break;
-    //   case "unit":
-    //     attribute = "type";
-    //     break;
-    //   case "item":
-    //     attribute = "name";
-    //     break;
-    // }
 
     const isAssociated = options.references[state].some(o => o.id === option.id);
 
