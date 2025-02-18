@@ -22,15 +22,15 @@ function IngredientInputGroup({ handleIngredient, ingredient, index, handleOptio
     handleIngredient.update(updatedIngredient, index)
   }
 
-  /** Changes selected attribute */
+  /** Changes selected option */
   function updateSelected(state: string, option: AttributeData) {
     if (state === "item") setItem(option)
     if (state === "unit") setUnit(option)
     if (state === "amount") setAmount(option)
   }
 
-  /** Unselects option */
-  function unSelectInput(state: string) {
+  /** Removes selected option */
+  function removeSelected(state: string) {
     if (state === "item") setItem(defaultItem);
     if (state === "unit") setUnit(defaultUnit);
     if (state === "amount") setAmount(defaultAmount);
@@ -38,7 +38,7 @@ function IngredientInputGroup({ handleIngredient, ingredient, index, handleOptio
 
   const handleComponent = {
     updateSelected,
-    remove: unSelectInput
+    removeSelected
   }
 
   /** Maintains parent components state synced with latest selections */

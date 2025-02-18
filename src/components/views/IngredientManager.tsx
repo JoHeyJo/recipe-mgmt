@@ -61,7 +61,7 @@ function IngredientManager({ value, attribute, entity, options, handleOption, ha
 
   /** Consolidates actions that deselect option */
   function processDeselect() {
-    handleComponent.remove(entity)
+    handleComponent.removeSelected(entity)
     setSelected(null)
   }
 

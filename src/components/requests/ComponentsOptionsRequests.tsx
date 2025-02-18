@@ -1,7 +1,7 @@
 import { useState, ChangeEvent, useEffect, useContext } from "react";
 import RadioSwitch from "../ui/common/RadioSwitch";
 import IngredientInputGroup from "../selectors/IngredientInputGroup";
-import { IngredientRequestsProps } from "../../utils/props";
+import { ComponentsOptionsRequestsProps } from "../../utils/props";
 import FaPlusButton from '../ui/common/FaPlusButton';
 import FaMinusButton from '../ui/common/FaMinusButton';
 import API from "../../api";
@@ -13,7 +13,7 @@ import { errorHandling } from '../../utils/ErrorHandling';
  * 
  * IngredientsGroup -> ComponentsOptionsRequests -> IngredientInputGroup
  */
-function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleIngredient }: IngredientRequestsProps) {
+function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleIngredient }: ComponentsOptionsRequestsProps) {
   const [items, setItems] = useState<AttributeData[]>([])
   const [quantityAmount, setQuantityAmounts] = useState<AttributeData[]>([])
   const [quantityUnits, setQuantityUnits] = useState<AttributeData[]>([])
@@ -38,15 +38,17 @@ function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleIngredie
   }
 
   /** Handles selected options */
-  async function updateSelected(state: string, option: AttributeData) {
+  async function updateAvailableOptions(state: string, option: AttributeData) {
     if (state === "item") setItems((options: AttributeData[]) => [...options, option])
     if (state === "unit") setQuantityUnits((options: AttributeData[]) => [...options, option])
     if (state === "amount") setQuantityAmounts((options: AttributeData[]) => [...options, option])
+
+      console.log("change!!!!")
   }
 
   const handleOption = {
     post: postOption,
-    updateSelected,
+    updateAvailableOptions,
     associate: associateOptionToBook
   }
 
