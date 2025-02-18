@@ -47,8 +47,8 @@ function IngredientManager({ value, attribute, entity, options, handleOption, ha
   async function processNewOption(option: AttributeData) {
     const newOption = { ...option, id: null, [attribute]: query }
     const createdOption = await handleOption.post(entity, newOption);
-    // handleOption.updateSelected(entity, createdOption);
-    // handleSelected.update(entity, createdOption);
+    handleOption.addCreated(entity, createdOption);
+    handleComponent.updateSelected(entity, createdOption);
     setSelected(createdOption);
   }
 
