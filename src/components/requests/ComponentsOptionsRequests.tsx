@@ -37,18 +37,16 @@ function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleIngredie
     }
   }
 
-  /** Handles selected options */
+  /** Handles list of available options - adds newly created */
   async function updateAvailableOptions(state: string, option: AttributeData) {
     if (state === "item") setItems((options: AttributeData[]) => [...options, option])
     if (state === "unit") setQuantityUnits((options: AttributeData[]) => [...options, option])
     if (state === "amount") setQuantityAmounts((options: AttributeData[]) => [...options, option])
-
-      console.log("change!!!!")
   }
 
   const handleOption = {
     post: postOption,
-    updateAvailableOptions,
+    addCreated: updateAvailableOptions,
     associate: associateOptionToBook
   }
 

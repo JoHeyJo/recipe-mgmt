@@ -27,6 +27,8 @@ function IngredientInputGroup({ handleIngredient, ingredient, index, handleOptio
     if (state === "item") setItem(option)
     if (state === "unit") setUnit(option)
     if (state === "amount") setAmount(option)
+
+    
   }
 
   /** Removes selected option */

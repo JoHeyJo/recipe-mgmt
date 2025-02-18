@@ -55,7 +55,6 @@ function IngredientManager({ value, attribute, entity, options, handleOption, ha
   /** Updates parent state with selected option */
   function processExistingOption(option: AttributeData) {
     handleComponent.updateSelected(entity, option)
-    handleOption.associate(userId, currentBookId, +option.id, entity)
     setSelected(option);
   }
 

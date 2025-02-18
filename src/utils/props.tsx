@@ -7,24 +7,36 @@ export type InstructionManagerProps = {
   handleInstructions: any
 }
 
+type Options = {
+  items: AttributeData[];
+  amounts: AttributeData[];
+  units: AttributeData[]
+}
+
+type HandleIngredient = {
+  add: () => void,
+  remove: (index: number) => void,
+  update: (newIngredient: Ingredient, index: number) => void
+}
+
+type HandleOption = {
+  post: (entity: string, attributeObject: AttributeData) => Promise<AttributeData>;
+  addCreated: (state: string, option: AttributeData) => void;
+  associate: (userId: number, currentBookId: number, optionId: number, component: string) => void
+}
+
 export type IngredientInputGroupProps = {
-  options: {
-    items: AttributeData[]
-    amounts: AttributeData[]
-    units: AttributeData[]
-  }
+  options: Options;
   ingredient: Ingredient;
   index: number;
-  handleIngredient: {
-    add: () => void,
-    remove: (index: number) => void,
-    update: (newIngredient: Ingredient, index: number) => void
-  }
-  handleOption: {
-    post: (entity: string, attributeObject: AttributeData) => Promise<AttributeData>;
-    updateAvailableOptions: (state: string, option: AttributeData) => void;
-    associate: (userId: number, currentBookId: number, optionId: number, component: string) => void
-  }
+  handleIngredient: HandleIngredient;
+  handleOption: HandleOption
+}
+
+export type ComponentsOptionsRequestsProps = {
+  ingredients: Ingredients;
+  ingredientKeys: number[];
+  handleIngredient: HandleIngredient
 }
 
 // type can be joined with OptionRequestsProps
@@ -32,27 +44,12 @@ export type IngredientManagerProps = {
   value: AttributeData;
   attribute: string
   options: AttributeData[];
-  handleOption: {
-    post: (entity: string, attributeObject: AttributeData) => Promise<AttributeData>;
-    updateSelected: (state: string, option: AttributeData) => void;
-    associate: (userId: number, currentBookId: number, optionId: number, component: string) => void
-  }
+  handleOption: HandleOption
   handleComponent: {
     updateSelected: (state: string, option: AttributeData) => void;
     removeSelected: (state: string) => void
   }
   entity: string
-}
-
-
-export type ComponentsOptionsRequestsProps = {
-  ingredients: Ingredients;
-  ingredientKeys: number[];
-  handleIngredient: {
-    add: ()=> void,
-    remove: (index: number)=> void,
-    update: (newIngredient: Ingredient, index: number) => void
-  }
 }
 
 export type IngredientsViewProp = {
@@ -109,7 +106,7 @@ export type RecipesListProps = {
 }
 
 export type InputWithLabelProps = {
-  handleUpdate: (e:any) => void;
+  handleUpdate: (e: any) => void;
   id: string;
   name: string;
   value: string;
