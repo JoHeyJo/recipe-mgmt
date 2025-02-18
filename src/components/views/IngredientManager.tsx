@@ -1,12 +1,11 @@
- import { useState, useEffect, useContext } from 'react'
+import { useState } from 'react'
 import { AttributeData } from '../../utils/types'
-import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions, Label } from '@headlessui/react'
+import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { IngredientManagerProps } from '../../utils/props'
-import { UserContext } from '../../context/UserContext';
-/** IngredientManager - ring is removed 
+
+/** IngredientManager - Searches and filters existing ingredient options - ring is removed 
  * 
- * Searches and filters existing ingredient options
  * Renders input field with capability to create new options.
  * 
  * IngredientInputGroup -> IngredientManager
@@ -16,8 +15,6 @@ function IngredientManager({ value, attribute, entity, options, handleOption, ha
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<AttributeData>(value)
 
-  const { userId, currentBookId } = useContext(UserContext);
-  //SHOULD REQUESTS AND STATE MANAGMENT BE SPLIT INTO TWO OBJECTS eg handleSelected & optionRequest....
   const isNewOption = (option: AttributeData) => typeof option.id === "string" && option[attribute] === '+ create...'
 
   /** Creates a list of filtered options based on search query */

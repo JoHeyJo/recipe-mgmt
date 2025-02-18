@@ -19,3 +19,13 @@ export const defaultIngredient: Ingredient = {
   unit: { id: null, type: "" },
   item: { id: null, name: "" }
 }
+
+export const references = {
+  amount: [],
+  unit: [],
+  item: []
+}
+
+export const defaultItem = { id: null, name: "" };
+export const defaultAmount = { id: null, value: "" };
+export const defaultUnit = { id: null, type: "" };

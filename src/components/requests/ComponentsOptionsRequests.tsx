@@ -8,12 +8,8 @@ import API from "../../api";
 import { UserContext } from '../../context/UserContext';
 import { AttributeData } from "../../utils/types";
 import { errorHandling } from '../../utils/ErrorHandling';
+import { references } from "../../utils/templates";
 
-const references = {
-  amount: [],
-  unit: [],
-  item: []
-}
 
 /** Manages ingredient requests and dropdown options
  * 
@@ -65,14 +61,15 @@ function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleIngredie
     references: optionsReferences
   }
 
+  /** Fetches components options associated to Book  */
   async function fetchBookComponentsOptions() {
     const { amounts, units, items } = await API.getBookComponentsOptions(userId, currentBookId)
-    setOptionsReferences({ "amount": amounts, "unit": units, "item": items }) ///does this need to me memoized  
+    setOptionsReferences({ "amount": amounts, "unit": units, "item": items }) ///DOES THIS NEED TO BE MEMOIZED
     setItems(items);
     setQuantityUnits(units);
     setQuantityAmounts(amounts);
   }
-
+  /** Fetches components options associated to User  */
   async function fetchUserComponentsOptions() {
     const { amounts, units, items } = await API.getUserComponentsOptions(userId);
     setItems(items);

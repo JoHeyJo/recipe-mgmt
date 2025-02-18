@@ -3,10 +3,7 @@ import { AttributeData } from '../../utils/types';
 import { IngredientInputGroupProps, Options } from '../../utils/props';
 import IngredientManager from '../views/IngredientManager';
 import { UserContext } from '../../context/UserContext';
-
-const defaultItem = { id: null, name: "" };
-const defaultAmount = { id: null, value: "" };
-const defaultUnit = { id: null, type: "" };
+import { defaultItem, defaultAmount, defaultUnit } from '../../utils/templates';
 
 /** Manages individual components of Ingredient object
  * 
@@ -33,6 +30,7 @@ function IngredientInputGroup({ handleIngredient, ingredient, index, handleOptio
     if (options.selected === "user" && isOptionNotAssociated(option, options, state)) handleOption.associate(userId, currentBookId, +option.id, state)
   }
 
+  /** Checks if selected user option already exists in list of user's book options */
   function isOptionNotAssociated(option: AttributeData, options: Options, state: string) {
 
     const isAssociated = options.references[state].some(o => o.id === option.id);
