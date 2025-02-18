@@ -7,12 +7,19 @@ export type InstructionManagerProps = {
   handleInstructions: any
 }
 
-type Options = {
+export type Options = {
   items: AttributeData[];
   amounts: AttributeData[];
   units: AttributeData[];
   selected: string;
+  references: {
+    item: AttributeData[];
+    amount: AttributeData[];
+    unit: AttributeData[];
+  }
 }
+
+
 
 type HandleIngredient = {
   add: () => void,

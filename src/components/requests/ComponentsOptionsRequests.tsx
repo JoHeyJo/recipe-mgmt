@@ -9,6 +9,12 @@ import { UserContext } from '../../context/UserContext';
 import { AttributeData } from "../../utils/types";
 import { errorHandling } from '../../utils/ErrorHandling';
 
+const references = {
+  amount: [],
+  unit: [],
+  item: []
+}
+
 /** Manages ingredient requests and dropdown options
  * 
  * IngredientsGroup -> ComponentsOptionsRequests -> IngredientInputGroup
@@ -18,6 +24,7 @@ function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleIngredie
   const [quantityAmount, setQuantityAmounts] = useState<AttributeData[]>([])
   const [quantityUnits, setQuantityUnits] = useState<AttributeData[]>([])
   const [whichOptions, setWhichOptions] = useState<string>("book");
+  const [optionsReferences, setOptionsReferences] = useState(references)
 
   const { userId, currentBookId } = useContext(UserContext);
 
@@ -54,11 +61,14 @@ function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleIngredie
     items,
     amounts: quantityAmount,
     units: quantityUnits,
-    selected: whichOptions
+    selected: whichOptions,
+    references: optionsReferences
   }
 
   async function fetchBookComponentsOptions() {
     const { amounts, units, items } = await API.getBookComponentsOptions(userId, currentBookId)
+    console.log("!!!!",{amounts, units, items})
+    setOptionsReferences({ "amount": amounts, "unit": units, "item": items }) ///does this need to me memoized  
     setItems(items);
     setQuantityUnits(units);
     setQuantityAmounts(amounts);
@@ -81,7 +91,7 @@ function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleIngredie
     }
   }
 
-  /** Populate each instance of component with latest options */
+  /** Populate each instance of component with the most current options */
   useEffect(() => {
     whichOptions == "book" ? fetchBookComponentsOptions() : fetchUserComponentsOptions()
   }, [whichOptions])
