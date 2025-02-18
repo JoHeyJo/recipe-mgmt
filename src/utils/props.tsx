@@ -22,7 +22,7 @@ export type IngredientInputGroupProps = {
   }
   handleOption: {
     post: (entity: string, attributeObject: AttributeData) => Promise<AttributeData>;
-    set: (state: string, option: AttributeData) => void;
+    updateSelected: (state: string, option: AttributeData) => void;
     associate: (userId: number, currentBookId: number, optionId: number, component: string) => void
   }
 }
@@ -34,11 +34,11 @@ export type IngredientManagerProps = {
   options: AttributeData[];
   handleOption: {
     post: (entity: string, attributeObject: AttributeData) => Promise<AttributeData>;
-    set: (state: string, option: AttributeData) => void;
+    updateSelected: (state: string, option: AttributeData) => void;
     associate: (userId: number, currentBookId: number, optionId: number, component: string) => void
   }
-  handleSelected: {
-    update: (state: string, option: AttributeData) => void;
+  handleComponent: {
+    updateSelected: (state: string, option: AttributeData) => void;
     remove: (state: string) => void
   }
   entity: string

@@ -36,8 +36,8 @@ function IngredientInputGroup({ handleIngredient, ingredient, index, handleOptio
     if (state === "amount") setAmount(defaultAmount);
   }
 
-  const handleSelected = {
-    update: updateSelected,
+  const handleComponent = {
+    updateSelected,
     remove: unSelectInput
   }
 
@@ -48,9 +48,9 @@ function IngredientInputGroup({ handleIngredient, ingredient, index, handleOptio
 
   return (
     <div className="flex rounded-md">
-      <IngredientManager value={ingredient.amount} attribute={"value"} entity={"amount"} options={options.amounts} handleOption={handleOption} handleSelected={handleSelected} />
-      <IngredientManager value={ingredient.unit} attribute={"type"} entity={"unit"} options={options.units} handleOption={handleOption} handleSelected={handleSelected} />
-      <IngredientManager value={ingredient.item} attribute={"name"} entity={"item"} options={options.items} handleOption={handleOption} handleSelected={handleSelected} />
+      <IngredientManager value={ingredient.amount} attribute={"value"} entity={"amount"} options={options.amounts} handleOption={handleOption} handleComponent={handleComponent} />
+      <IngredientManager value={ingredient.unit} attribute={"type"} entity={"unit"} options={options.units} handleOption={handleOption} handleComponent={handleComponent} />
+      <IngredientManager value={ingredient.item} attribute={"name"} entity={"item"} options={options.items} handleOption={handleOption} handleComponent={handleComponent} />
     </div>
   )
 }

@@ -12,7 +12,7 @@ import { UserContext } from '../../context/UserContext';
  * IngredientInputGroup -> IngredientManager
  */
 
-function IngredientManager({ value, attribute, entity, options, handleOption, handleSelected }: IngredientManagerProps) {
+function IngredientManager({ value, attribute, entity, options, handleOption, handleComponent }: IngredientManagerProps) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<AttributeData>(value)
 
@@ -47,21 +47,21 @@ function IngredientManager({ value, attribute, entity, options, handleOption, ha
   async function processNewOption(option: AttributeData) {
     const newOption = { ...option, id: null, [attribute]: query }
     const createdOption = await handleOption.post(entity, newOption);
-    handleOption.set(entity, createdOption)
-    handleSelected.update(entity, createdOption);
+    // handleOption.updateSelected(entity, createdOption);
+    // handleSelected.update(entity, createdOption);
     setSelected(createdOption);
   }
 
   /** Updates parent state with selected option */
   function processExistingOption(option: AttributeData) {
-    handleSelected.update(entity, option)
+    handleComponent.updateSelected(entity, option)
     handleOption.associate(userId, currentBookId, +option.id, entity)
     setSelected(option);
   }
 
   /** Consolidates actions that deselect option */
   function processDeselect() {
-    handleSelected.remove(entity)
+    handleComponent.remove(entity)
     setSelected(null)
   }
 
