@@ -20,8 +20,7 @@ export type Options = {
 }
 
 
-
-type HandleIngredient = {
+type HandleRecipe = {
   add: () => void,
   remove: (index: number) => void,
   update: (newIngredient: Ingredient, index: number) => void
@@ -33,21 +32,24 @@ type HandleOption = {
   associate: (userId: number, currentBookId: number, optionId: number, component: string) => void
 }
 
+export type InstructionsRequestsProp = {
+  handleRecipe: HandleRecipe;
+}
+
 export type IngredientInputGroupProps = {
   options: Options;
   ingredient: Ingredient;
   index: number;
-  handleIngredient: HandleIngredient;
+  handleRecipe: HandleRecipe;
   handleOption: HandleOption
 }
 
 export type ComponentsOptionsRequestsProps = {
   ingredients: Ingredients;
   ingredientKeys: number[];
-  handleIngredient: HandleIngredient
+  handleRecipe: HandleRecipe
 }
 
-// type can be joined with OptionRequestsProps
 export type IngredientManagerProps = {
   value: AttributeData;
   attribute: string
@@ -88,11 +90,18 @@ export type RecipeViewProps = {
 }
 
 export type IngredientsGroupProps = {
-  handleUpdate: (data: Ingredient[], section: string) => void;
+  handleRecipe: (data: Ingredient[], section: string) => void;
+}
+
+type InstructionsData = {
+  instructions: Instructions;
+  selected: string;
+  references: Instructions;
 }
 
 export type InstructionsAreaProps = {
-  handleUpdate: (data: Instruction | Instructions, section: string) => void;
+  handleRecipe: HandleRecipe;
+  instructions: InstructionsData;
 }
 
 

@@ -9,7 +9,7 @@ import { defaultItem, defaultAmount, defaultUnit } from '../../utils/templates';
  * 
  * ComponentsOptionsRequests -> IngredientInputGroup -> IngredientManager
 */
-function IngredientInputGroup({ handleIngredient, ingredient, index, handleOption, options }: IngredientInputGroupProps) {
+function IngredientInputGroup({ handleRecipe, ingredient, index, handleOption, options }: IngredientInputGroupProps) {
   const [item, setItem] = useState<AttributeData>(ingredient.item);
   const [amount, setAmount] = useState<AttributeData>(ingredient.amount);
   const [unit, setUnit] = useState<AttributeData>(ingredient.unit);
@@ -19,7 +19,7 @@ function IngredientInputGroup({ handleIngredient, ingredient, index, handleOptio
   /** Calls parent callback to handleUpdate name */
   function updateIngredientList() {
     const updatedIngredient = { ...ingredient, item, amount, unit };
-    handleIngredient.update(updatedIngredient, index)
+    handleRecipe.update(updatedIngredient, index)
   }
 
   /** Changes selected option */

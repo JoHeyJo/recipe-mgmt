@@ -3,12 +3,7 @@ import { Instruction, Instructions } from "../../utils/types";
 import InstructionManager from "../views/InstructionManager";
 import { InstructionsAreaProps } from "../../utils/props";
 import { UserContext } from "../../context/UserContext";
-
-const PLACE_HOLDER: Instructions = [
-  { instruction: "Add ingredients...", id: null },
-  { instruction: "Add ice...", id: null },
-  { instruction: "Shake...", id: null }
-]
+import { PLACE_HOLDER } from "../../utils/templates";
 
 const InstructionsTemplate: Instructions = []
 
@@ -26,20 +21,11 @@ const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs - 1 
  * 
  * InstructionsRequests -> InstructionsArea -> InstructionManager
  */
-function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
+function InstructionsArea({ handleRecipe, instructions }: InstructionsAreaProps) {
   const { userId, currentBookId } = useContext(UserContext)
-  const [instructions, setInstructions] = useState([]);
+  // const [instructions, setInstructions] = useState([]);
   const [selectedInstructions, setSelectedInstructions] = useState<Instructions>(PLACE_HOLDER);
   const [filterKey, setFilterKeys] = useState({});
-
-  /** Add newly created instruction (DB return object) to list of available instructions */
-  function addCreated(instruction: Instruction) {
-    setInstructions((i: Instruction[]) => {
-      const updatedInstructions = [...i];
-      updatedInstructions.push(instruction);
-      return updatedInstructions;
-    })
-  }
 
   /** Update list of selected instructions */
   async function updateSelected(instruction: Instruction, arrayKey: number) {
@@ -64,22 +50,22 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   }
 
   /** Remove unselected filter key */
-  function removeFilterKey(arrayKey: number) {
-    setFilterKeys(keys => {
-      const updatedKeys = { ...keys }
-      delete updatedKeys[arrayKey]
-      return updatedKeys;
-    })
-  }
+  // function removeFilterKey(arrayKey: number) {
+  //   setFilterKeys(keys => {
+  //     const updatedKeys = { ...keys }
+  //     delete updatedKeys[arrayKey]
+  //     return updatedKeys;
+  //   })
+  // }
 
   /** Constructs key value pair of filters keys with array id & option id and updates filter keys */
-  function updateFilterKeys(keys: number[]) {
-    setFilterKeys(prevKeys => {
-      const updatedKeys = { ...prevKeys }
-      const newKeySet = { [keys[0]]: keys[1] }
-      return { ...updatedKeys, ...newKeySet }
-    })
-  }
+  // function updateFilterKeys(keys: number[]) {
+  //   setFilterKeys(prevKeys => {
+  //     const updatedKeys = { ...prevKeys }
+  //     const newKeySet = { [keys[0]]: keys[1] }
+  //     return { ...updatedKeys, ...newKeySet }
+  //   })
+  // }
 
   /** Create additional input field for new instruction */
   function createInstructionInput() {
@@ -92,26 +78,26 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
     addCreated,
     createInstructionInput,
     updateSelected,
-    updateFilterKeys,
+    // updateFilterKeys,
     removeSelected,
-    removeFilterKey
+    // removeFilterKey
   }
 
   /** Filter selected items from subsequent arrays */
   // filtered down to just the elements from the given array that pass the test 
-  function filterSelected(instructions: Instructions, arrayKey: number) {
-    // If no item is selected in this dropdown, show all options
-    if (!filterKey[arrayKey]) return instructions
-    return instructions.filter((instruction, index) => {
+  // function filterSelected(instructions: Instructions, arrayKey: number) {
+  //   // If no item is selected in this dropdown, show all options
+  //   if (!filterKey[arrayKey]) return instructions
+  //   return instructions.filter((instruction, index) => {
 
-      // if(arrayKey !== index) return filterKey[arrayKey] !== instruction.id
-      // If we are rendering the dropdown with the selected item (arrayKey matches), show all options including the selected one
-      if (filterKey[arrayKey]) return true
+  //     // if(arrayKey !== index) return filterKey[arrayKey] !== instruction.id
+  //     // If we are rendering the dropdown with the selected item (arrayKey matches), show all options including the selected one
+  //     if (filterKey[arrayKey]) return true
 
-      // In other dropdowns (arrayKey !== current arrayKey), filter out the selected item
-      // return filterKey[instruction.id]
-    })
-  }
+  //     // In other dropdowns (arrayKey !== current arrayKey), filter out the selected item
+  //     // return filterKey[instruction.id]
+  //   })
+  // }
 
   /** Updates parent state of instructions when instructions is changed and on mount */
   useEffect(() => {
@@ -126,7 +112,7 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
           key={index}
           arrayKey={index}
           instruction={value}
-          options={filterSelected(instructions, index)}
+          // options={filterSelected(instructions, index)}
           handleInstructions={handleInstructions}
         />
       )}

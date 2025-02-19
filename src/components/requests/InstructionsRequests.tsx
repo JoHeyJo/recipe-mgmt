@@ -1,25 +1,37 @@
 import { useState, useContext, useEffect, ChangeEvent } from "react";
 import { UserContext } from "../../context/UserContext";
 import { RecipeContext } from "../../context/RecipeContext";
-import { Ingredient } from "../../utils/types";
+import { Ingredient, Instruction } from "../../utils/types";
 import API from "../../api";
 import { errorHandling } from "../../utils/ErrorHandling";
 import InstructionsArea from "../ui/InstructionsArea";
+import RadioSwitch from "../ui/common/RadioSwitch";
+import { InstructionsRequestsProp } from "../../utils/props";
 
-/** Handles API requests for Instructions 
+/** Handles API requests & data management for Instructions 
  * 
  * RecipeRequests -> InstructionsRequests -> InstructionsArea
 */
-function InstructionsRequests() {
+function InstructionsRequests({ handleRecipe }: InstructionsRequestsProp) {
   const { userId, currentBookId } = useContext(UserContext)
   const { requestAction, contextInstructions } = useContext(RecipeContext);
   const [instructions, setInstructions] = useState([]);
   const [whichInstructions, setWhichInstructions] = useState("book");
+  const [instructionsReferences, setInstructionsReferences] = useState()
 
   /** handle state change for whichInstructions */
   function handleRadio(event: ChangeEvent<HTMLInputElement>) {
     setWhichInstructions(event.target.value)
   }
+
+    /** Add newly created instruction (DB return object) to list of available instructions */
+    function addCreated(instruction: Instruction) {
+      setInstructions((i: Instruction[]) => {
+        const updatedInstructions = [...i];
+        updatedInstructions.push(instruction);
+        return updatedInstructions;
+      })
+    }
 
   /** Request to create new instruction */
   async function addInstruction(ingredient: Ingredient) {
@@ -54,9 +66,15 @@ function InstructionsRequests() {
     }
   }
 
-  const handleRequests = {
+  const handleInstruction = {
     post: addInstruction,
     associate: associateInstructionToBook
+  }
+
+  const data = {
+    instructions,
+    selected: whichInstructions,
+    references: instructionsReferences
   }
 
   /** Populate instruction area on mount */
@@ -77,7 +95,7 @@ function InstructionsRequests() {
   return (
     <>
       <RadioSwitch handleSwitch={handleRadio} selection={whichInstructions} />
-      <InstructionsArea />
+      <InstructionsArea handleRecipe={handleRecipe} instructions={data} />
     </>
   )
 

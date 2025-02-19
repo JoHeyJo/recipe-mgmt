@@ -5,7 +5,7 @@ import { IngredientsGroupProps } from '../../utils/props';
 import { RecipeContext } from '../../context/RecipeContext';
 import { v4 as uuidv4 } from 'uuid';
 import { defaultIngredient, recipeTemplate } from '../../utils/templates';
-import IngredientRequests from '../requests/ComponentsOptionsRequests';
+import ComponentsOptionsRequests from '../requests/ComponentsOptionsRequests';
 
 /** Contains grouped ingredients for processing - handles mutation of ingredient's array 
  * Refactor: IngredientKeys can be removed and id associated with ingredient can now be used.
@@ -13,7 +13,7 @@ import IngredientRequests from '../requests/ComponentsOptionsRequests';
  * 
  * RecipeRequests -> IngredientsGroup -> ComponentsOptionsRequests
  */
-function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
+function IngredientsGroup({ handleRecipe }: IngredientsGroupProps) {
   const { requestAction, contextIngredients } = useContext(RecipeContext);
   const [ingredients, setIngredients] = useState<Ingredients>(contextIngredients || recipeTemplate.ingredients);
   const [ingredientKeys, setIngredientKeys] = useState<any>([Date.now()]); // Generate unique key on first render
@@ -57,12 +57,12 @@ function IngredientsGroup({ handleUpdate }: IngredientsGroupProps) {
 
   /** Updates parent state of ingredients when ingredient is added to state */
   useEffect(() => {
-    handleUpdate(ingredients, "ingredients")
+    handleRecipe(ingredients, "ingredients")
   }, [ingredients])
 
   return (
     <div id='IngredientsGroup-main'>
-      <IngredientRequests ingredients={ingredients} ingredientKeys={ingredientKeys} handleIngredient={handleIngredient} />
+      <ComponentsOptionsRequests ingredients={ingredients} ingredientKeys={ingredientKeys} handleRecipe={handleIngredient} />
     </div>
   )
 }

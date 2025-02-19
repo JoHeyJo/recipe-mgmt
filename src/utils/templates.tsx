@@ -1,4 +1,4 @@
-import { Recipe, Ingredient } from "./types"
+import { Recipe, Ingredient, Instructions } from "./types"
 
 export const recipeTemplate: Recipe = {
   id: 0,
@@ -29,3 +29,9 @@ export const references = {
 export const defaultItem = { id: null, name: "" };
 export const defaultAmount = { id: null, value: "" };
 export const defaultUnit = { id: null, type: "" };
+
+export const PLACE_HOLDER: Instructions = [
+  { instruction: "Add ingredients...", id: null },
+  { instruction: "Add ice...", id: null },
+  { instruction: "Shake...", id: null }
+]

@@ -14,7 +14,7 @@ import { references } from "../../utils/templates";
  * 
  * IngredientsGroup -> ComponentsOptionsRequests -> IngredientInputGroup
  */
-function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleIngredient }: ComponentsOptionsRequestsProps) {
+function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleRecipe }: ComponentsOptionsRequestsProps) {
   const [items, setItems] = useState<AttributeData[]>([])
   const [quantityAmount, setQuantityAmounts] = useState<AttributeData[]>([])
   const [quantityUnits, setQuantityUnits] = useState<AttributeData[]>([])
@@ -96,8 +96,8 @@ function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleIngredie
       <RadioSwitch handleSwitch={handleRadio} selection={whichOptions} />
       {ingredients.map((ingredient, i) =>
         <div key={ingredient.ingredient_id || ingredientKeys[i]} className='flex items-center justify-center'>
-          <IngredientInputGroup index={i} ingredient={ingredient} handleIngredient={handleIngredient} handleOption={handleOption} options={options} />
-          {i === ingredients.length - 1 ? <FaPlusButton onAction={handleIngredient.add} /> : <FaMinusButton onAction={() => handleIngredient.remove(i)} />}
+          <IngredientInputGroup index={i} ingredient={ingredient} handleRecipe={handleRecipe} handleOption={handleOption} options={options} />
+          {i === ingredients.length - 1 ? <FaPlusButton onAction={handleRecipe.add} /> : <FaMinusButton onAction={() => handleRecipe.remove(i)} />}
         </div>
       )}
     </>
