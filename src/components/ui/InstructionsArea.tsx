@@ -98,7 +98,7 @@ function InstructionsArea({ handleRecipe, instructions, handleInstruction }: Ins
 
   /** Updates parent state of instructions when instructions is changed and on mount */
   useEffect(() => {
-    handleUpdate(selectedInstructions.filter((i => i.id)), "instructions")
+    handleRecipe(selectedInstructions.filter((i => i.id)), "instructions")
   }, [selectedInstructions])
 
 

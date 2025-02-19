@@ -62,7 +62,7 @@ function IngredientsGroup({ handleRecipe }: IngredientsGroupProps) {
 
   return (
     <div id='IngredientsGroup-main'>
-      <ComponentsOptionsRequests ingredients={ingredients} ingredientKeys={ingredientKeys} handleRecipe={handleIngredient} />
+      <ComponentsOptionsRequests ingredients={ingredients} ingredientKeys={ingredientKeys} handleIngredient={handleIngredient} />
     </div>
   )
 }

@@ -20,7 +20,7 @@ export type Options = {
 }
 
 
-type HandleRecipe = {
+type HandleIngredient = {
   add: () => void,
   remove: (index: number) => void,
   update: (newIngredient: Ingredient, index: number) => void
@@ -40,14 +40,14 @@ export type IngredientInputGroupProps = {
   options: Options;
   ingredient: Ingredient;
   index: number;
-  handleRecipe: HandleRecipe;
+  handleIngredient: HandleIngredient;
   handleOption: HandleOption
 }
 
 export type ComponentsOptionsRequestsProps = {
   ingredients: Ingredients;
   ingredientKeys: number[];
-  handleRecipe: HandleRecipe
+  handleIngredient: HandleIngredient
 }
 
 export type IngredientManagerProps = {
