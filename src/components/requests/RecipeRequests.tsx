@@ -5,14 +5,13 @@ import { Ingredient, Instruction, Instructions, Recipe } from '../../utils/types
 import API from '../../api';
 import { errorHandling } from '../../utils/ErrorHandling';
 import { useMediaQuery } from 'react-responsive';
-import InstructionsArea from '../ui/InstructionsArea';
+import InstructionsRequests from './InstructionsRequests';
 import { UserContext } from '../../context/UserContext';
 import { RecipeRequestsProps } from '../../utils/props';
 import NotesInput from '../ui/NotesInput';
 import { RecipeContext, RecipeContextType } from '../../context/RecipeContext';
 import { compareIngredients, compareInstructions, compareNames, filterRecipe, compareNotes } from '../../utils/filters';
 import TitleInput from '../ui/TitleInput';
-
 
 /** Processes recipe data. Context data is passed through here on edit. Else template data.
  * RecipeRequests data is mutable while context data(reference data) is not
@@ -190,7 +189,7 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
                   </section>
 
                   <section id='RecipeRequests-instructions' className="flex-1 ml-4 ">
-                    <InstructionsArea handleUpdate={handleRecipeUpdate} />
+                    <InstructionsRequests handleRecipeUpdate={handleRecipeUpdate} />
                   </section>
                 </section>
 

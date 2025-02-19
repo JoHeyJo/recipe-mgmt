@@ -1,5 +1,4 @@
-import { useState, useEffect, useContext, ChangeEvent } from 'react';
-import IngredientInputGroup from './IngredientInputGroup';
+import { useState, useEffect, useContext } from 'react';
 import { Ingredients, Ingredient } from '../../utils/types';
 import { IngredientsGroupProps } from '../../utils/props';
 import { RecipeContext } from '../../context/RecipeContext';
@@ -7,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { defaultIngredient, recipeTemplate } from '../../utils/templates';
 import ComponentsOptionsRequests from '../requests/ComponentsOptionsRequests';
 
-/** Contains grouped ingredients for processing - handles mutation of ingredient's array 
+/** Handles selected Ingredients - mutation of ingredient's array - updates parent recipe state
  * Refactor: IngredientKeys can be removed and id associated with ingredient can now be used.
  * Need to choose between using DATE or UUID
  * 

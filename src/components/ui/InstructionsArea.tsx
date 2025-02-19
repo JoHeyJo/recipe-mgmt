@@ -12,7 +12,7 @@ const InstructionsTemplate: Instructions = []
  */
 const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs - 1 === arrayKey
 
-/** InstructionsArea handles selected instruction
+/** InstructionsArea handles selected instruction - updates GrandParent recipe state
  * 
  * Dynamically renders list of instructions - filters out selected options (WIP)
  * 
@@ -70,8 +70,8 @@ function InstructionsArea({ handleRecipeUpdate, data, handleInstruction }: Instr
 
   /** Consolidates logic pertaining to adding instructions */
   const handleInstructions = {
-    addInstruction,
-    addCreated,
+    // addInstruction,
+    // addCreated,
     createInstructionInput,
     updateSelected,
     // updateFilterKeys,
@@ -108,7 +108,7 @@ function InstructionsArea({ handleRecipeUpdate, data, handleInstruction }: Instr
           key={index}
           arrayKey={index}
           instruction={value}
-          // options={filterSelected(instructions, index)}
+          options={data.instructions}
           handleInstructions={handleInstructions}
         />
       )}

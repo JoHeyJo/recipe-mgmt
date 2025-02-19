@@ -8,9 +8,7 @@ import { InstructionManagerProps } from '../../utils/props';
 
 /** InstructionManager - renders instructions - ring is removed 
  * 
- * NOTES TO BE ADDRESSED
- * 
- * Searches and filters existing options
+ * Searches and filters existing instructions
  * 
  * InstructionsArea -> InstructionManager
  */
