@@ -10,7 +10,6 @@ import { AttributeData } from "../../utils/types";
 import { errorHandling } from '../../utils/ErrorHandling';
 import { references } from "../../utils/templates";
 
-
 /** Manages ingredient requests and dropdown options
  * 
  * IngredientsGroup -> ComponentsOptionsRequests -> IngredientInputGroup

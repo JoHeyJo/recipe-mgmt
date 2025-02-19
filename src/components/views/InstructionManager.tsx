@@ -1,5 +1,5 @@
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions } from '@headlessui/react'
 import { Instruction } from '../../utils/types';
@@ -20,6 +20,10 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
   const [selected, setSelected] = useState<Instruction>(instruction)
 
   const isNewInstruction = (option: Instruction) => typeof option.id === "string" && option.instruction === '+ create...'
+
+  useEffect(()=>{
+    setSelected(instruction)
+  },[])
 
   /** Creates a list of filtered options based on search query */
   const filteredOptions: Instruction[] =
@@ -88,14 +92,14 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
   function displayInitialValue(value: Instruction){
     // don't do anything for null value
     if(!value) return 
-    return typeof(value.id) === "string" ? value.instruction : value;
+    return value.id ? value : value.instruction;
   }
 
   return (
     <>
       <Combobox
         as="div"
-        value={displayInitialValue(selected || { instruction: '', id: ''})}
+        value={displayInitialValue(selected || { instruction: '', id: null})}
         onChange={onValueSelect}
       >
         <div className="relative mt-2">

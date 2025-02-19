@@ -9,9 +9,9 @@ import { UserContext } from "../../context/UserContext";
 import RadioSwitch from "./common/RadioSwitch";
 
 const PLACE_HOLDER: Instructions = [
-  { instruction: "Add ingredients...", id: `create-${Math.random()}` },
-  { instruction: "Add ice...", id: `create-${Math.random()}` },
-  { instruction: "Shake...", id: `create-${Math.random()}` }
+  { instruction: "Add ingredients...", id: null },
+  { instruction: "Add ice...", id: null },
+  { instruction: "Shake...", id: null }
 ]
 
 const InstructionsTemplate: Instructions = []
@@ -28,7 +28,7 @@ const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs - 1 
  *
  * Dynamically renders list of instructions - filters out selected options
  * 
- * RecipeRequests -> InstructionsArea -> InstructionManager
+ * InstructionsRequests -> InstructionsArea -> InstructionManager
  */
 function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   const { userId, currentBookId } = useContext(UserContext)
@@ -41,10 +41,10 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   // On mount, populate instructions if recipe is selected
   useEffect(() => {
     if (requestAction === "edit") {
-      setSelectedInstructions(contextInstructions)
-      createInstructionInput()
+      // setSelectedInstructions(contextInstructions)
+      // createInstructionInput()
     } else {
-      setSelectedInstructions(PLACE_HOLDER)
+      // setSelectedInstructions(PLACE_HOLDER)
     }
   }, [])
 
@@ -75,7 +75,6 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
     setSelectedInstructions(instructions => {
       const alteredInstructions = [...instructions];
       alteredInstructions[instructionKey] = PLACE_HOLDER[instructionKey] || { id: null, "instruction": "some other thing..." }
-      console.log("alteredInstructions", alteredInstructions)
       return alteredInstructions
     })
   }
@@ -100,7 +99,7 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
 
   /** Create additional input field for new instruction */
   function createInstructionInput() {
-    setSelectedInstructions(selected => [...selected, { id: `create-${Math.random()}`, "instruction": "some other thing..." }])
+    setSelectedInstructions(selected => [...selected, { id: null, instruction: "some other thing..." }])
   }
 
   /** Request to create new instruction */
