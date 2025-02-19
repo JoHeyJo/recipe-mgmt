@@ -102,6 +102,10 @@ type InstructionsData = {
 export type InstructionsAreaProps = {
   handleRecipe: HandleRecipe;
   instructions: InstructionsData;
+  handleInstruction: {
+    post: (ingredient: Ingredient) => void;
+    associate: (userId: number, currentBookId: number, instructionId: number) => void;
+  }
 }
 
 

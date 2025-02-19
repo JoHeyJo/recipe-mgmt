@@ -95,7 +95,7 @@ function InstructionsRequests({ handleRecipe }: InstructionsRequestsProp) {
   return (
     <>
       <RadioSwitch handleSwitch={handleRadio} selection={whichInstructions} />
-      <InstructionsArea handleRecipe={handleRecipe} instructions={data} />
+      <InstructionsArea handleRecipe={handleRecipe} handleInstruction={handleInstruction} instructions={data} />
     </>
   )
 

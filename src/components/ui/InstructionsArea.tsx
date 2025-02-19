@@ -12,16 +12,13 @@ const InstructionsTemplate: Instructions = []
  */
 const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs - 1 === arrayKey
 
-/** InstructionsArea handles instructions array mutation - Makes requests for instructions
+/** InstructionsArea handles selected instruction
  * 
- * Needs to be refactored into two components
- * 
- *
  * Dynamically renders list of instructions - filters out selected options
  * 
  * InstructionsRequests -> InstructionsArea -> InstructionManager
  */
-function InstructionsArea({ handleRecipe, instructions }: InstructionsAreaProps) {
+function InstructionsArea({ handleRecipe, instructions, handleInstruction }: InstructionsAreaProps) {
   const { userId, currentBookId } = useContext(UserContext)
   // const [instructions, setInstructions] = useState([]);
   const [selectedInstructions, setSelectedInstructions] = useState<Instructions>(PLACE_HOLDER);
@@ -35,7 +32,7 @@ function InstructionsArea({ handleRecipe, instructions }: InstructionsAreaProps)
       return updatedInstructions;
     })
 
-    if (whichInstructions === "user") await associateInstructionToBook(userId, currentBookId, +instruction.id)
+    if (instructions.selected === "user") handleInstruction.associate(userId, currentBookId, +instruction.id)
 
     if (HAS_NO_REMAINING_INPUT(selectedInstructions.length, arrayKey)) createInstructionInput();
   }
