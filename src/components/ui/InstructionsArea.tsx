@@ -14,13 +14,12 @@ const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs - 1 
 
 /** InstructionsArea handles selected instruction
  * 
- * Dynamically renders list of instructions - filters out selected options
+ * Dynamically renders list of instructions - filters out selected options (WIP)
  * 
  * InstructionsRequests -> InstructionsArea -> InstructionManager
  */
-function InstructionsArea({ handleRecipe, instructions, handleInstruction }: InstructionsAreaProps) {
+function InstructionsArea({ handleRecipeUpdate, data, handleInstruction }: InstructionsAreaProps) {
   const { userId, currentBookId } = useContext(UserContext)
-  // const [instructions, setInstructions] = useState([]);
   const [selectedInstructions, setSelectedInstructions] = useState<Instructions>(PLACE_HOLDER);
   const [filterKey, setFilterKeys] = useState({});
 
@@ -32,7 +31,7 @@ function InstructionsArea({ handleRecipe, instructions, handleInstruction }: Ins
       return updatedInstructions;
     })
 
-    if (instructions.selected === "user") handleInstruction.associate(userId, currentBookId, +instruction.id)
+    if (data.selected === "user") handleInstruction.associate(userId, currentBookId, +instruction.id)
 
     if (HAS_NO_REMAINING_INPUT(selectedInstructions.length, arrayKey)) createInstructionInput();
   }
@@ -98,7 +97,7 @@ function InstructionsArea({ handleRecipe, instructions, handleInstruction }: Ins
 
   /** Updates parent state of instructions when instructions is changed and on mount */
   useEffect(() => {
-    handleRecipe(selectedInstructions.filter((i => i.id)), "instructions")
+    handleRecipeUpdate(selectedInstructions.filter((i => i.id)), "instructions")
   }, [selectedInstructions])
 
 

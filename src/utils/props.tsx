@@ -19,6 +19,9 @@ export type Options = {
   }
 }
 
+type HandleRecipe = {
+  handleRecipe: (data: string | Ingredient[] | Instruction | Instructions, section: string) => void;
+}
 
 type HandleIngredient = {
   add: () => void,
@@ -33,7 +36,7 @@ type HandleOption = {
 }
 
 export type InstructionsRequestsProp = {
-  handleRecipe: HandleRecipe;
+  handleRecipeUpdate: (data: Instructions, section:string) => void;
 }
 
 export type IngredientInputGroupProps = {
@@ -90,7 +93,7 @@ export type RecipeViewProps = {
 }
 
 export type IngredientsGroupProps = {
-  handleRecipe: (data: Ingredient[], section: string) => void;
+  handleRecipeUpdate: (data: Ingredient[], section: string) => void;
 }
 
 type InstructionsData = {
@@ -99,9 +102,10 @@ type InstructionsData = {
   references: Instructions;
 }
 
+
 export type InstructionsAreaProps = {
-  handleRecipe: HandleRecipe;
-  instructions: InstructionsData;
+  handleRecipeUpdate: (data: Instructions, section: string) => void;
+  data: InstructionsData;
   handleInstruction: {
     post: (ingredient: Ingredient) => void;
     associate: (userId: number, currentBookId: number, instructionId: number) => void;

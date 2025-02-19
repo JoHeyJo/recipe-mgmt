@@ -186,7 +186,7 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
                   <section id='RecipeRequests-ingredients' className="flex-1 mr-4">
                     <TitleInput handleUpdate={handleRecipeUpdate} />
 
-                    <IngredientsGroup handleRecipe={handleRecipeUpdate} />
+                    <IngredientsGroup handleRecipeUpdate={handleRecipeUpdate} />
                   </section>
 
                   <section id='RecipeRequests-instructions' className="flex-1 ml-4 ">

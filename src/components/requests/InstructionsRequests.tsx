@@ -12,7 +12,7 @@ import { InstructionsRequestsProp } from "../../utils/props";
  * 
  * RecipeRequests -> InstructionsRequests -> InstructionsArea
 */
-function InstructionsRequests({ handleRecipe }: InstructionsRequestsProp) {
+function InstructionsRequests({ handleRecipeUpdate }: InstructionsRequestsProp) {
   const { userId, currentBookId } = useContext(UserContext)
   const { requestAction, contextInstructions } = useContext(RecipeContext);
   const [instructions, setInstructions] = useState([]);
@@ -95,7 +95,7 @@ function InstructionsRequests({ handleRecipe }: InstructionsRequestsProp) {
   return (
     <>
       <RadioSwitch handleSwitch={handleRadio} selection={whichInstructions} />
-      <InstructionsArea handleRecipe={handleRecipe} handleInstruction={handleInstruction} instructions={data} />
+      <InstructionsArea handleRecipeUpdate={handleRecipeUpdate} handleInstruction={handleInstruction} data={data} />
     </>
   )
 

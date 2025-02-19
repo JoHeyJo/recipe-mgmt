@@ -13,7 +13,7 @@ import ComponentsOptionsRequests from '../requests/ComponentsOptionsRequests';
  * 
  * RecipeRequests -> IngredientsGroup -> ComponentsOptionsRequests
  */
-function IngredientsGroup({ handleRecipe }: IngredientsGroupProps) {
+function IngredientsGroup({ handleRecipeUpdate }: IngredientsGroupProps) {
   const { requestAction, contextIngredients } = useContext(RecipeContext);
   const [ingredients, setIngredients] = useState<Ingredients>(contextIngredients || recipeTemplate.ingredients);
   const [ingredientKeys, setIngredientKeys] = useState<any>([Date.now()]); // Generate unique key on first render
@@ -57,7 +57,7 @@ function IngredientsGroup({ handleRecipe }: IngredientsGroupProps) {
 
   /** Updates parent state of ingredients when ingredient is added to state */
   useEffect(() => {
-    handleRecipe(ingredients, "ingredients")
+    handleRecipeUpdate(ingredients, "ingredients")
   }, [ingredients])
 
   return (
