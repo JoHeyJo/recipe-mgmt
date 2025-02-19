@@ -29,7 +29,7 @@ function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleIngredie
   }
 
   /** Request to create new ingredient option */
-  async function postOption(entity: string, attributeObject: AttributeData): Promise<AttributeData> {
+  async function addOption(entity: string, attributeObject: AttributeData): Promise<AttributeData> {
     try {
       const id = await API.postComponentOption(attributeObject, currentBookId, userId, entity);
       return id;
@@ -47,7 +47,7 @@ function ComponentsOptionsRequests({ ingredients, ingredientKeys, handleIngredie
   }
 
   const handleOption = {
-    post: postOption,
+    post: addOption,
     addCreated: updateAvailableOptions,
     associate: associateOptionToBook
   }

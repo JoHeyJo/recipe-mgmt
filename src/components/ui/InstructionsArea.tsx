@@ -1,12 +1,8 @@
 import { useState, useEffect, useContext, ChangeEventHandler, ChangeEvent } from "react";
-import { Ingredient, Instruction, Instructions } from "../../utils/types";
+import { Instruction, Instructions } from "../../utils/types";
 import InstructionManager from "../views/InstructionManager";
-import API from "../../api";
-import { errorHandling } from '../../utils/ErrorHandling';
 import { InstructionsAreaProps } from "../../utils/props";
-import { RecipeContext } from "../../context/RecipeContext";
 import { UserContext } from "../../context/UserContext";
-import RadioSwitch from "./common/RadioSwitch";
 
 const PLACE_HOLDER: Instructions = [
   { instruction: "Add ingredients...", id: null },
@@ -32,21 +28,9 @@ const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs - 1 
  */
 function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
   const { userId, currentBookId } = useContext(UserContext)
-  const { requestAction, contextInstructions } = useContext(RecipeContext);
   const [instructions, setInstructions] = useState([]);
   const [selectedInstructions, setSelectedInstructions] = useState<Instructions>(PLACE_HOLDER);
   const [filterKey, setFilterKeys] = useState({});
-  const [whichInstructions, setWhichInstructions] = useState("book");
-
-  // On mount, populate instructions if recipe is selected
-  useEffect(() => {
-    if (requestAction === "edit") {
-      // setSelectedInstructions(contextInstructions)
-      // createInstructionInput()
-    } else {
-      // setSelectedInstructions(PLACE_HOLDER)
-    }
-  }, [])
 
   /** Add newly created instruction (DB return object) to list of available instructions */
   function addCreated(instruction: Instruction) {
@@ -102,17 +86,6 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
     setSelectedInstructions(selected => [...selected, { id: null, instruction: "some other thing..." }])
   }
 
-  /** Request to create new instruction */
-  async function addInstruction(ingredient: Ingredient) {
-    try {
-      const id = await API.postInstruction(userId, currentBookId, ingredient);
-      return id
-    } catch (error: any) {
-      errorHandling("InstructionsArea - addInstruction", error)
-      throw error
-    }
-  }
-
   /** Consolidates logic pertaining to adding instructions */
   const handleInstructions = {
     addInstruction,
@@ -123,20 +96,6 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
     removeSelected,
     removeFilterKey
   }
-
-  async function fetchBookInstructions() {
-    const res = await API.getBookInstructions(userId, currentBookId)
-    setInstructions(res)
-  }
-  async function fetchUserInstructions() {
-    const res = await API.getUserInstructions(userId);
-    setInstructions(res)
-  }
-
-  /** Populate instruction area on mount */
-  useEffect(() => {
-    whichInstructions == "book" ? fetchBookInstructions() : fetchUserInstructions()
-  }, [whichInstructions])
 
   /** Filter selected items from subsequent arrays */
   // filtered down to just the elements from the given array that pass the test 
@@ -154,29 +113,14 @@ function InstructionsArea({ handleUpdate }: InstructionsAreaProps) {
     })
   }
 
-  /** handle state change for whichInstructions */
-  function handleRadio(event: ChangeEvent<HTMLInputElement>) {
-    setWhichInstructions(event.target.value)
-  }
-
   /** Updates parent state of instructions when instructions is changed and on mount */
   useEffect(() => {
     handleUpdate(selectedInstructions.filter((i => i.id)), "instructions")
   }, [selectedInstructions])
 
-  /** Automatically associates "global user" instructions to current book on select */
-  async function associateInstructionToBook(userId: number, currentBookId: number, instructionId: number) {
-    try {
-      const res = await API.postInstructionAssociation(userId, currentBookId, instructionId)
-    } catch (error: any) {
-      errorHandling("InstructionsArea - associateInstructionToBook", error)
-      throw error
-    }
-  }
 
   return (
     <div id="InstructionsArea" className="block w-full h-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
-      <RadioSwitch handleSwitch={handleRadio} selection={whichInstructions} />
       {selectedInstructions.map((value, index) =>
         <InstructionManager
           key={index}
