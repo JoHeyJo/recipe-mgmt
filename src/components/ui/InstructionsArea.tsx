@@ -6,8 +6,6 @@ import { UserContext } from "../../context/UserContext";
 import { PLACE_HOLDER } from "../../utils/templates";
 import { RecipeContext } from "../../context/RecipeContext";
 
-const InstructionsTemplate: Instructions = []
-
 /** Triggers creation of input if there are no inputs left (num of inputs = array index)
  * This doesn't work with refactoring of PLACE_HOLDER instructions
  */
@@ -22,20 +20,18 @@ const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs - 1 
 function InstructionsArea({ handleRecipeUpdate, data, handleInstruction }: InstructionsAreaProps) {
   const { userId, currentBookId } = useContext(UserContext)
   const { requestAction, contextInstructions } = useContext(RecipeContext);
-  const [selectedInstructions, setSelectedInstructions] = useState<Instructions>(contextInstructions) ;
+  const [selectedInstructions, setSelectedInstructions] = useState<Instructions>(requestAction === "edit" ? contextInstructions : PLACE_HOLDER) ;
   const [filterKey, setFilterKeys] = useState({});
-
 
   // On mount, populate instructions if recipe is selected
   useEffect(() => {
     if (requestAction === "edit") {
       setSelectedInstructions(contextInstructions)
-      createInstructionInput()
+      // createInstructionInput()
     } else {
       setSelectedInstructions(PLACE_HOLDER)
     }
   }, [])
-
 
   /** Update list of selected instructions */
   async function updateSelected(instruction: Instruction, arrayKey: number) {

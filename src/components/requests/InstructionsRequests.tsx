@@ -7,7 +7,6 @@ import { errorHandling } from "../../utils/ErrorHandling";
 import InstructionsArea from "../ui/InstructionsArea";
 import RadioSwitch from "../ui/common/RadioSwitch";
 import { InstructionsRequestsProp } from "../../utils/props";
-import { PLACE_HOLDER } from "../../utils/templates";
 
 /** Handles API requests & data management for Instructions 
  * 
@@ -83,8 +82,6 @@ function InstructionsRequests({ handleRecipeUpdate }: InstructionsRequestsProp) 
   useEffect(() => {
     whichInstructions == "book" ? fetchBookInstructions() : fetchUserInstructions()
   }, [whichInstructions])
-
-
 
   return (
     <>

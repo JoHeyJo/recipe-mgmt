@@ -116,7 +116,7 @@ type InstructionsData = {
 export type InstructionsAreaProps = {
   handleRecipeUpdate: (data: Instructions, section: string) => void;
   data: InstructionsData;
-  handleInstruction: HandleInstruction
+  handleInstruction: HandleInstruction;
 }
 
 export type FaPlusButtonProp = {
