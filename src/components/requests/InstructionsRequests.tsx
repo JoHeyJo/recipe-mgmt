@@ -24,14 +24,14 @@ function InstructionsRequests({ handleRecipeUpdate }: InstructionsRequestsProp) 
     setWhichInstructions(event.target.value)
   }
 
-    /** Add newly created instruction (DB return object) to list of available instructions */
-    function updateAvailableInstructions(instruction: Instruction) {
-      setInstructions((i: Instruction[]) => {
-        const updatedInstructions = [...i];
-        updatedInstructions.push(instruction);
-        return updatedInstructions;
-      })
-    }
+  /** Add newly created instruction (DB return object) to list of available instructions */
+  function updateAvailableInstructions(instruction: Instruction) {
+    setInstructions((i: Instruction[]) => {
+      const updatedInstructions = [...i];
+      updatedInstructions.push(instruction);
+      return updatedInstructions;
+    })
+  }
 
   /** Request to create new instruction */
   async function addInstruction(instruction: Instruction) {

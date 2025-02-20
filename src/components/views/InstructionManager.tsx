@@ -66,7 +66,7 @@ function InstructionManager({ arrayKey, instruction, options, handleSelected, ha
   /** Consolidates actions that deselect option */
   function processDeselect(selectedOption: Instruction) {
     // handleInstructions.removeFilterKey(arrayKey) WIP
-    // selectedOption = null for pending creation of instructions. Will break without this check
+    // selectedOption = null for pending creation of instructions.
     if (!selectedOption) return
     // Only created instructions will trigger this action
     if (!isNewInstruction(selectedOption)) handleSelected.removeSelected(arrayKey) // P

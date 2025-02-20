@@ -58,7 +58,7 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
       })
     }, [recipeId])
 
-  /** Enables/disables update submit */
+  /** Enables/disables UPDATE submit */
   useEffect(() => {
     if (requestAction === "edit") {
       const name = compareNames(recipeName, recipe.name);

@@ -81,22 +81,6 @@ function InstructionsArea({ handleRecipeUpdate, data, handleInstruction }: Instr
     // removeFilterKey
   }
 
-  /** Filter selected items from subsequent arrays */
-  // filtered down to just the elements from the given array that pass the test 
-  // function filterSelected(instructions: Instructions, arrayKey: number) {
-  //   // If no item is selected in this dropdown, show all options
-  //   if (!filterKey[arrayKey]) return instructions
-  //   return instructions.filter((instruction, index) => {
-
-  //     // if(arrayKey !== index) return filterKey[arrayKey] !== instruction.id
-  //     // If we are rendering the dropdown with the selected item (arrayKey matches), show all options including the selected one
-  //     if (filterKey[arrayKey]) return true
-
-  //     // In other dropdowns (arrayKey !== current arrayKey), filter out the selected item
-  //     // return filterKey[instruction.id]
-  //   })
-  // }
-
   /** Updates parent state of instructions when instructions is changed and on mount */
   useEffect(() => {
     handleRecipeUpdate(selectedInstructions.filter((i => i.id)), "instructions")
