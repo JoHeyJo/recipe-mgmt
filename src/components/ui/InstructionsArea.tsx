@@ -1,9 +1,10 @@
-import { useState, useEffect, useContext, ChangeEventHandler, ChangeEvent } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Instruction, Instructions } from "../../utils/types";
 import InstructionManager from "../views/InstructionManager";
 import { InstructionsAreaProps } from "../../utils/props";
 import { UserContext } from "../../context/UserContext";
 import { PLACE_HOLDER } from "../../utils/templates";
+import { RecipeContext } from "../../context/RecipeContext";
 
 const InstructionsTemplate: Instructions = []
 
@@ -20,8 +21,21 @@ const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs - 1 
  */
 function InstructionsArea({ handleRecipeUpdate, data, handleInstruction }: InstructionsAreaProps) {
   const { userId, currentBookId } = useContext(UserContext)
-  const [selectedInstructions, setSelectedInstructions] = useState<Instructions>(PLACE_HOLDER);
+  const { requestAction, contextInstructions } = useContext(RecipeContext);
+  const [selectedInstructions, setSelectedInstructions] = useState<Instructions>(contextInstructions) ;
   const [filterKey, setFilterKeys] = useState({});
+
+
+  // On mount, populate instructions if recipe is selected
+  useEffect(() => {
+    if (requestAction === "edit") {
+      setSelectedInstructions(contextInstructions)
+      createInstructionInput()
+    } else {
+      setSelectedInstructions(PLACE_HOLDER)
+    }
+  }, [])
+
 
   /** Update list of selected instructions */
   async function updateSelected(instruction: Instruction, arrayKey: number) {

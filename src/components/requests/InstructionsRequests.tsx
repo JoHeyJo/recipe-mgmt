@@ -1,12 +1,13 @@
 import { useState, useContext, useEffect, ChangeEvent } from "react";
 import { UserContext } from "../../context/UserContext";
 import { RecipeContext } from "../../context/RecipeContext";
-import { Ingredient, Instruction } from "../../utils/types";
+import { Instruction } from "../../utils/types";
 import API from "../../api";
 import { errorHandling } from "../../utils/ErrorHandling";
 import InstructionsArea from "../ui/InstructionsArea";
 import RadioSwitch from "../ui/common/RadioSwitch";
 import { InstructionsRequestsProp } from "../../utils/props";
+import { PLACE_HOLDER } from "../../utils/templates";
 
 /** Handles API requests & data management for Instructions 
  * 
@@ -83,15 +84,7 @@ function InstructionsRequests({ handleRecipeUpdate }: InstructionsRequestsProp) 
     whichInstructions == "book" ? fetchBookInstructions() : fetchUserInstructions()
   }, [whichInstructions])
 
-  // On mount, populate instructions if recipe is selected
-  useEffect(() => {
-    if (requestAction === "edit") {
-      // setSelectedInstructions(contextInstructions)
-      // createInstructionInput()
-    } else {
-      // setSelectedInstructions(PLACE_HOLDER)
-    }
-  }, [])
+
 
   return (
     <>
