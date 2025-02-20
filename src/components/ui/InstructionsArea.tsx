@@ -20,18 +20,10 @@ const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs - 1 
 function InstructionsArea({ handleRecipeUpdate, data, handleInstruction }: InstructionsAreaProps) {
   const { userId, currentBookId } = useContext(UserContext)
   const { requestAction, contextInstructions } = useContext(RecipeContext);
-  const [selectedInstructions, setSelectedInstructions] = useState<Instructions>(requestAction === "edit" ? contextInstructions : PLACE_HOLDER) ;
+  const [selectedInstructions, setSelectedInstructions] = useState<Instructions>(
+    requestAction === "edit" ? [...contextInstructions, { id: null, "instruction": "some other thing..." }] : PLACE_HOLDER
+  );
   const [filterKey, setFilterKeys] = useState({});
-
-  // On mount, populate instructions if recipe is selected
-  useEffect(() => {
-    if (requestAction === "edit") {
-      setSelectedInstructions(contextInstructions)
-      // createInstructionInput()
-    } else {
-      setSelectedInstructions(PLACE_HOLDER)
-    }
-  }, [])
 
   /** Update list of selected instructions */
   async function updateSelected(instruction: Instruction, arrayKey: number) {
