@@ -25,6 +25,11 @@ function InstructionsArea({ handleRecipeUpdate, data, handleInstruction }: Instr
   );
   const [filterKey, setFilterKeys] = useState({});
 
+  /** Create additional input field for new instruction */
+  function createInstructionInput() {
+    setSelectedInstructions(selected => [...selected, { id: null, instruction: "some other thing..." }])
+  }
+
   /** Update list of selected instructions */
   async function updateSelected(instruction: Instruction, arrayKey: number) {
     setSelectedInstructions((i: Instruction[]) => {
@@ -64,11 +69,6 @@ function InstructionsArea({ handleRecipeUpdate, data, handleInstruction }: Instr
   //     return { ...updatedKeys, ...newKeySet }
   //   })
   // }
-
-  /** Create additional input field for new instruction */
-  function createInstructionInput() {
-    setSelectedInstructions(selected => [...selected, { id: null, instruction: "some other thing..." }])
-  }
 
   /** Consolidates logic pertaining to adding instructions */
   const handleSelected = {
