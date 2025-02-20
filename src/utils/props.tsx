@@ -1,10 +1,21 @@
 import { Recipe, Ingredient, Instructions, Instruction, Ingredients, Book, AttributeData } from "./types";
 
+type HandleInstruction = {
+  post: (instruction: Instruction) => Promise<Instruction>;
+  associate: (userId: number, currentBookId: number, instructionId: number) => void;
+  addCreated: (instruction: Instruction) => void;
+}
+
 export type InstructionManagerProps = {
   instruction: Instruction;
   arrayKey: number;
   options: Instructions;
-  handleInstructions: any
+  handleInstruction: HandleInstruction;
+  handleSelected: {
+    updateSelected: (instruction: Instruction, arrayKey: number) => void;
+    removeSelected: (instructionKey: number) => void;
+    createInput: () => void;
+  }
 }
 
 export type Options = {
@@ -36,7 +47,7 @@ type HandleOption = {
 }
 
 export type InstructionsRequestsProp = {
-  handleRecipeUpdate: (data: Instructions, section:string) => void;
+  handleRecipeUpdate: (data: Instructions, section: string) => void;
 }
 
 export type IngredientInputGroupProps = {
@@ -102,16 +113,11 @@ type InstructionsData = {
   references: Instructions;
 }
 
-
 export type InstructionsAreaProps = {
   handleRecipeUpdate: (data: Instructions, section: string) => void;
   data: InstructionsData;
-  handleInstruction: {
-    post: (ingredient: Ingredient) => void;
-    associate: (userId: number, currentBookId: number, instructionId: number) => void;
-  }
+  handleInstruction: HandleInstruction
 }
-
 
 export type FaPlusButtonProp = {
   onAction: () => void;

@@ -69,10 +69,10 @@ function InstructionsArea({ handleRecipeUpdate, data, handleInstruction }: Instr
   }
 
   /** Consolidates logic pertaining to adding instructions */
-  const handleInstructions = {
+  const handleSelected = {
     // addInstruction,
     // addCreated,
-    createInstructionInput,
+    createInput: createInstructionInput,
     updateSelected,
     // updateFilterKeys,
     removeSelected,
@@ -109,7 +109,8 @@ function InstructionsArea({ handleRecipeUpdate, data, handleInstruction }: Instr
           arrayKey={index}
           instruction={value}
           options={data.instructions}
-          handleInstructions={handleInstructions}
+          handleSelected={handleSelected}
+          handleInstruction={handleInstruction}
         />
       )}
     </div>

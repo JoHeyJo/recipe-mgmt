@@ -13,15 +13,15 @@ import { InstructionManagerProps } from '../../utils/props';
  * InstructionsArea -> InstructionManager
  */
 
-function InstructionManager({ arrayKey, instruction, options, handleInstructions }: InstructionManagerProps) {
+function InstructionManager({ arrayKey, instruction, options, handleSelected, handleInstruction }: InstructionManagerProps) {
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<Instruction>(instruction)
 
   const isNewInstruction = (option: Instruction) => typeof option.id === "string" && option.instruction === '+ create...'
 
-  useEffect(()=>{
+  useEffect(() => {
     setSelected(instruction)
-  },[])
+  }, [])
 
   /** Creates a list of filtered options based on search query */
   const filteredOptions: Instruction[] =
@@ -49,27 +49,27 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
   async function processNewInstruction(option: Instruction) {
     // option id will need to be changed to null along with the query inject
     const newOption = { ...option, instruction: query };
-    const createdOption = await handleInstructions.addInstruction(newOption);
-    handleInstructions.addCreated(createdOption)
-    handleInstructions.updateSelected(createdOption, arrayKey)
-    handleInstructions.updateFilterKeys([arrayKey, createdOption.id])
+    const createdOption = await handleInstruction.post(newOption);
+    handleInstruction.addCreated(createdOption)
+    handleSelected.updateSelected(createdOption, arrayKey)
+    // handleInstructions.updateFilterKeys([arrayKey, createdOption.id]) WIP 
     setSelected(createdOption);
   }
 
-  /** Updates parent state with selected option*/
+  /** Updates parent state with selected option */
   function processExistingInstruction(option: Instruction) {
-    handleInstructions.updateSelected(option, arrayKey)
-    handleInstructions.updateFilterKeys([arrayKey, option.id])
+    handleSelected.updateSelected(option, arrayKey) // P
+    // handleInstructions.updateFilterKeys([arrayKey, option.id]) WIP
     setSelected(option)
   }
 
   /** Consolidates actions that deselect option */
   function processDeselect(selectedOption: Instruction) {
-    handleInstructions.removeFilterKey(arrayKey)
+    // handleInstructions.removeFilterKey(arrayKey) WIP
     // selectedOption = null for pending creation of instructions. Will break without this check
-    if(!selectedOption) return
+    if (!selectedOption) return
     // Only created instructions will trigger this action
-    if (!isNewInstruction(selectedOption)) handleInstructions.removeSelected(arrayKey)
+    if (!isNewInstruction(selectedOption)) handleSelected.removeSelected(arrayKey) // P
     setSelected(null)
   }
 
@@ -87,9 +87,9 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
   }
 
   /** Facilitates if a created value or template value is rendered */
-  function displayInitialValue(value: Instruction){
+  function displayInitialValue(value: Instruction) {
     // don't do anything for null value
-    if(!value) return 
+    if (!value) return
     return value.id ? value : value.instruction;
   }
 
@@ -97,12 +97,12 @@ function InstructionManager({ arrayKey, instruction, options, handleInstructions
     <>
       <Combobox
         as="div"
-        value={displayInitialValue(selected || { instruction: '', id: null})}
+        value={displayInitialValue(selected || { instruction: '', id: null })}
         onChange={onValueSelect}
       >
         <div className="relative mt-2">
           <ComboboxInput
-            placeholder={instruction.instruction} 
+            placeholder={instruction.instruction}
             className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             onChange={(event) => setQuery(event.target.value)}
             onBlur={() => setQuery('')}

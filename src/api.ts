@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Recipe, UserLogin, UserSignUp, Ingredient, Book, AttributeData } from "./utils/types";
+import { Recipe, UserLogin, UserSignUp, Ingredient, Book, AttributeData, Instruction } from "./utils/types";
 
 const BASEURL = "http://127.0.0.1:5000"
 /** API class. 
@@ -139,7 +139,7 @@ class API {
   }
 
   /** Post instruction to database */
-  static async postInstruction(userId: number, bookId: number, data: Ingredient) {
+  static async postInstruction(userId: number, bookId: number, data: Instruction) {
     const res = await this.request(`users/${userId}/books/${bookId}/instructions`, data, "POST")
     return res
   }

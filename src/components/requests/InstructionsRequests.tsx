@@ -25,7 +25,7 @@ function InstructionsRequests({ handleRecipeUpdate }: InstructionsRequestsProp) 
   }
 
     /** Add newly created instruction (DB return object) to list of available instructions */
-    function addCreated(instruction: Instruction) {
+    function updateAvailableInstructions(instruction: Instruction) {
       setInstructions((i: Instruction[]) => {
         const updatedInstructions = [...i];
         updatedInstructions.push(instruction);
@@ -34,9 +34,9 @@ function InstructionsRequests({ handleRecipeUpdate }: InstructionsRequestsProp) 
     }
 
   /** Request to create new instruction */
-  async function addInstruction(ingredient: Ingredient) {
+  async function addInstruction(instruction: Instruction) {
     try {
-      const id = await API.postInstruction(userId, currentBookId, ingredient);
+      const id = await API.postInstruction(userId, currentBookId, instruction);
       return id
     } catch (error: any) {
       errorHandling("InstructionsArea - addInstruction", error)
@@ -68,7 +68,8 @@ function InstructionsRequests({ handleRecipeUpdate }: InstructionsRequestsProp) 
 
   const handleInstruction = {
     post: addInstruction,
-    associate: associateInstructionToBook
+    associate: associateInstructionToBook,
+    addCreated: updateAvailableInstructions
   }
 
   const data = {
