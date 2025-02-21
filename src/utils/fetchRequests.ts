@@ -13,9 +13,9 @@ export async function extractAndSetUser(token: string, setUser: (user: User) => 
     try {
       const res = await API.getUser(sub);
       console.log("response in extractAndSetUser", res)
-      setUser({ 
-        userName: res.user_name, 
-        id: res.id, 
+      setUser({
+        userName: res.user_name,
+        id: res.id,
         defaultBookId: res.default_book_id,
         defaultBook: res.default_book,
         currentBookId: +localStorage.getItem("current-book-id") || res.default_book_id,

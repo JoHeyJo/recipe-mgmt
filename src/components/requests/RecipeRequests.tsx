@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext, useEffect, FormEventHandler, FormEvent } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
 import IngredientsGroup from '../selectors/IngredientsGroup';
 import { Ingredient, Instruction, Instructions, Recipe } from '../../utils/types';
@@ -48,15 +48,15 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
   }
 
   // syncs selected original recipe with mutable recipe
-    useEffect(() => {
-      setRecipe({
-        name: recipeName,
-        id: recipeId,
-        ingredients: contextIngredients,
-        instructions: contextInstructions,
-        notes: selectedNotes,
-      })
-    }, [recipeId])
+  useEffect(() => {
+    setRecipe({
+      name: recipeName,
+      id: recipeId,
+      ingredients: contextIngredients,
+      instructions: contextInstructions,
+      notes: selectedNotes,
+    })
+  }, [recipeId])
 
   /** Enables/disables UPDATE submit */
   useEffect(() => {
@@ -83,8 +83,8 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
   // ADD A CHECK TO FILTER OUT EMPTY FIELDS E.G. ingredient/instructions without values
   async function addRecipe() {
     try {
-      const filteredRecipe = 
-      console.log("POST", recipe, currentBookId, userId)
+      const filteredRecipe =
+        console.log("POST", recipe, currentBookId, userId)
       const res = await API.postUserRecipe(recipe, currentBookId, userId);
       recipeActions.updateRecipes(res)
     } catch (error: any) {
@@ -99,7 +99,7 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
       console.log("mutated data", mutatedData)
       const res = await API.editBookRecipe(userId, currentBookId, recipeId, mutatedData);
       recipeActions.editRecipe()
-      return res;  
+      return res;
     } catch (error: any) {
       errorHandling("RecipeRequests - editRecipe", error);
     }
@@ -120,40 +120,41 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
     deleteRecipe(userId, currentBookId, recipeId)
   }
 
-  function handleSubmit() {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault()
     setShowing()
     addRecipe()
   }
 
   /** Renders request buttons */
-  function renderRequestButtons() {
-    return requestAction !== "edit"
-      ?
-      <div className='flex'>
-        <button
-          type="button"
-          onClick={handleSubmit}
-          className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-          Submit
-        </button>
-      </div>
-      :
-      <div className='flex'>
-        <button
-          type="button"
-          onClick={() => editRecipe(selectedRecipe, recipe)}
-          disabled={isDisabled}
-          className={`${isDisabled ? "bg-gray-600" : "bg-indigo-600 hover:bg-indigo-500"} inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}>
-          Update
-        </button>
-        <button
-          type="button"
-          onClick={handleDelete}
-          className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-          delete
-        </button>
-      </div>
-  }
+  // function renderRequestButtons() {
+  //   return requestAction !== "edit"
+  //     ?
+  //     <div className='flex'>
+  //       <button
+  //         type="submit"
+  //         onClick={handleSubmit}
+  //         className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+  //         Submit
+  //       </button>
+  //     </div>
+  //     :
+  //     <div className='flex'>
+  //       <button
+  //         type="button"
+  //         onClick={() => editRecipe(selectedRecipe, recipe)}
+  //         disabled={isDisabled}
+  //         className={`${isDisabled ? "bg-gray-600" : "bg-indigo-600 hover:bg-indigo-500"} inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}>
+  //         Update
+  //       </button>
+  //       <button
+  //         type="button"
+  //         onClick={handleDelete}
+  //         className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+  //         delete
+  //       </button>
+  //     </div>
+  // }
 
   return (
     <Dialog open={isOpen} onClose={setShowing} className="relative z-10">
@@ -167,41 +168,70 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
             id='RecipeRequests-DialogPanel'
             transition
             className="relative h-full transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6">
-            <div>
-              {/* <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+            <form onSubmit={handleSubmit}>
+              <div>
+                {/* <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
                 <CheckIcon aria-hidden="true" className="h-6 w-6 text-green-600" />
               </div> */}
-              <div className="mt-3 text-center sm:mt-5">
-                {/* <DialogTitle as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                <div className="mt-3 text-center sm:mt-5">
+                  {/* <DialogTitle as="h3" className="text-base font-semibold leading-6 text-gray-900">
                   Payment successful
                 </DialogTitle> */}
-                {/* <div className="mt-2">
+                  {/* <div className="mt-2">
                   <p className="text-sm text-gray-500">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet labore.
                   </p>
                 </div> */}
-                <section id='RecipeRequests-book' className='flex h-full'>
+                  <section id='RecipeRequests-book' className='flex h-full'>
+                    <section id='RecipeRequests-ingredients' className="flex-1 mr-4">
+                      <TitleInput handleUpdate={handleRecipeUpdate} />
 
-                  <section id='RecipeRequests-ingredients' className="flex-1 mr-4">
-                    <TitleInput handleUpdate={handleRecipeUpdate} />
+                      <IngredientsGroup handleRecipeUpdate={handleRecipeUpdate} />
+                    </section>
 
-                    <IngredientsGroup handleRecipeUpdate={handleRecipeUpdate} />
+                    <section id='RecipeRequests-instructions' className="flex-1 ml-4 ">
+                      <InstructionsRequests handleRecipeUpdate={handleRecipeUpdate} />
+                    </section>
                   </section>
 
-                  <section id='RecipeRequests-instructions' className="flex-1 ml-4 ">
-                    <InstructionsRequests handleRecipeUpdate={handleRecipeUpdate} />
+                  <section id='RecipeRequests-notes' className='flex-1'>
+                    <NotesInput handleUpdate={handleRecipeUpdate} />
                   </section>
-                </section>
 
-                <section id='RecipeRequests-notes' className='flex-1'>
-                  <NotesInput handleUpdate={handleRecipeUpdate} />
-                </section>
-
+                </div>
               </div>
-            </div>
-            <div className="mt-5 sm:mt-6">
-              {renderRequestButtons()}
-            </div>
+
+              <div className="mt-5 sm:mt-6">
+                {
+                  requestAction !== "edit"
+                    ?
+                    <div className='flex'>
+                      <button
+                        type="submit"
+                        // onClick={handleSubmit}
+                        className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                        Submit
+                      </button>
+                    </div>
+                    :
+                    <div className='flex'>
+                      <button
+                        type="button"
+                        onClick={() => editRecipe(selectedRecipe, recipe)}
+                        disabled={isDisabled}
+                        className={`${isDisabled ? "bg-gray-600" : "bg-indigo-600 hover:bg-indigo-500"} inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}>
+                        Update
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleDelete}
+                        className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                        delete
+                      </button>
+                    </div>
+                }
+              </div>
+            </form>
           </DialogPanel>
         </div>
       </div>
