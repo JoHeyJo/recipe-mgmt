@@ -105,7 +105,6 @@ function MainContainer() {
 
   /** Updates current book selection */
   useEffect(() => {
-    console.log("Setting selected book id >>>>>",currentBookId)
     setSelectedBookId(currentBookId || defaultBookId)
   }, [currentBookId])
 

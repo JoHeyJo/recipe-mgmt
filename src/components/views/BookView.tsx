@@ -13,6 +13,9 @@ function BookView() {
   const [bookId, setBookId] = useLocalStorage("current-book-id");
   const [isModalOpen, setIsModalOpen] = useState(false)
 
+  const currentBook = books.filter(book => book.id === +bookId)[0] || defaultBook;
+  console.log("current book", currentBook)
+
   /** Set current book id */
   function selectBook(id: number) {
     setUserData(user => {
@@ -22,6 +25,7 @@ function BookView() {
       return userData;
     });
   }
+
   return (
     <section>
       {!defaultBook && books.length === 0
@@ -32,7 +36,7 @@ function BookView() {
           <button onClick={()=>setIsModalOpen(true)}>Create Book</button>
         </>
         :
-        <MultiSelect defaultOption={defaultBook.title} options={books} selectOption={selectBook} />
+        <MultiSelect defaultOption={currentBook.title} options={books} selectOption={selectBook} />
       }
     </section>
   )

@@ -8,7 +8,7 @@ import { MultiSelectProp } from '../../../utils/props';
  * BookView -> MultiSelect
  */
 function MultiSelect({ defaultOption, options, selectOption }: MultiSelectProp) {
-  const [option, setOption] = useState<string>(defaultOption);
+  const [option, setOption] = useState<string>();
   
   /** Selects option and sets option title for display */
   function onSelect(id: number, title: string){
@@ -16,18 +16,11 @@ function MultiSelect({ defaultOption, options, selectOption }: MultiSelectProp) 
     setOption(title)
   }
 
-  /** set default option title. This could be removed => either fetch the option 
-   * or return the book object with id and title...
-   */
-  // useEffect(()=>{
-
-  // },[])
-
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-          {option}
+          {defaultOption}
           <ChevronDownIcon aria-hidden="true" className="-mr-1 size-5 text-gray-400" />
         </MenuButton>
       </div>
