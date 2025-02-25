@@ -13,8 +13,7 @@ function BookView() {
   const [bookId, setBookId] = useLocalStorage("current-book-id");
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const currentBook = books.filter(book => book.id === +bookId)[0] || defaultBook;
-  console.log("current book", currentBook)
+  const currentBook = books.find(book => book.id === +bookId) || defaultBook;
 
   /** Set current book id */
   function selectBook(id: number) {
