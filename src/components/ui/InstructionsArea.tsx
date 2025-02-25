@@ -88,7 +88,7 @@ function InstructionsArea({ handleRecipeUpdate, data, handleInstruction }: Instr
 
 
   return (
-    <div id="InstructionsArea" className="flex-col h-full block w-full rounded-md border px-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
+    <div id="InstructionsArea" className="flex-col block w-full rounded-md border pb-2 px-2 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
       {selectedInstructions.map((value, index) =>
         <InstructionManager
           key={index}
