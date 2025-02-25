@@ -8,11 +8,11 @@ import { RecipeContext } from "../../context/RecipeContext"
 /** Renders recipe 
  * 
  * 
- * MainContainer -> RecipeContainer -> RecipeRequests
+ * MainContainer -> RecipeContainer -> RecipeView
  */
 
 function RecipeContainer({ recipe, handleModalToggle, isOpen }: RecipeViewProps) {
-
+console.log("RecipeContainer",recipe)
   const { recipeId } = useContext(RecipeContext);
 
   return (

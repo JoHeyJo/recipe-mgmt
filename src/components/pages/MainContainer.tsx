@@ -35,6 +35,7 @@ function MainContainer() {
 
   /** Updates rendered recipes after creation */
   function updateRecipes(recipe: Recipe) {
+    console.log("update",recipe)
     setRecipes(recipes => [...recipes, recipe])
   }
 

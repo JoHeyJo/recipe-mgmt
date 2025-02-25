@@ -2,7 +2,7 @@ import "../../styles/Recipes.css";
 import { Recipe } from "../../utils/types";
 import { RecipesListProps } from "../../utils/props";
 
-/** Renders recipe
+/** Renders list of recipes that can be selected for view
  * 
  * 
  * MainContainer -> Recipes
