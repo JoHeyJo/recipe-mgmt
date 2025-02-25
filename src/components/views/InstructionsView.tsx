@@ -6,7 +6,6 @@ import { InstructionsViewProp } from "../../utils/props";
  * RecipeView -> InstructionsView
  */
 function InstructionsView({ instructions }: InstructionsViewProp) {
-  console.log("InstructionView", instructions)
   return (
     <div className="flex px-4 py-6 sm:gap-4 sm:px-3">
       <div className="basis-1/3 self-center text-sm font-medium leading-6">Instructions:</div>

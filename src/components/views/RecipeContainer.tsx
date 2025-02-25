@@ -12,7 +12,6 @@ import { RecipeContext } from "../../context/RecipeContext"
  */
 
 function RecipeContainer({ recipe, handleModalToggle, isOpen }: RecipeViewProps) {
-console.log("RecipeContainer",recipe)
   const { recipeId } = useContext(RecipeContext);
 
   return (
