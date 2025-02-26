@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { MultiSelectProp } from '../../../utils/props';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 
 /** Renders dropdown multiselect
  * 
@@ -31,7 +34,10 @@ function MultiSelect({ defaultOption, options, selectOption }: MultiSelectProp) 
           {options.map(option =>
             <MenuItem key={option.id} >
               <li onClick={() => onSelect(option.id, option.title)} className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none">
-                {option.title}
+                <input type="checkbox" className="mr-2 appearance-none rounded-full border border-gray-300 h-4 w-4 checked:bg-blue-500 checked:border-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="option2" />
+                <label>{option.title}</label>
+                
+                <FontAwesomeIcon className='group-data-[selected]:flex group-data-[focus]:text-white' icon={faCheck} />
               </li>
             </MenuItem>
           )}
