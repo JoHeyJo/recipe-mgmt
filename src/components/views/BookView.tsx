@@ -4,7 +4,7 @@ import MultiSelect from "../ui/common/MultiSelect";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import CreateBook from "../requests/CreateBook";
 import { BookViewProp } from "../../utils/props";
-
+ 
 /** Facilitates rendering books & book selection
  * 
  * MainContainer -> BookView -> MultiSelect
@@ -16,7 +16,7 @@ function BookView({resetSelected}: BookViewProp ) {
 
   const currentBook = books.find(book => book.id === +bookId) || defaultBook;
 
-  /** Set current book id */
+  /** Set selected book id & reset selected book to default */
   function selectBook(id: number) {
     setUserData(user => {
       const userData = { ...user };
@@ -26,10 +26,10 @@ function BookView({resetSelected}: BookViewProp ) {
     });
     resetSelected()
   }
-
+  console.log("BookView-----", defaultBook)
   return (
     <section>
-      {!defaultBook && books.length === 0
+      {books.length === 0
         ?
         <>
         {/* Model */}

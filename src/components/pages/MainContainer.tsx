@@ -124,7 +124,7 @@ function MainContainer() {
             <RecipeRequests recipeActions={recipeActions} setShowing={toggleModel} isOpen={isOpen} />
             <div className="flex justify-between m-1">
               <div>Recipes for:</div>
-              <BookView resetSelected={resetSelectedRecipe}/>
+              {selectedBookId && <BookView resetSelected={resetSelectedRecipe} /> }
               <FaPlusButton onAction={toggleCreateForm} />
             </div>
             <RecipesList recipes={recipes} handleSelect={selectRecipe} />
