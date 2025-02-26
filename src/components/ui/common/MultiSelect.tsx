@@ -1,36 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { MultiSelectProp } from '../../../utils/props';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Book } from '../../../utils/types';
+
 
 
 /** Renders dropdown multiselect
  * 
  * BookView -> MultiSelect
  */
-function MultiSelect({ defaultOption, options, selectOption }: MultiSelectProp) {
-  const [option, setOption] = useState<string>();
+function MultiSelect({ option, options, handleIdChange }: MultiSelectProp) {
+  const [selected, setSelected] = useState({ title: undefined, id: null });
 
   /** Selects option and sets option title for display */
-  function onSelect(id: number, title: string) {
-    selectOption(id);
-    setOption(title)
+  function handleSelect(option: Book) {
+    handleIdChange(option.id);
+    setSelected(option)
   }
-
-  const handleSelect = (option) => {
-    setSelectedOption(option.id);
-    onSelect(option.id, option.title);  // Call parent function if needed
-  };
-
-  const [selectedOption, setSelectedOption] = useState(null);
 
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-          {defaultOption}
+          {option}
           <ChevronDownIcon aria-hidden="true" className="-mr-1 size-5 text-gray-400" />
         </MenuButton>
       </div>
@@ -43,10 +38,10 @@ function MultiSelect({ defaultOption, options, selectOption }: MultiSelectProp) 
               <li
                 onClick={() => handleSelect(option)}
                 className={`group relative flex justify-between px-4 py-2 text-sm cursor-pointer data-[focus]:bg-indigo-600 data-[focus]:text-white 
-                  ${selectedOption === option.id ? 'text-gray-700 font-semibold' : 'text-gray-700'}`}>
+                  ${selected.id === option.id ? 'text-gray-700 font-semibold' : 'text-gray-700'}`}>
                 <span className="block truncate">{option.title}</span>
 
-                {selectedOption === option.id && (
+                {selected.id === option.id && (
                   <FontAwesomeIcon className="text-indigo-600 group-data-[focus]:text-white" icon={faCheck} />
                 )}
               </li>

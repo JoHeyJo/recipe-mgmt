@@ -37,7 +37,7 @@ function BookView({resetSelected}: BookViewProp ) {
           <button onClick={()=>setIsModalOpen(true)}>Create Book</button>
         </>
         :
-        <MultiSelect defaultOption={currentBook.title} options={books} selectOption={selectBook} />
+        <MultiSelect option={currentBook.title} options={books} handleIdChange={selectBook} />
       }
     </section>
   )
