@@ -12,12 +12,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
  */
 function MultiSelect({ defaultOption, options, selectOption }: MultiSelectProp) {
   const [option, setOption] = useState<string>();
-  
+
   /** Selects option and sets option title for display */
-  function onSelect(id: number, title: string){
+  function onSelect(id: number, title: string) {
     selectOption(id);
     setOption(title)
   }
+
+  const handleSelect = (option) => {
+    setSelectedOption(option.id);
+    onSelect(option.id, option.title);  // Call parent function if needed
+  };
+
+  const [selectedOption, setSelectedOption] = useState(null);
 
   return (
     <Menu as="div" className="relative inline-block text-left">
@@ -33,11 +40,15 @@ function MultiSelect({ defaultOption, options, selectOption }: MultiSelectProp) 
         <div className="py-1">
           {options.map(option =>
             <MenuItem key={option.id} >
-              <li onClick={() => onSelect(option.id, option.title)} className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none">
-                <input type="checkbox" className="mr-2 appearance-none rounded-full border border-gray-300 h-4 w-4 checked:bg-blue-500 checked:border-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="option2" />
-                <label>{option.title}</label>
-                
-                <FontAwesomeIcon className='group-data-[selected]:flex group-data-[focus]:text-white' icon={faCheck} />
+              <li
+                onClick={() => handleSelect(option)}
+                className={`group relative flex justify-between px-4 py-2 text-sm cursor-pointer data-[focus]:bg-indigo-600 data-[focus]:text-white 
+                  ${selectedOption === option.id ? 'text-gray-700 font-semibold' : 'text-gray-700'}`}>
+                <span className="block truncate">{option.title}</span>
+
+                {selectedOption === option.id && (
+                  <FontAwesomeIcon className="text-indigo-600 group-data-[focus]:text-white" icon={faCheck} />
+                )}
               </li>
             </MenuItem>
           )}
