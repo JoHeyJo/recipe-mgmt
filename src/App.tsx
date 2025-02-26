@@ -43,6 +43,7 @@ function App() {
     defaultBookId: userData?.defaultBookId, // remove?
     currentBookId: userData?.currentBookId || userData?.defaultBookId,
     books: userData?.books,
+    token,
     setUserData
   }
 

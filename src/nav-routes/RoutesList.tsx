@@ -12,11 +12,11 @@ import PrivateRoutes from "./PrivateRoutes";
 function RoutesList({ signUp, login }: AuthProps) {
   return (
         <Routes>
-          <Route element={<PrivateRoutes />}>
+          {/* <Route element={<PrivateRoutes />}> */}
             <Route path="/home" element={<MainContainer />} />
             <Route path="/" element={<Home />} />
             <Route path="*" element={<NotFound />} />
-          </Route>
+          {/* </Route> */}
           {/* <Route path="/home" element={<MainContainer />} /> */}
           <Route path="/auth" element={<AuthTabs signUp={signUp} login={login} />} />
           <Route path="*" element={<NotFound />} />
