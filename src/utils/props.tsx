@@ -154,3 +154,7 @@ export type MultiSelectProp = {
   options: Book[];
   selectOption: (id: number) => void;
 }
+
+export type BookViewProp = {
+  resetSelected: ()=>void;
+}
