@@ -120,8 +120,8 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
     deleteRecipe(userId, currentBookId, recipeId)
   }
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault()
+  function handleSubmit() {
+    // e.preventDefault()
     setShowing()
     addRecipe()
   }
@@ -138,7 +138,7 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
             id='RecipeRequests-DialogPanel'
             transition
             className="relative h-full transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6">
-            <form onSubmit={handleSubmit}>
+            {/* <form onSubmit={handleSubmit}> */}
               <div>
                 {/* <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
                 <CheckIcon aria-hidden="true" className="h-6 w-6 text-green-600" />
@@ -182,7 +182,7 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
                     <div className='flex'>
                       <button
                         type="submit"
-                        // onClick={handleSubmit}
+                        onClick={handleSubmit}
                         className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                         Submit
                       </button>
@@ -205,7 +205,7 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
                     </div>
                 }
               </div>
-            </form>
+            {/* </form> */}
           </DialogPanel>
         </div>
       </div>
