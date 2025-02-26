@@ -26,7 +26,7 @@ function BookView({resetSelected}: BookViewProp ) {
     });
     resetSelected()
   }
-  console.log("BookView-----", defaultBook)
+  console.log("book lengt....",books)
   return (
     <section>
       {books.length === 0

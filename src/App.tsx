@@ -86,7 +86,6 @@ function App() {
     API.token = token;
     async function persistUser(){
       const userId = await extractAndSetUser(token as string, setUserData)
-      validateUserFetchBooks(userId, setUserData);
     }
     if (token) {
       persistUser();

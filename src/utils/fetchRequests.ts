@@ -1,6 +1,6 @@
 import { Dispatch } from "react";
 import { jwtDecode } from "jwt-decode";
-import { JWTPayload, User } from "./types";
+import { JWTPayload, User, Book } from "./types";
 import API from "../api";
 import { errorHandling } from "./ErrorHandling";
 
@@ -19,7 +19,7 @@ export async function extractAndSetUser(token: string, setUser: (user: User) => 
         defaultBookId: res.default_book_id,
         defaultBook: res.default_book,
         currentBookId: +localStorage.getItem("current-book-id") || res.default_book_id,
-        books: [],
+        books: await validateUserFetchBooks(sub, setUser)
       })
       return sub
     } catch (error: any) {
@@ -30,17 +30,17 @@ export async function extractAndSetUser(token: string, setUser: (user: User) => 
 }
 
 /** On successful auth populate user's books */
-export async function validateUserFetchBooks(userId: number, setBooks: Dispatch<React.SetStateAction<User>>) {
+export async function validateUserFetchBooks(userId: number, setBooks: Dispatch<React.SetStateAction<User>>): Promise<Book[]> {
   if (userId) {
     try {
       const res = await API.getUserBooks(userId);
-      setBooks((books) => {
-        const userBooks = { ...books };
-        userBooks.books = res;
-        return userBooks
-      })
+      setBooks((books) => (
+        {...books, books:res}
+      ))
+      return res
     } catch (error: any) {
       errorHandling("utilities - validateUserFetchBooks", error)
+      throw error
     }
   }
 }
@@ -52,6 +52,7 @@ async function fetchBookRecipes(userId: number, bookId: number) {
     return recipes
   } catch (error) {
     errorHandling("BookView -> fetchBook", error)
+    throw error
   }
 }
 
