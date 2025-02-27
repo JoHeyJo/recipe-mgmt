@@ -36,6 +36,7 @@ function MultiSelect({ option, options, handleIdChange }: MultiSelectProp) {
           {options.map(option =>
             <MenuItem key={option.id} >
               <li
+                
                 onClick={() => handleSelect(option)}
                 className={`group relative flex justify-between px-4 py-2 text-sm cursor-pointer data-[focus]:bg-indigo-600 data-[focus]:text-white 
                   ${selected.id === option.id ? 'text-gray-700 font-semibold' : 'text-gray-700'}`}>
