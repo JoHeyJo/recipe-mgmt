@@ -16,7 +16,7 @@ import BookView from "../views/BookView";
  * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList]
  */
 function MainContainer() {
-  const { userId, defaultBookId, currentBookId } = useContext(UserContext);
+  const { userId, defaultBookId, currentBookId, books } = useContext(UserContext);
   const [selectedBookId, setSelectedBookId] = useState<number>();
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate);
@@ -124,7 +124,7 @@ function MainContainer() {
             <RecipeRequests recipeActions={recipeActions} setShowing={toggleModel} isOpen={isOpen} />
             <div className="flex justify-between m-1">
               <div>Recipes for:</div>
-              {defaultBookId && <BookView resetSelected={resetSelectedRecipe} /> }
+              {(defaultBookId || books.length === 0) && <BookView resetSelected={resetSelectedRecipe} /> }
               <FaPlusButton onAction={toggleCreateForm} />
             </div>
             <RecipesList recipes={recipes} handleSelect={selectRecipe} />
