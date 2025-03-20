@@ -15,6 +15,7 @@ function InputWithLabel({ id, name, value, handleUpdate, type, placeholder }: In
       </label>
       <div className="mt-2">
         <input
+          // required={name === "title"}
           onChange={handleUpdate}
           value={value || ""}
           id={id}

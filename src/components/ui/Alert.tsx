@@ -1,5 +1,4 @@
 import { ExclamationTriangleIcon } from '@heroicons/react/20/solid'
-import { useState } from 'react';
 
 type AlertProp = {
   alert: string;
