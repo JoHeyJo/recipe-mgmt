@@ -23,7 +23,7 @@ export async function extractAndSetUser(token: string, setUser: (user: User) => 
       })
       return sub
     } catch (error: any) {
-      errorHandling("Utilities -> extractAndSetUser", error)
+      errorHandling("fetchRequests -> extractAndSetUser", error)
       throw error;
     }
   }
@@ -39,7 +39,7 @@ export async function validateUserFetchBooks(userId: number, setBooks: Dispatch<
       ))
       return res
     } catch (error: any) {
-      errorHandling("utilities - validateUserFetchBooks", error)
+      errorHandling("fetchRequests - validateUserFetchBooks", error)
       throw error
     }
   }
@@ -51,7 +51,7 @@ async function fetchBookRecipes(userId: number, bookId: number) {
     const recipes = await API.getBookRecipes(userId, bookId)
     return recipes
   } catch (error) {
-    errorHandling("BookView -> fetchBook", error)
+    errorHandling("fetchRequests -> fetchBookRecipes", error)
     throw error
   }
 }

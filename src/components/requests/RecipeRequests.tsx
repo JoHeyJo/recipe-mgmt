@@ -10,8 +10,9 @@ import { UserContext } from '../../context/UserContext';
 import { RecipeRequestsProps } from '../../utils/props';
 import NotesInput from '../ui/NotesInput';
 import { RecipeContext, RecipeContextType } from '../../context/RecipeContext';
-import { compareIngredients, compareInstructions, compareNames, filterRecipe, compareNotes } from '../../utils/filters';
+import { compareIngredients, compareInstructions, compareNames, filterRecipe, compareNotes, filterTemplate } from '../../utils/filters';
 import TitleInput from '../ui/TitleInput';
+import { recipeTemplate } from '../../utils/templates';
 
 /** Processes recipe data. Context data is passed through here on edit. Else template data.
  * RecipeRequests data is mutable while context data(reference data) is not
@@ -83,12 +84,13 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
   // ADD A CHECK TO FILTER OUT EMPTY FIELDS E.G. ingredient/instructions without values
   async function addRecipe() {
     try {
-      const filteredRecipe =
+      const filteredRecipe = filterTemplate(recipe, recipeTemplate);
         console.log("POST", recipe, currentBookId, userId)
-      const res = await API.postUserRecipe(recipe, currentBookId, userId);
-      recipeActions.updateRecipes(res)
+      // const res = await API.postUserRecipe(recipe, currentBookId, userId);
+      // recipeActions.updateRecipes(res)
     } catch (error: any) {
       errorHandling("RecipeRequests - addRecipe", error)
+      setError(error.error)
     }
   }
 
