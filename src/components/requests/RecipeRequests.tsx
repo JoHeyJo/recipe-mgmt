@@ -85,7 +85,7 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
   async function addRecipe() {
     try {
       const filteredRecipe = filterTemplate(recipe, recipeTemplate);
-        console.log("POST", recipe, currentBookId, userId)
+      console.log("POST", filteredRecipe, currentBookId, userId)
       // const res = await API.postUserRecipe(recipe, currentBookId, userId);
       // recipeActions.updateRecipes(res)
     } catch (error: any) {

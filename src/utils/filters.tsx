@@ -7,6 +7,8 @@ export function filterTemplate(recipe: Recipe, template: Recipe) {
   const instructions = compareInstructions(template.instructions, recipe.instructions) ? recipe.instructions : null;
   const name = compareNames(template.name, recipe.name) ? recipe.name : null;
   const notes = compareNotes(template.notes, recipe.notes) ? recipe.notes : null
+
+  if(!name) throw {"error": "recipe needs a name"}
   
   if(!ingredients && !instructions && !name && !notes ) throw {"error": "no data to submit"}
 
