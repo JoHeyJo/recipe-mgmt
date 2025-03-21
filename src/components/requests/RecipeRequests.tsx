@@ -114,7 +114,7 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
       const res = API.deleteUserRecipe(userId, currentBookId, recipeId)
       recipeActions.deleteRecipe()
     } catch (error: any) {
-      setError(error.msg)
+      setError(error.message)
       errorHandling("RecipeRequests - addRecipe", error)
     }
   }
@@ -130,6 +130,10 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
     if (res) setShowing()
   }
 
+  useEffect(() => {
+    setTimeout(() => setError(null), 5000)
+  }, error)
+
   return (
     <Dialog open={isOpen} onClose={setShowing} className="relative z-10">
       <DialogBackdrop
@@ -142,7 +146,7 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
             id='RecipeRequests-DialogPanel'
             transition
             className="relative h-full transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6">
-            <Alert alert={error} degree={"yellow"} />
+            {error && <Alert alert={error} degree={"yellow"} />} {/* This will be a popup instead */}
             {/* <form onSubmit={handleSubmit}> */}
             <div>
               {/* <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
