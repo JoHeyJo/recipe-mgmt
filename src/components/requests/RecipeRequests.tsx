@@ -93,6 +93,7 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
     } catch (error: any) {
       errorHandling("RecipeRequests - addRecipe", error)
       setError(error.error)
+      setTimeout(() => setError(null), 5000)
     }
   }
 
@@ -115,6 +116,7 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
       recipeActions.deleteRecipe()
     } catch (error: any) {
       setError(error.message)
+      setTimeout(() => setError(null), 5000)
       errorHandling("RecipeRequests - addRecipe", error)
     }
   }
@@ -129,10 +131,6 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
     const res = await addRecipe()
     if (res) setShowing()
   }
-
-  useEffect(() => {
-    setTimeout(() => setError(null), 5000)
-  }, error)
 
   return (
     <Dialog open={isOpen} onClose={setShowing} className="relative z-10">
