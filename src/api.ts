@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Recipe, UserLogin, UserSignUp, Ingredient, Book, AttributeData, Instruction } from "./utils/types";
+import { Console } from "console";
 
 const BASEURL = "http://127.0.0.1:5000"
 /** API class. 

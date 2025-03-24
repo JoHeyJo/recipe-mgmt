@@ -77,10 +77,12 @@ function InstructionsRequests({ handleRecipeUpdate }: InstructionsRequestsProp) 
     selected: whichInstructions,
     references: instructionsReferences
   }
-
+  console.log('Rendering InstructionsView');
   /** Populate instruction area on mount */
   useEffect(() => {
     whichInstructions == "book" ? fetchBookInstructions() : fetchUserInstructions()
+    console.log(`[RENDER] <InstructionsView /> rendered`);
+    document.title = `Render @ ${new Date().toLocaleTimeString()}`;
   }, [whichInstructions])
 
   return (

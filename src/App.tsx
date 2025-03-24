@@ -92,7 +92,7 @@ function App() {
     }
   }, [token])
 
-
+  if(!userData.id) return <p>"Loading...."</p>
   return (
     <BrowserRouter>
       <div id="App-container">

@@ -86,9 +86,8 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
   async function addRecipe() {
     try {
       const filteredRecipe = filterTemplate(recipe, recipeTemplate);
-      console.log("POST", filteredRecipe, currentBookId, userId)
-      // const res = await API.postUserRecipe(recipe, currentBookId, userId);
-      // recipeActions.updateRecipes(res)
+      const res = await API.postUserRecipe(filteredRecipe, currentBookId, userId);
+      recipeActions.updateRecipes(res)  
       return "submitted"
     } catch (error: any) {
       errorHandling("RecipeRequests - addRecipe", error)
@@ -131,6 +130,8 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
     const res = await addRecipe()
     if (res) setShowing()
   }
+
+  console.log('Rendering RecipeRequests');
 
   return (
     <Dialog open={isOpen} onClose={setShowing} className="relative z-10">

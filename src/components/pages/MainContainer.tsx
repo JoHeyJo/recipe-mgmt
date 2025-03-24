@@ -33,17 +33,18 @@ function MainContainer() {
     requestAction
   }
 
+
   /** Updates rendered recipes after creation */
   function updateRecipes(recipe: Recipe) {
-    console.log("update",recipe)
+    console.log("update", recipe)
     setRecipes(recipes => [...recipes, recipe])
   }
 
   /** Handles recipe edit action: requests updated recipes, re-selects updated recipe. */
-  async function editRecipe(){
+  async function editRecipe() {
     setOpen(false)
     const res = await API.getBookRecipes(userId, selectedBookId);
-    for (let recipe of res){
+    for (let recipe of res) {
       if (recipe.id === selectedRecipe.id) setSelectedRecipe(recipe)
     }
     setRecipes(res);
@@ -80,7 +81,7 @@ function MainContainer() {
     setOpen(!isOpen);
   }
 
-  function resetSelectedRecipe(){
+  function resetSelectedRecipe() {
     setSelectedRecipe(recipeTemplate)
   }
 
@@ -102,7 +103,7 @@ function MainContainer() {
         setIsLoading(false);
       }
     }
-    if(selectedBookId){
+    if (selectedBookId) {
       fetchUserRecipes();
     }
   }, [selectedBookId, userId])
@@ -113,7 +114,7 @@ function MainContainer() {
   }, [currentBookId])
 
   if (!isLoading) (<div>Loading...</div>);
-  
+console.log("Rendering MainContainer")
   return (
     <div className="border-2 mt-7 border-red-900 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       {/* We've used 3xl here, but feel free to try other max-widths based on your needs */}
@@ -124,12 +125,12 @@ function MainContainer() {
             <RecipeRequests recipeActions={recipeActions} setShowing={toggleModel} isOpen={isOpen} />
             <div className="flex justify-between m-1">
               <div>Recipes for:</div>
-              {(defaultBookId || books.length === 0) && <BookView resetSelected={resetSelectedRecipe} /> }
+              {(defaultBookId || books.length === 0) && <BookView resetSelected={resetSelectedRecipe} />}
               <FaPlusButton onAction={toggleCreateForm} />
             </div>
             <RecipesList recipes={recipes} handleSelect={selectRecipe} />
           </section>
-          <RecipeContainer recipe={selectedRecipe} handleModalToggle={toggleEditTemplate} isOpen={isOpen}/>
+          <RecipeContainer recipe={selectedRecipe} handleModalToggle={toggleEditTemplate} isOpen={isOpen} />
         </RecipeContext.Provider >
       </div>
     </div>
