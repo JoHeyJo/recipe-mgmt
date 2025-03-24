@@ -22,7 +22,6 @@ class API {
       const res = (await axios({ url, method, data, params, headers })).data;
       return res
     } catch (error) {
-      console.log(error)
       console.error(`Error in ${endpoint} API => ${error}`)
       throw error
     }

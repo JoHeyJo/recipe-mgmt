@@ -100,7 +100,6 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
   async function editRecipe(originalRecipe: RecipeContextType, mutableRecipe: Recipe) {
     try {
       const mutatedData = filterRecipe(originalRecipe, mutableRecipe);
-      console.log("mutated data", mutatedData)
       const res = await API.editBookRecipe(userId, currentBookId, recipeId, mutatedData);
       recipeActions.editRecipe()
       return res;
@@ -130,8 +129,6 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
     const res = await addRecipe()
     if (res) setShowing()
   }
-
-  console.log('Rendering RecipeRequests');
 
   return (
     <Dialog open={isOpen} onClose={setShowing} className="relative z-10">
