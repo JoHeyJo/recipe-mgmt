@@ -9,10 +9,11 @@ import { BookViewProp } from "../../utils/props";
  * 
  * MainContainer -> BookView -> MultiSelect
   */
-function BookView({resetSelected}: BookViewProp ) {
+function BookView({ resetSelected, defaultBookId }: BookViewProp ) {
   const { defaultBook, books, setUserData } = useContext(UserContext);
   const [bookId, setBookId] = useLocalStorage("current-book-id");
   const [isModalOpen, setIsModalOpen] = useState(false)
+  console.log("book id",bookId)
 
   const currentBook = books.find(book => book.id === +bookId) || defaultBook;
 
@@ -26,9 +27,12 @@ function BookView({resetSelected}: BookViewProp ) {
     });
     resetSelected()
   }
+
+  if(!defaultBookId) return <></>
+  
   return (
     <section>
-      {books.length === 0
+      {bookId === undefined
         ?
         <>
         {/* Model */}

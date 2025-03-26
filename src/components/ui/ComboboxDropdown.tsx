@@ -1,5 +1,5 @@
 
-// DEPRECATED
+// DEPRECATED !!!!!!!!!
 import { ChangeEvent } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions, Label } from '@headlessui/react'
@@ -31,7 +31,6 @@ type ComboBoxDropDown = {
  * [InstructionManager, IngredientManager] -> ComboboxDropdown
  */
 function ComboboxDropdown({ name, handleQuery, onValueSelect, filteredOptions, selected }: ComboBoxDropDown) {
-// console.log("selected",selected)
 //   const handleSelect = (value: any) => {
 //     // Type narrowing with 'in' operator
 //     if ('instruction' in value) {

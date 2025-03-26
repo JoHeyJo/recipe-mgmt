@@ -3,6 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import { JWTPayload, User, Book } from "./types";
 import API from "../api";
 import { errorHandling } from "./ErrorHandling";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 /** Fetches specific user and updates state used by context */
 export async function extractAndSetUser(token: string, setUser: (user: User) => void) {
@@ -21,6 +22,7 @@ export async function extractAndSetUser(token: string, setUser: (user: User) => 
         currentBookId: +localStorage.getItem("current-book-id") || res.default_book_id,
         books: await validateUserFetchBooks(sub, setUser)
       })
+      localStorage.setItem("current-book-id", +localStorage.getItem("current-book-id") || res.default_book_id)
       return sub
     } catch (error: any) {
       errorHandling("fetchRequests -> extractAndSetUser", error)
@@ -35,7 +37,7 @@ export async function validateUserFetchBooks(userId: number, setBooks: Dispatch<
     try {
       const res = await API.getUserBooks(userId);
       setBooks((books) => (
-        {...books, books:res}
+        { ...books, books: res }
       ))
       return res
     } catch (error: any) {
@@ -68,10 +70,4 @@ export function ensureDefaultBook(currentDefaultBookId: number, setId: Dispatch<
     })
   }
 }
-
-
-// export function toggleColorScheme() {
-//   document.documentElement.classList.toggle('dark');
-//   console.log("toggled")
-// }
 

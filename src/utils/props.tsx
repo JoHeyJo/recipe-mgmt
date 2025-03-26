@@ -156,5 +156,6 @@ export type MultiSelectProp = {
 }
 
 export type BookViewProp = {
+  defaultBookId: number;
   resetSelected: ()=>void;
 }

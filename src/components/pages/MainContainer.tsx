@@ -113,6 +113,7 @@ function MainContainer() {
   }, [currentBookId])
 
   if (!isLoading) (<div>Loading...</div>);
+
   return (
     <div className="border-2 mt-7 border-red-900 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       {/* We've used 3xl here, but feel free to try other max-widths based on your needs */}
@@ -123,7 +124,7 @@ function MainContainer() {
             <RecipeRequests recipeActions={recipeActions} setShowing={toggleModel} isOpen={isOpen} />
             <div className="flex justify-between m-1">
               <div>Recipes for:</div>
-              {(defaultBookId || books.length === 0) && <BookView resetSelected={resetSelectedRecipe} />}
+              <BookView resetSelected={resetSelectedRecipe} defaultBookId={defaultBookId}/>
               <FaPlusButton onAction={toggleCreateForm} />
             </div>
             <RecipesList recipes={recipes} handleSelect={selectRecipe} />

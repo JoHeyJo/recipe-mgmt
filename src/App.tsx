@@ -32,6 +32,7 @@ const defaultUser = {
 
 function App() {
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
+  const [bookId, setBookId] = useLocalStorage("current-book-id")
   const [userData, setUserData] = useState<User>(defaultUser);
 
   console.log("user in App from state", userData)
@@ -54,7 +55,7 @@ function App() {
       const userId = await extractAndSetUser(res.token, setUserData)
       API.token = res.token;
       setToken(res.token);
-      validateUserFetchBooks(userId, setUserData);
+      // validateUserFetchBooks(userId, setUserData);
     } catch (error: any) {
       errorHandling("App->userSignUp", error)
       throw error;
@@ -68,7 +69,7 @@ function App() {
       const userId = await extractAndSetUser(res.token, setUserData)
       API.token = res.token;
       setToken(res.token);
-      validateUserFetchBooks(userId, setUserData);
+      // validateUserFetchBooks(userId, setUserData);
     } catch (error: any) {
       errorHandling("App->userLogin", error)
       throw error;
