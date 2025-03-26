@@ -11,6 +11,7 @@ import PublicRoutes from "./PublicRoutes";
 
 
 function RoutesList({ signUp, login }: AuthProps) {
+  
   return (
     <Routes>
       <Route element={<PrivateRoutes />}>

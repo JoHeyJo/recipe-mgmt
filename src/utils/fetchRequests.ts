@@ -3,7 +3,6 @@ import { jwtDecode } from "jwt-decode";
 import { JWTPayload, User, Book } from "./types";
 import API from "../api";
 import { errorHandling } from "./ErrorHandling";
-import useLocalStorage from "../hooks/useLocalStorage";
 
 /** Fetches specific user and updates state used by context */
 export async function extractAndSetUser(token: string, setUser: (user: User) => void) {
@@ -12,6 +11,8 @@ export async function extractAndSetUser(token: string, setUser: (user: User) => 
   const { sub }: JWTPayload = jwtDecode(token);
   if (sub) {
     try {
+      const localStorageValue = JSON.parse(localStorage.getItem("current-book-id"))
+      console.log("local storage value....",localStorageValue)
       const res = await API.getUser(sub);
       console.log("response in extractAndSetUser", res)
       setUser({
@@ -19,10 +20,10 @@ export async function extractAndSetUser(token: string, setUser: (user: User) => 
         id: res.id,
         defaultBookId: res.default_book_id,
         defaultBook: res.default_book,
-        currentBookId: +localStorage.getItem("current-book-id") || res.default_book_id,
+        currentBookId: localStorageValue|| res.default_book_id,
         books: await validateUserFetchBooks(sub, setUser)
       })
-      localStorage.setItem("current-book-id", +localStorage.getItem("current-book-id") || res.default_book_id)
+      localStorage.setItem("current-book-id", JSON.stringify(localStorage.getItem("current-book-id")) || res.default_book_id)
       return sub
     } catch (error: any) {
       errorHandling("fetchRequests -> extractAndSetUser", error)

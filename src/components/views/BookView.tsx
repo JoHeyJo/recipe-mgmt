@@ -4,16 +4,15 @@ import MultiSelect from "../ui/common/MultiSelect";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import CreateBook from "../requests/CreateBook";
 import { BookViewProp } from "../../utils/props";
- 
+
 /** Facilitates rendering books & book selection
  * 
  * MainContainer -> BookView -> MultiSelect
   */
-function BookView({ resetSelected, defaultBookId }: BookViewProp ) {
+function BookView({ resetSelected }: BookViewProp) {
   const { defaultBook, books, setUserData } = useContext(UserContext);
   const [bookId, setBookId] = useLocalStorage("current-book-id");
   const [isModalOpen, setIsModalOpen] = useState(false)
-  console.log("book id",bookId)
 
   const currentBook = books.find(book => book.id === +bookId) || defaultBook;
 
@@ -27,20 +26,19 @@ function BookView({ resetSelected, defaultBookId }: BookViewProp ) {
     });
     resetSelected()
   }
-
-  if(!defaultBookId) return <></>
-  
+console.log("bookId",typeof(bookId))
+console.log("bookId",bookId)
   return (
     <section>
-      {bookId === undefined
+      {!bookId
         ?
         <>
-        {/* Model */}
+          {/* Model */}
           <CreateBook isOpen={isModalOpen} setOpen={setIsModalOpen} />
-          <button onClick={()=>setIsModalOpen(true)}>Create Book</button>
+          <button onClick={() => setIsModalOpen(true)}>Create Book</button>
         </>
         :
-        <MultiSelect option={currentBook.title} options={books} handleIdChange={selectBook} />
+        <MultiSelect option={currentBook} options={books} handleIdChange={selectBook} />
       }
     </section>
   )
