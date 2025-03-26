@@ -12,7 +12,8 @@ export async function extractAndSetUser(token: string, setUser: (user: User) => 
   if (sub) {
     try {
       const localStorageValue = JSON.parse(localStorage.getItem("current-book-id"))
-      console.log("local storage value....",localStorageValue)
+      console.log("local storage value....", typeof (localStorageValue))
+      console.log("local storage value....", localStorageValue)
       const res = await API.getUser(sub);
       console.log("response in extractAndSetUser", res)
       setUser({
@@ -20,10 +21,13 @@ export async function extractAndSetUser(token: string, setUser: (user: User) => 
         id: res.id,
         defaultBookId: res.default_book_id,
         defaultBook: res.default_book,
-        currentBookId: localStorageValue|| res.default_book_id,
+        currentBookId: localStorageValue || res.default_book_id,
         books: await validateUserFetchBooks(sub, setUser)
       })
-      localStorage.setItem("current-book-id", JSON.stringify(localStorage.getItem("current-book-id")) || res.default_book_id)
+      console.log(">>>>>>>", JSON.stringify(localStorageValue), JSON.stringify(res.default_book_id))
+      const value = JSON.stringify(localStorageValue)
+      console.log("value **********", value, typeof(value))
+      localStorage.setItem("current-book-id", value || res.default_book_id)
       return sub
     } catch (error: any) {
       errorHandling("fetchRequests -> extractAndSetUser", error)

@@ -24,10 +24,11 @@ function useLocalStorage(key: string): [string | null, React.Dispatch<React.SetS
       localStorage.removeItem("keys");
     } else if (storage) {
       // Update the specific key's value in localStorage
-      localStorage.setItem(key, storage);
+      console.log("STORage!!!!!!!!!",JSON.stringify(storage))
+      localStorage.setItem(key, JSON.stringify(storage));
       // create keys
       const storedKeys = JSON.parse(localStorage.getItem("keys") || "[]");
-      //add to keys array if property does't exists
+      //add to keys array if property doesn't exists
       if (!storedKeys.includes(key)) {
         storedKeys.push(key);
         localStorage.setItem("keys", JSON.stringify(storedKeys));
