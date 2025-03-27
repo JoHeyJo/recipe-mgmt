@@ -13,6 +13,7 @@ function BookView({ resetSelected }: BookViewProp) {
   const { defaultBook, books, setUserData } = useContext(UserContext);
   const [bookId, setBookId] = useLocalStorage("current-book-id");
   const [isModalOpen, setIsModalOpen] = useState(false)
+  console.log("bookId",bookId, "typeof:",typeof(bookId))
 
   const currentBook = books.find(book => book.id === +bookId) || defaultBook;
 
@@ -26,8 +27,6 @@ function BookView({ resetSelected }: BookViewProp) {
     });
     resetSelected()
   }
-console.log("bookId",typeof(bookId))
-console.log("bookId",bookId)
   return (
     <section>
       {!bookId

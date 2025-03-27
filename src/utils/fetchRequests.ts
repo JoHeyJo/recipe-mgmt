@@ -12,8 +12,7 @@ export async function extractAndSetUser(token: string, setUser: (user: User) => 
   if (sub) {
     try {
       const localStorageValue = JSON.parse(localStorage.getItem("current-book-id"))
-      console.log("local storage value....", typeof (localStorageValue))
-      console.log("local storage value....", localStorageValue)
+      console.log("local storage value....", localStorageValue, "typeof: ",typeof (localStorageValue))
       const res = await API.getUser(sub);
       console.log("response in extractAndSetUser", res)
       setUser({
@@ -24,10 +23,17 @@ export async function extractAndSetUser(token: string, setUser: (user: User) => 
         currentBookId: localStorageValue || res.default_book_id,
         books: await validateUserFetchBooks(sub, setUser)
       })
-      console.log(">>>>>>>", JSON.stringify(localStorageValue), JSON.stringify(res.default_book_id))
-      const value = JSON.stringify(localStorageValue)
-      console.log("value **********", value, typeof(value))
-      localStorage.setItem("current-book-id", value || res.default_book_id)
+      
+      const localBookValue = JSON.parse(localStorage.getItem("current-book-id"))
+      console.log(">>>>>>>>", localBookValue, typeof (localBookValue))
+      if (!localBookValue){
+        console.log("++++++++++", localBookValue, typeof (localBookValue))
+        localStorage.setItem("current-book-id", JSON.stringify(localBookValue))
+      } else {
+        console.log("_________", localBookValue, typeof (localBookValue))
+        localStorage.setItem("current-book-id", JSON.stringify(res.default_book_id))
+      }
+      // localStorage.setItem("current-book-id", parsesValue || res.default_book_id)
       return sub
     } catch (error: any) {
       errorHandling("fetchRequests -> extractAndSetUser", error)

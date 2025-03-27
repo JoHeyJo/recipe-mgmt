@@ -32,7 +32,6 @@ const defaultUser = {
 
 function App() {
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
-  const [bookId, setBookId] = useLocalStorage("current-book-id")
   const [userData, setUserData] = useState<User>(defaultUser);
 
   console.log("user in App from state", userData)
