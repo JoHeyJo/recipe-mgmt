@@ -24,6 +24,7 @@ function useLocalStorage(key: string): [string | null, React.Dispatch<React.SetS
       localStorage.removeItem("keys");
     } else if (storage) {
       // Update the specific key's value in localStorage
+      // key === "user-token" ? localStorage.setItem(key, storage) : localStorage.setItem(key, JSON.stringify(storage));
       localStorage.setItem(key, JSON.stringify(storage))
       // create keys
       const storedKeys = JSON.parse(localStorage.getItem("keys") || "[]");
