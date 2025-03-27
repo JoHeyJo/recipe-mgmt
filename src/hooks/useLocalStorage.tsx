@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
  * Explicitly annotate return type of hook, otherwise React infers incorrect types for return value storage
  */
 function useLocalStorage(key: string): [string | null, React.Dispatch<React.SetStateAction<string | null | number>>] {
-  const initialValue = localStorage.getItem(key) || undefined;
+  const initialValue = JSON.parse(localStorage.getItem(key)) || undefined;
   const [storage, setStorage] = useState(initialValue);
 
   useEffect(() => {
@@ -24,13 +24,13 @@ function useLocalStorage(key: string): [string | null, React.Dispatch<React.SetS
       localStorage.removeItem("keys");
     } else if (storage) {
       // Update the specific key's value in localStorage
-      // key === "user-token" ? localStorage.setItem(key, storage) : localStorage.setItem(key, JSON.stringify(storage));
+      localStorage.setItem(key, JSON.stringify(storage))
       // create keys
       const storedKeys = JSON.parse(localStorage.getItem("keys") || "[]");
       //add to keys array if property doesn't exists
       if (!storedKeys.includes(key)) {
         storedKeys.push(key);
-        // localStorage.setItem("keys", JSON.stringify(storedKeys));
+        localStorage.setItem("keys", JSON.stringify(storedKeys));
       }
     }
   }, [storage, key]);
