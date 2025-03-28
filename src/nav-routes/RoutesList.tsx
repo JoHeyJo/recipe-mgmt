@@ -10,7 +10,7 @@ import PublicRoutes from "./PublicRoutes";
 
 
 
-function RoutesList({ signUp, login, isUserHydrated, userId }: AuthProps) {
+function RoutesList({ signUp, login }: AuthProps) {
 
   return (
     <Routes>

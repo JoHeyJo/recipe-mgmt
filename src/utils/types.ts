@@ -50,10 +50,7 @@ export type Login = {
   login: (loginData: UserLogin) => Promise<void>;
 }
 
-export type AuthProps = Login & SignUp & {
-  userId?: number;
-  isUserHydrated?: boolean;
-}
+export type AuthProps = Login & SignUp
 
 export type JWTPayload = {
   sub: number;
