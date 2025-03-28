@@ -23,8 +23,7 @@ export async function extractAndSetUser(token: string, setUser: (user: User) => 
         books: await validateUserFetchBooks(sub, setUser)
       })
       // setLocalStorageToDefaultBookValue
-      const localBookValue = JSON.parse(localStorage.getItem("current-book-id"))
-      if (!localBookValue){
+      if (!localStorageBookValue){
         localStorage.setItem("current-book-id", JSON.stringify(res.default_book_id))
       }
       return sub
