@@ -32,8 +32,8 @@ function BookView({ resetSelected }: BookViewProp) {
     resetSelected()
   }
 
-  console.log(".....",currentBook)
-  
+  console.log(".....", currentBook)
+
   return (
     <section>
       {!currentBook && bookId
@@ -44,7 +44,7 @@ function BookView({ resetSelected }: BookViewProp) {
           <button onClick={() => setIsModalOpen(true)}>Create Book</button>
         </>
         :
-        <MultiSelect option={currentBook} options={books} handleIdChange={selectBook} />
+        <MultiSelect selected={currentBook} options={books} handleIdChange={selectBook} />
       }
     </section>
   )
