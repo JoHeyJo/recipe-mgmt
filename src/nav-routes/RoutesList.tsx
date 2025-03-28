@@ -10,8 +10,8 @@ import PublicRoutes from "./PublicRoutes";
 
 
 
-function RoutesList({ signUp, login }: AuthProps) {
-  
+function RoutesList({ signUp, login, isUserHydrated, userId }: AuthProps) {
+
   return (
     <Routes>
       <Route element={<PrivateRoutes />}>

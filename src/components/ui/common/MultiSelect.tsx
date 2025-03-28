@@ -19,8 +19,6 @@ function MultiSelect({ selected, options, handleIdChange }: MultiSelectProp) {
     handleIdChange(option.id);
   }
 
-  console.log("MultiSelect.....", selected, options)
-
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>

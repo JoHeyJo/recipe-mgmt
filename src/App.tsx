@@ -24,9 +24,9 @@ const USER_STORAGE_ID = "user-data"
 const defaultUser = {
   userName: "",
   id: undefined,
-  isAdmin: undefined, 
+  isAdmin: undefined,
   defaultBookId: undefined,
-  currentBookId:undefined,
+  currentBookId: undefined,
   books: [],
 }
 
@@ -35,7 +35,7 @@ function App() {
   const [userData, setUserData] = useState<User>(defaultUser);
 
   console.log("user in App from state", userData)
-  
+
   const UserDataFromContext: UserContextType = {
     user: userData?.userName,
     userId: userData?.id,
@@ -58,7 +58,7 @@ function App() {
     } catch (error: any) {
       errorHandling("App->userSignUp", error)
       throw error;
-    } 
+    }
   }
 
   /** User login - returns token */
@@ -84,7 +84,7 @@ function App() {
   /** persist user data state on refresh */
   useEffect(() => {
     API.token = token;
-    async function persistUser(){
+    async function persistUser() {
       const userId = await extractAndSetUser(token as string, setUserData)
     }
     if (token) {
@@ -92,14 +92,12 @@ function App() {
     }
   }, [token])
 
-  // if(!userData.id) return <p></p>
-
   return (
     <BrowserRouter>
       <div id="App-container">
         <UserContext.Provider value={UserDataFromContext}>
           <TopNav logout={logout} />
-          <RoutesList signUp={userSignUp} login={userLogin} />
+          <RoutesList signUp={userSignUp} login={userLogin} isUserHydrated={isUserHydrated} userId={userData.id}/>
         </UserContext.Provider>
         {/* <button type="button" onClick={toggleDarkMode}>toggle color scheme</button> */}
       </div>
