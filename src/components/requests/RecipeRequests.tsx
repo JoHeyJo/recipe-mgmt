@@ -14,6 +14,7 @@ import { compareIngredients, compareInstructions, compareNames, filterRecipe, co
 import TitleInput from '../ui/TitleInput';
 import { recipeTemplate } from '../../utils/templates';
 import Alert from '../ui/Alert';
+import { defaultIngredient } from '../../utils/templates';
 
 /** Processes recipe data. Context data is passed through here on edit. Else template data.
  * RecipeRequests data is mutable while context data(reference data) is not
@@ -30,10 +31,12 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
     contextInstructions,
     selectedNotes
   } = useContext(RecipeContext);
+
   const [recipe, setRecipe] = useState<any>({
     name: recipeName,
     id: recipeId,
-    ingredients: contextIngredients,
+    // ingredients: contextIngredients.length === 0 ? [defaultIngredient] : contextIngredients,
+    ingredients: defaultIngredient,
     instructions: contextInstructions,
     notes: selectedNotes,
   });
