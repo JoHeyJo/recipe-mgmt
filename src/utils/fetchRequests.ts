@@ -11,8 +11,7 @@ export async function extractAndSetUser(token: string, setUser: (user: User) => 
   const { sub }: JWTPayload = jwtDecode(token);
   if (sub) {
     try {
-      const localStorageValue = JSON.parse(localStorage.getItem("current-book-id"))
-      console.log("local storage value....", localStorageValue, "typeof: ",typeof (localStorageValue))
+      const localStorageBookValue = JSON.parse(localStorage.getItem("current-book-id"))
       const res = await API.getUser(sub);
       console.log("response in extractAndSetUser", res)
       setUser({
@@ -20,19 +19,14 @@ export async function extractAndSetUser(token: string, setUser: (user: User) => 
         id: res.id,
         defaultBookId: res.default_book_id,
         defaultBook: res.default_book,
-        currentBookId: localStorageValue || res.default_book_id,
+        currentBookId: localStorageBookValue || res.default_book_id,
         books: await validateUserFetchBooks(sub, setUser)
       })
+      // setLocalStorageToDefaultBookValue
       const localBookValue = JSON.parse(localStorage.getItem("current-book-id"))
-      localStorage.setItem("current-book-id", localBookValue || res.default_book_id)
-      // console.log(">>>>>>>>", localBookValue, typeof (localBookValue))
-      // if (!localBookValue){
-      //   console.log("++++++++++", localBookValue, typeof (localBookValue))
-      //   localStorage.setItem("current-book-id", JSON.stringify(localBookValue))
-      // } else {
-      //   console.log("_________", localBookValue, typeof (localBookValue))
-      //   localStorage.setItem("current-book-id", JSON.stringify(res.default_book_id))
-      // }
+      if (!localBookValue){
+        localStorage.setItem("current-book-id", JSON.stringify(res.default_book_id))
+      }
       return sub
     } catch (error: any) {
       errorHandling("fetchRequests -> extractAndSetUser", error)

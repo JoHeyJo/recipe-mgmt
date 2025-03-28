@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
  * - if new state is null, removes from localStorage
  * - else, updates localStorage
  *
+ * [App, BookView]
+ * 
  * Explicitly annotate return type of hook, otherwise React infers incorrect types for return value storage
  */
 function useLocalStorage(key: string): [string | null, React.Dispatch<React.SetStateAction<string | null | number>>] {

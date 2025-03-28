@@ -14,6 +14,7 @@ import { Book } from '../../../utils/types';
  */
 function MultiSelect({ option, options, handleIdChange }: MultiSelectProp) {
   const [selected, setSelected] = useState({ title: undefined, id: null });
+  console.log(">>>>>>>",option)
 
   /** Selects option and sets option title for display */
   function handleSelect(option: Book) {
@@ -25,7 +26,7 @@ function MultiSelect({ option, options, handleIdChange }: MultiSelectProp) {
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-          {option}
+          {/* {option} */}
           <ChevronDownIcon aria-hidden="true" className="-mr-1 size-5 text-gray-400" />
         </MenuButton>
       </div>
@@ -36,7 +37,6 @@ function MultiSelect({ option, options, handleIdChange }: MultiSelectProp) {
           {options.map(option =>
             <MenuItem key={option.id} >
               <li
-                
                 onClick={() => handleSelect(option)}
                 className={`group relative flex justify-between px-4 py-2 text-sm cursor-pointer data-[focus]:bg-indigo-600 data-[focus]:text-white 
                   ${selected.id === option.id ? 'text-gray-700 font-semibold' : 'text-gray-700'}`}>
