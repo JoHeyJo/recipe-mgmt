@@ -33,9 +33,10 @@ function BookView({ resetSelected }: BookViewProp) {
   }
 
   console.log(".....",currentBook)
+  
   return (
     <section>
-      {!bookId
+      {!currentBook && bookId
         ?
         <>
           {/* Model */}
