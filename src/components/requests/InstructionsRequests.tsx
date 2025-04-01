@@ -8,20 +8,22 @@ import InstructionsArea from "../ui/InstructionsArea";
 import RadioSwitch from "../ui/common/RadioSwitch";
 import { InstructionsRequestsProp } from "../../utils/props";
 
-/** Handles API requests & data management for Instructions 
- * 
+/** Handles API requests & data management for Instructions
+ *
  * RecipeRequests -> InstructionsRequests -> InstructionsArea
-*/
-function InstructionsRequests({ handleRecipeUpdate }: InstructionsRequestsProp) {
-  const { userId, currentBookId } = useContext(UserContext)
+ */
+function InstructionsRequests({
+  handleRecipeUpdate,
+}: InstructionsRequestsProp) {
+  const { userId, currentBookId } = useContext(UserContext);
   const { requestAction, contextInstructions } = useContext(RecipeContext);
   const [instructions, setInstructions] = useState([]);
   const [whichInstructions, setWhichInstructions] = useState("book");
-  const [instructionsReferences, setInstructionsReferences] = useState()
+  const [instructionsReferences, setInstructionsReferences] = useState();
 
   /** handle state change for whichInstructions */
   function handleRadio(event: ChangeEvent<HTMLInputElement>) {
-    setWhichInstructions(event.target.value)
+    setWhichInstructions(event.target.value);
   }
 
   /** Add newly created instruction (DB return object) to list of available instructions */
@@ -30,65 +32,78 @@ function InstructionsRequests({ handleRecipeUpdate }: InstructionsRequestsProp) 
       const updatedInstructions = [...i];
       updatedInstructions.push(instruction);
       return updatedInstructions;
-    })
+    });
   }
 
   /** Request to create new instruction */
   async function addInstruction(instruction: Instruction) {
     try {
       const id = await API.postInstruction(userId, currentBookId, instruction);
-      return id
+      return id;
     } catch (error: any) {
-      errorHandling("InstructionsArea - addInstruction", error)
-      throw error
+      errorHandling("InstructionsArea - addInstruction", error);
+      throw error;
     }
   }
 
   /** Fetch instructions associated to Book */
   async function fetchBookInstructions() {
-    const res = await API.getBookInstructions(userId, currentBookId)
-    setInstructions(res)
+    const res = await API.getBookInstructions(userId, currentBookId);
+    setInstructions(res);
   }
 
   /** Fetch instructions associated to User */
   async function fetchUserInstructions() {
     const res = await API.getUserInstructions(userId);
-    setInstructions(res)
+    setInstructions(res);
   }
 
   /** Automatically associates "global user" instructions to current book on select */
-  async function associateInstructionToBook(userId: number, currentBookId: number, instructionId: number) {
+  async function associateInstructionToBook(
+    userId: number,
+    currentBookId: number,
+    instructionId: number,
+  ) {
     try {
-      const res = await API.postInstructionAssociation(userId, currentBookId, instructionId)
+      const res = await API.postInstructionAssociation(
+        userId,
+        currentBookId,
+        instructionId,
+      );
     } catch (error: any) {
-      errorHandling("InstructionsArea - associateInstructionToBook", error)
-      throw error
+      errorHandling("InstructionsArea - associateInstructionToBook", error);
+      throw error;
     }
   }
 
   const handleInstruction = {
     post: addInstruction,
     associate: associateInstructionToBook,
-    addCreated: updateAvailableInstructions
-  }
+    addCreated: updateAvailableInstructions,
+  };
 
   const data = {
     instructions,
     selected: whichInstructions,
-    references: instructionsReferences
-  }
+    references: instructionsReferences,
+  };
   /** Populate instruction area on mount */
   useEffect(() => {
-    whichInstructions == "book" ? fetchBookInstructions() : fetchUserInstructions()
-  }, [whichInstructions])
+    whichInstructions == "book"
+      ? fetchBookInstructions()
+      : fetchUserInstructions();
+  }, [whichInstructions]);
 
   return (
     <>
       <RadioSwitch handleSwitch={handleRadio} selection={whichInstructions} />
-      <InstructionsArea handleRecipeUpdate={handleRecipeUpdate} handleInstruction={handleInstruction} data={data} />
+      <InstructionsArea
+        handleRecipeUpdate={handleRecipeUpdate}
+        handleInstruction={handleInstruction}
+        data={data}
+      />
     </>
-  )
-
+  );
 }
 
-export default InstructionsRequests
+export default InstructionsRequests;

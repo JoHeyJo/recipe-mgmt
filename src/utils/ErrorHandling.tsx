@@ -1,4 +1,3 @@
-
 export function errorHandling(location: string, error: { message: string }) {
-  console.error(`Error in ${location} =>`, error.message)
-} 
+  console.error(`Error in ${location} =>`, error.message);
+}

@@ -1,33 +1,41 @@
-import RecipeView from "./RecipeView"
-import { RecipeViewProps } from "../../utils/props"
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useContext } from "react"
-import { RecipeContext } from "../../context/RecipeContext"
+import RecipeView from "./RecipeView";
+import { RecipeViewProps } from "../../utils/props";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useContext } from "react";
+import { RecipeContext } from "../../context/RecipeContext";
 
-/** Renders recipe 
- * 
- * 
+/** Renders recipe
+ *
+ *
  * MainContainer -> RecipeContainer -> RecipeView
  */
 
-function RecipeContainer({ recipe, handleModalToggle, isOpen }: RecipeViewProps) {
+function RecipeContainer({
+  recipe,
+  handleModalToggle,
+  isOpen,
+}: RecipeViewProps) {
   const { recipeId } = useContext(RecipeContext);
 
   return (
-    <div id="RecipeContainer-container" className="overflow-y-auto divide-y border-2 border-blue-900 mx-auto flex-1">
+    <div
+      id="RecipeContainer-container"
+      className="overflow-y-auto divide-y border-2 border-blue-900 mx-auto flex-1"
+    >
       <div id="RecipeContainer-header" className="flex justify-between p-4">
         <h3 className="font-semibold leading-7">Recipe:</h3>
         <h2>{recipe.name}</h2>
         <button
           onClick={handleModalToggle}
-          className="font-semibold leading-7 ml-1 hover:text-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-zinc-600"              >
-          {recipeId !== 0 ? <FontAwesomeIcon icon={faPenToSquare}/> : <></> }
+          className="font-semibold leading-7 ml-1 hover:text-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-zinc-600"
+        >
+          {recipeId !== 0 ? <FontAwesomeIcon icon={faPenToSquare} /> : <></>}
         </button>
       </div>
       <RecipeView recipe={recipe} />
     </div>
-  )
+  );
 }
 
-export default RecipeContainer
+export default RecipeContainer;

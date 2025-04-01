@@ -1,27 +1,49 @@
-import { useState, useContext, useEffect, FormEventHandler, FormEvent } from 'react'
-import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
-import IngredientsGroup from '../selectors/IngredientsGroup';
-import { Ingredient, Instruction, Instructions, Recipe } from '../../utils/types';
-import API from '../../api';
-import { errorHandling } from '../../utils/ErrorHandling';
-import { useMediaQuery } from 'react-responsive';
-import InstructionsRequests from './InstructionsRequests';
-import { UserContext } from '../../context/UserContext';
-import { RecipeRequestsProps } from '../../utils/props';
-import NotesInput from '../ui/NotesInput';
-import { RecipeContext, RecipeContextType } from '../../context/RecipeContext';
-import { compareIngredients, compareInstructions, compareNames, filterRecipe, compareNotes, filterTemplate } from '../../utils/filters';
-import TitleInput from '../ui/TitleInput';
-import { recipeTemplate } from '../../utils/templates';
-import Alert from '../ui/Alert';
-import { defaultIngredient } from '../../utils/templates';
+import {
+  useState,
+  useContext,
+  useEffect,
+  FormEventHandler,
+  FormEvent,
+} from "react";
+import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
+import IngredientsGroup from "../selectors/IngredientsGroup";
+import {
+  Ingredient,
+  Instruction,
+  Instructions,
+  Recipe,
+} from "../../utils/types";
+import API from "../../api";
+import { errorHandling } from "../../utils/ErrorHandling";
+import { useMediaQuery } from "react-responsive";
+import InstructionsRequests from "./InstructionsRequests";
+import { UserContext } from "../../context/UserContext";
+import { RecipeRequestsProps } from "../../utils/props";
+import NotesInput from "../ui/NotesInput";
+import { RecipeContext, RecipeContextType } from "../../context/RecipeContext";
+import {
+  compareIngredients,
+  compareInstructions,
+  compareNames,
+  filterRecipe,
+  compareNotes,
+  filterTemplate,
+} from "../../utils/filters";
+import TitleInput from "../ui/TitleInput";
+import { recipeTemplate } from "../../utils/templates";
+import Alert from "../ui/Alert";
+import { defaultIngredient } from "../../utils/templates";
 
 /** Processes recipe data. Context data is passed through here on edit. Else template data.
  * RecipeRequests data is mutable while context data(reference data) is not
- * 
+ *
  * MainContainer -> RecipeRequests -> [IngredientsGroup, InstructionsArea, NotesInput, TitleInput]
  */
-function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsProps) {
+function RecipeRequests({
+  recipeActions,
+  setShowing,
+  isOpen,
+}: RecipeRequestsProps) {
   const { currentBookId, userId } = useContext(UserContext);
   const {
     recipeId,
@@ -29,7 +51,7 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
     requestAction,
     contextIngredients,
     contextInstructions,
-    selectedNotes
+    selectedNotes,
   } = useContext(RecipeContext);
 
   const [recipe, setRecipe] = useState<any>({
@@ -40,7 +62,7 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
     instructions: contextInstructions,
     notes: selectedNotes,
   });
-  const [error, setError] = useState()
+  const [error, setError] = useState();
   const [isDisabled, setIsDisabled] = useState(true);
 
   const selectedRecipe = {
@@ -49,8 +71,8 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
     requestAction,
     contextIngredients,
     contextInstructions,
-    selectedNotes
-  }
+    selectedNotes,
+  };
 
   // syncs selected original recipe with mutable recipe
   useEffect(() => {
@@ -60,28 +82,35 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
       ingredients: contextIngredients,
       instructions: contextInstructions,
       notes: selectedNotes,
-    })
-  }, [recipeId])
+    });
+  }, [recipeId]);
 
   /** Enables/disables UPDATE submit */
   useEffect(() => {
     if (requestAction === "edit") {
       const name = compareNames(recipeName, recipe.name);
-      const ingredients = compareIngredients(contextIngredients, recipe.ingredients);
-      const instructions = compareInstructions(contextInstructions, recipe.instructions);
+      const ingredients = compareIngredients(
+        contextIngredients,
+        recipe.ingredients,
+      );
+      const instructions = compareInstructions(
+        contextInstructions,
+        recipe.instructions,
+      );
       const notes = compareNotes(selectedNotes, recipe.notes);
       const isAltered = name || ingredients || instructions || notes;
-      setIsDisabled(!isAltered)
+      setIsDisabled(!isAltered);
     }
-  }, [recipe])
+  }, [recipe]);
 
-  const isLargeScreen = useMediaQuery({ query: '(min-width: 1024px)' }); // lg breakpoint in Tailwind
+  const isLargeScreen = useMediaQuery({ query: "(min-width: 1024px)" }); // lg breakpoint in Tailwind
 
   /** Updates recipe state */
-  function handleRecipeUpdate(data: string | Ingredient[] | Instruction | Instructions, section: string) {
-    setRecipe(prevRecipe => (
-      { ...prevRecipe, [section]: data }
-    ));
+  function handleRecipeUpdate(
+    data: string | Ingredient[] | Instruction | Instructions,
+    section: string,
+  ) {
+    setRecipe((prevRecipe) => ({ ...prevRecipe, [section]: data }));
   }
 
   /** Calls API - sends post request with recipe data */
@@ -89,48 +118,64 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
   async function addRecipe() {
     try {
       const filteredRecipe = filterTemplate(recipe, recipeTemplate);
-      const res = await API.postUserRecipe(filteredRecipe, currentBookId, userId);
-      recipeActions.updateRecipes(res)  
-      return "submitted"
+      const res = await API.postUserRecipe(
+        filteredRecipe,
+        currentBookId,
+        userId,
+      );
+      recipeActions.updateRecipes(res);
+      return "submitted";
     } catch (error: any) {
-      errorHandling("RecipeRequests - addRecipe", error)
-      setError(error.error)
-      setTimeout(() => setError(null), 5000)
+      errorHandling("RecipeRequests - addRecipe", error);
+      setError(error.error);
+      setTimeout(() => setError(null), 5000);
     }
   }
 
   /** Calls API - sends patch request with only edited recipe data */
-  async function editRecipe(originalRecipe: RecipeContextType, mutableRecipe: Recipe) {
+  async function editRecipe(
+    originalRecipe: RecipeContextType,
+    mutableRecipe: Recipe,
+  ) {
     try {
       const mutatedData = filterRecipe(originalRecipe, mutableRecipe);
-      const res = await API.editBookRecipe(userId, currentBookId, recipeId, mutatedData);
-      recipeActions.editRecipe()
+      const res = await API.editBookRecipe(
+        userId,
+        currentBookId,
+        recipeId,
+        mutatedData,
+      );
+      recipeActions.editRecipe();
       return res;
     } catch (error: any) {
       errorHandling("RecipeRequests - editRecipe", error);
     }
   }
   /** Calls API - sends delete request for recipe */
-  async function deleteRecipe(userId: number, bookId: number, recipeId: number) {
+  async function deleteRecipe(
+    userId: number,
+    bookId: number,
+    recipeId: number,
+  ) {
     try {
-      const res = API.deleteUserRecipe(userId, currentBookId, recipeId)
-      recipeActions.deleteRecipe()
+      const res = API.deleteUserRecipe(userId, currentBookId, recipeId);
+      recipeActions.deleteRecipe();
     } catch (error: any) {
-      setError(error.message)
-      setTimeout(() => setError(null), 5000)
-      errorHandling("RecipeRequests - addRecipe", error)
+      setError(error.message);
+      setTimeout(() => setError(null), 5000);
+      errorHandling("RecipeRequests - addRecipe", error);
     }
   }
 
   function handleDelete() {
-    setShowing()
-    deleteRecipe(userId, currentBookId, recipeId)
+    setShowing();
+    deleteRecipe(userId, currentBookId, recipeId);
   }
 
   async function handleSubmit() {
     // e.preventDefault()
-    const res = await addRecipe()
-    if (res) setShowing()
+    const res = await addRecipe();
+    if (res) setShowing();
   }
 
   return (
@@ -142,10 +187,12 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
-            id='RecipeRequests-DialogPanel'
+            id="RecipeRequests-DialogPanel"
             transition
-            className="relative h-full transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6">
-            {error && <Alert alert={error} degree={"yellow"} />} {/* This will be a popup instead */}
+            className="relative h-full transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"
+          >
+            {error && <Alert alert={error} degree={"yellow"} />}{" "}
+            {/* This will be a popup instead */}
             {/* <form onSubmit={handleSubmit}> */}
             <div>
               {/* <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
@@ -161,64 +208,72 @@ function RecipeRequests({ recipeActions, setShowing, isOpen }: RecipeRequestsPro
                   </p>
                 </div> */}
 
-                <section id='RecipeRequests-book' className='flex flex-col'>
-
-                  <section id='RecipeRequests-recipe' className='flex'>
-                    <section id='RecipeRequests-ingredients' className="flex-1 mr-4">
+                <section id="RecipeRequests-book" className="flex flex-col">
+                  <section id="RecipeRequests-recipe" className="flex">
+                    <section
+                      id="RecipeRequests-ingredients"
+                      className="flex-1 mr-4"
+                    >
                       <TitleInput handleUpdate={handleRecipeUpdate} />
 
-                      <IngredientsGroup handleRecipeUpdate={handleRecipeUpdate} />
+                      <IngredientsGroup
+                        handleRecipeUpdate={handleRecipeUpdate}
+                      />
                     </section>
 
-                    <section id='RecipeRequests-instructions' className="flex-1 ml-4 ">
-                      <InstructionsRequests handleRecipeUpdate={handleRecipeUpdate} />
+                    <section
+                      id="RecipeRequests-instructions"
+                      className="flex-1 ml-4 "
+                    >
+                      <InstructionsRequests
+                        handleRecipeUpdate={handleRecipeUpdate}
+                      />
                     </section>
                   </section>
 
-                  <section id='RecipeRequests-notes' className='pt-6'>
+                  <section id="RecipeRequests-notes" className="pt-6">
                     <NotesInput handleUpdate={handleRecipeUpdate} />
                   </section>
                 </section>
-
               </div>
             </div>
-
             <div className="mt-5 sm:mt-6">
-              {
-                requestAction !== "edit"
-                  ?
-                  <div className='flex'>
-                    <button
-                      type="submit"
-                      onClick={handleSubmit}
-                      className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                      Submit
-                    </button>
-                  </div>
-                  :
-                  <div className='flex'>
-                    <button
-                      type="button"
-                      onClick={() => editRecipe(selectedRecipe, recipe)}
-                      disabled={isDisabled}
-                      className={`${isDisabled ? "bg-gray-600" : "bg-indigo-600 hover:bg-indigo-500"} inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}>
-                      Update
-                    </button>
-                    <button
-                      type="button"
-                      onClick={handleDelete}
-                      className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                      delete
-                    </button>
-                  </div>
-              }
+              {requestAction !== "edit" ? (
+                <div className="flex">
+                  <button
+                    type="submit"
+                    onClick={handleSubmit}
+                    className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    Submit
+                  </button>
+                </div>
+              ) : (
+                <div className="flex">
+                  <button
+                    type="button"
+                    onClick={() => editRecipe(selectedRecipe, recipe)}
+                    disabled={isDisabled}
+                    className={`${isDisabled ? "bg-gray-600" : "bg-indigo-600 hover:bg-indigo-500"} inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
+                  >
+                    Update
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleDelete}
+                    className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    delete
+                  </button>
+                </div>
+              )}
             </div>
             {/* </form> */}
           </DialogPanel>
         </div>
       </div>
     </Dialog>
-  )
+  );
 }
 
 export default RecipeRequests;

@@ -1,25 +1,25 @@
 //modules
-import { useEffect, useState } from 'react';
-import { Login, UserLogin } from '../utils/types';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { Login, UserLogin } from "../utils/types";
+import { useNavigate, Navigate } from "react-router-dom";
 //components
-import { PillButton } from '../components/ui/PillButton';
-import { errorHandling } from '../utils/ErrorHandling';
-import InputWithLabelForm from '../components/views/InputWithLabelForm'
-import Alert from '../components/ui/Alert';
+import { PillButton } from "../components/ui/PillButton";
+import { errorHandling } from "../utils/ErrorHandling";
+import InputWithLabelForm from "../components/views/InputWithLabelForm";
+import Alert from "../components/ui/Alert";
 //styles
-import '../styles/Login.css';
+import "../styles/Login.css";
 
-const defaultCredentials: UserLogin = { userName: "", password: ""};
+const defaultCredentials: UserLogin = { userName: "", password: "" };
 
 /** Renders login form
- * 
+ *
  * App -> LoginForm
  */
 function LoginForm({ login }: Login) {
   const [credentials, setCredentials] = useState<UserLogin>(defaultCredentials);
   const [alert, setAlert] = useState(undefined);
-  
+
   const navigate = useNavigate();
 
   /** sends form data */
@@ -31,27 +31,25 @@ function LoginForm({ login }: Login) {
       navigate("/home");
     } catch (error: any) {
       errorHandling("Login", error);
-      setAlert(error.response.data.error)
+      setAlert(error.response.data.error);
     }
   }
 
   /** handles input change */
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     event.preventDefault();
-    const { id, value } = event.target
-    setCredentials(credentials => (
-      { ...credentials, [id]: value }
-    ))
+    const { id, value } = event.target;
+    setCredentials((credentials) => ({ ...credentials, [id]: value }));
   }
 
   useEffect(() => {
     function hideAlert() {
       setTimeout(() => {
         setAlert(undefined);
-      }, 3000)
+      }, 3000);
     }
     hideAlert();
-  }, [alert])
+  }, [alert]);
 
   return (
     <div className="LoginForm-container">
@@ -64,7 +62,8 @@ function LoginForm({ login }: Login) {
             className={"LoginForm-email"}
             handleChange={handleChange}
             value={credentials.userName}
-            required={true} />
+            required={true}
+          />
         </div>
         <div className="form-group">
           <InputWithLabelForm
@@ -74,9 +73,10 @@ function LoginForm({ login }: Login) {
             className={"LoginForm-password"}
             handleChange={handleChange}
             value={credentials.password}
-            required={true} />
+            required={true}
+          />
         </div>
-        <div id='Login-form-footer'>
+        <div id="Login-form-footer">
           <PillButton action={"Login"} />
           {alert && <Alert alert={alert} degree={"yellow"} />}
         </div>

@@ -1,18 +1,23 @@
-
 import { InputWithLabelProps } from "../../../utils/props";
 
-
 /** Renders Input
- * 
+ *
  * TitleInput ->InputWithLabel
  */
-function InputWithLabel({ id, name, value, handleUpdate, type, placeholder }: InputWithLabelProps) {
-
-
+function InputWithLabel({
+  id,
+  name,
+  value,
+  handleUpdate,
+  type,
+  placeholder,
+}: InputWithLabelProps) {
   return (
     <div>
-      <label htmlFor="title" className="block text-sm font-medium leading-6 text-gray-900">
-      </label>
+      <label
+        htmlFor="title"
+        className="block text-sm font-medium leading-6 text-gray-900"
+      ></label>
       <div className="mt-2">
         <input
           // required={name === "title"}
@@ -26,7 +31,7 @@ function InputWithLabel({ id, name, value, handleUpdate, type, placeholder }: In
         />
       </div>
     </div>
-  )
+  );
 }
 
 export default InputWithLabel;

@@ -12,9 +12,8 @@
   --background-button-hover: #f9fafb;
   --background-modal: var(--background-button-color);
   --text-placeholder: #9ca3af;
-  --button-color:#243E61;
-  --button-color-cancel: #99A7B5;
-
+  --button-color: #243e61;
+  --button-color-cancel: #99a7b5;
 
   --submit-button-color: var(--button-color);
   --submit-button-transition: background-color 0.2s ease;

@@ -4,7 +4,7 @@ import { useState, useContext, useEffect } from "react";
 import { RecipeContext } from "../../context/RecipeContext";
 
 /** Consolidations recipe data and logic
- * 
+ *
  * RecipeRequests -> TitleInput -> InputWithLabel
  */
 function TitleInput({ handleUpdate }: RecipeInfoProp) {
@@ -12,20 +12,20 @@ function TitleInput({ handleUpdate }: RecipeInfoProp) {
   const [title, setTitle] = useState(recipeName);
 
   /** Updates parent component with title data */
-  function updateTitle(){
-    handleUpdate(title, "name")
+  function updateTitle() {
+    handleUpdate(title, "name");
   }
 
   /** Handles changes to title state */
-  function handleChange(e){
+  function handleChange(e) {
     const value = e.target.value;
-    setTitle(value)
+    setTitle(value);
   }
 
   /** handles parent state changes */
-  useEffect(()=>{
-    updateTitle()
-  },[title])  
+  useEffect(() => {
+    updateTitle();
+  }, [title]);
 
   return (
     <InputWithLabel
@@ -34,8 +34,9 @@ function TitleInput({ handleUpdate }: RecipeInfoProp) {
       value={title}
       type={"title"}
       handleUpdate={handleChange}
-      placeholder={"Awesome recipe name!"} />
-  )
+      placeholder={"Awesome recipe name!"}
+    />
+  );
 }
 
 export default TitleInput;

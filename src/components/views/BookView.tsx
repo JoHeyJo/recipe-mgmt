@@ -6,41 +6,44 @@ import CreateBook from "../requests/CreateBook";
 import { BookViewProp } from "../../utils/props";
 
 /** Facilitates rendering books & book selection
- * 
+ *
  * MainContainer -> BookView -> MultiSelect
-  */
+ */
 function BookView({ resetSelected }: BookViewProp) {
   const { defaultBook, books, setUserData } = useContext(UserContext);
   const [bookId, setBookId] = useLocalStorage("current-book-id");
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const currentBook = books.find(book => book.id === +bookId) || defaultBook;
+  const currentBook = books.find((book) => book.id === +bookId) || defaultBook;
 
   /** Set selected book id & reset selected book to default */
   function selectBook(id: number) {
-    setUserData(user => {
+    setUserData((user) => {
       const userData = { ...user };
       userData.currentBookId = id;
       setBookId(id);
       return userData;
     });
-    resetSelected()
+    resetSelected();
   }
-  
+
   return (
     <section>
-      {!currentBook && !bookId
-        ?
+      {!currentBook && !bookId ? (
         <>
           {/* Model */}
           <CreateBook isOpen={isModalOpen} setOpen={setIsModalOpen} />
           <button onClick={() => setIsModalOpen(true)}>Create Book</button>
         </>
-        :
-        <MultiSelect selected={currentBook} options={books} handleIdChange={selectBook} />
-      }
+      ) : (
+        <MultiSelect
+          selected={currentBook}
+          options={books}
+          handleIdChange={selectBook}
+        />
+      )}
     </section>
-  )
+  );
 }
 
 export default BookView;

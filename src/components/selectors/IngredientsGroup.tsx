@@ -15,7 +15,7 @@ import ComponentsOptionsRequests from "../requests/ComponentsOptionsRequests";
 function IngredientsGroup({ handleRecipeUpdate }: IngredientsGroupProps) {
   const { requestAction, contextIngredients } = useContext(RecipeContext);
   const [ingredients, setIngredients] = useState<Ingredients>(
-    contextIngredients || recipeTemplate.ingredients
+    contextIngredients || recipeTemplate.ingredients,
   );
   const [ingredientKeys, setIngredientKeys] = useState<any>([Date.now()]); // Generate unique key on first render
 
@@ -41,7 +41,7 @@ function IngredientsGroup({ handleRecipeUpdate }: IngredientsGroupProps) {
   /** Handles removing ingredient object from array of ingredients */
   function removeIngredient(index: number) {
     setIngredients((prevIngredients) =>
-      prevIngredients.filter((_, i) => i !== index)
+      prevIngredients.filter((_, i) => i !== index),
     );
 
     setIngredientKeys((prevKeys) => prevKeys.filter((_, i) => i !== index));

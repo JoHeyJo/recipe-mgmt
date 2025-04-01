@@ -2,22 +2,32 @@ import { ChangeEvent } from "react";
 
 type InputWithLabelForm = {
   type: string;
-  name: string
+  name: string;
   id: string;
   className: string;
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
   value: string;
   required: boolean;
-}
+};
 
-/** Handles form input and label  
- * 
+/** Handles form input and label
+ *
  * [Login, SignUp] -> InputWithLabelForm
-*/
-function InputWithLabelForm({ type, name, id, className, handleChange, value, required }: InputWithLabelForm) {
+ */
+function InputWithLabelForm({
+  type,
+  name,
+  id,
+  className,
+  handleChange,
+  value,
+  required,
+}: InputWithLabelForm) {
   return (
     <>
-      <label htmlFor={id} className={`${className}-label`}>{name}</label>
+      <label htmlFor={id} className={`${className}-label`}>
+        {name}
+      </label>
       <input
         type={type}
         id={id}
@@ -27,7 +37,7 @@ function InputWithLabelForm({ type, name, id, className, handleChange, value, re
         required={required}
       />
     </>
-  )
+  );
 }
 
 export default InputWithLabelForm;

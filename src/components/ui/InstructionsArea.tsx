@@ -9,25 +9,39 @@ import { RecipeContext } from "../../context/RecipeContext";
 /** Triggers creation of input if there are no inputs left (num of inputs = array index)
  * This doesn't work with refactoring of PLACE_HOLDER instructions
  */
-const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) => inputs - 1 === arrayKey
+const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) =>
+  inputs - 1 === arrayKey;
 
 /** InstructionsArea handles selected instruction - updates GrandParent recipe state
- * 
+ *
  * Dynamically renders list of instructions - filters out selected options (WIP)
- * 
+ *
  * InstructionsRequests -> InstructionsArea -> InstructionManager
  */
-function InstructionsArea({ handleRecipeUpdate, data, handleInstruction }: InstructionsAreaProps) {
-  const { userId, currentBookId } = useContext(UserContext)
+function InstructionsArea({
+  handleRecipeUpdate,
+  data,
+  handleInstruction,
+}: InstructionsAreaProps) {
+  const { userId, currentBookId } = useContext(UserContext);
   const { requestAction, contextInstructions } = useContext(RecipeContext);
-  const [selectedInstructions, setSelectedInstructions] = useState<Instructions>(
-    requestAction === "edit" ? [...contextInstructions, { id: null, "instruction": "some other thing..." }] : PLACE_HOLDER
-  );
+  const [selectedInstructions, setSelectedInstructions] =
+    useState<Instructions>(
+      requestAction === "edit"
+        ? [
+            ...contextInstructions,
+            { id: null, instruction: "some other thing..." },
+          ]
+        : PLACE_HOLDER,
+    );
   const [filterKey, setFilterKeys] = useState({});
 
   /** Create additional input field for new instruction */
   function createInstructionInput() {
-    setSelectedInstructions(selected => [...selected, { id: null, instruction: "some other thing..." }])
+    setSelectedInstructions((selected) => [
+      ...selected,
+      { id: null, instruction: "some other thing..." },
+    ]);
   }
 
   /** Update list of selected instructions */
@@ -36,20 +50,25 @@ function InstructionsArea({ handleRecipeUpdate, data, handleInstruction }: Instr
       const updatedInstructions = [...i];
       updatedInstructions[arrayKey] = instruction;
       return updatedInstructions;
-    })
+    });
 
-    if (data.selected === "user") handleInstruction.associate(userId, currentBookId, +instruction.id)
+    if (data.selected === "user")
+      handleInstruction.associate(userId, currentBookId, +instruction.id);
 
-    if (HAS_NO_REMAINING_INPUT(selectedInstructions.length, arrayKey)) createInstructionInput();
+    if (HAS_NO_REMAINING_INPUT(selectedInstructions.length, arrayKey))
+      createInstructionInput();
   }
 
   /** Remove unselected instruction */
   function removeSelected(instructionKey: number) {
-    setSelectedInstructions(instructions => {
+    setSelectedInstructions((instructions) => {
       const alteredInstructions = [...instructions];
-      alteredInstructions[instructionKey] = PLACE_HOLDER[instructionKey] || { id: null, "instruction": "some other thing..." }
-      return alteredInstructions
-    })
+      alteredInstructions[instructionKey] = PLACE_HOLDER[instructionKey] || {
+        id: null,
+        instruction: "some other thing...",
+      };
+      return alteredInstructions;
+    });
   }
 
   /** Remove unselected filter key */
@@ -79,17 +98,22 @@ function InstructionsArea({ handleRecipeUpdate, data, handleInstruction }: Instr
     // updateFilterKeys,
     removeSelected,
     // removeFilterKey
-  }
+  };
 
   /** Updates parent state of instructions when instructions is changed and on mount */
   useEffect(() => {
-    handleRecipeUpdate(selectedInstructions.filter((i => i.id)), "instructions")
-  }, [selectedInstructions])
-
+    handleRecipeUpdate(
+      selectedInstructions.filter((i) => i.id),
+      "instructions",
+    );
+  }, [selectedInstructions]);
 
   return (
-    <div id="InstructionsArea" className="flex-col block w-full rounded-md border pb-2 px-2 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6">
-      {selectedInstructions.map((value, index) =>
+    <div
+      id="InstructionsArea"
+      className="flex-col block w-full rounded-md border pb-2 px-2 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6"
+    >
+      {selectedInstructions.map((value, index) => (
         <InstructionManager
           key={index}
           arrayKey={index}
@@ -98,9 +122,9 @@ function InstructionsArea({ handleRecipeUpdate, data, handleInstruction }: Instr
           handleSelected={handleSelected}
           handleInstruction={handleInstruction}
         />
-      )}
+      ))}
     </div>
-  )
+  );
 }
 
 export default InstructionsArea;

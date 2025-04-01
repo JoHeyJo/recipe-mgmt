@@ -1,7 +1,3 @@
-export default function NotFound(){
-  return (
-    <>
-    "PAGE NOT FOUND"
-    </>
-  )
+export default function NotFound() {
+  return <>"PAGE NOT FOUND"</>;
 }

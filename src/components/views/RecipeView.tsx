@@ -5,11 +5,11 @@ import NotesView from "./NotesView";
 
 type RecipeViewProps = {
   recipe: Recipe;
-}
+};
 
 /** Renders view of entire recipe.
- * 
- * 
+ *
+ *
  * RecipeContainer -> RecipeView -> [IngredientsView, InstructionsView, NotesView]
  */
 
@@ -25,7 +25,7 @@ function RecipeView({ recipe }: RecipeViewProps) {
         </section>
       </div>
     </>
-  )
+  );
 }
 
 export default RecipeView;

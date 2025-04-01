@@ -2,16 +2,21 @@ import { useEffect, useState } from "react";
 
 /** Custom hook to sync state user data with localStorage
  * Can handle multiple keys in localStorage
- * 
+ *
  * When `storage` changes, effect re-runs:
  * - if new state is null, removes from localStorage
  * - else, updates localStorage
  *
  * [App, BookView]
- * 
+ *
  * Explicitly annotate return type of hook, otherwise React infers incorrect types for return value storage
  */
-function useLocalStorage(key: string): [string | null, React.Dispatch<React.SetStateAction<string | null | number>>] {
+function useLocalStorage(
+  key: string,
+): [
+  string | null,
+  React.Dispatch<React.SetStateAction<string | null | number>>,
+] {
   const initialValue = JSON.parse(localStorage.getItem(key)) || undefined;
   const [storage, setStorage] = useState(initialValue);
 
@@ -26,7 +31,7 @@ function useLocalStorage(key: string): [string | null, React.Dispatch<React.SetS
       localStorage.removeItem("keys");
     } else if (storage) {
       // Update the specific key's value in localStorage
-      localStorage.setItem(key, JSON.stringify(storage))
+      localStorage.setItem(key, JSON.stringify(storage));
       // create keys
       const storedKeys = JSON.parse(localStorage.getItem("keys") || "[]");
       //add to keys array if property doesn't exists

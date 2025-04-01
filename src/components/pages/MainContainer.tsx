@@ -1,4 +1,4 @@
-import RecipesList from "../views/RecipesList"
+import RecipesList from "../views/RecipesList";
 import { UserContext } from "../../context/UserContext";
 import { useContext, useEffect, useState } from "react";
 import API from "../../api";
@@ -6,17 +6,18 @@ import { errorHandling } from "../../utils/ErrorHandling";
 import { Recipe } from "../../utils/types";
 import RecipeContainer from "../views/RecipeContainer";
 import { recipeTemplate } from "../../utils/templates";
-import FaPlusButton from "../ui/common/FaPlusButton"
+import FaPlusButton from "../ui/common/FaPlusButton";
 import RecipeRequests from "../requests/RecipeRequests";
 import { RecipeContext } from "../../context/RecipeContext";
 import BookView from "../views/BookView";
 
 /** Renders the main container (book) housing list of recipes and individual recipe
- * 
+ *
  * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList]
  */
 function MainContainer() {
-  const { userId, defaultBookId, currentBookId, books } = useContext(UserContext);
+  const { userId, defaultBookId, currentBookId, books } =
+    useContext(UserContext);
   const [selectedBookId, setSelectedBookId] = useState<number>();
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate);
@@ -30,21 +31,20 @@ function MainContainer() {
     contextIngredients: selectedRecipe.ingredients,
     contextInstructions: selectedRecipe.instructions,
     selectedNotes: selectedRecipe.notes,
-    requestAction
-  }
-
+    requestAction,
+  };
 
   /** Updates rendered recipes after creation */
   function updateRecipes(recipe: Recipe) {
-    setRecipes(recipes => [...recipes, recipe])
+    setRecipes((recipes) => [...recipes, recipe]);
   }
 
   /** Handles recipe edit action: requests updated recipes, re-selects updated recipe. */
   async function editRecipe() {
-    setOpen(false)
+    setOpen(false);
     const res = await API.getBookRecipes(userId, selectedBookId);
     for (let recipe of res) {
-      if (recipe.id === selectedRecipe.id) setSelectedRecipe(recipe)
+      if (recipe.id === selectedRecipe.id) setSelectedRecipe(recipe);
     }
     setRecipes(res);
   }
@@ -52,14 +52,14 @@ function MainContainer() {
   /** Removes recipe from list after deletion */
   function deleteRecipe() {
     const id = selectedRecipe.id;
-    const updatedRecipes = recipes.filter((recipe) => recipe.id !== id)
+    const updatedRecipes = recipes.filter((recipe) => recipe.id !== id);
     setRecipes(updatedRecipes);
     setSelectedRecipe(recipeTemplate);
   }
 
   /** Change selected recipe */
   function selectRecipe(index: number) {
-    setSelectedRecipe(recipes[index])
+    setSelectedRecipe(recipes[index]);
   }
 
   /** Model toggle function for children components */
@@ -69,26 +69,26 @@ function MainContainer() {
 
   /** Triggers actions that renders RecipeRequests with appropriate data set - current recipe */
   function toggleEditTemplate() {
-    setRequestAction("edit")
+    setRequestAction("edit");
     setOpen(!isOpen);
   }
 
   /** Triggers actions that renders RecipeRequests with empty data - no recipe */
   function toggleCreateForm() {
     setSelectedRecipe(recipeTemplate);
-    setRequestAction("")
+    setRequestAction("");
     setOpen(!isOpen);
   }
 
   function resetSelectedRecipe() {
-    setSelectedRecipe(recipeTemplate)
+    setSelectedRecipe(recipeTemplate);
   }
 
   const recipeActions = {
     updateRecipes,
     deleteRecipe,
-    editRecipe
-  }
+    editRecipe,
+  };
 
   /** Loads user recipes when user data is populated */
   useEffect(() => {
@@ -105,14 +105,14 @@ function MainContainer() {
     if (selectedBookId) {
       fetchUserRecipes();
     }
-  }, [selectedBookId, userId])
+  }, [selectedBookId, userId]);
 
   /** Updates current book selection */
   useEffect(() => {
-    setSelectedBookId(currentBookId || defaultBookId)
-  }, [currentBookId])
+    setSelectedBookId(currentBookId || defaultBookId);
+  }, [currentBookId]);
 
-  if (!isLoading) (<div>Loading...</div>);
+  if (!isLoading) <div>Loading...</div>;
 
   return (
     <div className="border-2 mt-7 border-red-900 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -121,19 +121,27 @@ function MainContainer() {
         {/* Does recipes need to be reduced to just ids and title??? */}
         <RecipeContext.Provider value={recipeData}>
           <section id="RecipesList-container" className="flex-1">
-            <RecipeRequests recipeActions={recipeActions} setShowing={toggleModel} isOpen={isOpen} />
+            <RecipeRequests
+              recipeActions={recipeActions}
+              setShowing={toggleModel}
+              isOpen={isOpen}
+            />
             <div className="flex justify-between m-1">
               <div>Recipes for:</div>
-              <BookView resetSelected={resetSelectedRecipe}/>
+              <BookView resetSelected={resetSelectedRecipe} />
               <FaPlusButton onAction={toggleCreateForm} />
             </div>
             <RecipesList recipes={recipes} handleSelect={selectRecipe} />
           </section>
-          <RecipeContainer recipe={selectedRecipe} handleModalToggle={toggleEditTemplate} isOpen={isOpen} />
-        </RecipeContext.Provider >
+          <RecipeContainer
+            recipe={selectedRecipe}
+            handleModalToggle={toggleEditTemplate}
+            isOpen={isOpen}
+          />
+        </RecipeContext.Provider>
       </div>
     </div>
-  )
+  );
 }
 
 export default MainContainer;

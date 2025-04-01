@@ -2,7 +2,7 @@
   --primary-color: #1f2937;
   --secondary-color: #1a202c;
   --background-color: #1a202c;
-  --text-color: #E5E7EB;
+  --text-color: #e5e7eb;
   --primary-card: #1f2937;
   --navItem-color: #2e2e2e;
   /*filters navItem-color */
@@ -24,13 +24,12 @@
   --cancel-button-border: 1px solid #4a4a4a;
   --cancel-button-hover: #3a3a3a;
 
-
   --background: #121926;
-  --card-background: #1E293B;
-  --accent-highlight: #4B5563;
-  --text-primary: #D1D5DB;
-  --text-secondary: #9CA3AF;
-  --border-divider: #3B4252;
+  --card-background: #1e293b;
+  --accent-highlight: #4b5563;
+  --text-primary: #d1d5db;
+  --text-secondary: #9ca3af;
+  --border-divider: #3b4252;
 
   --sign-up-background-color: #333333;
   --form-background-color: #1f2937;
@@ -42,7 +41,6 @@
   --button-background-color: #3b82f6;
   --button-hover-color: #2563eb;
   --button-text-color: #ffffff;
-
 }
 
 /* overwrites plugin styles necessary for other forms to work  */

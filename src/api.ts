@@ -1,27 +1,38 @@
 import axios from "axios";
-import { Recipe, UserLogin, UserSignUp, Ingredient, Book, AttributeData, Instruction } from "./utils/types";
+import {
+  Recipe,
+  UserLogin,
+  UserSignUp,
+  Ingredient,
+  Book,
+  AttributeData,
+  Instruction,
+} from "./utils/types";
 
-const BASEURL = "http://127.0.0.1:5000"
-/** API class. 
- * 
+const BASEURL = "http://127.0.0.1:5000";
+/** API class.
+ *
  * Static class - Contains methods that facilitate communications between client
  * and backend API */
 class API {
   static token: string | null = null;
 
-  static async request(endpoint: string, data: object = {}, method: string = "GET") {
-
+  static async request(
+    endpoint: string,
+    data: object = {},
+    method: string = "GET",
+  ) {
     const url = `${BASEURL}/${endpoint}`;
     const headers = {
-      Authorization: `Bearer ${this.token}`
+      Authorization: `Bearer ${this.token}`,
     };
-    const params = method === "GET" ? data : {}
+    const params = method === "GET" ? data : {};
     try {
       const res = (await axios({ url, method, data, params, headers })).data;
-      return res
+      return res;
     } catch (error) {
-      console.error(`Error in ${endpoint} API => ${error}`)
-      throw error
+      console.error(`Error in ${endpoint} API => ${error}`);
+      throw error;
     }
   }
 
@@ -48,71 +59,112 @@ class API {
   // ############ RECIPES ###########
   /** Add user recipe to corresponding book*/
   static async postUserRecipe(data: Recipe, bookId: number, userId: number) {
-    const res = await this.request(`users/${userId}/books/${bookId}/recipes`, data, "POST");
+    const res = await this.request(
+      `users/${userId}/books/${bookId}/recipes`,
+      data,
+      "POST",
+    );
     return res;
   }
 
   /** Fetch user recipes */
   static async getBookRecipes(userId: number, bookId: number) {
-    const res = await this.request(`users/${userId}/books/${bookId}/recipes`)
-    return res
+    const res = await this.request(`users/${userId}/books/${bookId}/recipes`);
+    return res;
   }
 
   /** Edit user recipe */
-  static async editBookRecipe(userId: number, bookId: number, recipeId: number, data) {
-    const res = await this.request(`users/${userId}/books/${bookId}/recipes/${recipeId}`, data, "PATCH")
-    return res
+  static async editBookRecipe(
+    userId: number,
+    bookId: number,
+    recipeId: number,
+    data,
+  ) {
+    const res = await this.request(
+      `users/${userId}/books/${bookId}/recipes/${recipeId}`,
+      data,
+      "PATCH",
+    );
+    return res;
   }
 
   /** Delete book recipe */
-  static async deleteUserRecipe(userId: number, bookId: number, recipeId: number) {
-    const res = await this.request(`users/${userId}/books/${bookId}/recipes/${recipeId}`, {}, "DELETE")
-    return res
+  static async deleteUserRecipe(
+    userId: number,
+    bookId: number,
+    recipeId: number,
+  ) {
+    const res = await this.request(
+      `users/${userId}/books/${bookId}/recipes/${recipeId}`,
+      {},
+      "DELETE",
+    );
+    return res;
   }
 
   // ########### BOOKS ###########
 
   /** Post new book */
   static async postBook(data: Book, userId: number) {
-    const res = await this.request(`users/${userId}/books`, data, "POST")
-    return res
+    const res = await this.request(`users/${userId}/books`, data, "POST");
+    return res;
   }
 
   /** Fetch user books */
   static async getUserBooks(userId: number) {
-    const res = await this.request(`users/${userId}/books`)
-    return res
+    const res = await this.request(`users/${userId}/books`);
+    return res;
   }
 
   // ########### COMPONENT OPTIONS = {amount, unit, item} = INGREDIENT ###########
 
   /** Fetch all ingredients  */
   static async getUserComponentsOptions(userId: number) {
-    const res = await this.request(`/users/${userId}/ingredients/components`)
+    const res = await this.request(`/users/${userId}/ingredients/components`);
     return res;
   }
 
   /** Fetch book ingredients */
   static async getBookComponentsOptions(userId: number, bookId: number) {
-    const res = await this.request(`/users/${userId}/books/${bookId}/ingredients/components`)
+    const res = await this.request(
+      `/users/${userId}/books/${bookId}/ingredients/components`,
+    );
     return res;
   }
 
   /** Add ingredient - NOT IN USE*/
   static async postIngredient(data: AttributeData, option: string) {
-    const res = await this.request(`ingredients/${option}`, data, "POST")
+    const res = await this.request(`ingredients/${option}`, data, "POST");
     return res;
   }
 
   /** Add book ingredient */
-  static async postComponentOption(option: AttributeData, bookId: number, userId: number, component: string) {
-    const res = await this.request(`/users/${userId}/books/${bookId}/ingredients/${component}`, option, "POST")
+  static async postComponentOption(
+    option: AttributeData,
+    bookId: number,
+    userId: number,
+    component: string,
+  ) {
+    const res = await this.request(
+      `/users/${userId}/books/${bookId}/ingredients/${component}`,
+      option,
+      "POST",
+    );
     return res;
   }
 
   /** Post option association */
-  static async postOptionAssociation(userId: number, bookId: number, optionId: number, component: string) {
-    const res = await this.request(`/users/${userId}/books/${bookId}/components/${component}/options/${optionId}`, {}, "POST")
+  static async postOptionAssociation(
+    userId: number,
+    bookId: number,
+    optionId: number,
+    component: string,
+  ) {
+    const res = await this.request(
+      `/users/${userId}/books/${bookId}/components/${component}/options/${optionId}`,
+      {},
+      "POST",
+    );
     return res;
   }
 
@@ -120,34 +172,51 @@ class API {
 
   /** Fetch all instructions */
   static async getInstructions() {
-    const res = await this.request("instructions")
+    const res = await this.request("instructions");
     return res;
   }
 
   /** Fetch user instructions */
   static async getUserInstructions(userId: number) {
-    const res = await this.request(`/users/${userId}/instructions`)
+    const res = await this.request(`/users/${userId}/instructions`);
     return res;
   }
 
   /** Fetch book instructions */
   static async getBookInstructions(userId: number, bookId: number) {
-    const res = await this.request(`/users/${userId}/books/${bookId}/instructions`)
+    const res = await this.request(
+      `/users/${userId}/books/${bookId}/instructions`,
+    );
     return res;
   }
 
   /** Post instruction to database */
-  static async postInstruction(userId: number, bookId: number, data: Instruction) {
-    const res = await this.request(`users/${userId}/books/${bookId}/instructions`, data, "POST")
-    return res
+  static async postInstruction(
+    userId: number,
+    bookId: number,
+    data: Instruction,
+  ) {
+    const res = await this.request(
+      `users/${userId}/books/${bookId}/instructions`,
+      data,
+      "POST",
+    );
+    return res;
   }
 
   /** Post instruction association */
-  static async postInstructionAssociation(userId: number, bookId: number, instructionId: number) {
-    const res = await this.request(`users/${userId}/books/${bookId}/instructions/${instructionId}`, {}, "POST")
-    return res
+  static async postInstructionAssociation(
+    userId: number,
+    bookId: number,
+    instructionId: number,
+  ) {
+    const res = await this.request(
+      `users/${userId}/books/${bookId}/instructions/${instructionId}`,
+      {},
+      "POST",
+    );
+    return res;
   }
 }
-
 
 export default API;

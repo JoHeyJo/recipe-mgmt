@@ -1,32 +1,41 @@
-import React, { useState } from 'react';
-import Login from '../../auth/Login'; 
-import SignUp from '../../auth/SignUp'; 
-import '../../styles/AuthTabs.css'; 
-import { AuthProps } from '../../utils/types';
-
+import React, { useState } from "react";
+import Login from "../../auth/Login";
+import SignUp from "../../auth/SignUp";
+import "../../styles/AuthTabs.css";
+import { AuthProps } from "../../utils/types";
 
 /** Displays user auth forms
- * 
- * 
+ *
+ *
  * RoutesList -> AuthTabs -> [Login, SignUp]
  */
 function AuthTabs({ signUp, login }: AuthProps) {
-  const [activeTab, setActiveTab] = useState('login');
+  const [activeTab, setActiveTab] = useState("login");
 
   return (
     <div className="cardContainer">
-      <nav id='AuthTabs-container'>
+      <nav id="AuthTabs-container">
         <ul className="navList">
-          <li className={`navItem ${activeTab === 'login' ? 'navItemActive' : ''}`} onClick={() => setActiveTab('login')}>
+          <li
+            className={`navItem ${activeTab === "login" ? "navItemActive" : ""}`}
+            onClick={() => setActiveTab("login")}
+          >
             Login
           </li>
-          <li className={`navItem ${activeTab === 'signup' ? 'navItemActive' : ''}`} onClick={() => setActiveTab('signup')}>
+          <li
+            className={`navItem ${activeTab === "signup" ? "navItemActive" : ""}`}
+            onClick={() => setActiveTab("signup")}
+          >
             Sign up
           </li>
         </ul>
       </nav>
       <div className="formContent">
-        {activeTab === 'login' ? <Login login={login} /> : <SignUp signUp={signUp}/>}
+        {activeTab === "login" ? (
+          <Login login={login} />
+        ) : (
+          <SignUp signUp={signUp} />
+        )}
       </div>
     </div>
   );

@@ -36,18 +36,18 @@ form,
 }
 
 .navItem:hover {
-  background-color: var(--navItem-hover)
+  background-color: var(--navItem-hover);
 }
 
 .navItemActive {
-  background-color: var(--naveItem-active)
+  background-color: var(--naveItem-active);
 }
 
 /*Hover effect handled inline */
-#TopNav-Items, .TopNav-Items {
+#TopNav-Items,
+.TopNav-Items {
   background-color: var(--background-secondary);
   /* color: var(--text-color); */
-
 }
 
 /* #TopNav-Items:hover, .TopNav-Items:hover {
@@ -59,12 +59,15 @@ form,
   background-color: var(--container-background-color);
 }
 
-#NotesView-container, #IngredientsView-container {
+#NotesView-container,
+#IngredientsView-container {
   background-color: var(--view-container);
 }
 
-#CreateBook-DialogPanel, textarea, #RecipeRequests-DialogPanel{
-background-color: var(--background-modal);
+#CreateBook-DialogPanel,
+textarea,
+#RecipeRequests-DialogPanel {
+  background-color: var(--background-modal);
 }
 
 textarea::placeholder {
@@ -75,19 +78,18 @@ textarea::placeholder {
   background-color: var(--background-secondary);
 }
 
-#submit-button{
+#submit-button {
   background-color: var(--submit-button-color);
 }
 
-#submit-button:hover{
+#submit-button:hover {
   background-color: var(--submit-button-hover);
 }
 
- #cancel-button {
+#cancel-button {
   background-color: var(--cancel-button-color);
- }
+}
 
- #cancel-button:hover {
+#cancel-button:hover {
   background-color: var(--cancel-button-hover);
- }
-
+}
