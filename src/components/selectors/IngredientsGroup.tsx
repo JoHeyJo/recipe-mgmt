@@ -15,7 +15,7 @@ import ComponentsOptionsRequests from "../requests/ComponentsOptionsRequests";
 function IngredientsGroup({ handleRecipeUpdate }: IngredientsGroupProps) {
   const { requestAction, contextIngredients } = useContext(RecipeContext);
   const [ingredients, setIngredients] = useState<Ingredients>(
-    contextIngredients || recipeTemplate.ingredients,
+    contextIngredients.length === 0 ? recipeTemplate.ingredients : contextIngredients
   );
   const [ingredientKeys, setIngredientKeys] = useState<any>([Date.now()]); // Generate unique key on first render
 

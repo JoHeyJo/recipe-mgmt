@@ -6,8 +6,7 @@ import {
   ComboboxButton,
   ComboboxInput,
   ComboboxOption,
-  ComboboxOptions,
-  Label,
+  ComboboxOptions
 } from "@headlessui/react";
 import { AttributeData, Instruction, Manager } from "../../utils/types";
 

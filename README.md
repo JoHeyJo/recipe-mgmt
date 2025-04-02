@@ -5,7 +5,7 @@ In the project directory, you can run:
 ### `npx prettier --write .`
 
 Run Prettier over all files in the project
-cmd + shift + f - to run on current file
+`option + shift + f` - run on current file if set as default formatter
 
 ### `npm start`
 

@@ -57,14 +57,12 @@ function RecipeRequests({
   const [recipe, setRecipe] = useState<any>({
     name: recipeName,
     id: recipeId,
-    // ingredients: contextIngredients.length === 0 ? [defaultIngredient] : contextIngredients,
     ingredients: defaultIngredient,
     instructions: contextInstructions,
     notes: selectedNotes,
   });
   const [error, setError] = useState();
   const [isDisabled, setIsDisabled] = useState(true);
-
   const selectedRecipe = {
     recipeId,
     recipeName,
@@ -74,7 +72,7 @@ function RecipeRequests({
     selectedNotes,
   };
 
-  // syncs selected original recipe with mutable recipe
+  // syncs selected original context recipe with mutable recipe state - on edit?
   useEffect(() => {
     setRecipe({
       name: recipeName,
@@ -91,11 +89,11 @@ function RecipeRequests({
       const name = compareNames(recipeName, recipe.name);
       const ingredients = compareIngredients(
         contextIngredients,
-        recipe.ingredients,
+        recipe.ingredients
       );
       const instructions = compareInstructions(
         contextInstructions,
-        recipe.instructions,
+        recipe.instructions
       );
       const notes = compareNotes(selectedNotes, recipe.notes);
       const isAltered = name || ingredients || instructions || notes;
@@ -108,7 +106,7 @@ function RecipeRequests({
   /** Updates recipe state */
   function handleRecipeUpdate(
     data: string | Ingredient[] | Instruction | Instructions,
-    section: string,
+    section: string
   ) {
     setRecipe((prevRecipe) => ({ ...prevRecipe, [section]: data }));
   }
@@ -121,7 +119,7 @@ function RecipeRequests({
       const res = await API.postUserRecipe(
         filteredRecipe,
         currentBookId,
-        userId,
+        userId
       );
       recipeActions.updateRecipes(res);
       return "submitted";
@@ -135,7 +133,7 @@ function RecipeRequests({
   /** Calls API - sends patch request with only edited recipe data */
   async function editRecipe(
     originalRecipe: RecipeContextType,
-    mutableRecipe: Recipe,
+    mutableRecipe: Recipe
   ) {
     try {
       const mutatedData = filterRecipe(originalRecipe, mutableRecipe);
@@ -143,7 +141,7 @@ function RecipeRequests({
         userId,
         currentBookId,
         recipeId,
-        mutatedData,
+        mutatedData
       );
       recipeActions.editRecipe();
       return res;
@@ -155,7 +153,7 @@ function RecipeRequests({
   async function deleteRecipe(
     userId: number,
     bookId: number,
-    recipeId: number,
+    recipeId: number
   ) {
     try {
       const res = API.deleteUserRecipe(userId, currentBookId, recipeId);

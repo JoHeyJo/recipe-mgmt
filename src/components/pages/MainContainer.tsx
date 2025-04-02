@@ -69,7 +69,7 @@ function MainContainer() {
 
   /** Triggers actions that renders RecipeRequests with appropriate data set - current recipe */
   function toggleEditTemplate() {
-    setRequestAction("edit");
+  setRequestAction("edit");
     setOpen(!isOpen);
   }
 

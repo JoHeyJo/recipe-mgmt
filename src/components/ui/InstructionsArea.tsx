@@ -30,7 +30,7 @@ function InstructionsArea({
       requestAction === "edit"
         ? [
             ...contextInstructions,
-            { id: null, instruction: "some other thing..." },
+            { id: null, instruction: "some instruction..." },
           ]
         : PLACE_HOLDER,
     );
@@ -40,7 +40,7 @@ function InstructionsArea({
   function createInstructionInput() {
     setSelectedInstructions((selected) => [
       ...selected,
-      { id: null, instruction: "some other thing..." },
+      { id: null, instruction: "some instruction..." },
     ]);
   }
 
@@ -65,7 +65,7 @@ function InstructionsArea({
       const alteredInstructions = [...instructions];
       alteredInstructions[instructionKey] = PLACE_HOLDER[instructionKey] || {
         id: null,
-        instruction: "some other thing...",
+        instruction: "some instruction...",
       };
       return alteredInstructions;
     });
