@@ -27,7 +27,6 @@ export async function extractAndSetUser(
         currentBookId: localStorageBookValue || res.default_book_id,
         books: await validateUserFetchBooks(sub, setUser),
       });
-      // setLocalStorageToDefaultBookValue
       if (!localStorageBookValue) {
         localStorage.setItem(
           "current-book-id",
