@@ -8,11 +8,11 @@ const PrivateRoutes = () => {
   const { token, userId } = useContext(UserContext);
   return (
     // Gate rendering for "loading state" - requires valid token and hydrated user data
-    token && !isTokenValid(token) && userId ? (
+    token && !isTokenValid(token) && userId ? 
       <Outlet />
-    ) : (
+     : 
       <Navigate to="/auth" />
-    )
+    
   );
 };
 
