@@ -6,13 +6,15 @@ import { isTokenValid } from "../utils/functions";
 /** Handles redirect to protected routes with valid token */
 const PrivateRoutes = () => {
   const { token, userId } = useContext(UserContext);
+  console.log("Private ROUTES......", token, !isTokenValid(token), userId);
+  return (token && isTokenValid(token) && userId) && <Outlet />
   return (
     // Gate rendering for "loading state" - requires valid token and hydrated user data
-    token && !isTokenValid(token) && userId ? 
+    token && !isTokenValid(token) && userId ? (
       <Outlet />
-     : 
-      <Navigate to="/auth" />
-    
+    ) : (
+      <Navigate to="/home" />
+    )
   );
 };
 
