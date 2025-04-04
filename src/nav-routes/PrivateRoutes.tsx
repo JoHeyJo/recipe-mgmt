@@ -7,7 +7,7 @@ import { isTokenValid } from "../utils/functions";
 const PrivateRoutes = () => {
   const { token, userId } = useContext(UserContext);
   console.log("Private ROUTES......", token, !isTokenValid(token), userId);
-  // if (token && isTokenValid(token) && userId) return <Outlet />
+  if (token && isTokenValid(token) && userId) return <Outlet />
   // return token && isTokenValid(token) && userId && <Outlet />;
   return (
     // Gate rendering for "loading state" - requires valid token and hydrated user data
