@@ -6,5 +6,5 @@ export function isTokenValid(token: string | null) {
   const decodedToken = jwtDecode(token);
   const expirationTime = decodedToken.exp;
   const currentTime = Math.floor(Date.now() / 1000);
-  return expirationTime < currentTime;
+  return expirationTime >= currentTime;
 }
