@@ -29,6 +29,28 @@ function RoutesList({ signUp, login }: AuthProps) {
 
     </Routes>
   );
+
+    return (
+      <Routes>
+        <Route element={<PrivateRoutes />}>
+          <Route path="/home" element={<MainContainer />} />
+          <Route path="/" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+        {/* <Route element={<PublicRoutes />}> 
+        <Route
+          path="/auth"
+          element={<AuthTabs signUp={signUp} login={login} />}
+        />
+        <Route path="*" element={<NotFound />} />
+        </Route> */}
+        <Route
+          path="/auth"
+          element={<AuthTabs signUp={signUp} login={login} />}
+        />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    );
 }
 
 export default RoutesList;

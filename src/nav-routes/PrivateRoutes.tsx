@@ -9,14 +9,6 @@ const PrivateRoutes = () => {
   console.log("Private ROUTES......", token, !isTokenValid(token), userId);
   if (token && isTokenValid(token) && userId) return <Outlet />
   // return token && isTokenValid(token) && userId && <Outlet />;
-  return (
-    // Gate rendering for "loading state" - requires valid token and hydrated user data
-    token && !isTokenValid(token) && userId ? (
-      <Outlet />
-    ) : (
-      <Navigate to="/auth" />
-    )
-  );
 };
 
 export default PrivateRoutes;
