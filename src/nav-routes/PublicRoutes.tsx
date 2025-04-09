@@ -10,7 +10,7 @@ const PublicRoutes = () => {
   return !isAuthenticated && !isTokenValid(token) && !userId ? (
     <Outlet />
   ) : (
-    <Navigate to="/" />
+    <Navigate to="/home" />
   );
 };
 
