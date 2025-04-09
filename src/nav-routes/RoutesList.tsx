@@ -26,7 +26,6 @@ function RoutesList({ signUp, login }: AuthProps) {
       :
        <Route path="/auth"element={<AuthTabs signUp={signUp} login={login}  />} />
     }
-
     </Routes>
   );
 
