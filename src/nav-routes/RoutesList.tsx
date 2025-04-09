@@ -36,13 +36,13 @@ function RoutesList({ signUp, login }: AuthProps) {
           <Route path="/" element={<Home />} />
           <Route path="*" element={<NotFound />} />
         </Route>
-        {/* <Route element={<PublicRoutes />}> 
+        <Route element={<PublicRoutes />}> 
         <Route
           path="/auth"
           element={<AuthTabs signUp={signUp} login={login} />}
         />
         <Route path="*" element={<NotFound />} />
-        </Route> */}
+        </Route>
         <Route
           path="/auth"
           element={<AuthTabs signUp={signUp} login={login} />}
