@@ -97,10 +97,10 @@ function App() {
   return (
     <BrowserRouter>
       <div id="App-container">
-        <UserContext.Provider value={UserDataFromContext}>
-          <TopNav logout={logout} />
+       <UserContext.Provider value={UserDataFromContext}>
+           <TopNav logout={logout} />
           <RoutesList signUp={userSignUp} login={userLogin} />
-        </UserContext.Provider>
+       </UserContext.Provider>
         {/* <button type="button" onClick={toggleDarkMode}>toggle color scheme</button> */}
       </div>
     </BrowserRouter>

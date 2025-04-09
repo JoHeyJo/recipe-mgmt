@@ -5,8 +5,13 @@ import { isTokenValid } from "../utils/functions";
 
 /** Handles redirect to public routes with invalid token */
 const PublicRoutes = () => {
-  const { token } = useContext(UserContext);
-  return !token || isTokenValid(token) ? <Outlet /> : <Navigate to="/home" />;
+  const { token, userId } = useContext(UserContext);
+  const isAuthenticated = token && isTokenValid(token) && userId;
+  return !isAuthenticated && !isTokenValid(token) && !userId ? (
+    <Outlet />
+  ) : (
+    <Navigate to="/" />
+  );
 };
 
 export default PublicRoutes;

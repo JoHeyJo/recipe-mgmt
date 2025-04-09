@@ -37,7 +37,7 @@ function TopNav({ logout }: TopNavProps) {
 
   function logOutAndRedirect() {
     logout();
-    navigate("/auth");
+    navigate("/");
   }
 
   return (
@@ -169,7 +169,7 @@ function TopNav({ logout }: TopNavProps) {
                           <MenuItem>
                             <a
                               href="#"
-                              onClick={() => navigate("/auth")}
+                              onClick={() => navigate("/")}
                               className="TopNav-Item block px-4 py-2 text-sm data-[focus]:bg-gray-100 dark:data-[focus]:bg-gray-600 "
                             >
                               Login

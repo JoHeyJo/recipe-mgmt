@@ -1,4 +1,10 @@
-import { Routes, Route } from "react-router-dom";
+import {
+  RouterProvider,
+  Routes,
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+} from "react-router-dom";
 import AuthTabs from "../components/ui/AuthTabs";
 import NotFound from "../components/pages/NotFound";
 import { AuthProps } from "../utils/types";
@@ -13,43 +19,40 @@ import { useContext } from "react";
 import { isTokenValid } from "../utils/functions";
 
 function RoutesList({ signUp, login }: AuthProps) {
-    const { token, userId } = useContext(UserContext);
-    const location = useLocation();
-    console.log("Current path:", location.pathname)
-    console.log(token , isTokenValid(token) , userId);
+  const { token, userId } = useContext(UserContext);
+
   return (
     <Routes>
-      {
-      token && isTokenValid(token) && userId
-      ?
-      <Route path="/home" element={<MainContainer />} />
-      :
-       <Route path="/auth"element={<AuthTabs signUp={signUp} login={login}  />} />
-    }
+      <Route element={<PublicRoutes />}>
+        <Route path="/" element={<AuthTabs signUp={signUp} login={login} />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+
+      <Route element={<PrivateRoutes />}>
+        <Route path="/home" element={<MainContainer />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
     </Routes>
   );
-
-    return (
-      <Routes>
-        <Route element={<PrivateRoutes />}>
-          <Route path="/home" element={<MainContainer />} />
-          <Route path="/" element={<Home />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-        <Route element={<PublicRoutes />}> 
-        <Route
-          path="/auth"
-          element={<AuthTabs signUp={signUp} login={login} />}
-        />
-        <Route path="*" element={<NotFound />} />
-        </Route>
-        <Route
-          path="/auth"
-          element={<AuthTabs signUp={signUp} login={login} />}
-        />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    );
 }
+
+//   const router = createBrowserRouter(
+//     createRoutesFromElements(
+//       <Route path="/">
+//         <Route element={<PrivateRoutes />}>
+//           <Route path="/" element={<Home />} />
+//           <Route path="/home" element={<MainContainer />} />
+//           <Route path="*" element={<NotFound />} />
+//         </Route>
+//         <Route
+//           path="/auth"
+//           element={<AuthTabs signUp={signUp} login={login} />}
+//         />
+//       </Route>
+//     )
+//   );
+// function RoutesList({ signUp, login }: AuthProps) {
+//   return <RouterProvider router={router} />;
+// }
 
 export default RoutesList;
