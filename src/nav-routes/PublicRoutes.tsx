@@ -7,7 +7,7 @@ import { isTokenValid } from "../utils/functions";
 const PublicRoutes = () => {
   const { token, userId } = useContext(UserContext);
   const isAuthenticated = token && isTokenValid(token) && userId;
-  return !isAuthenticated && !isTokenValid(token) && !userId ? (
+  return !token && !isTokenValid(token) && !userId ? (
     <Outlet />
   ) : (
     <Navigate to="/home" />

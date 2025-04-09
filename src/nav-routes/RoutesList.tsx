@@ -21,38 +21,19 @@ import { isTokenValid } from "../utils/functions";
 function RoutesList({ signUp, login }: AuthProps) {
   const { token, userId } = useContext(UserContext);
 
-  return (
-    <Routes>
-      <Route element={<PublicRoutes />}>
-        <Route path="/" element={<AuthTabs signUp={signUp} login={login} />} />
-        <Route path="*" element={<NotFound />} />
-      </Route>
+ if (token && isTokenValid(token) && userId)
+   return (
+     <Routes>
+       <Route element={<PublicRoutes />}>
+         <Route path="/" element={<AuthTabs signUp={signUp} login={login} />} />
+       </Route>
 
-      <Route element={<PrivateRoutes />}>
-        <Route path="/home" element={<MainContainer />} />
-        <Route path="*" element={<NotFound />} />
-      </Route>
-    </Routes>
-  );
+       <Route element={<PrivateRoutes />}>
+         <Route path="/home" element={<MainContainer />} />
+       </Route>
+       <Route path="*" element={<NotFound />} />
+     </Routes>
+   );
 }
-
-//   const router = createBrowserRouter(
-//     createRoutesFromElements(
-//       <Route path="/">
-//         <Route element={<PrivateRoutes />}>
-//           <Route path="/" element={<Home />} />
-//           <Route path="/home" element={<MainContainer />} />
-//           <Route path="*" element={<NotFound />} />
-//         </Route>
-//         <Route
-//           path="/auth"
-//           element={<AuthTabs signUp={signUp} login={login} />}
-//         />
-//       </Route>
-//     )
-//   );
-// function RoutesList({ signUp, login }: AuthProps) {
-//   return <RouterProvider router={router} />;
-// }
 
 export default RoutesList;
