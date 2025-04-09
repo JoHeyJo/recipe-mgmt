@@ -19,21 +19,34 @@ import { useContext } from "react";
 import { isTokenValid } from "../utils/functions";
 
 function RoutesList({ signUp, login }: AuthProps) {
-  const { token, userId } = useContext(UserContext);
+  const { token, userId, isLoading } = useContext(UserContext);
+  // return (
+  //   <Routes>
+  //     {token && isTokenValid(token) && userId ? (
+  //       <Route path="/home" element={<MainContainer />} />
+  //     ) : (
+  //       <Route
+  //         path="/"
+  //         element={<AuthTabs signUp={signUp} login={login} />}
+  //       />
+  //     )}
+  //   </Routes>
+  // );
+  console.log("IS LOADING", isLoading);
+  if (isLoading) return null;
 
- if (token && isTokenValid(token) && userId)
-   return (
-     <Routes>
-       <Route element={<PublicRoutes />}>
-         <Route path="/" element={<AuthTabs signUp={signUp} login={login} />} />
-       </Route>
+  return (
+    <Routes>
+      <Route element={<PublicRoutes />}>
+        <Route path="/" element={<AuthTabs signUp={signUp} login={login} />} />
+      </Route>
 
-       <Route element={<PrivateRoutes />}>
-         <Route path="/home" element={<MainContainer />} />
-       </Route>
-       <Route path="*" element={<NotFound />} />
-     </Routes>
-   );
+      <Route element={<PrivateRoutes />}>
+        <Route path="/home" element={<MainContainer />} />
+      </Route>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
 }
 
 export default RoutesList;

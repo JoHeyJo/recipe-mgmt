@@ -35,7 +35,7 @@ const defaultUser = {
 function App() {
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
   const [userData, setUserData] = useState<User>(defaultUser);
-
+  const [ isLoading, setIsLoading] = useState<boolean>(true)
   console.log("user in App from state", userData);
 
   const UserDataFromContext: UserContextType = {
@@ -47,6 +47,7 @@ function App() {
     books: userData?.books,
     token,
     setUserData,
+    isLoading,
   };
 
   /** User sign up - returns token and auth credentials - saved to local storage */
@@ -60,6 +61,8 @@ function App() {
     } catch (error: any) {
       errorHandling("App->userSignUp", error);
       throw error;
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -74,6 +77,8 @@ function App() {
     } catch (error: any) {
       errorHandling("App->userLogin", error);
       throw error;
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -81,6 +86,7 @@ function App() {
   function logout() {
     setToken(null);
     setUserData(null);
+    setIsLoading(false);
   }
 
   /** persist user data state on refresh */
@@ -91,15 +97,18 @@ function App() {
     }
     if (token) {
       persistUser();
+      setIsLoading(false)
     }
   }, [token]);
+
+  // if(isLoading) return <p>Loading...</p>
 
   return (
     <BrowserRouter>
       <div id="App-container">
        <UserContext.Provider value={UserDataFromContext}>
            <TopNav logout={logout} />
-          <RoutesList signUp={userSignUp} login={userLogin} />
+          <RoutesList signUp={userSignUp} login={userLogin}/>
        </UserContext.Provider>
         {/* <button type="button" onClick={toggleDarkMode}>toggle color scheme</button> */}
       </div>

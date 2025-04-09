@@ -5,13 +5,15 @@ import { isTokenValid } from "../utils/functions";
 
 /** Handles redirect to protected routes with valid token */
 function PrivateRoutes() {
-  const { token, userId } = useContext(UserContext);
-   const isAuthenticated = token && isTokenValid(token) && userId;
-     return token && isTokenValid(token) && userId ? (
-     <Outlet />
-   ) : (
-     <Navigate to="/" />
-   );
+  const { token, userId, isLoading } = useContext(UserContext);
+
+  if (isLoading) return null;
+
+  return token && isTokenValid(token) && userId ? (
+    <Outlet />
+  ) : (
+    <Navigate to="/" />
+  );
 }
 
 export default PrivateRoutes;
