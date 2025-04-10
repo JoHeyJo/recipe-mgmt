@@ -5,9 +5,7 @@ import { isTokenValid } from "../utils/functions";
 
 /** Handles redirect to public routes with invalid token */
 const PublicRoutes = () => {
-  const { token, userId, isLoading } = useContext(UserContext);
-
-  if (isLoading) return null;
+  const { token, userId } = useContext(UserContext);
 
   return !token && !isTokenValid(token) && !userId ? (
     <Outlet />

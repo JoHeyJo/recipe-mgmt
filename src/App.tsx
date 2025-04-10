@@ -101,9 +101,7 @@ function App() {
     }
   }, [token]);
 
-  console.log("loading in app",isLoading)
-  if(isLoading) return 
-
+  if(isLoading) return //template of application with outdata
   return (
     <BrowserRouter>
       <div id="App-container">
