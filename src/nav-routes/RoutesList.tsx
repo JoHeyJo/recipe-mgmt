@@ -20,21 +20,6 @@ import { isTokenValid } from "../utils/functions";
 
 function RoutesList({ signUp, login }: AuthProps) {
   const { token, userId, isLoading } = useContext(UserContext);
-  // return (
-  //   <Routes>
-  //     {token && isTokenValid(token) && userId ? (
-  //       <Route path="/home" element={<MainContainer />} />
-  //     ) : (
-  //       <Route
-  //         path="/"
-  //         element={<AuthTabs signUp={signUp} login={login} />}
-  //       />
-  //     )}
-  //   </Routes>
-  // );
-  console.log("IS LOADING", isLoading);
-  if (isLoading) return null;
-
   return (
     <Routes>
       <Route element={<PublicRoutes />}>
