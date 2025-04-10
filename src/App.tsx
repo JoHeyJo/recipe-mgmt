@@ -101,7 +101,8 @@ function App() {
     }
   }, [token]);
 
-  // if(isLoading) return <p>Loading...</p>
+  console.log("loading in app",isLoading)
+  if(isLoading) return 
 
   return (
     <BrowserRouter>
