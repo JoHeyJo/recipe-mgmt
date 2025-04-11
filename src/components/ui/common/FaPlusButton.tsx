@@ -6,7 +6,6 @@ import { useContext } from "react";
 
 function FaPlusButton({ onAction }: FaPlusButtonProp) {
   const { defaultBookId } = useContext(UserContext);
-  console.log("default book id", !!defaultBookId);
   const isDisabled = !!defaultBookId === false ? true : false;
   return (
     <button
