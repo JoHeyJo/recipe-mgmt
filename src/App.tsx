@@ -101,7 +101,8 @@ function App() {
     }
   }, [token]);
 
-  if(isLoading) return //template of application with outdata
+  // if(isLoading) return //template of application with outdata
+
   return (
     <BrowserRouter>
       <div id="App-container">

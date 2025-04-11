@@ -5,6 +5,7 @@ import { FaPlusButtonProp } from "../../../utils/props";
 function FaPlusButton({ onAction }: FaPlusButtonProp) {
   return (
     <button
+      disabled
       onClick={onAction}
       className="font-semibold leading-7 ml-1 hover:text-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-zinc-600"
     >
