@@ -9,7 +9,8 @@ import {
   Instruction,
 } from "./utils/types";
 
-const BASEURL = "http://127.0.0.1:5000";
+const BASEURL = process.env.REACT_APP_BASE_URL || process.env.EC2_CONNECTION_STRING;
+
 /** API class.
  *
  * Static class - Contains methods that facilitate communications between client

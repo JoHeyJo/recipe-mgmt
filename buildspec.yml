@@ -1,0 +1,19 @@
+version: 0.2
+env:
+   parameter-store:
+     EC2_CONNECTION_STRING: /CodeBuild/BASE_URL
+phases:
+  install:
+    runtime-versions:
+      nodejs: latest
+    commands:
+      - echo "Installing dependencies..."
+      - npm install
+  build:
+    commands:
+      - echo "Building the app..."
+      - npm run build
+  post_build:
+    commands:
+      - echo "Build completed on `date`"
+      - aws s3 sync ./build/ s3://sling-it-react-prod --delete
