@@ -9,7 +9,7 @@ import {
   Instruction,
 } from "./utils/types";
 
-const BASEURL = process.env.REACT_APP_BASE_URL || process.env.EC2_CONNECTION_STRING;
+const BASEURL = process.env.REACT_APP_BASE_URL || process.env.EC2_BASE_URL;
 
 console.log("BASEURL", BASEURL)
 
