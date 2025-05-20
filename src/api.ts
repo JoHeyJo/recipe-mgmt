@@ -26,7 +26,7 @@ class API {
     data: object = {},
     method: string = "GET",
   ) {
-    const url = `${BASEURL}/${endpoint}`;
+    const url = `http://${BASEURL}/${endpoint}`;
     const headers = {
       Authorization: `Bearer ${this.token}`,
     };
