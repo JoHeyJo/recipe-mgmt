@@ -11,6 +11,8 @@ import {
 
 const BASEURL = process.env.REACT_APP_BASE_URL || process.env.EC2_CONNECTION_STRING;
 
+console.log("BASEURL", BASEURL)
+
 /** API class.
  *
  * Static class - Contains methods that facilitate communications between client
@@ -41,6 +43,7 @@ class API {
 
   /** Register user: returns token */
   static async signUp(data: UserSignUp) {
+    console.log("BASEURL in signUp", BASEURL);
     const res = await this.request("signup", data, "POST");
     return res;
   }
