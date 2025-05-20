@@ -8,7 +8,7 @@ phases:
       nodejs: latest
     commands:
       - echo "Installing dependencies..."
-      - export EC2_BASE_URL=$EC2_CONNECTION_STRING
+      - export REACT_APP_EC2_BASE_URL=$EC2_CONNECTION_STRING
       - npm install
   build:
     commands:
