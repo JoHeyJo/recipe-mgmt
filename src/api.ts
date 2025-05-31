@@ -9,7 +9,7 @@ import {
 } from "./utils/types";
 
 const BASEURL =
-  process.env.REACT_APP_BASE_URL || process.env.REACT_APP_EC2_BASE_URL;
+  process.env.REACT_APP_BASE_URL || process.env.REACT_APP_EC2_ALB_DOMAIN;
 
 /** API class.
  *
