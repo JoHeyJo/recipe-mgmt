@@ -9,7 +9,6 @@ export async function extractAndSetUser(
   token: string,
   setUser: (user: User) => void,
 ) {
-  console.log("token", token);
   API.token = token;
   const { sub }: JWTPayload = jwtDecode(token);
   if (sub) {

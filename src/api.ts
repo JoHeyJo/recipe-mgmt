@@ -3,7 +3,6 @@ import {
   Recipe,
   UserLogin,
   UserSignUp,
-  Ingredient,
   Book,
   AttributeData,
   Instruction,
@@ -11,8 +10,6 @@ import {
 
 const BASEURL =
   process.env.REACT_APP_BASE_URL || process.env.REACT_APP_EC2_BASE_URL;
-
-console.log("BASEURL", BASEURL)
 
 /** API class.
  *
@@ -26,13 +23,12 @@ class API {
     data: object = {},
     method: string = "GET",
   ) {
-    const url = `http://${BASEURL}/${endpoint}`;
+    const url = `https://${BASEURL}/${endpoint}`;
     const headers = {
       Authorization: `Bearer ${this.token}`,
     };
     const params = method === "GET" ? data : {};
     try {
-      console.log("URL in post",url)
       const res = (await axios({ url, method, data, params, headers })).data;
       return res;
     } catch (error) {
@@ -45,8 +41,8 @@ class API {
 
   /** Register user: returns token */
   static async signUp(data: UserSignUp) {
-    console.log("BASEURL in signUp", BASEURL);
     const res = await this.request("signup", data, "POST");
+    console.log("RES",res)
     return res;
   }
 
