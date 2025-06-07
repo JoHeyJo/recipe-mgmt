@@ -35,8 +35,8 @@ const defaultUser = {
 function App() {
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
   const [userData, setUserData] = useState<User>(defaultUser);
-  const [ isLoading, setIsLoading] = useState<boolean>(true)
-  console.log("user in App from state", userData);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isContextInitialized, setIsContextInitialized] = useState(false);
 
   const UserDataFromContext: UserContextType = {
     user: userData?.userName,
@@ -48,6 +48,7 @@ function App() {
     token,
     setUserData,
     isLoading,
+    isInitialized: isContextInitialized,
   };
 
   /** User sign up - returns token and auth credentials - saved to local storage */
@@ -62,7 +63,8 @@ function App() {
       errorHandling("App->userSignUp", error);
       throw error;
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
+      setIsContextInitialized(true)
     }
   }
 
@@ -79,6 +81,7 @@ function App() {
       throw error;
     } finally {
       setIsLoading(false);
+      setIsContextInitialized(true);
     }
   }
 
@@ -97,8 +100,9 @@ function App() {
     }
     if (token) {
       persistUser();
-      setIsLoading(false)
+      setIsLoading(false);
     }
+    setIsContextInitialized(true);
   }, [token]);
 
   // if(isLoading) return //template of application with outdata
@@ -106,10 +110,10 @@ function App() {
   return (
     <BrowserRouter>
       <div id="App-container">
-       <UserContext.Provider value={UserDataFromContext}>
-           <TopNav logout={logout} />
-          <RoutesList signUp={userSignUp} login={userLogin}/>
-       </UserContext.Provider>
+        <UserContext.Provider value={UserDataFromContext}>
+          <TopNav logout={logout} />
+          <RoutesList signUp={userSignUp} login={userLogin} />
+        </UserContext.Provider>
         {/* <button type="button" onClick={toggleDarkMode}>toggle color scheme</button> */}
       </div>
     </BrowserRouter>
