@@ -7,10 +7,12 @@ import { isTokenValid } from "../utils/functions";
 function PrivateRoutes() {
   const { token, userId} = useContext(UserContext);
 
+  if (token === undefined || userId === undefined) return null;
+
   return token && isTokenValid(token) && userId ? (
     <Outlet />
   ) : (
-    <Navigate to="/" />
+    <Navigate to="/" replace/>
   );
 }
 
