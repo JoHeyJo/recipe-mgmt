@@ -23,7 +23,7 @@ class API {
     data: object = {},
     method: string = "GET",
   ) {
-    const url = `http://${BASEURL}/${endpoint}`;
+    const url = `https://${BASEURL}/${endpoint}`;
     const headers = {
       Authorization: `Bearer ${this.token}`,
     };
