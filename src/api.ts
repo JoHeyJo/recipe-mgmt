@@ -12,7 +12,6 @@ const BASEURL =
   process.env.REACT_APP_BASE_URL || process.env.REACT_APP_EC2_BASE_URL;
 
 /** API class.
- *
  * Static class - Contains methods that facilitate communications between client
  * and backend API */
 class API {
