@@ -1,14 +1,14 @@
 version: 0.2
 env:
    parameter-store:
-     EC2_CONNECTION_STRING: /CodeBuild/BASE_URL
+     ELB_CONNECTION_STRING: /CodeBuild/ELB_DNS
 phases:
   install:
     runtime-versions:
       nodejs: latest
     commands:
       - echo "Installing dependencies..."
-      - export REACT_APP_EC2_BASE_URL=$EC2_CONNECTION_STRING
+      - export REACT_APP_ELB_BASE_URL=$ELB_CONNECTION_STRING
       - npm install
   build:
     commands:
