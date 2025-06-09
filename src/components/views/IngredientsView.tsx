@@ -18,13 +18,13 @@ function IngredientsView({ ingredients }: IngredientsViewProp) {
         {ingredients.map((ingredient, i) => (
           <dl key={i} id="IngredientsView-ingredient" className="md:pr-9 flex">
             <dd className="flex-1 text-sm leading-6 sm:col-span-2">
-              {ingredient.amount.value}
+              {ingredient.amount.value || ""}
             </dd>
             <dd className="flex-1 text-sm leading-6 sm:col-span-2">
-              {ingredient.unit.type}
+              {ingredient.unit.type || ""}
             </dd>
             <dt className="flex-1 text-sm leading-6 sm:col-span-2">
-              {ingredient.item.name}
+              {ingredient.item.name || ""}
             </dt>
           </dl>
         ))}
