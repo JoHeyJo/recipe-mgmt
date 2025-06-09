@@ -6,6 +6,7 @@ import { IngredientsViewProp } from "../../utils/props";
  * RecipeView -> IngredientsView
  */
 function IngredientsView({ ingredients }: IngredientsViewProp) {
+  console.log(ingredients)
   return (
     <div
       id="IngredientsView-container"
@@ -18,13 +19,13 @@ function IngredientsView({ ingredients }: IngredientsViewProp) {
         {ingredients.map((ingredient, i) => (
           <dl key={i} id="IngredientsView-ingredient" className="md:pr-9 flex">
             <dd className="flex-1 text-sm leading-6 sm:col-span-2">
-              {ingredient.amount.value || ""}
+              {ingredient.amount ? ingredient.amount.value : ""}
             </dd>
             <dd className="flex-1 text-sm leading-6 sm:col-span-2">
-              {ingredient.unit.type || ""}
+              {ingredient.unit ? ingredient.unit.type : ""}
             </dd>
             <dt className="flex-1 text-sm leading-6 sm:col-span-2">
-              {ingredient.item.name || ""}
+              {ingredient.item ? ingredient.item.name : ""}
             </dt>
           </dl>
         ))}
