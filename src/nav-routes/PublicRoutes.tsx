@@ -3,17 +3,17 @@ import { Navigate, Outlet } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import { isTokenValid } from "../utils/functions";
 
-/** Handles redirect to public routes with invalid token */
+/** Handles redirect to public routes with invalid token.
+ * If context has been initialized route render is prevented.
+ */
 const PublicRoutes = () => {
   const { token, userId, isInitialized } = useContext(UserContext);
 
   if (!isInitialized) return null;
+  const isNotAuthenticated = !token && !isTokenValid(token) && !userId;
+  console.log("isNotAuthenticated in Publictoutes:", isNotAuthenticated);
 
-  return !token && !isTokenValid(token) && !userId ? (
-    <Outlet />
-  ) : (
-    <Navigate to="/home" replace/>
-  );
+  return isNotAuthenticated ? <Outlet /> : <Navigate to="/" replace />;
 };
 
 export default PublicRoutes;
