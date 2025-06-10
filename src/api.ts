@@ -8,8 +8,7 @@ import {
   Instruction,
 } from "./utils/types";
 
-const BASEURL =
-  process.env.REACT_APP_BASE_URL || process.env.REACT_APP_ELB_BASE_URL;
+const BASEURL = process.env.REACT_APP_BASE_URL;
 
 const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
 
