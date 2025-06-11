@@ -6,7 +6,6 @@ import { IngredientsViewProp } from "../../utils/props";
  * RecipeView -> IngredientsView
  */
 function IngredientsView({ ingredients }: IngredientsViewProp) {
-  console.log(ingredients)
   return (
     <div
       id="IngredientsView-container"

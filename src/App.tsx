@@ -85,6 +85,7 @@ function App() {
 
   /** Removes token and user data */
   function logout() {
+    setIsContextInitialized(false);
     setToken(null);
     setUserData(null);
     setIsLoading(false);
@@ -98,19 +99,18 @@ function App() {
     }
     if (token) {
       persistUser();
-      // setIsLoading(false);
     }
+    setIsLoading(false);
   }, [token]);
 
   useEffect(()=>{
-    console.log("In app", userData)
       if (userData?.id) {
         setIsContextInitialized(true);
-        setIsLoading(false);
       }
+      setIsLoading(false);  
   },[userData])
   
-  if(isLoading) return <p>Loading...</p>//template of application with outdata
+  if(isLoading) return <p>Loading...</p> //template of application with outdata
 
   return (
     <BrowserRouter>

@@ -42,7 +42,6 @@ class API {
   /** Register user: returns token */
   static async signUp(data: UserSignUp) {
     const res = await this.request("signup", data, "POST");
-    console.log("RES",res)
     return res;
   }
 
