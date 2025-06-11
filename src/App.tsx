@@ -37,8 +37,6 @@ function App() {
   const [userData, setUserData] = useState<User>(defaultUser);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isContextInitialized, setIsContextInitialized] = useState(false);
-  console.log("User data", userData)
-  console.log("token:",token)
 
   const UserDataFromContext: UserContextType = {
     user: userData?.userName,

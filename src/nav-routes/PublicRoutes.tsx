@@ -11,17 +11,7 @@ const PublicRoutes = () => {
 
   if (!isInitialized) return null;
   const isNotAuthenticated = !token && !isTokenValid(token) && !userId;
-  console.log("isNotAuthenticated in Publictoutes:", isNotAuthenticated);
-  console.log("PublicRoutes -",
-    "token:",
-    token,
-    "isTokenValid:",
-    isTokenValid(token),
-    "userId:",
-    userId
-  );
-
-  return isNotAuthenticated ? <Outlet /> : null;
+  return isNotAuthenticated ? <Outlet /> : <Navigate to="/" replace />;
 };
 
 export default PublicRoutes;
