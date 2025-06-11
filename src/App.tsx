@@ -37,6 +37,8 @@ function App() {
   const [userData, setUserData] = useState<User>(defaultUser);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isContextInitialized, setIsContextInitialized] = useState(false);
+  console.log("User data", userData)
+  console.log("token:",token)
 
   const UserDataFromContext: UserContextType = {
     user: userData?.userName,
@@ -58,13 +60,12 @@ function App() {
       const userId = await extractAndSetUser(res.token, setUserData);
       API.token = res.token;
       setToken(res.token);
-      // validateUserFetchBooks(userId, setUserData);
+      setIsContextInitialized(true)
     } catch (error: any) {
       errorHandling("App->userSignUp", error);
       throw error;
     } finally {
       setIsLoading(false);
-      setIsContextInitialized(true)
     }
   }
 
@@ -75,13 +76,12 @@ function App() {
       const userId = await extractAndSetUser(res.token, setUserData);
       API.token = res.token;
       setToken(res.token);
-      // validateUserFetchBooks(userId, setUserData);
+      setIsContextInitialized(true);
     } catch (error: any) {
       errorHandling("App->userLogin", error);
       throw error;
     } finally {
       setIsLoading(false);
-      setIsContextInitialized(true);
     }
   }
 
@@ -100,12 +100,18 @@ function App() {
     }
     if (token) {
       persistUser();
-      setIsLoading(false);
+      // setIsLoading(false);
     }
-    setIsContextInitialized(true);
   }, [token]);
 
-  // if(isLoading) return //template of application with outdata
+  useEffect(()=>{
+      if (userData?.id) {
+        setIsContextInitialized(true);
+        setIsLoading(false);
+      }
+  },[userData])
+  
+  if(isLoading) return <p>Loading...</p>//template of application with outdata
 
   return (
     <BrowserRouter>

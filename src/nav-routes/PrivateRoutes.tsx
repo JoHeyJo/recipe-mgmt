@@ -10,10 +10,10 @@ function PrivateRoutes() {
   const { token, userId, isInitialized } = useContext(UserContext);
 
   if (!isInitialized) return null;
-
+  console.log("isInitialied:",isInitialized)
   const isAuthenticated = token && isTokenValid(token) && userId;
   console.log("isAuthenticated in Privatetoutes:", isAuthenticated)
-  console.log("token:",token, "isTokenValid:",isTokenValid(token), "userId:",userId)
+  console.log("PrivateRoutes-","token:",token, "isTokenValid:",isTokenValid(token), "userId:",userId)
   return isAuthenticated ? <Outlet /> : <Navigate to="/" replace />;
 }
 
