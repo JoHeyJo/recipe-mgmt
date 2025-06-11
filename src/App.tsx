@@ -103,6 +103,7 @@ function App() {
   }, [token]);
 
   useEffect(()=>{
+    console.log("In app", userData)
       if (userData?.id) {
         setIsContextInitialized(true);
         setIsLoading(false);

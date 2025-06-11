@@ -8,7 +8,7 @@ import { isTokenValid } from "../utils/functions";
  */
 function PrivateRoutes() {
   const { token, userId, isInitialized } = useContext(UserContext);
-
+  console.log("PrivateRoutes",!token, !isTokenValid(token), !userId);
   if (!isInitialized) return null;
   const isAuthenticated = token && isTokenValid(token) && userId;
   return isAuthenticated ? <Outlet /> : <Navigate to="/" replace />;

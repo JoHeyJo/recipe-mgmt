@@ -8,10 +8,10 @@ import { isTokenValid } from "../utils/functions";
  */
 const PublicRoutes = () => {
   const { token, userId, isInitialized } = useContext(UserContext);
-
+  console.log("PublicRoutes",!token , !isTokenValid(token) , !userId)
   if (!isInitialized) return null;
   const isNotAuthenticated = !token && !isTokenValid(token) && !userId;
-  return isNotAuthenticated ? <Outlet /> : <Navigate to="/" replace />;
+  return isNotAuthenticated ? <Outlet /> : null;
 };
 
 export default PublicRoutes;
