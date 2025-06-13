@@ -10,6 +10,8 @@ import {
 
 const BASEURL = process.env.REACT_APP_BASE_URL;
 
+const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+
 /** API class.
  * Static class - Contains methods that facilitate communications between client
  * and backend API */
@@ -21,9 +23,7 @@ class API {
     data: object = {},
     method: string = "GET",
   ) {
-    const url =
-      process.env.NODE_ENV ===
-      "development" ? `http://${BASEURL}/${endpoint}` : `/api/${endpoint}`;
+    const url = `${protocol}://${BASEURL}/${endpoint}`;
     const headers = {
       Authorization: `Bearer ${this.token}`,
     };
