@@ -9,13 +9,13 @@ function IngredientsView({ ingredients }: IngredientsViewProp) {
   return (
     <div
       id="IngredientsView-container"
-      className="flex sm:gap-4  border-b-2 border-t-2 border-primary"
+      className={`flex sm:gap-4  ${ingredients[0].id === 0 && "py-6"} border-b-2 border-t-2 border-primary`}
     >
       <div className="basis-1/6 self-center text-sm font-medium leading-6 ">
         Ingredients:
       </div>
       <div className="basis-5/6">
-        {ingredients.map((ingredient, i) => (
+        {ingredients[0].id !== 0 && ingredients.map((ingredient, i) => (
           <dl
             key={i}
             id="IngredientsView-ingredient"
