@@ -19,7 +19,7 @@ function RecipeView({ recipe }: RecipeViewProps) {
     <>
       <div className="border-t border-gray-100">
         <section className="divide-y divide-gray-100">
-          <IngredientsView ingredients={ingredients} />
+          <IngredientsView ingredients={ingredients} index={instructions.length} />
           <InstructionsView instructions={instructions} />
           <NotesView notes={notes} />
         </section>
