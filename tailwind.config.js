@@ -12,8 +12,9 @@ module.exports = {
     "secondary": "#E5E7EB",
     "primary-dark": "#1F2937",
     "secondary-dark": "#1A202C",
-    "text-color": "1A202C",
-    "text-color-dark": "F0F2F4",
+    "text-color": "#1A202C",
+    "text-color-dark": "#F0F2F4",
+    "secondary-accent": "#F0F2F4",
 
   },
 
