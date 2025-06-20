@@ -21,11 +21,11 @@ function RecipeContainer({
   return (
     <div
       id="RecipeContainer-container"
-      className="overflow-y-auto divide-y border-2 border-blue-900 mx-auto flex-1"
+      className="overflow-y-auto divide-y border-x-2 border-blue-900 mx-auto flex-1"
     >
-      <div id="RecipeContainer-header" className="flex justify-between p-4">
-        <h3 className="font-semibold leading-7">Recipe:</h3>
-        <h2>{recipe.name}</h2>
+      <div id="RecipeContainer-header" className="flex justify-between p-1">
+        <h3 className="font-semibold text-lg">Recipe:</h3>
+        <h2 className="font-semibold text-lg">{recipe.name}</h2>
         <button
           onClick={handleModalToggle}
           className="font-semibold leading-7 ml-1 hover:text-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-zinc-600"

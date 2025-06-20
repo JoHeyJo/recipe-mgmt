@@ -9,9 +9,9 @@ function IngredientsView({ ingredients }: IngredientsViewProp) {
   return (
     <div
       id="IngredientsView-container"
-      className="flex px-4 py-6 sm:gap-4 sm:px-3"
+      className="flex px-4 py-6 sm:gap-4 sm:px-3 border-b-2 border-t-2 border-[#1f2937]"
     >
-      <div className="basis-1/3 self-center text-sm font-medium leading-6">
+      <div className="basis-1/3 self-center text-sm font-medium leading-6 ">
         Ingredients:
       </div>
       <div className="basis-2/3 space-y-4 ml-4">
