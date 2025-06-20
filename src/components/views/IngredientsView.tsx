@@ -20,7 +20,6 @@ function IngredientsView({ ingredients }: IngredientsViewProp) {
     return ingredients[0].id === 0
   };
 
-  console.log(ingredients);
   return (
     <div
       id="IngredientsView-container"

@@ -6,23 +6,26 @@ import { styleRecipeRows } from "../../utils/functions";
  *
  * RecipeView -> InstructionsView
  */
-function InstructionsView({ instructions }: InstructionsViewProp) {
-
+function InstructionsView({ instructions, prevSectionLength }: InstructionsViewProp) {
+  console.log(instructions);
+  /** Apply padding when there is not ingredients data to render */
+  const shouldPaddingBeApplied = () => {
+    if (instructions.length === 0) return true;
+    return instructions[0].id === 0;
+  };
   return (
-    <div className="flex px-4 py-6 sm:gap-4 sm:px-3">
-      <div className="basis-1/3 self-center text-sm font-medium leading-6">
+    <div className={`${shouldPaddingBeApplied() && "py-6"} flex sm:gap-4`}>
+      <div className="basis-1/6 self-center text-sm font-medium leading-6">
         Instructions:
       </div>
-      <div className="basis-2/3 space-y-4 ml-4">
+      <div className="basis-5/6">
         {instructions.map(({ instruction, id }, i) => (
           <div
             key={id}
             id="InstructionsView-instruction"
-            className={`flex space-x-4 ${styleRecipeRows(i,0)}`}
+            className={`flex py-2 pl-2 space-x-4 ${styleRecipeRows(i, prevSectionLength)}`}
           >
-            <p className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0">
-              {instruction}
-            </p>
+            <p className="leading-6 sm:col-span-2 sm:mt-0">{instruction}</p>
           </div>
         ))}
       </div>

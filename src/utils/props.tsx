@@ -105,6 +105,7 @@ export type IngredientsViewProp = {
 };
 export type InstructionsViewProp = {
   instructions: Instructions;
+  prevSectionLength: number;
 };
 
 export type NotesViewProp = {

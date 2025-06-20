@@ -14,8 +14,8 @@ module.exports = {
     "secondary-dark": "#1A202C",
     "text-color": "#1A202C",
     "text-color-dark": "#F0F2F4",
+    "accent": "#D2D5D8",
     "secondary-accent": "#F0F2F4",
-
   },
 
     extend: {
