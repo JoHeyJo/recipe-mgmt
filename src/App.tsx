@@ -15,7 +15,6 @@ import "./styles/theme.css";
 import { errorHandling } from "./utils/ErrorHandling";
 import {
   extractAndSetUser,
-  validateUserFetchBooks,
 } from "./utils/fetchRequests";
 import useLocalStorage from "./hooks/useLocalStorage";
 import TopNav from "./components/layout/TopNav";

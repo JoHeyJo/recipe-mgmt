@@ -11,7 +11,6 @@ export function isTokenValid(token: string | null) {
 
 /** fill recipe rows with alternating styles  */
 export function styleRecipeRows(index, prevSectionRowCount) {
-  console.log(prevSectionRowCount);
   if (prevSectionRowCount % 2 === 0) {
     return index % 2 === 0 ? "bg-accent" : "bg-secondary-accent";
   } else {
