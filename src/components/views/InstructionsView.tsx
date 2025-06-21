@@ -16,7 +16,7 @@ function InstructionsView({
     return instructions[0].id === 0;
   };
   return (
-    <div className={`${shouldPaddingBeApplied() && "py-6"} flex sm:gap-4`}>
+    <div className={`${shouldPaddingBeApplied() ? "py-6" : ""} flex sm:gap-4`}>
       <div className="basis-1/6 self-center text-sm font-medium leading-6">
         Instructions:
       </div>

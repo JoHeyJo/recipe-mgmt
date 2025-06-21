@@ -22,7 +22,7 @@ function IngredientsView({ ingredients }: IngredientsViewProp) {
   return (
     <div
       id="IngredientsView-container"
-      className={`flex sm:gap-4  ${shouldPaddingBeApplied() && "py-6"} border-b-2 border-t-2 border-primary`}
+      className={`flex sm:gap-4  ${shouldPaddingBeApplied() ? "py-6" : ""} border-b-2 border-t-2 border-primary`}
     >
       <div className="basis-1/6 self-center text-sm font-medium leading-6 ">
         Ingredients:

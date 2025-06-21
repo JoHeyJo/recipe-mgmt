@@ -3,11 +3,12 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 /** @type {import('tailwindcss').Config} */
 
 module.exports = {
+  safelist:["bg-accent","bg-secondary-accent"],
   darkMode: "selector",
-  content: ["./src/**/*.{html,js,jsx,tsx}"],
+  content: ["./index.html","./src/**/*.{html,js,jsx,tsx}"],
   theme: {
-    
-  colors: {
+    extend: {
+        colors: {
     "primary": "#1F2937",
     "secondary": "#E5E7EB",
     "primary-dark": "#1F2937",
@@ -17,8 +18,6 @@ module.exports = {
     "accent": "#D2D5D8",
     "secondary-accent": "#F0F2F4",
   },
-
-    extend: {
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
       },
