@@ -6,8 +6,10 @@ import { styleRecipeRows } from "../../utils/functions";
  *
  * RecipeView -> InstructionsView
  */
-function InstructionsView({ instructions, prevSectionLength }: InstructionsViewProp) {
-  console.log(instructions);
+function InstructionsView({
+  instructions,
+  prevSectionLength,
+}: InstructionsViewProp) {
   /** Apply padding when there is not ingredients data to render */
   const shouldPaddingBeApplied = () => {
     if (instructions.length === 0) return true;

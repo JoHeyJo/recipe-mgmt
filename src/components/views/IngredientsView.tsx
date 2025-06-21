@@ -8,16 +8,15 @@ import { Ingredients } from "../../utils/types";
  * RecipeView -> IngredientsView
  */
 function IngredientsView({ ingredients }: IngredientsViewProp) {
-  
   /**Guards against rendering empty data */
   function shouldIngredientsRender(ingredients: Ingredients) {
-    return ingredients.length > 1
+    return ingredients.length > 1;
   }
 
   /** Apply padding when there is not ingredients data to render */
-   const shouldPaddingBeApplied = () => {
-    if(ingredients.length === 0) return true
-    return ingredients[0].id === 0
+  const shouldPaddingBeApplied = () => {
+    if (ingredients.length === 0) return true;
+    return ingredients[0].id === 0;
   };
 
   return (

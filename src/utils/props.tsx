@@ -13,7 +13,7 @@ type HandleInstruction = {
   associate: (
     userId: number,
     currentBookId: number,
-    instructionId: number,
+    instructionId: number
   ) => void;
   addCreated: (instruction: Instruction) => void;
 };
@@ -45,7 +45,7 @@ export type Options = {
 type HandleRecipe = {
   handleRecipe: (
     data: string | Ingredient[] | Instruction | Instructions,
-    section: string,
+    section: string
   ) => void;
 };
 
@@ -58,14 +58,14 @@ type HandleIngredient = {
 type HandleOption = {
   post: (
     entity: string,
-    attributeObject: AttributeData,
+    attributeObject: AttributeData
   ) => Promise<AttributeData>;
   addCreated: (state: string, option: AttributeData) => void;
   associate: (
     userId: number,
     currentBookId: number,
     optionId: number,
-    component: string,
+    component: string
   ) => void;
 };
 

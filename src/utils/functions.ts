@@ -9,18 +9,12 @@ export function isTokenValid(token: string | null) {
   return expirationTime >= currentTime;
 }
 
-  /** fill recipe rows with alternating styles  */
-  export function styleRecipeRows(index, prevSectionRowCount){
-    console.log(prevSectionRowCount)
-    if(prevSectionRowCount % 2 === 0){
-      return index % 2 === 0 ? "bg-accent" : "bg-secondary-accent";
-    } else{
-      return index % 2 === 0 ? "bg-secondary-accent" : "bg-accent";
-    }
+/** fill recipe rows with alternating styles  */
+export function styleRecipeRows(index, prevSectionRowCount) {
+  console.log(prevSectionRowCount);
+  if (prevSectionRowCount % 2 === 0) {
+    return index % 2 === 0 ? "bg-accent" : "bg-secondary-accent";
+  } else {
+    return index % 2 === 0 ? "bg-secondary-accent" : "bg-accent";
   }
-
-  // dark on odd
-  // light on even
-  // next section is 
-  // if prev sections is even stat on odd
-  // if prev sections is odd stat on even
+}
