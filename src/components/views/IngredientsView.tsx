@@ -11,13 +11,10 @@ function IngredientsView({ ingredients }: IngredientsViewProp) {
 
   /**Guards against rendering empty data */
   function shouldIngredientsRender() {
-    return ingredients.length > 1;
+    return ingredients[0].id !== 0;
   }
 
-  console.log(ingredients)
-
   const isIngredientsEmpty = ingredients[0].id === 0;
-  console.log("is ingredients empty",isIngredientsEmpty, ingredients)
 
   return (
     <div

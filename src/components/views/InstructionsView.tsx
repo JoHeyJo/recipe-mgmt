@@ -14,11 +14,10 @@ function InstructionsView({
 
     /**Guards against rendering empty data */
     function shouldInstructionsRender() {
-      return instructions.length > 1;
+      return instructions[0].id !== 0;
     }
 
   const isInstructionsEmpty = instructions[0].id === 0;
-    console.log("is ingredients empty", isInstructionsEmpty, instructions);
 
   return (
     <div className={`${isInstructionsEmpty ? "py-6" : ""} flex sm:gap-4`}>

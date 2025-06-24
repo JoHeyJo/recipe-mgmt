@@ -95,7 +95,6 @@ function MainContainer() {
     async function fetchUserRecipes() {
       try {
         const res = await API.getBookRecipes(userId, selectedBookId);
-        console.log("recipes",res)
         setRecipes(res);
       } catch (error: any) {
         errorHandling("MainContainer -> fetchUserRecipes", error);
