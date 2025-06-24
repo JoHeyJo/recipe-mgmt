@@ -10,13 +10,12 @@ function InstructionsView({
   instructions,
   prevSectionLength,
 }: InstructionsViewProp) {
-  /** Apply padding when there is not ingredients data to render */
-  const shouldPaddingBeApplied = () => {
-    if (instructions.length === 0) return true;
-    return instructions[0].id === 0;
-  };
+
+  const isInstructionsEmpty =
+    instructions.length === 0 || instructions[0].id === 0;
+    
   return (
-    <div className={`${shouldPaddingBeApplied() ? "py-6" : ""} flex sm:gap-4`}>
+    <div className={`${isInstructionsEmpty ? "py-6" : ""} flex sm:gap-4`}>
       <div className="basis-1/6 self-center text-sm font-medium leading-6">
         Instructions:
       </div>

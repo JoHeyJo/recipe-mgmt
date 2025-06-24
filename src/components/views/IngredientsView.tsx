@@ -13,16 +13,13 @@ function IngredientsView({ ingredients }: IngredientsViewProp) {
     return ingredients.length > 1;
   }
 
-  /** Apply padding when there is not ingredients data to render */
-  const shouldPaddingBeApplied = () => {
-    if (ingredients.length === 0) return true;
-    return ingredients[0].id === 0;
-  };
+  const isIngredientsEmpty =
+    ingredients.length === 0 || ingredients[0].id === 0;
 
   return (
     <div
       id="IngredientsView-container"
-      className={`flex sm:gap-4  ${shouldPaddingBeApplied() ? "py-6" : ""} border-b-2 border-t-2 border-primary`}
+      className={`flex sm:gap-4 ${isIngredientsEmpty ? "py-6" : ""} border-b-2 border-t-2 border-primary`}
     >
       <div className="basis-1/6 self-center text-sm font-medium leading-6 ">
         Ingredients:
@@ -33,7 +30,7 @@ function IngredientsView({ ingredients }: IngredientsViewProp) {
             <dl
               key={ingredient_id}
               id="IngredientsView-ingredient"
-              className={`md:pr-9 py-2 pl-2 text-md flex ${styleRecipeRows(i, 0)}`}
+              className={`md:pr-9 py-2 pl-2 text-md flex ${i % 2 === 0 ? "bg-accent" : "bg-secondary-accent"}`}
             >
               <dd className="flex-1 leading-6 sm:col-span-2">
                 {amount ? amount.value : ""}
