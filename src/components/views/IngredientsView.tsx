@@ -8,13 +8,15 @@ import { Ingredients } from "../../utils/types";
  * RecipeView -> IngredientsView
  */
 function IngredientsView({ ingredients }: IngredientsViewProp) {
+
   /**Guards against rendering empty data */
-  function shouldIngredientsRender(ingredients: Ingredients) {
+  function shouldIngredientsRender() {
     return ingredients.length > 1;
   }
 
-  const isIngredientsEmpty =
-    ingredients.length === 0 || ingredients[0].id === 0;
+  console.log(ingredients)
+
+  const isIngredientsEmpty = ingredients[0].id === 0;
 
   return (
     <div
@@ -25,7 +27,7 @@ function IngredientsView({ ingredients }: IngredientsViewProp) {
         Ingredients:
       </div>
       <div className="basis-5/6">
-        {shouldIngredientsRender(ingredients) &&
+        {shouldIngredientsRender() &&
           ingredients.map(({ amount, unit, item, ingredient_id }, i) => (
             <dl
               key={ingredient_id}

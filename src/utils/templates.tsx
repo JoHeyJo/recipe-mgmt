@@ -1,18 +1,8 @@
-import { Recipe, Ingredient, Instructions } from "./types";
+import { Recipe, Ingredient, Instructions, Instruction } from "./types";
 
-export const recipeTemplate: Recipe = {
+export const defaultInstruction: Instruction = {
   id: 0,
-  name: "",
-  instructions: [],
-  notes: "",
-  ingredients: [
-    {
-      id: 0,
-      amount: { id: null, value: "" },
-      unit: { id: null, type: "" },
-      item: { id: null, name: "" },
-    },
-  ],
+  instruction:''
 };
 
 export const defaultIngredient: Ingredient = {
@@ -20,6 +10,14 @@ export const defaultIngredient: Ingredient = {
   amount: { id: null, value: "" },
   unit: { id: null, type: "" },
   item: { id: null, name: "" },
+};
+
+export const recipeTemplate: Recipe = {
+  id: 0,
+  name: "",
+  instructions: [defaultInstruction],
+  notes: "",
+  ingredients: [defaultIngredient],
 };
 
 export const references = {
