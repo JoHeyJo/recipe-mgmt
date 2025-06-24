@@ -18,6 +18,7 @@ function InstructionsView({
     }
 
   const isInstructionsEmpty = instructions[0].id === 0;
+    console.log("is ingredients empty", isInstructionsEmpty, instructions);
 
   return (
     <div className={`${isInstructionsEmpty ? "py-6" : ""} flex sm:gap-4`}>

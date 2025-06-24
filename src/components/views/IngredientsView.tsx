@@ -17,6 +17,7 @@ function IngredientsView({ ingredients }: IngredientsViewProp) {
   console.log(ingredients)
 
   const isIngredientsEmpty = ingredients[0].id === 0;
+  console.log("is ingredients empty",isIngredientsEmpty, ingredients)
 
   return (
     <div
