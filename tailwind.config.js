@@ -9,14 +9,13 @@ module.exports = {
   theme: {
     extend: {
         colors: {
-    "primary": "#1F2937",
-    "secondary": "#E5E7EB",
-    "primary-dark": "#1F2937",
-    "secondary-dark": "#1A202C",
-    "text-color": "#1A202C",
-    "text-color-dark": "#F0F2F4",
-    "accent": "#D2D5D8",
-    "secondary-accent": "#F0F2F4",
+        primary: 'var(--primary)',
+        secondary: 'var(--secondary)',
+        text: 'var(--text-color)',
+        background: 'var(--background-primary)',
+        accent: 'var(--accent-highlight)',
+        "data-focus":'var(--data_focus)',
+        "card-background": 'var(--card-background)',
   },
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],

@@ -1,11 +1,6 @@
-:root {
+/* :root {
   background-color: var(--background-secondary);
   color: var(--text-color);
-}
-
-#App-container {
-  /* background-color: var(--background-color); */
-  /* color: var(--text-color) */
 }
 
 .TopNav-Disclosure {
@@ -16,8 +11,6 @@ form,
 .formContent,
 #AuthTabs-container {
   background-color: var(--card-background);
-  /* color: var(--form-text-color); */
-  /* border: 1px solid var(--form-border-color); */
 }
 
 #PillButton {
@@ -44,17 +37,16 @@ form,
 }
 
 /*Hover effect handled inline */
-#TopNav-Items,
+/* #TopNav-Items,
 .TopNav-Items {
   background-color: var(--background-secondary);
-  /* color: var(--text-color); */
-}
+} */ 
 
-/* #TopNav-Items:hover, .TopNav-Items:hover {
-  background-color: var(--background-button-hover);
-} */
+                    /* #TopNav-Items:hover, .TopNav-Items:hover {
+                      background-color: var(--background-button-hover);
+                    } */
 
-#RecipeContainer-container,
+/* #RecipeContainer-container,
 #Recipes-container {
   background-color: var(--container-background-color);
 }
@@ -92,4 +84,4 @@ textarea::placeholder {
 
 #cancel-button:hover {
   background-color: var(--cancel-button-hover);
-}
+} */

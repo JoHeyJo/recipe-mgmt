@@ -92,13 +92,13 @@ function CreateBook({ isOpen, setOpen }) {
           <DialogPanel
             id="CreateBook-DialogPanel"
             transition
-            className="relative transform overflow-hidden rounded-lg px-4 pb-4 pt-5 text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg sm:p-6 data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
+            className="relative bg-card-background transform overflow-hidden rounded-lg px-4 pb-4 pt-5 text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg sm:p-6 data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
           >
             <div>
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full">
                 <BookOpenIcon
                   aria-hidden="true"
-                  className="h-6 w-6 text-blue-600"
+                  className="h-6 w-6 text-secondary"
                 />
               </div>
               <div className="mt-3 text-center sm:mt-5">
