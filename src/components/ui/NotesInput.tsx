@@ -25,7 +25,7 @@ function NotesInput({ handleUpdate }: NotesInputProps) {
     <div className="flex items-start space-x-4">
       <div className="min-w-0 flex-1">
         <form action="#">
-          <div className="NotesInput-text border-b border-gray-200 focus-within:border-gray-800">
+          <div className="NotesInput-text border-b border-light-border focus-within:border-gray-800">
             <label htmlFor="notes" className="sr-only"></label>
             <textarea
               onChange={handleChange}

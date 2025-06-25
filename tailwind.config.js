@@ -10,12 +10,25 @@ module.exports = {
     extend: {
         colors: {
         primary: 'var(--primary)',
-        secondary: 'var(--secondary)',
+        'secondary': {
+   50: 'var(--secondary-50)',
+   100: 'var(--secondary-100)',
+   200: 'var(--secondary-200)',
+   300: 'var(--secondary-300)',
+   400: 'var(--secondary-400)',
+   500: 'var(--secondary-500)',
+   600: 'var(--secondary-600)',
+   700: 'var(--secondary-700)',
+   800: 'var(--secondary-800)',
+   900: 'var(--secondary-900)',
+   950: 'var(--secondary-950)',
+ },
         text: 'var(--text-color)',
         background: 'var(--background-primary)',
         accent: 'var(--accent-highlight)',
-        "data-focus":'var(--data_focus)',
+        "data-hover":'var(--data-hover)',
         "card-background": 'var(--card-background)',
+        "light-border":'var(--light-border)'
   },
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],

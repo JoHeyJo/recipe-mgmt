@@ -9,7 +9,7 @@ function TextInputDescription({ handleChange }: TextInputDescription) {
     <div className="flex items-start space-x-4">
       <div className="min-w-0 flex-1">
         <form action="#">
-          <div className="TextInputDescription-text border-b border-gray-200 focus-within:border-indigo-600">
+          <div className="TextInputDescription-text border-b border-light-border focus-within:border-indigo-600">
             <label htmlFor="description" className="sr-only"></label>
             <textarea
               onChange={handleChange}

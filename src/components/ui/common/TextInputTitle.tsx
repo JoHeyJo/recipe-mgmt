@@ -19,7 +19,7 @@ function TextInputTitle({ handleChange, title }: TextInputTitle) {
       </div>
       <div className="min-w-0 flex-1">
         <form action="#">
-          <div className="TextInputTitle-text border-b border-gray-200 focus-within:border-indigo-600">
+          <div className="TextInputTitle-text border-b">
             <label htmlFor="title" className="sr-only"></label>
             <textarea
               onChange={handleChange}
@@ -27,7 +27,7 @@ function TextInputTitle({ handleChange, title }: TextInputTitle) {
               name="title"
               rows={1}
               placeholder="Book Title..."
-              className="block w-full resize-none border-0 border-b border-transparent p-0 pb-2 focus:border-indigo-600 focus:ring-0 sm:text-sm sm:leading-6"
+              className="block w-full resize-none border-0 border-b border-transparent p-0 pb-2 focus:border-secondary-300 focus:ring-0 sm:text-sm sm:leading-6"
               defaultValue={""}
             />
           </div>

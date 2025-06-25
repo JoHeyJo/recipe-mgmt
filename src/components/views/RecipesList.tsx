@@ -13,7 +13,7 @@ function RecipesList({ recipes, handleSelect }: RecipesListProps) {
       <ul
         role="list"
         id="Recipes-container"
-        className=" divide-y divide-gray-200"
+        className=" divide-y divide-light-border"
       >
         {recipes.map(({ name, id }, index) => (
           <li

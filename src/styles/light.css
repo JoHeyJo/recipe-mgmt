@@ -4,6 +4,32 @@
   --primary: #e5e7eb;
   --secondary: #1f2937;
   --accent: #f0f2f4;
-  --data_focus:#F5f5f5;
+  --data-hover:#F5f5f5;
   --card-background:#FFFFFF;
+  --light-border:#EEEEEE;
+
+
+      --primary-50: #f1f2f4;
+        --primary-100: #e2e4e9;
+        --primary-200: #c5cad3;
+        --primary-300: #a9afbc;
+        --primary-400: #8c95a6;
+        --primary-500: #6f7a90;
+        --primary-600: #596273;
+        --primary-700: #434956;
+        --primary-800: #2c313a;
+        --primary-900: #16181d;
+        --primary-950: #0b0c0e;
+
+            --secondary-50: #eff2f6;
+              --secondary-100: #dee4ed;
+              --secondary-200: #becada;
+              --secondary-300: #9dafc8;
+              --secondary-400: #7c94b6;
+              --secondary-500: #5c7aa3;
+              --secondary-600: #496183;
+              --secondary-700: #374962;
+              --secondary-800: #253141;
+              --secondary-900: #121821;
+              --secondary-950: #090c10;
 }
