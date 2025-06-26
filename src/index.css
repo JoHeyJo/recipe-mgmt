@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 body {
   margin: 0;
   font-family:'Outfit';
@@ -11,4 +12,76 @@ body {
 code {
   font-family:
     source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+
+@layer base {
+  /* Root text and background */
+  html, body {
+  background-color: var(--primary);
+    /* @apply bg-background text-text; */
+    /* font-family: system-ui, sans-serif; */
+    /* line-height: 1.5; */
+  }
+
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--text-color);
+    font-weight: 600;
+  }
+
+  /* Text elements */
+  p, span, strong, em, small, blockquote {
+    color: var(--text-color);
+  }
+
+  /* Lists */
+  ul, ol, li {
+    color: var(--text-color);
+    /* padding-left: 1.25rem; */
+  }
+    li:hover {
+    opacity: 0.8;
+    /* color: red; */
+  }
+
+  /* Links */
+  a {
+    color: var(--text-color);
+    text-decoration: underline;
+  }
+  a:hover {
+    opacity: 0.8;
+  }
+
+  /* Inputs and form fields */
+  input, select, textarea, button {
+    color: var(--text-color);
+    background-color: var(--background-button-color);
+    /* border: 1px solid var(--cancel-button-border, #d1d5db); */
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--text-placeholder);
+  }
+
+  /* Cards or panels */
+  .card, .panel, .container {
+    background-color: var(--card-background);
+    color: var(--text-color);
+    /* border-radius: 0.5rem; */
+  }
+
+  /* Horizontal rules */
+  hr {
+    border-color: var(--border-divider, #e5e7eb);
+  }
+
+  /* Code */
+  code, pre {
+    background-color: var(--card-background);
+    color: var(--text-color);
+    font-family: monospace;
+  }
 }

@@ -24,6 +24,7 @@ class API {
     method: string = "GET",
   ) {
     const url = `${protocol}://${BASEURL}/${endpoint}`;
+    // const url = `http://192.168.4.152:5000/${endpoint}`;
     const headers = {
       Authorization: `Bearer ${this.token}`,
     };

@@ -11,7 +11,7 @@ module.exports = {
       colors: {
         primary: "var(--primary)",
         secondary: "var(--secondary)",
-        text: "var(--text-color)",
+        // text: "var(--text-color)",
         "text-hover": "var(--text-hover)",
         background: "var(--background-primary)",
         accent: "var(--accent)",
