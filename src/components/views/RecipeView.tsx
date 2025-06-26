@@ -37,7 +37,7 @@ function RecipeView({ recipe }: RecipeViewProps) {
             }
             prevSectionLength={ingredients.length}
           />
-          <NotesView notes={notes} prevSectionLength={instructions.length} />
+          <NotesView notes={notes} prevSectionLength={instructions.length - ingredients.length} />
         </section>
       </div>
     </>
