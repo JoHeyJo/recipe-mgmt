@@ -132,7 +132,7 @@ function MainContainer() {
               <BookView resetSelected={resetSelectedRecipe} />
               <FaPlusButton onAction={toggleCreateForm} />
             </div>
-            <RecipesList recipes={recipes} handleSelect={selectRecipe} />
+            <RecipesList recipes={recipes} handleSelect={selectRecipe} selectedId={selectedRecipe.id}/>
           </section>
           <RecipeContainer
             recipe={selectedRecipe}

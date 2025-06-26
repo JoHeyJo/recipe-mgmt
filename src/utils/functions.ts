@@ -10,10 +10,10 @@ export function isTokenValid(token: string | null) {
 }
 
 /** fill recipe rows with alternating styles  */
-export function styleRecipeRows(index, prevSectionRowCount) {
+export function styleRecipeRows(index: number, prevSectionRowCount: number) {
   if (prevSectionRowCount % 2 === 0) {
-    return index % 2 === 0 ? "bg-accent" : "bg-secondary-accent";
+    return index % 2 === 0 ? "bg-accent" : "bg-accent-secondary";
   } else {
-    return index % 2 === 0 ? "bg-secondary-accent" : "bg-accent";
+    return index % 2 === 0 ? "bg-accent-secondary" : "bg-accent";
   }
 }

@@ -38,6 +38,7 @@ export function compareIngredients(
   edited: Ingredients,
 ) {
   const isAltered = edited.find((editedIngredient, index) => {
+    console.log(editedIngredient)
     return (
       // checks for empty ingredient input
       (editedIngredient.amount.id !== null ||

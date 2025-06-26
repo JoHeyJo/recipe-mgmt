@@ -110,6 +110,7 @@ export type InstructionsViewProp = {
 
 export type NotesViewProp = {
   notes: string;
+  prevSectionLength: number;
 };
 
 export type RecipeRequestsProps = {
@@ -159,6 +160,7 @@ export type NotesInputProps = {
 export type RecipesListProps = {
   recipes: Recipe[];
   handleSelect: (index: number) => void;
+  selectedId: number;
 };
 
 export type InputWithLabelProps = {

@@ -8,7 +8,6 @@ import { Ingredients } from "../../utils/types";
  * RecipeView -> IngredientsView
  */
 function IngredientsView({ ingredients }: IngredientsViewProp) {
-
   /**Guards against rendering empty data */
   function shouldIngredientsRender() {
     return ingredients[0].id !== 0;
@@ -19,12 +18,12 @@ function IngredientsView({ ingredients }: IngredientsViewProp) {
   return (
     <div
       id="IngredientsView-container"
-      className={`flex sm:gap-4 ${isIngredientsEmpty ? "py-6" : ""} bg-data-hover border-b-2 border-t-2 border-secondary`}
+      className={`flex sm:gap-4 ${isIngredientsEmpty ? "py-4" : ""} bg-data-hover border-b-2 border-t-2 border-secondary sm:pl-3`}
     >
-      <div className="basis-1/6 self-center text-sm font-medium leading-6">
+      <div className="basis-1/6 self-center font-medium leading-6">
         Ingredients:
       </div>
-      <div className="basis-5/6">
+      <div className="basis-5/6 divide-y divide-border-color">
         {shouldIngredientsRender() &&
           ingredients.map(({ amount, unit, item, ingredient_id }, i) => (
             <dl
