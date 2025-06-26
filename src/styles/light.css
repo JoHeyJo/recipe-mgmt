@@ -1,14 +1,19 @@
 :root{
   --text: #f0f2f4;
+  --text-hover: #757575;
   --background: #c5ccd3;
   --primary: #e5e7eb;
   --secondary: #1f2937;
   --accent: #f0f2f4;
+  --accent-secondary: #e8e9ea;
 
   --data-hover:#F5f5f5;
+  /* --data-hover-dark:#f8f2f2; */
+
   --card-background:#FFFFFF;
-  --light-border:#EEEEEE;
   --input-highlight:#0284c7;
+
+  --light-border:#EEEEEE;
   --border-color:#94A3B8;
   --border-color-dark:#020408;
 

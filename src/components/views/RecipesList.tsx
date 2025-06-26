@@ -13,13 +13,12 @@ function RecipesList({ recipes, handleSelect }: RecipesListProps) {
       <ul
         role="list"
         id="Recipes-container"
-        className=" divide-y divide-light-border"
       >
         {recipes.map(({ name, id }, index) => (
           <li
             key={id}
             onClick={() => handleSelect(index)}
-            className="p-2 hover:bg-gray-50 hover:text-gray-600 border-b border-primary"
+            className="p-2 hover:bg-data-hover hover:text-text-hover border-b border-secondary"
           >
             {name}
           </li>
