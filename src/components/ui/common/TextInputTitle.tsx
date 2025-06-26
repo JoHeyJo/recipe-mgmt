@@ -1,4 +1,5 @@
 import { ChangeEvent } from "react";
+import TextArea from "./TextArea";
 
 type TextInputTitle = {
   handleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
@@ -21,14 +22,13 @@ function TextInputTitle({ handleChange, title }: TextInputTitle) {
         <form action="#">
           <div className="TextInputTitle-text border-b focus-within:border-input-highlight">
             <label htmlFor="title" className="sr-only"></label>
-            <textarea
-              onChange={handleChange}
-              id="title"
-              name="title"
-              rows={1}
-              placeholder="Book Title..."
-              className="block w-full resize-none border-0 border-b p-0 pb-2 focus:border-input-highlight focus:ring-0 sm:text-sm sm:leading-6"
+            <TextArea
               defaultValue={""}
+              placeholder="Book Title..."
+              rows={1}
+              name={"title"}
+              id={"title"}
+              handleChange={handleChange}
             />
           </div>
           {/* <div className="flex justify-between pt-2">

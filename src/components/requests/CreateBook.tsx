@@ -78,7 +78,7 @@ function CreateBook({ isOpen, setOpen }) {
   const user = useContext(UserContext);
   return (
     <Dialog
-      open={true}
+      open={isOpen}
       onClose={handleClosingActions}
       className="relative z-10"
     >
@@ -130,7 +130,7 @@ function CreateBook({ isOpen, setOpen }) {
                 type="button"
                 data-autofocus
                 onClick={() => handleClosingActions()}
-                className="mt-3 inline-flex w-full justify-center rounded-md bg-accent px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
+                className="mt-3 inline-flex w-full justify-center rounded-md bg-accent px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-light-border hover:bg-button-hover sm:col-start-1 sm:mt-0"
               >
                 Cancel
               </button>

@@ -43,10 +43,10 @@ function TopNav({ logout }: TopNavProps) {
   return (
     <>
       <CreateBook isOpen={isModalOpen} setOpen={setIsModalOpen} />
-      <Disclosure as="nav" className="TopNav-Disclosure">
+      <Disclosure as="nav" className="TopNav-Disclosure bg-secondary">
         {({ open }) => (
           <>
-            <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+            <div className="mx-auto bg-secondary max-w-7xl px-2 sm:px-6 lg:px-8">
               <div className="relative flex h-16 items-center justify-between">
                 <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                   {/* Mobile menu button*/}
@@ -78,7 +78,7 @@ function TopNav({ logout }: TopNavProps) {
                           key={item.name}
                           href={item.href}
                           className={classNames(
-                            item.current ? 'bg-gray-900 text-accent' : 'text-gray-300 hover:bg-gray-700 hover:text-accent',
+                            item.current ? 'bg-gray-900 text-accent' : 'text-light-border hover:bg-gray-700 hover:text-accent',
                             'rounded-md px-3 py-2 text-sm font-medium'
                           )}
                           aria-current={item.current ? 'page' : undefined}
@@ -193,7 +193,7 @@ function TopNav({ logout }: TopNavProps) {
                     className={classNames(
                       item.current
                         ? "bg-gray-900 text-accent"
-                        : "text-gray-300 hover:bg-gray-700 hover:text-accent",
+                        : "text-light-border hover:bg-gray-700 hover:text-accent",
                       "block rounded-md px-3 py-2 text-base font-medium",
                     )}
                     aria-current={item.current ? "page" : undefined}

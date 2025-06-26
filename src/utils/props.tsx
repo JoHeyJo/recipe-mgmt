@@ -183,3 +183,12 @@ export type MultiSelectProp = {
 export type BookViewProp = {
   resetSelected: () => void;
 };
+
+export type TextAreaProps = {
+  id: string;
+  name: string;
+  rows: number;
+  placeholder: string;
+  defaultValue: string;
+  handleChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+};

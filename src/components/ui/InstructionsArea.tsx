@@ -111,7 +111,7 @@ function InstructionsArea({
   return (
     <div
       id="InstructionsArea"
-      className="flex-col block w-full rounded-md border pb-2 px-2 shadow-sm ring-1 ring-inset ring-gray-300 sm:leading-6"
+      className="flex-col block w-full rounded-md border pb-2 px-2 shadow-sm ring-1 ring-inset ring-light-border sm:leading-6"
     >
       {selectedInstructions.map((value, index) => (
         <InstructionManager
