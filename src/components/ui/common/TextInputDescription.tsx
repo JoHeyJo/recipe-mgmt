@@ -9,7 +9,7 @@ function TextInputDescription({ handleChange }: TextInputDescription) {
     <div className="flex items-start space-x-4">
       <div className="min-w-0 flex-1">
         <form action="#">
-          <div className="TextInputDescription-text border-b border-light-border focus-within:border-indigo-600">
+          <div className="TextInputDescription-text border-b focus-within:border-input-highlight">
             <label htmlFor="description" className="sr-only"></label>
             <textarea
               onChange={handleChange}
@@ -17,7 +17,7 @@ function TextInputDescription({ handleChange }: TextInputDescription) {
               name="description"
               rows={1}
               placeholder="Book Description..."
-              className="block w-full resize-none border-0 border-b border-transparent p-0 pb-2 focus:border-indigo-600 focus:ring-0 sm:text-sm sm:leading-6"
+              className="block w-full resize-none focus:border-input-highlight border-0 border-b p-0 pb-2 focus:ring-0 sm:text-sm sm:leading-6"
               defaultValue={""}
             />
           </div>

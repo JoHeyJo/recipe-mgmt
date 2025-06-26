@@ -78,7 +78,7 @@ function CreateBook({ isOpen, setOpen }) {
   const user = useContext(UserContext);
   return (
     <Dialog
-      open={isOpen}
+      open={true}
       onClose={handleClosingActions}
       className="relative z-10"
     >
@@ -121,7 +121,7 @@ function CreateBook({ isOpen, setOpen }) {
                 id="submit-button"
                 type="button"
                 onClick={() => handleSubmit(bookData, userId)}
-                className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
+                className="inline-flex w-full justify-center rounded-md bg-button-default px-3 py-2 text-sm font-semibold text-accent shadow-sm hover:bg-button-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-disabled sm:col-start-2"
               >
                 Submit
               </button>
@@ -130,7 +130,7 @@ function CreateBook({ isOpen, setOpen }) {
                 type="button"
                 data-autofocus
                 onClick={() => handleClosingActions()}
-                className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
+                className="mt-3 inline-flex w-full justify-center rounded-md bg-accent px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
               >
                 Cancel
               </button>

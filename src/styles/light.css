@@ -2,11 +2,21 @@
   --text: #f0f2f4;
   --background: #c5ccd3;
   --primary: #e5e7eb;
-  --secondary: #1f2937;
+  --secondary: #1f2937; /*button-hover */
   --accent: #f0f2f4;
   --data-hover:#F5f5f5;
   --card-background:#FFFFFF;
   --light-border:#EEEEEE;
+  --input-highlight:#0284c7;
+  --border-color:#94A3B8;
+
+  --button-default:#1F3557;
+  --button-hover:rgb(55, 65, 79);
+  --button-clicked:rgb(75, 85, 99);
+  --button-disabled:#9CA3AF;
+
+
+
 
 
       --primary-50: #f1f2f4;

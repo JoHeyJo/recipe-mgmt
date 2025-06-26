@@ -3,7 +3,7 @@ import React from "react";
 const RightPage = () => (
   <div className="flex-shrink-0 w-[628px] h-[819px] border-[3px] border-black bg-light-border">
     <div className="flex flex-shrink-0 items-center w-[627px] h-[9.75rem] border border-gray-800">
-      <div className="flex absolute justify-center items-center pl-[1.9375rem] pr-[1.875rem] p-2 h-[9.75rem] bg-white text-black font-['Outfit'] text-lg font-medium leading-[44px]">
+      <div className="flex absolute justify-center items-center pl-[1.9375rem] pr-[1.875rem] p-2 h-[9.75rem] bg-accent text-black font-['Outfit'] text-lg font-medium leading-[44px]">
         Ingredients:
       </div>
       <div className="right-0 flex flex-col absolute justify-center items-start pl-[0.25px] p-2 w-[470.25px]">
@@ -43,7 +43,7 @@ const RightPage = () => (
       </div>
     </div>
     <div className="flex flex-shrink-0 items-center w-[625px] h-[9.9375rem] border border-gray-800">
-      <div className="flex flex-col absolute justify-center items-center pl-[1.9375rem] pr-[1.875rem] p-2 h-[9.9375rem] bg-white text-black font-['Outfit'] text-lg font-medium leading-[44px]">
+      <div className="flex flex-col absolute justify-center items-center pl-[1.9375rem] pr-[1.875rem] p-2 h-[9.9375rem] bg-accent text-black font-['Outfit'] text-lg font-medium leading-[44px]">
         Ingredients:
       </div>
       <div className="right-0 flex flex-col absolute justify-center items-start pt-2 pb-px px-2 w-[468px]">
@@ -56,7 +56,7 @@ const RightPage = () => (
       </div>
     </div>
     <div className="flex flex-shrink-0 items-center w-[628px] h-[9.9375rem] border border-gray-800">
-      <div className="flex flex-col absolute justify-center items-center pl-[3.3125rem] pr-[3.25rem] p-2 w-[9.8125rem] h-[9.9375rem] bg-white text-black font-['Outfit'] text-lg font-medium leading-[44px]">
+      <div className="flex flex-col absolute justify-center items-center pl-[3.3125rem] pr-[3.25rem] p-2 w-[9.8125rem] h-[9.9375rem] bg-accent text-black font-['Outfit'] text-lg font-medium leading-[44px]">
         Notes:
       </div>
       <div className="right-0 flex flex-col absolute justify-center items-start p-2 w-[471px] h-[9.9375rem]">

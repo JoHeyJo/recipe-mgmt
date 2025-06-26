@@ -120,7 +120,7 @@ function InstructionManager({
         <div className="relative mt-2">
           <ComboboxInput
             placeholder={instruction.instruction}
-            className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            className="w-full rounded-md border-0 bg-accent py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             onChange={(event) => {
               event.preventDefault();
               setQuery(event.target.value);
@@ -138,18 +138,18 @@ function InstructionManager({
           </ComboboxButton>
 
           {filteredOptions.length > 0 && (
-            <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-accent py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
               {filteredOptions.map((option) => (
                 <ComboboxOption
                   key={option.id}
                   value={option}
-                  className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-indigo-600 data-[focus]:text-white"
+                  className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-indigo-600 data-[focus]:text-accent"
                 >
                   <span className="block truncate group-data-[selected]:font-semibold">
                     {option.instruction}
                   </span>
 
-                  <span className="absolute inset-y-0 right-0 hidden items-center pr-4 text-indigo-600 group-data-[selected]:flex group-data-[focus]:text-white">
+                  <span className="absolute inset-y-0 right-0 hidden items-center pr-4 text-indigo-600 group-data-[selected]:flex group-data-[focus]:text-accent">
                     <CheckIcon className="h-5 w-5" aria-hidden="true" />
                   </span>
                 </ComboboxOption>
