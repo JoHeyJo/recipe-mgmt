@@ -11,18 +11,19 @@ module.exports = {
       colors: {
         "background-color": "var(--input-background-color)",
         "text-color": "var(--form-text-color)",
-        "border-color": "var(--input-highlight)",
+        "border-color": "var(--border-color)",
         "test-color": "var(--test-color)",
+        selected: "var(--selected)",
+        // "light-border": "var(--light-border)",
+        accent: "var(--accent)",
+        accent: "var(--accent)",
         //   primary: "var(--primary)",
         //   secondary: "var(--secondary)",
         //   // text: "var(--text-color)",
-        selected: "var(--text-hover)",
         //   background: "var(--background-primary)",
-        accent: "var(--accent)",
         //   "accent-secondary": "var(--accent-secondary)",
         //   "input-highlight": "var(--input-highlight)",
 
-        "light-border": "var(--light-border)",
         //   "border-color": "var(--border-color)",
         //   "border-color-dark": "var(--border-color-dark)",
 

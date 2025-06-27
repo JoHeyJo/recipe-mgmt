@@ -15,8 +15,9 @@
   --card-background:#FFFFFF;
   --input-highlight:#0284c7;
 
-  --light-border:#ccc;
-  --border-color:#94A3B8;
+  --border-color:#ccc;
+  /* --light-border:#ccc; */
+  /* --border-color:#94A3B8; */
   --border-color-dark:#020408;
 
   --button-default:#1F3557;
