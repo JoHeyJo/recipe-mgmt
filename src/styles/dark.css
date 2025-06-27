@@ -6,7 +6,9 @@
   --accent: #0b0d0f;
   --data_focus: #757575;
 
-  --data-hover: #2c333a;
+  --test-color:red;
+
+  --selected: #2c333a;
   --card-background:#2c333a;
   --light-border: #eeeeee;
   --input-highlight: #0284c7;
@@ -18,7 +20,7 @@
   --button-disabled: #9ca3af;
 
 
-    --sign-up-background-color: #333333;
+  --sign-up-background-color: #333333;
   --form-background-color: #1f2937;
   --form-text-color: #e5e7eb;
   --form-border-color: #4b5563;

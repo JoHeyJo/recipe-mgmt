@@ -8,10 +8,12 @@ import { UserContext, UserContextType } from "./context/UserContext";
 import { User } from "./utils/types";
 import { BrowserRouter } from "react-router-dom";
 //styles
+import "./index.css";
 import "./styles/App.css";
+import "./styles/theme.css";
 import "./styles/light.css";
 import "./styles/dark.css";
-import "./styles/theme.css";
+
 import { errorHandling } from "./utils/ErrorHandling";
 import {
   extractAndSetUser,

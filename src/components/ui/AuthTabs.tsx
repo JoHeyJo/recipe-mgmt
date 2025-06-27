@@ -11,19 +11,19 @@ import { AuthProps } from "../../utils/types";
  */
 function AuthTabs({ signUp, login }: AuthProps) {
   const [activeTab, setActiveTab] = useState("login");
-
+  // border-solid border-b border-white border-b-1
   return (
-    <div className="cardContainer">
+    <div className="cardContainer border border-test-color">
       <nav id="AuthTabs-container">
         <ul className="navList">
           <li
-            className={`navItem ${activeTab === "login" ? "navItemActive" : ""}`}
+            className={`navItem ${activeTab === "login" ? "light-border" : "navItemActive"}`}
             onClick={() => setActiveTab("login")}
           >
             Login
           </li>
           <li
-            className={`navItem ${activeTab === "signup" ? "navItemActive" : ""}`}
+            className={`navItem ${activeTab === "signup" ? "light-border" : "navItemActive"}`}
             onClick={() => setActiveTab("signup")}
           >
             Sign up

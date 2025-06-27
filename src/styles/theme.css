@@ -32,9 +32,7 @@ form,
   background-color: var(--navItem-hover);
 }
 
-.navItemActive {
-  background-color: var(--naveItem-active);
-}
+
 
 /*Hover effect handled inline */
 /* #TopNav-Items,
@@ -85,3 +83,9 @@ textarea::placeholder {
 #cancel-button:hover {
   background-color: var(--cancel-button-hover);
 } */
+
+
+.navItemActive {
+  background-color: var(--selected);
+  /* border-bottom: 0; */
+}

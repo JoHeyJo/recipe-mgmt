@@ -4,7 +4,7 @@
 
 body {
   margin: 0;
-  font-family:'Outfit';
+  font-family: "Outfit";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -14,33 +14,46 @@ code {
     source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-
 @layer base {
   /* Root text and background */
-  html, body {
-  background-color: var(--primary);
+  html,
+  body {
+    background-color: var(--primary);
     /* @apply bg-background text-text; */
     /* font-family: system-ui, sans-serif; */
     /* line-height: 1.5; */
   }
 
   /* Headings */
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     color: var(--text-color);
     font-weight: 600;
   }
 
   /* Text elements */
-  p, span, strong, em, small, blockquote {
+  p,
+  span,
+  strong,
+  em,
+  small,
+  blockquote {
     color: var(--text-color);
   }
 
   /* Lists */
-  ul, ol, li {
+  ul,
+  ol,
+  li {
     color: var(--text-color);
+    /* border: 1px solid var(--accent) */
     /* padding-left: 1.25rem; */
   }
-    li:hover {
+  li:hover {
     opacity: 0.8;
     /* color: red; */
   }
@@ -55,19 +68,37 @@ code {
   }
 
   /* Inputs and form fields */
-  input, select, textarea, button {
+  input,
+  select,
+  textarea,
+  label {
     color: var(--text-color);
     background-color: var(--background-button-color);
-    /* border: 1px solid var(--cancel-button-border, #d1d5db); */
   }
+
+  button {
+    color: var(--text-color);
+  }
+
+  button:hover {
+    opacity: 0.4;
+  }
+
 
   input::placeholder,
   textarea::placeholder {
     color: var(--text-placeholder);
   }
 
+  /* layout */
+  nav {
+    /* border: 1px solid red; */
+  }
+
   /* Cards or panels */
-  .card, .panel, .container {
+  .card,
+  .panel,
+  .container {
     background-color: var(--card-background);
     color: var(--text-color);
     /* border-radius: 0.5rem; */
@@ -79,7 +110,8 @@ code {
   }
 
   /* Code */
-  code, pre {
+  code,
+  pre {
     background-color: var(--card-background);
     color: var(--text-color);
     font-family: monospace;
