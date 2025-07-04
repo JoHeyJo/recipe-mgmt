@@ -85,7 +85,7 @@ textarea::placeholder {
 } */
 
 
-.navItemActive {
-  background-color: var(--selected);
+/* .navItemActive { */
+  /* background-color: var(--selected); */
   /* border-bottom: 0; */
-}
+/* } */

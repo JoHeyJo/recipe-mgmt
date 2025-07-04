@@ -115,7 +115,7 @@ function MainContainer() {
   if (!isLoading) <div>Loading...</div>;
 
   return (
-    <div className="border-2 mt-7 border-secondary bg-primary mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="border-4 mt-7 border-secondary bg-primary mx-auto max-w-7xl xl:px-8 xl:border-2">
       {/* <div className="w-[1350px] h-[819px] absolute overflow-hidden -translate-x-2/4 p-0 border-[3px] "> */}
       {/* We've used 3xl here, but feel free to try other max-widths based on your needs */}
       <div className="border-2 border-secondary bg-primary h-[75vh] flex">

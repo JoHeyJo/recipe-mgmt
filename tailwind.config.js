@@ -17,20 +17,20 @@ module.exports = {
         // "light-border": "var(--light-border)",
         accent: "var(--accent)",
         accent: "var(--accent)",
-        //   primary: "var(--primary)",
-        //   secondary: "var(--secondary)",
+          // primary: "var(--primary)",
+          secondary: "var(--secondary)",
         //   // text: "var(--text-color)",
         //   background: "var(--background-primary)",
         //   "accent-secondary": "var(--accent-secondary)",
         //   "input-highlight": "var(--input-highlight)",
 
-        //   "border-color": "var(--border-color)",
-        //   "border-color-dark": "var(--border-color-dark)",
+          // "border-color": "var(--border-color)",
+          // "border-color-dark": "var(--border-color-dark)",
 
         //   "data-hover": "var(--data-hover)",
         //   "data-hover-dark": "var(--data-hover-dark)",
 
-        //   "card-background": "var(--card-background)",
+          // "card-background": "var(--card-background)",
 
         //   "button-default": "var(--button-default)",
         //   "button-hover": "var(--button-hover)",
