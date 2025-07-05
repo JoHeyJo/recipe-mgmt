@@ -11,12 +11,13 @@ module.exports = {
       colors: {
         "background-color": "var(--input-background-color)",
         "text-color": "var(--form-text-color)",
-        "border-color": "var(--border-color)",
+        "border-color-light": "var(--border-color-light)",
+        "border-color-dark": "var(--border-color-dark)",
         "test-color": "var(--test-color)",
         selected: "var(--selected)",
         // "light-border": "var(--light-border)",
         accent: "var(--accent)",
-        accent: "var(--accent)",
+        // accent: "var(--accent)",
           // primary: "var(--primary)",
           secondary: "var(--secondary)",
         //   // text: "var(--text-color)",
@@ -27,7 +28,7 @@ module.exports = {
           // "border-color": "var(--border-color)",
           // "border-color-dark": "var(--border-color-dark)",
 
-        //   "data-hover": "var(--data-hover)",
+          "data-hover": "var(--data-hover)",
         //   "data-hover-dark": "var(--data-hover-dark)",
 
           // "card-background": "var(--card-background)",

@@ -15,6 +15,11 @@ code {
 }
 
 @layer base {
+
+  * {
+     border-color: var(--border-color-dark);
+  }
+
   /* Root text and background */
   html,
   body {
@@ -22,6 +27,7 @@ code {
     /* @apply bg-background text-text; */
     /* font-family: system-ui, sans-serif; */
     /* line-height: 1.5; */
+    /* border-color: red; */
   }
 
   /* Headings */
@@ -55,6 +61,7 @@ code {
   }
   li:hover {
     opacity: 0.8;
+    background-color: var(--selected);
     /* color: red; */
   }
 

@@ -133,7 +133,7 @@ function TopNav({ logout }: TopNavProps) {
                             <MenuItem>
                               <a
                                 href="#"
-                                className="TopNav-Item block px-4 py-2 text-sm data-[focus]:bg-data_focus"
+                                className="TopNav-Item block px-4 py-2 text-sm data-[focus]:bg-selected"
                               >
                                 Your Profile
                               </a>
@@ -142,7 +142,7 @@ function TopNav({ logout }: TopNavProps) {
                               <a
                                 onClick={() => setIsModalOpen(true)}
                                 href="#"
-                                className="TopNav-Item block px-4 py-2 text-sm data-[focus]:bg-data_focus"
+                                className="TopNav-Item block px-4 py-2 text-sm data-[focus]:bg-selected"
                               >
                                 Create Book
                               </a>
@@ -150,7 +150,7 @@ function TopNav({ logout }: TopNavProps) {
                             <MenuItem>
                               <a
                                 href="#"
-                                className="TopNav-Item block px-4 py-2 text-sm data-[focus]:bg-data_focus"
+                                className="TopNav-Item block px-4 py-2 text-sm data-[focus]:bg-selected"
                               >
                                 Settings
                               </a>
@@ -159,7 +159,7 @@ function TopNav({ logout }: TopNavProps) {
                               <a
                                 onClick={logOutAndRedirect}
                                 href="#"
-                                className="TopNav-Item block px-4 py-2 text-sm data-[focus]:bg-data_focus"
+                                className="TopNav-Item block px-4 py-2 text-sm data-[focus]:bg-selected"
                               >
                                 Logout
                               </a>
@@ -170,7 +170,7 @@ function TopNav({ logout }: TopNavProps) {
                             <a
                               href="#"
                               onClick={() => navigate("/")}
-                              className="TopNav-Item block px-4 py-2 text-sm data-[focus]:bg-data_focus "
+                              className="TopNav-Item block px-4 py-2 text-sm data-[focus]:bg-selected "
                             >
                               Login
                             </a>

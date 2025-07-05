@@ -18,7 +18,7 @@ function IngredientsView({ ingredients }: IngredientsViewProp) {
   return (
     <div
       id="IngredientsView-container"
-      className={`flex sm:gap-4 ${isIngredientsEmpty ? "py-4" : ""} bg-data-hover border-b-2 border-t-2 border-secondary sm:pl-3`}
+      className={`flex sm:gap-4 ${isIngredientsEmpty ? "py-4" : ""} bg-data-hover border-b-2 border-t-2 sm:pl-3`}
     >
       <div className="basis-1/6 self-center font-medium leading-6">
         Ingredients:

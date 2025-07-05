@@ -20,7 +20,7 @@ function InstructionsView({
 
   return (
     <div
-      className={`${isInstructionsEmpty ? "py-4" : ""} bg-data-hover border-b-2 border-secondary flex sm:gap-4 sm:pl-3`}
+      className={`${isInstructionsEmpty ? "py-4" : ""} bg-data-hover border-b-2 flex sm:gap-4 sm:pl-3`}
     >
       <div className="basis-1/6 self-center font-medium leading-6">
         Instructions:
