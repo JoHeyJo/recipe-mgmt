@@ -29,7 +29,7 @@ function IngredientsView({ ingredients }: IngredientsViewProp) {
             <dl
               key={ingredient_id}
               id="IngredientsView-ingredient"
-              className={`md:pr-9 py-2 pl-2 text-md flex ${i % 2 === 0 ? "bg-accent" : "bg-accent-secondary"}`}
+              className={`md:pr-9 py-2 pl-2 text-md flex odd:bg-accent even:bg-accent-secondary`}
             >
               <dd className="flex-1 leading-6 sm:col-span-2">
                 {amount ? amount.value : ""}

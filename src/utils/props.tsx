@@ -101,7 +101,6 @@ export type IngredientManagerProps = {
 
 export type IngredientsViewProp = {
   ingredients: Ingredient[];
-  index: number;
 };
 export type InstructionsViewProp = {
   instructions: Instructions;

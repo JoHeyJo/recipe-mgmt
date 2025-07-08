@@ -27,7 +27,6 @@ function RecipeView({ recipe }: RecipeViewProps) {
                 ? recipeTemplate.ingredients
                 : ingredients
             }
-            index={instructions.length}
           />
           <InstructionsView
             instructions={
