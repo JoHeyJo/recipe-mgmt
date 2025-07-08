@@ -14,6 +14,7 @@ module.exports = {
         "background-color": "var(--background-color)",
         "text-color": "var(--form-text-color)",
         accent: "var(--accent)",
+        "accent-secondary": "var(--accent-secondary)",
 
         "button-submit": "var(--button-submit)",
         "button-cancel": "var(--button-cancel)",

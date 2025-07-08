@@ -64,8 +64,8 @@ code {
     /* padding-left: 1.25rem; */
   }
   li:hover {
-    opacity: 0.8;
-    background-color: var(--selected);
+    /* opacity: 0.8; */
+    /* background-color: var(--selected); */
     /* color: red; */
   }
 
