@@ -68,10 +68,9 @@ code {
   /* Links */
   a {
     color: var(--text-color);
-    text-decoration: underline;
   }
   a:hover {
-    opacity: 0.8;
+    background-color: var(--selected);
   }
 
   /* Inputs and form fields */

@@ -106,7 +106,7 @@ function TopNav({ logout }: TopNavProps) {
                     <div>
                       <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-gray-800">
                         <span className="absolute -inset-1.5" />
-                        <span className="sr-only">Open user menu</span>
+                        {/* <span className="sr-only">Open user menu</span> */}
                         <img
                           className="h-8 w-8 rounded-full"
                           // src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -115,7 +115,7 @@ function TopNav({ logout }: TopNavProps) {
                         />
                       </MenuButton>
                     </div>
-                    <Transition
+                    {/* <Transition
                       as={Fragment}
                       enter="transition ease-out duration-100"
                       enterFrom="transform opacity-0 scale-95"
@@ -123,61 +123,60 @@ function TopNav({ logout }: TopNavProps) {
                       leave="transition ease-in duration-75"
                       leaveFrom="transform opacity-100 scale-100"
                       leaveTo="transform opacity-0 scale-95"
+                    ></Transition> */}
+                    <MenuItems
+                      id="TopNav-Items"
+                      className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     >
-                      <MenuItems
-                        id="TopNav-Items"
-                        className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                      >
-                        {user ? (
-                          <>
-                            <MenuItem>
-                              <a
-                                href="#"
-                                className="TopNav-Item block px-4 py-2 text-sm data-[focus]:bg-selected"
-                              >
-                                Your Profile
-                              </a>
-                            </MenuItem>
-                            <MenuItem>
-                              <a
-                                onClick={() => setIsModalOpen(true)}
-                                href="#"
-                                className="TopNav-Item block px-4 py-2 text-sm data-[focus]:bg-selected"
-                              >
-                                Create Book
-                              </a>
-                            </MenuItem>
-                            <MenuItem>
-                              <a
-                                href="#"
-                                className="TopNav-Item block px-4 py-2 text-sm data-[focus]:bg-selected"
-                              >
-                                Settings
-                              </a>
-                            </MenuItem>
-                            <MenuItem>
-                              <a
-                                onClick={logOutAndRedirect}
-                                href="#"
-                                className="TopNav-Item block px-4 py-2 text-sm data-[focus]:bg-selected"
-                              >
-                                Logout
-                              </a>
-                            </MenuItem>
-                          </>
-                        ) : (
+                      {user ? (
+                        <>
                           <MenuItem>
                             <a
                               href="#"
-                              onClick={() => navigate("/")}
-                              className="TopNav-Item block px-4 py-2 text-sm data-[focus]:bg-selected "
+                              className="TopNav-Item block px-4 py-2 text-sm bg-primary"
                             >
-                              Login
+                              Your Profile
                             </a>
                           </MenuItem>
-                        )}
-                      </MenuItems>
-                    </Transition>
+                          <MenuItem>
+                            <a
+                              onClick={() => setIsModalOpen(true)}
+                              href="#"
+                              className="TopNav-Item block px-4 py-2 text-sm bg-primary"
+                            >
+                              Create Book
+                            </a>
+                          </MenuItem>
+                          <MenuItem>
+                            <a
+                              href="#"
+                              className="TopNav-Item block px-4 py-2 text-sm bg-primary"
+                            >
+                              Settings
+                            </a>
+                          </MenuItem>
+                          <MenuItem>
+                            <a
+                              onClick={logOutAndRedirect}
+                              href="#"
+                              className="TopNav-Item block px-4 py-2 text-sm bg-primary"
+                            >
+                              Logout
+                            </a>
+                          </MenuItem>
+                        </>
+                      ) : (
+                        <MenuItem>
+                          <a
+                            href="#"
+                            onClick={() => navigate("/")}
+                            className="TopNav-Item block px-4 py-2 text-sm bg-primary"
+                          >
+                            Login
+                          </a>
+                        </MenuItem>
+                      )}
+                    </MenuItems>
                   </Menu>
                 </div>
               </div>
@@ -194,7 +193,7 @@ function TopNav({ logout }: TopNavProps) {
                       item.current
                         ? "bg-gray-900 text-accent"
                         : "text-light-border hover:bg-gray-700 hover:text-accent",
-                      "block rounded-md px-3 py-2 text-base font-medium",
+                      "block rounded-md px-3 py-2 text-base font-medium"
                     )}
                     aria-current={item.current ? "page" : undefined}
                   >
