@@ -10,17 +10,20 @@ module.exports = {
     extend: {
       colors: {
         primary: "var(--primary)",
-        "background-color": "var(--input-background-color)",
+        secondary: "var(--secondary)",
+        "background-color": "var(--background-color)",
         "text-color": "var(--form-text-color)",
+        accent: "var(--accent)",
+
+        "button-submit": "var(--button-submit)",
+        "button-cancel": "var(--button-cancel)",
         "border-color-light": "var(--border-color-light)",
         "border-color-dark": "var(--border-color-dark)",
         "test-color": "var(--test-color)",
         selected: "var(--selected)",
         // "light-border": "var(--light-border)",
-        accent: "var(--accent)",
         // accent: "var(--accent)",
         // primary: "var(--primary)",
-        secondary: "var(--secondary)",
         //   // text: "var(--text-color)",
         //   background: "var(--background-primary)",
         //   "accent-secondary": "var(--accent-secondary)",

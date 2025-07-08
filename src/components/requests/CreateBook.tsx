@@ -14,6 +14,7 @@ import API from "../../api";
 import { errorHandling } from "../../utils/ErrorHandling";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
+import { PillButton } from "../ui/PillButton";
 
 type CreateBook = {
   isOpen: boolean;
@@ -92,20 +93,17 @@ function CreateBook({ isOpen, setOpen }) {
           <DialogPanel
             id="CreateBook-DialogPanel"
             transition
-            className="relative bg-card-background transform overflow-hidden rounded-lg px-4 pb-4 pt-5 text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg sm:p-6 data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
+            className="relative bg-primary transform overflow-hidden rounded-lg px-4 pb-4 pt-5 text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg sm:p-6 data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
           >
             <div>
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full">
+              <div className="mx-auto bg-background-color flex h-12 w-12 items-center justify-center rounded-full">
                 <BookOpenIcon
                   aria-hidden="true"
                   className="h-6 w-6 text-secondary"
                 />
               </div>
               <div className="mt-3 text-center sm:mt-5">
-                <DialogTitle
-                  as="h3"
-                  className="text-base font-semibold leading-6"
-                >
+                <DialogTitle as="h3" className="text-base leading-6">
                   <TextInputTitle
                     handleChange={handleChange}
                     title={bookData.title}
@@ -121,7 +119,7 @@ function CreateBook({ isOpen, setOpen }) {
                 id="submit-button"
                 type="button"
                 onClick={() => handleSubmit(bookData, userId)}
-                className="inline-flex w-full justify-center rounded-md bg-button-default px-3 py-2 text-sm font-semibold text-accent shadow-sm hover:bg-button-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-disabled sm:col-start-2"
+                className="inline-flex w-full justify-center rounded-md bg-button-submit px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-disabled sm:col-start-2"
               >
                 Submit
               </button>
@@ -130,7 +128,7 @@ function CreateBook({ isOpen, setOpen }) {
                 type="button"
                 data-autofocus
                 onClick={() => handleClosingActions()}
-                className="mt-3 inline-flex w-full justify-center rounded-md bg-accent px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-light-border hover:bg-button-hover sm:col-start-1 sm:mt-0"
+                className="mt-3 inline-flex w-full justify-center rounded-md bg-button-cancel px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-button-submit sm:col-start-1 sm:mt-0"
               >
                 Cancel
               </button>

@@ -30,6 +30,10 @@ code {
     /* border-color: red; */
   }
 
+  div {
+    /* background-color: var(--primary); */
+  }
+
   /* Headings */
   h1,
   h2,
@@ -83,7 +87,8 @@ code {
   }
 
   button {
-    color: var(--text-color);
+    /* color: var(--text-color); */
+    background-color: var(--primary)
   }
 
   button:hover {
