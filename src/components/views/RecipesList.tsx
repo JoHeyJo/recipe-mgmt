@@ -15,7 +15,7 @@ function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
           <li
             key={id}
             onClick={() => handleSelect(index)}
-            className={`p-2 border-b ${selectedId === id ? "text-text-hover bg-selected" : "hover:text-text-hover"}`}
+            className={`p-2 border-b hover:bg-selected ${selectedId === id ? "text-text-hover bg-selected" : "hover:text-text-hover"}`}
           >
             {name}
           </li>
