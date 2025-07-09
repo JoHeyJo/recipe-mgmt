@@ -68,7 +68,7 @@ function IngredientsGroup({ handleRecipeUpdate }: IngredientsGroupProps) {
   }, [ingredients]);
 
   return (
-    <div id="IngredientsGroup-main">
+    <div id="IngredientsGroup-main" className="h-full border-2 border-green-300">
       <ComponentsOptionsRequests
         ingredients={ingredients}
         ingredientKeys={ingredientKeys}

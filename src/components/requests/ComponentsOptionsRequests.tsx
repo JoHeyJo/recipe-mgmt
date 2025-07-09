@@ -35,14 +35,14 @@ function ComponentsOptionsRequests({
   /** Request to create new ingredient option */
   async function addOption(
     entity: string,
-    attributeObject: AttributeData,
+    attributeObject: AttributeData
   ): Promise<AttributeData> {
     try {
       const id = await API.postComponentOption(
         attributeObject,
         currentBookId,
         userId,
-        entity,
+        entity
       );
       return id;
     } catch (error: any) {
@@ -79,7 +79,7 @@ function ComponentsOptionsRequests({
   async function fetchBookComponentsOptions() {
     const { amounts, units, items } = await API.getBookComponentsOptions(
       userId,
-      currentBookId,
+      currentBookId
     );
     setOptionsReferences({ amount: amounts, unit: units, item: items }); ///DOES THIS NEED TO BE MEMOIZED
     setItems(items);
@@ -100,14 +100,14 @@ function ComponentsOptionsRequests({
     userId: number,
     currentBookId: number,
     optionId: number,
-    component: string,
+    component: string
   ) {
     try {
       const res = await API.postOptionAssociation(
         userId,
         currentBookId,
         optionId,
-        component,
+        component
       );
     } catch (error: any) {
       errorHandling("ComponentsOptionsRequests - associateOptionToBook", error);
@@ -125,25 +125,27 @@ function ComponentsOptionsRequests({
   return (
     <>
       <RadioSwitch handleSwitch={handleRadio} selection={whichOptions} />
-      {ingredients.map((ingredient, i) => (
-        <div
-          key={ingredient.ingredient_id || ingredientKeys[i]}
-          className="flex items-center justify-center"
-        >
-          <IngredientInputGroup
-            index={i}
-            ingredient={ingredient}
-            handleIngredient={handleIngredient}
-            handleOption={handleOption}
-            options={options}
-          />
-          {i === ingredients.length - 1 ? (
-            <FaPlusButton onAction={handleIngredient.add} />
-          ) : (
-            <FaMinusButton onAction={() => handleIngredient.remove(i)} />
-          )}
-        </div>
-      ))}
+      <div className="py-2 px-1 h-full rounded-xl border-2 border-red-300">
+        {ingredients.map((ingredient, i) => (
+          <div
+            key={ingredient.ingredient_id || ingredientKeys[i]}
+            className="Ingredients-section flex items-center justify-center"
+          >
+            <IngredientInputGroup
+              index={i}
+              ingredient={ingredient}
+              handleIngredient={handleIngredient}
+              handleOption={handleOption}
+              options={options}
+            />
+            {i === ingredients.length - 1 ? (
+              <FaPlusButton onAction={handleIngredient.add} />
+            ) : (
+              <FaMinusButton onAction={() => handleIngredient.remove(i)} />
+            )}
+          </div>
+        ))}
+      </div>
     </>
   );
 }

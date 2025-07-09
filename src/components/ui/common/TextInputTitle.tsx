@@ -13,7 +13,7 @@ function TextInputTitle({ handleChange, title }: TextInputTitle) {
       <div className="flex-shrink-0">
         <div
           id="TextInputTitle-badge"
-          className="mx-auto bg-background-color flex h-12 w-12 items-center justify-center rounded-full"
+          className="mx-auto bg-background-color flex w-12 items-center justify-center rounded-full"
         >
           {initials || title[0]}
         </div>
