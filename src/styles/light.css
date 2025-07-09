@@ -11,10 +11,12 @@
   --test-color:red;
   --text-hover: #757575;
   --selected:#F5f5f5;
+  --focus-color:#294977;
 
   /* Button  */
   --button-submit:#294570;
   --button-cancel:#dddddd;
+  --button-disabled:#9CA3AF;
 
 
 
@@ -29,6 +31,5 @@
   --button-default:#1F3557;
   --button-hover:rgb(55, 65, 79);
   --button-clicked:#4b5563;
-  --button-disabled:#9CA3AF;
 
 }

@@ -99,7 +99,7 @@ function IngredientManager({
       <div className="relative mt-2">
         <ComboboxInput
           placeholder={entity}
-          className="w-full rounded-md border-0 bg-accent py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
           onChange={(event) => {
             event.preventDefault();
             setQuery(event.target.value);
@@ -122,7 +122,7 @@ function IngredientManager({
               <ComboboxOption
                 key={option.id}
                 value={option}
-                className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-indigo-600 data-[focus]:text-accent"
+                className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-selected data-[focus]:text-accent"
               >
                 <span className="block truncate group-data-[selected]:font-semibold">
                   {option[attribute]}

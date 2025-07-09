@@ -9,6 +9,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        /* Main color pallette */
         primary: "var(--primary)",
         secondary: "var(--secondary)",
         "background-color": "var(--background-color)",
@@ -16,12 +17,17 @@ module.exports = {
         accent: "var(--accent)",
         "accent-secondary": "var(--accent-secondary)",
 
+        /* Interactive color pallette */
+        selected: "var(--selected)",
+        "test-color": "var(--test-color)",
+        "focus-color": "var(--focus-color)",
+
         "button-submit": "var(--button-submit)",
         "button-cancel": "var(--button-cancel)",
+        "button-disabled": "var(--button-disabled)",
+
         "border-color-light": "var(--border-color-light)",
         "border-color-dark": "var(--border-color-dark)",
-        "test-color": "var(--test-color)",
-        selected: "var(--selected)",
         // "light-border": "var(--light-border)",
         // accent: "var(--accent)",
         // primary: "var(--primary)",

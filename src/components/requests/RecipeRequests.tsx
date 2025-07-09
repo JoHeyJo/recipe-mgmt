@@ -187,7 +187,7 @@ function RecipeRequests({
           <DialogPanel
             id="RecipeRequests-DialogPanel"
             transition
-            className="relative h-full transform rounded-lg bg-card-background px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"
+            className="relative h-full transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"
           >
             {error && <Alert alert={error} degree={"yellow"} />}{" "}
             {/* This will be a popup instead */}
@@ -241,7 +241,7 @@ function RecipeRequests({
                   <button
                     type="submit"
                     onClick={handleSubmit}
-                    className="inline-flex w-full justify-center rounded-md bg-button-default px-3 py-2 text-sm font-semibold text-accent shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default"
+                    className="inline-flex w-full justify-center rounded-md bg-button-submit px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default"
                   >
                     Submit
                   </button>
@@ -252,14 +252,14 @@ function RecipeRequests({
                     type="button"
                     onClick={() => editRecipe(selectedRecipe, recipe)}
                     disabled={isDisabled}
-                    className={`${isDisabled ? "bg-gray-600" : "bg-button-default hover:bg-indigo-500"} inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-accent shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default`}
+                    className={`${isDisabled ? "bg-button-disabled" : "bg-button-submit hover:opacity-50"} inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default`}
                   >
                     Update
                   </button>
                   <button
                     type="button"
                     onClick={handleDelete}
-                    className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-accent shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default"
+                    className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default"
                   >
                     delete
                   </button>
