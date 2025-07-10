@@ -216,12 +216,12 @@ function RecipeRequests({
                 >
                   <section
                     id="RecipeRequests-title-ingredients"
-                    className="flex-1 min-h-full border-2 border-blue-300"
+                    className="flex-1 flex flex-col min-h-full border-2 border-blue-300"
                   >
                     <div className="">
                       <TitleInput handleUpdate={handleRecipeUpdate} />
                     </div>
-                    <div className="">
+                    <div className="flex-1">
                       <IngredientsGroup
                         handleRecipeUpdate={handleRecipeUpdate}
                       />
