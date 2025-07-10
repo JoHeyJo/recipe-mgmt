@@ -68,7 +68,10 @@ function IngredientsGroup({ handleRecipeUpdate }: IngredientsGroupProps) {
   }, [ingredients]);
 
   return (
-    <div id="IngredientsGroup-main" className="h-full flex flex-col border-2 border-green-300">
+    <div
+      id="IngredientsGroup-main"
+      className="h-full flex flex-col overflow-hidden border-2 border-green-300"
+    >
       <ComponentsOptionsRequests
         ingredients={ingredients}
         ingredientKeys={ingredientKeys}
