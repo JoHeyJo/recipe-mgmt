@@ -187,12 +187,12 @@ function RecipeRequests({
           <DialogPanel
             id="RecipeRequests-DialogPanel"
             transition
-            className="relative transform h-screen rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"
+            className="relative flex flex-col transform h-96 rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"
           >
             {error && <Alert alert={error} degree={"yellow"} />}{" "}
             {/* This will be a popup instead */}
             {/* <form onSubmit={handleSubmit}> */}
-            <div>
+            <div className="h-full">
               {/* <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
                 <CheckIcon aria-hidden="true" className="h-6 w-6 text-green-600" />
               </div> */}
@@ -208,15 +208,12 @@ function RecipeRequests({
 
               <section
                 id="RecipeRequests-book"
-                className="mx-auto flex h-full flex-col "
+                className="mx-auto  h-full flex-col "
               >
-                <section
-                  id="RecipeRequests-recipe"
-                  className="flex h-full"
-                >
+                <section id="RecipeRequests-recipe" className="flex h-full">
                   <section
                     id="RecipeRequests-title-ingredients"
-                    className="flex-1 flex flex-col min-h-full "
+                    className="flex-1 h-full flex flex-col"
                   >
                     <div className="">
                       <TitleInput handleUpdate={handleRecipeUpdate} />
@@ -243,7 +240,7 @@ function RecipeRequests({
               </section>
               {/* </div> */}
             </div>
-            <div className="mt-5 sm:mt-6">
+            <div className="SubmitButton mt-5 sm:mt-6">
               {requestAction !== "edit" ? (
                 <div className="flex">
                   <button
