@@ -5,12 +5,114 @@ const AddRecipeEmpty = () => (
     <div className="flex items-center pl-[0.5625rem] pr-[17.3125rem] p-0 w-[413px] rounded-[0.3125rem] border-2 border-gray-300 flex-shrink-0 w-[7.9375rem] text-[#67686a] font-['Outfit'] text-xs font-medium leading-[44px]">
       Awesome Recipe name
     </div>
+    <div className="ingredients_section flex flex-col flex-shrink-0 items-center pt-[0.8125rem] pb-[0.8125rem] px-2 w-[412px] h-[7.5625rem] rounded-[0.3125rem] border-2 border-gray-300">
+      <div className="flex flex-shrink-0 items-center w-[22.25rem] h-8 rounded-[0.3125rem]">
+        <div className="item_input flex items-center pl-[0.5625rem] pr-[5.25rem] p-0 rounded-[0.3125rem] border border-gray-300 text-[#5d5e61] font-['Outfit'] text-xs font-medium leading-[44px]">
+          Item
+        </div>
+        <div className="unit_input flex items-center pr-[4.9375rem] py-0 pl-2 rounded-[0.3125rem] border border-gray-300 text-[#5d5e60] font-['Outfit'] text-xs font-medium leading-[44px]">
+          
+        </div>
+        <div className="amount_input flex items-center pr-[5.4375rem] py-0 pl-2 rounded-[0.3125rem] border border-gray-300 text-[#5d5e60] font-['Outfit'] text-xs font-medium leading-[44px]">
+          unit
+        </div>
+      </div>
+      <svg
+        width={35}
+        height={32}
+        viewBox="0 0 35 32"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M17.5 6.66669V25.3334M7.29163 16H27.7083"
+          stroke="#1E1E1E"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+      <div className="flex flex-shrink-0 items-center w-[22.25rem] h-8 rounded-[0.3125rem]">
+        <div className="item_input-1 flex items-center pl-[0.5625rem] pr-[5.25rem] p-0 rounded-[0.3125rem] border border-gray-300 text-[#5d5e61] font-['Outfit'] text-xs font-medium leading-[44px]">
+          Item
+        </div>
+        <div className="unit_input-1 flex items-center pr-[4.9375rem] py-0 pl-2 rounded-[0.3125rem] border border-gray-300 text-[#5d5e60] font-['Outfit'] text-xs font-medium leading-[44px]">
+          value
+        </div>
+        <div className="amount_input-1 flex items-center pr-[5.4375rem] py-0 pl-2 rounded-[0.3125rem] border border-gray-300 text-[#5d5e60] font-['Outfit'] text-xs font-medium leading-[44px]">
+          unit
+        </div>
+      </div>
+      <svg
+        width={35}
+        height={32}
+        viewBox="0 0 35 32"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M17.5 6.66669V25.3334M7.29163 16H27.7083"
+          stroke="#1E1E1E"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+      <div className="flex flex-shrink-0 items-center w-[22.25rem] h-8 rounded-[0.3125rem]">
+        <div className="item_input-2 flex items-center pl-[0.5625rem] pr-[5.25rem] p-0 rounded-[0.3125rem] border border-gray-300 text-[#5d5e61] font-['Outfit'] text-xs font-medium leading-[44px]">
+          Item
+        </div>
+        <div className="unit_input-2 flex items-center pr-[4.9375rem] py-0 pl-2 rounded-[0.3125rem] border border-gray-300 text-[#5d5e60] font-['Outfit'] text-xs font-medium leading-[44px]">
+          value
+        </div>
+        <div className="amount_input-2 flex items-center pr-[5.4375rem] py-0 pl-2 rounded-[0.3125rem] border border-gray-300 text-[#5d5e60] font-['Outfit'] text-xs font-medium leading-[44px]">
+          unit
+        </div>
+      </div>
+      <svg
+        width={35}
+        height={22}
+        viewBox="0 0 35 22"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M17.5 6.66669V25.3334M7.29163 16H27.7083"
+          stroke="#1E1E1E"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+      <div className="flex flex-shrink-0 items-center w-[22.25rem] h-8 rounded-[0.3125rem]">
+        <div className="item_input-3 flex items-center pl-[0.5625rem] pr-[5.25rem] p-0 rounded-[0.3125rem] border border-gray-300 text-[#5d5e61] font-['Outfit'] text-xs font-medium leading-[44px]">
+          Item
+        </div>
+        <div className="unit_input-3 flex items-center pr-[4.9375rem] py-0 pl-2 rounded-[0.3125rem] border border-gray-300 text-[#5d5e60] font-['Outfit'] text-xs font-medium leading-[44px]">
+          value
+        </div>
+        <div className="amount_input-3 flex items-center pr-[5.4375rem] py-0 pl-2 rounded-[0.3125rem] border border-gray-300 text-[#5d5e60] font-['Outfit'] text-xs font-medium leading-[44px]">
+          unit
+        </div>
+      </div>
+      <div className="flex flex-shrink-0 items-center w-[22.25rem] h-8 rounded-[0.3125rem]">
+        <div className="item_input-4 flex items-center pl-[0.5625rem] pr-[5.25rem] p-0 rounded-[0.3125rem] border border-gray-300 text-[#5d5e61] font-['Outfit'] text-xs font-medium leading-[44px]">
+          Item
+        </div>
+        <div className="unit_input-4 flex items-center pr-[4.9375rem] py-0 pl-2 rounded-[0.3125rem] border border-gray-300 text-[#5d5e60] font-['Outfit'] text-xs font-medium leading-[44px]">
+          value
+        </div>
+        <div className="amount_input-4 flex items-center pr-[5.4375rem] py-0 pl-2 rounded-[0.3125rem] border border-gray-300 text-[#5d5e60] font-['Outfit'] text-xs font-medium leading-[44px]">
+          unit
+        </div>
+      </div>
+    </div>
     <div className="textarea_field flex flex-col flex-shrink-0 items-start w-[845px] h-28">
       <div className="self-stretch text-[#1e1e1e] font-['Outfit'] text-[var(--sds-typography-body-size-medium)] font-[var(--sds-typography-body-font-weight-regular)] leading-[140%]">
         Notes:
       </div>
       <div className="flex items-start self-stretch pt-[var(--sds-size-space-300)] pb-[var(--sds-size-space-300)] pl-[var(--sds-size-space-400)] pr-[var(--sds-size-space-400)] py-3 px-4 min-w-[15rem] min-h-[5rem] rounded-lg border-[var(--sds-size-stroke-border)] border-[#d9d9d9] bg-[#f0f2f4]">
-        <div className="value text-[#5d5e60] font-['Outfit'] text-[var(--sds-typography-body-size-medium)] font-[var(--sds-typography-body-font-weight-regular)] leading-[140%]">
+        <div className="value-5 text-[#5d5e60] font-['Outfit'] text-[var(--sds-typography-body-size-medium)] font-[var(--sds-typography-body-font-weight-regular)] leading-[140%]">
           Serve in coup...
         </div>
         <svg
@@ -26,34 +128,6 @@ const AddRecipeEmpty = () => (
           />
         </svg>
       </div>
-    </div>
-    <div className="ingredients_section flex flex-shrink-0 justify-center items-start pt-[0.8125rem] pb-[0.8125rem] px-2 w-[412px] h-[7.5625rem] rounded-[0.3125rem] border-2 border-gray-300">
-      <div className="flex flex-shrink-0 items-center w-[22.25rem] h-8 rounded-[0.3125rem]">
-        <div className="item_input flex items-center pl-[0.5625rem] pr-[5.25rem] p-0 rounded-[0.3125rem] border border-gray-300 text-[#5d5e61] font-['Outfit'] text-xs font-medium leading-[44px]">
-          Item
-        </div>
-        <div className="unit_input flex items-center pr-[4.9375rem] py-0 pl-2 rounded-[0.3125rem] border border-gray-300 text-[#5d5e60] font-['Outfit'] text-xs font-medium leading-[44px]">
-          value
-        </div>
-        <div className="amount_input flex items-center pr-[5.4375rem] py-0 pl-2 rounded-[0.3125rem] border border-gray-300 text-[#5d5e60] font-['Outfit'] text-xs font-medium leading-[44px]">
-          unit
-        </div>
-      </div>
-      <svg
-        width={35}
-        height={32}
-        viewBox="0 0 35 32"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M17.5 6.66669V25.3334M7.29166 16H27.7083"
-          stroke="#1E1E1E"
-          strokeWidth={2}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
     </div>
     <div className="flex flex-shrink-0 justify-center items-center pt-px pb-0 px-16 w-[844px] h-10">
       <div className="flex flex-shrink-0 justify-center items-center pt-[0.5625rem] pb-2 px-0 w-[716px] h-[2.4375rem] rounded-[0.625rem] bg-[#1f3557] text-black font-['Outfit'] leading-[140%]">
@@ -90,14 +164,26 @@ const AddRecipeEmpty = () => (
     <div className="text-black font-['Outfit'] text-xs font-medium leading-[44px]">
       Book values
     </div>
-    <div className="instructions_section flex flex-col flex-shrink-0 items-start pt-[0.8125rem] pb-[0.8125rem] px-2 w-[412px] h-[10.375rem] rounded-[0.3125rem] border-2 border-gray-300">
-      <div className="flex flex-shrink-0 items-center self-stretch pr-[1.9375rem] py-0 pl-2 h-9 rounded-[0.3125rem] border border-gray-300 w-[22.1875rem] text-[#5d5e60] font-['Outfit'] text-xs font-medium leading-[44px]">
+    <div className="instructions_section flex flex-col flex-shrink-0 items-start pt-[0.8125rem] pb-[0.8125rem] px-2 w-[407px] h-[10.375rem] rounded-[0.3125rem] border border-gray-300">
+      <div className="flex flex-shrink-0 items-center self-stretch pr-[1.625rem] py-0 pl-2 h-9 rounded-[0.3125rem] border border-gray-300 w-[22.1875rem] text-[#5d5e60] font-['Outfit'] text-xs font-medium leading-[44px]">
         Add ingredients in shaker with ice ....
       </div>
-      <div className="flex flex-shrink-0 items-center self-stretch pr-[1.9375rem] py-0 pl-2 h-9 rounded-[0.3125rem] border border-gray-300 w-[22.1875rem] text-[#5d5e60] font-['Outfit'] text-xs font-medium leading-[44px]">
+      <div className="flex flex-shrink-0 items-center self-stretch pr-[1.625rem] py-0 pl-2 h-9 rounded-[0.3125rem] border border-gray-300 w-[22.1875rem] text-[#5d5e60] font-['Outfit'] text-xs font-medium leading-[44px]">
         Shake ingredients....
       </div>
-      <div className="flex flex-shrink-0 items-center self-stretch pl-[0.5625rem] pr-[1.9375rem] p-2 h-9 rounded-[0.3125rem] border border-gray-300 w-[22.25rem] h-11 text-[#5d5e60] font-['Outfit'] text-xs font-medium leading-[44px]">
+      <div className="flex flex-shrink-0 items-center self-stretch pl-[0.5625rem] pr-[1.625rem] p-2 h-9 rounded-[0.3125rem] border border-gray-300 w-[22.25rem] h-11 text-[#5d5e60] font-['Outfit'] text-xs font-medium leading-[44px]">
+        Double Strain ingredients....
+      </div>
+      <div className="flex flex-shrink-0 items-center self-stretch pl-[0.5625rem] pr-[1.625rem] p-2 h-9 rounded-[0.3125rem] border border-gray-300 w-[22.25rem] h-11 text-[#5d5e60] font-['Outfit'] text-xs font-medium leading-[44px]">
+        Double Strain ingredients....
+      </div>
+      <div className="flex flex-shrink-0 items-center self-stretch pl-[0.5625rem] pr-[1.625rem] p-2 h-9 rounded-[0.3125rem] border border-gray-300 w-[22.25rem] h-11 text-[#5d5e60] font-['Outfit'] text-xs font-medium leading-[44px]">
+        Double Strain ingredients....
+      </div>
+      <div className="flex flex-shrink-0 items-center self-stretch pl-[0.5625rem] pr-[1.625rem] p-2 h-9 rounded-[0.3125rem] border border-gray-300 w-[22.25rem] h-11 text-[#5d5e60] font-['Outfit'] text-xs font-medium leading-[44px]">
+        Double Strain ingredients....
+      </div>
+      <div className="flex flex-shrink-0 items-center self-stretch pl-[0.5625rem] pr-[1.625rem] p-2 h-9 rounded-[0.3125rem] border border-gray-300 w-[22.25rem] h-11 text-[#5d5e60] font-['Outfit'] text-xs font-medium leading-[44px]">
         Double Strain ingredients....
       </div>
     </div>
@@ -135,14 +221,3 @@ const AddRecipeEmpty = () => (
 );
 
 export default AddRecipeEmpty;
-
-// import React from "react";
-
-// const Ingredient1 = () => (
-//   <div className="flex flex-shrink-0 items-center self-stretch pr-[1.625rem] py-0 pl-2 h-9 rounded-[0.3125rem] border border-gray-300 w-[22.1875rem] text-[#5d5e60] font-['Outfit'] text-xs font-medium leading-[44px]">
-//     Add ingredients in shaker with ice ....
-//   </div>
-// );
-
-// export default Ingredient1;
-
