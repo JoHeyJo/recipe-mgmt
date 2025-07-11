@@ -226,7 +226,7 @@ function RecipeRequests({
                   </section>
                   <section
                     id="RecipeRequests-instructions"
-                    className="flex-1 ml-4 "
+                    className="flex-1 ml-4 h-full "
                   >
                     <InstructionsRequests
                       handleRecipeUpdate={handleRecipeUpdate}
