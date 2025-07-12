@@ -116,6 +116,7 @@ function InstructionManager({
         as="div"
         value={displayInitialValue(selected || { instruction: "", id: null })}
         onChange={onValueSelect}
+        className=""
       >
         <div className="relative mt-2">
           <ComboboxInput
@@ -138,7 +139,7 @@ function InstructionManager({
           </ComboboxButton>
 
           {filteredOptions.length > 0 && (
-            <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-accent py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <ComboboxOptions className="absolute z-50 mt-1 max-h-60 w-full visible-auto rounded-md bg-accent py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
               {filteredOptions.map((option) => (
                 <ComboboxOption
                   key={option.id}
