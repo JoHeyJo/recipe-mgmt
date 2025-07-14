@@ -9,6 +9,7 @@ import {
 } from "@headlessui/react";
 import { Instruction } from "../../utils/types";
 import { InstructionManagerProps } from "../../utils/props";
+import Portal from "../ui/common/Portal";
 
 /** InstructionManager - renders instructions - ring is removed
  *
@@ -117,6 +118,7 @@ function InstructionManager({
         value={displayInitialValue(selected || { instruction: "", id: null })}
         onChange={onValueSelect}
         className=""
+        id="InstructionManager"
       >
         <div className="relative mt-2">
           <ComboboxInput
@@ -139,21 +141,28 @@ function InstructionManager({
           </ComboboxButton>
 
           {filteredOptions.length > 0 && (
-            <ComboboxOptions className="absolute z-50 mt-1 max-h-60 w-full visible-auto rounded-md bg-accent py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <ComboboxOptions
+              id="InstructionsManager-Options"
+              className="absolute z-50 mt-1 max-h-60 w-full visible-auto rounded-md bg-accent py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+            >
               {filteredOptions.map((option) => (
-                <ComboboxOption
-                  key={option.id}
-                  value={option}
-                  className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-selected data-[focus]:text-accent"
-                >
-                  <span className="block truncate group-data-[selected]:font-semibold">
-                    {option.instruction}
-                  </span>
+                <div id="testing ">
+                  <Portal portal={"InstructionsManager-Options"}>
+                    <ComboboxOption
+                      key={option.id}
+                      value={option}
+                      className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-selected data-[focus]:text-accent"
+                    >
+                      <span className="block truncate group-data-[selected]:font-semibold">
+                        {option.instruction}
+                      </span>
 
-                  <span className="absolute inset-y-0 right-0 hidden items-center pr-4 text-indigo-600 group-data-[selected]:flex group-data-[focus]:text-accent">
-                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                  </span>
-                </ComboboxOption>
+                      <span className="absolute inset-y-0 right-0 hidden items-center pr-4 text-indigo-600 group-data-[selected]:flex group-data-[focus]:text-accent">
+                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                      </span>
+                    </ComboboxOption>
+                  </Portal>
+                </div>
               ))}
             </ComboboxOptions>
           )}

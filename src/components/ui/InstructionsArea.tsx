@@ -5,6 +5,8 @@ import { InstructionsAreaProps } from "../../utils/props";
 import { UserContext } from "../../context/UserContext";
 import { PLACE_HOLDER } from "../../utils/templates";
 import { RecipeContext } from "../../context/RecipeContext";
+import { createPortal } from "react-dom";
+import ScrollableComboboxList from "./ScrollableComboboxlist";
 
 /** Triggers creation of input if there are no inputs left (num of inputs = array index)
  * This doesn't work with refactoring of PLACE_HOLDER instructions
@@ -32,7 +34,7 @@ function InstructionsArea({
             ...contextInstructions,
             { id: null, instruction: "some instruction..." },
           ]
-        : PLACE_HOLDER,
+        : PLACE_HOLDER
     );
   const [filterKey, setFilterKeys] = useState({});
 
@@ -104,7 +106,7 @@ function InstructionsArea({
   useEffect(() => {
     handleRecipeUpdate(
       selectedInstructions.filter((i) => i.id),
-      "instructions",
+      "instructions"
     );
   }, [selectedInstructions]);
 
@@ -113,16 +115,18 @@ function InstructionsArea({
       id="InstructionsArea"
       className="flex-col overflow-y-auto h-48 block w-full rounded-md border-2 border-accent-secondary pb-2 px-2 shadow-sm sm:leading-6"
     >
-      {selectedInstructions.map((value, index) => (
-        <InstructionManager
-          key={index}
-          arrayKey={index}
-          instruction={value}
-          options={data.instructions}
-          handleSelected={handleSelected}
-          handleInstruction={handleInstruction}
+      <ScrollableComboboxList />
+      {/* {selectedInstructions.map(
+        (value, index) => (
+          <InstructionManager
+            key={index}
+            arrayKey={index}
+            instruction={value}
+            options={data.instructions}
+            handleSelected={handleSelected}
+            handleInstruction={handleInstruction}
           />
-      ))}
+      ))} */}
     </div>
   );
 }
