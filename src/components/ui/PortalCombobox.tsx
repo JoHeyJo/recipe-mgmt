@@ -56,6 +56,7 @@ export function PortalCombobox({
 
     const closeOnScroll = (event: Event) => {
       const target = event.target as HTMLElement;
+      console.log("close on scroll",target)
       const isInsideDropdown = dropdownRef.current?.contains(target);
       const isInsideCombobox = wrapperRef.current?.contains(target);
 
