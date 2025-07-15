@@ -128,7 +128,7 @@ function MainContainer() {
               setShowing={toggleModel}
               isOpen={isOpen}
             />
-            <div className="flex justify-between p-1 text-lg border-b-2">
+            <div className="flex justify-between p-1 font-semibold text-lg border-b-2">
               <div>Recipes for:</div>
               <BookView resetSelected={resetSelectedRecipe} />
               <FaPlusButton onAction={toggleCreateForm} />

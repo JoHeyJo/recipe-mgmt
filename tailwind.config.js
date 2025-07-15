@@ -21,6 +21,7 @@ module.exports = {
         selected: "var(--selected)",
         "test-color": "var(--test-color)",
         "focus-color": "var(--focus-color)",
+        "icon-color": "var(--icon-color)",
 
         /* Button color pallette */
         "button-submit": "var(--button-submit)",

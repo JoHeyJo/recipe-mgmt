@@ -46,7 +46,7 @@ function TopNav({ logout }: TopNavProps) {
       <Disclosure as="nav" className="TopNav-Disclosure bg-secondary">
         {({ open }) => (
           <>
-            <div className="mx-auto bg-secondary max-w-7xl px-2 sm:px-6 lg:px-8">
+            <div className="mx-auto bg-pr max-w-7xl px-2 sm:px-6 lg:px-8">
               <div className="relative flex h-16 items-center justify-between">
                 <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                   {/* Mobile menu button*/}
@@ -104,7 +104,7 @@ function TopNav({ logout }: TopNavProps) {
                   <ToggleColorScheme />
                   <Menu as="div" className="relative ml-3">
                     <div>
-                      <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-gray-800">
+                      <MenuButton className="relative flex rounded-full bg-primary text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-gray-800">
                         <span className="absolute -inset-1.5" />
                         {/* <span className="sr-only">Open user menu</span> */}
                         <img
@@ -126,7 +126,7 @@ function TopNav({ logout }: TopNavProps) {
                     ></Transition> */}
                     <MenuItems
                       id="TopNav-Items"
-                      className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                      className="absolute right-0 z-10 mt-2 w-48 bg-primary origin-top-right rounded-md py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     >
                       {user ? (
                         <>
