@@ -247,7 +247,7 @@ function RecipeRequests({
                   <button
                     type="submit"
                     onClick={handleSubmit}
-                    className="inline-flex w-full justify-center rounded-md bg-button-submit px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default"
+                    className="inline-flex w-full justify-center rounded-md bg-button-submit px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default"
                   >
                     Submit
                   </button>
@@ -258,7 +258,7 @@ function RecipeRequests({
                     type="button"
                     onClick={() => editRecipe(selectedRecipe, recipe)}
                     disabled={isDisabled}
-                    className={`${isDisabled ? "bg-button-disabled" : "bg-button-submit hover:opacity-50"} inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default`}
+                    className={`${isDisabled ? "bg-button-disabled hover:opacity-100" : "bg-button-submit"} inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default`}
                   >
                     Update
                   </button>
