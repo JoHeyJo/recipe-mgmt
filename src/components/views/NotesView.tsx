@@ -1,5 +1,4 @@
 import { NotesViewProp } from "../../utils/props";
-import { styleRecipeRows } from "../../utils/functions";
 
 /** Renders list of notes
  *
@@ -22,12 +21,16 @@ function NotesView({ notes, prevSectionLength }: NotesViewProp) {
       <ul className="basis-5/6 divide-y divide-border-color">
         {notes &&
           notes.split("\n").map((notes, id) => (
-            <div key={id} id="NotesView-notes" className="">
-              <li
-                className={`flex py-2 pl-2 space-x-4 ${styleRecipeRows(id, prevSectionLength)}`}
-              >
-                {notes}
-              </li>
+            <div
+              key={id}
+              id="NotesView-notes"
+              className={`                  ${
+                prevSectionLength % 2 === 0
+                  ? "odd:bg-accent even:bg-accent-secondary"
+                  : "odd:bg-accent odd:bg-accent-secondary"
+              }`}
+            >
+              <li className="flex py-2 pl-2 space-x-4">{notes}</li>
             </div>
           ))}
       </ul>

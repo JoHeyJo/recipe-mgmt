@@ -8,12 +8,3 @@ export function isTokenValid(token: string | null) {
   const currentTime = Math.floor(Date.now() / 1000);
   return expirationTime >= currentTime;
 }
-
-/** fill recipe rows with alternating styles  */
-export function styleRecipeRows(index: number, prevSectionRowCount: number) {
-  if (prevSectionRowCount % 2 === 0) {
-    return index % 2 === 0 ? "bg-accent" : "bg-accent-secondary";
-  } else {
-    return index % 2 === 0 ? "bg-accent-secondary" : "bg-accent";
-  }
-}

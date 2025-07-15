@@ -1,4 +1,3 @@
-import { styleRecipeRows } from "../../utils/functions";
 import { IngredientsViewProp } from "../../utils/props";
 import { Ingredients } from "../../utils/types";
 

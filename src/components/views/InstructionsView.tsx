@@ -1,5 +1,4 @@
 import { InstructionsViewProp } from "../../utils/props";
-import { styleRecipeRows } from "../../utils/functions";
 import { Instructions } from "../../utils/types";
 
 /** Renders list of instructions
@@ -31,9 +30,15 @@ function InstructionsView({
             <li
               key={id}
               id="InstructionsView-instruction"
-              className={`flex py-2 pl-2 space-x-4 ${styleRecipeRows(i, prevSectionLength)}`}
+              className={`flex py-2 pl-2 space-x-4 ${
+                prevSectionLength % 2 === 0
+                  ? "odd:bg-accent even:bg-accent-secondary"
+                  : "even:bg-accent odd:bg-accent-secondary"
+              }`}
             >
-              <div className="leading-6 sm:col-span-2 sm:mt-0">{instruction}</div>
+              <div className="leading-6 sm:col-span-2 sm:mt-0">
+                {instruction}
+              </div>
             </li>
           ))}
       </ol>
