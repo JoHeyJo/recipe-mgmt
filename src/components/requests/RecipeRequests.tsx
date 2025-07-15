@@ -193,7 +193,7 @@ function RecipeRequests({
             {error && <Alert alert={error} degree={"yellow"} />}{" "}
             {/* This will be a popup instead */}
             {/* <form onSubmit={handleSubmit}> */}
-            <div className="h-full">
+            <div className="h-80">
               {/* <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
                 <CheckIcon aria-hidden="true" className="h-6 w-6 text-green-600" />
               </div> */}
@@ -211,7 +211,7 @@ function RecipeRequests({
                 id="RecipeRequests-book"
                 className="mx-auto h-full flex-col "
               >
-                <section id="RecipeRequests-recipe" className="flex">
+                <section id="RecipeRequests-recipe" className="flex h-2/3">
                   <section
                     id="RecipeRequests-title-ingredients"
                     className="flex-1 h-full flex flex-col"
@@ -227,7 +227,7 @@ function RecipeRequests({
                   </section>
                   <section
                     id="RecipeRequests-instructions"
-                    className="flex-1 ml-4 h-full "
+                    className="flex-col flex flex-1 ml-4 rounded-md"
                   >
                     <InstructionsRequests
                       handleRecipeUpdate={handleRecipeUpdate}
