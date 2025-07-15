@@ -115,8 +115,8 @@ function InstructionsArea({
       id="InstructionsArea"
       className="flex-col overflow-y-auto h-48 block w-full rounded-md border-2 border-accent-secondary pb-2 px-2 shadow-sm sm:leading-6"
     >
-      <ScrollableComboboxList />
-      {/* {selectedInstructions.map(
+      {/* <ScrollableComboboxList /> */}
+      {selectedInstructions.map(
         (value, index) => (
           <InstructionManager
             key={index}
@@ -126,7 +126,7 @@ function InstructionsArea({
             handleSelected={handleSelected}
             handleInstruction={handleInstruction}
           />
-      ))} */}
+      ))}
     </div>
   );
 }

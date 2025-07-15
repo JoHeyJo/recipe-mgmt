@@ -2,8 +2,6 @@ import { Combobox } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { useContext } from "react";
-import { RecipeContext } from "../../context/RecipeContext";
 
 const OPTIONS = [
   "Apple",
@@ -21,10 +19,8 @@ const OPTIONS = [
 
 export function PortalCombobox({
   label,
-  scrollContainerRef,
-}: {
-  label: string;
-  scrollContainerRef: React.RefObject<HTMLElement>;
+  }: {
+  label: string
 }) {
   const [selected, setSelected] = useState("");
   const [query, setQuery] = useState("");

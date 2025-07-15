@@ -11,7 +11,6 @@ export default function ScrollableComboboxList() {
         <PortalCombobox
           key={index}
           label={label}
-          scrollContainerRef={scrollContainerRef}
         />
       ))}
     </div>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import {
   Combobox,
@@ -10,6 +10,7 @@ import {
 import { Instruction } from "../../utils/types";
 import { InstructionManagerProps } from "../../utils/props";
 import Portal from "../ui/common/Portal";
+import { createPortal } from "react-dom";
 
 /** InstructionManager - renders instructions - ring is removed
  *
@@ -27,6 +28,11 @@ function InstructionManager({
 }: InstructionManagerProps) {
   const [query, setQuery] = useState<string>("");
   const [selected, setSelected] = useState<Instruction>(instruction);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, width: 0 });
+
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const isNewInstruction = (option: Instruction) =>
     typeof option.id === "string" && option.instruction === "+ create...";
@@ -111,6 +117,60 @@ function InstructionManager({
     return value.id ? value : value.instruction;
   }
 
+  // Update dropdown position
+  useEffect(() => {
+    if (!dropdownOpen) return;
+
+    const rect = wrapperRef.current?.getBoundingClientRect();
+    if (rect) {
+      setDropdownPos({
+        top: rect.bottom + window.scrollY,
+        left: rect.left + window.scrollX,
+        width: rect.width,
+      });
+    }
+  }, [dropdownOpen, query]);
+
+  // Close on scroll *outside* dropdown
+  useEffect(() => {
+    if (!dropdownOpen) return;
+
+    const closeOnScroll = (event: Event) => {
+      const target = event.target as HTMLElement;
+
+      const isInsideDropdown = dropdownRef.current?.contains(target);
+      const isInsideCombobox = wrapperRef.current?.contains(target);
+
+      if (!isInsideDropdown && !isInsideCombobox) {
+        setDropdownOpen(false);
+      }
+    };
+
+    window.addEventListener("scroll", closeOnScroll, true);
+    return () => {
+      window.removeEventListener("scroll", closeOnScroll, true);
+    };
+  }, [dropdownOpen]);
+
+  // Close on outside click
+  useEffect(() => {
+    if (!dropdownOpen) return;
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node) &&
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [dropdownOpen]);
+
   return (
     <>
       <Combobox
@@ -120,13 +180,15 @@ function InstructionManager({
         className=""
         id="InstructionManager"
       >
-        <div className="relative mt-2">
+        <div ref={wrapperRef} className="relative mt-2">
           <ComboboxInput
             placeholder={instruction.instruction}
             className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
+            onFocus={() => setDropdownOpen(true)}
             onChange={(event) => {
               event.preventDefault();
               setQuery(event.target.value);
+              setDropdownOpen(true);
             }}
             onBlur={() => setQuery("")}
             displayValue={(option: { instruction: string }) =>
@@ -140,32 +202,38 @@ function InstructionManager({
             />
           </ComboboxButton>
 
-          {filteredOptions.length > 0 && (
-            <ComboboxOptions
-              id="InstructionsManager-Options"
-              className="absolute z-50 mt-1 max-h-60 w-full visible-auto rounded-md bg-accent py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-            >
-              {filteredOptions.map((option) => (
-                <div id="testing ">
-                  <Portal portal={"InstructionsManager-Options"}>
-                    <ComboboxOption
-                      key={option.id}
-                      value={option}
-                      className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-selected data-[focus]:text-accent"
-                    >
-                      <span className="block truncate group-data-[selected]:font-semibold">
-                        {option.instruction}
-                      </span>
+          {dropdownOpen &&
+            filteredOptions.length > 0 &&
+            createPortal(
+              <ComboboxOptions
+                ref={dropdownRef}
+                id="InstructionsManager-Options"
+                className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-accent py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                style={{
+                  top: dropdownPos.top,
+                  left: dropdownPos.left,
+                  width: dropdownPos.width,
+                  position: "absolute",
+                }}
+              >
+                {filteredOptions.map((option) => (
+                  <ComboboxOption
+                    key={option.id}
+                    value={option}
+                    className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-selected data-[focus]:text-accent"
+                  >
+                    <span className="block truncate group-data-[selected]:font-semibold">
+                      {option.instruction}
+                    </span>
 
-                      <span className="absolute inset-y-0 right-0 hidden items-center pr-4 text-indigo-600 group-data-[selected]:flex group-data-[focus]:text-accent">
-                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                      </span>
-                    </ComboboxOption>
-                  </Portal>
-                </div>
-              ))}
-            </ComboboxOptions>
-          )}
+                    <span className="absolute inset-y-0 right-0 hidden items-center pr-4 text-indigo-600 group-data-[selected]:flex group-data-[focus]:text-accent">
+                      <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                    </span>
+                  </ComboboxOption>
+                ))}
+              </ComboboxOptions>,
+              document.body
+            )}
         </div>
       </Combobox>
     </>
