@@ -176,8 +176,6 @@ function InstructionManager({
         as="div"
         value={displayInitialValue(selected || { instruction: "", id: null })}
         onChange={onValueSelect}
-        className=""
-        id="InstructionManager"
       >
         <div ref={wrapperRef} className="relative mt-2">
           <ComboboxInput
