@@ -9,7 +9,6 @@ import {
 } from "@headlessui/react";
 import { Instruction } from "../../utils/types";
 import { InstructionManagerProps } from "../../utils/props";
-import Portal from "../ui/common/Portal";
 import { createPortal } from "react-dom";
 
 /** InstructionManager - renders instructions - ring is removed
@@ -28,8 +27,8 @@ function InstructionManager({
 }: InstructionManagerProps) {
   const [query, setQuery] = useState<string>("");
   const [selected, setSelected] = useState<Instruction>(instruction);
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-    const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, width: 0 });
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, width: 0 });
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);

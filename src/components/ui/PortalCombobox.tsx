@@ -3,6 +3,7 @@ import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
+// DEPRECATED 
 const OPTIONS = [
   "Apple",
   "Banana",

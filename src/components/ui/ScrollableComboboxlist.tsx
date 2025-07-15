@@ -1,6 +1,8 @@
 import { PortalCombobox } from "./PortalCombobox";
 import { useRef } from "react";
 
+// DEPRECATED 
+
 export default function ScrollableComboboxList() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const items = Array.from({ length: 15 }, (_, i) => `Item ${i + 1}`);
