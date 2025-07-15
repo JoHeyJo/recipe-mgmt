@@ -25,15 +25,15 @@ function NotesInput({ handleUpdate }: NotesInputProps) {
     <div className="flex items-start space-x-4">
       <div className="min-w-0 flex-1">
         <form action="#">
-          <div className="NotesInput-text border-b border-light-border focus-within:border-gray-800">
-            <label htmlFor="notes" className="sr-only"></label>
+          <div className="NotesInput-text focus-within:border-gray-800">
+            <label htmlFor="notes" className="">Notes:</label>
             <textarea
               onChange={handleChange}
               id="notes"
               name="notes"
-              rows={1}
-              placeholder="Notes..."
-              className="block w-full resize-none rounded-xl border-2 border-gray-300 p-0 pb-2 placeholder:text-gray-500 focus:border-gray-800 focus:ring-0 sm:text-sm sm:leading-6"
+              rows={3}
+              placeholder="Serve on rocks or ice..."
+              className="block w-full resize-none rounded-xl p-2 border-2 border-gray-300 placeholder:text-gray-500 focus:border-gray-800 focus:ring-0 sm:text-sm sm:leading-6"
               defaultValue={notes}
             />
           </div>

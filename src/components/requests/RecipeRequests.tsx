@@ -188,7 +188,7 @@ function RecipeRequests({
           <DialogPanel
             id="RecipeRequests-DialogPanel"
             transition
-            className="relative flex flex-col transform h-96 rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"
+            className="relative flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"
           >
             {error && <Alert alert={error} degree={"yellow"} />}{" "}
             {/* This will be a popup instead */}
@@ -209,9 +209,9 @@ function RecipeRequests({
 
               <section
                 id="RecipeRequests-book"
-                className="mx-auto  h-full flex-col "
+                className="mx-auto h-full flex-col "
               >
-                <section id="RecipeRequests-recipe" className="flex h-full">
+                <section id="RecipeRequests-recipe" className="flex">
                   <section
                     id="RecipeRequests-title-ingredients"
                     className="flex-1 h-full flex flex-col"
