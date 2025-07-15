@@ -8,6 +8,7 @@ export type RecipeContextType = {
   selectedNotes: string;
   contextIngredients: Ingredients;
   requestAction: string;
+  dialogRef?:any;
 };
 
 export const RecipeContext = createContext<RecipeContextType | null>(null);

@@ -2,6 +2,8 @@ import { Combobox } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { useContext } from "react";
+import { RecipeContext } from "../../context/RecipeContext";
 
 const OPTIONS = [
   "Apple",
@@ -53,10 +55,10 @@ export function PortalCombobox({
   // Close on scroll *outside* dropdown
   useEffect(() => {
     if (!dropdownOpen) return;
-
+    
     const closeOnScroll = (event: Event) => {
       const target = event.target as HTMLElement;
-      console.log("close on scroll",target)
+
       const isInsideDropdown = dropdownRef.current?.contains(target);
       const isInsideCombobox = wrapperRef.current?.contains(target);
 
@@ -101,9 +103,6 @@ export function PortalCombobox({
             setQuery(e.target.value);
             setSelected(e.target.value);
             setDropdownOpen(true);
-          }}
-          onBlur={() => {
-            setTimeout(() => setDropdownOpen(false), 150);
           }}
           className="w-full rounded-md border border-gray-300 py-1.5 pl-3 pr-10 text-sm shadow-sm"
         />

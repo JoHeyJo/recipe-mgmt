@@ -18,6 +18,7 @@ import BookView from "../views/BookView";
 function MainContainer() {
   const { userId, defaultBookId, currentBookId, books } =
     useContext(UserContext);
+
   const [selectedBookId, setSelectedBookId] = useState<number>();
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate);
@@ -132,7 +133,11 @@ function MainContainer() {
               <BookView resetSelected={resetSelectedRecipe} />
               <FaPlusButton onAction={toggleCreateForm} />
             </div>
-            <RecipesList recipes={recipes} handleSelect={selectRecipe} selectedId={selectedRecipe.id}/>
+            <RecipesList
+              recipes={recipes}
+              handleSelect={selectRecipe}
+              selectedId={selectedRecipe.id}
+            />
           </section>
           <RecipeContainer
             recipe={selectedRecipe}
