@@ -153,18 +153,18 @@ function InstructionManager({
 
   // Close on outside click
   useEffect(() => {
-    // setDropdownOpen(false);
     if (!dropdownOpen) return;
 
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        wrapperRef.current &&
-        !wrapperRef.current.contains(event.target as Node) &&
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setDropdownOpen(false);
-      }
+      setDropdownOpen(false);
+      // if (
+      //   wrapperRef.current &&
+      //   !wrapperRef.current.contains(event.target as Node) &&
+      //   dropdownRef.current &&
+      //   !dropdownRef.current.contains(event.target as Node)
+      // ) {
+      //   setDropdownOpen(false);
+      // }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -194,7 +194,7 @@ function InstructionManager({
             }
           />
           <ComboboxButton
-            onClick={() => setDropdownOpen(true)}
+            onClick={() => setDropdownOpen(!dropdownOpen)}
             onPointerDown={(e) => e.preventDefault()}
             className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none"
           >

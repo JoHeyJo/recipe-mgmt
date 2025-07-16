@@ -140,14 +140,15 @@ function IngredientManager({
     if (!dropdownOpen) return;
 
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        wrapperRef.current &&
-        !wrapperRef.current.contains(event.target as Node) &&
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setDropdownOpen(false);
-      }
+      setDropdownOpen(false);
+      // if (
+      //   wrapperRef.current &&
+      //   !wrapperRef.current.contains(event.target as Node) &&
+      //   dropdownRef.current &&
+      //   !dropdownRef.current.contains(event.target as Node)
+      // ) {
+      //   setDropdownOpen(false);
+      // }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -156,7 +157,7 @@ function IngredientManager({
 
   return (
     <Combobox as="div" value={selected || ""} onChange={onValueSelect}>
-      <div ref={wrapperRef} className="relative mt-2">
+      <div ref={wrapperRef} className="relative mb-2">
         <ComboboxInput
           placeholder={entity}
           className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
@@ -172,7 +173,8 @@ function IngredientManager({
           }
         />
         <ComboboxButton
-          onClick={() => setDropdownOpen(true)}
+          // onBlur={()=>setDropdownOpen(false)}// try adding a div to incorporate blur then maybe this approach will work
+          onClick={() => setDropdownOpen(!dropdownOpen)}
           onPointerDown={(e) => e.preventDefault()}
           className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none"
         >
@@ -182,7 +184,8 @@ function IngredientManager({
           />
         </ComboboxButton>
 
-        {dropdownOpen && filteredOptions.length > 0 &&
+        {dropdownOpen &&
+          filteredOptions.length > 0 &&
           createPortal(
             <ComboboxOptions
               static={true}
@@ -197,7 +200,7 @@ function IngredientManager({
             >
               {filteredOptions.map((option) => (
                 <ComboboxOption
-                  onClick={()=>setDropdownOpen(false)}
+                  onClick={() => setDropdownOpen(false)}
                   key={option.id}
                   value={option}
                   className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-selected data-[focus]:text-accent"
