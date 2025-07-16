@@ -160,7 +160,7 @@ function IngredientManager({
         <ComboboxInput
           placeholder={entity}
           className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
-          // onFocus={() => setDropdownOpen(true)}
+          onFocus={() => setDropdownOpen(false)}
           onChange={(event) => {
             event.preventDefault();
             setQuery(event.target.value);
@@ -173,7 +173,7 @@ function IngredientManager({
         />
         <ComboboxButton
           onClick={() => setDropdownOpen(true)}
-          onPointerDown={(e)=>e.preventDefault()}
+          onPointerDown={(e) => e.preventDefault()}
           className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none"
         >
           <ChevronUpDownIcon
@@ -182,7 +182,7 @@ function IngredientManager({
           />
         </ComboboxButton>
 
-        {filteredOptions.length > 0 &&
+        {dropdownOpen && filteredOptions.length > 0 &&
           createPortal(
             <ComboboxOptions
               static={true}
@@ -197,6 +197,7 @@ function IngredientManager({
             >
               {filteredOptions.map((option) => (
                 <ComboboxOption
+                  onClick={()=>setDropdownOpen(false)}
                   key={option.id}
                   value={option}
                   className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-selected data-[focus]:text-accent"
