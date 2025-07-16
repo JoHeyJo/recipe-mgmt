@@ -30,11 +30,9 @@ function IngredientManager({
   const [selected, setSelected] = useState<AttributeData>(value);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, width: 0 });
-  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const isNewOption = (option: AttributeData) =>
     typeof option.id === "string" && option[attribute] === "+ create...";
@@ -156,26 +154,17 @@ function IngredientManager({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [dropdownOpen]);
 
-  function openDropdown() {
-    console.log("drop down triggered")
-    setDropdownOpen(true);
-  }
-
   return (
     <Combobox as="div" value={selected || ""} onChange={onValueSelect}>
       <div ref={wrapperRef} className="relative mt-2">
         <ComboboxInput
-          // inputMode="numeric"
-          // readOnly={isKeyboardVisible}
-          // inputMode=""
-          ref={inputRef}
           placeholder={entity}
           className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
-          // onFocus={() => openDropdown()}
+          // onFocus={() => setDropdownOpen(true)}
           onChange={(event) => {
             event.preventDefault();
             setQuery(event.target.value);
-            // setDropdownOpen(true);
+            setDropdownOpen(true);
           }}
           onBlur={() => setQuery("")}
           displayValue={(option: { [key: string]: string }) =>
@@ -183,7 +172,8 @@ function IngredientManager({
           }
         />
         <ComboboxButton
-
+          onClick={() => setDropdownOpen(true)}
+          onPointerDown={(e)=>e.preventDefault()}
           className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none"
         >
           <ChevronUpDownIcon
@@ -192,10 +182,10 @@ function IngredientManager({
           />
         </ComboboxButton>
 
-        {
-          filteredOptions.length > 0 &&
+        {filteredOptions.length > 0 &&
           createPortal(
             <ComboboxOptions
+              static={true}
               ref={dropdownRef}
               className="absolute z-10 mt-1 max-h-30 w-full overflow-auto rounded-md bg-accent py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
               style={{
