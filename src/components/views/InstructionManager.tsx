@@ -153,6 +153,7 @@ function InstructionManager({
 
   // Close on outside click
   useEffect(() => {
+    // setDropdownOpen(false);
     if (!dropdownOpen) return;
 
     const handleClickOutside = (event: MouseEvent) => {
@@ -181,7 +182,7 @@ function InstructionManager({
           <ComboboxInput
             placeholder={instruction.instruction}
             className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
-            onFocus={() => setDropdownOpen(false)}
+            onFocus={() => setDropdownOpen(true)}
             onChange={(event) => {
               event.preventDefault();
               setQuery(event.target.value);
@@ -192,7 +193,11 @@ function InstructionManager({
               option.instruction
             }
           />
-          <ComboboxButton className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
+          <ComboboxButton
+            onClick={() => setDropdownOpen(true)}
+            onPointerDown={(e) => e.preventDefault()}
+            className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none"
+          >
             <ChevronUpDownIcon
               className="h-5 w-5 text-gray-400"
               aria-hidden="true"
@@ -203,6 +208,7 @@ function InstructionManager({
             filteredOptions.length > 0 &&
             createPortal(
               <ComboboxOptions
+                static={true}
                 ref={dropdownRef}
                 id="InstructionsManager-Options"
                 className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-accent py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
@@ -215,6 +221,7 @@ function InstructionManager({
               >
                 {filteredOptions.map((option) => (
                   <ComboboxOption
+                    onClick={() => setDropdownOpen(false)}
                     key={option.id}
                     value={option}
                     className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-selected data-[focus]:text-accent"
