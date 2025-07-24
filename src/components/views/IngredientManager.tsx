@@ -33,6 +33,7 @@ function IngredientManager({
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef(null);
 
   const isNewOption = (option: AttributeData) =>
     typeof option.id === "string" && option[attribute] === "+ create...";
@@ -140,15 +141,14 @@ function IngredientManager({
     if (!dropdownOpen) return;
 
     const handleClickOutside = (event: MouseEvent) => {
-      setDropdownOpen(false);
-      // if (
-      //   wrapperRef.current &&
-      //   !wrapperRef.current.contains(event.target as Node) &&
-      //   dropdownRef.current &&
-      //   !dropdownRef.current.contains(event.target as Node)
-      // ) {
-      //   setDropdownOpen(false);
-      // }
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node) &&
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setDropdownOpen(false);
+      }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -157,15 +157,14 @@ function IngredientManager({
 
   return (
     <Combobox as="div" value={selected || ""} onChange={onValueSelect}>
-      <div ref={wrapperRef} className="relative mb-2">
+      <div ref={wrapperRef} className="relative mt-2">
         <ComboboxInput
+          ref={inputRef}
           placeholder={entity}
           className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
-          // onFocus={() => setDropdownOpen(false)}
           onChange={(event) => {
             event.preventDefault();
             setQuery(event.target.value);
-            setDropdownOpen(true);
           }}
           onBlur={() => setQuery("")}
           displayValue={(option: { [key: string]: string }) =>
@@ -173,13 +172,13 @@ function IngredientManager({
           }
         />
         <ComboboxButton
-          // onBlur={()=>setDropdownOpen(false)}// try adding a div to incorporate blur then maybe this approach will work
-          // onClick={() => setDropdownOpen(!dropdownOpen)}
-          // onPointerDown={(e) => e.preventDefault()}
-          onMouseDown={(e)=> {
-            e.preventDefault()
-          }}
           className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none"
+          // onMouseDown={(e) => {
+          //   e.preventDefault(); // prevents input focus → no keyboard
+          //   e.currentTarget.click(); // focus sibling component ComboboxInput
+          // }}
+          // onClick={(e) => e.currentTarget.click()}
+          // onPointerDown={(e) => e.preventDefault()}
         >
           <ChevronUpDownIcon
             className="h-5 w-5 text-gray-400"
@@ -187,39 +186,35 @@ function IngredientManager({
           />
         </ComboboxButton>
 
-        {dropdownOpen &&
-          filteredOptions.length > 0 &&
-          createPortal(
-            <ComboboxOptions
-              // static={true}
-              ref={dropdownRef}
-              className="absolute z-10 mt-1 max-h-30 w-full overflow-auto rounded-md bg-accent py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-              style={{
-                top: dropdownPos.top,
-                left: dropdownPos.left,
-                width: dropdownPos.width,
-                position: "absolute",
-              }}
-            >
-              {filteredOptions.map((option) => (
-                <ComboboxOption
-                  onClick={() => setDropdownOpen(false)}
-                  key={option.id}
-                  value={option}
-                  className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-selected data-[focus]:text-accent"
-                >
-                  <span className="block truncate group-data-[selected]:font-semibold">
-                    {option[attribute]}
-                  </span>
+        {createPortal(
+          <ComboboxOptions
+            ref={dropdownRef}
+            className="absolute z-10 mt-1 max-h-30 w-full overflow-auto rounded-md bg-accent py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+            style={{
+              top: dropdownPos.top,
+              left: dropdownPos.left,
+              width: dropdownPos.width,
+              position: "absolute",
+            }}
+          >
+            {filteredOptions.map((option) => (
+              <ComboboxOption
+                key={option.id}
+                value={option}
+                className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-selected data-[focus]:text-accent"
+              >
+                <span className="block truncate group-data-[selected]:font-semibold">
+                  {option[attribute]}
+                </span>
 
-                  <span className="absolute inset-y-0 right-0 hidden items-center pr-4 text-indigo-600 group-data-[selected]:flex group-data-[focus]:text-accent">
-                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                  </span>
-                </ComboboxOption>
-              ))}
-            </ComboboxOptions>,
-            document.body
-          )}
+                <span className="absolute inset-y-0 right-0 hidden items-center pr-4 text-indigo-600 group-data-[selected]:flex group-data-[focus]:text-accent">
+                  <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                </span>
+              </ComboboxOption>
+            ))}
+          </ComboboxOptions>,
+          document.body
+        )}
       </div>
     </Combobox>
   );
