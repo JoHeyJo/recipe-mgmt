@@ -159,11 +159,12 @@ function IngredientManager({
     <Combobox as="div" value={selected || ""} onChange={onValueSelect}>
       <div ref={wrapperRef} className="relative mt-2">
         <ComboboxInput
+          // inputMode="none"
           ref={inputRef}
           placeholder={entity}
           className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
           onChange={(event) => {
-            event.preventDefault();
+            // event.preventDefault();
             setQuery(event.target.value);
           }}
           onBlur={() => setQuery("")}
@@ -173,12 +174,7 @@ function IngredientManager({
         />
         <ComboboxButton
           className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none"
-          // onMouseDown={(e) => {
-          //   e.preventDefault(); // prevents input focus → no keyboard
-          //   e.currentTarget.click(); // focus sibling component ComboboxInput
-          // }}
-          // onClick={(e) => e.currentTarget.click()}
-          // onPointerDown={(e) => e.preventDefault()}
+          inputMode="none"
         >
           <ChevronUpDownIcon
             className="h-5 w-5 text-gray-400"
@@ -188,6 +184,7 @@ function IngredientManager({
 
         {createPortal(
           <ComboboxOptions
+            // static={true}
             ref={dropdownRef}
             className="absolute z-10 mt-1 max-h-30 w-full overflow-auto rounded-md bg-accent py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
             style={{
