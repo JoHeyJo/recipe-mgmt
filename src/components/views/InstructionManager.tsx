@@ -200,12 +200,12 @@ function InstructionManager({
             }
           />
           <ComboboxButton
-            onClick={() => setDropdownOpen((isOpen) => !isOpen)}
-            // onPointerDown={inputRef.current?.blur()}
-            // onClick={() =>{
-            // setDropdownOpen((isOpen) => !isOpen)
-            // // inputRef.current?.blur()
-            // }}
+            // onClick={() => setDropdownOpen((isOpen) => !isOpen)}
+            // onClick={inputRef.current?.blur()}
+            onClick={() =>{
+            setDropdownOpen((isOpen) => !isOpen)
+            inputRef.current?.blur()
+            }}
             className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none"
           >
             {/* <button
