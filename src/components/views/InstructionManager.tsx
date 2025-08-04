@@ -174,14 +174,6 @@ function InstructionManager({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [dropdownOpen]);
 
-    const handleDrop = (event) => {
-      // setQuery(event.target.value);
-      // Add other logic here if needed
-      // setTimeout(() => {
-        searchRef.current?.blur(); // Blur the input to hide the keyboard
-      // }, 0);
-    };
-
   return (
     <>
       <Combobox
@@ -197,11 +189,10 @@ function InstructionManager({
             inputMode={suppressKb ? "none" : undefined}
             placeholder={instruction.instruction}
             className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
-            onFocus={() => setDropdownOpen(true)}
+            // onFocus={() => setDropdownOpen(true)}
             onChange={(event) => {
               event.preventDefault();
               setQuery(event.target.value);
-              handleDrop(event);
               // setDropdownOpen(true);
             }}
             onBlur={() => setQuery("")}
@@ -210,34 +201,23 @@ function InstructionManager({
             }
           />
           <ComboboxButton
-            onClick={(e) => {
-              // e.preventDefault(); // stop input from focusing → no keyboard
-              // e.stopPropagation(); // avoid bubbling that may close it
-              // setDropdownOpen((prev) => !prev);
-              inputRef.current?.blur();
+            onClick={() => {
+              setSuppressKb(true)
+              setDropdownOpen(true)
             }}
             className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none"
           >
-            {/* <button
-            className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none"
-            onPointerDown={(e) => e.preventDefault()}
-            onClick={() => setDropdownOpen((isOpen) => !isOpen)}
-          > */}
             <ChevronUpDownIcon
-              // onClick={() => setDropdownOpen((isOpen) => !isOpen)}
               className="h-5 w-5 text-gray-400"
               aria-hidden="true"
             />
-            {/* </button> */}
           </ComboboxButton>
 
           {
-            // dropdownOpen &&
+            dropdownOpen &&
             //   filteredOptions.length > 0 &&
             createPortal(
               <ComboboxOptions
-                onClick={(e) => e.preventDefault()}
-                // static={true}
                 ref={dropdownRef}
                 id="InstructionsManager-Options"
                 className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-accent py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
