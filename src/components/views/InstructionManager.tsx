@@ -29,11 +29,10 @@ function InstructionManager({
   const [selected, setSelected] = useState<Instruction>(instruction);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, width: 0 });
-  const [suppressKb, setSuppressKb] = useState(false);
+  const [isKbSuppressed, setIsKbSuppressed] = useState(false);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef(null);
 
   const isNewInstruction = (option: Instruction) =>
     typeof option.id === "string" && option.instruction === "+ create...";
@@ -182,12 +181,11 @@ function InstructionManager({
       >
         <div ref={wrapperRef} className="relative mt-2">
           <ComboboxInput
-            ref={inputRef}
-            inputMode={suppressKb ? "none" : undefined}
+            inputMode={isKbSuppressed ? "none" : undefined}
             placeholder={instruction.instruction}
             className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
-            onFocus={() => setSuppressKb(false)}
-            onSelect={()=> setSuppressKb(false)}
+            onFocus={() => setIsKbSuppressed(false)}
+            onSelect={()=> setIsKbSuppressed(false)}
             onChange={(event) => {
               event.preventDefault();
               setQuery(event.target.value);
@@ -199,8 +197,8 @@ function InstructionManager({
           />
           <ComboboxButton
             onClick={() => {
-              setSuppressKb(true);
-              // setDropdownOpen(true);
+              setIsKbSuppressed(true);
+              setDropdownOpen(true);
             }}
             className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none"
           >

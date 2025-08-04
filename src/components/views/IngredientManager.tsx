@@ -30,10 +30,10 @@ function IngredientManager({
   const [selected, setSelected] = useState<AttributeData>(value);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, width: 0 });
+  const [isKbSuppressed, setIsKbSuppressed] = useState(false);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef(null);
 
   const isNewOption = (option: AttributeData) =>
     typeof option.id === "string" && option[attribute] === "+ create...";
@@ -141,14 +141,15 @@ function IngredientManager({
     if (!dropdownOpen) return;
 
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        wrapperRef.current &&
-        !wrapperRef.current.contains(event.target as Node) &&
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setDropdownOpen(false);
-      }
+      setDropdownOpen(false);
+      // if (
+      //   wrapperRef.current &&
+      //   !wrapperRef.current.contains(event.target as Node) &&
+      //   dropdownRef.current &&
+      //   !dropdownRef.current.contains(event.target as Node)
+      // ) {
+      //   setDropdownOpen(false);
+      // }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -159,12 +160,13 @@ function IngredientManager({
     <Combobox as="div" value={selected || ""} onChange={onValueSelect}>
       <div ref={wrapperRef} className="relative mt-2">
         <ComboboxInput
-          // inputMode="none"
-          ref={inputRef}
+          inputMode={isKbSuppressed ? "none" : undefined}
           placeholder={entity}
           className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
+          onFocus={() => setIsKbSuppressed(false)}
+          onSelect={() => setIsKbSuppressed(false)}
           onChange={(event) => {
-            // event.preventDefault();
+            event.preventDefault();
             setQuery(event.target.value);
           }}
           onBlur={() => setQuery("")}
@@ -173,8 +175,11 @@ function IngredientManager({
           }
         />
         <ComboboxButton
+          onClick={() => {
+            setIsKbSuppressed(true);
+            setDropdownOpen(true);
+          }}
           className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none"
-          inputMode="none"
         >
           <ChevronUpDownIcon
             className="h-5 w-5 text-gray-400"
@@ -184,7 +189,6 @@ function IngredientManager({
 
         {createPortal(
           <ComboboxOptions
-            // static={true}
             ref={dropdownRef}
             className="absolute z-10 mt-1 max-h-30 w-full overflow-auto rounded-md bg-accent py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
             style={{
