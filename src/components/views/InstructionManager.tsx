@@ -29,10 +29,12 @@ function InstructionManager({
   const [selected, setSelected] = useState<Instruction>(instruction);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, width: 0 });
+  const [suppressKb, setSuppressKb] = useState(false);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
-    const inputRef = useRef(null);
+  const inputRef = useRef(null);
+  const searchRef = useRef(null); 
 
   const isNewInstruction = (option: Instruction) =>
     typeof option.id === "string" && option.instruction === "+ create...";
@@ -172,6 +174,14 @@ function InstructionManager({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [dropdownOpen]);
 
+    const handleDrop = (event) => {
+      // setQuery(event.target.value);
+      // Add other logic here if needed
+      // setTimeout(() => {
+        searchRef.current?.blur(); // Blur the input to hide the keyboard
+      // }, 0);
+    };
+
   return (
     <>
       <Combobox
@@ -181,17 +191,17 @@ function InstructionManager({
       >
         <div ref={wrapperRef} className="relative mt-2">
           <ComboboxInput
-            // readOnly={true}
-            // inputMode="none"
             ref={inputRef}
             // inputMode="none"
             // onClick={() => inputRef.current?.focus()}
+            inputMode={suppressKb ? "none" : undefined}
             placeholder={instruction.instruction}
             className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
-            // onFocus={() => setDropdownOpen(true)}
+            onFocus={() => setDropdownOpen(true)}
             onChange={(event) => {
-              // event.preventDefault();
+              event.preventDefault();
               setQuery(event.target.value);
+              handleDrop(event);
               // setDropdownOpen(true);
             }}
             onBlur={() => setQuery("")}
@@ -200,11 +210,11 @@ function InstructionManager({
             }
           />
           <ComboboxButton
-            // onClick={() => setDropdownOpen((isOpen) => !isOpen)}
-            // onClick={inputRef.current?.blur()}
-            onClick={() =>{
-            setDropdownOpen((isOpen) => !isOpen)
-            inputRef.current?.blur()
+            onClick={(e) => {
+              // e.preventDefault(); // stop input from focusing → no keyboard
+              // e.stopPropagation(); // avoid bubbling that may close it
+              // setDropdownOpen((prev) => !prev);
+              inputRef.current?.blur();
             }}
             className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none"
           >
@@ -221,10 +231,12 @@ function InstructionManager({
             {/* </button> */}
           </ComboboxButton>
 
-          {dropdownOpen &&
-            filteredOptions.length > 0 &&
+          {
+            // dropdownOpen &&
+            //   filteredOptions.length > 0 &&
             createPortal(
               <ComboboxOptions
+                onClick={(e) => e.preventDefault()}
                 // static={true}
                 ref={dropdownRef}
                 id="InstructionsManager-Options"
@@ -254,7 +266,8 @@ function InstructionManager({
                 ))}
               </ComboboxOptions>,
               document.body
-            )}
+            )
+          }
         </div>
       </Combobox>
     </>
