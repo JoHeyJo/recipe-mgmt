@@ -34,7 +34,6 @@ function InstructionManager({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef(null);
-  const searchRef = useRef(null); 
 
   const isNewInstruction = (option: Instruction) =>
     typeof option.id === "string" && option.instruction === "+ create...";
@@ -184,16 +183,14 @@ function InstructionManager({
         <div ref={wrapperRef} className="relative mt-2">
           <ComboboxInput
             ref={inputRef}
-            // inputMode="none"
-            // onClick={() => inputRef.current?.focus()}
             inputMode={suppressKb ? "none" : undefined}
             placeholder={instruction.instruction}
             className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
-            // onFocus={() => setDropdownOpen(true)}
+            onFocus={() => setSuppressKb(false)}
+            onSelect={()=> setSuppressKb(false)}
             onChange={(event) => {
               event.preventDefault();
               setQuery(event.target.value);
-              // setDropdownOpen(true);
             }}
             onBlur={() => setQuery("")}
             displayValue={(option: { instruction: string }) =>
@@ -202,8 +199,8 @@ function InstructionManager({
           />
           <ComboboxButton
             onClick={() => {
-              setSuppressKb(true)
-              setDropdownOpen(true)
+              setSuppressKb(true);
+              // setDropdownOpen(true);
             }}
             className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none"
           >
@@ -214,8 +211,8 @@ function InstructionManager({
           </ComboboxButton>
 
           {
-            dropdownOpen &&
-            //   filteredOptions.length > 0 &&
+          // dropdownOpen &&
+          //   filteredOptions.length > 0 &&
             createPortal(
               <ComboboxOptions
                 ref={dropdownRef}
@@ -246,8 +243,7 @@ function InstructionManager({
                 ))}
               </ComboboxOptions>,
               document.body
-            )
-          }
+            )}
         </div>
       </Combobox>
     </>
