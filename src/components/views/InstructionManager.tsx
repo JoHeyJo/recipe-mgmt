@@ -33,6 +33,7 @@ function InstructionManager({
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const isNewInstruction = (option: Instruction) =>
     typeof option.id === "string" && option.instruction === "+ create...";
@@ -181,11 +182,13 @@ function InstructionManager({
       >
         <div ref={wrapperRef} className="relative mt-2">
           <ComboboxInput
+            ref={inputRef}
             inputMode={isKbSuppressed ? "none" : undefined}
             placeholder={instruction.instruction}
             className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
             onFocus={() => setIsKbSuppressed(false)}
             onSelect={()=> setIsKbSuppressed(false)}
+            onClick={()=> setIsKbSuppressed(false)}
             onChange={(event) => {
               event.preventDefault();
               setQuery(event.target.value);
@@ -196,7 +199,8 @@ function InstructionManager({
             }
           />
           <ComboboxButton
-            onClick={() => {
+            onClick={(e) => {
+              // setTimeout(()=>{inputRef.current?.blur()})
               setIsKbSuppressed(true);
               setDropdownOpen(true);
             }}
