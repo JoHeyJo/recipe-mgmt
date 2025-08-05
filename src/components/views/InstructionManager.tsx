@@ -173,6 +173,7 @@ function InstructionManager({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [dropdownOpen]);
 
+
   return (
     <>
       <Combobox
@@ -187,8 +188,8 @@ function InstructionManager({
             placeholder={instruction.instruction}
             className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
             onFocus={() => setIsKbSuppressed(false)}
-            onSelect={()=> setIsKbSuppressed(false)}
-            onClick={()=> setIsKbSuppressed(false)}
+            onSelect={() => setIsKbSuppressed(false)}
+            onClick={() => setIsKbSuppressed(false)}
             onChange={(event) => {
               event.preventDefault();
               setQuery(event.target.value);
@@ -200,7 +201,6 @@ function InstructionManager({
           />
           <ComboboxButton
             onClick={(e) => {
-              // setTimeout(()=>{inputRef.current?.blur()})
               setIsKbSuppressed(true);
               setDropdownOpen(true);
             }}
@@ -213,8 +213,8 @@ function InstructionManager({
           </ComboboxButton>
 
           {
-          // dropdownOpen &&
-          //   filteredOptions.length > 0 &&
+            // dropdownOpen &&
+            //   filteredOptions.length > 0 &&
             createPortal(
               <ComboboxOptions
                 ref={dropdownRef}
@@ -245,7 +245,8 @@ function InstructionManager({
                 ))}
               </ComboboxOptions>,
               document.body
-            )}
+            )
+          }
         </div>
       </Combobox>
     </>
