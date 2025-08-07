@@ -19,6 +19,8 @@ type HandleInstruction = {
 };
 
 export type InstructionManagerProps = {
+  recipeRequestRef: React.MutableRefObject<HTMLDivElement>;
+  instructionsAreaRef: React.MutableRefObject<HTMLDivElement>;
   instruction: Instruction;
   arrayKey: number;
   options: Instructions;
@@ -70,6 +72,7 @@ type HandleOption = {
 };
 
 export type InstructionsRequestsProp = {
+  recipeRequestRef: React.MutableRefObject<HTMLDivElement>;
   handleRecipeUpdate: (data: Instructions, section: string) => void;
 };
 
@@ -139,6 +142,7 @@ type InstructionsData = {
 };
 
 export type InstructionsAreaProps = {
+  recipeRequestRef: React.MutableRefObject<HTMLDivElement>;
   handleRecipeUpdate: (data: Instructions, section: string) => void;
   data: InstructionsData;
   handleInstruction: HandleInstruction;

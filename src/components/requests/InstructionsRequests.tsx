@@ -13,6 +13,7 @@ import { InstructionsRequestsProp } from "../../utils/props";
  * RecipeRequests -> InstructionsRequests -> InstructionsArea
  */
 function InstructionsRequests({
+  recipeRequestRef,
   handleRecipeUpdate,
 }: InstructionsRequestsProp) {
   const { userId, currentBookId } = useContext(UserContext);
@@ -98,6 +99,7 @@ function InstructionsRequests({
     <>
       <RadioSwitch handleSwitch={handleRadio} selection={whichInstructions} />
       <InstructionsArea
+        recipeRequestRef={recipeRequestRef}
         handleRecipeUpdate={handleRecipeUpdate}
         handleInstruction={handleInstruction}
         data={data}

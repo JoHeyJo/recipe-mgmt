@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { Instruction, Instructions } from "../../utils/types";
 import InstructionManager from "../views/InstructionManager";
 import { InstructionsAreaProps } from "../../utils/props";
@@ -21,6 +21,7 @@ const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) =>
  * InstructionsRequests -> InstructionsArea -> InstructionManager
  */
 function InstructionsArea({
+  recipeRequestRef,
   handleRecipeUpdate,
   data,
   handleInstruction,
@@ -37,6 +38,8 @@ function InstructionsArea({
         : PLACE_HOLDER
     );
   const [filterKey, setFilterKeys] = useState({});
+
+  const instructionsAreaRef = useRef<HTMLDivElement>(null);
 
   /** Create additional input field for new instruction */
   function createInstructionInput() {
@@ -110,21 +113,25 @@ function InstructionsArea({
     );
   }, [selectedInstructions]);
 
+
+
   return (
     <div
+      ref={instructionsAreaRef}
       id="InstructionsArea"
-      className="flex-col flex-1 overflow-y-auto block w-full rounded-md border-2 border-accent-secondary pb-2 px-2 shadow-sm sm:leading-6"
+      className="flex-col flex-1 overflow-x-hidden block w-full rounded-md border-2 border-accent-secondary pb-2 px-2 shadow-sm sm:leading-6"
     >
-      {selectedInstructions.map(
-        (value, index) => (
-          <InstructionManager
-            key={index}
-            arrayKey={index}
-            instruction={value}
-            options={data.instructions}
-            handleSelected={handleSelected}
-            handleInstruction={handleInstruction}
-          />
+      {selectedInstructions.map((value, index) => (
+        <InstructionManager
+          recipeRequestRef={recipeRequestRef}
+          instructionsAreaRef={instructionsAreaRef}
+          key={index}
+          arrayKey={index}
+          instruction={value}
+          options={data.instructions}
+          handleSelected={handleSelected}
+          handleInstruction={handleInstruction}
+        />
       ))}
     </div>
   );

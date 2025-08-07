@@ -19,6 +19,8 @@ import { createPortal } from "react-dom";
  */
 
 function InstructionManager({
+  recipeRequestRef,
+  instructionsAreaRef,
   arrayKey,
   instruction,
   options,
@@ -107,8 +109,46 @@ function InstructionManager({
 
   /** Consolidates actions taken when dropdown value is selected  */
   function onValueSelect(value: Instruction) {
+
+      const container = instructionsAreaRef?.current;
+
+      if (container) {
+        console.log("📦 Scrolling container:", container);
+        setTimeout(()=>{
+          container.scrollTo({
+            top: instructionsAreaRef.current.scrollTop + 100,
+            behavior: "smooth",
+          });
+
+        },1500)
+      } else {
+        console.warn("🚫 instructionsAreaRef is not available");
+      }
+    // setTimeout(() => {
+      // recipeRequestRef.current?.scrollIntoView({
+      //   block: "center",
+      //   behavior: "smooth",
+      // });
+    //   instructionsAreaRef.current?.scrollIntoView({
+    //     block: "center",
+    //     behavior: "smooth",
+    //   });
+    // }, 1500);
     setQuery("");
     handleChange(value);
+      // const inputEl = inputRef.current;
+      // if (inputEl) {
+      //   const scrollContainer = findScrollableParent(inputEl);
+      //   console.log(
+      //     "👀 Nearest scrollable parent for scrollIntoView:",
+      //     scrollContainer
+      //   );
+
+      //   inputEl.scrollIntoView({ block: "nearest", behavior: "smooth" });
+      // }
+
+      // setQuery("");
+      // handleChange(value);
   }
 
   /** Facilitates if a created value or template value is rendered */
@@ -173,6 +213,36 @@ function InstructionManager({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [dropdownOpen]);
 
+  function findScrollableParent(el: HTMLElement | null): HTMLElement | null {
+    while (el && el !== document.body) {
+      const style = getComputedStyle(el);
+      const overflowY = style.overflowY;
+      const isScrollable = overflowY === "auto" || overflowY === "scroll";
+      const canScroll = el.scrollHeight > el.clientHeight;
+
+      if (isScrollable && canScroll) {
+        console.log("🟢 Found scrollable ancestor:", el);
+        return el;
+      }
+
+      el = el.parentElement;
+    }
+
+    console.warn("🔴 No scrollable ancestor found");
+    return null;
+  }
+
+  useEffect(() => {
+    if (instructionsAreaRef?.current) {
+      console.log(
+        "✅ instructionsAreaRef points to:",
+        instructionsAreaRef.current
+      );
+    } else {
+      console.warn("❌ instructionsAreaRef is null or undefined");
+    }
+  }, []);
+
 
   return (
     <>
@@ -191,6 +261,7 @@ function InstructionManager({
             onSelect={() => setIsKbSuppressed(false)}
             onClick={() => setIsKbSuppressed(false)}
             onChange={(event) => {
+              // recipeRequestRef.current?.scrollIntoView();
               event.preventDefault();
               setQuery(event.target.value);
             }}

@@ -4,6 +4,7 @@ import {
   useEffect,
   FormEventHandler,
   FormEvent,
+  useRef
 } from "react";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import IngredientsGroup from "../selectors/IngredientsGroup";
@@ -63,6 +64,8 @@ function RecipeRequests({
   });
   const [error, setError] = useState();
   const [isDisabled, setIsDisabled] = useState(true);
+
+  const recipeRequestRef = useRef<HTMLDivElement>(null);
 
   const selectedRecipe = {
     recipeId,
@@ -181,14 +184,14 @@ function RecipeRequests({
     <Dialog open={isOpen} onClose={setShowing} className="relative z-10">
       <DialogBackdrop
         transition
-        className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
+        className="overflow-y-auto fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
       />
       <div className="fixed h-full inset-0 z-10 w-screen">
         <div className="flex h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
             id="RecipeRequests-DialogPanel"
             transition
-            className="relative flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"
+            className="overflow-y-auto max-h-[70vh] relative flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"
           >
             {error && <Alert alert={error} degree={"yellow"} />}{" "}
             {/* This will be a popup instead */}
@@ -219,17 +222,19 @@ function RecipeRequests({
                     <div className="">
                       <TitleInput handleUpdate={handleRecipeUpdate} />
                     </div>
-                    <div className="flex-1 overflow-hidden">
+                    <div className="flex-1">
                       <IngredientsGroup
                         handleRecipeUpdate={handleRecipeUpdate}
                       />
                     </div>
                   </section>
                   <section
+                    ref={recipeRequestRef}
                     id="RecipeRequests-instructions"
                     className="flex-col flex flex-1 ml-4 rounded-md"
                   >
                     <InstructionsRequests
+                      recipeRequestRef={recipeRequestRef}
                       handleRecipeUpdate={handleRecipeUpdate}
                     />
                   </section>
