@@ -4,7 +4,6 @@ import {
   useEffect,
   FormEventHandler,
   FormEvent,
-  useRef
 } from "react";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import IngredientsGroup from "../selectors/IngredientsGroup";
@@ -65,8 +64,6 @@ function RecipeRequests({
   const [error, setError] = useState();
   const [isDisabled, setIsDisabled] = useState(true);
 
-  const recipeRequestRef = useRef<HTMLDivElement>(null);
-
   const selectedRecipe = {
     recipeId,
     recipeName,
@@ -104,6 +101,7 @@ function RecipeRequests({
       setIsDisabled(!isAltered);
     }
   }, [recipe]);
+  
 
   const isLargeScreen = useMediaQuery({ query: "(min-width: 1024px)" }); // lg breakpoint in Tailwind
 
@@ -180,65 +178,59 @@ function RecipeRequests({
     if (res) setShowing();
   }
 
-  useEffect(() => {
-    document.documentElement.style.overflow = "hidden";
-    return () => {
-      document.documentElement.style.overflow = "";
-    };
-  }, []);
-
   return (
-    <Dialog
-      // ref={recipeRequestRef}
-      open={isOpen}
-      onClose={setShowing}
-      className="relative z-10"
-    >
+    <Dialog open={isOpen} onClose={setShowing} className="relative z-10">
       <DialogBackdrop
-        // ref={recipeRequestRef}
         transition
         className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
       />
       <div className="fixed h-full inset-0 z-10 w-screen">
-        <div
-          // ref={recipeRequestRef}
-          className="flex h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
-        >
+        <div className="flex h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
-            // ref={recipeRequestRef}
             id="RecipeRequests-DialogPanel"
             transition
-            className="min-h-0 max-h-[80vh] relative flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"
+            className="relative flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"
           >
             {error && <Alert alert={error} degree={"yellow"} />}{" "}
             {/* This will be a popup instead */}
             {/* <form onSubmit={handleSubmit}> */}
             <div className="h-80">
+              {/* <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+                <CheckIcon aria-hidden="true" className="h-6 w-6 text-green-600" />
+              </div> */}
+              {/* <div className="mt-3 h-full border-2 border-yellow-300 text-center sm:mt-5"> */}
+              {/* <DialogTitle as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                  Payment successful
+                </DialogTitle> */}
+              {/* <div className="mt-2">
+                  <p className="text-sm text-gray-500">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet labore.
+                  </p>
+                </div> */}
+
               <section
                 id="RecipeRequests-book"
-                className="min-h-0 mx-auto h-full flex-col "
+                className="mx-auto h-full flex-col "
               >
                 <section id="RecipeRequests-recipe" className="flex h-2/3">
                   <section
                     id="RecipeRequests-title-ingredients"
-                    className="min-h-0 flex-1 h-full flex flex-col"
+                    className="flex-1 h-full flex flex-col"
                   >
-                    <div className="min-h-0 ">
+                    <div className="">
                       <TitleInput handleUpdate={handleRecipeUpdate} />
                     </div>
-                    <div className="min-h-0 flex-1 overflow-hidden">
+                    <div className="flex-1 overflow-hidden">
                       <IngredientsGroup
                         handleRecipeUpdate={handleRecipeUpdate}
                       />
                     </div>
                   </section>
                   <section
-                    // ref={recipeRequestRef}
                     id="RecipeRequests-instructions"
-                    className="min-h-0 flex-col flex flex-1 ml-4 rounded-md"
+                    className="flex-col flex flex-1 ml-4 rounded-md"
                   >
                     <InstructionsRequests
-                      recipeRequestRef={recipeRequestRef}
                       handleRecipeUpdate={handleRecipeUpdate}
                     />
                   </section>

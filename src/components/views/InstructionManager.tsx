@@ -127,63 +127,17 @@ function InstructionManager({
 
   /** Consolidates actions taken when dropdown value is selected  */
   function onValueSelect(value: Instruction) {
-    // const container = instructionsAreaRef?.current;
-
-    // if (container) {
-    //   console.log("📦 Scrolling container:", container);
-    //   setTimeout(()=>{
-    //     container.scrollTo({
-    //       top: instructionsAreaRef.current.scrollTop + 100,
-    //       behavior: "smooth",
-    //     });
-
-    //   },1500)
-    // } else {
-    //   console.warn("🚫 instructionsAreaRef is not available");
-    // }
-    // setTimeout(() => {
-    // recipeRequestRef.current?.scrollIntoView({
-    //   block: "center",
-    //   behavior: "smooth",
-    // });
-    //   instructionsAreaRef.current?.scrollIntoView({
-    //     block: "center",
-    //     behavior: "smooth",
-    //   });
-    // }, 1500);
     setQuery("");
     handleChange(value);
-    // const inputEl = inputRef.current;
-    // if (inputEl) {
-    //   const scrollContainer = findScrollableParent(inputEl);
-    //   console.log(
-    //     "👀 Nearest scrollable parent for scrollIntoView:",
-    //     scrollContainer
-    //   );
-
-    //   inputEl.scrollIntoView({ block: "nearest", behavior: "smooth" });
-    // }
-
-    // setQuery("");
-    // handleChange(value);
-    // setSelected(value);
-    // Give iOS time to resize for the keyboard & settle layout
-    // requestAnimationFrame(() => {
-    // requestAnimationFrame(() => {
-    //   const el = recipeRequestRef.current; // the section you want in view
-    //   console.log("el:", el);
-    //   if (el) scrollIntoKeyboardSafeView(el, 24);
-    // });
-    // });
-    setTimeout(()=>{
-      // recipeRequestRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+    // setTimeout(()=>{
+    //   recipeRequestRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+    // },500)
   const element = document.getElementById("RecipeRequests-DialogPanel");
   if (!element) return;
   window.scroll({
     top: element.offsetTop - 20,
     behavior: "smooth",
   }); 
-    },500)
   }
 
   /** Facilitates if a created value or template value is rendered */
@@ -247,37 +201,6 @@ function InstructionManager({
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [dropdownOpen]);
-
-  function findScrollableParent(el: HTMLElement | null): HTMLElement | null {
-    while (el && el !== document.body) {
-      const style = getComputedStyle(el);
-      const overflowY = style.overflowY;
-      const isScrollable = overflowY === "auto" || overflowY === "scroll";
-      const canScroll = el.scrollHeight > el.clientHeight;
-
-      if (isScrollable && canScroll) {
-        console.log("🟢 Found scrollable ancestor:", el);
-        return el;
-      }
-
-      el = el.parentElement;
-    }
-
-    console.warn("🔴 No scrollable ancestor found");
-    return null;
-  }
-
-  useEffect(() => {
-    if (instructionsAreaRef?.current) {
-      console.log(
-        "✅ instructionsAreaRef points to:",
-        instructionsAreaRef.current
-      );
-    } else {
-      console.warn("❌ instructionsAreaRef is null or undefined");
-    }
-  }, []);
-
 
   return (
     <>
