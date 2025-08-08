@@ -10,7 +10,7 @@ export function isTokenValid(token: string | null) {
 }
 
 export function scrollToElement(element: any) {
-  const el = document.getElementById("element");
+  const el = document.getElementById(element);
   if (!el) return;
   window.scroll({
     top: el.offsetTop,

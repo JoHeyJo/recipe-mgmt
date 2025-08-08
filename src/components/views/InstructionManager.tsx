@@ -109,7 +109,7 @@ function InstructionManager({
   function onValueSelect(value: Instruction) {
     setQuery("");
     handleChange(value);
-    scrollToElement("")
+    scrollToElement("RecipeRequests-DialogPanel");
   }
 
   /** Facilitates if a created value or template value is rendered */
