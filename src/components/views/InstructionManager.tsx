@@ -190,7 +190,6 @@ function InstructionManager({
             onSelect={() => setIsKbSuppressed(false)}
             onClick={() => setIsKbSuppressed(false)}
             onChange={(event) => {
-              // recipeRequestRef.current?.scrollIntoView();
               event.preventDefault();
               setQuery(event.target.value);
             }}
