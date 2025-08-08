@@ -19,8 +19,6 @@ import { createPortal } from "react-dom";
  */
 
 function InstructionManager({
-  recipeRequestRef,
-  instructionsAreaRef,
   arrayKey,
   instruction,
   options,
@@ -43,24 +41,6 @@ function InstructionManager({
   useEffect(() => {
     setSelected(instruction);
   }, []);
-
-  function scrollIntoKeyboardSafeView(el: HTMLElement, pad = 16) {
-    const vv = window.visualViewport;
-    const rect = el.getBoundingClientRect();
-    const viewportHeight = vv ? vv.height : window.innerHeight;
-  
-    // How far below the visual viewport bottom the element is
-    const overlap = rect.bottom - viewportHeight + pad;
-    if (overlap > 0) {
-      window.scrollBy({ top: overlap, behavior: 'smooth' });
-    }
-  
-    // Also handle the case where the element's top is above the viewport (rare here)
-    const topOverlap = pad - rect.top;
-    if (topOverlap > 0) {
-      window.scrollBy({ top: -topOverlap, behavior: 'smooth' });
-    }
-  }
 
   /** Creates a list of filtered options based on search query */
   const filteredOptions: Instruction[] =
@@ -129,13 +109,15 @@ function InstructionManager({
   function onValueSelect(value: Instruction) {
     setQuery("");
     handleChange(value);
+    // scrollIntoView does not play nice with a modal. Could only get it to finally work
+    // when I attached ref to Dialog but could only achieve a scroll to the bottom of the page
     // setTimeout(()=>{
     //   recipeRequestRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
     // },500)
   const element = document.getElementById("RecipeRequests-DialogPanel");
   if (!element) return;
   window.scroll({
-    top: element.offsetTop - 20,
+    top: element.offsetTop,
     behavior: "smooth",
   }); 
   }

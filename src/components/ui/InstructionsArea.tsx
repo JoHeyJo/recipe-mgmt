@@ -21,7 +21,6 @@ const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) =>
  * InstructionsRequests -> InstructionsArea -> InstructionManager
  */
 function InstructionsArea({
-  recipeRequestRef,
   handleRecipeUpdate,
   data,
   handleInstruction,
@@ -123,8 +122,6 @@ function InstructionsArea({
     >
       {selectedInstructions.map((value, index) => (
         <InstructionManager
-          recipeRequestRef={recipeRequestRef}
-          instructionsAreaRef={instructionsAreaRef}
           key={index}
           arrayKey={index}
           instruction={value}
