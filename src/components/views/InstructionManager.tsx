@@ -176,7 +176,13 @@ function InstructionManager({
     // });
     // });
     setTimeout(()=>{
-      recipeRequestRef.current.scrollIntoView({ block: "end", behavior: "smooth" });
+      // recipeRequestRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+  const element = document.getElementById("RecipeRequests-DialogPanel");
+  if (!element) return;
+  window.scroll({
+    top: element.offsetTop - 20,
+    behavior: "smooth",
+  }); 
     },500)
   }
 

@@ -189,17 +189,21 @@ function RecipeRequests({
 
   return (
     <Dialog
-      ref={recipeRequestRef}
+      // ref={recipeRequestRef}
       open={isOpen}
       onClose={setShowing}
       className="relative z-10"
     >
       <DialogBackdrop
+        // ref={recipeRequestRef}
         transition
         className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
       />
       <div className="fixed h-full inset-0 z-10 w-screen">
-        <div className="flex h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+        <div
+          // ref={recipeRequestRef}
+          className="flex h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+        >
           <DialogPanel
             // ref={recipeRequestRef}
             id="RecipeRequests-DialogPanel"
@@ -209,7 +213,7 @@ function RecipeRequests({
             {error && <Alert alert={error} degree={"yellow"} />}{" "}
             {/* This will be a popup instead */}
             {/* <form onSubmit={handleSubmit}> */}
-            <div className="">
+            <div className="h-80">
               <section
                 id="RecipeRequests-book"
                 className="min-h-0 mx-auto h-full flex-col "
@@ -229,7 +233,7 @@ function RecipeRequests({
                     </div>
                   </section>
                   <section
-                    ref={recipeRequestRef}
+                    // ref={recipeRequestRef}
                     id="RecipeRequests-instructions"
                     className="min-h-0 flex-col flex flex-1 ml-4 rounded-md"
                   >
