@@ -119,7 +119,7 @@ function InstructionsArea({
     <div
       ref={instructionsAreaRef}
       id="InstructionsArea"
-      className="flex-col flex-1 overflow-x-hidden block w-full rounded-md border-2 border-accent-secondary pb-2 px-2 shadow-sm sm:leading-6"
+      className="flex-col flex-1 overflow-y-auto block w-full rounded-md border-2 border-accent-secondary pb-2 px-2 shadow-sm sm:leading-6"
     >
       {selectedInstructions.map((value, index) => (
         <InstructionManager

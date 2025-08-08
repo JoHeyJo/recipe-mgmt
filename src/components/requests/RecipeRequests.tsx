@@ -180,6 +180,13 @@ function RecipeRequests({
     if (res) setShowing();
   }
 
+  useEffect(() => {
+    document.documentElement.style.overflow = "hidden";
+    return () => {
+      document.documentElement.style.overflow = "";
+    };
+  }, []);
+
   return (
     <Dialog open={isOpen} onClose={setShowing} className="relative z-10">
       <DialogBackdrop
@@ -191,25 +198,12 @@ function RecipeRequests({
           <DialogPanel
             id="RecipeRequests-DialogPanel"
             transition
-            className="overflow-y-auto max-h-[70vh] relative flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"
+            className="overflow-y-auto max-h-[80vh] relative flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"
           >
             {error && <Alert alert={error} degree={"yellow"} />}{" "}
             {/* This will be a popup instead */}
             {/* <form onSubmit={handleSubmit}> */}
             <div className="h-80">
-              {/* <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-                <CheckIcon aria-hidden="true" className="h-6 w-6 text-green-600" />
-              </div> */}
-              {/* <div className="mt-3 h-full border-2 border-yellow-300 text-center sm:mt-5"> */}
-              {/* <DialogTitle as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                  Payment successful
-                </DialogTitle> */}
-              {/* <div className="mt-2">
-                  <p className="text-sm text-gray-500">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet labore.
-                  </p>
-                </div> */}
-
               <section
                 id="RecipeRequests-book"
                 className="mx-auto h-full flex-col "
