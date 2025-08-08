@@ -188,7 +188,12 @@ function RecipeRequests({
   }, []);
 
   return (
-    <Dialog open={isOpen} onClose={setShowing} className="relative z-10">
+    <Dialog
+      ref={recipeRequestRef}
+      open={isOpen}
+      onClose={setShowing}
+      className="relative z-10"
+    >
       <DialogBackdrop
         transition
         className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
@@ -196,6 +201,7 @@ function RecipeRequests({
       <div className="fixed h-full inset-0 z-10 w-screen">
         <div className="flex h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
+            // ref={recipeRequestRef}
             id="RecipeRequests-DialogPanel"
             transition
             className="min-h-0 max-h-[80vh] relative flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"

@@ -169,13 +169,15 @@ function InstructionManager({
     // setSelected(value);
     // Give iOS time to resize for the keyboard & settle layout
     // requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      const el = recipeRequestRef.current; // the section you want in view
-      console.log("el:", el);
-      if (el) scrollIntoKeyboardSafeView(el, 24);
-    });
+    // requestAnimationFrame(() => {
+    //   const el = recipeRequestRef.current; // the section you want in view
+    //   console.log("el:", el);
+    //   if (el) scrollIntoKeyboardSafeView(el, 24);
     // });
-    recipeRequestRef.current.scrollIntoView({ block: "center", behavior: "smooth" });
+    // });
+    setTimeout(()=>{
+      recipeRequestRef.current.scrollIntoView({ block: "end", behavior: "smooth" });
+    },500)
   }
 
   /** Facilitates if a created value or template value is rendered */
