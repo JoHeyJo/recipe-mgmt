@@ -10,6 +10,7 @@ import {
 import { Instruction } from "../../utils/types";
 import { InstructionManagerProps } from "../../utils/props";
 import { createPortal } from "react-dom";
+import { scrollToElement } from "../../utils/functions";
 
 /** InstructionManager - renders instructions - ring is removed
  *
@@ -33,7 +34,6 @@ function InstructionManager({
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const isNewInstruction = (option: Instruction) =>
     typeof option.id === "string" && option.instruction === "+ create...";
@@ -109,17 +109,7 @@ function InstructionManager({
   function onValueSelect(value: Instruction) {
     setQuery("");
     handleChange(value);
-    // scrollIntoView does not play nice with a modal. Could only get it to finally work
-    // when I attached ref to Dialog but could only achieve a scroll to the bottom of the page
-    // setTimeout(()=>{
-    //   recipeRequestRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
-    // },500)
-  const element = document.getElementById("RecipeRequests-DialogPanel");
-  if (!element) return;
-  window.scroll({
-    top: element.offsetTop,
-    behavior: "smooth",
-  }); 
+    scrollToElement("")
   }
 
   /** Facilitates if a created value or template value is rendered */
@@ -193,7 +183,6 @@ function InstructionManager({
       >
         <div ref={wrapperRef} className="relative mt-2">
           <ComboboxInput
-            ref={inputRef}
             inputMode={isKbSuppressed ? "none" : undefined}
             placeholder={instruction.instruction}
             className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
