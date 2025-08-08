@@ -8,6 +8,9 @@ import InstructionsArea from "../ui/InstructionsArea";
 import RadioSwitch from "../ui/common/RadioSwitch";
 import { InstructionsRequestsProp } from "../../utils/props";
 
+// utils/scrollIntoKeyboardSafeView.ts
+
+
 /** Handles API requests & data management for Instructions
  *
  * RecipeRequests -> InstructionsRequests -> InstructionsArea

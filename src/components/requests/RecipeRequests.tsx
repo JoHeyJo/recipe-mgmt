@@ -191,32 +191,32 @@ function RecipeRequests({
     <Dialog open={isOpen} onClose={setShowing} className="relative z-10">
       <DialogBackdrop
         transition
-        className="overflow-y-auto fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
+        className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
       />
       <div className="fixed h-full inset-0 z-10 w-screen">
         <div className="flex h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
             id="RecipeRequests-DialogPanel"
             transition
-            className="overflow-y-auto max-h-[80vh] relative flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"
+            className="min-h-0 max-h-[80vh] relative flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"
           >
             {error && <Alert alert={error} degree={"yellow"} />}{" "}
             {/* This will be a popup instead */}
             {/* <form onSubmit={handleSubmit}> */}
-            <div className="h-80">
+            <div className="">
               <section
                 id="RecipeRequests-book"
-                className="mx-auto h-full flex-col "
+                className="min-h-0 mx-auto h-full flex-col "
               >
                 <section id="RecipeRequests-recipe" className="flex h-2/3">
                   <section
                     id="RecipeRequests-title-ingredients"
-                    className="flex-1 h-full flex flex-col"
+                    className="min-h-0 flex-1 h-full flex flex-col"
                   >
-                    <div className="">
+                    <div className="min-h-0 ">
                       <TitleInput handleUpdate={handleRecipeUpdate} />
                     </div>
-                    <div className="flex-1">
+                    <div className="min-h-0 flex-1 overflow-hidden">
                       <IngredientsGroup
                         handleRecipeUpdate={handleRecipeUpdate}
                       />
@@ -225,7 +225,7 @@ function RecipeRequests({
                   <section
                     ref={recipeRequestRef}
                     id="RecipeRequests-instructions"
-                    className="flex-col flex flex-1 ml-4 rounded-md"
+                    className="min-h-0 flex-col flex flex-1 ml-4 rounded-md"
                   >
                     <InstructionsRequests
                       recipeRequestRef={recipeRequestRef}

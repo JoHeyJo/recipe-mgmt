@@ -44,6 +44,24 @@ function InstructionManager({
     setSelected(instruction);
   }, []);
 
+  function scrollIntoKeyboardSafeView(el: HTMLElement, pad = 16) {
+    const vv = window.visualViewport;
+    const rect = el.getBoundingClientRect();
+    const viewportHeight = vv ? vv.height : window.innerHeight;
+  
+    // How far below the visual viewport bottom the element is
+    const overlap = rect.bottom - viewportHeight + pad;
+    if (overlap > 0) {
+      window.scrollBy({ top: overlap, behavior: 'smooth' });
+    }
+  
+    // Also handle the case where the element's top is above the viewport (rare here)
+    const topOverlap = pad - rect.top;
+    if (topOverlap > 0) {
+      window.scrollBy({ top: -topOverlap, behavior: 'smooth' });
+    }
+  }
+
   /** Creates a list of filtered options based on search query */
   const filteredOptions: Instruction[] =
     query === "" ? options : filterOptions();
@@ -109,26 +127,25 @@ function InstructionManager({
 
   /** Consolidates actions taken when dropdown value is selected  */
   function onValueSelect(value: Instruction) {
+    // const container = instructionsAreaRef?.current;
 
-      const container = instructionsAreaRef?.current;
+    // if (container) {
+    //   console.log("📦 Scrolling container:", container);
+    //   setTimeout(()=>{
+    //     container.scrollTo({
+    //       top: instructionsAreaRef.current.scrollTop + 100,
+    //       behavior: "smooth",
+    //     });
 
-      if (container) {
-        console.log("📦 Scrolling container:", container);
-        setTimeout(()=>{
-          container.scrollTo({
-            top: instructionsAreaRef.current.scrollTop + 100,
-            behavior: "smooth",
-          });
-
-        },1500)
-      } else {
-        console.warn("🚫 instructionsAreaRef is not available");
-      }
+    //   },1500)
+    // } else {
+    //   console.warn("🚫 instructionsAreaRef is not available");
+    // }
     // setTimeout(() => {
-      // recipeRequestRef.current?.scrollIntoView({
-      //   block: "center",
-      //   behavior: "smooth",
-      // });
+    // recipeRequestRef.current?.scrollIntoView({
+    //   block: "center",
+    //   behavior: "smooth",
+    // });
     //   instructionsAreaRef.current?.scrollIntoView({
     //     block: "center",
     //     behavior: "smooth",
@@ -136,19 +153,29 @@ function InstructionManager({
     // }, 1500);
     setQuery("");
     handleChange(value);
-      // const inputEl = inputRef.current;
-      // if (inputEl) {
-      //   const scrollContainer = findScrollableParent(inputEl);
-      //   console.log(
-      //     "👀 Nearest scrollable parent for scrollIntoView:",
-      //     scrollContainer
-      //   );
+    // const inputEl = inputRef.current;
+    // if (inputEl) {
+    //   const scrollContainer = findScrollableParent(inputEl);
+    //   console.log(
+    //     "👀 Nearest scrollable parent for scrollIntoView:",
+    //     scrollContainer
+    //   );
 
-      //   inputEl.scrollIntoView({ block: "nearest", behavior: "smooth" });
-      // }
+    //   inputEl.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    // }
 
-      // setQuery("");
-      // handleChange(value);
+    // setQuery("");
+    // handleChange(value);
+    // setSelected(value);
+    // Give iOS time to resize for the keyboard & settle layout
+    // requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      const el = recipeRequestRef.current; // the section you want in view
+      console.log("el:", el);
+      if (el) scrollIntoKeyboardSafeView(el, 24);
+    });
+    // });
+    recipeRequestRef.current.scrollIntoView({ block: "center", behavior: "smooth" });
   }
 
   /** Facilitates if a created value or template value is rendered */
