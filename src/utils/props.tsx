@@ -74,6 +74,7 @@ export type InstructionsRequestsProp = {
 };
 
 export type IngredientInputGroupProps = {
+  scrollToRef: React.MutableRefObject<HTMLDivElement>;
   options: Options;
   ingredient: Ingredient;
   index: number;
@@ -82,12 +83,14 @@ export type IngredientInputGroupProps = {
 };
 
 export type ComponentsOptionsRequestsProps = {
+  scrollToRef: React.MutableRefObject<HTMLDivElement>;
   ingredients: Ingredients;
   ingredientKeys: number[];
   handleIngredient: HandleIngredient;
 };
 
 export type IngredientManagerProps = {
+  scrollToRef: React.MutableRefObject<HTMLDivElement>;
   value: AttributeData;
   attribute: string;
   options: AttributeData[];

@@ -73,7 +73,7 @@ function IngredientsGroup({ handleRecipeUpdate, scrollToRef }: IngredientsGroupP
       className="h-full flex flex-col overflow-hidden"
     >
       <ComponentsOptionsRequests
-        scrollToRef={dialogPanelRef}
+        scrollToRef={scrollToRef}
         ingredients={ingredients}
         ingredientKeys={ingredientKeys}
         handleIngredient={handleIngredient}

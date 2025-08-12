@@ -109,7 +109,7 @@ function InstructionManager({
   function onValueSelect(value: Instruction) {
     setQuery("");
     handleChange(value);
-    scrollToElement("RecipeRequests-DialogPanel");
+    scrollToElement("RecipeRequests-DialogPanel", "");
   }
 
   /** Facilitates if a created value or template value is rendered */
@@ -189,7 +189,7 @@ function InstructionManager({
             onFocus={() => setIsKbSuppressed(false)}
             onSelect={() => setIsKbSuppressed(false)}
             onClick={() => {
-              scrollToElement("RecipeRequests-DialogPanel");
+              scrollToElement("RecipeRequests-DialogPanel", "");
               setIsKbSuppressed(false);
             }}
             onChange={(event) => {

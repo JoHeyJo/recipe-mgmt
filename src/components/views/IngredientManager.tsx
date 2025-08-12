@@ -20,6 +20,7 @@ import { scrollToElement } from "../../utils/functions";
  */
 
 function IngredientManager({
+  scrollToRef,
   value,
   attribute,
   entity,
@@ -100,7 +101,7 @@ function IngredientManager({
   function onValueSelect(value: any) {
     setQuery("");
     handleChange(value);
-    scrollToElement("RecipeRequests-DialogPanel");
+    scrollToElement("RecipeRequests-DialogPanel",scrollToRef);
   }
 
   // Update dropdown position
@@ -168,7 +169,7 @@ function IngredientManager({
           onFocus={() =>setIsKbSuppressed(false)}
             onSelect={() => setIsKbSuppressed(false)}
             onClick={() => {
-              scrollToElement("RecipeRequests-DialogPanel");
+              scrollToElement("RecipeRequests-DialogPanel", scrollToRef);
               setIsKbSuppressed(false)}}
           onChange={(event) => {
             event.preventDefault();

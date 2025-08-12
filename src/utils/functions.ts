@@ -9,11 +9,10 @@ export function isTokenValid(token: string | null) {
   return expirationTime >= currentTime;
 }
 
-export function scrollToElement(element: any) {
-  const el = document.getElementById(element);
-  if (!el) return;
+export function scrollToElement(element: any, ref: any) {
+  if (!ref) return;
   window.scroll({
-    top: el.offsetTop,
+    top: ref?.current.offsetTop,
     behavior: "smooth",
   });
 }

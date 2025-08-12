@@ -10,6 +10,7 @@ import { defaultItem, defaultAmount, defaultUnit } from "../../utils/templates";
  * ComponentsOptionsRequests -> IngredientInputGroup -> IngredientManager
  */
 function IngredientInputGroup({
+  scrollToRef,
   handleIngredient,
   ingredient,
   index,
@@ -73,6 +74,7 @@ function IngredientInputGroup({
   return (
     <div className="Ingredient-section flex rounded-md">
       <IngredientManager
+        scrollToRef={scrollToRef}
         value={ingredient.amount}
         attribute={"value"}
         entity={"amount"}
@@ -81,6 +83,7 @@ function IngredientInputGroup({
         handleComponent={handleComponent}
       />
       <IngredientManager
+      scrollToRef={scrollToRef}
         value={ingredient.unit}
         attribute={"type"}
         entity={"unit"}
@@ -89,6 +92,7 @@ function IngredientInputGroup({
         handleComponent={handleComponent}
       />
       <IngredientManager
+      scrollToRef={scrollToRef}
         value={ingredient.item}
         attribute={"name"}
         entity={"item"}
