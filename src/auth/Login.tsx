@@ -31,7 +31,7 @@ function LoginForm({ login }: Login) {
       navigate("/home");
     } catch (error: any) {
       errorHandling("Login", error);
-      setAlert(error.response.data.error);
+      setAlert(error.message);
     }
   }
 

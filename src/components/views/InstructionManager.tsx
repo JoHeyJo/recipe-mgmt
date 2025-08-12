@@ -192,6 +192,7 @@ function InstructionManager({
             onChange={(event) => {
               event.preventDefault();
               setQuery(event.target.value);
+              setDropdownOpen(true);
             }}
             onBlur={() => setQuery("")}
             displayValue={(option: { instruction: string }) =>
