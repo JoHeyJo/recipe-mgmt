@@ -188,7 +188,10 @@ function InstructionManager({
             className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
             onFocus={() => setIsKbSuppressed(false)}
             onSelect={() => setIsKbSuppressed(false)}
-            onClick={() => setIsKbSuppressed(false)}
+            onClick={() => {
+              scrollToElement("RecipeRequests-DialogPanel");
+              setIsKbSuppressed(false);
+            }}
             onChange={(event) => {
               event.preventDefault();
               setQuery(event.target.value);
@@ -200,7 +203,7 @@ function InstructionManager({
             }
           />
           <ComboboxButton
-            onClick={(e) => {
+            onClick={() => {
               setIsKbSuppressed(true);
               setDropdownOpen(true);
             }}
