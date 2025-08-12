@@ -15,6 +15,7 @@ import { references } from "../../utils/templates";
  * IngredientsGroup -> ComponentsOptionsRequests -> IngredientInputGroup
  */
 function ComponentsOptionsRequests({
+  dialogPanelRef,
   ingredients,
   ingredientKeys,
   handleIngredient,
@@ -133,6 +134,7 @@ function ComponentsOptionsRequests({
           >
             <IngredientInputGroup
               index={i}
+              scrollToRef={dialogPanelRef}
               ingredient={ingredient}
               handleIngredient={handleIngredient}
               handleOption={handleOption}

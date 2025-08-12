@@ -129,6 +129,7 @@ export type RecipeViewProps = {
 };
 
 export type IngredientsGroupProps = {
+  scrollToRef: React.MutableRefObject<HTMLDivElement>;
   handleRecipeUpdate: (data: Ingredient[], section: string) => void;
 };
 

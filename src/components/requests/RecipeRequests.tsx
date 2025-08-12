@@ -4,6 +4,7 @@ import {
   useEffect,
   FormEventHandler,
   FormEvent,
+  useRef,
 } from "react";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import IngredientsGroup from "../selectors/IngredientsGroup";
@@ -178,6 +179,8 @@ function RecipeRequests({
     if (res) setShowing();
   }
 
+  const dialogPanelRef = useRef(null);
+
   return (
     <Dialog open={isOpen} onClose={setShowing} className="relative z-10">
       <DialogBackdrop
@@ -188,8 +191,9 @@ function RecipeRequests({
         <div className="flex h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
             id="RecipeRequests-DialogPanel"
+            ref={dialogPanelRef}
             transition
-            className="relative flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"
+            className="relative border-2 border-red-600 flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"
           >
             {error && <Alert alert={error} degree={"yellow"} />}{" "}
             {/* This will be a popup instead */}
@@ -222,6 +226,7 @@ function RecipeRequests({
                     </div>
                     <div className="flex-1 overflow-hidden">
                       <IngredientsGroup
+                        scrollToRef={dialogPanelRef}
                         handleRecipeUpdate={handleRecipeUpdate}
                       />
                     </div>
