@@ -113,7 +113,6 @@ function InstructionManager({
   function onValueSelect(value: Instruction) {
     setQuery("");
     handleChange(value);
-    scrollToElement(dialogPanelRef);
   }
 
   /** Facilitates if a created value or template value is rendered */
@@ -190,10 +189,13 @@ function InstructionManager({
             inputMode={isKbSuppressed ? "none" : undefined}
             placeholder={instruction.instruction}
             className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
-            onFocus={() => setIsKbSuppressed(false)}
+            onFocus={() => {
+              setDropdownOpen(true);
+              setIsKbSuppressed(false);
+            }}
             onSelect={() => setIsKbSuppressed(false)}
             onClick={() => {
-              scrollToElement(dialogPanelRef,30);
+              scrollToElement(dialogPanelRef, 30);
               setIsKbSuppressed(false);
             }}
             onChange={(event) => {

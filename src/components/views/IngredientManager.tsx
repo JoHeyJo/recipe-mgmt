@@ -104,7 +104,6 @@ function IngredientManager({
   function onValueSelect(value: any) {
     setQuery("");
     handleChange(value);
-    scrollToElement(dialogPanelRef);
   }
 
   // Update dropdown position
@@ -169,10 +168,12 @@ function IngredientManager({
           inputMode={isKbSuppressed ? "none" : undefined}
           placeholder={entity}
           className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
-          onFocus={() => setIsKbSuppressed(false)}
+          onFocus={() => {
+            setDropdownOpen(true)
+            setIsKbSuppressed(false)}}
           onSelect={() => setIsKbSuppressed(false)}
           onClick={() => {
-            scrollToElement(dialogPanelRef, 30);
+            scrollToElement(dialogPanelRef, 50);
             setIsKbSuppressed(false);
           }}
           onChange={(event) => {
