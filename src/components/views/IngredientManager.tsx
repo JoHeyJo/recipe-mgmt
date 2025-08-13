@@ -172,7 +172,7 @@ function IngredientManager({
           onFocus={() => setIsKbSuppressed(false)}
           onSelect={() => setIsKbSuppressed(false)}
           onClick={() => {
-            scrollToElement(dialogPanelRef);
+            scrollToElement(dialogPanelRef, 30);
             setIsKbSuppressed(false);
           }}
           onChange={(event) => {
