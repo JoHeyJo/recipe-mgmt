@@ -11,6 +11,8 @@ import { Instruction } from "../../utils/types";
 import { InstructionManagerProps } from "../../utils/props";
 import { createPortal } from "react-dom";
 import { scrollToElement } from "../../utils/functions";
+import { useContext } from "react";
+import { ReferenceContext } from "../../context/ReferenceContext";
 
 /** InstructionManager - renders instructions - ring is removed
  *
@@ -31,6 +33,8 @@ function InstructionManager({
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, width: 0 });
   const [isKbSuppressed, setIsKbSuppressed] = useState(false);
+
+  const { dialogPanelRef } = useContext(ReferenceContext);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -109,7 +113,7 @@ function InstructionManager({
   function onValueSelect(value: Instruction) {
     setQuery("");
     handleChange(value);
-    scrollToElement("RecipeRequests-DialogPanel", "");
+    scrollToElement(dialogPanelRef);
   }
 
   /** Facilitates if a created value or template value is rendered */
@@ -189,7 +193,7 @@ function InstructionManager({
             onFocus={() => setIsKbSuppressed(false)}
             onSelect={() => setIsKbSuppressed(false)}
             onClick={() => {
-              scrollToElement("RecipeRequests-DialogPanel", "");
+              scrollToElement(dialogPanelRef);
               setIsKbSuppressed(false);
             }}
             onChange={(event) => {

@@ -12,7 +12,7 @@ import ComponentsOptionsRequests from "../requests/ComponentsOptionsRequests";
  *
  * RecipeRequests -> IngredientsGroup -> ComponentsOptionsRequests
  */
-function IngredientsGroup({ handleRecipeUpdate, scrollToRef }: IngredientsGroupProps) {
+function IngredientsGroup({ handleRecipeUpdate }: IngredientsGroupProps) {
   const { requestAction, contextIngredients } = useContext(RecipeContext);
   const [ingredients, setIngredients] = useState<Ingredients>(
     contextIngredients.length === 0 ? recipeTemplate.ingredients : contextIngredients
@@ -73,7 +73,6 @@ function IngredientsGroup({ handleRecipeUpdate, scrollToRef }: IngredientsGroupP
       className="h-full flex flex-col overflow-hidden"
     >
       <ComponentsOptionsRequests
-        scrollToRef={scrollToRef}
         ingredients={ingredients}
         ingredientKeys={ingredientKeys}
         handleIngredient={handleIngredient}

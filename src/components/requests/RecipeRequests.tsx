@@ -34,6 +34,7 @@ import TitleInput from "../ui/TitleInput";
 import { recipeTemplate } from "../../utils/templates";
 import Alert from "../ui/Alert";
 import { defaultIngredient } from "../../utils/templates";
+import { ReferenceContext } from "../../context/ReferenceContext";
 
 /** Processes recipe data. Context data is passed through here on edit. Else template data.
  * RecipeRequests data is mutable while context data(reference data) is not
@@ -102,7 +103,6 @@ function RecipeRequests({
       setIsDisabled(!isAltered);
     }
   }, [recipe]);
-  
 
   const isLargeScreen = useMediaQuery({ query: "(min-width: 1024px)" }); // lg breakpoint in Tailwind
 
@@ -217,28 +217,32 @@ function RecipeRequests({
                 className="mx-auto h-full flex-col "
               >
                 <section id="RecipeRequests-recipe" className="flex h-2/3">
-                  <section
-                    id="RecipeRequests-title-ingredients"
-                    className="flex-1 h-full flex flex-col"
-                  >
-                    <div className="">
-                      <TitleInput handleUpdate={handleRecipeUpdate} />
-                    </div>
-                    <div className="flex-1 overflow-hidden">
-                      <IngredientsGroup
-                        scrollToRef={dialogPanelRef}
+                  <ReferenceContext.Provider value={{dialogPanelRef:dialogPanelRef}}>
+                    <section
+                      id="RecipeRequests-title-ingredients"
+                      className="flex-1 h-full flex flex-col"
+                    >
+                     
+                      <div className="">
+                        <TitleInput handleUpdate={handleRecipeUpdate} />
+                      </div>
+
+                      <div className="flex-1 overflow-hidden">
+                        <IngredientsGroup
+                          handleRecipeUpdate={handleRecipeUpdate}
+                        />
+                      </div>
+                    </section>
+                    
+                    <section
+                      id="RecipeRequests-instructions"
+                      className="flex-col flex flex-1 ml-4 rounded-md"
+                    >
+                      <InstructionsRequests
                         handleRecipeUpdate={handleRecipeUpdate}
                       />
-                    </div>
-                  </section>
-                  <section
-                    id="RecipeRequests-instructions"
-                    className="flex-col flex flex-1 ml-4 rounded-md"
-                  >
-                    <InstructionsRequests
-                      handleRecipeUpdate={handleRecipeUpdate}
-                    />
-                  </section>
+                    </section>
+                  </ReferenceContext.Provider>
                 </section>
 
                 <section id="RecipeRequests-notes" className="">

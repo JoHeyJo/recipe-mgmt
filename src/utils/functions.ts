@@ -9,7 +9,7 @@ export function isTokenValid(token: string | null) {
   return expirationTime >= currentTime;
 }
 
-export function scrollToElement(element: any, ref: any) {
+export function scrollToElement(ref: React.MutableRefObject<HTMLDivElement | null>) {
   if (!ref) return;
   window.scroll({
     top: ref?.current.offsetTop,

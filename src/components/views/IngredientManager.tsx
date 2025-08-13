@@ -11,6 +11,8 @@ import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { IngredientManagerProps } from "../../utils/props";
 import { createPortal } from "react-dom";
 import { scrollToElement } from "../../utils/functions";
+import { useContext } from "react";
+import { ReferenceContext } from "../../context/ReferenceContext";
 
 /** IngredientManager - Searches and filters existing ingredient options - ring is removed
  *
@@ -20,7 +22,6 @@ import { scrollToElement } from "../../utils/functions";
  */
 
 function IngredientManager({
-  scrollToRef,
   value,
   attribute,
   entity,
@@ -33,6 +34,8 @@ function IngredientManager({
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, width: 0 });
   const [isKbSuppressed, setIsKbSuppressed] = useState(false);
+
+  const { dialogPanelRef } = useContext(ReferenceContext);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -101,7 +104,7 @@ function IngredientManager({
   function onValueSelect(value: any) {
     setQuery("");
     handleChange(value);
-    scrollToElement("RecipeRequests-DialogPanel",scrollToRef);
+    scrollToElement(dialogPanelRef);
   }
 
   // Update dropdown position
@@ -166,15 +169,16 @@ function IngredientManager({
           inputMode={isKbSuppressed ? "none" : undefined}
           placeholder={entity}
           className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
-          onFocus={() =>setIsKbSuppressed(false)}
-            onSelect={() => setIsKbSuppressed(false)}
-            onClick={() => {
-              scrollToElement("RecipeRequests-DialogPanel", scrollToRef);
-              setIsKbSuppressed(false)}}
+          onFocus={() => setIsKbSuppressed(false)}
+          onSelect={() => setIsKbSuppressed(false)}
+          onClick={() => {
+            scrollToElement(dialogPanelRef);
+            setIsKbSuppressed(false);
+          }}
           onChange={(event) => {
             event.preventDefault();
             setQuery(event.target.value);
-            setDropdownOpen(true)
+            setDropdownOpen(true);
           }}
           onBlur={() => setQuery("")}
           displayValue={(option: { [key: string]: string }) =>
