@@ -113,6 +113,7 @@ function InstructionManager({
   function onValueSelect(value: Instruction) {
     setQuery("");
     handleChange(value);
+    scrollToElement(dialogPanelRef);
   }
 
   /** Facilitates if a created value or template value is rendered */
@@ -163,6 +164,7 @@ function InstructionManager({
 
     const handleClickOutside = (event: MouseEvent) => {
       setDropdownOpen(false);
+      setIsKbSuppressed(true);
       // if (
       //   wrapperRef.current &&
       //   !wrapperRef.current.contains(event.target as Node) &&
@@ -183,6 +185,7 @@ function InstructionManager({
         as="div"
         value={displayInitialValue(selected || { instruction: "", id: null })}
         onChange={onValueSelect}
+        // onBlur={() => setIsKbSuppressed(true)}
       >
         <div ref={wrapperRef} className="relative mt-2">
           <ComboboxInput
@@ -195,13 +198,12 @@ function InstructionManager({
             }}
             onSelect={() => setIsKbSuppressed(false)}
             onClick={() => {
-              scrollToElement(dialogPanelRef, 30);
+              scrollToElement(dialogPanelRef, 50);
               setIsKbSuppressed(false);
             }}
             onChange={(event) => {
               event.preventDefault();
               setQuery(event.target.value);
-              setDropdownOpen(true);
             }}
             onBlur={() => setQuery("")}
             displayValue={(option: { instruction: string }) =>
