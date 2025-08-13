@@ -185,7 +185,6 @@ function InstructionManager({
         as="div"
         value={displayInitialValue(selected || { instruction: "", id: null })}
         onChange={onValueSelect}
-        // onBlur={() => setIsKbSuppressed(true)}
       >
         <div ref={wrapperRef} className="relative mt-2">
           <ComboboxInput
@@ -193,7 +192,7 @@ function InstructionManager({
             placeholder={instruction.instruction}
             className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
             onFocus={() => {
-              setDropdownOpen(true);
+              // setDropdownOpen(true);
               setIsKbSuppressed(false);
             }}
             onSelect={() => setIsKbSuppressed(false)}
