@@ -172,7 +172,7 @@ function IngredientManager({
           placeholder={entity}
           className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
           onFocus={() => {
-            // setDropdownOpen(true) causes a scroll to jump 
+            setDropdownOpen(true) //causes a scroll to jump if enabled but it also prevents dialog panel from being pushed down under the keyboard
             setIsKbSuppressed(false);
           }}
           onSelect={() => setIsKbSuppressed(false)}
