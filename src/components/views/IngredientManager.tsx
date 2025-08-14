@@ -95,7 +95,6 @@ function IngredientManager({
 
   /** Handles parent state update when selection is made in combobox */
   function handleChange(option: any) {
-    scrollToElement(dialogPanelRef);
     if (!option) return processDeselect();
     isNewOption(option)
       ? processNewOption(option)
@@ -104,9 +103,9 @@ function IngredientManager({
 
   /** Consolidates actions taken when dropdown value is selected  */
   function onValueSelect(value: any) {
+    scrollToElement(dialogPanelRef);
     setQuery("");
     handleChange(value);
-    // scrollToElement(dialogPanelRef);
   }
 
   // Update dropdown position
@@ -147,8 +146,10 @@ function IngredientManager({
   // Close on outside click
   useEffect(() => {
     if (!dropdownOpen) return;
+    console.log("dropdown is open:", dropdownOpen)
 
     const handleClickOutside = (event: MouseEvent) => {
+      console.log("window click")
       setDropdownOpen(false);
       setIsKbSuppressed(true);
       // if (
@@ -165,9 +166,9 @@ function IngredientManager({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [dropdownOpen]);
 
-  useEffect(()=>{
-    scrollToElement(dialogPanelRef)
-  },[isKbSuppressed])
+  // useEffect(()=>{
+  //   scrollToElement(dialogPanelRef)
+  // },[isKbSuppressed])
 
   return (
     <Combobox as="div" value={selected || ""} onChange={onValueSelect}>
@@ -177,16 +178,21 @@ function IngredientManager({
           placeholder={entity}
           className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
           onFocus={() => {
-            /* pro: prevents dialog panel from being pushed under keyboard  
-               con: causes scroll to jump  
+            /* 
+            setDropdownOpen(true) 
+            pro: prevents dialog panel from being pushed under keyboard when typing starts
+            con: causes scroll to jump  
             */
-            // setDropdownOpen(true) 
+          //  setDropdownOpen(true);
+            //  scrollToElement(dialogPanelRef, 50);
             setIsKbSuppressed(false);
           }}
-          onSelect={() => setIsKbSuppressed(false)}
+          // onSelect={() => setIsKbSuppressed(false)}
           onClick={(e) => {
-            // //scroll to jumps between two points necessary for element to scroll into place whe dropdown is open and keyboard opens on click
-            // scrollToElement(dialogPanelRef, 50); 
+            //scrollToElement(dialogPanelRef, 50);
+            // Pro: necessary for element to scroll into place whe dropdown is open and keyboard is opens on input click
+            // Con: scroll to jumps between two points
+            scrollToElement(dialogPanelRef, 50);
             setIsKbSuppressed(false);
           }}
           // onInput={(e)=>{
@@ -196,7 +202,7 @@ function IngredientManager({
           onChange={(event) => {
             event.preventDefault();
             setQuery(event.target.value);
-            setDropdownOpen(true);
+            // setDropdownOpen(true);
           }}
           onBlur={() => setQuery("")}
           displayValue={(option: { [key: string]: string }) =>
@@ -219,7 +225,7 @@ function IngredientManager({
         {createPortal(
           <ComboboxOptions
             ref={dropdownRef}
-            className="absolute z-10 mt-1 max-h-30 w-full overflow-auto rounded-md bg-accent py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+            className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-accent py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
             style={{
               top: dropdownPos.top,
               left: dropdownPos.left,
