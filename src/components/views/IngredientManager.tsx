@@ -95,6 +95,7 @@ function IngredientManager({
 
   /** Handles parent state update when selection is made in combobox */
   function handleChange(option: any) {
+    scrollToElement(dialogPanelRef);
     if (!option) return processDeselect();
     isNewOption(option)
       ? processNewOption(option)
@@ -105,7 +106,7 @@ function IngredientManager({
   function onValueSelect(value: any) {
     setQuery("");
     handleChange(value);
-    scrollToElement(dialogPanelRef);
+    // scrollToElement(dialogPanelRef);
   }
 
   // Update dropdown position
@@ -164,6 +165,10 @@ function IngredientManager({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [dropdownOpen]);
 
+  useEffect(()=>{
+    scrollToElement(dialogPanelRef)
+  },[isKbSuppressed])
+
   return (
     <Combobox as="div" value={selected || ""} onChange={onValueSelect}>
       <div ref={wrapperRef} className="relative mt-2">
@@ -172,18 +177,22 @@ function IngredientManager({
           placeholder={entity}
           className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
           onFocus={() => {
-            setDropdownOpen(true) //causes a scroll to jump if enabled but it also prevents dialog panel from being pushed down under the keyboard
+            /* pro: prevents dialog panel from being pushed under keyboard  
+               con: causes scroll to jump  
+            */
+            // setDropdownOpen(true) 
             setIsKbSuppressed(false);
           }}
           onSelect={() => setIsKbSuppressed(false)}
           onClick={(e) => {
-            // scrollToElement(dialogPanelRef, 50); scroll to jumps between two points
+            // //scroll to jumps between two points necessary for element to scroll into place whe dropdown is open and keyboard opens on click
+            // scrollToElement(dialogPanelRef, 50); 
             setIsKbSuppressed(false);
           }}
-          onInput={(e)=>{
-            e.preventDefault()
-            e.stopPropagation()
-          }}
+          // onInput={(e)=>{
+          //   e.preventDefault()
+          //   e.stopPropagation()
+          // }}
           onChange={(event) => {
             event.preventDefault();
             setQuery(event.target.value);
