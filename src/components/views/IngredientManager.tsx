@@ -103,7 +103,7 @@ function IngredientManager({
 
   /** Consolidates actions taken when dropdown value is selected  */
   function onValueSelect(value: any) {
-    // inputRef.current?.blur() // consider implementing this for friendly accessibility 
+    // inputRef.current?.blur() // consider implementing this for friendly accessibility
     setIsKbSuppressed(true);
     scrollToElement(dialogPanelRef);
     setQuery("");
@@ -124,53 +124,49 @@ function IngredientManager({
     }
   }, [dropdownOpen, query]);
 
-  // Close on scroll *outside* dropdown
-  useEffect(() => {
-    if (!dropdownOpen) return;
+  // // Close on scroll *outside* dropdown - is this necessary???
+  // useEffect(() => {
+  //   if (!dropdownOpen) return;
 
-    const closeOnScroll = (event: Event) => {
-      const target = event.target as HTMLElement;
+  //   const closeOnScroll = (event: Event) => {
+  //     const target = event.target as HTMLElement;
 
-      const isInsideDropdown = dropdownRef.current?.contains(target);
-      const isInsideCombobox = wrapperRef.current?.contains(target);
+  //     const isInsideDropdown = dropdownRef.current?.contains(target);
+  //     const isInsideCombobox = wrapperRef.current?.contains(target);
 
-      if (!isInsideDropdown && !isInsideCombobox) {
-        setDropdownOpen(false);
-      }
-    };
+  //     if (!isInsideDropdown && !isInsideCombobox) {
+  //       setDropdownOpen(false);
+  //     }
+  //   };
 
-    window.addEventListener("scroll", closeOnScroll, true);
-    return () => {
-      window.removeEventListener("scroll", closeOnScroll, true);
-    };
-  }, [dropdownOpen]);
+  //   window.addEventListener("scroll", closeOnScroll, true);
+  //   return () => {
+  //     window.removeEventListener("scroll", closeOnScroll, true);
+  //   };
+  // }, [dropdownOpen]);
 
-  // Close on outside click
-  useEffect(() => {
-    if (!dropdownOpen) return;
-    console.log("dropdown is open:", dropdownOpen)
+  // Close on outside click - is this necessary???
+  // useEffect(() => {
+  //   if (!dropdownOpen) return;
+  //   console.log("dropdown is open:", dropdownOpen)
 
-    const handleClickOutside = (event: MouseEvent) => {
-      console.log("window click")
-      setDropdownOpen(false);
-      setIsKbSuppressed(true);
-      // if (
-      //   wrapperRef.current &&
-      //   !wrapperRef.current.contains(event.target as Node) &&
-      //   dropdownRef.current &&
-      //   !dropdownRef.current.contains(event.target as Node)
-      // ) {
-      //   setDropdownOpen(false);
-      // }
-    };
+  //   const handleClickOutside = (event: MouseEvent) => {
+  //     console.log("window click")
+  //     // setDropdownOpen(false);
+  //     // setIsKbSuppressed(true);
+  //     // if (
+  //     //   wrapperRef.current &&
+  //     //   !wrapperRef.current.contains(event.target as Node) &&
+  //     //   dropdownRef.current &&
+  //     //   !dropdownRef.current.contains(event.target as Node)
+  //     // ) {
+  //     //   setDropdownOpen(false);
+  //     // }
+  //   };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [dropdownOpen]);
-
-  // useEffect(()=>{
-  //   scrollToElement(dialogPanelRef)
-  // },[isKbSuppressed])
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => document.removeEventListener("mousedown", handleClickOutside);
+  // }, [dropdownOpen]);
 
   return (
     <Combobox as="div" value={selected || ""} onChange={onValueSelect}>
@@ -186,25 +182,26 @@ function IngredientManager({
             pro: prevents dialog panel from being pushed under keyboard when typing starts
             con: on input focus window scroll jumps  
             */
-          //  setDropdownOpen(true);
+            //  setDropdownOpen(true);
             //  scrollToElement(dialogPanelRef, 50);
             // setIsKbSuppressed(false);
           }}
-          // onSelect={() => setIsKbSuppressed(false)}
           onClick={(e) => {
-            //scrollToElement(dialogPanelRef, 50);
+            setIsKbSuppressed(false);
             // Pro: necessary for element to scroll into place whe dropdown is open and keyboard is opens on input click
             // Con: scroll to jumps between two points
             scrollToElement(dialogPanelRef, 50);
-            // setIsKbSuppressed(false);
+            // Prevents dialog panel from being pushed under keyboard when typing starts
+            // con: on input focus window scroll jumps  
+            setDropdownOpen(true);
             /* 
             prevents modal from jumping under keyboard on user input - this 
             still does not automatically open dropdown on click, user input 
             is necessary 
              */
-            setDropdownOpen(true);
+            // setDropdownOpen(true);
           }}
-          onInput={(e)=>{
+          onInput={(e) => {
             // e.preventDefault()
             // e.stopPropagation()
             // setDropdownOpen(true);
