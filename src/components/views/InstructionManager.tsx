@@ -101,7 +101,7 @@ function InstructionManager({
   }
 
   /** Handles parent state update when changes are made to combobox */
-  async function handleChange(option: Instruction) {
+  async function updateOnSelect(option: Instruction) {
     // clears input when characters are deleted
     if (!option) return processDeselect(selected);
     isNewInstruction(option)
@@ -112,7 +112,7 @@ function InstructionManager({
   /** Consolidates actions taken when dropdown value is selected  */
   function onValueSelect(value: Instruction) {
     setQuery("");
-    handleChange(value);
+    updateOnSelect(value);
     scrollToElement(dialogPanelRef);
   }
 

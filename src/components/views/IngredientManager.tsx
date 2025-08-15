@@ -94,7 +94,7 @@ function IngredientManager({
   }
 
   /** Handles parent state update when selection is made in combobox */
-  function handleChange(option: any) {
+  function updateOnSelect(option: any) {
     if (!option) return processDeselect();
     isNewOption(option)
       ? processNewOption(option)
@@ -103,9 +103,11 @@ function IngredientManager({
 
   /** Consolidates actions taken when dropdown value is selected  */
   function onValueSelect(value: any) {
+    // inputRef.current?.blur() // consider implementing this for friendly accessibility 
+    setIsKbSuppressed(true);
     scrollToElement(dialogPanelRef);
     setQuery("");
-    handleChange(value);
+    updateOnSelect(value);
   }
 
   // Update dropdown position
@@ -174,6 +176,7 @@ function IngredientManager({
     <Combobox as="div" value={selected || ""} onChange={onValueSelect}>
       <div ref={wrapperRef} className="relative mt-2">
         <ComboboxInput
+          ref={inputRef}
           inputMode={isKbSuppressed ? "none" : undefined}
           placeholder={entity}
           className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
@@ -181,11 +184,11 @@ function IngredientManager({
             /* 
             setDropdownOpen(true) 
             pro: prevents dialog panel from being pushed under keyboard when typing starts
-            con: causes scroll to jump  
+            con: on input focus window scroll jumps  
             */
           //  setDropdownOpen(true);
             //  scrollToElement(dialogPanelRef, 50);
-            setIsKbSuppressed(false);
+            // setIsKbSuppressed(false);
           }}
           // onSelect={() => setIsKbSuppressed(false)}
           onClick={(e) => {
@@ -193,16 +196,24 @@ function IngredientManager({
             // Pro: necessary for element to scroll into place whe dropdown is open and keyboard is opens on input click
             // Con: scroll to jumps between two points
             scrollToElement(dialogPanelRef, 50);
-            setIsKbSuppressed(false);
+            // setIsKbSuppressed(false);
+            /* 
+            prevents modal from jumping under keyboard on user input - this 
+            still does not automatically open dropdown on click, user input 
+            is necessary 
+             */
+            setDropdownOpen(true);
           }}
-          // onInput={(e)=>{
-          //   e.preventDefault()
-          //   e.stopPropagation()
-          // }}
+          onInput={(e)=>{
+            // e.preventDefault()
+            // e.stopPropagation()
+            // setDropdownOpen(true);
+          }}
           onChange={(event) => {
             event.preventDefault();
             setQuery(event.target.value);
-            // setDropdownOpen(true);
+            // ensures dropdown is shown on user input - does NOT cause modal to hide under keyboard on input
+            setDropdownOpen(true);
           }}
           onBlur={() => setQuery("")}
           displayValue={(option: { [key: string]: string }) =>
