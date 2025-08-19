@@ -170,6 +170,11 @@ function IngredientManager({
   //   return () => document.removeEventListener("mousedown", handleClickOutside);
   // }, [dropdownOpen]);
 
+  function openKB(){
+    if(isKbSuppressed === true) scrollToElement(dialogPanelRef, 50);
+    setIsKbSuppressed(false);
+  }
+
   return (
     <Combobox as="div" value={selected || ""} onChange={onValueSelect}>
       <div ref={wrapperRef} className="relative mt-2">
@@ -185,14 +190,16 @@ function IngredientManager({
             con: on input focus window scroll jumps  
             */
              setDropdownOpen(true);
+            //  scrollToElement is too inconsistent. DO NOT USE
             //  scrollToElement(dropdownRef, -40);
             // setIsKbSuppressed(false);
           }}
           onClick={(e) => {
-            // setIsKbSuppressed(false);
+            setIsKbSuppressed(false);
+            // openKB();
             // Necessary for element to scroll into place whe dropdown is open and keyboard is opens on input click
             // Scroll to jumps between two points on click
-            // scrollToElement(dialogPanelRef, 50);
+            scrollToElement(dialogPanelRef, -60);
             // Prevents dialog panel from being pushed under keyboard when typing starts
             // On input click window scroll jumps - does not auto open dropdown...
             // setDropdownOpen(true);
