@@ -11,6 +11,7 @@ export function isTokenValid(token: string | null) {
 
 export function scrollToElement(ref: React.MutableRefObject<HTMLDivElement | null>, offSet: number = 0) {
   if (!ref) return;
+  console.log("REF",ref)
   window.scroll({
     top: ref?.current?.offsetTop - offSet,
     behavior: "smooth",
