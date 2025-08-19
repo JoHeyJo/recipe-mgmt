@@ -19,6 +19,8 @@ import { ReferenceContext } from "../../context/ReferenceContext";
  * Renders input field with capability to create new options.
  *
  * IngredientInputGroup -> IngredientManager
+ * 
+ * Latest working commit 93cf131
  */
 
 function IngredientManager({
@@ -153,7 +155,7 @@ function IngredientManager({
   //   const handleClickOutside = (event: MouseEvent) => {
   //     console.log("window click")
   //     // setDropdownOpen(false);
-  //     // setIsKbSuppressed(true);
+  //     setIsKbSuppressed(true);
   //     // if (
   //     //   wrapperRef.current &&
   //     //   !wrapperRef.current.contains(event.target as Node) &&
@@ -182,35 +184,37 @@ function IngredientManager({
             pro: prevents dialog panel from being pushed under keyboard when typing starts
             con: on input focus window scroll jumps  
             */
-            //  setDropdownOpen(true);
-            //  scrollToElement(dialogPanelRef, 50);
+             setDropdownOpen(true);
+            //  scrollToElement(dropdownRef, -40);
             // setIsKbSuppressed(false);
           }}
           onClick={(e) => {
-            setIsKbSuppressed(false);
-            // Pro: necessary for element to scroll into place whe dropdown is open and keyboard is opens on input click
-            // Con: scroll to jumps between two points
-            scrollToElement(dialogPanelRef, 50);
+            // setIsKbSuppressed(false);
+            // Necessary for element to scroll into place whe dropdown is open and keyboard is opens on input click
+            // Scroll to jumps between two points on click
+            // scrollToElement(dialogPanelRef, 50);
             // Prevents dialog panel from being pushed under keyboard when typing starts
-            // con: on input focus window scroll jumps  
-            setDropdownOpen(true);
-            /* 
-            prevents modal from jumping under keyboard on user input - this 
-            still does not automatically open dropdown on click, user input 
-            is necessary 
-             */
+            // On input click window scroll jumps - does not auto open dropdown...
             // setDropdownOpen(true);
           }}
           onInput={(e) => {
-            // e.preventDefault()
+            // e.preventDefault();
             // e.stopPropagation()
+            // setDropdownOpen(true);
+            // setDropdownOpen(true);
+          }}
+          onKeyDownCapture={(e) => {
+            // e.preventDefault();
+            // e.stopPropagation()
+            // setDropdownOpen(true);
             // setDropdownOpen(true);
           }}
           onChange={(event) => {
             event.preventDefault();
             setQuery(event.target.value);
+            // scrollToElement(dialogPanelRef);
             // ensures dropdown is shown on user input - does NOT cause modal to hide under keyboard on input
-            setDropdownOpen(true);
+            // setDropdownOpen(true);
           }}
           onBlur={() => setQuery("")}
           displayValue={(option: { [key: string]: string }) =>
