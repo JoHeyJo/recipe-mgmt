@@ -20,8 +20,8 @@ import { ReferenceContext } from "../../context/ReferenceContext";
  *
  * IngredientInputGroup -> IngredientManager
  * 
- * Commit with all attempted handler variations & useEffect to handle 
- * close on outside scroll and close on outside click - b0a1cee
+ * Commit with all attempted handler variations for keyboard interactions
+ * & useEffect to handle close on outside scroll and close on outside click -  b0a1cee
  */
 
 function IngredientManager({
@@ -142,7 +142,7 @@ function IngredientManager({
           }}
           onClick={(e) => {
             setIsKbSuppressed(false);
-            // scrollToElement(dialogPanelRef, 40);
+            // scrollToElement(dialogPanelRef, 40); // clicking on input causes position to jump up and down
           }}
           onChange={(event) => {
             event.preventDefault();

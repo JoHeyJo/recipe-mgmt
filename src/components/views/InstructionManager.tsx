@@ -19,6 +19,9 @@ import { ReferenceContext } from "../../context/ReferenceContext";
  * Searches and filters existing instructions
  *
  * InstructionsArea -> InstructionManager
+ * 
+ * Commit with all attempted handler variations for keyboard interactions
+ *  & useEffect to handle close on outside scroll and close on outside click - 3ea06ee
  */
 
 function InstructionManager({
@@ -111,9 +114,10 @@ function InstructionManager({
 
   /** Consolidates actions taken when dropdown value is selected  */
   function onValueSelect(value: Instruction) {
+    setIsKbSuppressed(true);
     setQuery("");
     updateOnSelect(value);
-    scrollToElement(dialogPanelRef);
+    // scrollToElement(dialogPanelRef);
   }
 
   /** Facilitates if a created value or template value is rendered */
@@ -137,48 +141,6 @@ function InstructionManager({
     }
   }, [dropdownOpen, query]);
 
-  // Close on scroll *outside* dropdown
-  useEffect(() => {
-    if (!dropdownOpen) return;
-
-    const closeOnScroll = (event: Event) => {
-      const target = event.target as HTMLElement;
-
-      const isInsideDropdown = dropdownRef.current?.contains(target);
-      const isInsideCombobox = wrapperRef.current?.contains(target);
-
-      if (!isInsideDropdown && !isInsideCombobox) {
-        setDropdownOpen(false);
-      }
-    };
-
-    window.addEventListener("scroll", closeOnScroll, true);
-    return () => {
-      window.removeEventListener("scroll", closeOnScroll, true);
-    };
-  }, [dropdownOpen]);
-
-  // Close on outside click
-  useEffect(() => {
-    if (!dropdownOpen) return;
-
-    const handleClickOutside = (event: MouseEvent) => {
-      setDropdownOpen(false);
-      setIsKbSuppressed(true);
-      // if (
-      //   wrapperRef.current &&
-      //   !wrapperRef.current.contains(event.target as Node) &&
-      //   dropdownRef.current &&
-      //   !dropdownRef.current.contains(event.target as Node)
-      // ) {
-      //   setDropdownOpen(false);
-      // }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [dropdownOpen]);
-
   return (
     <>
       <Combobox
@@ -192,13 +154,11 @@ function InstructionManager({
             placeholder={instruction.instruction}
             className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
             onFocus={() => {
-              // setDropdownOpen(true);
-              setIsKbSuppressed(false);
+              setDropdownOpen(true);
             }}
-            onSelect={() => setIsKbSuppressed(false)}
             onClick={() => {
-              scrollToElement(dialogPanelRef, 50);
               setIsKbSuppressed(false);
+              // scrollToElement(dialogPanelRef, 50); clicking on input causes position to jump up and down
             }}
             onChange={(event) => {
               event.preventDefault();
