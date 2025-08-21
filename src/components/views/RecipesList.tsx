@@ -10,7 +10,11 @@ import { RecipesListProps } from "../../utils/props";
 function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
   return (
     <section>
-      <ul className="overflow-y-auto" role="list" id="Recipes-container">
+      <ul
+        // className="h-full overflow-y-scroll"
+        role="list"
+        id="Recipes-container"
+      >
         {recipes.map(({ name, id }, index) => (
           <li
             key={id}

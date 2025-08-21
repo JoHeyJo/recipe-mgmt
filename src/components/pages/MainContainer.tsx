@@ -70,7 +70,7 @@ function MainContainer() {
 
   /** Triggers actions that renders RecipeRequests with appropriate data set - current recipe */
   function toggleEditTemplate() {
-  setRequestAction("edit");
+    setRequestAction("edit");
     setOpen(!isOpen);
   }
 
@@ -122,22 +122,32 @@ function MainContainer() {
       <div className="border-2 bg-primary h-[75vh] flex">
         {/* Does recipes need to be reduced to just ids and title??? */}
         <RecipeContext.Provider value={recipeData}>
-          <section id="RecipesList-container" className="flex-1">
-            <RecipeRequests
-              recipeActions={recipeActions}
-              setShowing={toggleModel}
-              isOpen={isOpen}
-            />
-            <div className="flex justify-between p-1 font-semibold text-lg border-b-2">
-              <div>Recipes for:</div>
-              <BookView resetSelected={resetSelectedRecipe} />
-              <FaPlusButton onAction={toggleCreateForm} />
+          <section
+            id="RecipesList-container"
+            className="flex-1 flex flex-col "
+          >
+            <div id="RecipeList-header">
+              <RecipeRequests
+                recipeActions={recipeActions}
+                setShowing={toggleModel}
+                isOpen={isOpen}
+              />
+              <div className="flex justify-between p-1 font-semibold text-lg border-b-2">
+                <div>Recipes for:</div>
+                <BookView resetSelected={resetSelectedRecipe} />
+                <FaPlusButton onAction={toggleCreateForm} />
+              </div>
             </div>
-            <RecipesList
-              recipes={recipes}
-              handleSelect={selectRecipe}
-              selectedId={selectedRecipe.id}
-            />
+            <div
+              id="RecipeList-recipes"
+              className="overflow-y-auto"
+            >
+              <RecipesList
+                recipes={recipes}
+                handleSelect={selectRecipe}
+                selectedId={selectedRecipe.id}
+              />
+            </div>
           </section>
           <RecipeContainer
             recipe={selectedRecipe}

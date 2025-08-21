@@ -115,7 +115,7 @@ function ComponentsOptionsRequests({
     }
   }
 
-  /** Populate each instance of component with the most current options */
+  /** Populate each instance of component with the most current options */ 
   useEffect(() => {
     whichOptions == "book"
       ? fetchBookComponentsOptions()
