@@ -141,6 +141,27 @@ function InstructionManager({
     }
   }, [dropdownOpen, query]);
 
+    // Close on scroll *outside* dropdown - necessary on browser
+    useEffect(() => {
+      if (!dropdownOpen) return;
+  
+      const closeOnScroll = (event: Event) => {
+        const target = event.target as HTMLElement;
+  
+        const isInsideDropdown = dropdownRef.current?.contains(target);
+        const isInsideCombobox = wrapperRef.current?.contains(target);
+  
+        if (!isInsideDropdown && !isInsideCombobox) {
+          setDropdownOpen(false);
+        }
+      };
+  
+      window.addEventListener("scroll", closeOnScroll, true);
+      return () => {
+        window.removeEventListener("scroll", closeOnScroll, true);
+      };
+    }, [dropdownOpen]);
+
   return (
     <>
       <Combobox
@@ -183,7 +204,7 @@ function InstructionManager({
           </ComboboxButton>
 
           {
-            // dropdownOpen &&
+            dropdownOpen &&
             //   filteredOptions.length > 0 &&
             createPortal(
               <ComboboxOptions

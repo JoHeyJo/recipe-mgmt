@@ -127,7 +127,7 @@ function IngredientManager({
     }
   }, [dropdownOpen, query]);
 
-  // Close on scroll *outside* dropdown - is this necessary???
+  // Close on scroll *outside* dropdown - necessary on browser
   useEffect(() => {
     if (!dropdownOpen) return;
 
