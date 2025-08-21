@@ -119,12 +119,12 @@ function MainContainer() {
     <div className="border-4 mt-7 bg-primary mx-auto max-w-7xl xl:px-8 xl:border-2">
       {/* <div className="w-[1350px] h-[819px] absolute overflow-hidden -translate-x-2/4 p-0 border-[3px] "> */}
       {/* We've used 3xl here, but feel free to try other max-widths based on your needs */}
-      <div className="border-2 bg-primary h-[75vh] flex">
+      <div className="border-2 bg-primary h-[75vh] flex min-h-0">
         {/* Does recipes need to be reduced to just ids and title??? */}
         <RecipeContext.Provider value={recipeData}>
           <section
             id="RecipesList-container"
-            className="flex-1 flex flex-col "
+            className="flex-1 flex flex-col min-h-0"
           >
             <div id="RecipeList-header">
               <RecipeRequests
@@ -138,10 +138,7 @@ function MainContainer() {
                 <FaPlusButton onAction={toggleCreateForm} />
               </div>
             </div>
-            <div
-              id="RecipeList-recipes"
-              className="overflow-y-auto"
-            >
+            <div id="RecipeList-recipes" className="flex-1 overflow-y-auto min-h-0">
               <RecipesList
                 recipes={recipes}
                 handleSelect={selectRecipe}
