@@ -127,6 +127,26 @@ function IngredientManager({
     }
   }, [dropdownOpen, query]);
 
+  // Close on scroll *outside* dropdown - is this necessary???
+  useEffect(() => {
+    if (!dropdownOpen) return;
+
+    const closeOnScroll = (event: Event) => {
+      const target = event.target as HTMLElement;
+
+      const isInsideDropdown = dropdownRef.current?.contains(target);
+      const isInsideCombobox = wrapperRef.current?.contains(target);
+
+      if (!isInsideDropdown && !isInsideCombobox) {
+        setDropdownOpen(false);
+      }
+    };
+
+    window.addEventListener("scroll", closeOnScroll, true);
+    return () => {
+      window.removeEventListener("scroll", closeOnScroll, true);
+    };
+  }, [dropdownOpen]);
 
   return (
     <Combobox as="div" value={selected || ""} onChange={onValueSelect}>
@@ -138,7 +158,7 @@ function IngredientManager({
           className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
           onFocus={() => {
             // prevents modal from being pushed under keyboard on key input
-             setDropdownOpen(true);
+            setDropdownOpen(true);
           }}
           onClick={(e) => {
             setIsKbSuppressed(false);
@@ -166,7 +186,7 @@ function IngredientManager({
           />
         </ComboboxButton>
 
-        {createPortal(
+        {dropdownOpen && createPortal(
           <ComboboxOptions
             ref={dropdownRef}
             className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-accent py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"

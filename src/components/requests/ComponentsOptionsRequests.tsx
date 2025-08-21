@@ -125,7 +125,7 @@ function ComponentsOptionsRequests({
   return (
     <>
       <RadioSwitch handleSwitch={handleRadio} selection={whichOptions} />
-      <div className="py-2 px-1 rounded-md border-2 border-accent-secondary">
+      <div className="py-2 px-1 h-40 overflow-y-scroll rounded-md border-2 border-accent-secondary">
         {ingredients.map((ingredient, i) => (
           <div
             key={ingredient.ingredient_id || ingredientKeys[i]}
