@@ -21,7 +21,6 @@ function RecipeContainer({
   return (
     <div
       id="RecipeContainer-container"
-      className="overflow-y-auto divide-y border-x-2 mx-auto flex-1"
     >
       <div id="RecipeContainer-header" className="flex justify-between p-1">
         <h3 className="font-semibold text-lg">Recipe:</h3>

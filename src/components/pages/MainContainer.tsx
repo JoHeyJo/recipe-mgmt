@@ -119,14 +119,17 @@ function MainContainer() {
     <div className="border-4 mt-7 bg-primary mx-auto max-w-7xl xl:px-8 xl:border-2">
       {/* <div className="w-[1350px] h-[819px] absolute overflow-hidden -translate-x-2/4 p-0 border-[3px] "> */}
       {/* We've used 3xl here, but feel free to try other max-widths based on your needs */}
-      <div className="border-2 bg-primary h-[75vh] flex min-h-0">
+      <div
+        id="MainContainer-container"
+        className="border-2 bg-primary h-[75vh] flex min-h-0"
+      >
         {/* Does recipes need to be reduced to just ids and title??? */}
         <RecipeContext.Provider value={recipeData}>
           <section
-            id="RecipesList-container"
+            id="MainContainer-leftpage"
             className="flex-1 flex flex-col min-h-0"
           >
-            <div id="RecipeList-header">
+            <div id="MainContainer-header">
               <RecipeRequests
                 recipeActions={recipeActions}
                 setShowing={toggleModel}
@@ -138,7 +141,10 @@ function MainContainer() {
                 <FaPlusButton onAction={toggleCreateForm} />
               </div>
             </div>
-            <div id="RecipeList-recipes" className="flex-1 overflow-y-auto min-h-0">
+            <div
+              id="MainContainer-recipes"
+              className="flex-1 overflow-y-auto min-h-0"
+            >
               <RecipesList
                 recipes={recipes}
                 handleSelect={selectRecipe}
@@ -146,11 +152,16 @@ function MainContainer() {
               />
             </div>
           </section>
-          <RecipeContainer
-            recipe={selectedRecipe}
-            handleModalToggle={toggleEditTemplate}
-            isOpen={isOpen}
-          />
+          <section
+            id="MainContainer-rightpage"
+            className="overflow-y-auto divide-y border-x-2 mx-auto flex-1"
+          >
+            <RecipeContainer
+              recipe={selectedRecipe}
+              handleModalToggle={toggleEditTemplate}
+              isOpen={isOpen}
+            />
+          </section>
         </RecipeContext.Provider>
       </div>
     </div>
