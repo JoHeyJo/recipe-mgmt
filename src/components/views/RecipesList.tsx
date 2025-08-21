@@ -9,8 +9,8 @@ import { RecipesListProps } from "../../utils/props";
  */
 function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
   return (
-    <>
-      <ul role="list" id="Recipes-container">
+    <section>
+      <ul className="overflow-y-auto" role="list" id="Recipes-container">
         {recipes.map(({ name, id }, index) => (
           <li
             key={id}
@@ -21,7 +21,7 @@ function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
           </li>
         ))}
       </ul>
-    </>
+    </section>
   );
 }
 
