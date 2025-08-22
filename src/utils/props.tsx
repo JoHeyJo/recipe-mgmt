@@ -193,3 +193,7 @@ export type TextAreaProps = {
   defaultValue: string;
   handleChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 };
+
+export type SearchProps = {
+  list: [];
+}
