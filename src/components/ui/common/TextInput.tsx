@@ -2,7 +2,7 @@ import { InputWithLabelProps } from "../../../utils/props";
 
 /** Renders Input
  *
- * TitleInput ->TextInput
+ * [TitleInput, Search] ->TextInput
  */
 function TextInput({
   id,

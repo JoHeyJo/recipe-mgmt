@@ -10,8 +10,8 @@ import FaPlusButton from "../ui/common/FaPlusButton";
 import RecipeRequests from "../requests/RecipeRequests";
 import { RecipeContext } from "../../context/RecipeContext";
 import BookView from "../views/BookView";
-import TextInput
- from "../ui/common/TextInput";
+import Search from "../ui/Search";
+
 /** Renders the main container (book) housing list of recipes and individual recipe
  *
  * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList]
@@ -86,6 +86,11 @@ function MainContainer() {
     setSelectedRecipe(recipeTemplate);
   }
 
+  /** Filter recipes */
+  function filterRecipes(filtered: Recipe[]){
+    setRecipes(recipes => [...recipes, filtered])
+  }
+
   const recipeActions = {
     updateRecipes,
     deleteRecipe,
@@ -139,13 +144,7 @@ function MainContainer() {
               <div className="flex justify-between p-1 font-semibold text-lg border-b-2">
                 <div>Recipes for:</div>
                 <BookView resetSelected={resetSelectedRecipe} />
-                <TextInput   id={"null"}
-  name={"search"}
-  value={"none"}
-  handleUpdate={()=>{}}
-  type={"none"}
-  placeholder={"Search..."}
-  />
+                {recipes.length !== 0 && <Search list={recipes} filter={filterRecipes}/>}
                 <FaPlusButton onAction={toggleCreateForm} />
               </div>
             </div>
