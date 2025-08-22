@@ -2,6 +2,8 @@ version: 0.2
 env:
    parameter-store:
     BASE_URL_CONNECTION_STRING: /CodeBuild/BASE_URL
+    CLOUDFRONT_DISTRIBUTION_ID: /CLOUDFRONT_DISTRIBUTION_ID
+
 phases:
   install:
     runtime-versions:
@@ -18,3 +20,5 @@ phases:
     commands:
       - echo "Build completed on `date`"
       - aws s3 sync ./build/ s3://sling-it-react-prod --delete
+      - echo "Invalidating CloudFront cache..."
+      - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
