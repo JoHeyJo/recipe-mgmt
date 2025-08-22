@@ -2,7 +2,7 @@ import { InputWithLabelProps } from "../../../utils/props";
 
 /** Renders Input
  *
- * NOT IN USE 
+ * TitleInput ->TextInput
  */
 function TextInput({
   id,
@@ -14,10 +14,6 @@ function TextInput({
 }: InputWithLabelProps) {
   return (
     <div>
-      <label
-        htmlFor="title"
-        className="block text-sm font-medium leading-6 text-gray-900"
-      ></label>
       <div className="mt-2">
         <input
           // required={name === "title"}
