@@ -88,6 +88,7 @@ function MainContainer() {
 
   /** Filter recipes */
   function filterRecipes(filtered: Recipe[]){
+    console.log("filtered In Maincontainer", filtered)
     setRecipes(recipes => [...recipes, filtered])
   }
 

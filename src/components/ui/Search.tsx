@@ -15,11 +15,13 @@ function Search({ list, filter }: SearchProps) {
     setQuery(value)
   }
   const filteredList = list.filter((item) => {
-    console.log("item",item)
-    if(!item) item.name.includes(query)
+    if(!item) {
+      item.name.includes(query)
+      console.log("filtering", item.name, query, item.name.includes(query) )
+    }
   });
 
-  console.log("fileted list",filteredList)
+  // console.log("fileted list",filteredList)
 
   useEffect(()=>{
     filter(filteredList)
