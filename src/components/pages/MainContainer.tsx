@@ -115,11 +115,13 @@ function MainContainer() {
   }, [selectedBookId, userId]);
 
   /** Updates current book selection */
-  useEffect(() => {
+  useEffect(() => { 
     setSelectedBookId(currentBookId || defaultBookId);
   }, [currentBookId]);
 
   if (!isLoading) <div>Loading...</div>;
+
+  // search array -> filter -> render
 
   return (
     <div className="border-4 mt-7 bg-primary mx-auto max-w-7xl xl:px-8 xl:border-2">
@@ -144,7 +146,7 @@ function MainContainer() {
               <div className="flex justify-between p-1 font-semibold text-lg border-b-2">
                 <div>Recipes for:</div>
                 <BookView resetSelected={resetSelectedRecipe} />
-                {recipes.length !== 0 && <Search list={recipes} filter={filterRecipes}/>}
+                <Search list={recipes} filter={filterRecipes}/>
                 <FaPlusButton onAction={toggleCreateForm} />
               </div>
             </div>
