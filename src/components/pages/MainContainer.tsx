@@ -104,7 +104,7 @@ function MainContainer() {
       try {
         const res = await API.getBookRecipes(userId, selectedBookId);
         setRecipes(res);
-        setFilteredRecipe(recipes);
+        setFilteredRecipe(res);
       } catch (error: any) {
         errorHandling("MainContainer -> fetchUserRecipes", error);
       } finally {
