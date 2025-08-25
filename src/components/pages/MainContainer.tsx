@@ -22,6 +22,7 @@ function MainContainer() {
 
   const [selectedBookId, setSelectedBookId] = useState<number>();
   const [recipes, setRecipes] = useState([]);
+  const [filteredRecipes, setFilteredRecipe] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate);
   const [isOpen, setOpen] = useState(false);
   const [requestAction, setRequestAction] = useState<string>("");
@@ -87,9 +88,8 @@ function MainContainer() {
   }
 
   /** Filter recipes */
-  function filterRecipes(filtered: Recipe[]){
-    console.log("filtered In Maincontainer", filtered)
-    setRecipes(recipes => [...recipes, filtered])
+  function filterRecipes(filteredRecipes: Recipe[]) {
+    setFilteredRecipe(filteredRecipes);
   }
 
   const recipeActions = {
@@ -104,6 +104,7 @@ function MainContainer() {
       try {
         const res = await API.getBookRecipes(userId, selectedBookId);
         setRecipes(res);
+        setFilteredRecipe(recipes);
       } catch (error: any) {
         errorHandling("MainContainer -> fetchUserRecipes", error);
       } finally {
@@ -116,13 +117,11 @@ function MainContainer() {
   }, [selectedBookId, userId]);
 
   /** Updates current book selection */
-  useEffect(() => { 
+  useEffect(() => {
     setSelectedBookId(currentBookId || defaultBookId);
   }, [currentBookId]);
 
   if (!isLoading) <div>Loading...</div>;
-
-  // search array -> filter -> render
 
   return (
     <div className="border-4 mt-7 bg-primary mx-auto max-w-7xl xl:px-8 xl:border-2">
@@ -147,7 +146,7 @@ function MainContainer() {
               <div className="flex justify-between p-1 font-semibold text-lg border-b-2">
                 <div>Recipes for:</div>
                 <BookView resetSelected={resetSelectedRecipe} />
-                <Search list={recipes} filter={filterRecipes}/>
+                <Search list={recipes} setList={filterRecipes} />
                 <FaPlusButton onAction={toggleCreateForm} />
               </div>
             </div>
@@ -156,7 +155,7 @@ function MainContainer() {
               className="flex-1 overflow-y-auto min-h-0"
             >
               <RecipesList
-                recipes={recipes}
+                recipes={filteredRecipes}
                 handleSelect={selectRecipe}
                 selectedId={selectedRecipe.id}
               />

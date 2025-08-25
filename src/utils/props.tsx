@@ -196,5 +196,5 @@ export type TextAreaProps = {
 
 export type SearchProps = {
   list: Recipe[];
-  filter: (filter: Recipe[]) =>void;
+  setList: (list: Recipe[]) => void;
 };
