@@ -106,20 +106,21 @@ function App() {
   }, [token]);
 
   useEffect(() => {
+    // Does not persist expired user token
     if (!isTokenValid(token)) {
       setToken(null);
       navigate("/")
     }
+
     if (userData?.id) {
       setIsContextInitialized(true);
     }
     setIsLoading(false);
   }, [userData]);
 
-  if (isLoading) return <p>Loading...</p>; //template of application with outdata
+  if (isLoading) return <p>Loading...</p>; //should template of application render without data?
 
   return (
-    // <BrowserRouter>
     <div id="App-container">
       <UserContext.Provider value={UserDataFromContext}>
         <TopNav logout={logout} />
@@ -127,7 +128,6 @@ function App() {
       </UserContext.Provider>
       {/* <button type="button" onClick={toggleDarkMode}>toggle color scheme</button> */}
     </div>
-    // </BrowserRouter>
   );
 }
 
