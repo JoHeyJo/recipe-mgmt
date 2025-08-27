@@ -6,7 +6,7 @@ import { UserSignUp as SignUpData, UserLogin } from "./utils/types";
 import API from "./api";
 import { UserContext, UserContextType } from "./context/UserContext";
 import { User } from "./utils/types";
-import { BrowserRouter } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 //styles
 import "./index.css";
 import "./styles/App.css";
@@ -15,11 +15,10 @@ import "./styles/light.css";
 import "./styles/dark.css";
 
 import { errorHandling } from "./utils/ErrorHandling";
-import {
-  extractAndSetUser,
-} from "./utils/fetchRequests";
+import { extractAndSetUser } from "./utils/fetchRequests";
 import useLocalStorage from "./hooks/useLocalStorage";
 import TopNav from "./components/layout/TopNav";
+import { isTokenValid } from "./utils/functions";
 
 const TOKEN_STORAGE_ID = "user-token";
 const USER_STORAGE_ID = "user-data";
@@ -38,6 +37,8 @@ function App() {
   const [userData, setUserData] = useState<User>(defaultUser);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isContextInitialized, setIsContextInitialized] = useState(false);
+
+  const navigate = useNavigate();
 
   const UserDataFromContext: UserContextType = {
     user: userData?.userName,
@@ -59,7 +60,7 @@ function App() {
       const userId = await extractAndSetUser(res.token, setUserData);
       API.token = res.token;
       setToken(res.token);
-      setIsContextInitialized(true)
+      setIsContextInitialized(true);
     } catch (error: any) {
       errorHandling("App->userSignUp", error);
       throw error;
@@ -104,25 +105,29 @@ function App() {
     setIsLoading(false);
   }, [token]);
 
-  useEffect(()=>{
-      if (userData?.id) {
-        setIsContextInitialized(true);
-      }
-      setIsLoading(false);  
-  },[userData])
-  
-  if(isLoading) return <p>Loading...</p> //template of application with outdata
+  useEffect(() => {
+    if (!isTokenValid(token)) {
+      setToken(null);
+      navigate("/")
+    }
+    if (userData?.id) {
+      setIsContextInitialized(true);
+    }
+    setIsLoading(false);
+  }, [userData]);
+
+  if (isLoading) return <p>Loading...</p>; //template of application with outdata
 
   return (
-    <BrowserRouter>
-      <div id="App-container">
-        <UserContext.Provider value={UserDataFromContext}>
-          <TopNav logout={logout} />
-          <RoutesList signUp={userSignUp} login={userLogin} />
-        </UserContext.Provider>
-        {/* <button type="button" onClick={toggleDarkMode}>toggle color scheme</button> */}
-      </div>
-    </BrowserRouter>
+    // <BrowserRouter>
+    <div id="App-container">
+      <UserContext.Provider value={UserDataFromContext}>
+        <TopNav logout={logout} />
+        <RoutesList signUp={userSignUp} login={userLogin} />
+      </UserContext.Provider>
+      {/* <button type="button" onClick={toggleDarkMode}>toggle color scheme</button> */}
+    </div>
+    // </BrowserRouter>
   );
 }
 
