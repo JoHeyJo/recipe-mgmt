@@ -10,6 +10,7 @@ import FaPlusButton from "../ui/common/FaPlusButton";
 import RecipeRequests from "../requests/RecipeRequests";
 import { RecipeContext } from "../../context/RecipeContext";
 import BookView from "../views/BookView";
+import Search from "../ui/Search";
 
 /** Renders the main container (book) housing list of recipes and individual recipe
  *
@@ -21,6 +22,7 @@ function MainContainer() {
 
   const [selectedBookId, setSelectedBookId] = useState<number>();
   const [recipes, setRecipes] = useState([]);
+  const [filteredRecipes, setFilteredRecipe] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate);
   const [isOpen, setOpen] = useState(false);
   const [requestAction, setRequestAction] = useState<string>("");
@@ -85,6 +87,11 @@ function MainContainer() {
     setSelectedRecipe(recipeTemplate);
   }
 
+  /** Filter recipes */
+  function filterRecipes(filteredRecipes: Recipe[]) {
+    setFilteredRecipe(filteredRecipes);
+  }
+
   const recipeActions = {
     updateRecipes,
     deleteRecipe,
@@ -97,6 +104,7 @@ function MainContainer() {
       try {
         const res = await API.getBookRecipes(userId, selectedBookId);
         setRecipes(res);
+        setFilteredRecipe(res);
       } catch (error: any) {
         errorHandling("MainContainer -> fetchUserRecipes", error);
       } finally {
@@ -138,6 +146,7 @@ function MainContainer() {
               <div className="flex justify-between p-1 font-semibold text-lg border-b-2">
                 <div>Recipes for:</div>
                 <BookView resetSelected={resetSelectedRecipe} />
+                <Search list={recipes} setList={filterRecipes} />
                 <FaPlusButton onAction={toggleCreateForm} />
               </div>
             </div>
@@ -146,7 +155,7 @@ function MainContainer() {
               className="flex-1 overflow-y-auto min-h-0"
             >
               <RecipesList
-                recipes={recipes}
+                recipes={filteredRecipes}
                 handleSelect={selectRecipe}
                 selectedId={selectedRecipe.id}
               />

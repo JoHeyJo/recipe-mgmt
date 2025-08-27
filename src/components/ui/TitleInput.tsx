@@ -1,11 +1,11 @@
-import InputWithLabel from "./common/InputWithLabel";
+import TextInput from "./common/TextInput";
 import { RecipeInfoProp } from "../../utils/props";
 import { useState, useContext, useEffect } from "react";
 import { RecipeContext } from "../../context/RecipeContext";
 
 /** Consolidations recipe data and logic
  *
- * RecipeRequests -> TitleInput -> InputWithLabel
+ * RecipeRequests -> TitleInput -> TextInput
  */
 function TitleInput({ handleUpdate }: RecipeInfoProp) {
   const { recipeId, recipeName } = useContext(RecipeContext);
@@ -28,7 +28,7 @@ function TitleInput({ handleUpdate }: RecipeInfoProp) {
   }, [title]);
 
   return (
-    <InputWithLabel
+    <TextInput
       id={recipeId.toString()}
       name={recipeName}
       value={title}
