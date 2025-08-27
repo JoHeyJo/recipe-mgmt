@@ -10,7 +10,11 @@ const PublicRoutes = () => {
   const { token, userId, isInitialized } = useContext(UserContext);
 
   const isAuthenticated = token && isTokenValid(token) && userId;
-  return !isAuthenticated && !isInitialized ? <Outlet /> : null;
+  return !isAuthenticated && !isInitialized ? (
+    <Outlet />
+  ) : (
+    <Navigate to="home" replace />
+  );
 };
 
 export default PublicRoutes;
