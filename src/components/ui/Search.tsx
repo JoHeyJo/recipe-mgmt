@@ -16,7 +16,7 @@ function Search({ list, setList }: SearchProps) {
 
   function filterList() {
     const filteredRecipes = list.filter((recipe) =>
-      recipe.name.toLowerCase().includes(query)
+      recipe.name.toLowerCase().includes(query.toLocaleLowerCase())
     );
     setList(filteredRecipes);
   }
