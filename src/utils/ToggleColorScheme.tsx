@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
 
 /** Component responsible for toggling function that adds/removes dark class on HTML element 
- * SHOULD USE STATE AND MAYBE CONTEXT TO MANAGE THEME
 */
 function ToggleColorScheme() {
   function toggleColorScheme() {

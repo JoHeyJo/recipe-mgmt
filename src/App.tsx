@@ -118,7 +118,7 @@ function App() {
     setIsLoading(false);
   }, [userData]);
 
-  if (isLoading) return <p>Loading...</p>; //should template of application render without data?
+  if (isLoading && !isContextInitialized) return <p>Loading...</p>; //should template of application render without data?
 
   return (
     <div id="App-container">
