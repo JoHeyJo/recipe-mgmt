@@ -62,7 +62,7 @@ function MainContainer() {
 
   /** Change selected recipe */
   function selectRecipe(index: number) {
-    setSelectedRecipe(recipes[index]);
+    setSelectedRecipe(filteredRecipes[index]);
   }
 
   /** Model toggle function for children components */
