@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useEffect, useContext } from "react";
+import { useState, ChangeEvent, useEffect, useContext, useRef } from "react";
 import RadioSwitch from "../ui/common/RadioSwitch";
 import IngredientInputGroup from "../selectors/IngredientInputGroup";
 import { ComponentsOptionsRequestsProps } from "../../utils/props";
@@ -24,6 +24,8 @@ function ComponentsOptionsRequests({
   const [quantityUnits, setQuantityUnits] = useState<AttributeData[]>([]);
   const [whichOptions, setWhichOptions] = useState<string>("book");
   const [optionsReferences, setOptionsReferences] = useState(references);
+
+  const divRef = useRef<HTMLDivElement>();
 
   const { userId, currentBookId } = useContext(UserContext);
 
@@ -122,14 +124,26 @@ function ComponentsOptionsRequests({
       : fetchUserComponentsOptions();
   }, [whichOptions]);
 
+  function handleScroll(){
+          if (divRef.current) {
+        divRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+useEffect(()=>{
+  console.log("should scroll")
+  handleScroll()
+},[whichOptions])
+
   return (
     <>
       <RadioSwitch handleSwitch={handleRadio} selection={whichOptions} />
       <div className="py-2 px-1 h-40 overflow-y-scroll rounded-md border-2 border-accent-secondary">
         {ingredients.map((ingredient, i) => (
           <div
+          ref={divRef}
             key={ingredient.ingredient_id || ingredientKeys[i]}
-            className="Ingredients-section flex items-center justify-center"
+            className="ComponentsOptionsRequests-Ingredients-section flex items-center justify-center"
           >
             <IngredientInputGroup
               index={i}
