@@ -9,6 +9,7 @@ import { UserContext } from "../../context/UserContext";
 import { AttributeData } from "../../utils/types";
 import { errorHandling } from "../../utils/ErrorHandling";
 import { references } from "../../utils/templates";
+import { scrollIntoViewElement } from "../../utils/functions";
 
 /** Manages ingredient requests and dropdown options
  *
@@ -125,15 +126,9 @@ function ComponentsOptionsRequests({
       : fetchUserComponentsOptions();
   }, [whichOptions]);
 
-  function handleScroll() {
-    if (ingredientSectionRef.current) {
-      ingredientSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }
-
   // Scrolls into view newly created ingredient
   useEffect(() => {
-    if(numOfIngredients > 3) handleScroll()
+    if(numOfIngredients > 3) scrollIntoViewElement(ingredientSectionRef)
   }, [numOfIngredients]);
 
   return (

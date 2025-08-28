@@ -10,21 +10,20 @@ import {
 import { Instruction } from "../../utils/types";
 import { InstructionManagerProps } from "../../utils/props";
 import { createPortal } from "react-dom";
-import { scrollToElement } from "../../utils/functions";
-import { useContext } from "react";
-import { ReferenceContext } from "../../context/ReferenceContext";
+import { scrollIntoViewElement } from "../../utils/functions";
 
 /** InstructionManager - renders instructions - ring is removed
  *
  * Searches and filters existing instructions
  *
  * InstructionsArea -> InstructionManager
- * 
+ *
  * Commit with all attempted handler variations for keyboard interactions
  *  & useEffect to handle close on outside scroll and close on outside click - 3ea06ee
  */
 
 function InstructionManager({
+  numOfInstruction,
   arrayKey,
   instruction,
   options,
@@ -37,10 +36,9 @@ function InstructionManager({
   const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, width: 0 });
   const [isKbSuppressed, setIsKbSuppressed] = useState(false);
 
-  const { dialogPanelRef } = useContext(ReferenceContext);
-
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const instructionRef = useRef<HTMLDivElement>(null);
 
   const isNewInstruction = (option: Instruction) =>
     typeof option.id === "string" && option.instruction === "+ create...";
@@ -141,30 +139,36 @@ function InstructionManager({
     }
   }, [dropdownOpen, query]);
 
-    // Close on scroll *outside* dropdown - necessary on browser
-    useEffect(() => {
-      if (!dropdownOpen) return;
-  
-      const closeOnScroll = (event: Event) => {
-        const target = event.target as HTMLElement;
-  
-        const isInsideDropdown = dropdownRef.current?.contains(target);
-        const isInsideCombobox = wrapperRef.current?.contains(target);
-  
-        if (!isInsideDropdown && !isInsideCombobox) {
-          setDropdownOpen(false);
-        }
-      };
-  
-      window.addEventListener("scroll", closeOnScroll, true);
-      return () => {
-        window.removeEventListener("scroll", closeOnScroll, true);
-      };
-    }, [dropdownOpen]);
+  // Close on scroll *outside* dropdown - necessary on browser
+  useEffect(() => {
+    if (!dropdownOpen) return;
+
+    const closeOnScroll = (event: Event) => {
+      const target = event.target as HTMLElement;
+
+      const isInsideDropdown = dropdownRef.current?.contains(target);
+      const isInsideCombobox = wrapperRef.current?.contains(target);
+
+      if (!isInsideDropdown && !isInsideCombobox) {
+        setDropdownOpen(false);
+      }
+    };
+
+    window.addEventListener("scroll", closeOnScroll, true);
+    return () => {
+      window.removeEventListener("scroll", closeOnScroll, true);
+    };
+  }, [dropdownOpen]);
+
+  useEffect(() => {
+    if (numOfInstruction > 4) scrollIntoViewElement(instructionRef);
+  }, [numOfInstruction]);
 
   return (
     <>
       <Combobox
+        ref={instructionRef}
+        id="InstructionsManger-instruction"
         as="div"
         value={displayInitialValue(selected || { instruction: "", id: null })}
         onChange={onValueSelect}
@@ -203,8 +207,7 @@ function InstructionManager({
             />
           </ComboboxButton>
 
-          {
-            dropdownOpen &&
+          {dropdownOpen &&
             //   filteredOptions.length > 0 &&
             createPortal(
               <ComboboxOptions
@@ -236,8 +239,7 @@ function InstructionManager({
                 ))}
               </ComboboxOptions>,
               document.body
-            )
-          }
+            )}
         </div>
       </Combobox>
     </>

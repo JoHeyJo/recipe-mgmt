@@ -124,6 +124,7 @@ function InstructionsArea({
         <InstructionManager
           key={index}
           arrayKey={index}
+          numOfInstruction={selectedInstructions.length}
           instruction={value}
           options={data.instructions}
           handleSelected={handleSelected}
