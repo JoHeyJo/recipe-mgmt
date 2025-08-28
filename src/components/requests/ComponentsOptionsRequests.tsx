@@ -15,6 +15,7 @@ import { references } from "../../utils/templates";
  * IngredientsGroup -> ComponentsOptionsRequests -> IngredientInputGroup
  */
 function ComponentsOptionsRequests({
+  numOfIngredients,
   ingredients,
   ingredientKeys,
   handleIngredient,
@@ -25,7 +26,7 @@ function ComponentsOptionsRequests({
   const [whichOptions, setWhichOptions] = useState<string>("book");
   const [optionsReferences, setOptionsReferences] = useState(references);
 
-  const divRef = useRef<HTMLDivElement>();
+  const ingredientSectionRef = useRef<HTMLDivElement>();
 
   const { userId, currentBookId } = useContext(UserContext);
 
@@ -117,23 +118,23 @@ function ComponentsOptionsRequests({
     }
   }
 
-  /** Populate each instance of component with the most current options */ 
+  /** Populate each instance of component with the most current options */
   useEffect(() => {
     whichOptions == "book"
       ? fetchBookComponentsOptions()
       : fetchUserComponentsOptions();
   }, [whichOptions]);
 
-  function handleScroll(){
-          if (divRef.current) {
-        divRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  function handleScroll() {
+    if (ingredientSectionRef.current) {
+      ingredientSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   }
-}
 
-useEffect(()=>{
-  console.log("should scroll")
-  handleScroll()
-},[whichOptions])
+  // Scrolls into view newly created ingredient
+  useEffect(() => {
+    if(numOfIngredients > 3) handleScroll()
+  }, [numOfIngredients]);
 
   return (
     <>
@@ -141,7 +142,7 @@ useEffect(()=>{
       <div className="py-2 px-1 h-40 overflow-y-scroll rounded-md border-2 border-accent-secondary">
         {ingredients.map((ingredient, i) => (
           <div
-          ref={divRef}
+            ref={ingredientSectionRef}
             key={ingredient.ingredient_id || ingredientKeys[i]}
             className="ComponentsOptionsRequests-Ingredients-section flex items-center justify-center"
           >
