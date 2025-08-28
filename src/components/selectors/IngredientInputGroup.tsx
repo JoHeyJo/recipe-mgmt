@@ -71,7 +71,7 @@ function IngredientInputGroup({
   }, [item, amount, unit]);
 
   return (
-    <div className="Ingredient-section flex rounded-md">
+    <div className="IngredientInputGroup-Ingredient-section flex rounded-md">
       <IngredientManager
         value={ingredient.amount}
         attribute={"value"}

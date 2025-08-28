@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useEffect, useContext } from "react";
+import { useState, ChangeEvent, useEffect, useContext, useRef } from "react";
 import RadioSwitch from "../ui/common/RadioSwitch";
 import IngredientInputGroup from "../selectors/IngredientInputGroup";
 import { ComponentsOptionsRequestsProps } from "../../utils/props";
@@ -9,12 +9,14 @@ import { UserContext } from "../../context/UserContext";
 import { AttributeData } from "../../utils/types";
 import { errorHandling } from "../../utils/ErrorHandling";
 import { references } from "../../utils/templates";
+import { scrollIntoViewElement } from "../../utils/functions";
 
 /** Manages ingredient requests and dropdown options
  *
  * IngredientsGroup -> ComponentsOptionsRequests -> IngredientInputGroup
  */
 function ComponentsOptionsRequests({
+  numOfIngredients,
   ingredients,
   ingredientKeys,
   handleIngredient,
@@ -24,6 +26,8 @@ function ComponentsOptionsRequests({
   const [quantityUnits, setQuantityUnits] = useState<AttributeData[]>([]);
   const [whichOptions, setWhichOptions] = useState<string>("book");
   const [optionsReferences, setOptionsReferences] = useState(references);
+
+  const ingredientSectionRef = useRef<HTMLDivElement>();
 
   const { userId, currentBookId } = useContext(UserContext);
 
@@ -115,12 +119,17 @@ function ComponentsOptionsRequests({
     }
   }
 
-  /** Populate each instance of component with the most current options */ 
+  /** Populate each instance of component with the most current options */
   useEffect(() => {
     whichOptions == "book"
       ? fetchBookComponentsOptions()
       : fetchUserComponentsOptions();
   }, [whichOptions]);
+
+  // Scrolls into view newly created ingredient
+  useEffect(() => {
+    if(numOfIngredients > 3) scrollIntoViewElement(ingredientSectionRef)
+  }, [numOfIngredients]);
 
   return (
     <>
@@ -128,8 +137,9 @@ function ComponentsOptionsRequests({
       <div className="py-2 px-1 h-40 overflow-y-scroll rounded-md border-2 border-accent-secondary">
         {ingredients.map((ingredient, i) => (
           <div
+            ref={ingredientSectionRef}
             key={ingredient.ingredient_id || ingredientKeys[i]}
-            className="Ingredients-section flex items-center justify-center"
+            className="ComponentsOptionsRequests-Ingredients-section flex items-center justify-center"
           >
             <IngredientInputGroup
               index={i}

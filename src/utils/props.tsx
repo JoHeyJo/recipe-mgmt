@@ -19,6 +19,7 @@ type HandleInstruction = {
 };
 
 export type InstructionManagerProps = {
+  numOfInstruction: number;
   instruction: Instruction;
   arrayKey: number;
   options: Instructions;
@@ -82,6 +83,7 @@ export type IngredientInputGroupProps = {
 };
 
 export type ComponentsOptionsRequestsProps = {
+  numOfIngredients: number;
   ingredients: Ingredients;
   ingredientKeys: number[];
   handleIngredient: HandleIngredient;
