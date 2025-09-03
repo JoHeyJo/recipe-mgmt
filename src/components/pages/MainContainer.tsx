@@ -11,6 +11,7 @@ import RecipeRequests from "../requests/RecipeRequests";
 import { RecipeContext } from "../../context/RecipeContext";
 import BookView from "../views/BookView";
 import Search from "../ui/Search";
+import FaShareButton from "../ui/common/FaShareButton";
 
 /** Renders the main container (book) housing list of recipes and individual recipe
  *

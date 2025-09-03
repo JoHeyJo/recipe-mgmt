@@ -17,6 +17,7 @@ export async function extractAndSetUser(
         localStorage.getItem("current-book-id"),
       );
       const res = await API.getUser(sub);
+      console.log("user object",res)
       setUser({
         userName: res.user_name,
         id: res.id,
