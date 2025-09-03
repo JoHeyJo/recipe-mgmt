@@ -4,6 +4,8 @@ import MultiSelect from "../ui/common/MultiSelect";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import CreateBook from "../requests/CreateBook";
 import { BookViewProp } from "../../utils/props";
+import FaShareButton from "../ui/common/FaShareButton";
+import { errorHandling } from "../../utils/ErrorHandling";
 
 /** Facilitates rendering books & book selection
  *
@@ -27,6 +29,16 @@ function BookView({ resetSelected }: BookViewProp) {
     resetSelected();
   }
 
+  function handleShare(){
+
+    console.log("Book #",bookId,"shared")
+    // try {
+    // } catch (error: any) {
+    //   errorHandling("BookView -> handleShare", error);
+    //   throw error;
+    // }
+  }
+
   return (
     <section>
       {!currentBook && !bookId ? (
@@ -36,11 +48,14 @@ function BookView({ resetSelected }: BookViewProp) {
           <button onClick={() => setIsModalOpen(true)}>Create Book</button>
         </>
       ) : (
-        <MultiSelect
-          selected={currentBook}
-          options={books}
-          handleIdChange={selectBook}
-        />
+        <>
+          <MultiSelect
+            selected={currentBook}
+            options={books}
+            handleIdChange={selectBook}
+          />
+          <FaShareButton handleClick={handleShare} />
+        </>
       )}
     </section>
   );
