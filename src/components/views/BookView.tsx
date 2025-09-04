@@ -17,6 +17,7 @@ function BookView({ resetSelected }: BookViewProp) {
   const { userId, defaultBook, books, setUserData } = useContext(UserContext);
   const [bookId, setBookId] = useLocalStorage("current-book-id");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const currentBook = books.find((book) => book.id === +bookId) || defaultBook;
 
@@ -33,11 +34,17 @@ function BookView({ resetSelected }: BookViewProp) {
 
   function shareBookWithUser() {
     try {
-      const res = API.postShareBook(userId, currentBook.id)
+      setIsDialogOpen(true)
+      // const res = API.postShareBook(userId, currentBook.id)
     } catch (error: any) {
       errorHandling("BookView -> shareBookWithUser", error);
       throw error;
     }
+  }
+
+  /** Toggles Alert panel */
+  function toggleDialogPanel(){
+    setIsDialogOpen(isDialogOpen => !isDialogOpen)
   }
 
   return (
@@ -50,13 +57,13 @@ function BookView({ resetSelected }: BookViewProp) {
         </>
       ) : (
         <>
+          <PopOutAlert isDialogOpen={isDialogOpen} handleClose={toggleDialogPanel}/>
           <MultiSelect
             selected={currentBook}
             options={books}
             handleIdChange={selectBook}
           />
           <FaShareButton handleClick={shareBookWithUser} />
-          <PopOutAlert/>
         </>
       )}
     </section>

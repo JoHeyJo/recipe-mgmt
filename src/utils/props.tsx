@@ -200,3 +200,8 @@ export type SearchProps = {
   list: Recipe[];
   setList: (list: Recipe[]) => void;
 };
+
+export type PopOutAlertProps = {
+  isDialogOpen: boolean;
+  handleClose: () => void;
+};

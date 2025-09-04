@@ -1,8 +1,9 @@
-import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
+import { Dialog, DialogBackdrop } from "@headlessui/react";
+import { PopOutAlertProps } from "../../../utils/props";
 
-function PopOutAlert(){
+function PopOutAlert({ isDialogOpen, handleClose }: PopOutAlertProps) {
   return (
-    <Dialog open={false} onClose={()=>{}} className="relative z-10">
+    <Dialog open={isDialogOpen} onClose={handleClose} className="relative z-10">
       <DialogBackdrop
         transition
         className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
@@ -34,6 +35,7 @@ function PopOutAlert(){
               . Give it a click if you like.
             </div>
             <button
+            onClick={handleClose}
               type="button"
               className="ms-auto -mx-1.5 -my-1.5 bg-blue-50 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-blue-400 dark:hover:bg-gray-700"
               data-dismiss-target="#alert-border-1"
