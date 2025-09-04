@@ -117,6 +117,11 @@ class API {
     return res;
   }
 
+  /** Post shared book id - create association */
+  static async postShareBook(userId: number, bookId: number){
+    const res = await this.request(`users/${userId}/books/${bookId}`);
+  }
+
   // ########### COMPONENT OPTIONS = {amount, unit, item} = INGREDIENT ###########
 
   /** Fetch all ingredients  */

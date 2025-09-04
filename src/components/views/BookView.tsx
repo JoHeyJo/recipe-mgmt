@@ -6,13 +6,15 @@ import CreateBook from "../requests/CreateBook";
 import { BookViewProp } from "../../utils/props";
 import FaShareButton from "../ui/common/FaShareButton";
 import { errorHandling } from "../../utils/ErrorHandling";
+import API from "../../api";
+import PopOutAlert from "../ui/common/PopOutAlert";
 
 /** Facilitates rendering books & book selection
  *
- * MainContainer -> BookView -> MultiSelect
+ * MainContainer -> BookView -> [MultiSelect, FaShareButton]
  */
 function BookView({ resetSelected }: BookViewProp) {
-  const { defaultBook, books, setUserData } = useContext(UserContext);
+  const { userId, defaultBook, books, setUserData } = useContext(UserContext);
   const [bookId, setBookId] = useLocalStorage("current-book-id");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -29,14 +31,13 @@ function BookView({ resetSelected }: BookViewProp) {
     resetSelected();
   }
 
-  function handleShare(){
-
-    console.log("Book #",bookId,"shared")
-    // try {
-    // } catch (error: any) {
-    //   errorHandling("BookView -> handleShare", error);
-    //   throw error;
-    // }
+  function shareBookWithUser() {
+    try {
+      const res = API.postShareBook(userId, currentBook.id)
+    } catch (error: any) {
+      errorHandling("BookView -> shareBookWithUser", error);
+      throw error;
+    }
   }
 
   return (
@@ -54,7 +55,8 @@ function BookView({ resetSelected }: BookViewProp) {
             options={books}
             handleIdChange={selectBook}
           />
-          <FaShareButton handleClick={handleShare} />
+          <FaShareButton handleClick={shareBookWithUser} />
+          <PopOutAlert/>
         </>
       )}
     </section>
