@@ -32,10 +32,12 @@ function BookView({ resetSelected }: BookViewProp) {
     resetSelected();
   }
 
-  function shareBookWithUser() {
+  async function shareBookWithUser() {
     try {
-      setIsDialogOpen(true)
-      // const res = API.postShareBook(userId, currentBook.id)
+      const res = await API.postShareBook(userId, currentBook.id, {
+        recipient: "Jo",
+      });
+      console.log(res);
     } catch (error: any) {
       errorHandling("BookView -> shareBookWithUser", error);
       throw error;
@@ -43,8 +45,8 @@ function BookView({ resetSelected }: BookViewProp) {
   }
 
   /** Toggles Alert panel */
-  function toggleDialogPanel(){
-    setIsDialogOpen(isDialogOpen => !isDialogOpen)
+  function toggleDialogPanel() {
+    setIsDialogOpen(!isDialogOpen);
   }
 
   return (
@@ -57,13 +59,16 @@ function BookView({ resetSelected }: BookViewProp) {
         </>
       ) : (
         <>
-          <PopOutAlert isDialogOpen={isDialogOpen} handleClose={toggleDialogPanel}/>
+          <PopOutAlert
+            isDialogOpen={isDialogOpen}
+            handleClose={toggleDialogPanel}
+          />
           <MultiSelect
             selected={currentBook}
             options={books}
             handleIdChange={selectBook}
           />
-          <FaShareButton handleClick={shareBookWithUser} />
+          <FaShareButton handleClick={()=>setIsDialogOpen(true)} />
         </>
       )}
     </section>
