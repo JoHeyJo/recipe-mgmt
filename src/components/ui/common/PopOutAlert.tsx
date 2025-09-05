@@ -3,13 +3,19 @@ import { PopOutAlertProps } from "../../../utils/props";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import InputWithLabelForm from "../../views/InputWithLabelForm";
-
+import { PillButton } from "../PillButton";
 
 /** PopOut overlay on grey dialog screen
- * 
- * 
+ *
+ * ShareBook -> PopOutAlert -> InputWithLabelFrom
  */
-function PopOutAlert({ isDialogOpen, handleClose }: PopOutAlertProps) {
+function PopOutAlert({
+  isDialogOpen,
+  handleClose,
+  handleChange,
+  value,
+  text,
+}: PopOutAlertProps) {
   return (
     <Dialog open={isDialogOpen} onClose={handleClose} className="relative z-10">
       <DialogBackdrop
@@ -23,15 +29,19 @@ function PopOutAlert({ isDialogOpen, handleClose }: PopOutAlertProps) {
             className="flex items-center p-4 mb-4 text-blue-800 border-t-4 border-blue-300 bg-blue-50 dark:text-blue-400 dark:bg-gray-800 dark:border-blue-800"
             role="alert"
           >
-            <InputWithLabelForm
-              type={"user-name"}
-              name={"User Name"}
-              id={"user-name"}
-              className={"user-name"}
-              handleChange={()=>{}}
-              value={"Eli"}
-              required={true}
-            />
+            <div>{text}</div>
+            <div>
+              <InputWithLabelForm
+                type={"user-name"}
+                name={"User Name"}
+                id={"user-name"}
+                className={"user-name"}
+                handleChange={handleChange}
+                value={value}
+                required={true}
+                styles={"px-2 border-2 border-solid"}
+              />
+            </div>
             <button
               onClick={handleClose}
               type="button"
@@ -40,6 +50,7 @@ function PopOutAlert({ isDialogOpen, handleClose }: PopOutAlertProps) {
             >
               <FontAwesomeIcon icon={faXmark} />
             </button>
+        <PillButton action={"submit"}/>
           </div>
         </div>
       </div>

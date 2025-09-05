@@ -5,13 +5,11 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 import CreateBook from "../requests/CreateBook";
 import { BookViewProp } from "../../utils/props";
 import FaShareButton from "../ui/common/FaShareButton";
-import { errorHandling } from "../../utils/ErrorHandling";
-import API from "../../api";
-import ShareBookWithUser from "../requests/ShareBook";
+import ShareBook from "../requests/ShareBook";
 
 /** Facilitates rendering books & book selection
  *
- * MainContainer -> BookView -> [MultiSelect, FaShareButton]
+ * MainContainer -> BookView -> [CreateBook, MultiSelect, FaShareButton, ShareBookWithUser]
  */
 function BookView({ resetSelected }: BookViewProp) {
   const { userId, defaultBook, books, setUserData } = useContext(UserContext);
@@ -32,18 +30,6 @@ function BookView({ resetSelected }: BookViewProp) {
     resetSelected();
   }
 
-  async function shareBookWithUser() {
-    try {
-      const res = await API.postShareBook(userId, currentBook.id, {
-        recipient: "Jo",
-      });
-      console.log(res);
-    } catch (error: any) {
-      errorHandling("BookView -> shareBookWithUser", error);
-      throw error;
-    }
-  }
-
   /** Toggles Alert panel */
   function toggleDialogPanel() {
     setIsDialogOpen(!isDialogOpen);
@@ -59,9 +45,11 @@ function BookView({ resetSelected }: BookViewProp) {
         </>
       ) : (
         <>
-          <ShareBookWithUser
+          <ShareBook
             isOpen={isDialogOpen}
             togglePanel={toggleDialogPanel}
+            userId={userId}
+            currentBookId={currentBook.id}
           />
           <MultiSelect
             selected={currentBook}
