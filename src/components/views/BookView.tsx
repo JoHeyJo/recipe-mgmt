@@ -7,7 +7,7 @@ import { BookViewProp } from "../../utils/props";
 import FaShareButton from "../ui/common/FaShareButton";
 import { errorHandling } from "../../utils/ErrorHandling";
 import API from "../../api";
-import PopOutAlert from "../ui/common/PopOutAlert";
+import ShareBookWithUser from "../requests/ShareBook";
 
 /** Facilitates rendering books & book selection
  *
@@ -59,16 +59,16 @@ function BookView({ resetSelected }: BookViewProp) {
         </>
       ) : (
         <>
-          <PopOutAlert
-            isDialogOpen={isDialogOpen}
-            handleClose={toggleDialogPanel}
+          <ShareBookWithUser
+            isOpen={isDialogOpen}
+            togglePanel={toggleDialogPanel}
           />
           <MultiSelect
             selected={currentBook}
             options={books}
             handleIdChange={selectBook}
           />
-          <FaShareButton handleClick={()=>setIsDialogOpen(true)} />
+          <FaShareButton handleClick={() => setIsDialogOpen(true)} />
         </>
       )}
     </section>
