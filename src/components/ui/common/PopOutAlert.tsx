@@ -50,7 +50,7 @@ function PopOutAlert({
             >
               <FontAwesomeIcon icon={faXmark} />
             </button>
-        <PillButton action={"submit"}/>
+            <PillButton action={"share"} />
           </div>
         </div>
       </div>

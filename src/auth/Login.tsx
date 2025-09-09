@@ -1,5 +1,5 @@
 //modules
-import { useEffect, useState } from "react";
+import { useEffect, useState, FormEvent } from "react";
 import { Login, UserLogin } from "../utils/types";
 import { useNavigate, Navigate } from "react-router-dom";
 //components
@@ -23,7 +23,7 @@ function LoginForm({ login }: Login) {
   const navigate = useNavigate();
 
   /** sends form data */
-  async function handleSubmit(event: any) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
       const res = await login(credentials);

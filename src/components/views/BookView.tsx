@@ -5,7 +5,7 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 import CreateBook from "../requests/CreateBook";
 import { BookViewProp } from "../../utils/props";
 import FaShareButton from "../ui/common/FaShareButton";
-import ShareBook from "../requests/ShareBook";
+import PopOutAlert from "../ui/common/PopOutAlert";
 
 /** Facilitates rendering books & book selection
  *
@@ -30,7 +30,7 @@ function BookView({ resetSelected }: BookViewProp) {
     resetSelected();
   }
 
-  /** Toggles Alert panel */
+  /** Toggles Share Book Dialog panel */
   function toggleDialogPanel() {
     setIsDialogOpen(!isDialogOpen);
   }
@@ -45,11 +45,10 @@ function BookView({ resetSelected }: BookViewProp) {
         </>
       ) : (
         <>
-          <ShareBook
-            isOpen={isDialogOpen}
-            togglePanel={toggleDialogPanel}
-            userId={userId}
-            currentBookId={currentBook.id}
+          <PopOutAlert
+            text={"Who would you like to share this book with?"}
+            isDialogOpen={isDialogOpen}
+            handleClose={toggleDialogPanel}
           />
           <MultiSelect
             selected={currentBook}

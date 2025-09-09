@@ -1,9 +1,10 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import PopOutAlert from "../ui/common/PopOutAlert";
 import { errorHandling } from "../../utils/ErrorHandling";
 import API from "../../api";
 import { ShareBookProps } from "../../utils/props";
 
+/** Handles User request to share book with recipient */
 function ShareBook({
   isOpen,
   togglePanel,
@@ -18,12 +19,16 @@ function ShareBook({
     setUser(value);
   }
 
-  async function shareBookWithUser() {
+  /** Post request to share User book with recipient */
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    console.log("submit");
+    event.preventDefault();
     try {
-      const res = await API.postShareBook(userId, currentBookId, {
-        recipient: user,
-      });
-      console.log(res);
+      // const res = await API.postShareBook(userId, currentBookId, {
+      //   recipient: user,
+      // });
+      togglePanel();
+      console.log("submit");
     } catch (error: any) {
       errorHandling("BookView -> shareBookWithUser", error);
       throw error;
@@ -31,14 +36,7 @@ function ShareBook({
   }
 
   return (
-    <form>
-      <PopOutAlert
-        text={"Who would you like to share this book with?"}
-        isDialogOpen={isOpen}
-        handleClose={togglePanel}
-        handleChange={handleChange}
-        value={user}
-      />
+    <form onSubmit={handleSubmit}>
     </form>
   );
 }
