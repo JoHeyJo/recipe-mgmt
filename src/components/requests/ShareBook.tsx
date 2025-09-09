@@ -1,14 +1,17 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useContext } from "react";
 import PopOutAlert from "../ui/common/PopOutAlert";
 import { errorHandling } from "../../utils/ErrorHandling";
 import API from "../../api";
 import { ShareBookProps } from "../../utils/props";
 import InputWithLabelForm from "../views/InputWithLabelForm";
 import { PillButtonSubmit } from "../ui/PillButtonSubmit";
+import { UserContext } from "../../context/UserContext";
 
 /** Handles User request to share book with recipient */
 function ShareBook({closePanel}: ShareBookProps) {
   const [user, setUser] = useState("");
+
+  const { userId, currentBookId } = useContext(UserContext)
 
   /** Facilitates change in user name */
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -20,11 +23,11 @@ function ShareBook({closePanel}: ShareBookProps) {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      // const res = await API.postShareBook(userId, currentBookId, {
-      //   recipient: user,
-      // });
+      const res = await API.postShareBook(userId, currentBookId, {
+        recipient: user,
+      });
       closePanel();
-      console.log(user);
+      console.log(res);
     } catch (error: any) {
       errorHandling("BookView -> shareBookWithUser", error);
       throw error;
