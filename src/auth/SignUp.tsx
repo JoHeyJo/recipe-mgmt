@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 //styles
 import "../styles/SignUp.css";
 import "../styles/theme.css";
-import { PillButton } from "../components/ui/PillButton";
+import { PillButtonSubmit } from "../components/ui/PillButtonSubmit";
 import { SignUp as SignUpProps, UserSignUp } from "../utils/types";
 import { errorHandling } from "../utils/ErrorHandling";
 
@@ -109,7 +109,7 @@ function SignUp({ signUp }: SignUpProps) {
               required
             />
           </div>
-          <PillButton action={"submit"} />
+          <PillButtonSubmit action={"submit"} />
         </form>
       </div>
       {alert && <Alert alert={alert} degree={"yellow"} />}

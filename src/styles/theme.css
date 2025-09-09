@@ -13,14 +13,14 @@ form,
   background-color: var(--card-background);
 }
 
-#PillButton {
+#PillButtonSubmit {
   background-color: var(--background-button-color);
   color: var(--text-color);
   border: var(--darker-border);
   transition: background-color 0.2s ease;
 }
 
-#PillButton:hover {
+#PillButtonSubmit:hover {
   background-color: var(--background-button-hover);
 }
 

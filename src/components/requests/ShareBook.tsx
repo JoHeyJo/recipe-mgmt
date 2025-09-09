@@ -3,8 +3,8 @@ import PopOutAlert from "../ui/common/PopOutAlert";
 import { errorHandling } from "../../utils/ErrorHandling";
 import API from "../../api";
 import { ShareBookProps } from "../../utils/props";
-import { PillButton } from "../ui/PillButton";
 import InputWithLabelForm from "../views/InputWithLabelForm";
+import { PillButtonSubmit } from "../ui/PillButtonSubmit";
 
 /** Handles User request to share book with recipient */
 function ShareBook({closePanel}: ShareBookProps) {
@@ -18,14 +18,13 @@ function ShareBook({closePanel}: ShareBookProps) {
 
   /** Post request to share User book with recipient */
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    console.log("submit");
     event.preventDefault();
     try {
       // const res = await API.postShareBook(userId, currentBookId, {
       //   recipient: user,
       // });
       closePanel();
-      console.log("submit");
+      console.log(user);
     } catch (error: any) {
       errorHandling("BookView -> shareBookWithUser", error);
       throw error;
@@ -44,7 +43,7 @@ function ShareBook({closePanel}: ShareBookProps) {
         required={true}
         styles={"px-2 border-2 border-solid"}
       />
-      <PillButton action={"share"} />
+      <PillButtonSubmit action={"share"} />
     </form>
   );
 }
