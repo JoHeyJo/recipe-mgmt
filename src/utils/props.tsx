@@ -207,15 +207,10 @@ export type PopOutAlertProps = {
   text: string;
   isDialogOpen: boolean;
   handleClose: () => void;
-  handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  value: string;
 };
 
 export type ShareBookProps = {
-  isOpen: boolean;
-  togglePanel: () => void;
-  userId: number;
-  currentBookId: number;
+  closePanel: () => void;
 };
 
 export type InputWithLabelFormProps = {

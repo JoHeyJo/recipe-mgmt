@@ -2,8 +2,7 @@ import { Dialog, DialogBackdrop } from "@headlessui/react";
 import { PopOutAlertProps } from "../../../utils/props";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import InputWithLabelForm from "../../views/InputWithLabelForm";
-import { PillButton } from "../PillButton";
+import ShareBook from "../../requests/ShareBook";
 
 /** PopOut overlay on grey dialog screen
  *
@@ -12,8 +11,6 @@ import { PillButton } from "../PillButton";
 function PopOutAlert({
   isDialogOpen,
   handleClose,
-  handleChange,
-  value,
   text,
 }: PopOutAlertProps) {
   return (
@@ -30,18 +27,7 @@ function PopOutAlert({
             role="alert"
           >
             <div>{text}</div>
-            <div>
-              <InputWithLabelForm
-                type={"user-name"}
-                name={"User Name"}
-                id={"user-name"}
-                className={"user-name"}
-                handleChange={handleChange}
-                value={value}
-                required={true}
-                styles={"px-2 border-2 border-solid"}
-              />
-            </div>
+              <ShareBook closePanel={handleClose}/>
             <button
               onClick={handleClose}
               type="button"
@@ -50,7 +36,6 @@ function PopOutAlert({
             >
               <FontAwesomeIcon icon={faXmark} />
             </button>
-            <PillButton action={"share"} />
           </div>
         </div>
       </div>

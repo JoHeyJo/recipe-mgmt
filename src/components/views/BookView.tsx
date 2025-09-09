@@ -35,6 +35,11 @@ function BookView({ resetSelected }: BookViewProp) {
     setIsDialogOpen(!isDialogOpen);
   }
 
+  /** Close Share book Dialog panel */
+  function closeDialogPanel(){
+    setIsDialogOpen(false);
+  }
+
   return (
     <section>
       {!currentBook && !bookId ? (
@@ -48,7 +53,7 @@ function BookView({ resetSelected }: BookViewProp) {
           <PopOutAlert
             text={"Who would you like to share this book with?"}
             isDialogOpen={isDialogOpen}
-            handleClose={toggleDialogPanel}
+            handleClose={closeDialogPanel}
           />
           <MultiSelect
             selected={currentBook}
