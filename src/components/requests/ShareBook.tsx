@@ -7,11 +7,15 @@ import InputWithLabelForm from "../views/InputWithLabelForm";
 import { PillButtonSubmit } from "../ui/PillButtonSubmit";
 import { UserContext } from "../../context/UserContext";
 
-/** Handles User request to share book with recipient */
-function ShareBook({closePanel}: ShareBookProps) {
+/** Handles User request to share book with recipient 
+ * 
+ * 
+*/
+function ShareBook({ closePanel }: ShareBookProps) {
   const [user, setUser] = useState("");
+  const [response, setResponse] = useState(null);
 
-  const { userId, currentBookId } = useContext(UserContext)
+  const { userId, currentBookId } = useContext(UserContext);
 
   /** Facilitates change in user name */
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -23,11 +27,11 @@ function ShareBook({closePanel}: ShareBookProps) {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      const res = await API.postShareBook(userId, currentBookId, {
+      const { message } = await API.postShareBook(userId, currentBookId, {
         recipient: user,
       });
-      closePanel();
-      console.log(res);
+      setResponse(message);
+      // closePanel();
     } catch (error: any) {
       errorHandling("BookView -> shareBookWithUser", error);
       throw error;
@@ -36,17 +40,24 @@ function ShareBook({closePanel}: ShareBookProps) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <InputWithLabelForm
-        type={"user-name"}
-        name={"User Name:"}
-        id={"user-name"}
-        className={"user-name"}
-        handleChange={handleChange}
-        value={user}
-        required={true}
-        styles={"px-2 border-2 border-solid"}
-      />
-      <PillButtonSubmit action={"share"} />
+      {response ? (
+        response
+      ) : (
+        <>
+        <div>Who would you like to share this book with?</div>
+          <InputWithLabelForm
+            type={"user-name"}
+            name={"User Name:"}
+            id={"user-name"}
+            className={"user-name"}
+            handleChange={handleChange}
+            value={user}
+            required={true}
+            styles={"px-2 border-2 border-solid"}
+          />
+          <PillButtonSubmit action={"share"} />
+        </>
+      )}
     </form>
   );
 }

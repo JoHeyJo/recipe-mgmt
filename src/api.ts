@@ -124,7 +124,7 @@ class API {
       data,
       "POST"
     );
-    console.log("res", res);
+    return res;
   }
 
   // ########### COMPONENT OPTIONS = {amount, unit, item} = INGREDIENT ###########

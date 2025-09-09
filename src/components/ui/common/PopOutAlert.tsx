@@ -11,7 +11,6 @@ import ShareBook from "../../requests/ShareBook";
 function PopOutAlert({
   isDialogOpen,
   handleClose,
-  text,
 }: PopOutAlertProps) {
   return (
     <Dialog open={isDialogOpen} onClose={handleClose} className="relative z-10">
@@ -26,7 +25,6 @@ function PopOutAlert({
             className="flex items-center p-4 mb-4 text-blue-800 border-t-4 border-blue-300 bg-blue-50 dark:text-blue-400 dark:bg-gray-800 dark:border-blue-800"
             role="alert"
           >
-            <div>{text}</div>
               <ShareBook closePanel={handleClose}/>
             <button
               onClick={handleClose}
