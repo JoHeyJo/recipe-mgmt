@@ -1,15 +1,5 @@
 import { ChangeEvent } from "react";
-
-type InputWithLabelForm = {
-  type: string;
-  name: string;
-  id: string;
-  className: string;
-  handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  value: string;
-  required: boolean;
-};
-
+import { InputWithLabelFormProps } from "../../utils/props";
 /** Handles form input and label
  *
  * [Login, SignUp] -> InputWithLabelForm
@@ -22,7 +12,8 @@ function InputWithLabelForm({
   handleChange,
   value,
   required,
-}: InputWithLabelForm) {
+  styles
+}: InputWithLabelFormProps) {
   return (
     <>
       <label htmlFor={id} className={`${className}-label`}>
@@ -31,7 +22,7 @@ function InputWithLabelForm({
       <input
         type={type}
         id={id}
-        className={`${className}-input`}
+        className={`${className}-input ${styles}`}
         onChange={handleChange}
         value={value}
         required={required}

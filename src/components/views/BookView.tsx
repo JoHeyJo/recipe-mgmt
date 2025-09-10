@@ -4,15 +4,18 @@ import MultiSelect from "../ui/common/MultiSelect";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import CreateBook from "../requests/CreateBook";
 import { BookViewProp } from "../../utils/props";
+import FaShareButton from "../ui/common/FaShareButton";
+import PopOutAlert from "../ui/common/PopOutAlert";
 
 /** Facilitates rendering books & book selection
  *
- * MainContainer -> BookView -> MultiSelect
+ * MainContainer -> BookView -> [CreateBook, MultiSelect, FaShareButton, ShareBookWithUser]
  */
 function BookView({ resetSelected }: BookViewProp) {
-  const { defaultBook, books, setUserData } = useContext(UserContext);
+  const { userId, defaultBook, books, setUserData } = useContext(UserContext);
   const [bookId, setBookId] = useLocalStorage("current-book-id");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const currentBook = books.find((book) => book.id === +bookId) || defaultBook;
 
@@ -27,6 +30,11 @@ function BookView({ resetSelected }: BookViewProp) {
     resetSelected();
   }
 
+  /** Close Share book Dialog panel */
+  function closeDialogPanel(){
+    setIsDialogOpen(false);
+  }
+
   return (
     <section>
       {!currentBook && !bookId ? (
@@ -36,11 +44,19 @@ function BookView({ resetSelected }: BookViewProp) {
           <button onClick={() => setIsModalOpen(true)}>Create Book</button>
         </>
       ) : (
-        <MultiSelect
-          selected={currentBook}
-          options={books}
-          handleIdChange={selectBook}
-        />
+        <>
+          <PopOutAlert
+            text={"Who would you like to share this book with?"}
+            isDialogOpen={isDialogOpen}
+            handleClose={closeDialogPanel}
+          />
+          <MultiSelect
+            selected={currentBook}
+            options={books}
+            handleIdChange={selectBook}
+          />
+          <FaShareButton handleClick={() => setIsDialogOpen(true)} />
+        </>
       )}
     </section>
   );

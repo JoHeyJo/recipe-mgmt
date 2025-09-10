@@ -21,7 +21,7 @@ class API {
   static async request(
     endpoint: string,
     data: object = {},
-    method: string = "GET",
+    method: string = "GET"
   ) {
     const url = `${protocol}://${BASEURL}/${endpoint}`;
     const headers = {
@@ -63,7 +63,7 @@ class API {
     const res = await this.request(
       `users/${userId}/books/${bookId}/recipes`,
       data,
-      "POST",
+      "POST"
     );
     return res;
   }
@@ -79,12 +79,12 @@ class API {
     userId: number,
     bookId: number,
     recipeId: number,
-    data,
+    data
   ) {
     const res = await this.request(
       `users/${userId}/books/${bookId}/recipes/${recipeId}`,
       data,
-      "PATCH",
+      "PATCH"
     );
     return res;
   }
@@ -93,12 +93,12 @@ class API {
   static async deleteUserRecipe(
     userId: number,
     bookId: number,
-    recipeId: number,
+    recipeId: number
   ) {
     const res = await this.request(
       `users/${userId}/books/${bookId}/recipes/${recipeId}`,
       {},
-      "DELETE",
+      "DELETE"
     );
     return res;
   }
@@ -117,6 +117,16 @@ class API {
     return res;
   }
 
+  /** Post shared book id - create association */
+  static async postShareBook(userId: number, bookId: number, data: object) {
+    const res = await this.request(
+      `users/${userId}/books/${bookId}`,
+      data,
+      "POST"
+    );
+    return res;
+  }
+
   // ########### COMPONENT OPTIONS = {amount, unit, item} = INGREDIENT ###########
 
   /** Fetch all ingredients  */
@@ -128,7 +138,7 @@ class API {
   /** Fetch book ingredients */
   static async getBookComponentsOptions(userId: number, bookId: number) {
     const res = await this.request(
-      `/users/${userId}/books/${bookId}/ingredients/components`,
+      `/users/${userId}/books/${bookId}/ingredients/components`
     );
     return res;
   }
@@ -144,12 +154,12 @@ class API {
     option: AttributeData,
     bookId: number,
     userId: number,
-    component: string,
+    component: string
   ) {
     const res = await this.request(
       `/users/${userId}/books/${bookId}/ingredients/${component}`,
       option,
-      "POST",
+      "POST"
     );
     return res;
   }
@@ -159,12 +169,12 @@ class API {
     userId: number,
     bookId: number,
     optionId: number,
-    component: string,
+    component: string
   ) {
     const res = await this.request(
       `/users/${userId}/books/${bookId}/components/${component}/options/${optionId}`,
       {},
-      "POST",
+      "POST"
     );
     return res;
   }
@@ -186,7 +196,7 @@ class API {
   /** Fetch book instructions */
   static async getBookInstructions(userId: number, bookId: number) {
     const res = await this.request(
-      `/users/${userId}/books/${bookId}/instructions`,
+      `/users/${userId}/books/${bookId}/instructions`
     );
     return res;
   }
@@ -195,12 +205,12 @@ class API {
   static async postInstruction(
     userId: number,
     bookId: number,
-    data: Instruction,
+    data: Instruction
   ) {
     const res = await this.request(
       `users/${userId}/books/${bookId}/instructions`,
       data,
-      "POST",
+      "POST"
     );
     return res;
   }
@@ -209,12 +219,12 @@ class API {
   static async postInstructionAssociation(
     userId: number,
     bookId: number,
-    instructionId: number,
+    instructionId: number
   ) {
     const res = await this.request(
       `users/${userId}/books/${bookId}/instructions/${instructionId}`,
       {},
-      "POST",
+      "POST"
     );
     return res;
   }

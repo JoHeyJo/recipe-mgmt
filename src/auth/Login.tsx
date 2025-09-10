@@ -1,9 +1,9 @@
 //modules
-import { useEffect, useState } from "react";
+import { useEffect, useState, FormEvent } from "react";
 import { Login, UserLogin } from "../utils/types";
 import { useNavigate, Navigate } from "react-router-dom";
 //components
-import { PillButton } from "../components/ui/PillButton";
+import { PillButtonSubmit } from "../components/ui/PillButtonSubmit";
 import { errorHandling } from "../utils/ErrorHandling";
 import InputWithLabelForm from "../components/views/InputWithLabelForm";
 import Alert from "../components/ui/Alert";
@@ -23,7 +23,7 @@ function LoginForm({ login }: Login) {
   const navigate = useNavigate();
 
   /** sends form data */
-  async function handleSubmit(event: any) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
       const res = await login(credentials);
@@ -77,7 +77,7 @@ function LoginForm({ login }: Login) {
           />
         </div>
         <div id="Login-form-footer">
-          <PillButton action={"Login"} />
+          <PillButtonSubmit action={"Login"} />
           {alert && <Alert alert={alert} degree={"yellow"} />}
         </div>
       </form>

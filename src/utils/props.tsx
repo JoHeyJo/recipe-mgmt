@@ -1,3 +1,5 @@
+import { ChangeEvent } from "react";
+
 import {
   Recipe,
   Ingredient,
@@ -193,10 +195,27 @@ export type TextAreaProps = {
   rows: number;
   placeholder: string;
   defaultValue: string;
-  handleChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  handleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
 };
 
 export type SearchProps = {
   list: Recipe[];
   setList: (list: Recipe[]) => void;
+};
+
+export type PopOutAlertProps = {
+  text: string;
+  isDialogOpen: boolean;
+  handleClose: () => void;
+};
+
+export type InputWithLabelFormProps = {
+  type: string;
+  name: string;
+  id: string;
+  className: string;
+  handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  value: string;
+  required: boolean;
+  styles?: string;
 };
