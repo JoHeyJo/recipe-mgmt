@@ -209,10 +209,6 @@ export type PopOutAlertProps = {
   handleClose: () => void;
 };
 
-export type ShareBookProps = {
-  closePanel: () => void;
-};
-
 export type InputWithLabelFormProps = {
   type: string;
   name: string;

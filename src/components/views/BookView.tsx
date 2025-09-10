@@ -30,11 +30,6 @@ function BookView({ resetSelected }: BookViewProp) {
     resetSelected();
   }
 
-  /** Toggles Share Book Dialog panel */
-  function toggleDialogPanel() {
-    setIsDialogOpen(!isDialogOpen);
-  }
-
   /** Close Share book Dialog panel */
   function closeDialogPanel(){
     setIsDialogOpen(false);

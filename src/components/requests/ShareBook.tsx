@@ -1,8 +1,6 @@
 import { useState, ChangeEvent, FormEvent, useContext } from "react";
-import PopOutAlert from "../ui/common/PopOutAlert";
 import { errorHandling } from "../../utils/ErrorHandling";
 import API from "../../api";
-import { ShareBookProps } from "../../utils/props";
 import InputWithLabelForm from "../views/InputWithLabelForm";
 import { PillButtonSubmit } from "../ui/PillButtonSubmit";
 import { UserContext } from "../../context/UserContext";
@@ -11,7 +9,7 @@ import { UserContext } from "../../context/UserContext";
  * 
  * 
 */
-function ShareBook({ closePanel }: ShareBookProps) {
+function ShareBook() {
   const [user, setUser] = useState("");
   const [response, setResponse] = useState(null);
 
@@ -31,7 +29,6 @@ function ShareBook({ closePanel }: ShareBookProps) {
         recipient: user,
       });
       setResponse(message);
-      // closePanel();
     } catch (error: any) {
       errorHandling("BookView -> shareBookWithUser", error);
       throw error;
