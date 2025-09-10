@@ -7,7 +7,7 @@ import { UserContext } from "../../context/UserContext";
 
 /** Handles User request to share book with recipient 
  * 
- * 
+ * PopOutAlert -> ShareBook -> [InputWithLabelForm, PillButtonSubmit]
 */
 function ShareBook() {
   const [user, setUser] = useState("");
