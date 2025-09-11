@@ -11,6 +11,7 @@ function MyComponent() {
   const { userId } = useContext(UserContext);
 
   useEffect(() => {
+    console.log("token",API.token)
     const newSocket = io("http://localhost:5000", {
       auth: { userId: userId, token: API.token },
     });
