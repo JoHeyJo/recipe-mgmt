@@ -3,12 +3,12 @@ import io from "socket.io-client";
 import { UserContext } from "../context/UserContext";
 import API from "../api";
 
-function MyComponent({recipientId=1}) {
+function MyComponent({recipientUserName="Eli"}) {
   const [socket, setSocket] = useState(null);
   const [message, setMessage] = useState("");
-  const [receivedMessages, setReceivedMessages] = useState([]);
+  // const [receivedMessages, setReceivedMessages] = useState([]);
 
-  const { userId, currentBookId } = useContext(UserContext);
+  const { userId, currentBookId, user, defaultBook } = useContext(UserContext);
 
   useEffect(() => {
     console.log("token",API.token)
@@ -21,9 +21,8 @@ function MyComponent({recipientId=1}) {
       console.log("Connected to server");
     });
 
-    newSocket.on("message", (data) => {
+    newSocket.on("share", (data) => {
       console.log("received message", data);
-      // setReceivedMessages((prevMessages) => [...prevMessages, msg]);
     });
 
     return () => {
@@ -34,7 +33,7 @@ function MyComponent({recipientId=1}) {
 
   const sendMessage = () => {
     if (socket && message) {
-      socket.emit("message", { userId, recipientId, currentBookId });
+      socket.emit("share", { userId, recipientUserName, currentBookId, user, defaultBook });
       // setMessage("");
     }
   };
@@ -50,9 +49,9 @@ function MyComponent({recipientId=1}) {
       <div>
         <h3>Received Messages:</h3>
         <ul>
-          {receivedMessages.map((msg, index) => (
+          {/* {receivedMessages.map((msg, index) => (
             <li key={index}>{msg}</li>
-          ))}
+          ))} */}
         </ul>
       </div>
     </div>
