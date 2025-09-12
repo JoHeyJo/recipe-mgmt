@@ -3,12 +3,12 @@ import io from "socket.io-client";
 import { UserContext } from "../context/UserContext";
 import API from "../api";
 
-function MyComponent() {
+function MyComponent({recipientId=1}) {
   const [socket, setSocket] = useState(null);
   const [message, setMessage] = useState("");
   const [receivedMessages, setReceivedMessages] = useState([]);
 
-  const { userId } = useContext(UserContext);
+  const { userId, currentBookId } = useContext(UserContext);
 
   useEffect(() => {
     console.log("token",API.token)
@@ -21,9 +21,9 @@ function MyComponent() {
       console.log("Connected to server");
     });
 
-    newSocket.on("receiveMessage", (msg) => {
-      console.log("received message", msg);
-      setReceivedMessages((prevMessages) => [...prevMessages, msg]);
+    newSocket.on("message", (data) => {
+      console.log("received message", data);
+      // setReceivedMessages((prevMessages) => [...prevMessages, msg]);
     });
 
     return () => {
@@ -34,8 +34,8 @@ function MyComponent() {
 
   const sendMessage = () => {
     if (socket && message) {
-      socket.emit("sendMessage", userId);
-      setMessage("");
+      socket.emit("message", { userId, recipientId, currentBookId });
+      // setMessage("");
     }
   };
 
