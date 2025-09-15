@@ -3,7 +3,7 @@ import io from "socket.io-client";
 import { UserContext } from "../context/UserContext";
 import API from "../api";
 
-function MyComponent({recipientUserName="Eli"}) {
+function MyComponent({recipientUserName="Jo"}) {
   const [socket, setSocket] = useState(null);
   const [message, setMessage] = useState("");
   // const [receivedMessages, setReceivedMessages] = useState([]);
@@ -11,7 +11,6 @@ function MyComponent({recipientUserName="Eli"}) {
   const { userId, currentBookId, user, defaultBook } = useContext(UserContext);
 
   useEffect(() => {
-    console.log("token",API.token)
     const newSocket = io("http://localhost:5000", {
       auth: { userId: userId, token: API.token },
     });
