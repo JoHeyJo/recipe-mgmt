@@ -19,6 +19,7 @@ import { extractAndSetUser } from "./utils/fetchRequests";
 import useLocalStorage from "./hooks/useLocalStorage";
 import TopNav from "./components/layout/TopNav";
 import { isTokenValid } from "./utils/functions";
+import useWebSocket from "./hooks/useWebSocket";
 
 const TOKEN_STORAGE_ID = "user-token";
 const USER_STORAGE_ID = "user-data";
@@ -37,6 +38,7 @@ function App() {
   const [userData, setUserData] = useState<User>(defaultUser);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isContextInitialized, setIsContextInitialized] = useState(false);
+  const { handleRecipient } = useWebSocket();
 
   const navigate = useNavigate();
 
@@ -109,7 +111,7 @@ function App() {
     // Does not persist expired user token
     if (!isTokenValid(token)) {
       setToken(null);
-      navigate("/")
+      navigate("/");
     }
 
     if (userData?.id) {

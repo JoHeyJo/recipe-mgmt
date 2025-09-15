@@ -4,6 +4,7 @@ import API from "../../api";
 import InputWithLabelForm from "../views/InputWithLabelForm";
 import { PillButtonSubmit } from "../ui/PillButtonSubmit";
 import { UserContext } from "../../context/UserContext";
+import useWebSocket from "../../hooks/useWebSocket";
 
 /** Handles User request to share book with recipient 
  * 
@@ -12,6 +13,7 @@ import { UserContext } from "../../context/UserContext";
 function ShareBook() {
   const [user, setUser] = useState("");
   const [response, setResponse] = useState(null);
+  useWebSocket();
 
   const { userId, currentBookId } = useContext(UserContext);
 

@@ -11,12 +11,10 @@ import RecipeRequests from "../requests/RecipeRequests";
 import { RecipeContext } from "../../context/RecipeContext";
 import BookView from "../views/BookView";
 import Search from "../ui/Search";
-import FaShareButton from "../ui/common/FaShareButton";
-import MyComponent from "../../hooks/useWebSocket";
 
 /** Renders the main container (book) housing list of recipes and individual recipe
  *
- * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList]
+ * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList, BookView, Search]
  */
 function MainContainer() {
   const { userId, defaultBookId, currentBookId, books } =
@@ -145,7 +143,6 @@ function MainContainer() {
                 setShowing={toggleModel}
                 isOpen={isOpen}
               />
-              <MyComponent />
               <div className="flex justify-between p-1 font-semibold text-lg border-b-2">
                 <div>Recipes for:</div>
                 <BookView resetSelected={resetSelectedRecipe} />

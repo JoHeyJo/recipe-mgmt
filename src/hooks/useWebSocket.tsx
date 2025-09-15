@@ -3,17 +3,22 @@ import io from "socket.io-client";
 import { UserContext } from "../context/UserContext";
 import API from "../api";
 
-function MyComponent({recipientUserName="Jo"}) {
+function useWebSocket() {
   const [socket, setSocket] = useState(null);
+  const [recipient, setRecipient] = useState(""); 
+  const [action, setAction] = useState(null);
   const [message, setMessage] = useState("");
 
-
   const { userId, currentBookId, user, defaultBook } = useContext(UserContext);
-
+  
+  /** Initiates handshake, maintains connection, & disconnects on unmount */
   useEffect(() => {
+    console.log("useWebSocket is mounting")
+
     const newSocket = io("http://localhost:5000", {
       auth: { userId: userId, token: API.token },
     });
+    
     setSocket(newSocket);
 
     newSocket.on("connect", () => {
@@ -23,38 +28,32 @@ function MyComponent({recipientUserName="Jo"}) {
     newSocket.on("share", (data) => {
       console.log("received message", data);
     });
-
+    
     return () => {
       newSocket.disconnect();
       console.log("Disconnected from server");
     };
   }, []);
 
-  const sendMessage = () => {
-    if (socket && message) {
-      socket.emit("share", { userId, recipientUserName, currentBookId, user, defaultBook });
-      // setMessage("");
-    }
-  };
 
-  return (
-    <div>
-      <input
-        type="text"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-      />
-      <button onClick={sendMessage}>Send</button>
-      <div>
-        <h3>Received Messages:</h3>
-        <ul>
-          {/* {receivedMessages.map((msg, index) => (
-            <li key={index}>{msg}</li>
-          ))} */}
-        </ul>
-      </div>
-    </div>
-  );
+    /** Sends message to share book with recipient */
+    function sendMessage() {
+      if (socket && recipient) {
+        socket.emit("share", {
+          userId,
+          recipient,
+          currentBookId,
+          user,
+          defaultBook,
+        });
+      }
+    };
+
+  function handleRecipient(recipient:string){
+    setRecipient(recipient)
+  }
+
+  return { handleRecipient, message };
 }
 
-export default MyComponent;
+export default useWebSocket;
