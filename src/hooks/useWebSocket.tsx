@@ -6,7 +6,7 @@ import API from "../api";
 function MyComponent({recipientUserName="Jo"}) {
   const [socket, setSocket] = useState(null);
   const [message, setMessage] = useState("");
-  // const [receivedMessages, setReceivedMessages] = useState([]);
+
 
   const { userId, currentBookId, user, defaultBook } = useContext(UserContext);
 
