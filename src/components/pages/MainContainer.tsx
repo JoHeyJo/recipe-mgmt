@@ -136,6 +136,11 @@ function MainContainer() {
     },310)
   }
 
+  /** Mange webSocket side effects */
+  useEffect(()=>{
+    if(webSocketAPI.status == 200) setIsDialogOpen(true);
+  },[webSocketAPI.status])
+
   if (!isLoading) <div>Loading...</div>;
 
   return (

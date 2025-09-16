@@ -6,6 +6,7 @@ import API from "../api";
 function useWebSocket() {
   const [socket, setSocket] = useState(null);
   const [message, setMessage] = useState("");
+  const [status, setStatus] = useState(null);
 
   const { userId, currentBookId, user, defaultBook } = useContext(UserContext);
 
@@ -20,10 +21,18 @@ function useWebSocket() {
       console.log("Connected to server");
     });
 
-    newSocket.on("share", (data) => {
+    newSocket.on("book_shared", (data) => {
       setMessage(data.data)
       console.log("received message", data);
     });
+
+    newSocket.on("user_shared_book", (data) =>{
+      setMessage(data.data)
+    })
+
+    newSocket.on("error_sharing_book", (data) => {
+      setMessage(data.data)
+    })
 
     return () => {
       newSocket.disconnect();
@@ -49,7 +58,7 @@ function useWebSocket() {
     setMessage("")
   }
 
-  return { sendMessage, message, resetMessage };
+  return { sendMessage, message, resetMessage, status };
 }
 
 export default useWebSocket;
