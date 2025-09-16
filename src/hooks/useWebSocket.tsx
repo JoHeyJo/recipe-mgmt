@@ -22,17 +22,20 @@ function useWebSocket() {
     });
 
     newSocket.on("book_shared", (data) => {
-      setMessage(data.data)
+      setMessage(data.data);
       console.log("received message", data);
     });
 
-    newSocket.on("user_shared_book", (data) =>{
-      setMessage(data.data)
-    })
+    newSocket.on("user_shared_book", (data) => {
+      setMessage(data);
+      setStatus(200);
+      console.log("data",data)
+      console.log("message",message)
+    });
 
     newSocket.on("error_sharing_book", (data) => {
-      setMessage(data.data)
-    })
+      setMessage(data.data);
+    });
 
     return () => {
       newSocket.disconnect();
@@ -53,9 +56,10 @@ function useWebSocket() {
     }
   }
 
-  /** Resests message value */
-  function resetMessage(){
-    setMessage("")
+  /** Resets message */
+  function resetMessage() {
+    setMessage("");
+    setStatus(null);
   }
 
   return { sendMessage, message, resetMessage, status };
