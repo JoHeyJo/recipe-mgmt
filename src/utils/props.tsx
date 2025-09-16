@@ -204,7 +204,10 @@ export type SearchProps = {
 };
 
 export type PopOutAlertProps = {
-  text: string;
+  api: {
+    sendMessage: (recipient: string) => void;
+    message: string;
+  };
   isDialogOpen: boolean;
   handleClose: () => void;
 };
@@ -218,4 +221,11 @@ export type InputWithLabelFormProps = {
   value: string;
   required: boolean;
   styles?: string;
+};
+
+export type ShareBookProp = {
+  webSocketAPI: {
+    sendMessage: (recipient: string) => void;
+    message: string;
+  };
 };

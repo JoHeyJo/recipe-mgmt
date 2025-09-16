@@ -32,7 +32,7 @@ function MainContainer() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  useWebSocket();
+  const webSocketAPI = useWebSocket();
 
   const recipeData = {
     recipeId: selectedRecipe.id,
@@ -130,6 +130,10 @@ function MainContainer() {
   /** Close Share book Dialog panel */
   function closeDialogPanel() {
     setIsDialogOpen(false);
+    // state setter is delayed until Dialog fades out
+    setTimeout(()=>{
+      webSocketAPI.resetMessage();
+    },310)
   }
 
   if (!isLoading) <div>Loading...</div>;
@@ -158,7 +162,7 @@ function MainContainer() {
                 <div>Recipes for:</div>
                 <BookView resetSelected={resetSelectedRecipe} />
                 <PopOutAlert
-                  text={"Who would you like to share this book with?"}
+                  api={webSocketAPI}
                   isDialogOpen={isDialogOpen}
                   handleClose={closeDialogPanel}
                 />
