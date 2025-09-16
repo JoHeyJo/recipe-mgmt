@@ -11,6 +11,9 @@ import RecipeRequests from "../requests/RecipeRequests";
 import { RecipeContext } from "../../context/RecipeContext";
 import BookView from "../views/BookView";
 import Search from "../ui/Search";
+import useWebSocket from "../../hooks/useWebSocket";
+import PopOutAlert from "../ui/common/PopOutAlert";
+import FaShareButton from "../ui/common/FaShareButton";
 
 /** Renders the main container (book) housing list of recipes and individual recipe
  *
@@ -27,6 +30,9 @@ function MainContainer() {
   const [isOpen, setOpen] = useState(false);
   const [requestAction, setRequestAction] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  useWebSocket();
 
   const recipeData = {
     recipeId: selectedRecipe.id,
@@ -121,6 +127,11 @@ function MainContainer() {
     setSelectedBookId(currentBookId || defaultBookId);
   }, [currentBookId]);
 
+  /** Close Share book Dialog panel */
+  function closeDialogPanel() {
+    setIsDialogOpen(false);
+  }
+
   if (!isLoading) <div>Loading...</div>;
 
   return (
@@ -146,6 +157,12 @@ function MainContainer() {
               <div className="flex justify-between p-1 font-semibold text-lg border-b-2">
                 <div>Recipes for:</div>
                 <BookView resetSelected={resetSelectedRecipe} />
+                <PopOutAlert
+                  text={"Who would you like to share this book with?"}
+                  isDialogOpen={isDialogOpen}
+                  handleClose={closeDialogPanel}
+                />
+                <FaShareButton handleClick={() => setIsDialogOpen(true)} />
                 <Search list={recipes} setList={filterRecipes} />
                 <FaPlusButton onAction={toggleCreateForm} />
               </div>

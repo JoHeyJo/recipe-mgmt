@@ -13,14 +13,12 @@ function useWebSocket() {
   
   /** Initiates handshake, maintains connection, & disconnects on unmount */
   useEffect(() => {
-    console.log("useWebSocket is mounting")
 
     const newSocket = io("http://localhost:5000", {
       auth: { userId: userId, token: API.token },
     });
     
     setSocket(newSocket);
-
     newSocket.on("connect", () => {
       console.log("Connected to server");
     });

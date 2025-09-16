@@ -13,7 +13,6 @@ import useWebSocket from "../../hooks/useWebSocket";
 function ShareBook() {
   const [user, setUser] = useState("");
   const [response, setResponse] = useState(null);
-  useWebSocket();
 
   const { userId, currentBookId } = useContext(UserContext);
 
