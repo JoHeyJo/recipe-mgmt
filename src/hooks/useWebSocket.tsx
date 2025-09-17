@@ -23,14 +23,11 @@ function useWebSocket() {
 
     newSocket.on("book_shared", (data) => {
       setMessage(data.data);
-      console.log("received message", data);
     });
 
     newSocket.on("user_shared_book", (data) => {
       setMessage(data);
       setStatus(200);
-      console.log("data",data)
-      console.log("message",message)
     });
 
     newSocket.on("error_sharing_book", (data) => {

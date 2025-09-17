@@ -31,7 +31,6 @@ function ShareBook({ webSocketAPI }: ShareBookProp) {
 
   useEffect(()=>{
     setResponse(webSocketAPI.message)
-    console.log("response:",response)
   },[webSocketAPI.message])
 
   return (

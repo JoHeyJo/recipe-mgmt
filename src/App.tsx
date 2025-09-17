@@ -21,7 +21,6 @@ import TopNav from "./components/layout/TopNav";
 import { isTokenValid } from "./utils/functions";
 
 const TOKEN_STORAGE_ID = "user-token";
-const USER_STORAGE_ID = "user-data";
 
 const defaultUser = {
   userName: "",

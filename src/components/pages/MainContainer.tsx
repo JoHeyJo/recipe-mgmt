@@ -131,15 +131,19 @@ function MainContainer() {
   function closeDialogPanel() {
     setIsDialogOpen(false);
     // state setter is delayed until Dialog fades out
-    setTimeout(()=>{
+    setTimeout(() => {
       webSocketAPI.resetMessage();
-    },310)
+    }, 310);
   }
 
   /** Mange webSocket side effects */
-  useEffect(()=>{
-    if(webSocketAPI.status == 200) setIsDialogOpen(true);
-  },[webSocketAPI.status])
+  useEffect(() => {
+    if (webSocketAPI.status == 200) {
+      setTimeout(() => {
+        setIsDialogOpen(true);
+      }, 310);
+    }
+  }, [webSocketAPI.status]);
 
   if (!isLoading) <div>Loading...</div>;
 
