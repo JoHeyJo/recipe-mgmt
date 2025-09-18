@@ -10,7 +10,7 @@ import { BookViewProp } from "../../utils/props";
  * MainContainer -> BookView -> [CreateBook, MultiSelect, FaShareButton, ShareBookWithUser]
  */
 function BookView({ resetSelected }: BookViewProp) {
-  const { userId, defaultBook, books, setUserData } = useContext(UserContext);
+  const { defaultBook, books, setUserData } = useContext(UserContext);
   const [bookId, setBookId] = useLocalStorage("current-book-id");
   const [isModalOpen, setIsModalOpen] = useState(false);
 

@@ -13,7 +13,7 @@ function useWebSocket() {
   const [status, setStatus] = useState(null);
   const [data, setData] = useState();
 
-  const { userId, currentBookId, user, defaultBook } = useContext(UserContext);
+  const { userId, currentBookId, user, currentBook } = useContext(UserContext);
 
   /** Initiates handshake, maintains connection, & disconnects on unmount */
   useEffect(() => {
@@ -53,7 +53,7 @@ function useWebSocket() {
         recipient,
         currentBookId,
         user,
-        defaultBook,
+        currentBook,
       });
     }
   }

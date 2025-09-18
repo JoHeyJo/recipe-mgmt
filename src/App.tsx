@@ -28,6 +28,7 @@ const defaultUser = {
   isAdmin: undefined,
   defaultBookId: undefined,
   currentBookId: undefined,
+  currentBook: undefined,
   books: [],
 };
 
@@ -45,6 +46,7 @@ function App() {
     defaultBook: userData?.defaultBook,
     defaultBookId: userData?.defaultBookId, // remove?
     currentBookId: userData?.currentBookId || userData?.defaultBookId,
+    currentBook: userData?.currentBook,
     books: userData?.books,
     token,
     setUserData,

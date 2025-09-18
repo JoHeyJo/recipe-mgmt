@@ -27,6 +27,7 @@ export type User = {
   id?: number;
   defaultBookId?: number;
   defaultBook?: Book;
+  currentBook?: Book;
   currentBookId?: number;
   books?: Book[];
 };
