@@ -18,7 +18,6 @@ export async function extractAndSetUser(
       );
       const res = await API.getUser(sub);
       const books = await validateUserFetchBooks(sub, setUser)
-        console.log("user object", res);
       setUser({
         userName: res.user_name,
         id: res.id,

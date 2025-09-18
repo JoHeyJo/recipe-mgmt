@@ -10,11 +10,11 @@ import { BookViewProp } from "../../utils/props";
  * MainContainer -> BookView -> [CreateBook, MultiSelect, FaShareButton, ShareBookWithUser]
  */
 function BookView({ resetSelected }: BookViewProp) {
-  const { defaultBook, books, setUserData } = useContext(UserContext);
+  const { userId, defaultBook, books, setUserData } = useContext(UserContext);
   const [bookId, setBookId] = useLocalStorage("current-book-id");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const currentBook = books.find((book) => book.id === +bookId) || defaultBook;
+  const selectedBook = books.find((book) => book.id === +bookId) || defaultBook;
 
   /** Set selected book id & reset selected book to default */
   function selectBook(id: number) {
@@ -30,7 +30,7 @@ function BookView({ resetSelected }: BookViewProp) {
 
   return (
     <section>
-      {!currentBook && !bookId ? (
+      {!selectedBook && !bookId ? (
         <>
           {/* Model */}
           <CreateBook isOpen={isModalOpen} setOpen={setIsModalOpen} />
@@ -39,7 +39,7 @@ function BookView({ resetSelected }: BookViewProp) {
       ) : (
         <>
           <MultiSelect
-            selected={currentBook}
+            selected={selectedBook}
             options={books}
             handleIdChange={selectBook}
           />
