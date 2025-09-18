@@ -20,7 +20,7 @@ import FaShareButton from "../ui/common/FaShareButton";
  * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList, BookView, Search]
  */
 function MainContainer() {
-  const { userId, defaultBookId, currentBookId, books } =
+  const { userId, defaultBookId, currentBookId, setUserData } =
     useContext(UserContext);
 
   const [selectedBookId, setSelectedBookId] = useState<number>();
@@ -138,10 +138,19 @@ function MainContainer() {
 
   /** Mange webSocket side effects */
   useEffect(() => {
+    async function updateWithSharedBook(){
+      const res = webSocketAPI.data;
+      console.log("response", res)
+      setUserData((data) => (
+        {...data, books: res}
+      ))
+    }
     if (webSocketAPI.status == 200) {
+      updateWithSharedBook();
       setTimeout(() => {
         setIsDialogOpen(true);
       }, 310);
+      
     }
   }, [webSocketAPI.status]);
 

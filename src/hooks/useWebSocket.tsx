@@ -3,22 +3,26 @@ import io from "socket.io-client";
 import { UserContext } from "../context/UserContext";
 import API from "../api";
 
+const BASEURL = process.env.REACT_APP_BASE_URL;
+
+const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+
 function useWebSocket() {
   const [socket, setSocket] = useState(null);
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState(null);
+  const [data, setData] = useState();
 
   const { userId, currentBookId, user, defaultBook } = useContext(UserContext);
 
   /** Initiates handshake, maintains connection, & disconnects on unmount */
   useEffect(() => {
-    const newSocket = io("http://localhost:5000", {
+    const newSocket = io(`${protocol}://${BASEURL}`, {
       auth: { userId: userId, token: API.token },
     });
 
     setSocket(newSocket);
     newSocket.on("connect", () => {
-      console.log("Connected to server");
     });
 
     newSocket.on("book_shared", (data) => {
@@ -26,7 +30,8 @@ function useWebSocket() {
     });
 
     newSocket.on("user_shared_book", (data) => {
-      setMessage(data);
+      setMessage(data.message);
+      setData(data.books);
       setStatus(200);
     });
 
@@ -59,7 +64,7 @@ function useWebSocket() {
     setStatus(null);
   }
 
-  return { sendMessage, message, resetMessage, status };
+  return { sendMessage, message, resetMessage, status, data };
 }
 
 export default useWebSocket;
