@@ -14,7 +14,7 @@ function useWebSocket() {
   const [data, setData] = useState();
 
   const { userId, currentBookId, user, currentBook } = useContext(UserContext);
-
+  console.log("Current Book", currentBook)
   /** Initiates handshake, maintains connection, & disconnects on unmount */
   useEffect(() => {
     const newSocket = io(`${protocol}://${BASEURL}`, {

@@ -5,26 +5,28 @@ export type UserContextType = {
   user: string | undefined;
   userId: number | undefined;
   currentBookId: number;
-  defaultBook;
+  defaultBook: Book;
   books: Book[];
   setUserData: React.Dispatch<React.SetStateAction<User>>;
   defaultBookId: number | undefined;
-  currentBook;
+  currentBook: Book;
   token: string;
   isLoading: boolean;
-  isInitialized: boolean
+  isInitialized: boolean;
 };
+
+const defaultBook = { id: 0, title: "", description: "" };
 
 export const UserContext = createContext<UserContextType>({
   user: "",
   userId: undefined,
   currentBookId: undefined,
-  defaultBook: {},
+  defaultBook: defaultBook,
   books: [],
   setUserData: () => {},
   defaultBookId: undefined,
-  currentBook: {},
+  currentBook: defaultBook,
   token: "",
   isLoading: true,
-  isInitialized: false
+  isInitialized: false,
 });
