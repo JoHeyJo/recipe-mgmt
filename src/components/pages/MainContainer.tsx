@@ -138,19 +138,16 @@ function MainContainer() {
 
   /** Mange webSocket side effects */
   useEffect(() => {
-    async function updateWithSharedBook(){
+    /** On successful communication and share with server update list of books  */
+    async function updateWithSharedBook() {
       const res = webSocketAPI.data;
-      console.log("response", res)
-      setUserData((data) => (
-        {...data, books: res}
-      ))
+      setUserData((data) => ({ ...data, books: res }));
     }
     if (webSocketAPI.status == 200) {
       updateWithSharedBook();
       setTimeout(() => {
         setIsDialogOpen(true);
       }, 310);
-      
     }
   }, [webSocketAPI.status]);
 

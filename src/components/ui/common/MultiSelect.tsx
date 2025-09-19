@@ -13,7 +13,7 @@ import { Book } from "../../../utils/types";
 function MultiSelect({ selected, options, handleIdChange }: MultiSelectProp) {
   /** Selects option and sets option title for display */
   function handleSelect(option: Book) {
-    handleIdChange(option.id);
+    handleIdChange(option.id, option);
   }
 
   return (
