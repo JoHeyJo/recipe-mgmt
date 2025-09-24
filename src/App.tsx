@@ -21,7 +21,6 @@ import TopNav from "./components/layout/TopNav";
 import { isTokenValid } from "./utils/functions";
 
 const TOKEN_STORAGE_ID = "user-token";
-const USER_STORAGE_ID = "user-data";
 
 const defaultUser = {
   userName: "",
@@ -29,6 +28,7 @@ const defaultUser = {
   isAdmin: undefined,
   defaultBookId: undefined,
   currentBookId: undefined,
+  currentBook: undefined,
   books: [],
 };
 
@@ -46,6 +46,7 @@ function App() {
     defaultBook: userData?.defaultBook,
     defaultBookId: userData?.defaultBookId, // remove?
     currentBookId: userData?.currentBookId || userData?.defaultBookId,
+    currentBook: userData?.currentBook,
     books: userData?.books,
     token,
     setUserData,
@@ -109,7 +110,7 @@ function App() {
     // Does not persist expired user token
     if (!isTokenValid(token)) {
       setToken(null);
-      navigate("/")
+      navigate("/");
     }
 
     if (userData?.id) {

@@ -13,7 +13,7 @@ import { Book } from "../../../utils/types";
 function MultiSelect({ selected, options, handleIdChange }: MultiSelectProp) {
   /** Selects option and sets option title for display */
   function handleSelect(option: Book) {
-    handleIdChange(option.id);
+    handleIdChange(option.id, option);
   }
 
   return (
@@ -29,7 +29,7 @@ function MultiSelect({ selected, options, handleIdChange }: MultiSelectProp) {
       </div>
       <MenuItems
         transition
-        className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-primary shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+        className="absolute right-0 z-10 mt-2 w-56 origin-top-right max-h-60 overflow-auto rounded-md bg-primary shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
       >
         <div className="py-1">
           {options.map((option) => (

@@ -17,14 +17,15 @@ export async function extractAndSetUser(
         localStorage.getItem("current-book-id"),
       );
       const res = await API.getUser(sub);
-      console.log("user object",res)
+      const books = await validateUserFetchBooks(sub, setUser)
       setUser({
         userName: res.user_name,
         id: res.id,
         defaultBookId: res.default_book_id,
         defaultBook: res.default_book,
         currentBookId: localStorageBookValue || res.default_book_id,
-        books: await validateUserFetchBooks(sub, setUser),
+        currentBook: books.find((book) => book.id === localStorageBookValue) || res.default_book,
+        books: books
       });
       if (!localStorageBookValue) {
         localStorage.setItem(

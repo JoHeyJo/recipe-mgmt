@@ -1,19 +1,16 @@
-import { useState, ChangeEvent, FormEvent, useContext } from "react";
+import { useState, ChangeEvent, FormEvent, useContext, useEffect } from "react";
 import { errorHandling } from "../../utils/ErrorHandling";
-import API from "../../api";
 import InputWithLabelForm from "../views/InputWithLabelForm";
 import { PillButtonSubmit } from "../ui/PillButtonSubmit";
-import { UserContext } from "../../context/UserContext";
+import { ShareBookProp } from "../../utils/props";
 
-/** Handles User request to share book with recipient 
- * 
+/** Handles User request to share book with recipient
+ *
  * PopOutAlert -> ShareBook -> [InputWithLabelForm, PillButtonSubmit]
-*/
-function ShareBook() {
+ */
+function ShareBook({ webSocketAPI }: ShareBookProp) {
   const [user, setUser] = useState("");
   const [response, setResponse] = useState(null);
-
-  const { userId, currentBookId } = useContext(UserContext);
 
   /** Facilitates change in user name */
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -25,15 +22,16 @@ function ShareBook() {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      const { message } = await API.postShareBook(userId, currentBookId, {
-        recipient: user,
-      });
-      setResponse(message);
+      webSocketAPI.sendMessage(user);
     } catch (error: any) {
       errorHandling("BookView -> shareBookWithUser", error);
       throw error;
     }
   }
+
+  useEffect(()=>{
+    setResponse(webSocketAPI.message)
+  },[webSocketAPI.message])
 
   return (
     <form onSubmit={handleSubmit}>
@@ -41,7 +39,7 @@ function ShareBook() {
         response
       ) : (
         <>
-        <div>Who would you like to share this book with?</div>
+          <div>Who would you like to share this book with?</div>
           <InputWithLabelForm
             type={"user-name"}
             name={"User Name:"}
