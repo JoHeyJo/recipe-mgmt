@@ -234,6 +234,6 @@ export type AvatarFrameProp = {
   avatar: string;
 };
 
-export type UserAvatar = {
-  user: string;
+export type UserAvatarProp = {
+  title: string;
 }

@@ -75,7 +75,8 @@ function CreateBook({ isOpen, setOpen }) {
     setBookData(defaultBook);
     setOpen(false);
   }
-  const user = useContext(UserContext);
+
+  console.log("book",bookData)
   return (
     <Dialog
       open={isOpen}

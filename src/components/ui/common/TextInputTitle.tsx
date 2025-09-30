@@ -1,7 +1,6 @@
 import { ChangeEvent } from "react";
 import TextArea from "./TextArea";
-import Badge from "./AvatarFrame";
-
+import BookBadge from "../BookBadge";
 type TextInputTitle = {
   handleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   title: string;
@@ -11,7 +10,7 @@ function TextInputTitle({ handleChange, title }: TextInputTitle) {
   return (
     <div className="flex items-start space-x-4">
       <div className="flex-shrink-0">
-        <Badge avatar={title} />
+        <BookBadge title={title} />
       </div>
       <div className="min-w-0 flex-1">
         <form action="#">

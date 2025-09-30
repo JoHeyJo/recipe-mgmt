@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import ToggleColorScheme from "../../utils/ToggleColorScheme";
 import CreateBook from "../requests/CreateBook";
 import Badge from "../ui/common/AvatarFrame";
+import UserAvatar from "../ui/UserAvatar";
 
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
@@ -108,7 +109,7 @@ function TopNav({ logout }: TopNavProps) {
                       <MenuButton className="relative flex rounded-full bg-primary text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-gray-800">
                         <span className="absolute -inset-1.5" />
                         {/* <span className="sr-only">Open user menu</span> */}
-                        <Badge title={user} />
+                        <UserAvatar title={user} />
                         {/* User will eventually be able to upload image */}
                         {/* <img
                           className="h-8 w-8 rounded-full"
