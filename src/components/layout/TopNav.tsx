@@ -1,4 +1,4 @@
-import { Fragment, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import {
   Disclosure,
   DisclosureButton,
@@ -15,6 +15,7 @@ import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import ToggleColorScheme from "../../utils/ToggleColorScheme";
 import CreateBook from "../requests/CreateBook";
+import Badge from "../ui/common/AvatarFrame";
 
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
@@ -107,12 +108,14 @@ function TopNav({ logout }: TopNavProps) {
                       <MenuButton className="relative flex rounded-full bg-primary text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-gray-800">
                         <span className="absolute -inset-1.5" />
                         {/* <span className="sr-only">Open user menu</span> */}
-                        <img
+                        <Badge title={user} />
+                        {/* User will eventually be able to upload image */}
+                        {/* <img
                           className="h-8 w-8 rounded-full"
                           // src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                           src={Eli}
                           alt=""
-                        />
+                        /> */}
                       </MenuButton>
                     </div>
                     {/* <Transition

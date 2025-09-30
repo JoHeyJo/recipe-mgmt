@@ -2,11 +2,14 @@ import { useContext, useEffect, useState } from "react";
 import io from "socket.io-client";
 import { UserContext } from "../context/UserContext";
 import API from "../api";
+import { BASEURL, protocol } from "../api";
 
-const BASEURL = process.env.REACT_APP_BASE_URL;
-
-const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
-
+/** Custom Hook to create open connection between client and server 
+ * 
+ * Notes: Should auto connect be turned off? 
+ * 
+ * MainContainer - > useWebSocket
+ */
 function useWebSocket() {
   const [socket, setSocket] = useState(null);
   const [message, setMessage] = useState("");

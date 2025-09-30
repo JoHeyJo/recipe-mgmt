@@ -8,9 +8,9 @@ import {
   Instruction,
 } from "./utils/types";
 
-const BASEURL = process.env.REACT_APP_BASE_URL;
+export const BASEURL = process.env.REACT_APP_BASE_URL;
 
-const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+export const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
 
 /** API class.
  * Static class - Contains methods that facilitate communications between client

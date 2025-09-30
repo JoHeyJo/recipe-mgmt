@@ -229,3 +229,11 @@ export type ShareBookProp = {
     message: string;
   };
 };
+
+export type AvatarFrameProp = {
+  avatar: string;
+};
+
+export type UserAvatar = {
+  user: string;
+}
