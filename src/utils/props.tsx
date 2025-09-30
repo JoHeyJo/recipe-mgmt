@@ -231,7 +231,7 @@ export type ShareBookProp = {
 };
 
 export type AvatarFrameProp = {
-  avatar: string;
+  avatar: string | undefined;
 };
 
 export type UserAvatarProp = {
