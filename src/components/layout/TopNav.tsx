@@ -15,7 +15,6 @@ import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import ToggleColorScheme from "../../utils/ToggleColorScheme";
 import CreateBook from "../requests/CreateBook";
-import Badge from "../ui/common/AvatarFrame";
 import UserAvatar from "../ui/UserAvatar";
 
 const navigation = [

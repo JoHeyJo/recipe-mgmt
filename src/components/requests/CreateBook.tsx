@@ -76,7 +76,6 @@ function CreateBook({ isOpen, setOpen }) {
     setOpen(false);
   }
 
-  console.log("book",bookData)
   return (
     <Dialog
       open={isOpen}
