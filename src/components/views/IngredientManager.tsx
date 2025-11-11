@@ -159,6 +159,8 @@ function IngredientManager({
           onFocus={() => {
             // prevents modal from being pushed under keyboard on key input
             setDropdownOpen(true);
+            console.log("input focused")
+            setDropdownOpen(true)
           }}
           onClick={(e) => {
             setIsKbSuppressed(false);
