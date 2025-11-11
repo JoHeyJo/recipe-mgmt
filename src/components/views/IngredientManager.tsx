@@ -138,7 +138,7 @@ function IngredientManager({
       const isInsideCombobox = wrapperRef.current?.contains(target);
 
       if (!isInsideDropdown && !isInsideCombobox) {
-        setDropdownOpen(false);
+        // setDropdownOpen(false);
       }
     };
 
@@ -168,7 +168,7 @@ function IngredientManager({
             event.preventDefault();
             setQuery(event.target.value);
           }}
-          onBlur={() => setQuery("")}
+          // onBlur={() => setQuery("")}
           displayValue={(option: { [key: string]: string }) =>
             option?.[attribute]
           }
