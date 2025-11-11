@@ -101,6 +101,7 @@ export type IngredientManagerProps = {
     removeSelected: (state: string) => void;
   };
   entity: string;
+  placeholder:string;
 };
 
 export type IngredientsViewProp = {

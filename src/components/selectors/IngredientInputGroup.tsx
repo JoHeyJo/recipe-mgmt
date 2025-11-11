@@ -79,6 +79,7 @@ function IngredientInputGroup({
         options={options.amounts}
         handleOption={handleOption}
         handleComponent={handleComponent}
+        placeholder={"1"}
       />
       <IngredientManager
         value={ingredient.unit}
@@ -87,6 +88,7 @@ function IngredientInputGroup({
         options={options.units}
         handleOption={handleOption}
         handleComponent={handleComponent}
+        placeholder={"oz"}
       />
       <IngredientManager
         value={ingredient.item}
@@ -95,6 +97,7 @@ function IngredientInputGroup({
         options={options.items}
         handleOption={handleOption}
         handleComponent={handleComponent}
+        placeholder={"tequila"}
       />
     </div>
   );

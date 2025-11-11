@@ -10,7 +10,6 @@ import {
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { IngredientManagerProps } from "../../utils/props";
 import { createPortal } from "react-dom";
-import { scrollToElement } from "../../utils/functions";
 import { useContext } from "react";
 import { ReferenceContext } from "../../context/ReferenceContext";
 
@@ -31,6 +30,7 @@ function IngredientManager({
   options,
   handleOption,
   handleComponent,
+  placeholder
 }: IngredientManagerProps) {
   const [query, setQuery] = useState<string>("");
   const [selected, setSelected] = useState<AttributeData>(value);
@@ -154,7 +154,7 @@ function IngredientManager({
         <ComboboxInput
           ref={inputRef}
           inputMode={isKbSuppressed ? "none" : undefined}
-          placeholder={entity}
+          placeholder={placeholder}
           className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
           onFocus={() => {
             // prevents modal from being pushed under keyboard on key input
