@@ -56,20 +56,37 @@ function IngredientManager({
 
   /** Filters options => all options / matching options / no match = create... */
   function filterOptions(): AttributeData[] {
-    if (options.length === 0) {
-      return [
-        { id: `create-${stableId}`, [attribute]: "+ create..." } as AttributeData,
-      ];
-    }
     const q = query.trim().toLowerCase();
+    if (options.length === 0) {
+      return [{ id: `create-${stableId}`, [attribute]: "+ create..." } as AttributeData];
+    }
+
+    // Collect matches (keep your original ordering)
     const matches = options.filter((opt) =>
       String(opt[attribute as keyof AttributeData] ?? "")
         .toLowerCase()
         .includes(q)
     );
-    if (matches.length > 0) return matches;
-    // No matches → show only "+ create..."
-    return [{ id: `create-${stableId}`, [attribute]: "+ create..." } as AttributeData];
+
+    if (matches.length === 0) {
+      // No matches → only create
+      return [{ id: `create-${stableId}`, [attribute]: "+ create..." } as AttributeData];
+    }
+
+    // Exact (case-insensitive) match present? then no create
+    const hasExact = matches.some(
+      (opt) =>
+        String(opt[attribute as keyof AttributeData] ?? "")
+          .trim()
+          .toLowerCase() === q
+    );
+    if (hasExact) return matches;
+
+    // Fuzzy matches exist but no exact → append create at the end
+    return [
+      ...matches,
+      { id: `create-${stableId}`, [attribute]: "+ create..." } as AttributeData,
+    ];
   }
 
   /** Injects query string prior to POST request and updates parent state  */
