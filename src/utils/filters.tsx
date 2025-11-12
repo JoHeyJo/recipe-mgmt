@@ -21,8 +21,8 @@ export function filterTemplate(recipe: Recipe, template: Recipe) {
     : null;
 
   if (!ingredients && !instructions && !name && !notes)
-    throw { error: "name required to create recipe template" };
-  if (!name) throw { error: "recipe requires name" };
+    throw { message: "name required to create recipe template" };
+  if (!name) throw { message: "recipe requires name" };
 
   return { id: null, name, notes, ingredients, instructions };
 }
@@ -111,7 +111,7 @@ function filterInstructions(original: Instructions, edited: Instructions) {
       ) {
         const editedInstruction = {
           // association id = PK of association table
-          // catches error if an additional input was created rather than replacing one
+          // catches message if an additional input was created rather than replacing one
           associationId: original[index]
             ? original[index].association_id
             : null,
