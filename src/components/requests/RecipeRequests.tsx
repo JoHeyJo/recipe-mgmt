@@ -63,7 +63,7 @@ function RecipeRequests({
     instructions: contextInstructions,
     notes: selectedNotes,
   });
-  const [error, setError] = useState();
+  const [error, setError] = useState<string | null>();
   const [isDisabled, setIsDisabled] = useState(true);
 
   const selectedRecipe = {
@@ -127,8 +127,8 @@ function RecipeRequests({
       recipeActions.updateRecipes(res);
       return "submitted";
     } catch (error: any) {
-      errorHandling("RecipeRequests - addRecipe", error);
-      setError(error.error);
+      const message = errorHandling("RecipeRequests - addRecipe", error);
+      if(message) setError(message);
       setTimeout(() => setError(null), 5000);
     }
   }

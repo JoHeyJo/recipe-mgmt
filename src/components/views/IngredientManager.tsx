@@ -138,7 +138,7 @@ function IngredientManager({
       const isInsideCombobox = wrapperRef.current?.contains(target);
 
       if (!isInsideDropdown && !isInsideCombobox) {
-        setDropdownOpen(false);
+        // setDropdownOpen(false);
       }
     };
 
@@ -165,7 +165,7 @@ function IngredientManager({
             // scrollToElement(dialogPanelRef, 40); // clicking on input causes position to jump up and down
           }}
           onChange={(event) => {
-            event.preventDefault();
+            // event.preventDefault();
             setQuery(event.target.value);
           }}
           onBlur={() => setQuery("")}
