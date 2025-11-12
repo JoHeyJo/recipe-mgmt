@@ -138,7 +138,7 @@ function IngredientManager({
       const isInsideCombobox = wrapperRef.current?.contains(target);
 
       if (!isInsideDropdown && !isInsideCombobox) {
-        // setDropdownOpen(false);
+        setDropdownOpen(false);
       }
     };
 
@@ -149,7 +149,7 @@ function IngredientManager({
   }, [dropdownOpen]);
 
   return (
-    <Combobox as="div" value={selected || ""} >
+    <Combobox as="div" value={selected || ""} onChange={onValueSelect}>
       <div ref={wrapperRef} className="relative mt-2">
         <ComboboxInput
           ref={inputRef}
@@ -157,7 +157,7 @@ function IngredientManager({
           placeholder={placeholder}
           className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
           onFocus={() => {
-            // prevents modal from being pushed under keyboard on key input - allows dropdown to open on input
+            // prevents modal from being pushed under keyboard on key input
             setDropdownOpen(true);
           }}
           onClick={(e) => {
@@ -165,10 +165,10 @@ function IngredientManager({
             // scrollToElement(dialogPanelRef, 40); // clicking on input causes position to jump up and down
           }}
           onChange={(event) => {
-            // event.preventDefault();
+            event.preventDefault();
             setQuery(event.target.value);
           }}
-          // onBlur={() => setQuery("")}
+          onBlur={() => setQuery("")}
           displayValue={(option: { [key: string]: string }) =>
             option?.[attribute]
           }
