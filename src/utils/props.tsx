@@ -93,6 +93,7 @@ export type ComponentsOptionsRequestsProps = {
 };
 
 export type IngredientManagerProps = {
+  length:number;
   value: AttributeData;
   attribute: string;
   options: AttributeData[];

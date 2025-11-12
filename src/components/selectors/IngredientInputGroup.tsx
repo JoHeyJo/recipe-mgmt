@@ -88,6 +88,7 @@ function IngredientInputGroup({
   return (
     <div className="IngredientInputGroup-Ingredient-section flex rounded-md">
       <IngredientManager
+      length={length}
         value={ingredient.amount}
         attribute={"value"}
         entity={"amount"}
@@ -97,6 +98,7 @@ function IngredientInputGroup({
         placeholder={"2"}
       />
       <IngredientManager
+      length={length}
         value={ingredient.unit}
         attribute={"type"}
         entity={"unit"}
@@ -106,6 +108,7 @@ function IngredientInputGroup({
         placeholder={"oz"}
       />
       <IngredientManager
+      length={length}
         value={ingredient.item}
         attribute={"name"}
         entity={"item"}

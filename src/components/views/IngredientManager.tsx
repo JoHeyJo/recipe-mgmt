@@ -25,6 +25,7 @@ import { useId } from "react";
  */
 
 function IngredientManager({
+  length,
   value,
   attribute,
   entity,
@@ -58,7 +59,12 @@ function IngredientManager({
   function filterOptions(): AttributeData[] {
     const q = query.trim().toLowerCase();
     if (options.length === 0) {
-      return [{ id: `create-${stableId}`, [attribute]: "+ create..." } as AttributeData];
+      return [
+        {
+          id: `create-${stableId}`,
+          [attribute]: "+ create...",
+        } as AttributeData,
+      ];
     }
 
     // Collect matches (keep your original ordering)
@@ -70,7 +76,12 @@ function IngredientManager({
 
     if (matches.length === 0) {
       // No matches → only create
-      return [{ id: `create-${stableId}`, [attribute]: "+ create..." } as AttributeData];
+      return [
+        {
+          id: `create-${stableId}`,
+          [attribute]: "+ create...",
+        } as AttributeData,
+      ];
     }
 
     // Exact (case-insensitive) match present? then no create
@@ -127,7 +138,7 @@ function IngredientManager({
     updateOnSelect(value);
   }
 
-  // Update dropdown position
+  // Update dropdown position: Dependencies track potential change in dropdown position
   useEffect(() => {
     if (!dropdownOpen) return;
 
@@ -139,7 +150,7 @@ function IngredientManager({
         width: rect.width,
       });
     }
-  }, [dropdownOpen, query]);
+  }, [dropdownOpen, selected, length]);
 
   // Close on scroll *outside* dropdown - necessary on browser
   useEffect(() => {
