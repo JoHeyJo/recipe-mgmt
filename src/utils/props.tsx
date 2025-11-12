@@ -82,6 +82,7 @@ export type IngredientInputGroupProps = {
   index: number;
   handleIngredient: HandleIngredient;
   handleOption: HandleOption;
+  length: number;
 };
 
 export type ComponentsOptionsRequestsProps = {

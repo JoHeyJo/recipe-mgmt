@@ -4,6 +4,8 @@ import { IngredientInputGroupProps, Options } from "../../utils/props";
 import IngredientManager from "../views/IngredientManager";
 import { UserContext } from "../../context/UserContext";
 import { defaultItem, defaultAmount, defaultUnit } from "../../utils/templates";
+import FaPlusButton from "../ui/common/FaPlusButton";
+import FaMinusButton from "../ui/common/FaMinusButton";
 
 /** Manages individual components of Ingredient object
  *
@@ -15,6 +17,7 @@ function IngredientInputGroup({
   index,
   handleOption,
   options,
+  length
 }: IngredientInputGroupProps) {
   const [item, setItem] = useState<AttributeData>(ingredient.item);
   const [amount, setAmount] = useState<AttributeData>(ingredient.amount);
@@ -70,6 +73,18 @@ function IngredientInputGroup({
     updateIngredientList();
   }, [item, amount, unit]);
 
+  /** Checks if ingredient components have any input. This allows dynamic rendering of 
+   * "+" or "-" button to add or remove additional ingredient inputs
+   */
+  function renderHandleIngredientUI(){
+    if(length === 0) return <FaPlusButton onAction={handleIngredient.add} />;
+    return (item.id || amount.id || unit.id) && length === index ? (
+      <FaPlusButton onAction={handleIngredient.add} />
+    ) : (
+      <FaMinusButton onAction={() => handleIngredient.remove(index)} />
+    );
+  }
+
   return (
     <div className="IngredientInputGroup-Ingredient-section flex rounded-md">
       <IngredientManager
@@ -99,6 +114,7 @@ function IngredientInputGroup({
         handleComponent={handleComponent}
         placeholder={"some liquid"}
       />
+        {renderHandleIngredientUI()}
     </div>
   );
 }
