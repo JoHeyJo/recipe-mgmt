@@ -115,7 +115,6 @@ function RecipeRequests({
   }
 
   /** Calls API - sends post request with recipe data */
-  // ADD A CHECK TO FILTER OUT EMPTY FIELDS E.G. ingredient/instructions without values
   async function addRecipe() {
     try {
       const filteredRecipe = filterTemplate(recipe, recipeTemplate);
@@ -173,8 +172,8 @@ function RecipeRequests({
     deleteRecipe(userId, currentBookId, recipeId);
   }
 
-  async function handleSubmit() {
-    // e.preventDefault()
+  async function handleSubmit(e) {
+    e.preventDefault()
     const res = await addRecipe();
     if (res) setShowing();
   }

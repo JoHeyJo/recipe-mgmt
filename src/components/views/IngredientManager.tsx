@@ -177,6 +177,7 @@ function IngredientManager({
     <Combobox as="div" value={selected || ""} onChange={onValueSelect}>
       <div ref={wrapperRef} className="relative mt-2">
         <ComboboxInput
+          // required={entity === "item" ? true : false}
           ref={inputRef}
           inputMode={isKbSuppressed ? "none" : undefined}
           placeholder={placeholder}
