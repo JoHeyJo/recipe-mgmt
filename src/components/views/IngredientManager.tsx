@@ -127,9 +127,9 @@ function IngredientManager({
     if (!option) return processDeselect();
     typeCheckIngredientQuery();
 
-    // isNewOption(option)
-    //   ? processNewOption(option)
-    //   : processExistingOption(option);
+    isNewOption(option)
+      ? processNewOption(option)
+      : processExistingOption(option);
   }
 
   function typeCheckIngredientQuery() {
