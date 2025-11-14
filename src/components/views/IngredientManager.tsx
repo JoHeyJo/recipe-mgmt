@@ -13,6 +13,7 @@ import { createPortal } from "react-dom";
 import { useContext } from "react";
 import { ReferenceContext } from "../../context/ReferenceContext";
 import { useId } from "react";
+import Alert from "../ui/Alert";
 
 /** IngredientManager - Searches and filters existing ingredient options - ring is removed
  *
@@ -22,6 +23,8 @@ import { useId } from "react";
  *
  * Commit with all attempted handler variations for keyboard interactions
  * & useEffect to handle close on outside scroll and close on outside click -  b0a1cee
+ *
+ * Currently all data posted is type of string..
  */
 
 function IngredientManager({
@@ -39,8 +42,6 @@ function IngredientManager({
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, width: 0 });
   const [isKbSuppressed, setIsKbSuppressed] = useState(false);
-
-  const { dialogPanelRef } = useContext(ReferenceContext);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -124,9 +125,35 @@ function IngredientManager({
   /** Handles parent state update when selection is made in combobox */
   function updateOnSelect(option: any) {
     if (!option) return processDeselect();
-    isNewOption(option)
-      ? processNewOption(option)
-      : processExistingOption(option);
+    typeCheckIngredientQuery();
+
+    // isNewOption(option)
+    //   ? processNewOption(option)
+    //   : processExistingOption(option);
+  }
+
+  function typeCheckIngredientQuery() {
+    try {
+         if (entity === "amount") {
+          const isNaN = +query;
+           if (Number.isNaN(isNaN))
+             throw { message: `Numbers only. Amount value "${query}", not valid.` };
+         }
+         if (entity === "unit") {
+           const isNaN = +query;
+           if (!Number.isNaN(isNaN)) {
+             throw { message: `No numbers. Unit value "${query}", not valid.` };
+           }
+         } 
+         if (entity === "item") {
+           const isNaN = +query;
+           if (!Number.isNaN(isNaN)) {
+             throw { message: `No numbers. Name value "${query}", not valid.` };
+           }
+         } 
+    } catch (error) {
+      handleComponent.handleError(error.message)
+    }
   }
 
   /** Consolidates actions taken when dropdown value is selected  */
@@ -175,6 +202,7 @@ function IngredientManager({
 
   return (
     <Combobox as="div" value={selected || ""} onChange={onValueSelect}>
+      {/* <Alert alert={"error"} degree={"yellow"} /> */}
       <div ref={wrapperRef} className="relative mt-2">
         <ComboboxInput
           // required={entity === "item" ? true : false}
