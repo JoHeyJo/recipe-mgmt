@@ -103,6 +103,7 @@ function IngredientManager({
 
   /** Injects query string prior to POST request and updates parent state  */
   async function processNewOption(option: AttributeData) {
+    typeCheckIngredientQuery();
     const newOption = { ...option, id: null, [attribute]: query };
     const createdOption = await handleOption.post(entity, newOption);
     handleOption.addCreated(entity, createdOption);
@@ -125,7 +126,6 @@ function IngredientManager({
   /** Handles parent state update when selection is made in combobox */
   function updateOnSelect(option: any) {
     if (!option) return processDeselect();
-    typeCheckIngredientQuery();
 
     isNewOption(option)
       ? processNewOption(option)
