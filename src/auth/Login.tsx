@@ -76,9 +76,14 @@ function LoginForm({ login }: Login) {
             required={true}
           />
         </div>
-        <div id="Login-form-footer">
-          <PillButtonSubmit action={"Login"} />
-          {alert && <Alert alert={alert} degree={"yellow"} />}
+        <div className="flex">
+          <div id="Login-form-footer">
+            <PillButtonSubmit action={"Login"} />
+            {alert && <Alert alert={alert} degree={"yellow"} />}
+          </div>
+          <button type={"button"} className="pl-8 text-blue-900 font-bold">
+            Forgot password?
+          </button>
         </div>
       </form>
     </div>
