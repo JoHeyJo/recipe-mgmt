@@ -22,6 +22,11 @@ function LoginForm({ login }: Login) {
 
   const navigate = useNavigate();
 
+  /** Navigate to password recovery component */
+  function passwordRecovery(){
+    navigate("/forgot")
+  }
+
   /** sends form data */
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -81,7 +86,11 @@ function LoginForm({ login }: Login) {
             <PillButtonSubmit action={"Login"} />
             {alert && <Alert alert={alert} degree={"yellow"} />}
           </div>
-          <button type={"button"} className="pl-8 text-blue-900 font-bold">
+          <button
+            onClick={passwordRecovery}
+            type={"button"}
+            className="pl-8 text-blue-900 font-bold"
+          >
             Forgot password?
           </button>
         </div>
