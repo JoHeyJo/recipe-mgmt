@@ -63,7 +63,7 @@ function App() {
       setToken(res.token);
       setIsContextInitialized(true);
     } catch (error: any) {
-      errorHandling("App->userSignUp", error);
+      errorHandling("App -> userSignUp", error);
       throw error;
     } finally {
       setIsLoading(false);
@@ -79,7 +79,7 @@ function App() {
       setToken(res.token);
       setIsContextInitialized(true);
     } catch (error: any) {
-      errorHandling("App->userLogin", error);
+      errorHandling("App -> userLogin", error);
       throw error;
     } finally {
       setIsLoading(false);
@@ -92,6 +92,16 @@ function App() {
     setToken(null);
     setUserData(null);
     setIsLoading(false);
+  }
+
+  /** Request token from back end to be sent to corresponding email  */
+  function requestReset(email: string) {
+    
+    try {
+    } catch (error) {
+      errorHandling("App -> requestReset", error);
+      throw error;
+    }
   }
 
   /** persist user data state on refresh */
