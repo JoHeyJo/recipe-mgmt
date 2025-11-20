@@ -63,7 +63,7 @@ function RecipeRequests({
     instructions: contextInstructions,
     notes: selectedNotes,
   });
-  const [error, setError] = useState();
+  const [error, setError] = useState<string | null>();
   const [isDisabled, setIsDisabled] = useState(true);
 
   const selectedRecipe = {
@@ -115,7 +115,6 @@ function RecipeRequests({
   }
 
   /** Calls API - sends post request with recipe data */
-  // ADD A CHECK TO FILTER OUT EMPTY FIELDS E.G. ingredient/instructions without values
   async function addRecipe() {
     try {
       const filteredRecipe = filterTemplate(recipe, recipeTemplate);
@@ -127,8 +126,8 @@ function RecipeRequests({
       recipeActions.updateRecipes(res);
       return "submitted";
     } catch (error: any) {
-      errorHandling("RecipeRequests - addRecipe", error);
-      setError(error.error);
+      const message = errorHandling("RecipeRequests - addRecipe", error);
+      if(message) setError(message);
       setTimeout(() => setError(null), 5000);
     }
   }
@@ -173,8 +172,8 @@ function RecipeRequests({
     deleteRecipe(userId, currentBookId, recipeId);
   }
 
-  async function handleSubmit() {
-    // e.preventDefault()
+  async function handleSubmit(e) {
+    e.preventDefault()
     const res = await addRecipe();
     if (res) setShowing();
   }

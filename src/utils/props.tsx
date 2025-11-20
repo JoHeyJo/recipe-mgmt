@@ -82,6 +82,7 @@ export type IngredientInputGroupProps = {
   index: number;
   handleIngredient: HandleIngredient;
   handleOption: HandleOption;
+  length: number;
 };
 
 export type ComponentsOptionsRequestsProps = {
@@ -92,6 +93,7 @@ export type ComponentsOptionsRequestsProps = {
 };
 
 export type IngredientManagerProps = {
+  length:number;
   value: AttributeData;
   attribute: string;
   options: AttributeData[];
@@ -99,6 +101,7 @@ export type IngredientManagerProps = {
   handleComponent: {
     updateSelected: (state: string, option: AttributeData) => void;
     removeSelected: (state: string) => void;
+    handleError: (error: string) => void;
   };
   entity: string;
   placeholder:string;

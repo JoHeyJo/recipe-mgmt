@@ -2,8 +2,6 @@ import { useState, ChangeEvent, useEffect, useContext, useRef } from "react";
 import RadioSwitch from "../ui/common/RadioSwitch";
 import IngredientInputGroup from "../selectors/IngredientInputGroup";
 import { ComponentsOptionsRequestsProps } from "../../utils/props";
-import FaPlusButton from "../ui/common/FaPlusButton";
-import FaMinusButton from "../ui/common/FaMinusButton";
 import API from "../../api";
 import { UserContext } from "../../context/UserContext";
 import { AttributeData } from "../../utils/types";
@@ -147,12 +145,8 @@ function ComponentsOptionsRequests({
               handleIngredient={handleIngredient}
               handleOption={handleOption}
               options={options}
+              length={ingredients.length - 1}
             />
-            {i === ingredients.length - 1 ? (
-              <FaPlusButton onAction={handleIngredient.add} />
-            ) : (
-              <FaMinusButton onAction={() => handleIngredient.remove(i)} />
-            )}
           </div>
         ))}
       </div>

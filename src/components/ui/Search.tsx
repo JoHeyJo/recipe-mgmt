@@ -23,7 +23,7 @@ function Search({ list, setList }: SearchProps) {
 
   useEffect(() => {
     filterList();
-  }, [query]);
+  }, [query, list]);
 
   return (
     <>

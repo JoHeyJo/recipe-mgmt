@@ -5,13 +5,13 @@ import { Ingredients, Instructions, Recipe, Ingredient } from "./types";
 export function filterTemplate(recipe: Recipe, template: Recipe) {
   const ingredients = compareIngredients(
     template.ingredients,
-    recipe.ingredients,
+    recipe.ingredients
   )
     ? recipe.ingredients
     : null;
   const instructions = compareInstructions(
     template.instructions,
-    recipe.instructions,
+    recipe.instructions
   )
     ? recipe.instructions
     : null;
@@ -19,12 +19,18 @@ export function filterTemplate(recipe: Recipe, template: Recipe) {
   const notes = compareNotes(template.notes, recipe.notes)
     ? recipe.notes
     : null;
-
   if (!ingredients && !instructions && !name && !notes)
-    throw { error: "name required to create recipe template" };
-  if (!name) throw { error: "recipe requires name" };
+    throw { message: "Add name to create recipe template..." };
+  if (!name) throw { message: "Recipe template requires name..." };
+  if (ingredients) checkForEmptyItemInput(ingredients);
 
   return { id: null, name, notes, ingredients, instructions };
+}
+
+/** Empty item validation - find empty item field and throw error */
+function checkForEmptyItemInput(ingredients: Ingredients) {
+  const isEmpty = ingredients.find((item) => !item.id);
+  if (isEmpty) throw { message: "To add ingredient a name is required." };
 }
 
 /** Compares titles */
@@ -32,13 +38,15 @@ export function compareNames(original: string, edited: string) {
   return original === edited ? null : edited;
 }
 
-/** Executes quick comparison of ingredients */
+/** Executes quick comparison of ingredients NOTE: edited simply refers to changed
+ * so editedIngredient can refer to a new ingredient that's being added which is different from the blank template
+ * I think... need to polish up documentation in the future...
+ */
 export function compareIngredients(
   originals: Ingredients,
-  edited: Ingredients,
+  edited: Ingredients
 ) {
   const isAltered = edited.find((editedIngredient, index) => {
-    console.log(editedIngredient)
     return (
       // checks for empty ingredient input
       (editedIngredient.amount.id !== null ||
@@ -56,7 +64,7 @@ export function compareIngredients(
 /** Executes quick comparison of instructions */
 export function compareInstructions(
   original: Instructions,
-  edited: Instructions,
+  edited: Instructions
 ) {
   const isAltered = edited.find((editedInstruction, index) => {
     // check out of bounds
@@ -76,17 +84,17 @@ export function compareNotes(original: string, edited: string) {
 /** Filters out recipe data that hasn't changed */
 export function filterRecipe(
   originalRecipe: RecipeContextType,
-  recipe: Recipe,
+  recipe: Recipe
 ) {
   const filteredData = {
     name: compareNames(originalRecipe.recipeName, recipe.name),
     ingredients: filterIngredients(
       originalRecipe.contextIngredients,
-      recipe.ingredients,
+      recipe.ingredients
     ),
     instructions: filterInstructions(
       originalRecipe.contextInstructions,
-      recipe.instructions,
+      recipe.instructions
     ),
     notes: filterNotes(originalRecipe.selectedNotes, recipe.notes),
   };
@@ -111,7 +119,7 @@ function filterInstructions(original: Instructions, edited: Instructions) {
       ) {
         const editedInstruction = {
           // association id = PK of association table
-          // catches error if an additional input was created rather than replacing one
+          // catches message if an additional input was created rather than replacing one
           associationId: original[index]
             ? original[index].association_id
             : null,
@@ -122,7 +130,7 @@ function filterInstructions(original: Instructions, edited: Instructions) {
       }
       return instructions;
     },
-    [],
+    []
   );
   return alteredInstructions.length === 0 ? null : alteredInstructions;
 }
@@ -132,7 +140,7 @@ function handleAdditionalInput(
   edited: Ingredient,
   originals: Ingredients,
   property: string,
-  index: number,
+  index: number
 ) {
   if (!originals[index]) return edited[property];
   if (edited)
@@ -144,7 +152,7 @@ function handleAdditionalInput(
 /** Compares edited to original ingredients and filters out non-edited fields */
 function filterIngredients(
   originalIngredients: Ingredients,
-  edited: Ingredients,
+  edited: Ingredients
 ) {
   const alteredIngredients = edited.reduce(
     (alteredIngredients, editedIngredient, index) => {
@@ -152,19 +160,19 @@ function filterIngredients(
         editedIngredient,
         originalIngredients,
         "amount",
-        index,
+        index
       );
       const item = handleAdditionalInput(
         editedIngredient,
         originalIngredients,
         "item",
-        index,
+        index
       );
       const unit = handleAdditionalInput(
         editedIngredient,
         originalIngredients,
         "unit",
-        index,
+        index
       );
       const alteredIngredient = {
         id: editedIngredient.ingredient_id || null,
@@ -188,7 +196,7 @@ function filterIngredients(
       }
       return alteredIngredients;
     },
-    [],
+    []
   );
 
   // removes empty ingredient inputs from mutated data that user left
