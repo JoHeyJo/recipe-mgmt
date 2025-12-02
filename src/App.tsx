@@ -63,7 +63,7 @@ function App() {
       setToken(res.token);
       setIsContextInitialized(true);
     } catch (error: any) {
-      errorHandling("App->userSignUp", error);
+      errorHandling("App -> userSignUp", error);
       throw error;
     } finally {
       setIsLoading(false);
@@ -79,7 +79,7 @@ function App() {
       setToken(res.token);
       setIsContextInitialized(true);
     } catch (error: any) {
-      errorHandling("App->userLogin", error);
+      errorHandling("App -> userLogin", error);
       throw error;
     } finally {
       setIsLoading(false);

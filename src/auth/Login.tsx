@@ -30,8 +30,8 @@ function LoginForm({ login }: Login) {
       setCredentials(defaultCredentials);
       navigate("/home");
     } catch (error: any) {
-      errorHandling("Login", error);
-      setAlert(error.message);
+      const errorMessage = errorHandling("Login", error);
+      setAlert(errorMessage);
     }
   }
 
