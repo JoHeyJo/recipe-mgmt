@@ -75,40 +75,43 @@ export default function PasswordRecovery({
     }
   }, [allowTokenFromQuery, token]);
 
-  // Derived validation messages
-  const emailError = useMemo(() => {
+  /** Validate email return error if invalid */
+  const emailHasError = useMemo(() => {
     if (!email) return "";
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email) ? "" : "Please enter a valid email.";
+    const requiredChars = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return requiredChars.test(email) ? "" : "Please enter a valid email.";
   }, [email]);
 
-  const passwordError = useMemo(() => {
+  /** Validates lenght of password */
+  const passwordLengthHasError = useMemo(() => {
     if (!password) return "";
     if (password.length < minLength)
       return `Password must be at least ${minLength} characters.`;
     return "";
   }, [password, minLength]);
 
-  const confirmError = useMemo(() => {
+  /** Validates password comparison */
+  const comparePasswordHasError = useMemo(() => {
     if (!requireConfirm) return "";
     if (!confirm) return "";
     return confirm !== password ? "Passwords do not match." : "";
   }, [confirm, password, requireConfirm]);
-
-  const hasErrors = useMemo(() => {
-    if (step === "request") return !!emailError || !email;
+  
+  /** Validates form */
+  const formHasErrors = useMemo(() => {
+    if (step === "request") return !!emailHasError || !email;
     // step === "reset"
     const tokenError = token ? "" : "Token is required.";
     return (
-      !!tokenError || !!passwordError || (!!confirmError && requireConfirm)
+      !!tokenError || !!passwordLengthHasError || (!!comparePasswordHasError && requireConfirm)
     );
   }, [
     step,
     email,
-    emailError,
+    emailHasError,
     token,
-    passwordError,
-    confirmError,
+    passwordLengthHasError,
+    comparePasswordHasError,
     requireConfirm,
   ]);
 
@@ -199,16 +202,16 @@ export default function PasswordRecovery({
       {/* Forms */}
       {step === "request" ? (
         <form onSubmit={handleRequestSubmit} noValidate>
-          <Field label="Email" htmlFor="pr-email" error={emailError} required>
+          <Field label="Email" htmlFor="pr-email" error={emailHasError} required>
             <input
               id="pr-email"
               type="email"
               autoComplete="email"
-              className={inputClass(emailError)}
+              className={inputClass(emailHasError)}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              aria-invalid={!!emailError}
-              aria-describedby={emailError ? "pr-email-error" : undefined}
+              aria-invalid={!!emailHasError}
+              aria-describedby={emailHasError ? "pr-email-error" : undefined}
               placeholder="you@example.com"
               required
             />
@@ -217,7 +220,7 @@ export default function PasswordRecovery({
           <button
             type="submit"
             className={primaryButtonClass}
-            disabled={hasErrors || status.state === "loading"}
+            disabled={formHasErrors || status.state === "loading"}
           >
             Send reset link
           </button>
@@ -243,11 +246,11 @@ export default function PasswordRecovery({
               id="pr-email2"
               type="email"
               autoComplete="email"
-              className={inputClass(emailError)}
+              className={inputClass(emailHasError)}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              aria-invalid={!!emailError}
-              aria-describedby={emailError ? "pr-email2-error" : undefined}
+              aria-invalid={!!emailHasError}
+              aria-describedby={emailHasError ? "pr-email2-error" : undefined}
               placeholder="you@example.com"
             />
           </Field>
@@ -271,7 +274,7 @@ export default function PasswordRecovery({
           <Field
             label="New password"
             htmlFor="pr-pass"
-            error={passwordError}
+            error={passwordLengthHasError}
             required
           >
             <div className="relative">
@@ -279,11 +282,11 @@ export default function PasswordRecovery({
                 id="pr-pass"
                 type={show ? "text" : "password"}
                 autoComplete="new-password"
-                className={inputClass(passwordError)}
+                className={inputClass(passwordLengthHasError)}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                aria-invalid={!!passwordError}
-                aria-describedby={passwordError ? "pr-pass-error" : undefined}
+                aria-invalid={!!passwordLengthHasError}
+                aria-describedby={passwordLengthHasError ? "pr-pass-error" : undefined}
                 placeholder={`At least ${minLength} characters`}
                 required
               />
@@ -302,18 +305,18 @@ export default function PasswordRecovery({
             <Field
               label="Confirm password"
               htmlFor="pr-confirm"
-              error={confirmError}
+              error={comparePasswordHasError}
               required
             >
               <input
                 id="pr-confirm"
                 type={show ? "text" : "password"}
                 autoComplete="new-password"
-                className={inputClass(confirmError)}
+                className={inputClass(comparePasswordHasError)}
                 value={confirm}
                 onChange={(e) => setConfirm(e.target.value)}
-                aria-invalid={!!confirmError}
-                aria-describedby={confirmError ? "pr-confirm-error" : undefined}
+                aria-invalid={!!comparePasswordHasError}
+                aria-describedby={comparePasswordHasError ? "pr-confirm-error" : undefined}
                 placeholder="Re-enter password"
                 required
               />
@@ -323,7 +326,7 @@ export default function PasswordRecovery({
           <button
             type="submit"
             className={primaryButtonClass}
-            disabled={hasErrors || status.state === "loading"}
+            disabled={formHasErrors || status.state === "loading"}
           >
             Reset password
           </button>
