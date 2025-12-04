@@ -8,6 +8,8 @@ import React, { useEffect, useMemo, useState } from "react";
  *
  * Styling: Uses lightweight utility classes (Tailwind-friendly) but works without Tailwind.
  * Validation: Client-side checks for email format, password length, and confirmation match.
+ * 
+ * RoutesList -> PasswordRecovery
  */
 
 export type PasswordRecoveryStep = "request" | "reset";
@@ -33,8 +35,6 @@ export interface PasswordRecoveryProps {
   initialToken?: string;
   /** If true, automatically read ?token= from location.search (default: true) */
   allowTokenFromQuery?: boolean;
-  /** Optional className for outer container */
-  className?: string;
   /** Optional heading overrides */
   titles?: Partial<Record<PasswordRecoveryStep, string>>;
 }
@@ -48,11 +48,11 @@ export default function PasswordRecovery({
   initialEmail = "",
   initialToken = "",
   allowTokenFromQuery = true,
-  className = "",
   titles,
 }: PasswordRecoveryProps) {
   const [step, setStep] = useState<PasswordRecoveryStep>(initialStep);
   const [email, setEmail] = useState(initialEmail);
+  const [user, setUser] = useState("");
   const [token, setToken] = useState(initialToken);
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -75,6 +75,11 @@ export default function PasswordRecovery({
     }
   }, [allowTokenFromQuery, token]);
 
+  /** Validate user input */
+  function handleUser(){
+    return !user ? "Username required " : "";
+  }
+
   /** Validate email return error if invalid */
   const emailHasError = useMemo(() => {
     if (!email) return "";
@@ -82,7 +87,7 @@ export default function PasswordRecovery({
     return requiredChars.test(email) ? "" : "Please enter a valid email.";
   }, [email]);
 
-  /** Validates lenght of password */
+  /** Validates length of password */
   const passwordLengthHasError = useMemo(() => {
     if (!password) return "";
     if (password.length < minLength)
@@ -167,7 +172,8 @@ export default function PasswordRecovery({
 
   return (
     <div
-      className={`mx-auto w-full max-w-md rounded-2xl border border-neutral-200/60 bg-white p-6 shadow-sm dark:border-neutral-800 dark:bg-neutral-900 ${className}`}
+    id="PasswordRecovery-container"
+      className={`mx-auto w-full max-w-md rounded-2xl border border-neutral-200/60 bg-white p-6 shadow-sm dark:border-neutral-800 dark:bg-neutral-900`}
     >
       <div className="mb-4 text-center">
         <h2 className="text-xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
@@ -238,15 +244,13 @@ export default function PasswordRecovery({
       ) : (
         <form onSubmit={handleResetSubmit} noValidate>
           <Field
-            label="Email (optional)"
-            htmlFor="pr-email2"
-            helper="Some backends require the email with the token."
+            label="Username"
+            htmlFor="pr-user"
           >
             <input
-              id="pr-email2"
-              type="email"
-              autoComplete="email"
-              className={inputClass(emailHasError)}
+              id="pr-user"
+              type="text"
+              className="user-name"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               aria-invalid={!!emailHasError}
