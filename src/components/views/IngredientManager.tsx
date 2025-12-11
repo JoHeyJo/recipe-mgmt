@@ -143,7 +143,7 @@ function IngredientManager({
       const isInsideCombobox = wrapperRef.current?.contains(target);
 
       if (!isInsideDropdown && !isInsideCombobox) {
-        // setDropdownOpen(false);
+        setDropdownOpen(false);
       }
     };
 
