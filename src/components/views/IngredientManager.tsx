@@ -10,10 +10,8 @@ import {
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { IngredientManagerProps } from "../../utils/props";
 import { createPortal } from "react-dom";
-import { useContext } from "react";
-import { ReferenceContext } from "../../context/ReferenceContext";
 import { useId } from "react";
-import Alert from "../ui/Alert";
+import { filterOptions } from "../../utils/functions";
 
 /** IngredientManager - Searches and filters existing ingredient options - ring is removed
  *
@@ -54,52 +52,8 @@ function IngredientManager({
 
   /** Creates a list of filtered options based on search query */
   const filteredOptions: AttributeData[] =
-    query.trim() === "" ? options : filterOptions();
+    query.trim() === "" ? options : filterOptions(query, options, attribute, stableId);
 
-  /** Filters options => all options / matching options / no match = create... */
-  function filterOptions(): AttributeData[] {
-    const q = query.trim().toLowerCase();
-    if (options.length === 0) {
-      return [
-        {
-          id: `create-${stableId}`,
-          [attribute]: "+ create...",
-        } as AttributeData,
-      ];
-    }
-
-    // Collect matches (keep your original ordering)
-    const matches = options.filter((opt) =>
-      String(opt[attribute as keyof AttributeData] ?? "")
-        .toLowerCase()
-        .includes(q)
-    );
-
-    if (matches.length === 0) {
-      // No matches → only create
-      return [
-        {
-          id: `create-${stableId}`,
-          [attribute]: "+ create...",
-        } as AttributeData,
-      ];
-    }
-
-    // Exact (case-insensitive) match present? then no create
-    const hasExact = matches.some(
-      (opt) =>
-        String(opt[attribute as keyof AttributeData] ?? "")
-          .trim()
-          .toLowerCase() === q
-    );
-    if (hasExact) return matches;
-
-    // Fuzzy matches exist but no exact → append create at the end
-    return [
-      ...matches,
-      { id: `create-${stableId}`, [attribute]: "+ create..." } as AttributeData,
-    ];
-  }
 
   /** Injects query string prior to POST request and updates parent state  */
   async function processNewOption(option: AttributeData) {
