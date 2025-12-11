@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useId } from "react";
 import { AttributeData } from "../../utils/types";
 import {
   Combobox,
@@ -10,7 +10,6 @@ import {
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { IngredientManagerProps } from "../../utils/props";
 import { createPortal } from "react-dom";
-import { useId } from "react";
 import { filterOptions } from "../../utils/functions";
 
 /** IngredientManager - Searches and filters existing ingredient options - ring is removed
