@@ -14,7 +14,6 @@ import Search from "../ui/Search";
 import useWebSocket from "../../hooks/useWebSocket";
 import PopOutAlert from "../ui/common/PopOutAlert";
 import FaShareButton from "../ui/common/FaShareButton";
-import PasswordRecovery from "../PasswordRecovery";
 
 /** Renders the main container (book) housing list of recipes and individual recipe
  *
@@ -162,7 +161,6 @@ function MainContainer() {
         id="MainContainer-container"
         className="border-2 bg-primary h-[75vh] flex min-h-0"
       >
-        <PasswordRecovery onRequestReset={null} onResetPassword={null}/>
         {/* Does recipes need to be reduced to just ids and title??? */}
         <RecipeContext.Provider value={recipeData}>
           <section
