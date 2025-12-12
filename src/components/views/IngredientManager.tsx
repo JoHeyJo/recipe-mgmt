@@ -51,8 +51,9 @@ function IngredientManager({
 
   /** Creates a list of filtered options based on search query */
   const filteredOptions: AttributeData[] =
-    query.trim() === "" ? options : filterOptions(query, options, attribute, stableId);
-
+    query.trim() === ""
+      ? options
+      : filterOptions(query, options, attribute, stableId);
 
   /** Injects query string prior to POST request and updates parent state  */
   async function processNewOption(option: AttributeData) {
@@ -74,8 +75,15 @@ function IngredientManager({
   function processDeselect() {
     handleComponent.removeSelected(entity);
     setSelected(null);
-    setDropdownOpen(false);
+    // setDropdownOpen(false);
+    console.log("deselected value:","isdropdown open:",dropdownOpen)
   }
+  // When input is deleted dropdown is closed - I think I need this
+  // When value is entered dropdown is open
+
+  // when input is deleted leave dropdown as open 
+  // when value is entered dropdown is already open
+  // this does not match combobox's internal state
 
   /** Handles parent state update when selection is made in combobox */
   function updateOnSelect(option: any) {
@@ -88,35 +96,38 @@ function IngredientManager({
 
   function typeCheckIngredientQuery() {
     try {
-         if (entity === "amount") {
-          const isNaN = +query;
-           if (Number.isNaN(isNaN))
-             throw { message: `Numbers only. Amount value "${query}", not valid.` };
-         }
-         if (entity === "unit") {
-           const isNaN = +query;
-           if (!Number.isNaN(isNaN)) {
-             throw { message: `No numbers. Unit value "${query}", not valid.` };
-           }
-         } 
-         if (entity === "item") {
-           const isNaN = +query;
-           if (!Number.isNaN(isNaN)) {
-             throw { message: `No numbers. Name value "${query}", not valid.` };
-           }
-         } 
+      if (entity === "amount") {
+        const isNaN = +query;
+        if (Number.isNaN(isNaN))
+          throw {
+            message: `Numbers only. Amount value "${query}", not valid.`,
+          };
+      }
+      if (entity === "unit") {
+        const isNaN = +query;
+        if (!Number.isNaN(isNaN)) {
+          throw { message: `No numbers. Unit value "${query}", not valid.` };
+        }
+      }
+      if (entity === "item") {
+        const isNaN = +query;
+        if (!Number.isNaN(isNaN)) {
+          throw { message: `No numbers. Name value "${query}", not valid.` };
+        }
+      }
     } catch (error) {
-      handleComponent.handleError(error.message)
+      handleComponent.handleError(error.message);
     }
   }
 
   /** Consolidates actions taken when dropdown value is selected  */
   function onValueSelect(value: any) {
+    console.log("isDropDownOpen:",dropdownOpen)
     // inputRef.current?.blur() // consider implementing this for friendly accessibility
     setIsKbSuppressed(true);
     setQuery("");
     updateOnSelect(value);
-    setDropdownOpen(false);
+    // setDropdownOpen(false);
   }
 
   // Update dropdown position: Dependencies track potential change in dropdown position
@@ -137,7 +148,6 @@ function IngredientManager({
   useEffect(() => {
     if (!dropdownOpen) return;
 
-
     const closeOnScroll = (event: Event) => {
       const target = event.target as HTMLElement;
 
@@ -145,7 +155,10 @@ function IngredientManager({
       const isInsideCombobox = wrapperRef.current?.contains(target);
 
       if (isInsideDropdown === false && !isInsideCombobox) {
-        setDropdownOpen(false);
+        console.log("isInsideDropdown:", isInsideDropdown);
+        console.log("isInsideCombobox:", isInsideCombobox);
+        console.log("setting to FALSE");
+        // setDropdownOpen(false);
       }
     };
 
@@ -171,14 +184,16 @@ function IngredientManager({
           }}
           onClick={(e) => {
             setIsKbSuppressed(false);
+            setDropdownOpen(true);
             // scrollToElement(dialogPanelRef, 40); // clicking on input causes position to jump up and down
           }}
           onChange={(event) => {
             // event.preventDefault();
+            console.log("typeing:", dropdownOpen);
             setQuery(event.target.value);
           }}
           onBlur={() => {
-            setQuery("")
+            setQuery("");
             setDropdownOpen(false);
           }}
           displayValue={(option: { [key: string]: string }) =>
@@ -195,6 +210,9 @@ function IngredientManager({
           <ChevronUpDownIcon
             className="h-5 w-5 text-gray-400"
             aria-hidden="true"
+            // onClick={() => {
+            //   setDropdownOpen(true);
+            // }}
           />
         </ComboboxButton>
 
