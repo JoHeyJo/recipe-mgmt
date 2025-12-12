@@ -136,16 +136,18 @@ function IngredientManager({
   // Close on scroll *outside* dropdown - necessary to auto close dropdown when scrolling outside dropdown
   useEffect(() => {
     if (!dropdownOpen) return;
-    
+
 
     const closeOnScroll = (event: Event) => {
       const target = event.target as HTMLElement;
 
       const isInsideDropdown = dropdownRef.current?.contains(target);
       const isInsideCombobox = wrapperRef.current?.contains(target);
-      console.log("Inside")
 
-      if (!isInsideDropdown && !isInsideCombobox) {
+      if (isInsideDropdown === false && !isInsideCombobox) {
+        console.log("isInsideDropdown:", isInsideDropdown);
+        console.log("isInsideCombobox:", isInsideCombobox);
+        console.log("setting to FALSE")
         setDropdownOpen(false);
       }
     };
