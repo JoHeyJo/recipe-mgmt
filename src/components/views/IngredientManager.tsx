@@ -74,6 +74,7 @@ function IngredientManager({
   function processDeselect() {
     handleComponent.removeSelected(entity);
     setSelected(null);
+    setDropdownOpen(false);
   }
 
   /** Handles parent state update when selection is made in combobox */
@@ -113,7 +114,6 @@ function IngredientManager({
   function onValueSelect(value: any) {
     // inputRef.current?.blur() // consider implementing this for friendly accessibility
     setIsKbSuppressed(true);
-    // scrollToElement(dialogPanelRef);
     setQuery("");
     updateOnSelect(value);
     setDropdownOpen(false);
@@ -145,9 +145,6 @@ function IngredientManager({
       const isInsideCombobox = wrapperRef.current?.contains(target);
 
       if (isInsideDropdown === false && !isInsideCombobox) {
-        console.log("isInsideDropdown:", isInsideDropdown);
-        console.log("isInsideCombobox:", isInsideCombobox);
-        console.log("setting to FALSE")
         setDropdownOpen(false);
       }
     };

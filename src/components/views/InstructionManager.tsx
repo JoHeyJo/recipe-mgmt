@@ -125,8 +125,8 @@ function InstructionManager({
       const isInsideDropdown = dropdownRef.current?.contains(target);
       const isInsideCombobox = wrapperRef.current?.contains(target);
 
-      if (!isInsideDropdown && !isInsideCombobox) {
-        // setDropdownOpen(false);
+      if (isInsideDropdown === false && !isInsideCombobox) {
+        setDropdownOpen(false);
       }
     };
 
