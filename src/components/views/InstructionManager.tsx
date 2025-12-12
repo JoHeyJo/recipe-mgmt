@@ -55,7 +55,6 @@ function InstructionManager({
     setSelected(instruction);
   }, []);
 
-
   /** Injects query string prior to POST request and updates parent state  */
   async function processNewInstruction(option: Instruction) {
     // option id will need to be changed to null along with the query inject
@@ -69,7 +68,7 @@ function InstructionManager({
 
   /** Updates parent state with selected option */
   function processExistingInstruction(option: Instruction) {
-    handleSelected.updateSelected(option, arrayKey); 
+    handleSelected.updateSelected(option, arrayKey);
     setSelected(option);
   }
 
@@ -92,6 +91,7 @@ function InstructionManager({
     setIsKbSuppressed(true);
     setQuery("");
     updateOnSelect(value);
+    setDropdownOpen(false);
   }
 
   /** Facilitates if a created value or template value is rendered */
@@ -115,7 +115,7 @@ function InstructionManager({
     }
   }, [dropdownOpen, selected, numOfInstruction]);
 
-  // Close on scroll *outside* dropdown - necessary on browser
+  // Close on scroll *outside* dropdown - necessary to auto close dropdown when scrolling outside dropdown
   useEffect(() => {
     if (!dropdownOpen) return;
 
@@ -126,7 +126,7 @@ function InstructionManager({
       const isInsideCombobox = wrapperRef.current?.contains(target);
 
       if (!isInsideDropdown && !isInsideCombobox) {
-        setDropdownOpen(false);
+        // setDropdownOpen(false);
       }
     };
 
@@ -165,7 +165,10 @@ function InstructionManager({
               // event.preventDefault();
               setQuery(event.target.value);
             }}
-            onBlur={() => setQuery("")}
+            onBlur={() => {
+              setQuery("");
+              setDropdownOpen(false);
+            }}
             displayValue={(option: { instruction: string }) =>
               option.instruction
             }

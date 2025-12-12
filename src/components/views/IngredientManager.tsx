@@ -116,6 +116,7 @@ function IngredientManager({
     // scrollToElement(dialogPanelRef);
     setQuery("");
     updateOnSelect(value);
+    setDropdownOpen(false);
   }
 
   // Update dropdown position: Dependencies track potential change in dropdown position
@@ -132,15 +133,17 @@ function IngredientManager({
     }
   }, [dropdownOpen, selected, length]);
 
-  // Close on scroll *outside* dropdown - necessary on browser
+  // Close on scroll *outside* dropdown - necessary to auto close dropdown when scrolling outside dropdown
   useEffect(() => {
     if (!dropdownOpen) return;
+    
 
     const closeOnScroll = (event: Event) => {
       const target = event.target as HTMLElement;
 
       const isInsideDropdown = dropdownRef.current?.contains(target);
       const isInsideCombobox = wrapperRef.current?.contains(target);
+      console.log("Inside")
 
       if (!isInsideDropdown && !isInsideCombobox) {
         setDropdownOpen(false);
@@ -175,7 +178,10 @@ function IngredientManager({
             // event.preventDefault();
             setQuery(event.target.value);
           }}
-          onBlur={() => setQuery("")}
+          onBlur={() => {
+            setQuery("")
+            setDropdownOpen(false);
+          }}
           displayValue={(option: { [key: string]: string }) =>
             option?.[attribute]
           }
