@@ -75,15 +75,8 @@ function IngredientManager({
   function processDeselect() {
     handleComponent.removeSelected(entity);
     setSelected(null);
-    // setDropdownOpen(false);
-    console.log("deselected value:","isdropdown open:",dropdownOpen)
+    console.log("deselected value:","is dropdown open:",dropdownOpen)
   }
-  // When input is deleted dropdown is closed - I think I need this
-  // When value is entered dropdown is open
-
-  // when input is deleted leave dropdown as open 
-  // when value is entered dropdown is already open
-  // this does not match combobox's internal state
 
   /** Handles parent state update when selection is made in combobox */
   function updateOnSelect(option: any) {
@@ -127,7 +120,7 @@ function IngredientManager({
     setIsKbSuppressed(true);
     setQuery("");
     updateOnSelect(value);
-    // setDropdownOpen(false);
+    setDropdownOpen(false);
   }
 
   // Update dropdown position: Dependencies track potential change in dropdown position
@@ -158,7 +151,7 @@ function IngredientManager({
         console.log("isInsideDropdown:", isInsideDropdown);
         console.log("isInsideCombobox:", isInsideCombobox);
         console.log("setting to FALSE");
-        // setDropdownOpen(false);
+        setDropdownOpen(false);
       }
     };
 
