@@ -130,8 +130,8 @@ function IngredientManager({
     const rect = wrapperRef.current?.getBoundingClientRect();
     if (rect) {
       setDropdownPos({
-        top: rect.bottom + window.scrollY,
-        left: rect.left + window.scrollX,
+        top: rect.bottom,
+        left: rect.left,
         width: rect.width,
       });
     }
@@ -216,10 +216,10 @@ function IngredientManager({
               ref={dropdownRef}
               className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-accent py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
               style={{
+                position: "fixed",
                 top: dropdownPos.top,
                 left: dropdownPos.left,
                 width: dropdownPos.width,
-                position: "absolute",
               }}
             >
               {filteredOptions.map((option) => (
