@@ -185,10 +185,11 @@ function IngredientManager({
             console.log("typeing:", dropdownOpen);
             setQuery(event.target.value);
           }}
-          onBlur={() => {
-            setQuery("");
-            setDropdownOpen(false);
-          }}
+          // onBlur={(e) => {
+          //   if (dropdownRef.current?.contains(e.relatedTarget)) return;
+          //   setQuery("");
+          //   setDropdownOpen(false);
+          // }}
           displayValue={(option: { [key: string]: string }) =>
             option?.[attribute]
           }
