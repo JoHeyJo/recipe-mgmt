@@ -75,7 +75,7 @@ function IngredientManager({
   function processDeselect() {
     handleComponent.removeSelected(entity);
     setSelected(null);
-    console.log("deselected value:","is dropdown open:",dropdownOpen)
+    console.log("deselected value:", "is dropdown open:", dropdownOpen);
   }
 
   /** Handles parent state update when selection is made in combobox */
@@ -115,7 +115,7 @@ function IngredientManager({
 
   /** Consolidates actions taken when dropdown value is selected  */
   function onValueSelect(value: any) {
-    console.log("isDropDownOpen:",dropdownOpen)
+    console.log("isDropDownOpen:", dropdownOpen);
     // inputRef.current?.blur() // consider implementing this for friendly accessibility
     setIsKbSuppressed(true);
     setQuery("");
@@ -138,38 +138,36 @@ function IngredientManager({
   }, [dropdownOpen, selected, length]);
 
   // Close on scroll *outside* dropdown - necessary to auto close dropdown when scrolling outside dropdown
-const openedAtRef = useRef(0);
+  const openedAtRef = useRef(0);
 
-const openDropdown = () => {
-  openedAtRef.current = performance.now();
-  setDropdownOpen(true);
-};
-
-useEffect(() => {
-  if (!dropdownOpen) return;
-
-  const closeOnScroll = (event: Event) => {
-    // Ignore “scroll caused by focusing / viewport settling” right after open
-    if (performance.now() - openedAtRef.current < 200) return;
-
-    const target = event.target as HTMLElement | Document | null;
-
-    // If scroll target isn't an element, don't treat it as “outside”
-    if (!(target instanceof HTMLElement)) return;
-
-    const isInsideDropdown = dropdownRef.current?.contains(target) ?? false;
-    const isInsideCombobox = wrapperRef.current?.contains(target) ?? false;
-
-    if (!isInsideDropdown && !isInsideCombobox) {
-      setDropdownOpen(false);
-    }
+  const openDropdown = () => {
+    openedAtRef.current = performance.now();
+    setDropdownOpen(true);
   };
 
-  window.addEventListener("scroll", closeOnScroll, true);
-  return () => window.removeEventListener("scroll", closeOnScroll, true);
-}, [dropdownOpen]);
+  useEffect(() => {
+    if (!dropdownOpen) return;
 
+    const closeOnScroll = (event: Event) => {
+      // Ignore “scroll caused by focusing / viewport settling” right after open
+      if (performance.now() - openedAtRef.current < 200) return;
 
+      const target = event.target as HTMLElement | Document | null;
+
+      // If scroll target isn't an element, don't treat it as “outside”
+      if (!(target instanceof HTMLElement)) return;
+
+      const isInsideDropdown = dropdownRef.current?.contains(target) ?? false;
+      const isInsideCombobox = wrapperRef.current?.contains(target) ?? false;
+
+      if (!isInsideDropdown && !isInsideCombobox) {
+        setDropdownOpen(false);
+      }
+    };
+
+    window.addEventListener("scroll", closeOnScroll, true);
+    return () => window.removeEventListener("scroll", closeOnScroll, true);
+  }, [dropdownOpen]);
 
   return (
     <Combobox as="div" value={selected || ""} onChange={onValueSelect}>

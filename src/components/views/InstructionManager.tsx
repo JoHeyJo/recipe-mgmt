@@ -115,17 +115,24 @@ function InstructionManager({
     }
   }, [dropdownOpen, selected, numOfInstruction]);
 
+  const openedAtRef = useRef(0);
+
   // Close on scroll *outside* dropdown - necessary to auto close dropdown when scrolling outside dropdown
   useEffect(() => {
     if (!dropdownOpen) return;
 
     const closeOnScroll = (event: Event) => {
-      const target = event.target as HTMLElement;
+      // Ignore “scroll caused by focusing / viewport settling” right after open
+      if (performance.now() - openedAtRef.current < 200) return;
+      const target = event.target as HTMLElement | Document | null;
+      
+      // If scroll target isn't an element, don't treat it as “outside”
+      if (!(target instanceof HTMLElement)) return;
 
-      const isInsideDropdown = dropdownRef.current?.contains(target);
-      const isInsideCombobox = wrapperRef.current?.contains(target);
+    const isInsideDropdown = dropdownRef.current?.contains(target) ?? false;
+    const isInsideCombobox = wrapperRef.current?.contains(target) ?? false;
 
-      if (isInsideDropdown === false && !isInsideCombobox) {
+      if (!isInsideDropdown && !isInsideCombobox) {
         setDropdownOpen(false);
       }
     };
