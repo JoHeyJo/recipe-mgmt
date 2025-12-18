@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useId } from "react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import {
   Combobox,
@@ -7,10 +7,10 @@ import {
   ComboboxOption,
   ComboboxOptions,
 } from "@headlessui/react";
-import { Instruction } from "../../utils/types";
+import { Instruction, Instructions } from "../../utils/types";
 import { InstructionManagerProps } from "../../utils/props";
 import { createPortal } from "react-dom";
-import { scrollIntoViewElement } from "../../utils/functions";
+import { scrollIntoViewElement, filterOptions } from "../../utils/functions";
 
 /** InstructionManager - renders instructions - ring is removed
  *
@@ -40,37 +40,20 @@ function InstructionManager({
   const dropdownRef = useRef<HTMLDivElement>(null);
   const instructionRef = useRef<HTMLDivElement>(null);
 
+  const stableId = useId();
+
+  /** Creates a list of filtered options based on search query */
+  const filteredOptions =
+    query.trim() === ""
+      ? options
+      : filterOptions(query, options, "instruction", stableId);
+
   const isNewInstruction = (option: Instruction) =>
     typeof option.id === "string" && option.instruction === "+ create...";
 
   useEffect(() => {
     setSelected(instruction);
   }, []);
-
-  /** Creates a list of filtered options based on search query */
-  const filteredOptions: Instruction[] =
-    query === "" ? options : filterOptions();
-
-  /** Filters options => all options / matching options / no match or no options = create... */
-  function filterOptions() {
-    if (options.length === 0) {
-      return [{ id: `create-${Math.random()}`, instruction: "+ create..." }];
-    } else {
-      return options.reduce<Instruction[]>((currentOptions, option) => {
-        const isOptionAvailable = option.instruction
-          .toLowerCase()
-          .includes(query.toLowerCase());
-        if (isOptionAvailable) currentOptions.push(option);
-        //renders "+ create" option if query value doesn't exist in the dropdown options
-        if (currentOptions.length < 1 && !isOptionAvailable)
-          currentOptions.push({
-            id: `create-${Math.random()}`,
-            instruction: "+ create...",
-          });
-        return currentOptions;
-      }, []);
-    }
-  }
 
   /** Injects query string prior to POST request and updates parent state  */
   async function processNewInstruction(option: Instruction) {
@@ -85,26 +68,19 @@ function InstructionManager({
 
   /** Updates parent state with selected option */
   function processExistingInstruction(option: Instruction) {
-    handleSelected.updateSelected(option, arrayKey); // P
-    // handleInstructions.updateFilterKeys([arrayKey, option.id]) WIP
+    handleSelected.updateSelected(option, arrayKey);
     setSelected(option);
   }
 
   /** Consolidates actions that deselect option */
-  function processDeselect(selectedOption: Instruction) {
-    // handleInstructions.removeFilterKey(arrayKey) WIP
-    // selectedOption = null for pending creation of instructions.
-    if (!selectedOption) return;
-    // Only created instructions will trigger this action
-    if (!isNewInstruction(selectedOption))
-      handleSelected.removeSelected(arrayKey); // P
+  function processDeselect() {
+    handleSelected.removeSelected(arrayKey);
     setSelected(null);
   }
 
   /** Handles parent state update when changes are made to combobox */
   async function updateOnSelect(option: Instruction) {
-    // clears input when characters are deleted
-    if (!option) return processDeselect(selected);
+    if (!option) return processDeselect();
     isNewInstruction(option)
       ? processNewInstruction(option)
       : processExistingInstruction(option);
@@ -115,7 +91,7 @@ function InstructionManager({
     setIsKbSuppressed(true);
     setQuery("");
     updateOnSelect(value);
-    // scrollToElement(dialogPanelRef);
+    setDropdownOpen(false);
   }
 
   /** Facilitates if a created value or template value is rendered */
@@ -137,17 +113,24 @@ function InstructionManager({
         width: rect.width,
       });
     }
-  }, [dropdownOpen, query]);
+  }, [dropdownOpen, selected, numOfInstruction]);
 
-  // Close on scroll *outside* dropdown - necessary on browser
+  const openedAtRef = useRef(0);
+
+  // Close on scroll *outside* dropdown - necessary to auto close dropdown when scrolling outside dropdown
   useEffect(() => {
     if (!dropdownOpen) return;
 
     const closeOnScroll = (event: Event) => {
-      const target = event.target as HTMLElement;
+      // Ignore “scroll caused by focusing / viewport settling” right after open
+      if (performance.now() - openedAtRef.current < 200) return;
+      const target = event.target as HTMLElement | Document | null;
+      
+      // If scroll target isn't an element, don't treat it as “outside”
+      if (!(target instanceof HTMLElement)) return;
 
-      const isInsideDropdown = dropdownRef.current?.contains(target);
-      const isInsideCombobox = wrapperRef.current?.contains(target);
+    const isInsideDropdown = dropdownRef.current?.contains(target) ?? false;
+    const isInsideCombobox = wrapperRef.current?.contains(target) ?? false;
 
       if (!isInsideDropdown && !isInsideCombobox) {
         setDropdownOpen(false);
@@ -186,10 +169,13 @@ function InstructionManager({
               // scrollToElement(dialogPanelRef, 50); clicking on input causes position to jump up and down
             }}
             onChange={(event) => {
-              event.preventDefault();
+              // event.preventDefault();
               setQuery(event.target.value);
             }}
-            onBlur={() => setQuery("")}
+            onBlur={() => {
+              setQuery("");
+              setDropdownOpen(false);
+            }}
             displayValue={(option: { instruction: string }) =>
               option.instruction
             }
@@ -208,7 +194,6 @@ function InstructionManager({
           </ComboboxButton>
 
           {dropdownOpen &&
-            //   filteredOptions.length > 0 &&
             createPortal(
               <ComboboxOptions
                 ref={dropdownRef}
@@ -223,7 +208,6 @@ function InstructionManager({
               >
                 {filteredOptions.map((option) => (
                   <ComboboxOption
-                    onClick={() => setDropdownOpen(false)}
                     key={option.id}
                     value={option}
                     className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-selected data-[focus]:text-accent"
