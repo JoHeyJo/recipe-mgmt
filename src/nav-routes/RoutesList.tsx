@@ -12,8 +12,7 @@ function RoutesList({ signUp, login, passwordReset }: RoutesListProps) {
     <Routes>
       <Route element={<PublicRoutes />}>
         <Route path="/" element={<AuthTabs signUp={signUp} login={login} />} />
-        <Route path="/forgot" element={<PasswordRecovery onRequestReset={passwordReset} onResetPassword={null}/>} />
-        <Route path="/reset" element={<PasswordRecovery onRequestReset={null} onResetPassword={null}/>} />
+        <Route path="/reset" element={<PasswordRecovery onRequestReset={passwordReset} onResetPassword={null}/>} />
       </Route>
 
       <Route element={<PrivateRoutes />}>

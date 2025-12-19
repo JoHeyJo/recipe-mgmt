@@ -24,7 +24,7 @@ function LoginForm({ login }: Login) {
 
   /** Navigate to password recovery component */
   function passwordRecovery(){
-    navigate("/forgot")
+    navigate("/reset")
   }
 
   /** sends form data */
