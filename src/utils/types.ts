@@ -53,6 +53,11 @@ export type Login = {
 
 export type AuthProps = Login & SignUp;
 
+export type RoutesListProps = Login &
+  SignUp & {
+    passwordReset: (email: string) => Promise<void>;
+  };
+
 export type JWTPayload = {
   sub: number;
 };

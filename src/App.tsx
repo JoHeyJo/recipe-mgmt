@@ -96,8 +96,8 @@ function App() {
 
   /** Request token from back end to be sent to corresponding email  */
   function requestReset(email: string) {
-    
     try {
+      return API.requestPasswordReset(email);
     } catch (error) {
       errorHandling("App -> requestReset", error);
       throw error;
@@ -135,7 +135,11 @@ function App() {
     <div id="App-container">
       <UserContext.Provider value={UserDataFromContext}>
         <TopNav logout={logout} />
-        <RoutesList signUp={userSignUp} login={userLogin} />
+        <RoutesList
+          signUp={userSignUp}
+          login={userLogin}
+          passwordReset={requestReset}
+        />
       </UserContext.Provider>
       {/* <button type="button" onClick={toggleDarkMode}>toggle color scheme</button> */}
     </div>

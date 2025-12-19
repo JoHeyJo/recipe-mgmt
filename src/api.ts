@@ -57,6 +57,12 @@ class API {
     return res;
   }
 
+  /** Request reset link */
+  static async requestPasswordReset(email: string){
+    const res = await this.request(`request_reset/${email}`);
+    return res;
+  }
+
   // ############ RECIPES ###########
   /** Add user recipe to corresponding book*/
   static async postUserRecipe(data: Recipe, bookId: number, userId: number) {
