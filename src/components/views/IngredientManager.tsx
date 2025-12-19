@@ -75,7 +75,6 @@ function IngredientManager({
   function processDeselect() {
     handleComponent.removeSelected(entity);
     setSelected(null);
-    console.log("deselected value:", "is dropdown open:", dropdownOpen);
   }
 
   /** Handles parent state update when selection is made in combobox */
@@ -115,7 +114,6 @@ function IngredientManager({
 
   /** Consolidates actions taken when dropdown value is selected  */
   function onValueSelect(value: any) {
-    console.log("isDropDownOpen:", dropdownOpen);
     // inputRef.current?.blur() // consider implementing this for friendly accessibility
     setIsKbSuppressed(true);
     setQuery("");
@@ -190,14 +188,8 @@ function IngredientManager({
           }}
           onChange={(event) => {
             // event.preventDefault();
-            console.log("typeing:", dropdownOpen);
             setQuery(event.target.value);
           }}
-          // onBlur={(e) => {
-          //   if (dropdownRef.current?.contains(e.relatedTarget)) return;
-          //   setQuery("");
-          //   setDropdownOpen(false);
-          // }}
           displayValue={(option: { [key: string]: string }) =>
             option?.[attribute]
           }
@@ -212,9 +204,6 @@ function IngredientManager({
           <ChevronUpDownIcon
             className="h-5 w-5 text-gray-400"
             aria-hidden="true"
-            // onClick={() => {
-            //   setDropdownOpen(true);
-            // }}
           />
         </ComboboxButton>
 
