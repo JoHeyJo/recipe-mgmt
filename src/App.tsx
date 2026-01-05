@@ -120,7 +120,6 @@ function App() {
     // Does not persist expired user token
     if (!isTokenValid(token)) {
       setToken(null);
-      // navigate("/");
     }
 
     if (userData?.id) {

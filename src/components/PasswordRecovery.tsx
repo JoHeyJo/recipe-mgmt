@@ -172,7 +172,7 @@ export default function PasswordRecovery({
 
   return (
     <div
-    id="PasswordRecovery-container"
+      id="PasswordRecovery-container"
       className={`mx-auto w-full max-w-md rounded-2xl border border-neutral-200/60 bg-white p-6 shadow-sm dark:border-neutral-800 dark:bg-neutral-900`}
     >
       <div className="mb-4 text-center">
@@ -208,7 +208,12 @@ export default function PasswordRecovery({
       {/* Forms */}
       {step === "request" ? (
         <form onSubmit={handleRequestSubmit} noValidate>
-          <Field label="Email" htmlFor="pr-email" error={emailHasError} required>
+          <Field
+            label="Email"
+            htmlFor="pr-email"
+            error={emailHasError}
+            required
+          >
             <input
               id="pr-email"
               type="email"
@@ -243,19 +248,14 @@ export default function PasswordRecovery({
         </form>
       ) : (
         <form onSubmit={handleResetSubmit} noValidate>
-          <Field
-            label="Username"
-            htmlFor="pr-user"
-          >
+          <Field label="Username" htmlFor="pr-user" required>
             <input
               id="pr-user"
               type="text"
-              className="user-name"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              aria-invalid={!!emailHasError}
-              aria-describedby={emailHasError ? "pr-email2-error" : undefined}
-              placeholder="you@example.com"
+              className={inputClass(!user ? "Username required" : "")}
+              value={user}
+              onChange={(e) => setUser(e.target.value)}
+              placeholder="User name"
             />
           </Field>
 
@@ -290,7 +290,9 @@ export default function PasswordRecovery({
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 aria-invalid={!!passwordLengthHasError}
-                aria-describedby={passwordLengthHasError ? "pr-pass-error" : undefined}
+                aria-describedby={
+                  passwordLengthHasError ? "pr-pass-error" : undefined
+                }
                 placeholder={`At least ${minLength} characters`}
                 required
               />
@@ -320,7 +322,9 @@ export default function PasswordRecovery({
                 value={confirm}
                 onChange={(e) => setConfirm(e.target.value)}
                 aria-invalid={!!comparePasswordHasError}
-                aria-describedby={comparePasswordHasError ? "pr-confirm-error" : undefined}
+                aria-describedby={
+                  comparePasswordHasError ? "pr-confirm-error" : undefined
+                }
                 placeholder="Re-enter password"
                 required
               />
