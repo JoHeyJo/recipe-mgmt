@@ -21,7 +21,7 @@ export interface PasswordRecoveryProps {
   onResetPassword: (input: {
     token: string;
     password: string;
-    email?: string;
+    user: string;
   }) => Promise<void> | null;
   /** Minimum password length (default: 8) */
   minLength?: number;
@@ -147,7 +147,7 @@ export default function PasswordRecovery({
       await onResetPassword({
         token: token.trim(),
         password,
-        email: email.trim() || undefined,
+        user: user.trim() || undefined,
       });
       setStatus({
         state: "success",
@@ -258,8 +258,8 @@ export default function PasswordRecovery({
               placeholder="User name"
             />
           </Field>
-
-          <Field label="Token" htmlFor="pr-token" required>
+          {/* It is not necessary to show user token */}
+          {/* <Field label="Token" htmlFor="pr-token" required>
             <input
               id="pr-token"
               type="text"
@@ -273,7 +273,7 @@ export default function PasswordRecovery({
               placeholder="Paste token"
               required
             />
-          </Field>
+          </Field> */}
 
           <Field
             label="New password"

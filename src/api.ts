@@ -57,9 +57,15 @@ class API {
     return res;
   }
 
-  /** Request reset link */
-  static async requestPasswordReset(email: string){
-    const res = await this.request(`request_reset/${email}`, {}, "POST");
+  /** Request reset link to be sent to user*/
+  static async postRequest(email: string) {
+    const res = await this.request(`initiate_reset/${email}`, {}, "POST");
+    return res;
+  }
+
+  /** Reset User password */
+  static async postReset() {
+    const res = await this.request(`request_reset`);
     return res;
   }
 

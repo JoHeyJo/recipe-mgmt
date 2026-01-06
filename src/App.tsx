@@ -95,11 +95,28 @@ function App() {
   }
 
   /** Request token from back end to be sent to corresponding email  */
-  function requestReset(email: string) {
+  function initiatePasswordReset(email: string) {
     try {
-      return API.requestPasswordReset(email);
+      if (token) {
+        if (isTokenValid(token)) {
+        } else {
+          throw "Token invalid!";
+        }
+      } else {
+        return API.postRequest(email);
+      }
     } catch (error) {
       errorHandling("App -> requestReset", error);
+      throw error;
+    }
+  }
+
+  /** Request password reset */
+  function resetPassword(token?: string, password?: string) {
+    try {
+      API.postReset();
+    } catch (error) {
+      errorHandling("App -> resetPassword", error);
       throw error;
     }
   }
@@ -137,7 +154,7 @@ function App() {
         <RoutesList
           signUp={userSignUp}
           login={userLogin}
-          passwordReset={requestReset}
+          passwordReset={initiatePasswordReset}
         />
       </UserContext.Provider>
       {/* <button type="button" onClick={toggleDarkMode}>toggle color scheme</button> */}
