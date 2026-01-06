@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import API from "../api";
 
 /**
  * PasswordRecovery
@@ -71,6 +72,7 @@ export default function PasswordRecovery({
     const t = p.get("token");
     if (t && !token) {
       setToken(t);
+      API.token = t
       setStep("reset");
     }
   }, [allowTokenFromQuery, token]);

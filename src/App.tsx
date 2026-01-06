@@ -95,26 +95,19 @@ function App() {
   }
 
   /** Request token from back end to be sent to corresponding email  */
-  function initiatePasswordReset(email: string) {
+  async function initiatePasswordReset(email: string) {
     try {
-      if (token) {
-        if (isTokenValid(token)) {
-        } else {
-          throw "Token invalid!";
-        }
-      } else {
-        return API.postRequest(email);
-      }
+      return await API.postResetRequest(email);
     } catch (error) {
-      errorHandling("App -> requestReset", error);
+      errorHandling("App -> initiatePasswordReset", error);
       throw error;
     }
   }
 
   /** Request password reset */
-  function resetPassword(token?: string, password?: string) {
+  async function resetPassword(token?: string, password?: string) {
     try {
-      API.postReset();
+      return await API.postPasswordReset();
     } catch (error) {
       errorHandling("App -> resetPassword", error);
       throw error;
