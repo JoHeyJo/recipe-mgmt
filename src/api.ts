@@ -64,7 +64,7 @@ class API {
   }
 
   /** Reset User password */
-  static async postPasswordReset() {
+  static async postPasswordReset(password: string) {
     const res = await this.request(`request_reset`);
     return res;
   }

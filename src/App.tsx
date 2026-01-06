@@ -105,9 +105,9 @@ function App() {
   }
 
   /** Request password reset */
-  async function resetPassword(token?: string, password?: string) {
+  async function resetPassword(password: string) {
     try {
-      return await API.postPasswordReset();
+      return await API.postPasswordReset(password);
     } catch (error) {
       errorHandling("App -> resetPassword", error);
       throw error;
