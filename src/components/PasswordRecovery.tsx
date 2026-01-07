@@ -9,7 +9,7 @@ import API from "../api";
  *
  * Styling: Uses lightweight utility classes (Tailwind-friendly) but works without Tailwind.
  * Validation: Client-side checks for email format, password length, and confirmation match.
- * 
+ *
  * RoutesList -> PasswordRecovery
  */
 
@@ -19,11 +19,7 @@ export interface PasswordRecoveryProps {
   /** Called when user submits their email to receive a reset link */
   onRequestReset: (email: string) => Promise<void> | null;
   /** Called when user submits token + new password. Email is optional if your backend needs it. */
-  onResetPassword: (input: {
-    token: string;
-    password: string;
-    user: string;
-  }) => Promise<void> | null;
+  onResetPassword: (password: string, user: string) => Promise<void> | null;
   /** Minimum password length (default: 8) */
   minLength?: number;
   /** Whether to require confirm password matching (default: true) */
@@ -72,13 +68,13 @@ export default function PasswordRecovery({
     const t = p.get("token");
     if (t && !token) {
       setToken(t);
-      API.token = t
+      API.token = t;
       setStep("reset");
     }
   }, [allowTokenFromQuery, token]);
 
   /** Validate user input */
-  function handleUser(){
+  function handleUser() {
     return !user ? "Username required " : "";
   }
 
@@ -103,14 +99,16 @@ export default function PasswordRecovery({
     if (!confirm) return "";
     return confirm !== password ? "Passwords do not match." : "";
   }, [confirm, password, requireConfirm]);
-  
+
   /** Validates form */
   const formHasErrors = useMemo(() => {
     if (step === "request") return !!emailHasError || !email;
     // step === "reset"
     const tokenError = token ? "" : "Token is required.";
     return (
-      !!tokenError || !!passwordLengthHasError || (!!comparePasswordHasError && requireConfirm)
+      !!tokenError ||
+      !!passwordLengthHasError ||
+      (!!comparePasswordHasError && requireConfirm)
     );
   }, [
     step,
@@ -146,11 +144,10 @@ export default function PasswordRecovery({
     if (status.state === "loading") return;
     setStatus({ state: "loading" });
     try {
-      await onResetPassword({
-        token: token.trim(),
+      await onResetPassword(
         password,
-        user: user.trim() || undefined,
-      });
+        user.trim() || undefined,
+      );
       setStatus({
         state: "success",
         message: "Password updated successfully. You can now sign in.",

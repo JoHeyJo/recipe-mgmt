@@ -96,22 +96,12 @@ function App() {
 
   /** Request token from back end to be sent to corresponding email  */
   async function initiatePasswordReset(email: string) {
-    try {
-      return await API.postResetRequest(email);
-    } catch (error) {
-      errorHandling("App -> initiatePasswordReset", error);
-      throw error;
-    }
+    return await API.postResetRequest(email);
   }
 
   /** Request password reset */
-  async function resetPassword(password: string) {
-    try {
-      return await API.postPasswordReset(password);
-    } catch (error) {
-      errorHandling("App -> resetPassword", error);
-      throw error;
-    }
+  async function resetPassword(password: string, user: string) {
+    return await API.postPasswordReset(password);
   }
 
   /** persist user data state on refresh */
@@ -147,7 +137,8 @@ function App() {
         <RoutesList
           signUp={userSignUp}
           login={userLogin}
-          passwordReset={initiatePasswordReset}
+          requestReset={initiatePasswordReset}
+          resetPassword={resetPassword}
         />
       </UserContext.Provider>
       {/* <button type="button" onClick={toggleDarkMode}>toggle color scheme</button> */}
