@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import API from "../api";
+import { errorHandling } from "../utils/ErrorHandling";
 
 /**
  * PasswordRecovery
@@ -16,10 +17,6 @@ import API from "../api";
 export type PasswordRecoveryStep = "request" | "reset";
 
 export interface PasswordRecoveryProps {
-  /** Called when user submits their email to receive a reset link */
-  onRequestReset: (email: string) => Promise<void> | null;
-  /** Called when user submits token + new password. Email is optional if your backend needs it. */
-  onResetPassword: (password: string, user: string) => Promise<void> | null;
   /** Minimum password length (default: 8) */
   minLength?: number;
   /** Whether to require confirm password matching (default: true) */
@@ -37,8 +34,6 @@ export interface PasswordRecoveryProps {
 }
 
 export default function PasswordRecovery({
-  onRequestReset,
-  onResetPassword,
   minLength = 8,
   requireConfirm = true,
   initialStep = "request",
@@ -72,11 +67,6 @@ export default function PasswordRecovery({
       setStep("reset");
     }
   }, [allowTokenFromQuery, token]);
-
-  /** Validate user input */
-  function handleUser() {
-    return !user ? "Username required " : "";
-  }
 
   /** Validate email return error if invalid */
   const emailHasError = useMemo(() => {
@@ -125,16 +115,17 @@ export default function PasswordRecovery({
     if (status.state === "loading") return;
     setStatus({ state: "loading" });
     try {
-      await onRequestReset(email.trim());
+      await API.postResetRequest(email.trim());
       setStatus({
         state: "success",
         message:
           "If an account exists for that email, we've sent a reset link.",
       });
-    } catch (err: any) {
+    } catch (error: any) {
+      errorHandling("PasswordRecovery -> handleRequestSubmit", error);
       setStatus({
         state: "error",
-        message: err?.message || "Could not send reset link. Please try again.",
+        message: error?.message || "Could not send reset link. Please try again.",
       });
     }
   }
@@ -143,10 +134,12 @@ export default function PasswordRecovery({
     e.preventDefault();
     if (status.state === "loading") return;
     setStatus({ state: "loading" });
+    console.log("token",API.token)
     try {
-      await onResetPassword(
+      await API.postPasswordReset(
         password,
         user.trim() || undefined,
+        token
       );
       setStatus({
         state: "success",
@@ -155,11 +148,11 @@ export default function PasswordRecovery({
       // Optional: clear password fields
       setPassword("");
       setConfirm("");
-    } catch (err: any) {
+    } catch (error: any) {
+      errorHandling("PasswordRecovery -> handleResetSubmit", error)
       setStatus({
         state: "error",
-        message:
-          err?.message || "Reset failed. Check your token and try again.",
+        message: "Reset failed. Check your token and try again.",
       });
     }
   }

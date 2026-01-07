@@ -10,7 +10,8 @@ import {
 
 export const BASEURL = process.env.REACT_APP_BASE_URL;
 
-export const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+export const protocol =
+  process.env.NODE_ENV === "development" ? "http" : "https";
 
 /** API class.
  * Static class - Contains methods that facilitate communications between client
@@ -64,8 +65,12 @@ class API {
   }
 
   /** Reset User password */
-  static async postPasswordReset(password: string) {
-    const res = await this.request(`request_reset`,{password}, "POST");
+  static async postPasswordReset(
+    password: string,
+    user: string,
+    token: string
+  ) {
+    const res = await this.request(`request_reset`, { password }, "POST");
     return res;
   }
 

@@ -94,16 +94,6 @@ function App() {
     setIsLoading(false);
   }
 
-  /** Request token from back end to be sent to corresponding email  */
-  async function initiatePasswordReset(email: string) {
-    return await API.postResetRequest(email);
-  }
-
-  /** Request password reset */
-  async function resetPassword(password: string, user: string) {
-    return await API.postPasswordReset(password);
-  }
-
   /** persist user data state on refresh */
   useEffect(() => {
     API.token = token;
@@ -137,8 +127,6 @@ function App() {
         <RoutesList
           signUp={userSignUp}
           login={userLogin}
-          requestReset={initiatePasswordReset}
-          resetPassword={resetPassword}
         />
       </UserContext.Provider>
       {/* <button type="button" onClick={toggleDarkMode}>toggle color scheme</button> */}

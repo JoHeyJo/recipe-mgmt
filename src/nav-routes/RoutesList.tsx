@@ -7,20 +7,12 @@ import PrivateRoutes from "./PrivateRoutes";
 import PublicRoutes from "./PublicRoutes";
 import PasswordRecovery from "../components/PasswordRecovery";
 
-function RoutesList({ signUp, login, requestReset, resetPassword }: RoutesListProps) {
+function RoutesList({ signUp, login }: RoutesListProps) {
   return (
     <Routes>
       <Route element={<PublicRoutes />}>
         <Route path="/" element={<AuthTabs signUp={signUp} login={login} />} />
-        <Route
-          path="/reset"
-          element={
-            <PasswordRecovery
-              onRequestReset={requestReset}
-              onResetPassword={resetPassword}
-            />
-          }
-        />
+        <Route path="/reset" element={<PasswordRecovery />} />
       </Route>
 
       <Route element={<PrivateRoutes />}>
