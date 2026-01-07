@@ -134,7 +134,6 @@ export default function PasswordRecovery({
     e.preventDefault();
     if (status.state === "loading") return;
     setStatus({ state: "loading" });
-    console.log("token",API.token)
     try {
       await API.postPasswordReset(
         password,
@@ -152,7 +151,7 @@ export default function PasswordRecovery({
       errorHandling("PasswordRecovery -> handleResetSubmit", error)
       setStatus({
         state: "error",
-        message: "Reset failed. Check your token and try again.",
+        message: error.response.data,
       });
     }
   }

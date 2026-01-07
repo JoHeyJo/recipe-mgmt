@@ -67,10 +67,11 @@ class API {
   /** Reset User password */
   static async postPasswordReset(
     password: string,
-    user: string,
+    userName: string,
     token: string
   ) {
-    const res = await this.request(`request_reset`, { password }, "POST");
+    API.token = token
+    const res = await this.request(`request_reset`, { password, userName }, "POST");
     return res;
   }
 
