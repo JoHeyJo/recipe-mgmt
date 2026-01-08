@@ -228,16 +228,6 @@ export default function PasswordRecovery({
           >
             Send reset link
           </button>
-
-          {/* <div className="mt-4 text-center">
-            <button
-              type="button"
-              onClick={() => setStep("reset")}
-              className="text-sm font-medium text-blue-600 hover:underline disabled:opacity-50 dark:text-blue-400"
-            >
-              Already have a token?
-            </button>
-          </div> */}
         </form>
       ) : (
         <form onSubmit={handleResetSubmit} noValidate>
@@ -251,23 +241,6 @@ export default function PasswordRecovery({
               placeholder="User name"
             />
           </Field>
-          {/* It is not necessary to show user token */}
-          {/* <Field label="Token" htmlFor="pr-token" required>
-            <input
-              id="pr-token"
-              type="text"
-              inputMode="text"
-              autoComplete="one-time-code"
-              className={inputClass(!token ? "Token is required." : "")}
-              value={token}
-              onChange={(e) => setToken(e.target.value)}
-              aria-invalid={!token}
-              aria-describedby={!token ? "pr-token-error" : undefined}
-              placeholder="Paste token"
-              required
-            />
-          </Field> */}
-
           <Field
             label="New password"
             htmlFor="pr-pass"
