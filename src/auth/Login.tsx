@@ -24,7 +24,7 @@ function LoginForm({ login }: Login) {
 
   /** Navigate to password recovery component */
   function passwordRecovery(){
-    navigate("/forgot")
+    navigate("/reset")
   }
 
   /** sends form data */
@@ -35,8 +35,8 @@ function LoginForm({ login }: Login) {
       setCredentials(defaultCredentials);
       navigate("/home");
     } catch (error: any) {
-      const errorMessage = errorHandling("Login", error);
-      setAlert(errorMessage);
+      const message = errorHandling("Login", error);
+      setAlert(message);
     }
   }
 

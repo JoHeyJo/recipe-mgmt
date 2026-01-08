@@ -13,7 +13,7 @@ const PublicRoutes = () => {
   return !isAuthenticated && !isInitialized ? (
     <Outlet />
   ) : (
-    <Navigate to="home" replace />
+    <Navigate to="/home" replace />
   );
 };
 

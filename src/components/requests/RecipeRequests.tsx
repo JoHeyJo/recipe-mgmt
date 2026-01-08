@@ -161,9 +161,9 @@ function RecipeRequests({
       const res = API.deleteUserRecipe(userId, currentBookId, recipeId);
       recipeActions.deleteRecipe();
     } catch (error: any) {
-      setError(error.message);
+      const message = errorHandling("RecipeRequests - addRecipe", error);
+      setError(message);
       setTimeout(() => setError(null), 5000);
-      errorHandling("RecipeRequests - addRecipe", error);
     }
   }
 

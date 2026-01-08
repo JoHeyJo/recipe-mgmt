@@ -11,7 +11,8 @@ import { errorHandling } from "./utils/ErrorHandling";
 
 export const BASEURL = process.env.REACT_APP_BASE_URL;
 
-export const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+export const protocol =
+  process.env.NODE_ENV === "development" ? "http" : "https";
 
 /** API class.
  * Static class - Contains methods that facilitate communications between client
@@ -55,6 +56,23 @@ class API {
   /** Fetch specific user */
   static async getUser(userId: number) {
     const res = await this.request(`users/${userId}`);
+    return res;
+  }
+
+  /** Request reset link to be sent to user*/
+  static async postResetRequest(email: string) {
+    const res = await this.request(`initiate_reset/${email}`, {}, "POST");
+    return res;
+  }
+
+  /** Reset User password */
+  static async postPasswordReset(
+    password: string,
+    userName: string,
+    token: string
+  ) {
+    API.token = token
+    const res = await this.request(`request_reset`, { password, userName }, "POST");
     return res;
   }
 

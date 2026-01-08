@@ -94,16 +94,6 @@ function App() {
     setIsLoading(false);
   }
 
-  /** Request token from back end to be sent to corresponding email  */
-  function requestReset(email: string) {
-    
-    try {
-    } catch (error) {
-      errorHandling("App -> requestReset", error);
-      throw error;
-    }
-  }
-
   /** persist user data state on refresh */
   useEffect(() => {
     API.token = token;
@@ -120,7 +110,6 @@ function App() {
     // Does not persist expired user token
     if (!isTokenValid(token)) {
       setToken(null);
-      navigate("/");
     }
 
     if (userData?.id) {
@@ -135,7 +124,10 @@ function App() {
     <div id="App-container">
       <UserContext.Provider value={UserDataFromContext}>
         <TopNav logout={logout} />
-        <RoutesList signUp={userSignUp} login={userLogin} />
+        <RoutesList
+          signUp={userSignUp}
+          login={userLogin}
+        />
       </UserContext.Provider>
       {/* <button type="button" onClick={toggleDarkMode}>toggle color scheme</button> */}
     </div>

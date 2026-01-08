@@ -1,4 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
+import API from "../api";
+import { errorHandling } from "../utils/ErrorHandling";
+import { useSearchParams } from "react-router-dom";
 
 /**
  * PasswordRecovery
@@ -8,21 +11,13 @@ import React, { useEffect, useMemo, useState } from "react";
  *
  * Styling: Uses lightweight utility classes (Tailwind-friendly) but works without Tailwind.
  * Validation: Client-side checks for email format, password length, and confirmation match.
- * 
+ *
  * RoutesList -> PasswordRecovery
  */
 
 export type PasswordRecoveryStep = "request" | "reset";
 
 export interface PasswordRecoveryProps {
-  /** Called when user submits their email to receive a reset link */
-  onRequestReset: (email: string) => Promise<void> | null;
-  /** Called when user submits token + new password. Email is optional if your backend needs it. */
-  onResetPassword: (input: {
-    token: string;
-    password: string;
-    email?: string;
-  }) => Promise<void> | null;
   /** Minimum password length (default: 8) */
   minLength?: number;
   /** Whether to require confirm password matching (default: true) */
@@ -33,15 +28,13 @@ export interface PasswordRecoveryProps {
   initialEmail?: string;
   /** Optionally prefill token (e.g., from a magic link) */
   initialToken?: string;
-  /** If true, automatically read ?token= from location.search (default: true) */
+  /** If true, automatically read ?token= from searchParams */
   allowTokenFromQuery?: boolean;
   /** Optional heading overrides */
   titles?: Partial<Record<PasswordRecoveryStep, string>>;
 }
 
 export default function PasswordRecovery({
-  onRequestReset,
-  onResetPassword,
   minLength = 8,
   requireConfirm = true,
   initialStep = "request",
@@ -63,22 +56,19 @@ export default function PasswordRecovery({
     | { state: "success"; message: string }
     | { state: "error"; message: string }
   >({ state: "idle" });
+  const [searchParams, setSearchParams] = useSearchParams();
 
   // Autofill token from query string (?token=...) if allowed
   useEffect(() => {
     if (!allowTokenFromQuery || typeof window === "undefined") return;
-    const p = new URLSearchParams(window.location.search);
-    const t = p.get("token");
-    if (t && !token) {
-      setToken(t);
+    const URLToken = searchParams.get("token");
+    searchParams.delete("token");
+    setSearchParams(searchParams, { replace: true });
+    if (URLToken && !token) {
+      setToken(URLToken);
       setStep("reset");
     }
-  }, [allowTokenFromQuery, token]);
-
-  /** Validate user input */
-  function handleUser(){
-    return !user ? "Username required " : "";
-  }
+  }, [allowTokenFromQuery, token, searchParams, setSearchParams]);
 
   /** Validate email return error if invalid */
   const emailHasError = useMemo(() => {
@@ -101,14 +91,16 @@ export default function PasswordRecovery({
     if (!confirm) return "";
     return confirm !== password ? "Passwords do not match." : "";
   }, [confirm, password, requireConfirm]);
-  
+
   /** Validates form */
   const formHasErrors = useMemo(() => {
     if (step === "request") return !!emailHasError || !email;
     // step === "reset"
     const tokenError = token ? "" : "Token is required.";
     return (
-      !!tokenError || !!passwordLengthHasError || (!!comparePasswordHasError && requireConfirm)
+      !!tokenError ||
+      !!passwordLengthHasError ||
+      (!!comparePasswordHasError && requireConfirm)
     );
   }, [
     step,
@@ -125,16 +117,17 @@ export default function PasswordRecovery({
     if (status.state === "loading") return;
     setStatus({ state: "loading" });
     try {
-      await onRequestReset(email.trim());
+      await API.postResetRequest(email.trim());
       setStatus({
         state: "success",
         message:
           "If an account exists for that email, we've sent a reset link.",
       });
-    } catch (err: any) {
+    } catch (error: any) {
+      errorHandling("PasswordRecovery -> handleRequestSubmit", error);
       setStatus({
         state: "error",
-        message: err?.message || "Could not send reset link. Please try again.",
+        message: error?.message || "Could not send reset link. Please try again.",
       });
     }
   }
@@ -144,11 +137,11 @@ export default function PasswordRecovery({
     if (status.state === "loading") return;
     setStatus({ state: "loading" });
     try {
-      await onResetPassword({
-        token: token.trim(),
+      await API.postPasswordReset(
         password,
-        email: email.trim() || undefined,
-      });
+        user.trim() || undefined,
+        token
+      );
       setStatus({
         state: "success",
         message: "Password updated successfully. You can now sign in.",
@@ -156,11 +149,11 @@ export default function PasswordRecovery({
       // Optional: clear password fields
       setPassword("");
       setConfirm("");
-    } catch (err: any) {
+    } catch (error: any) {
+      errorHandling("PasswordRecovery -> handleResetSubmit", error)
       setStatus({
         state: "error",
-        message:
-          err?.message || "Reset failed. Check your token and try again.",
+        message: error.response.data.error,
       });
     }
   }
@@ -172,7 +165,7 @@ export default function PasswordRecovery({
 
   return (
     <div
-    id="PasswordRecovery-container"
+      id="PasswordRecovery-container"
       className={`mx-auto w-full max-w-md rounded-2xl border border-neutral-200/60 bg-white p-6 shadow-sm dark:border-neutral-800 dark:bg-neutral-900`}
     >
       <div className="mb-4 text-center">
@@ -208,7 +201,12 @@ export default function PasswordRecovery({
       {/* Forms */}
       {step === "request" ? (
         <form onSubmit={handleRequestSubmit} noValidate>
-          <Field label="Email" htmlFor="pr-email" error={emailHasError} required>
+          <Field
+            label="Email"
+            htmlFor="pr-email"
+            error={emailHasError}
+            required
+          >
             <input
               id="pr-email"
               type="email"
@@ -230,51 +228,19 @@ export default function PasswordRecovery({
           >
             Send reset link
           </button>
-
-          <div className="mt-4 text-center">
-            <button
-              type="button"
-              onClick={() => setStep("reset")}
-              className="text-sm font-medium text-blue-600 hover:underline disabled:opacity-50 dark:text-blue-400"
-            >
-              Already have a token?
-            </button>
-          </div>
         </form>
       ) : (
         <form onSubmit={handleResetSubmit} noValidate>
-          <Field
-            label="Username"
-            htmlFor="pr-user"
-          >
+          <Field label="Username" htmlFor="pr-user" required>
             <input
               id="pr-user"
               type="text"
-              className="user-name"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              aria-invalid={!!emailHasError}
-              aria-describedby={emailHasError ? "pr-email2-error" : undefined}
-              placeholder="you@example.com"
+              className={inputClass(!user ? "Username required" : "")}
+              value={user}
+              onChange={(e) => setUser(e.target.value)}
+              placeholder="User name"
             />
           </Field>
-
-          <Field label="Token" htmlFor="pr-token" required>
-            <input
-              id="pr-token"
-              type="text"
-              inputMode="text"
-              autoComplete="one-time-code"
-              className={inputClass(!token ? "Token is required." : "")}
-              value={token}
-              onChange={(e) => setToken(e.target.value)}
-              aria-invalid={!token}
-              aria-describedby={!token ? "pr-token-error" : undefined}
-              placeholder="Paste token"
-              required
-            />
-          </Field>
-
           <Field
             label="New password"
             htmlFor="pr-pass"
@@ -290,7 +256,9 @@ export default function PasswordRecovery({
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 aria-invalid={!!passwordLengthHasError}
-                aria-describedby={passwordLengthHasError ? "pr-pass-error" : undefined}
+                aria-describedby={
+                  passwordLengthHasError ? "pr-pass-error" : undefined
+                }
                 placeholder={`At least ${minLength} characters`}
                 required
               />
@@ -320,7 +288,9 @@ export default function PasswordRecovery({
                 value={confirm}
                 onChange={(e) => setConfirm(e.target.value)}
                 aria-invalid={!!comparePasswordHasError}
-                aria-describedby={comparePasswordHasError ? "pr-confirm-error" : undefined}
+                aria-describedby={
+                  comparePasswordHasError ? "pr-confirm-error" : undefined
+                }
                 placeholder="Re-enter password"
                 required
               />
@@ -414,29 +384,3 @@ function inputClass(error?: string) {
 const primaryButtonClass =
   "mt-2 inline-flex w-full items-center justify-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-blue-500 dark:hover:bg-blue-400";
 
-/* ---------- Example usage (remove in production) ----------
-
-<PasswordRecovery
-  onRequestReset={async (email) => {
-    // Example call
-    await fetch("/api/auth/request-reset", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-    }).then((r) => {
-      if (!r.ok) throw new Error("Server error");
-    });
-  }}
-  onResetPassword={async ({ token, password, email }) => {
-    await fetch("/api/auth/reset-password", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token, password, email }),
-    }).then((r) => {
-      if (!r.ok) throw new Error("Invalid token or server error");
-    });
-  }}
-  allowTokenFromQuery
-/>
-
-*/
