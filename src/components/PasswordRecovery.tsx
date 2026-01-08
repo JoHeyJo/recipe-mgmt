@@ -151,7 +151,7 @@ export default function PasswordRecovery({
       errorHandling("PasswordRecovery -> handleResetSubmit", error)
       setStatus({
         state: "error",
-        message: error.response.data,
+        message: error.response.data.error,
       });
     }
   }

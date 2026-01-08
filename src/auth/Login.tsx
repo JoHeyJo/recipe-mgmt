@@ -35,8 +35,8 @@ function LoginForm({ login }: Login) {
       setCredentials(defaultCredentials);
       navigate("/home");
     } catch (error: any) {
-      errorHandling("Login", error);
-      setAlert(error.message);
+      const message = errorHandling("Login", error);
+      setAlert(message);
     }
   }
 

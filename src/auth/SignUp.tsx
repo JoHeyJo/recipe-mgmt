@@ -45,8 +45,8 @@ function SignUp({ signUp }: SignUpProps) {
       setNewUser(defaultNew);
       navigate("/home");
     } catch (error: any) {
-      errorHandling("SignUp", error);
-      setAlert(error.response.data.error);
+      const message = errorHandling("SignUp", error);
+      setAlert(message);
     }
   }
 
