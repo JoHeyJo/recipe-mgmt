@@ -7,6 +7,7 @@ import {
   AttributeData,
   Instruction,
 } from "./utils/types";
+import { errorHandling } from "./utils/ErrorHandling";
 
 export const BASEURL = process.env.REACT_APP_BASE_URL;
 
@@ -33,7 +34,7 @@ class API {
       const res = (await axios({ url, method, data, params, headers })).data;
       return res;
     } catch (error) {
-      console.error(`Error in ${endpoint} API => ${error}`);
+      console.error(`Error in ${endpoint} - API => ${error}`);
       throw error;
     }
   }

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useId } from "react";
-import { AttributeData } from "../../utils/types";
+import { AttributeData } from "./utils/types";
 import {
   Combobox,
   ComboboxButton,
@@ -8,11 +8,11 @@ import {
   ComboboxOptions,
 } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { IngredientManagerProps } from "../../utils/props";
+import { IngredientManagerProps } from "./utils/props";
 import { createPortal } from "react-dom";
 import { useContext } from "react";
-import { ReferenceContext } from "../../context/ReferenceContext";
-import Alert from "../ui/Alert";
+import { ReferenceContext } from "./context/ReferenceContext";
+import Alert from "./components/ui/Alert";
 
 /** IngredientManager - Searches and filters existing ingredient options - ring is removed
  *
@@ -25,6 +25,8 @@ import Alert from "../ui/Alert";
  *
  * Currently all data posted is type of string..
  */
+
+// WORKING MANAGER !!!!!!
 
 function IngredientManager({
   length,
@@ -53,9 +55,52 @@ function IngredientManager({
 
   /** Creates a list of filtered options based on search query */
   const filteredOptions: AttributeData[] =
-    query.trim() === ""
-      ? options
-      : filterOptions(query, options, attribute, stableId);
+    query.trim() === "" ? options : filterOptions();
+
+  /** Filters options => all options / matching options / no match = create... */
+  function filterOptions(): AttributeData[] {
+    const q = query.trim().toLowerCase();
+    if (options.length === 0) {
+      return [
+        {
+          id: `create-${stableId}`,
+          [attribute]: "+ create...",
+        } as AttributeData,
+      ];
+    }
+
+    // Collect matches (keep your original ordering)
+    const matches = options.filter((opt) =>
+      String(opt[attribute as keyof AttributeData] ?? "")
+        .toLowerCase()
+        .includes(q)
+    );
+
+    if (matches.length === 0) {
+      // No matches → only create
+      return [
+        {
+          id: `create-${stableId}`,
+          [attribute]: "+ create...",
+        } as AttributeData,
+      ];
+    }
+
+    // Exact (case-insensitive) match present? then no create
+    const hasExact = matches.some(
+      (opt) =>
+        String(opt[attribute as keyof AttributeData] ?? "")
+          .trim()
+          .toLowerCase() === q
+    );
+    if (hasExact) return matches;
+
+    // Fuzzy matches exist but no exact → append create at the end
+    return [
+      ...matches,
+      { id: `create-${stableId}`, [attribute]: "+ create..." } as AttributeData,
+    ];
+  }
 
   /** Injects query string prior to POST request and updates parent state  */
   async function processNewOption(option: AttributeData) {
@@ -90,27 +135,25 @@ function IngredientManager({
 
   function typeCheckIngredientQuery() {
     try {
-      if (entity === "amount") {
-        const isNaN = +query;
-        if (Number.isNaN(isNaN))
-          throw {
-            message: `Numbers only. Amount value "${query}", not valid.`,
-          };
-      }
-      if (entity === "unit") {
-        const isNaN = +query;
-        if (!Number.isNaN(isNaN)) {
-          throw { message: `No numbers. Unit value "${query}", not valid.` };
-        }
-      }
-      if (entity === "item") {
-        const isNaN = +query;
-        if (!Number.isNaN(isNaN)) {
-          throw { message: `No numbers. Name value "${query}", not valid.` };
-        }
-      }
+         if (entity === "amount") {
+          const isNaN = +query;
+           if (Number.isNaN(isNaN))
+             throw { message: `Numbers only. Amount value "${query}", not valid.` };
+         }
+         if (entity === "unit") {
+           const isNaN = +query;
+           if (!Number.isNaN(isNaN)) {
+             throw { message: `No numbers. Unit value "${query}", not valid.` };
+           }
+         } 
+         if (entity === "item") {
+           const isNaN = +query;
+           if (!Number.isNaN(isNaN)) {
+             throw { message: `No numbers. Name value "${query}", not valid.` };
+           }
+         } 
     } catch (error) {
-      handleComponent.handleError(error.message);
+      handleComponent.handleError(error.message)
     }
   }
 
@@ -118,9 +161,9 @@ function IngredientManager({
   function onValueSelect(value: any) {
     // inputRef.current?.blur() // consider implementing this for friendly accessibility
     setIsKbSuppressed(true);
+    // scrollToElement(dialogPanelRef);
     setQuery("");
     updateOnSelect(value);
-    setDropdownOpen(false);
   }
 
   // Update dropdown position: Dependencies track potential change in dropdown position
@@ -130,43 +173,32 @@ function IngredientManager({
     const rect = wrapperRef.current?.getBoundingClientRect();
     if (rect) {
       setDropdownPos({
-        top: rect.bottom,
-        left: rect.left,
+        top: rect.bottom + window.scrollY,
+        left: rect.left + window.scrollX,
         width: rect.width,
       });
     }
   }, [dropdownOpen, selected, length]);
 
-  // Close on scroll *outside* dropdown - necessary to auto close dropdown when scrolling outside dropdown
-  const openedAtRef = useRef(0);
-
-  const openDropdown = () => {
-    openedAtRef.current = performance.now();
-    setDropdownOpen(true);
-  };
-
+  // Close on scroll *outside* dropdown - necessary on browser
   useEffect(() => {
     if (!dropdownOpen) return;
 
     const closeOnScroll = (event: Event) => {
-      // Ignore “scroll caused by focusing / viewport settling” right after open
-      if (performance.now() - openedAtRef.current < 200) return;
+      const target = event.target as HTMLElement;
 
-      const target = event.target as HTMLElement | Document | null;
-
-      // If scroll target isn't an element, don't treat it as “outside”
-      if (!(target instanceof HTMLElement)) return;
-
-      const isInsideDropdown = dropdownRef.current?.contains(target) ?? false;
-      const isInsideCombobox = wrapperRef.current?.contains(target) ?? false;
+      const isInsideDropdown = dropdownRef.current?.contains(target);
+      const isInsideCombobox = wrapperRef.current?.contains(target);
 
       if (!isInsideDropdown && !isInsideCombobox) {
-        setDropdownOpen(false);
+        // setDropdownOpen(false);
       }
     };
 
     window.addEventListener("scroll", closeOnScroll, true);
-    return () => window.removeEventListener("scroll", closeOnScroll, true);
+    return () => {
+      window.removeEventListener("scroll", closeOnScroll, true);
+    };
   }, [dropdownOpen]);
 
   return (
@@ -185,13 +217,13 @@ function IngredientManager({
           }}
           onClick={(e) => {
             setIsKbSuppressed(false);
-            setDropdownOpen(true);
             // scrollToElement(dialogPanelRef, 40); // clicking on input causes position to jump up and down
           }}
           onChange={(event) => {
             // event.preventDefault();
             setQuery(event.target.value);
           }}
+          onBlur={() => setQuery("")}
           displayValue={(option: { [key: string]: string }) =>
             option?.[attribute]
           }
@@ -215,10 +247,10 @@ function IngredientManager({
               ref={dropdownRef}
               className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-accent py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
               style={{
-                position: "fixed",
                 top: dropdownPos.top,
                 left: dropdownPos.left,
                 width: dropdownPos.width,
+                position: "absolute",
               }}
             >
               {filteredOptions.map((option) => (

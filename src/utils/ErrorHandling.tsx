@@ -8,5 +8,8 @@ export function errorHandling(location: string, error: { message: string, respon
   if(serverError && status >= 400){
     return serverError
   }
-  if(clientError) return clientError
+  if (serverError && status === 401) {
+    return serverError;
+  }
+  if (clientError) return clientError;
 }

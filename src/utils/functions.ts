@@ -1,4 +1,5 @@
 import { jwtDecode } from "jwt-decode";
+import { AttributeData, Instructions } from "./types";
 
 /** Checks if token is valid based on expiration */
 export function isTokenValid(token: string | null) {
@@ -28,4 +29,55 @@ export function scrollIntoViewElement(element) {
       block: "start",
     });
   }
+}
+
+/** Filters options => all options / matching options / no match = create... */
+export function filterOptions(
+  query,
+  options,
+  attribute,
+  stableId
+): AttributeData[] | Instructions {
+  console.log("Manger:",attribute, "-", "options:", options)
+  const q = query.trim().toLowerCase();
+  if (options.length === 0) {
+    return [
+      {
+        id: `create-${stableId}`,
+        [attribute]: "+ create...",
+      } 
+    ];
+  }
+
+  // Collect matches (keep your original ordering)
+  const matches = options.filter((opt) =>
+    String(opt[attribute] ?? "")
+      .toLowerCase()
+      .includes(q)
+  );
+
+  if (matches.length === 0) {
+    // No matches → only create
+    return [
+      {
+        id: `create-${stableId}`,
+        [attribute]: "+ create...",
+      }
+    ];
+  }
+
+  // Exact (case-insensitive) match present? then no create
+  const hasExact = matches.some(
+    (opt) =>
+      String(opt[attribute] ?? "")
+        .trim()
+        .toLowerCase() === q
+  );
+  if (hasExact) return matches;
+
+  // Fuzzy matches exist but no exact → append create at the end
+  return [
+    ...matches,
+    { id: `create-${stableId}`, [attribute]: "+ create..." }
+  ];
 }

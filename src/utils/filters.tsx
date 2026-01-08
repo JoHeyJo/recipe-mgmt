@@ -22,14 +22,14 @@ export function filterTemplate(recipe: Recipe, template: Recipe) {
   if (!ingredients && !instructions && !name && !notes)
     throw { message: "Add name to create recipe template..." };
   if (!name) throw { message: "Recipe template requires name..." };
-  if (ingredients) checkForEmptyItemInput(ingredients);
+  checkForEmptyItemInput(ingredients);
 
   return { id: null, name, notes, ingredients, instructions };
 }
 
 /** Empty item validation - find empty item field and throw error */
 function checkForEmptyItemInput(ingredients: Ingredients) {
-  const isEmpty = ingredients.find((item) => !item.id);
+  const isEmpty = ingredients.find((item) => item.id === null);
   if (isEmpty) throw { message: "To add ingredient a name is required." };
 }
 

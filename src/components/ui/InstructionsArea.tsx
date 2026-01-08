@@ -5,8 +5,6 @@ import { InstructionsAreaProps } from "../../utils/props";
 import { UserContext } from "../../context/UserContext";
 import { PLACE_HOLDER } from "../../utils/templates";
 import { RecipeContext } from "../../context/RecipeContext";
-import { createPortal } from "react-dom";
-import ScrollableComboboxList from "./ScrollableComboboxlist";
 
 /** Triggers creation of input if there are no inputs left (num of inputs = array index)
  * This doesn't work with refactoring of PLACE_HOLDER instructions
