@@ -28,7 +28,7 @@ export interface PasswordRecoveryProps {
   initialEmail?: string;
   /** Optionally prefill token (e.g., from a magic link) */
   initialToken?: string;
-  /** If true, automatically read ?token= from location.search (default: true) */
+  /** If true, automatically read ?token= from searchParams */
   allowTokenFromQuery?: boolean;
   /** Optional heading overrides */
   titles?: Partial<Record<PasswordRecoveryStep, string>>;
@@ -62,14 +62,13 @@ export default function PasswordRecovery({
   useEffect(() => {
     if (!allowTokenFromQuery || typeof window === "undefined") return;
     const URLToken = searchParams.get("token");
-    searchParams.delete("token")
+    searchParams.delete("token");
     setSearchParams(searchParams, { replace: true });
     if (URLToken && !token) {
-      console.log(URLToken)
       setToken(URLToken);
       setStep("reset");
     }
-  }, [allowTokenFromQuery, token]);
+  }, [allowTokenFromQuery, token, searchParams, setSearchParams]);
 
   /** Validate email return error if invalid */
   const emailHasError = useMemo(() => {
