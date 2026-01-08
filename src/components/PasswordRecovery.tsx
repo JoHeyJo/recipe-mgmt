@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import API from "../api";
 import { errorHandling } from "../utils/ErrorHandling";
+import { useSearchParams } from "react-router-dom";
 
 /**
  * PasswordRecovery
@@ -55,15 +56,17 @@ export default function PasswordRecovery({
     | { state: "success"; message: string }
     | { state: "error"; message: string }
   >({ state: "idle" });
+  const [searchParams, setSearchParams] = useSearchParams();
 
   // Autofill token from query string (?token=...) if allowed
   useEffect(() => {
     if (!allowTokenFromQuery || typeof window === "undefined") return;
-    const p = new URLSearchParams(window.location.search);
-    const t = p.get("token");
-    if (t && !token) {
-      setToken(t);
-      API.token = t;
+    const URLToken = searchParams.get("token");
+    searchParams.delete("token")
+    setSearchParams(searchParams, { replace: true });
+    if (URLToken && !token) {
+      console.log(URLToken)
+      setToken(URLToken);
       setStep("reset");
     }
   }, [allowTokenFromQuery, token]);
@@ -227,7 +230,7 @@ export default function PasswordRecovery({
             Send reset link
           </button>
 
-          <div className="mt-4 text-center">
+          {/* <div className="mt-4 text-center">
             <button
               type="button"
               onClick={() => setStep("reset")}
@@ -235,7 +238,7 @@ export default function PasswordRecovery({
             >
               Already have a token?
             </button>
-          </div>
+          </div> */}
         </form>
       ) : (
         <form onSubmit={handleResetSubmit} noValidate>
@@ -409,29 +412,3 @@ function inputClass(error?: string) {
 const primaryButtonClass =
   "mt-2 inline-flex w-full items-center justify-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-blue-500 dark:hover:bg-blue-400";
 
-/* ---------- Example usage (remove in production) ----------
-
-<PasswordRecovery
-  onRequestReset={async (email) => {
-    // Example call
-    await fetch("/api/auth/request-reset", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-    }).then((r) => {
-      if (!r.ok) throw new Error("Server error");
-    });
-  }}
-  onResetPassword={async ({ token, password, email }) => {
-    await fetch("/api/auth/reset-password", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token, password, email }),
-    }).then((r) => {
-      if (!r.ok) throw new Error("Invalid token or server error");
-    });
-  }}
-  allowTokenFromQuery
-/>
-
-*/
