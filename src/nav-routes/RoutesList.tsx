@@ -5,7 +5,7 @@ import { AuthProps, RoutesListProps } from "../utils/types";
 import MainContainer from "../components/pages/MainContainer";
 import PrivateRoutes from "./PrivateRoutes";
 import PublicRoutes from "./PublicRoutes";
-// import PasswordRecovery from "../components/PasswordRecovery";
+import PasswordRecovery from "../components/PasswordRecovery";
 
 function RoutesList({ signUp, login }: RoutesListProps) {
   return (

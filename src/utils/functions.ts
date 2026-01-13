@@ -15,7 +15,6 @@ export function scrollToElement(
   offSet: number = 0
 ) {
   if (!ref) return;
-  console.log("REF", ref);
   window.scroll({
     top: ref?.current?.offsetTop - offSet,
     behavior: "smooth",
@@ -38,7 +37,6 @@ export function filterOptions(
   attribute,
   stableId
 ): AttributeData[] | Instructions {
-  console.log("Manger:",attribute, "-", "options:", options)
   const q = query.trim().toLowerCase();
   if (options.length === 0) {
     return [

@@ -10,9 +10,7 @@ import {
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { IngredientManagerProps } from "../../utils/props";
 import { createPortal } from "react-dom";
-import { useContext } from "react";
-import { ReferenceContext } from "../../context/ReferenceContext";
-import Alert from "../ui/Alert";
+import { filterOptions } from "../../utils/functions";
 
 /** IngredientManager - Searches and filters existing ingredient options - ring is removed
  *
