@@ -3,6 +3,8 @@ import { Ingredients, Instructions, Recipe, Ingredient } from "./types";
 
 /** Filters out template data */
 export function filterTemplate(recipe: Recipe, template: Recipe) {
+  console.log("recipe:",recipe)
+  checkForEmptyItemInput(recipe.ingredients);
   const ingredients = compareIngredients(
     template.ingredients,
     recipe.ingredients
@@ -22,14 +24,15 @@ export function filterTemplate(recipe: Recipe, template: Recipe) {
   if (!ingredients && !instructions && !name && !notes)
     throw { message: "Add name to create recipe template..." };
   if (!name) throw { message: "Recipe template requires name..." };
-  checkForEmptyItemInput(ingredients);
 
   return { id: null, name, notes, ingredients, instructions };
 }
 
 /** Empty item validation - find empty item field and throw error */
 function checkForEmptyItemInput(ingredients: Ingredients) {
-  const isEmpty = ingredients.find((item) => item.id === null);
+  console.log("It's checkForEmptyItemInput", ingredients)
+  const isEmpty = ingredients.some((part) => part.item.id === null);
+  console.log("Is empty?????",isEmpty)
   if (isEmpty) throw { message: "To add ingredient a name is required." };
 }
 

@@ -9,7 +9,7 @@ export function isTokenValid(token: string | null) {
   const currentTime = Math.floor(Date.now() / 1000);
   return expirationTime >= currentTime;
 }
-
+``
 export function scrollToElement(
   ref: React.MutableRefObject<HTMLDivElement | null>,
   offSet: number = 0
