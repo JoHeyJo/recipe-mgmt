@@ -49,6 +49,7 @@ function RecipeRequests({
   const { currentBookId, userId } = useContext(UserContext);
   const {
     recipeId,
+    created_by_id,
     recipeName,
     requestAction,
     contextIngredients,
@@ -58,6 +59,7 @@ function RecipeRequests({
 
   const [recipe, setRecipe] = useState<any>({
     name: recipeName,
+    created_by_id,
     id: recipeId,
     ingredients: defaultIngredient,
     instructions: contextInstructions,
@@ -68,6 +70,7 @@ function RecipeRequests({
 
   const selectedRecipe = {
     recipeId,
+    created_by_id,
     recipeName,
     requestAction,
     contextIngredients,
@@ -79,6 +82,7 @@ function RecipeRequests({
   useEffect(() => {
     setRecipe({
       name: recipeName,
+      created_by_id,
       id: recipeId,
       ingredients: contextIngredients,
       instructions: contextInstructions,
@@ -92,11 +96,11 @@ function RecipeRequests({
       const name = compareNames(recipeName, recipe.name);
       const ingredients = compareIngredients(
         contextIngredients,
-        recipe.ingredients
+        recipe.ingredients,
       );
       const instructions = compareInstructions(
         contextInstructions,
-        recipe.instructions
+        recipe.instructions,
       );
       const notes = compareNotes(selectedNotes, recipe.notes);
       const isAltered = name || ingredients || instructions || notes;
@@ -109,7 +113,7 @@ function RecipeRequests({
   /** Updates recipe state */
   function handleRecipeUpdate(
     data: string | Ingredient[] | Instruction | Instructions,
-    section: string
+    section: string,
   ) {
     setRecipe((prevRecipe) => ({ ...prevRecipe, [section]: data }));
   }
@@ -121,13 +125,13 @@ function RecipeRequests({
       const res = await API.postUserRecipe(
         filteredRecipe,
         currentBookId,
-        userId
+        userId,
       );
       recipeActions.updateRecipes(res);
       return "submitted";
     } catch (error: any) {
       const message = errorHandling("RecipeRequests - addRecipe", error);
-      if(message) setError(message);
+      if (message) setError(message);
       setTimeout(() => setError(null), 5000);
     }
   }
@@ -135,15 +139,17 @@ function RecipeRequests({
   /** Calls API - sends patch request with only edited recipe data */
   async function editRecipe(
     originalRecipe: RecipeContextType,
-    mutableRecipe: Recipe
+    mutableRecipe: Recipe,
   ) {
     try {
+      console.log(originalRecipe,mutableRecipe)
       const mutatedData = filterRecipe(originalRecipe, mutableRecipe);
+      mutatedData.created_by_id = created_by_id;
       const res = await API.editBookRecipe(
         userId,
         currentBookId,
         recipeId,
-        mutatedData
+        mutatedData,
       );
       recipeActions.editRecipe();
       return res;
@@ -155,7 +161,7 @@ function RecipeRequests({
   async function deleteRecipe(
     userId: number,
     bookId: number,
-    recipeId: number
+    recipeId: number,
   ) {
     try {
       const res = API.deleteUserRecipe(userId, currentBookId, recipeId);
@@ -173,7 +179,7 @@ function RecipeRequests({
   }
 
   async function handleSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
     const res = await addRecipe();
     if (res) setShowing();
   }
@@ -216,12 +222,13 @@ function RecipeRequests({
                 className="mx-auto h-full flex-col "
               >
                 <section id="RecipeRequests-recipe" className="flex h-2/3">
-                  <ReferenceContext.Provider value={{dialogPanelRef:dialogPanelRef}}>
+                  <ReferenceContext.Provider
+                    value={{ dialogPanelRef: dialogPanelRef }}
+                  >
                     <section
                       id="RecipeRequests-title-ingredients"
                       className="flex-1 h-full flex flex-col"
                     >
-                     
                       <div className="">
                         <TitleInput handleUpdate={handleRecipeUpdate} />
                       </div>
@@ -232,7 +239,7 @@ function RecipeRequests({
                         />
                       </div>
                     </section>
-                    
+
                     <section
                       id="RecipeRequests-instructions"
                       className="flex-col flex flex-1 ml-4 rounded-md"

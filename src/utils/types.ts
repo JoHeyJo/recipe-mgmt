@@ -7,6 +7,7 @@ export type RecipeData = Recipe & {
 
 export type Recipe = {
   id: number;
+  created_by_id?: number;
   name: string;
   instructions: Instructions;
   notes: string;

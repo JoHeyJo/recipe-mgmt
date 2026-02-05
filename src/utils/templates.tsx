@@ -14,6 +14,7 @@ export const defaultIngredient: Ingredient = {
 
 export const recipeTemplate: Recipe = {
   id: 0,
+  created_by_id: null,
   name: "",
   instructions: [defaultInstruction],
   notes: "",

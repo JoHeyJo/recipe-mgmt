@@ -3,6 +3,7 @@ import { Instructions, Ingredients } from "../utils/types";
 
 export type RecipeContextType = {
   recipeId: number;
+  created_by_id?: number,
   recipeName: string;
   contextInstructions: Instructions;
   selectedNotes: string;

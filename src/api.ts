@@ -98,7 +98,7 @@ class API {
     userId: number,
     bookId: number,
     recipeId: number,
-    data
+    data:any,
   ) {
     const res = await this.request(
       `users/${userId}/books/${bookId}/recipes/${recipeId}`,
