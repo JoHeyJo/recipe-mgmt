@@ -2,8 +2,6 @@ import {
   useState,
   useContext,
   useEffect,
-  FormEventHandler,
-  FormEvent,
   useRef,
 } from "react";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
@@ -35,6 +33,7 @@ import { recipeTemplate } from "../../utils/templates";
 import Alert from "../ui/Alert";
 import { defaultIngredient } from "../../utils/templates";
 import { ReferenceContext } from "../../context/ReferenceContext";
+
 
 /** Processes recipe data. Context data is passed through here on edit. Else template data.
  * RecipeRequests data is mutable while context data(reference data) is not
@@ -154,7 +153,8 @@ function RecipeRequests({
       recipeActions.editRecipe();
       return res;
     } catch (error: any) {
-      errorHandling("RecipeRequests - editRecipe", error);
+      const message = errorHandling("RecipeRequests - editRecipe", error);
+      setError(message)
     }
   }
   /** Calls API - sends delete request for recipe */
