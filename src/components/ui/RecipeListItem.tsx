@@ -19,7 +19,6 @@ function RecipeListItem({
   id,
   handleSelect,
 }: RecipeListItemProps) {
-  console.log("selected id", recipeId);
   return (
     <li
       key={id}
@@ -28,7 +27,7 @@ function RecipeListItem({
     >
       {name}
       <div className={`${recipeId === id ? "block" : "hidden"}`}>
-        <FaShareButton handleClick={() => API.postShareRecipe(recipeId, "")} />
+        <FaShareButton handleClick={() => {}} />
       </div>
     </li>
   );

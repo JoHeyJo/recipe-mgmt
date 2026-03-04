@@ -8,7 +8,7 @@ import useWebSocket from "../../hooks/useWebSocket";
 /** Renders list of recipes that can be selected for view
  *
  *
- * MainContainer -> Recipes
+ * MainContainer -> RecipesList -> [SharePopOut, RecipeListItem]
  */
 function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -21,6 +21,11 @@ function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
     setTimeout(() => {
       webSocketAPI.resetMessage();
     }, 310);
+  }
+
+  /** Open share recipes Dialog panel */
+  function openDialogPanel(){
+    setIsDialogOpen(true)
   }
 
   return (
