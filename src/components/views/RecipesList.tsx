@@ -1,6 +1,6 @@
 import "../../styles/Recipes.css";
-import { Recipe } from "../../utils/types";
 import { RecipesListProps } from "../../utils/props";
+import RecipeListItem from "../ui/RecipeListItem";
 
 /** Renders list of recipes that can be selected for view
  *
@@ -16,13 +16,7 @@ function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
         id="Recipes-container"
       >
         {recipes.map(({ name, id }, index) => (
-          <li
-            key={id}
-            onClick={() => handleSelect(index)}
-            className={`p-2 border-b hover:bg-selected ${selectedId === id ? "text-text-hover bg-selected" : "hover:text-text-hover"}`}
-          >
-            {name}
-          </li>
+          <RecipeListItem name={name} index={index} selectedId={selectedId} id={id} handleSelect={handleSelect} />
         ))}
       </ul>
     </section>
