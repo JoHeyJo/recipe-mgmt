@@ -44,6 +44,8 @@ function MainContainer() {
     requestAction,
   };
 
+  console.log(recipes)
+
   /** Updates rendered recipes after creation */
   function updateRecipes(recipe: Recipe) {
     setRecipes((recipes) => [...recipes, recipe]);

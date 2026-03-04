@@ -108,16 +108,17 @@ class API {
     return res;
   }
 
-  /** Delete book recipe */
+  /** Delete user recipe */
   static async deleteUserRecipe(
     userId: number,
     bookId: number,
-    recipeId: number
+    recipeId: number,
+    createdById: number,
   ) {
     const res = await this.request(
       `users/${userId}/books/${bookId}/recipes/${recipeId}`,
-      {},
-      "DELETE"
+      { createdById },
+      "DELETE",
     );
     return res;
   }

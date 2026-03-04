@@ -155,6 +155,7 @@ function RecipeRequests({
     } catch (error: any) {
       const message = errorHandling("RecipeRequests - editRecipe", error);
       setError(message)
+      setTimeout(() => setError(null), 5000);
     }
   }
   /** Calls API - sends delete request for recipe */
@@ -164,18 +165,24 @@ function RecipeRequests({
     recipeId: number,
   ) {
     try {
-      const res = API.deleteUserRecipe(userId, currentBookId, recipeId);
+      const res = await API.deleteUserRecipe(
+        userId,
+        currentBookId,
+        recipeId,
+        created_by_id,
+      );
       recipeActions.deleteRecipe();
+      return res.message
     } catch (error: any) {
-      const message = errorHandling("RecipeRequests - addRecipe", error);
+      const message = errorHandling("RecipeRequests - deleteRecipe", error);
       setError(message);
       setTimeout(() => setError(null), 5000);
     }
   }
 
-  function handleDelete() {
-    setShowing();
-    deleteRecipe(userId, currentBookId, recipeId);
+  async function handleDelete() {
+    const message = await deleteRecipe(userId, currentBookId, recipeId);
+    if(message) setShowing();
   }
 
   async function handleSubmit(e) {
