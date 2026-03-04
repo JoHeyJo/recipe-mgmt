@@ -207,8 +207,8 @@ export type SearchProps = {
   setList: (list: Recipe[]) => void;
 };
 
-export type PopOutAlertProps = {
-  api: {
+export type SharePopOutProps = {
+  webSocket: {
     sendMessage: (recipient: string) => void;
     message: string;
   };

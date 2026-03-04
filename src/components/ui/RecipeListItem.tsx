@@ -1,31 +1,35 @@
 import FaShareButton from "./common/FaShareButton";
+import API from "../../api";
 
 type RecipeListItemProps = {
   name: string;
   index: number;
-  selectedId: number;
+  recipeId: number;
   id: number;
   handleSelect: (index) => void;
 };
 /** Renders individual recipe item
- * 
+ *
  * RecipesList -> RecipeListItem
  */
 function RecipeListItem({
   name,
   index,
-  selectedId,
+  recipeId,
   id,
   handleSelect,
 }: RecipeListItemProps) {
+  console.log("selected id", recipeId);
   return (
     <li
       key={id}
       onClick={() => handleSelect(index)}
-      className={`flex justify-between p-2 border-b hover:bg-selected ${selectedId === id ? "text-text-hover bg-selected" : "hover:text-text-hover"}`}
+      className={`flex justify-between p-2 border-b hover:bg-selected ${recipeId === id ? "text-text-hover bg-selected" : "hover:text-text-hover"}`}
     >
       {name}
-      <FaShareButton handleClick={()=>{}}/>
+      <div className={`${recipeId === id ? "block" : "hidden"}`}>
+        <FaShareButton handleClick={() => API.postShareRecipe(recipeId, "")} />
+      </div>
     </li>
   );
 }

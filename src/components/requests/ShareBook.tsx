@@ -6,7 +6,7 @@ import { ShareBookProp } from "../../utils/props";
 
 /** Handles User request to share book with recipient
  *
- * PopOutAlert -> ShareBook -> [InputWithLabelForm, PillButtonSubmit]
+ * SharePopOut -> ShareBook -> [InputWithLabelForm, PillButtonSubmit]
  */
 function ShareBook({ webSocketAPI }: ShareBookProp) {
   const [user, setUser] = useState("");
@@ -24,7 +24,7 @@ function ShareBook({ webSocketAPI }: ShareBookProp) {
     try {
       webSocketAPI.sendMessage(user);
     } catch (error: any) {
-      errorHandling("BookView -> shareBookWithUser", error);
+      errorHandling("ShareBook -> handleSubmit", error);
       throw error;
     }
   }

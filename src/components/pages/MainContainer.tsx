@@ -12,7 +12,7 @@ import { RecipeContext } from "../../context/RecipeContext";
 import BookView from "../views/BookView";
 import Search from "../ui/Search";
 import useWebSocket from "../../hooks/useWebSocket";
-import PopOutAlert from "../ui/common/PopOutAlert";
+import SharePopOut from "../ui/common/SharePopOut";
 import FaShareButton from "../ui/common/FaShareButton";
 
 /** Renders the main container (book) housing list of recipes and individual recipe
@@ -179,8 +179,8 @@ function MainContainer() {
               <div className="flex justify-between p-1 font-semibold text-lg border-b-2">
                 <div>Recipes for:</div>
                 <BookView resetSelected={resetSelectedRecipe} />
-                <PopOutAlert
-                  api={webSocketAPI}
+                <SharePopOut
+                  webSocket={webSocketAPI}
                   isDialogOpen={isDialogOpen}
                   handleClose={closeDialogPanel}
                 />

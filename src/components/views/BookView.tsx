@@ -8,7 +8,7 @@ import { Book } from "../../utils/types";
 
 /** Facilitates rendering books & book selection
  *
- * MainContainer -> BookView -> [CreateBook, MultiSelect, FaShareButton, ShareBookWithUser]
+ * MainContainer -> BookView -> [CreateBook, MultiSelect]
  */
 function BookView({ resetSelected }: BookViewProp) {
   const { userId, defaultBook, books, setUserData } = useContext(UserContext);

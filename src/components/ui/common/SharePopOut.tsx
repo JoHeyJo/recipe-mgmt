@@ -1,18 +1,18 @@
 import { Dialog, DialogBackdrop } from "@headlessui/react";
-import { PopOutAlertProps } from "../../../utils/props";
+import { SharePopOutProps } from "../../../utils/props";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import ShareBook from "../../requests/ShareBook";
 
-/** PopOut overlay on grey dialog screen
+/** PopOut overlay on grey dialog screen that contains an input box
  *
- * MainContainer -> PopOutAlert -> ShareBook
+ * MainContainer -> SharePopOut -> ShareBook
  */
-function PopOutAlert({
-  api,
+function SharePopOut({
+  webSocket,
   isDialogOpen,
   handleClose,
-}: PopOutAlertProps) {
+}: SharePopOutProps) {
   return (
     <Dialog open={isDialogOpen} onClose={handleClose} className="relative z-10">
       <DialogBackdrop
@@ -26,7 +26,7 @@ function PopOutAlert({
             className="flex items-center p-4 mb-4 text-blue-800 border-t-4 border-blue-300 bg-blue-50 dark:text-blue-400 dark:bg-gray-800 dark:border-blue-800"
             role="alert"
           >
-              <ShareBook webSocketAPI={api}/>
+              <ShareBook webSocketAPI={webSocket}/>
             <button
               onClick={handleClose}
               type="button"
@@ -42,4 +42,4 @@ function PopOutAlert({
   );
 }
 
-export default PopOutAlert;
+export default SharePopOut;

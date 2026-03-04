@@ -144,9 +144,7 @@ function RecipeRequests({
       console.log(originalRecipe,mutableRecipe)
       const mutatedData = filterRecipe(originalRecipe, mutableRecipe);
       mutatedData.created_by_id = created_by_id;
-      const res = await API.editBookRecipe(
-        userId,
-        currentBookId,
+      const res = await API.patchUserRecipe(
         recipeId,
         mutatedData,
       );
