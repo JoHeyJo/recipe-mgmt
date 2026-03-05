@@ -32,6 +32,7 @@ function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
     <section>
       <div>
         <SharePopOut
+          action={"shareRecipe"}
           webSocket={webSocketAPI}
           isDialogOpen={isDialogOpen}
           handleClose={closeDialogPanel}

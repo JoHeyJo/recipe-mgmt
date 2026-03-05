@@ -9,7 +9,7 @@ import { ShareBookProp } from "../../utils/props";
  *
  * SharePopOut -> ShareBook -> [InputWithLabelForm, PillButtonSubmit]
  */
-function ShareBook({ webSocketAPI, handleClose }: ShareBookProp) {
+function ShareBook({ webSocketAPI, action }: ShareBookProp) {
   const [user, setUser] = useState("");
   const [response, setResponse] = useState(null);
 
@@ -24,7 +24,6 @@ function ShareBook({ webSocketAPI, handleClose }: ShareBookProp) {
     event.preventDefault();
     try {
       webSocketAPI.sendMessage(user);
-      // handleClose();
     } catch (error: any) {
       errorHandling("ShareBook -> handleSubmit", error);
       throw error;
@@ -34,14 +33,14 @@ function ShareBook({ webSocketAPI, handleClose }: ShareBookProp) {
   useEffect(()=>{
     setResponse(webSocketAPI.message)
   },[webSocketAPI.message])
-
+  console.log("action",action)
   return (
     <form onSubmit={handleSubmit}>
       {response ? (
         response
       ) : (
         <>
-          <div>Who would you like to share this book with?</div>
+          <div>{`Who would you like to share this ${action === "shareBook" ? "book" : "recipe"} with?`}</div>
           <InputWithLabelForm
             type={"user-name"}
             name={"User Name:"}

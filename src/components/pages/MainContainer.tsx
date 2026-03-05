@@ -180,6 +180,7 @@ function MainContainer() {
                 <div>Recipes for:</div>
                 <BookView resetSelected={resetSelectedRecipe} />
                 <SharePopOut
+                  action={"shareBook"}
                   webSocket={webSocketAPI}
                   isDialogOpen={isDialogOpen}
                   handleClose={closeDialogPanel}
