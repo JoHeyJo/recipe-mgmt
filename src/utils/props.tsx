@@ -228,6 +228,7 @@ export type InputWithLabelFormProps = {
 };
 
 export type ShareBookProp = {
+  handleClose: () => void;
   webSocketAPI: {
     sendMessage: (recipient: string) => void;
     message: string;

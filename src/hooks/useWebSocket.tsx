@@ -28,7 +28,8 @@ function useWebSocket() {
     });
 
     newSocket.on("book_shared", (data) => {
-      setMessage(data.data);
+      console.log(data)
+      setMessage(data.message);
     });
 
     newSocket.on("user_shared_book", (data) => {
@@ -50,7 +51,7 @@ function useWebSocket() {
   /** Sends message to share book with recipient */
   function sendMessage(recipient: string) {
     if (socket && recipient) {
-      socket.emit("share", {
+      socket.emit("share_book", {
         userId,
         recipient,
         currentBookId,

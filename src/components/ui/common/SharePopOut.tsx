@@ -26,7 +26,7 @@ function SharePopOut({
             className="flex items-center p-4 mb-4 text-blue-800 border-t-4 border-blue-300 bg-blue-50 dark:text-blue-400 dark:bg-gray-800 dark:border-blue-800"
             role="alert"
           >
-              <ShareBook webSocketAPI={webSocket}/>
+            <ShareBook webSocketAPI={webSocket} handleClose={handleClose} />
             <button
               onClick={handleClose}
               type="button"
