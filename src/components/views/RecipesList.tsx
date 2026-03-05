@@ -49,6 +49,7 @@ function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
             recipeId={selectedId}
             id={id}
             handleSelect={handleSelect}
+            handleOpen={openDialogPanel}
           />
         ))}
       </ul>

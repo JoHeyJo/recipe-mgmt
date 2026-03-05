@@ -7,6 +7,7 @@ type RecipeListItemProps = {
   recipeId: number;
   id: number;
   handleSelect: (index) => void;
+  handleOpen: () => void;
 };
 /** Renders individual recipe item
  *
@@ -18,6 +19,7 @@ function RecipeListItem({
   recipeId,
   id,
   handleSelect,
+  handleOpen,
 }: RecipeListItemProps) {
   return (
     <li
@@ -27,7 +29,7 @@ function RecipeListItem({
     >
       {name}
       <div className={`${recipeId === id ? "block" : "hidden"}`}>
-        <FaShareButton handleClick={() => {}} />
+        <FaShareButton handleClick={() => handleOpen()} />
       </div>
     </li>
   );
