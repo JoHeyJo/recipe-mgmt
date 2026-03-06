@@ -2,7 +2,7 @@ import { createContext } from "react";
 import { Instructions, Ingredients } from "../utils/types";
 
 export type RecipeContextType = {
-  recipeId: number;
+  recipeId?: number;
   created_by_id?: number,
   recipeName: string;
   contextInstructions: Instructions;
@@ -12,4 +12,12 @@ export type RecipeContextType = {
   dialogRef?:any;
 };
 
-export const RecipeContext = createContext<RecipeContextType | null>(null);
+export const RecipeContext = createContext<RecipeContextType | null>({
+  recipeId: null,
+  created_by_id: null,
+  recipeName: "",
+  contextInstructions: [],
+  selectedNotes: "",
+  contextIngredients: [],
+  requestAction: "",
+});

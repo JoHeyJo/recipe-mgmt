@@ -210,7 +210,8 @@ export type SearchProps = {
 export type SharePopOutProps = {
   action: string;
   webSocket: {
-    sendMessage: (recipient: string) => void;
+    sendBook: (recipient: string) => void;
+    sendRecipe: (recipient: string) => void;
     message: string;
   };
   isDialogOpen: boolean;
@@ -231,7 +232,8 @@ export type InputWithLabelFormProps = {
 export type ShareBookProp = {
   action: string;
   webSocketAPI: {
-    sendMessage: (recipient: string) => void;
+    sendBook: (recipient: string) => void;
+    sendRecipe: (recipient: string) => void;
     message: string;
   };
 };

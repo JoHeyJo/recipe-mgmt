@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import io from "socket.io-client";
 import { UserContext } from "../context/UserContext";
+import { RecipeContext } from "../context/RecipeContext";
 import API from "../api";
 import { BASEURL, protocol } from "../api";
 
@@ -17,6 +18,8 @@ function useWebSocket() {
   const [data, setData] = useState();
 
   const { userId, currentBookId, user, currentBook } = useContext(UserContext);
+  const {recipeId, created_by_id, } = useContext(RecipeContext); 
+  console.log("web hook data",recipeId, created_by_id, user)
   /** Initiates handshake, maintains connection, & disconnects on unmount */
   useEffect(() => {
     const newSocket = io(`${protocol}://${BASEURL}`, {
@@ -49,7 +52,19 @@ function useWebSocket() {
   }, []);
 
   /** Sends message to share book with recipient */
-  function sendMessage(recipient: string) {
+  function sendBook(recipient: string) {
+    if (socket && recipient) {
+      socket.emit("share_book", {
+        userId,
+        recipient,
+        currentBookId,
+        user,
+        currentBook: currentBook.title,
+      });
+    }
+  }
+
+  function sendRecipe(recipient: string) {
     if (socket && recipient) {
       socket.emit("share_book", {
         userId,
@@ -67,7 +82,7 @@ function useWebSocket() {
     setStatus(null);
   }
 
-  return { sendMessage, message, resetMessage, status, data };
+  return { sendRecipe, sendBook, message, resetMessage, status, data };
 }
 
 export default useWebSocket;

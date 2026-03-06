@@ -4,12 +4,12 @@ import InputWithLabelForm from "../views/InputWithLabelForm";
 import { PillButtonSubmit } from "../ui/PillButtonSubmit";
 import { ShareBookProp } from "../../utils/props";
 
-/** Handles User request to share book recipe with recipient
+/** Handles User request to share book/recipe with recipient
  * Calls on custom hook to establish WebSocket connection and communication
  *
- * SharePopOut -> ShareBook -> [InputWithLabelForm, PillButtonSubmit]
+ * SharePopOut -> Share -> [InputWithLabelForm, PillButtonSubmit]
  */
-function ShareBook({ webSocketAPI, action }: ShareBookProp) {
+function Share({ webSocketAPI, action }: ShareBookProp) {
   const [user, setUser] = useState("");
   const [response, setResponse] = useState(null);
 
@@ -23,9 +23,9 @@ function ShareBook({ webSocketAPI, action }: ShareBookProp) {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      webSocketAPI.sendMessage(user);
+      webSocketAPI.sendBook(user);
     } catch (error: any) {
-      errorHandling("ShareBook -> handleSubmit", error);
+      errorHandling("Share -> handleSubmit", error);
       throw error;
     }
   }
@@ -33,7 +33,6 @@ function ShareBook({ webSocketAPI, action }: ShareBookProp) {
   useEffect(()=>{
     setResponse(webSocketAPI.message)
   },[webSocketAPI.message])
-  console.log("action",action)
   return (
     <form onSubmit={handleSubmit}>
       {response ? (
@@ -58,4 +57,4 @@ function ShareBook({ webSocketAPI, action }: ShareBookProp) {
   );
 }
 
-export default ShareBook;
+export default Share;
