@@ -18,8 +18,8 @@ function useWebSocket() {
   const [data, setData] = useState();
 
   const { userId, currentBookId, user, currentBook } = useContext(UserContext);
-  const {recipeId, created_by_id, } = useContext(RecipeContext); 
-  console.log("web hook data",recipeId, created_by_id, user)
+  const {recipeId, created_by_id, recipeName} = useContext(RecipeContext); 
+
   /** Initiates handshake, maintains connection, & disconnects on unmount */
   useEffect(() => {
     const newSocket = io(`${protocol}://${BASEURL}`, {
@@ -35,13 +35,28 @@ function useWebSocket() {
       setMessage(data.message);
     });
 
+    newSocket.on("recipe_shared", (data) => {
+      console.log("sharing recipe",data)
+      setMessage(data.message);
+    });
+
     newSocket.on("user_shared_book", (data) => {
       setMessage(data.message);
       setData(data.books);
       setStatus(200);
     });
 
+    newSocket.on("user_shared_recipe", (data) => {
+      setMessage(data.message);
+      setData(data.books);
+      setStatus(200);
+    });
+
     newSocket.on("error_sharing_book", (data) => {
+      setMessage(data.data);
+    });
+
+    newSocket.on("error_sharing_recipe", (data) => {
       setMessage(data.data);
     });
 
@@ -65,13 +80,13 @@ function useWebSocket() {
   }
 
   function sendRecipe(recipient: string) {
+    console.log("sending recipe through socket")
     if (socket && recipient) {
-      socket.emit("share_book", {
-        userId,
+      socket.emit("share_recipe", {
         recipient,
-        currentBookId,
+        recipeId,
         user,
-        currentBook: currentBook.title,
+        recipeName,
       });
     }
   }

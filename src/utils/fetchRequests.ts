@@ -49,7 +49,6 @@ export async function validateUserFetchBooks(
   if (userId) {
     try {
       const res = await API.getUserBooks(userId);
-      console.log("Books",res)
       setBooks((books) => ({ ...books, books: res }));
       return res;
     } catch (error: any) {
