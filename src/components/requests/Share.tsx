@@ -39,19 +39,8 @@ function Share({ action }: ShareBookProp) {
     }
   }
 
-  useEffect(() => {
-    console.log("In Share message:", message);
-    setResponse(message);
-  }, [message]);
-
-  console.log("in Share:", message);
-
   return (
     <form onSubmit={handleSubmit}>
-      {response ? (
-        response
-      ) : (
-        <>
           <div>{`Who would you like to share this ${action === "shareBook" ? "book" : "recipe"} with?`}</div>
           <InputWithLabelForm
             type={"user-name"}
@@ -64,8 +53,6 @@ function Share({ action }: ShareBookProp) {
             styles={"px-2 border-2 border-solid"}
           />
           <PillButtonSubmit action={"share"} />
-        </>
-      )}
     </form>
   );
 }

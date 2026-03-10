@@ -15,7 +15,7 @@ type HandleInstruction = {
   associate: (
     userId: number,
     currentBookId: number,
-    instructionId: number
+    instructionId: number,
   ) => void;
   addCreated: (instruction: Instruction) => void;
 };
@@ -48,7 +48,7 @@ export type Options = {
 type HandleRecipe = {
   handleRecipe: (
     data: string | Ingredient[] | Instruction | Instructions,
-    section: string
+    section: string,
   ) => void;
 };
 
@@ -61,14 +61,14 @@ type HandleIngredient = {
 type HandleOption = {
   post: (
     entity: string,
-    attributeObject: AttributeData
+    attributeObject: AttributeData,
   ) => Promise<AttributeData>;
   addCreated: (state: string, option: AttributeData) => void;
   associate: (
     userId: number,
     currentBookId: number,
     optionId: number,
-    component: string
+    component: string,
   ) => void;
 };
 
@@ -93,7 +93,7 @@ export type ComponentsOptionsRequestsProps = {
 };
 
 export type IngredientManagerProps = {
-  length:number;
+  length: number;
   value: AttributeData;
   attribute: string;
   options: AttributeData[];
@@ -104,7 +104,7 @@ export type IngredientManagerProps = {
     handleError: (error: string) => void;
   };
   entity: string;
-  placeholder:string;
+  placeholder: string;
 };
 
 export type IngredientsViewProp = {
@@ -211,6 +211,7 @@ export type SharePopOutProps = {
   action: string;
   isDialogOpen: boolean;
   handleClose: (resetMessage: any) => void;
+  openDialogPanel: () => void;
 };
 
 export type InputWithLabelFormProps = {
@@ -234,4 +235,4 @@ export type AvatarFrameProp = {
 
 export type UserAvatarProp = {
   title: string;
-}
+};

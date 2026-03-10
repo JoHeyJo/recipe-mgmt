@@ -3,6 +3,8 @@ import { SharePopOutProps } from "../../../utils/props";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import Share from "../../requests/Share";
+import { WebSocketContext } from "../../../context/WebSocketContext";
+import { useContext, useEffect } from "react";
 
 /** PopOut overlay on grey dialog screen that contains an input box
  *
@@ -12,7 +14,17 @@ function SharePopOut({
   action,
   isDialogOpen,
   handleClose,
+  openDialogPanel,
 }: SharePopOutProps) {
+  const { message, sendBook, sendRecipe, resetMessage, status } =
+    useContext(WebSocketContext);
+
+  useEffect(() => {
+    console.log("In Share message:", message);
+    // setIsDialogOpen(message);
+    openDialogPanel();
+  }, [status]);
+
   return (
     <Dialog open={isDialogOpen} onClose={handleClose} className="relative z-10">
       <DialogBackdrop
@@ -26,7 +38,8 @@ function SharePopOut({
             className="flex items-center p-4 mb-4 text-blue-800 border-t-4 border-blue-300 bg-blue-50 dark:text-blue-400 dark:bg-gray-800 dark:border-blue-800"
             role="alert"
           >
-            <Share action={action} />
+            {message ? message : <Share action={action} />}
+
             <button
               onClick={handleClose}
               type="button"

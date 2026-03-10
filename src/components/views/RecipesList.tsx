@@ -35,12 +35,6 @@ function RecipesList({
     setIsDialogOpen(true);
   }
 
-    useEffect(() => {
-      console.log("In Share message:", message);
-      // setIsDialogOpen(message);
-      setIsDialogOpen(true)
-    }, [message]);
-
   return (
     <section>
       <div>
@@ -48,6 +42,7 @@ function RecipesList({
           action={"shareRecipe"}
           isDialogOpen={isDialogOpen}
           handleClose={closeDialogPanel}
+          openDialogPanel={openDialogPanel}
         />
       </div>
       <ul

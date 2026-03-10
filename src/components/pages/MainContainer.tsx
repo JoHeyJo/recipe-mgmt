@@ -31,7 +31,7 @@ function MainContainer() {
   const [isOpen, setOpen] = useState(false);
   const [requestAction, setRequestAction] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);  
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const recipeData = {
     recipeId: selectedRecipe.id,
@@ -43,7 +43,7 @@ function MainContainer() {
     requestAction,
   };
 
-  console.log(recipes)
+  console.log(recipes);
 
   /** Updates rendered recipes after creation */
   function updateRecipes(recipe: Recipe) {
@@ -134,7 +134,7 @@ function MainContainer() {
     setIsDialogOpen(false);
     // state setter is delayed until Dialog fades out
     setTimeout(() => {
-      resetMessage();
+      // resetMessage();
     }, 310);
   }
 
@@ -147,6 +147,11 @@ function MainContainer() {
   //     }, 310);
   //   }
   // }, [status]);
+
+  /** Open share recipes Dialog panel */
+  function openDialogPanel() {
+    setIsDialogOpen(true);
+  }
 
   if (!isLoading) <div>Loading...</div>;
 
@@ -176,6 +181,7 @@ function MainContainer() {
                   <div>Recipes for:</div>
                   <BookView resetSelected={resetSelectedRecipe} />
                   <SharePopOut
+                    openDialogPanel={openDialogPanel}
                     action={"shareBook"}
                     isDialogOpen={isDialogOpen}
                     handleClose={closeDialogPanel}
