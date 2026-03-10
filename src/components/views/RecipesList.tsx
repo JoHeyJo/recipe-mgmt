@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import "../../styles/Recipes.css";
 import { RecipesListProps } from "../../utils/props";
 import SharePopOut from "../ui/common/SharePopOut";
@@ -18,14 +18,15 @@ function RecipesList({
 }: RecipesListProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const webSocketAPI = useContext(WebSocketContext)
+  const { message, sendBook, sendRecipe, resetMessage, status } =
+    useContext(WebSocketContext);
 
   /** Close Share recipe Dialog panel */
   function closeDialogPanel() {
     setIsDialogOpen(false);
     // state setter is delayed until Dialog fades out
     setTimeout(() => {
-      webSocketAPI.resetMessage();
+      resetMessage();
     }, 310);
   }
 
@@ -33,6 +34,12 @@ function RecipesList({
   function openDialogPanel() {
     setIsDialogOpen(true);
   }
+
+    useEffect(() => {
+      console.log("In Share message:", message);
+      // setIsDialogOpen(message);
+      setIsDialogOpen(true)
+    }, [message]);
 
   return (
     <section>

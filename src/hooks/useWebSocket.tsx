@@ -102,7 +102,7 @@ function useWebSocket() {
     setMessage("");
     setStatus(null);
   }
-
+  console.log("Message:",message)
   return { sendRecipe, sendBook, message, resetMessage, status };
 }
 

@@ -16,7 +16,8 @@ function Share({ action }: ShareBookProp) {
 
   const { message, sendBook, sendRecipe, resetMessage, status } =
     useContext(WebSocketContext);
-
+  console.log("sendRecipe:", sendRecipe);  
+  console.log("message in Share:",message)
   /** Facilitates change in user name */
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const value = event.target.value;
@@ -26,11 +27,12 @@ function Share({ action }: ShareBookProp) {
   /** Post request to share User book with recipient */
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log("TOGGLE SEND user:",user)
+    console.log("TOGGLE SEND user:",user, action)
     try {
       action === "shareBook"
         ? sendBook(user)
         : sendRecipe(user);
+      
     } catch (error: any) {
       errorHandling("Share -> handleSubmit", error);
       throw error;
@@ -39,9 +41,7 @@ function Share({ action }: ShareBookProp) {
 
   useEffect(() => {
     console.log("In Share message:", message);
-    console.log("In Share message:", message);
     setResponse(message);
-    console.log("REsponse:", response);
   }, [message]);
 
   console.log("in Share:", message);
