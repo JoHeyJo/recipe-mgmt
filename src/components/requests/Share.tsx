@@ -3,6 +3,7 @@ import { errorHandling } from "../../utils/ErrorHandling";
 import InputWithLabelForm from "../views/InputWithLabelForm";
 import { PillButtonSubmit } from "../ui/PillButtonSubmit";
 import { ShareBookProp } from "../../utils/props";
+import useWebSocket from "../../hooks/useWebSocket";
 
 /** Handles User request to share book/recipe with recipient
  * Calls on custom hook to establish WebSocket connection and communication
@@ -12,6 +13,8 @@ import { ShareBookProp } from "../../utils/props";
 function Share({ webSocketAPI, action }: ShareBookProp) {
   const [user, setUser] = useState("");
   const [response, setResponse] = useState(null);
+
+  const { message, sendBook, sendRecipe } = useWebSocket();
 
   /** Facilitates change in user name */
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -24,17 +27,23 @@ function Share({ webSocketAPI, action }: ShareBookProp) {
     event.preventDefault();
     try {
       action === "shareBook"
-      ? webSocketAPI.sendBook(user)
-      : webSocketAPI.sendRecipe(user);
+        ? sendBook(user)
+        : sendRecipe(user);
     } catch (error: any) {
       errorHandling("Share -> handleSubmit", error);
       throw error;
     }
   }
 
-  useEffect(()=>{
-    setResponse(webSocketAPI.message)
-  },[webSocketAPI.message])
+  useEffect(() => {
+    console.log("In Share message:", message);
+    console.log("In Share webSocketAPI.message:", webSocketAPI.message);
+    setResponse(webSocketAPI.message);
+    console.log("REsponse:", response);
+  }, [message]);
+
+  console.log("in Share:", message);
+
   return (
     <form onSubmit={handleSubmit}>
       {response ? (

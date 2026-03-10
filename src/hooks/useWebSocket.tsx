@@ -5,10 +5,10 @@ import { RecipeContext } from "../context/RecipeContext";
 import API from "../api";
 import { BASEURL, protocol } from "../api";
 
-/** Custom Hook to create open connection between client and server 
- * 
- * Notes: Should auto connect be turned off? 
- * 
+/** Custom Hook to create open connection between client and server
+ *
+ * Notes: Should auto connect be turned off?
+ *
  * [MainContainer, RecipesList] - > useWebSocket
  */
 function useWebSocket() {
@@ -17,8 +17,9 @@ function useWebSocket() {
   const [status, setStatus] = useState(null);
   const [data, setData] = useState();
 
-  const { userId, currentBookId, user, currentBook } = useContext(UserContext);
-  const {recipeId, created_by_id, recipeName} = useContext(RecipeContext); 
+  const { userId, currentBookId, user, currentBook, setUserData } =
+    useContext(UserContext);
+  const { recipeId, created_by_id, recipeName } = useContext(RecipeContext);
 
   /** Initiates handshake, maintains connection, & disconnects on unmount */
   useEffect(() => {
@@ -27,27 +28,28 @@ function useWebSocket() {
     });
 
     setSocket(newSocket);
-    newSocket.on("connect", () => {
-    });
+    newSocket.on("connect", () => {});
 
     newSocket.on("book_shared", (data) => {
+      console.log("book shared:",data.message)
       setMessage(data.message);
     });
 
     newSocket.on("recipe_shared", (data) => {
+      console.log("recipe shared:", data.message);
       setMessage(data.message);
     });
 
     newSocket.on("user_shared_book", (data) => {
       setMessage(data.message);
-      setData(data.books);
+      setUserData((prevState) => ({ ...prevState, data, books: data.books }));
       setStatus(200);
     });
 
     newSocket.on("user_shared_recipe", (data) => {
-      console.log("socket response:",data)
-      // setMessage(data.message);
-      // setStatus(200);
+      console.log("message in socket:", data)
+      setMessage(data.message);
+      setStatus(200);
     });
 
     newSocket.on("error_sharing_book", (data) => {
@@ -94,7 +96,7 @@ function useWebSocket() {
     setStatus(null);
   }
 
-  return { sendRecipe, sendBook, message, resetMessage, status, data };
+  return { sendRecipe, sendBook, message, resetMessage, status };
 }
 
 export default useWebSocket;
