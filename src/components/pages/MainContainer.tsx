@@ -11,7 +11,6 @@ import RecipeRequests from "../requests/RecipeRequests";
 import { RecipeContext } from "../../context/RecipeContext";
 import BookView from "../views/BookView";
 import Search from "../ui/Search";
-import useWebSocket from "../../hooks/useWebSocket";
 import SharePopOut from "../ui/common/SharePopOut";
 import FaShareButton from "../ui/common/FaShareButton";
 import { WebSocketContext } from "../../context/WebSocketContext";
@@ -35,6 +34,8 @@ function MainContainer() {
 
   const { message, sendBook, sendRecipe, resetMessage, status } =
     useWebSocket();
+
+  
 
   const recipeData = {
     recipeId: selectedRecipe.id,
@@ -153,6 +154,7 @@ function MainContainer() {
 
   if (!isLoading) <div>Loading...</div>;
 
+  console.log("recipe data:", recipeData);
   return (
     <div className="border-4 mt-7 bg-primary mx-auto max-w-7xl xl:px-8 xl:border-2">
       {/* <div className="w-[1350px] h-[819px] absolute overflow-hidden -translate-x-2/4 p-0 border-[3px] "> */}

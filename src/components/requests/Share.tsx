@@ -14,7 +14,8 @@ function Share({ action }: ShareBookProp) {
   const [user, setUser] = useState("");
   const [response, setResponse] = useState(null);
 
-  const webSocketAPI = useContext(WebSocketContext);
+  const { message, sendBook, sendRecipe, resetMessage, status } =
+    useContext(WebSocketContext);
 
   /** Facilitates change in user name */
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -25,10 +26,11 @@ function Share({ action }: ShareBookProp) {
   /** Post request to share User book with recipient */
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    console.log("TOGGLE SEND user:",user)
     try {
       action === "shareBook"
-        ? webSocketAPI.sendBook(user)
-        : webSocketAPI.sendRecipe(user);
+        ? sendBook(user)
+        : sendRecipe(user);
     } catch (error: any) {
       errorHandling("Share -> handleSubmit", error);
       throw error;
@@ -36,13 +38,13 @@ function Share({ action }: ShareBookProp) {
   }
 
   useEffect(() => {
-    console.log("In Share message:", webSocketAPI.message);
-    console.log("In Share webSocketAPI.message:", webSocketAPI.message);
-    setResponse(webSocketAPI.message);
+    console.log("In Share message:", message);
+    console.log("In Share message:", message);
+    setResponse(message);
     console.log("REsponse:", response);
-  }, [webSocketAPI.message]);
+  }, [message]);
 
-  console.log("in Share:", webSocketAPI.message);
+  console.log("in Share:", message);
 
   return (
     <form onSubmit={handleSubmit}>
