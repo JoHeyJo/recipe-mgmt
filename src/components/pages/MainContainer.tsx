@@ -33,7 +33,8 @@ function MainContainer() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const webSocketAPI = useWebSocket();
+  const { message, sendBook, sendRecipe, resetMessage, status } =
+    useWebSocket();
 
   const recipeData = {
     recipeId: selectedRecipe.id,
@@ -136,19 +137,19 @@ function MainContainer() {
     setIsDialogOpen(false);
     // state setter is delayed until Dialog fades out
     setTimeout(() => {
-      webSocketAPI.resetMessage();
+      resetMessage();
     }, 310);
   }
 
   /** Mange webSocket side effects */
   useEffect(() => {
     /** On successful communication and share with server update list of books  */
-    if (webSocketAPI.status === 200) {
+    if (status === 200) {
       setTimeout(() => {
         setIsDialogOpen(true);
       }, 310);
     }
-  }, [webSocketAPI.status]);
+  }, [status]);
 
   if (!isLoading) <div>Loading...</div>;
 
@@ -162,42 +163,44 @@ function MainContainer() {
       >
         {/* Does recipes need to be reduced to just ids and title??? */}
         <RecipeContext.Provider value={recipeData}>
-          <WebSocketContext.Provider value={webSocketAPI}>
-          <section
-            id="MainContainer-leftpage"
-            className="flex-1 flex flex-col min-h-0"
+          <WebSocketContext.Provider
+            value={{ message, sendBook, sendRecipe, resetMessage, status }}
           >
-            <div id="MainContainer-header">
-              <RecipeRequests
-                recipeActions={recipeActions}
-                setShowing={toggleModel}
-                isOpen={isOpen}
-              />
-              <div className="flex justify-between p-1 font-semibold text-lg border-b-2">
-                <div>Recipes for:</div>
-                <BookView resetSelected={resetSelectedRecipe} />
-                <SharePopOut
-                  action={"shareBook"}
-                  isDialogOpen={isDialogOpen}
-                  handleClose={closeDialogPanel}
-                  />
-                <FaShareButton handleClick={() => setIsDialogOpen(true)} />
-                <Search list={recipes} setList={filterRecipes} />
-                <FaPlusButton onAction={toggleCreateForm} />
-              </div>
-            </div>
-            <div
-              id="MainContainer-recipes"
-              className="flex-1 overflow-y-auto min-h-0"
-              >
-              <RecipesList
-                recipes={filteredRecipes}
-                handleSelect={selectRecipe}
-                selectedId={selectedRecipe.id}
+            <section
+              id="MainContainer-leftpage"
+              className="flex-1 flex flex-col min-h-0"
+            >
+              <div id="MainContainer-header">
+                <RecipeRequests
+                  recipeActions={recipeActions}
+                  setShowing={toggleModel}
+                  isOpen={isOpen}
                 />
-            </div>
-          </section>
-                </WebSocketContext.Provider>
+                <div className="flex justify-between p-1 font-semibold text-lg border-b-2">
+                  <div>Recipes for:</div>
+                  <BookView resetSelected={resetSelectedRecipe} />
+                  <SharePopOut
+                    action={"shareBook"}
+                    isDialogOpen={isDialogOpen}
+                    handleClose={closeDialogPanel}
+                  />
+                  <FaShareButton handleClick={() => setIsDialogOpen(true)} />
+                  <Search list={recipes} setList={filterRecipes} />
+                  <FaPlusButton onAction={toggleCreateForm} />
+                </div>
+              </div>
+              <div
+                id="MainContainer-recipes"
+                className="flex-1 overflow-y-auto min-h-0"
+              >
+                <RecipesList
+                  recipes={filteredRecipes}
+                  handleSelect={selectRecipe}
+                  selectedId={selectedRecipe.id}
+                />
+              </div>
+            </section>
+          </WebSocketContext.Provider>
           <section
             id="MainContainer-rightpage"
             className="overflow-y-auto divide-y border-x-2 mx-auto flex-1"

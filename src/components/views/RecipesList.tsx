@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "../../styles/Recipes.css";
 import { RecipesListProps } from "../../utils/props";
 import SharePopOut from "../ui/common/SharePopOut";
 import RecipeListItem from "../ui/RecipeListItem";
 import useWebSocket from "../../hooks/useWebSocket";
+import { WebSocketContext } from "../../context/WebSocketContext";
 
 /** Renders list of recipes that can be selected for view
  *
@@ -14,9 +15,10 @@ function RecipesList({
   recipes,
   handleSelect,
   selectedId,
-  webSocketAPI,
 }: RecipesListProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const webSocketAPI = useContext(WebSocketContext)
 
   /** Close Share recipe Dialog panel */
   function closeDialogPanel() {
@@ -37,7 +39,6 @@ function RecipesList({
       <div>
         <SharePopOut
           action={"shareRecipe"}
-          webSocket={webSocketAPI}
           isDialogOpen={isDialogOpen}
           handleClose={closeDialogPanel}
         />
