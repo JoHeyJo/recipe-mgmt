@@ -210,7 +210,7 @@ export type SearchProps = {
 export type SharePopOutProps = {
   action: string;
   isDialogOpen: boolean;
-  handleClose: () => void;
+  handleClose: (resetMessage: any) => void;
 };
 
 export type InputWithLabelFormProps = {

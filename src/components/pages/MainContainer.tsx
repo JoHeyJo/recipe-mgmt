@@ -14,6 +14,7 @@ import Search from "../ui/Search";
 import SharePopOut from "../ui/common/SharePopOut";
 import FaShareButton from "../ui/common/FaShareButton";
 import { WebSocketContext } from "../../context/WebSocketContext";
+import { WebSocketProvider } from "../../context/WebSocketProvider";
 
 /** Renders the main container (book) housing list of recipes and individual recipe
  *
@@ -30,12 +31,7 @@ function MainContainer() {
   const [isOpen, setOpen] = useState(false);
   const [requestAction, setRequestAction] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  const { message, sendBook, sendRecipe, resetMessage, status } =
-    useWebSocket();
-
-  
+  const [isDialogOpen, setIsDialogOpen] = useState(false);  
 
   const recipeData = {
     recipeId: selectedRecipe.id,
@@ -134,7 +130,7 @@ function MainContainer() {
   }, [currentBookId]);
 
   /** Close Share book Dialog panel */
-  function closeDialogPanel() {
+  function closeDialogPanel(resetMessage) {
     setIsDialogOpen(false);
     // state setter is delayed until Dialog fades out
     setTimeout(() => {
@@ -142,15 +138,15 @@ function MainContainer() {
     }, 310);
   }
 
-  /** Mange webSocket side effects */
-  useEffect(() => {
-    /** On successful communication and share with server update list of books  */
-    if (status === 200) {
-      setTimeout(() => {
-        setIsDialogOpen(true);
-      }, 310);
-    }
-  }, [status]);
+  // /** Mange webSocket side effects */
+  // useEffect(() => {
+  //   /** On successful communication and share with server update list of books  */
+  //   if (status === 200) {
+  //     setTimeout(() => {
+  //       setIsDialogOpen(true);
+  //     }, 310);
+  //   }
+  // }, [status]);
 
   if (!isLoading) <div>Loading...</div>;
 
@@ -165,9 +161,7 @@ function MainContainer() {
       >
         {/* Does recipes need to be reduced to just ids and title??? */}
         <RecipeContext.Provider value={recipeData}>
-          <WebSocketContext.Provider
-            value={{ message, sendBook, sendRecipe, resetMessage, status }}
-          >
+          <WebSocketProvider>
             <section
               id="MainContainer-leftpage"
               className="flex-1 flex flex-col min-h-0"
@@ -202,7 +196,7 @@ function MainContainer() {
                 />
               </div>
             </section>
-          </WebSocketContext.Provider>
+          </WebSocketProvider>
           <section
             id="MainContainer-rightpage"
             className="overflow-y-auto divide-y border-x-2 mx-auto flex-1"
