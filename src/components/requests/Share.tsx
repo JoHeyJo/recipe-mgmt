@@ -22,7 +22,6 @@ function Share({ webSocketAPI, action }: ShareBookProp) {
   /** Post request to share User book with recipient */
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log("share recipe", "action:", action)
     try {
       action === "shareBook"
       ? webSocketAPI.sendBook(user)

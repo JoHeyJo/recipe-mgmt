@@ -11,10 +11,12 @@ import { Book } from "../../utils/types";
  * MainContainer -> BookView -> [CreateBook, MultiSelect]
  */
 function BookView({ resetSelected }: BookViewProp) {
-  const { userId, defaultBook, books, setUserData } = useContext(UserContext);
+  const { defaultBook, books, setUserData } = useContext(UserContext);
   const [bookId, setBookId] = useLocalStorage("current-book-id");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const selectedBook = books?.find((book) => book.id === +bookId) || defaultBook;
+
+  console.log("Books in BookView:",books)
 
   /** Set selected book id & reset selected book to default */
   function selectBook(id: number, selected: Book) {

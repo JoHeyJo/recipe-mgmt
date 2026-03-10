@@ -6,7 +6,7 @@ import Share from "../../requests/Share";
 
 /** PopOut overlay on grey dialog screen that contains an input box
  *
- * MainContainer -> SharePopOut -> Share
+ * [MainContainer, RecipesList] -> SharePopOut -> Share
  */
 function SharePopOut({
   action,

@@ -9,7 +9,7 @@ import { BASEURL, protocol } from "../api";
  * 
  * Notes: Should auto connect be turned off? 
  * 
- * MainContainer - > useWebSocket
+ * [MainContainer, RecipesList] - > useWebSocket
  */
 function useWebSocket() {
   const [socket, setSocket] = useState(null);
@@ -31,12 +31,10 @@ function useWebSocket() {
     });
 
     newSocket.on("book_shared", (data) => {
-      console.log(data)
       setMessage(data.message);
     });
 
     newSocket.on("recipe_shared", (data) => {
-      console.log("sharing recipe",data)
       setMessage(data.message);
     });
 
@@ -47,9 +45,9 @@ function useWebSocket() {
     });
 
     newSocket.on("user_shared_recipe", (data) => {
-      setMessage(data.message);
-      setData(data.books);
-      setStatus(200);
+      console.log("socket response:",data)
+      // setMessage(data.message);
+      // setStatus(200);
     });
 
     newSocket.on("error_sharing_book", (data) => {
@@ -80,7 +78,6 @@ function useWebSocket() {
   }
 
   function sendRecipe(recipient: string) {
-    console.log("sending recipe through socket")
     if (socket && recipient) {
       socket.emit("share_recipe", {
         recipient,
