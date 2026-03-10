@@ -14,6 +14,7 @@ import Search from "../ui/Search";
 import useWebSocket from "../../hooks/useWebSocket";
 import SharePopOut from "../ui/common/SharePopOut";
 import FaShareButton from "../ui/common/FaShareButton";
+import { WebSocketContext } from "../../context/WebSocketContext";
 
 /** Renders the main container (book) housing list of recipes and individual recipe
  *
@@ -161,6 +162,7 @@ function MainContainer() {
       >
         {/* Does recipes need to be reduced to just ids and title??? */}
         <RecipeContext.Provider value={recipeData}>
+          <WebSocketContext.Provider value={webSocketAPI}>
           <section
             id="MainContainer-leftpage"
             className="flex-1 flex flex-col min-h-0"
@@ -176,10 +178,9 @@ function MainContainer() {
                 <BookView resetSelected={resetSelectedRecipe} />
                 <SharePopOut
                   action={"shareBook"}
-                  webSocket={webSocketAPI}
                   isDialogOpen={isDialogOpen}
                   handleClose={closeDialogPanel}
-                />
+                  />
                 <FaShareButton handleClick={() => setIsDialogOpen(true)} />
                 <Search list={recipes} setList={filterRecipes} />
                 <FaPlusButton onAction={toggleCreateForm} />
@@ -188,14 +189,15 @@ function MainContainer() {
             <div
               id="MainContainer-recipes"
               className="flex-1 overflow-y-auto min-h-0"
-            >
+              >
               <RecipesList
                 recipes={filteredRecipes}
                 handleSelect={selectRecipe}
                 selectedId={selectedRecipe.id}
-              />
+                />
             </div>
           </section>
+                </WebSocketContext.Provider>
           <section
             id="MainContainer-rightpage"
             className="overflow-y-auto divide-y border-x-2 mx-auto flex-1"
