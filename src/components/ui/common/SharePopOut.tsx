@@ -20,9 +20,9 @@ function SharePopOut({
     useContext(WebSocketContext);
 
   useEffect(() => {
-    console.log("In Share message:", message);
+    console.log("In SharePopOut:", message);
     // setIsDialogOpen(message);
-    openDialogPanel();
+    // openDialogPanel();
   }, [status]);
 
   return (
