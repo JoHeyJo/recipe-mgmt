@@ -27,7 +27,6 @@ function SharePopOut({ action, isDialogOpen, handleClose }: SharePopOutProps) {
             role="alert"
           >
             {message ? message : <Share action={action} />}
-
             <button
               onClick={handleClose}
               type="button"

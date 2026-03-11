@@ -20,7 +20,6 @@ function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
   function closeDialogPanel() {
     setIsDialogOpen(false);
     // state setter is delayed until Dialog fades out
-    console.log("Resetting message!!!")
     setTimeout(() => {
       resetMessage();
     }, 310);

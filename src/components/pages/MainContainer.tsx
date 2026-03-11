@@ -33,6 +33,8 @@ function MainContainer() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+  const { resetMessage } = useContext(WebSocketContext);
+
   const recipeData = {
     recipeId: selectedRecipe.id,
     created_by_id: selectedRecipe.created_by_id,
@@ -43,7 +45,6 @@ function MainContainer() {
     requestAction,
   };
 
-  console.log(recipes);
 
   /** Updates rendered recipes after creation */
   function updateRecipes(recipe: Recipe) {
@@ -131,22 +132,13 @@ function MainContainer() {
 
   /** Close Share book Dialog panel */
   function closeDialogPanel() {
+    console.log("CLOSING IN MAIN......")
     setIsDialogOpen(false);
     // state setter is delayed until Dialog fades out
     setTimeout(() => {
-      // resetMessage();
+      resetMessage();
     }, 310);
   }
-
-  // /** Mange webSocket side effects */
-  // useEffect(() => {
-  //   /** On successful communication and share with server update list of books  */
-  //   if (status === 200) {
-  //     setTimeout(() => {
-  //       setIsDialogOpen(true);
-  //     }, 310);
-  //   }
-  // }, [status]);
 
   /** Open share recipes Dialog panel */
   function openDialogPanel() {
@@ -155,7 +147,6 @@ function MainContainer() {
 
   if (!isLoading) <div>Loading...</div>;
 
-  console.log("recipe data:", recipeData);
   return (
     <div className="border-4 mt-7 bg-primary mx-auto max-w-7xl xl:px-8 xl:border-2">
       {/* <div className="w-[1350px] h-[819px] absolute overflow-hidden -translate-x-2/4 p-0 border-[3px] "> */}
