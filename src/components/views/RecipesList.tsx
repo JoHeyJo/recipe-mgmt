@@ -11,11 +11,7 @@ import { WebSocketContext } from "../../context/WebSocketContext";
  *
  * MainContainer -> RecipesList -> [SharePopOut, RecipeListItem]
  */
-function RecipesList({
-  recipes,
-  handleSelect,
-  selectedId,
-}: RecipesListProps) {
+function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const { message, sendBook, sendRecipe, resetMessage, status } =
@@ -34,6 +30,12 @@ function RecipesList({
   function openDialogPanel() {
     setIsDialogOpen(true);
   }
+
+  // Triggers recipient UI to communicate successful share of recipe/book.
+  // No need to communicate to recipient failure. Only to sender. 
+  useEffect(() => {
+    if(status === 200) setIsDialogOpen(true);
+  }, [status]);
 
   return (
     <section>
