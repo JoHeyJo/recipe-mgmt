@@ -10,8 +10,15 @@ import { useContext, useEffect } from "react";
  *
  * [MainContainer, RecipesList] -> SharePopOut -> Share
  */
-function SharePopOut({ action, isDialogOpen, handleClose }: SharePopOutProps) {
-  const { message } = useContext(WebSocketContext);
+function SharePopOut({ action, isDialogOpen, closeDialog }: SharePopOutProps) {
+  const { message, resetMessage } = useContext(WebSocketContext);
+
+  function handleClose() {
+    closeDialog();
+    setTimeout(() => {
+      resetMessage();
+    }, 310);
+  }
 
   return (
     <Dialog open={isDialogOpen} onClose={handleClose} className="relative z-10">

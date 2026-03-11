@@ -132,12 +132,7 @@ function MainContainer() {
 
   /** Close Share book Dialog panel */
   function closeDialogPanel() {
-    console.log("CLOSING IN MAIN......")
     setIsDialogOpen(false);
-    // state setter is delayed until Dialog fades out
-    setTimeout(() => {
-      resetMessage();
-    }, 310);
   }
 
   /** Open share recipes Dialog panel */
@@ -175,7 +170,7 @@ function MainContainer() {
                     openDialogPanel={openDialogPanel}
                     action={"shareBook"}
                     isDialogOpen={isDialogOpen}
-                    handleClose={closeDialogPanel}
+                    closeDialog={closeDialogPanel}
                   />
                   <FaShareButton handleClick={() => setIsDialogOpen(true)} />
                   <Search list={recipes} setList={filterRecipes} />

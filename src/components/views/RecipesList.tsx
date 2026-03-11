@@ -20,9 +20,7 @@ function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
   function closeDialogPanel() {
     setIsDialogOpen(false);
     // state setter is delayed until Dialog fades out
-    setTimeout(() => {
-      resetMessage();
-    }, 310);
+
   }
 
   /** Open share recipes Dialog panel */
@@ -42,7 +40,7 @@ function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
         <SharePopOut
           action={"shareRecipe"}
           isDialogOpen={isDialogOpen}
-          handleClose={closeDialogPanel}
+          closeDialog={closeDialogPanel}
           openDialogPanel={openDialogPanel}
         />
       </div>
