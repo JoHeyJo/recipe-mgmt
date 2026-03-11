@@ -13,6 +13,7 @@ import { useContext, useEffect } from "react";
 function SharePopOut({ action, isDialogOpen, closeDialog }: SharePopOutProps) {
   const { message, resetMessage } = useContext(WebSocketContext);
 
+  // closes dialog panel 
   function handleClose() {
     closeDialog();
     setTimeout(() => {

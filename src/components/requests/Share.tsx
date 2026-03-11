@@ -12,12 +12,9 @@ import { WebSocketContext } from "../../context/WebSocketContext";
  */
 function Share({ action }: ShareBookProp) {
   const [user, setUser] = useState("");
-  const [response, setResponse] = useState(null);
 
-  const { message, sendBook, sendRecipe, resetMessage, status } =
-    useContext(WebSocketContext);
-  console.log("sendRecipe:", sendRecipe);  
-  console.log("message in Share:",message)
+  const { sendBook, sendRecipe } = useContext(WebSocketContext);
+  
   /** Facilitates change in user name */
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const value = event.target.value;
@@ -27,12 +24,8 @@ function Share({ action }: ShareBookProp) {
   /** Post request to share User book with recipient */
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log("TOGGLE SEND user:",user, action)
     try {
-      action === "shareBook"
-        ? sendBook(user)
-        : sendRecipe(user);
-      
+      action === "shareBook" ? sendBook(user) : sendRecipe(user);
     } catch (error: any) {
       errorHandling("Share -> handleSubmit", error);
       throw error;
@@ -41,18 +34,18 @@ function Share({ action }: ShareBookProp) {
 
   return (
     <form onSubmit={handleSubmit}>
-          <div>{`Who would you like to share this ${action === "shareBook" ? "book" : "recipe"} with?`}</div>
-          <InputWithLabelForm
-            type={"user-name"}
-            name={"User Name:"}
-            id={"user-name"}
-            className={"user-name"}
-            handleChange={handleChange}
-            value={user}
-            required={true}
-            styles={"px-2 border-2 border-solid"}
-          />
-          <PillButtonSubmit action={"share"} />
+      <div>{`Who would you like to share this ${action === "shareBook" ? "book" : "recipe"} with?`}</div>
+      <InputWithLabelForm
+        type={"user-name"}
+        name={"User Name:"}
+        id={"user-name"}
+        className={"user-name"}
+        handleChange={handleChange}
+        value={user}
+        required={true}
+        styles={"px-2 border-2 border-solid"}
+      />
+      <PillButtonSubmit action={"share"} />
     </form>
   );
 }

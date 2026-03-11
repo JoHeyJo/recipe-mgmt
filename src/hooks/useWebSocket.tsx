@@ -20,7 +20,6 @@ function useWebSocket() {
   const { userId, currentBookId, user, currentBook, setUserData } =
     useContext(UserContext);
   const { recipeId, created_by_id, recipeName } = useContext(RecipeContext);
-  console.log("recipe context:", recipeId, recipeName);
 
   /** Initiates handshake, maintains connection, & disconnects on unmount */
   useEffect(() => {
@@ -32,12 +31,10 @@ function useWebSocket() {
     newSocket.on("connect", () => {});
 
     newSocket.on("book_shared", (data) => {
-      console.log("book shared:",data.message)
       setMessage(data.message);
     });
 
     newSocket.on("recipe_shared", (data) => {
-      console.log("recipe shared:", data.message);
       setMessage(data.message);
     });
 
@@ -48,7 +45,6 @@ function useWebSocket() {
     });
 
     newSocket.on("user_shared_recipe", (data) => {
-      console.log("message in socket:", data)
       setMessage(data.message);
       setStatus(200);
     });
@@ -58,7 +54,6 @@ function useWebSocket() {
     });
 
     newSocket.on("error_sharing_recipe", (data) => {
-      console.log("error",data)
       setMessage(data.data);
     });
 
@@ -82,11 +77,6 @@ function useWebSocket() {
   }
 
   function sendRecipe(recipient: string) {
-    console.log("SENDING RECIPE", recipient, recipeId, user, recipeName);
-    console.log("recipient", recipient);
-    console.log("recipeId", recipeId);
-    console.log("user", user);
-    console.log("recipeName", recipeName);
     if (socket && recipient) {
       socket.emit("share_recipe", {
         recipient,
@@ -102,7 +92,6 @@ function useWebSocket() {
     setMessage("");
     setStatus(null);
   }
-  console.log("Message:",message)
   return { sendRecipe, sendBook, message, resetMessage, status };
 }
 

@@ -13,7 +13,6 @@ import BookView from "../views/BookView";
 import Search from "../ui/Search";
 import SharePopOut from "../ui/common/SharePopOut";
 import FaShareButton from "../ui/common/FaShareButton";
-import { WebSocketContext } from "../../context/WebSocketContext";
 import { WebSocketProvider } from "../../context/WebSocketProvider";
 
 /** Renders the main container (book) housing list of recipes and individual recipe
@@ -32,8 +31,6 @@ function MainContainer() {
   const [requestAction, setRequestAction] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  const { resetMessage } = useContext(WebSocketContext);
 
   const recipeData = {
     recipeId: selectedRecipe.id,
@@ -135,11 +132,6 @@ function MainContainer() {
     setIsDialogOpen(false);
   }
 
-  /** Open share recipes Dialog panel */
-  function openDialogPanel() {
-    setIsDialogOpen(true);
-  }
-
   if (!isLoading) <div>Loading...</div>;
 
   return (
@@ -167,7 +159,6 @@ function MainContainer() {
                   <div>Recipes for:</div>
                   <BookView resetSelected={resetSelectedRecipe} />
                   <SharePopOut
-                    openDialogPanel={openDialogPanel}
                     action={"shareBook"}
                     isDialogOpen={isDialogOpen}
                     closeDialog={closeDialogPanel}

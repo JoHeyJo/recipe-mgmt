@@ -3,7 +3,6 @@ import "../../styles/Recipes.css";
 import { RecipesListProps } from "../../utils/props";
 import SharePopOut from "../ui/common/SharePopOut";
 import RecipeListItem from "../ui/RecipeListItem";
-import useWebSocket from "../../hooks/useWebSocket";
 import { WebSocketContext } from "../../context/WebSocketContext";
 
 /** Renders list of recipes that can be selected for view
@@ -14,13 +13,11 @@ import { WebSocketContext } from "../../context/WebSocketContext";
 function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const { resetMessage, status } = useContext(WebSocketContext);
+  const { status } = useContext(WebSocketContext);
 
   /** Close Share recipe Dialog panel */
   function closeDialogPanel() {
     setIsDialogOpen(false);
-    // state setter is delayed until Dialog fades out
-
   }
 
   /** Open share recipes Dialog panel */
@@ -41,7 +38,6 @@ function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
           action={"shareRecipe"}
           isDialogOpen={isDialogOpen}
           closeDialog={closeDialogPanel}
-          openDialogPanel={openDialogPanel}
         />
       </div>
       <ul

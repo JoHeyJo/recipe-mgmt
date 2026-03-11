@@ -211,7 +211,6 @@ export type SharePopOutProps = {
   action: string;
   isDialogOpen: boolean;
   closeDialog: () => void;
-  openDialogPanel: () => void;
 };
 
 export type InputWithLabelFormProps = {
