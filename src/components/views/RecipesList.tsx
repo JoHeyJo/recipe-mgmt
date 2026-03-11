@@ -14,13 +14,13 @@ import { WebSocketContext } from "../../context/WebSocketContext";
 function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const { message, sendBook, sendRecipe, resetMessage, status } =
-    useContext(WebSocketContext);
+  const { resetMessage, status } = useContext(WebSocketContext);
 
   /** Close Share recipe Dialog panel */
   function closeDialogPanel() {
     setIsDialogOpen(false);
     // state setter is delayed until Dialog fades out
+    console.log("Resetting message!!!")
     setTimeout(() => {
       resetMessage();
     }, 310);

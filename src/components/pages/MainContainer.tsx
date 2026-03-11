@@ -130,7 +130,7 @@ function MainContainer() {
   }, [currentBookId]);
 
   /** Close Share book Dialog panel */
-  function closeDialogPanel(resetMessage) {
+  function closeDialogPanel() {
     setIsDialogOpen(false);
     // state setter is delayed until Dialog fades out
     setTimeout(() => {
