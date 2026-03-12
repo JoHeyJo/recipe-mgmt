@@ -3,14 +3,15 @@ import { Instructions, Ingredients, Recipe } from "../utils/types";
 
 export type RecipeContextType = {
   recipeId?: number;
-  created_by_id?: number,
+  created_by_id?: number;
   recipeName: string;
   contextInstructions: Instructions;
   selectedNotes: string;
   contextIngredients: Ingredients;
   requestAction: string;
-  setRecipes?:React.Dispatch<React.SetStateAction<Recipe[]>>;
-  dialogRef?:any;
+  setRecipes?: React.Dispatch<React.SetStateAction<Recipe[]>>;
+  updateRecipes?: (recipe: Recipe) => void;
+  dialogRef?: any;
 };
 
 export const RecipeContext = createContext<RecipeContextType | null>({
@@ -21,5 +22,6 @@ export const RecipeContext = createContext<RecipeContextType | null>({
   selectedNotes: "",
   contextIngredients: [],
   setRecipes: () => {},
+  updateRecipes: () => {},
   requestAction: "",
 });
