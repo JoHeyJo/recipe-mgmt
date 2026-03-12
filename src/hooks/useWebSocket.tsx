@@ -19,7 +19,7 @@ function useWebSocket() {
 
   const { userId, currentBookId, user, currentBook, setUserData } =
     useContext(UserContext);
-  const { recipeId, created_by_id, recipeName } = useContext(RecipeContext);
+  const { recipeId, recipeName, setRecipes } = useContext(RecipeContext);
 
   /** Initiates handshake, maintains connection, & disconnects on unmount */
   useEffect(() => {
@@ -40,12 +40,14 @@ function useWebSocket() {
 
     newSocket.on("user_shared_book", (data) => {
       setMessage(data.message);
+      console.log("data", data)
       setUserData((prevState) => ({ ...prevState, data, books: data.books }));
       setStatus(200);
     });
 
     newSocket.on("user_shared_recipe", (data) => {
       setMessage(data.message);
+      setRecipes((prevState) => [...prevState, data.recipe])
       setStatus(200);
     });
 

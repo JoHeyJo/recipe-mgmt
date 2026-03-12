@@ -38,7 +38,6 @@ function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isContextInitialized, setIsContextInitialized] = useState(false);
 
-  console.log("Books in App:",userData?.books)
   const UserDataFromContext: UserContextType = {
     user: userData?.userName,
     userId: userData?.id,

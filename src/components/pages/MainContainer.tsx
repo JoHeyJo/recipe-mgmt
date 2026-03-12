@@ -20,11 +20,10 @@ import { WebSocketProvider } from "../../context/WebSocketProvider";
  * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList, BookView, Search]
  */
 function MainContainer() {
-  const { userId, defaultBookId, currentBookId, setUserData } =
-    useContext(UserContext);
+  const { userId, defaultBookId, currentBookId } = useContext(UserContext);
 
   const [selectedBookId, setSelectedBookId] = useState<number>();
-  const [recipes, setRecipes] = useState([]);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [filteredRecipes, setFilteredRecipe] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate);
   const [isOpen, setOpen] = useState(false);
@@ -40,8 +39,8 @@ function MainContainer() {
     contextInstructions: selectedRecipe.instructions,
     selectedNotes: selectedRecipe.notes,
     requestAction,
+    setRecipes
   };
-
 
   /** Updates rendered recipes after creation */
   function updateRecipes(recipe: Recipe) {
