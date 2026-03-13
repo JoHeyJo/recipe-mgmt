@@ -19,7 +19,7 @@ function useWebSocket() {
 
   const { userId, currentBookId, user, currentBook, setUserData } =
     useContext(UserContext);
-  const { recipeId, recipeName, setRecipes, updateRecipes } = useContext(RecipeContext);
+  const { recipeId, recipeName, updateRecipes } = useContext(RecipeContext);
 
   /** Initiates handshake, maintains connection, & disconnects on unmount */
   useEffect(() => {

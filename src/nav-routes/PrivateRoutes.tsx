@@ -7,10 +7,11 @@ import { isTokenValid } from "../utils/functions";
  * If context has been initialized route render is prevented.
  */
 function PrivateRoutes() {
-  const { token, userId, isInitialized } = useContext(UserContext);
+  const { token, userId, isContextInitialized, isAuthenticated } =
+    useContext(UserContext);
 
-  if (!isInitialized) return null;
-  const isAuthenticated = token && isTokenValid(token) && userId;
+  if (!isContextInitialized) return null;
+  
   return isAuthenticated ? <Outlet /> : <Navigate to="/" replace />;
 }
 

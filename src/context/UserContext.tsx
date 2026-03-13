@@ -12,7 +12,8 @@ export type UserContextType = {
   currentBook: Book;
   token: string;
   isLoading: boolean;
-  isInitialized: boolean;
+  isContextInitialized: boolean;
+  isAuthenticated: boolean;
 };
 
 const defaultBook = { id: 0, title: "", description: "" };
@@ -28,5 +29,6 @@ export const UserContext = createContext<UserContextType>({
   currentBook: defaultBook,
   token: "",
   isLoading: true,
-  isInitialized: false,
+  isContextInitialized: false,
+  isAuthenticated: false,
 });

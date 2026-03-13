@@ -9,7 +9,6 @@ export type RecipeContextType = {
   selectedNotes: string;
   contextIngredients: Ingredients;
   requestAction: string;
-  setRecipes?: React.Dispatch<React.SetStateAction<Recipe[]>>;
   updateRecipes?: (recipe: Recipe) => void;
   dialogRef?: any;
 };
@@ -21,7 +20,6 @@ export const RecipeContext = createContext<RecipeContextType | null>({
   contextInstructions: [],
   selectedNotes: "",
   contextIngredients: [],
-  setRecipes: () => {},
   updateRecipes: () => {},
   requestAction: "",
 });

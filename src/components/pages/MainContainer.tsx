@@ -39,7 +39,6 @@ function MainContainer() {
     contextInstructions: selectedRecipe.instructions,
     selectedNotes: selectedRecipe.notes,
     requestAction,
-    setRecipes,
     updateRecipes,
   };
 
