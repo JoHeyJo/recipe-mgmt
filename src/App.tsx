@@ -19,7 +19,6 @@ import { extractAndSetUser } from "./utils/fetchRequests";
 import useLocalStorage from "./hooks/useLocalStorage";
 import TopNav from "./components/layout/TopNav";
 import { isTokenValid } from "./utils/functions";
-import { initializeAuth } from "./utils/functions";
 
 const TOKEN_STORAGE_ID = "user-token";
 
@@ -38,7 +37,8 @@ function App() {
   const [userData, setUserData] = useState<User>(defaultUser);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isContextInitialized, setIsContextInitialized] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const navigate = useNavigate();
 
   const UserDataFromContext: UserContextType = {
     user: userData?.userName,
@@ -51,8 +51,7 @@ function App() {
     token,
     setUserData,
     isLoading,
-    isContextInitialized,
-    isAuthenticated,
+    isInitialized: isContextInitialized,
   };
 
   /** User sign up - returns token and auth credentials - saved to local storage */
@@ -62,6 +61,7 @@ function App() {
       const userId = await extractAndSetUser(res.token, setUserData);
       API.token = res.token;
       setToken(res.token);
+      setIsContextInitialized(true);
     } catch (error: any) {
       errorHandling("App -> userSignUp", error);
       throw error;
@@ -77,6 +77,7 @@ function App() {
       const userId = await extractAndSetUser(res.token, setUserData);
       API.token = res.token;
       setToken(res.token);
+      setIsContextInitialized(true);
     } catch (error: any) {
       errorHandling("App -> userLogin", error);
       throw error;
@@ -107,15 +108,15 @@ function App() {
 
   useEffect(() => {
     // Does not persist expired user token
-    // if (!isTokenValid(token)) {
-      // setToken(null);
-    // }
+    if (!isTokenValid(token)) {
+      setToken(null);
+    }
 
     if (userData?.id) {
-      initializeAuth(token, setIsContextInitialized, setIsAuthenticated);
+      setIsContextInitialized(true);
     }
     setIsLoading(false);
-  }, []);
+  }, [userData]);
 
   if (isLoading && !isContextInitialized) return <p>Loading...</p>; //should template of application render without data?
 
