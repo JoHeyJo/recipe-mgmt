@@ -62,7 +62,6 @@ function App() {
       const userId = await extractAndSetUser(res.token, setUserData);
       API.token = res.token;
       setToken(res.token);
-      initializeAuth(token, setIsContextInitialized, setIsAuthenticated)
     } catch (error: any) {
       errorHandling("App -> userSignUp", error);
       throw error;
@@ -78,7 +77,6 @@ function App() {
       const userId = await extractAndSetUser(res.token, setUserData);
       API.token = res.token;
       setToken(res.token);
-      initializeAuth(token, setIsContextInitialized, setIsAuthenticated);
     } catch (error: any) {
       errorHandling("App -> userLogin", error);
       throw error;
@@ -109,15 +107,15 @@ function App() {
 
   useEffect(() => {
     // Does not persist expired user token
-    if (!isTokenValid(token)) {
-      setToken(null);
-    }
+    // if (!isTokenValid(token)) {
+      // setToken(null);
+    // }
 
     if (userData?.id) {
       initializeAuth(token, setIsContextInitialized, setIsAuthenticated);
     }
     setIsLoading(false);
-  }, [userData]);
+  }, []);
 
   if (isLoading && !isContextInitialized) return <p>Loading...</p>; //should template of application render without data?
 

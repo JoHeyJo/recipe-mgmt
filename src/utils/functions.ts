@@ -10,6 +10,7 @@ export function initializeAuth(
   setIsAuthenticated,
   skipValidation = false
 ) {
+  console.log("is there a token:",token)
   if (!token) {
     setIsContextInitialized(true);
     return;

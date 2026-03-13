@@ -7,10 +7,10 @@ import { isTokenValid } from "../utils/functions";
  * If context has been initialized route render is prevented.
  */
 const PublicRoutes = () => {
-  const { token, userId, isContextInitialized, isAuthenticated } =
+  const { isContextInitialized, isAuthenticated } =
     useContext(UserContext);
-
-  return !isAuthenticated && !isContextInitialized ? (
+console.log("in routes")
+  return !isAuthenticated ? (
     <Outlet />
   ) : (
     <Navigate to="/home" replace />
