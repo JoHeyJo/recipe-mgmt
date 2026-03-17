@@ -8,7 +8,6 @@ export type UserContextType = {
   defaultBook: Book;
   books: Book[];
   setUserData: React.Dispatch<React.SetStateAction<User>>;
-  // setIsContextInitialized: React.Dispatch<React.SetStateAction<boolean>>;
   defaultBookId: number | null;
   currentBook: Book;
   token: string;
@@ -25,7 +24,6 @@ export const UserContext = createContext<UserContextType>({
   defaultBook: defaultBook,
   books: [],
   setUserData: () => {},
-  // setIsContextInitialized: () => {},
   defaultBookId: null,
   currentBook: defaultBook,
   token: "",
