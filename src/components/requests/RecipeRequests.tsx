@@ -44,6 +44,7 @@ function RecipeRequests({
   recipeActions,
   setShowing,
   isOpen,
+  isShared
 }: RecipeRequestsProps) {
   const { currentBookId, userId } = useContext(UserContext);
   const {

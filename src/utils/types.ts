@@ -81,5 +81,7 @@ export type Book = {
   id: number;
   title: string;
   description: string;
+  book_role: string;
+  book_type: string;
 };
 // export type Books = { books?: Book[] }

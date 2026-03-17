@@ -16,8 +16,6 @@ function BookView({ resetSelected }: BookViewProp) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const selectedBook = books?.find((book) => book.id === +bookId) || defaultBook;
 
-  console.log("Books in BookView:",books)
-
   /** Set selected book id & reset selected book to default */
   function selectBook(id: number, selected: Book) {
     setUserData((user) => {

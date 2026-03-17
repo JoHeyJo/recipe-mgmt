@@ -20,7 +20,13 @@ type CreateBook = {
   setOpen: () => void;
 };
 
-const defaultBook = { id: null, title: "", description: "" };
+const defaultBook = {
+  id: null,
+  title: "",
+  description: "",
+  book_role: "",
+  book_type: "",
+};
 /** Renders modal that holds book information
  * Request book creation associated to user
  *

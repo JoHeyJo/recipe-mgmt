@@ -20,7 +20,8 @@ import { WebSocketProvider } from "../../context/WebSocketProvider";
  * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList, BookView, Search]
  */
 function MainContainer() {
-  const { userId, defaultBookId, currentBookId } = useContext(UserContext);
+  const { userId, defaultBookId, currentBookId, currentBook } = useContext(UserContext);
+  console.log("CURRENT BOOK:",currentBook)
 
   const [selectedBookId, setSelectedBookId] = useState<number>();
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -150,6 +151,7 @@ function MainContainer() {
             >
               <div id="MainContainer-header">
                 <RecipeRequests
+                  isShared={currentBook.book_type === "shared_inbox"} 
                   recipeActions={recipeActions}
                   setShowing={toggleModel}
                   isOpen={isOpen}

@@ -16,7 +16,7 @@ export type UserContextType = {
   isInitialized: boolean;
 };
 
-const defaultBook = { id: 0, title: "", description: "" };
+const defaultBook = { id: 0, title: "", description: "", book_role: "", book_type:"" };
 
 export const UserContext = createContext<UserContextType>({
   user: "",
