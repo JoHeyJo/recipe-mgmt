@@ -3,7 +3,6 @@ import { Ingredients, Instructions, Recipe, Ingredient } from "./types";
 
 /** Filters out template data */
 export function filterTemplate(recipe: Recipe, template: Recipe) {
-  console.log("recipe:", recipe);
   const ingredients = compareIngredients(
     template.ingredients,
     recipe.ingredients,
@@ -23,8 +22,6 @@ export function filterTemplate(recipe: Recipe, template: Recipe) {
   if (!ingredients && !instructions && !name && !notes)
     throw { message: "Add name to create recipe template..." };
   if (!name) throw { message: "Recipe template requires name..." };
-  console.log("ingredients:", ingredients);
-  console.log("recipe.ingredients:", recipe.ingredients);
   checkForEmptyItemInput(recipe.ingredients);
 
   return { id: null, name, notes, ingredients, instructions };

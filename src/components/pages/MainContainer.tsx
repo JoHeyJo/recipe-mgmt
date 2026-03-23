@@ -21,7 +21,6 @@ import { WebSocketProvider } from "../../context/WebSocketProvider";
  */
 function MainContainer() {
   const { userId, defaultBookId, currentBookId, currentBook } = useContext(UserContext);
-  console.log("CURRENT BOOK:",currentBook)
 
   const [selectedBookId, setSelectedBookId] = useState<number>();
   const [recipes, setRecipes] = useState<Recipe[]>([]);

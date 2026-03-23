@@ -8,7 +8,6 @@ export function WebSocketProvider({ children }) {
   // so it can consume them, and its state is shared with all children
   const { message, sendBook, sendRecipe, resetMessage, status } =
     useWebSocket();
-console.log("WebSocketProvider:", message)
   return (
     <WebSocketContext.Provider
       value={{ message, sendBook, sendRecipe, resetMessage, status }}
