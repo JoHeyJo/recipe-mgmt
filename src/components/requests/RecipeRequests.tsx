@@ -174,7 +174,8 @@ function RecipeRequests({
   async function removeSharedRecipe(bookId: number, recipeId: number) {
     try {
       const res = await API.deleteSharedRecipe(bookId, recipeId);
-      return res.message;
+      console.log("RES:",res)
+      if(res.message) recipeActions.deleteRecipe();
     } catch (error) {
       const message = errorHandling(
         "RecipeRequests - removeSharedRecipe",
