@@ -1,9 +1,4 @@
-import {
-  useState,
-  useContext,
-  useEffect,
-  useRef,
-} from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import IngredientsGroup from "../selectors/IngredientsGroup";
 import {
@@ -34,7 +29,6 @@ import Alert from "../ui/Alert";
 import { defaultIngredient } from "../../utils/templates";
 import { ReferenceContext } from "../../context/ReferenceContext";
 
-
 /** Processes recipe data. Context data is passed through here on edit. Else template data.
  * RecipeRequests data is mutable while context data(reference data) is not
  *
@@ -44,7 +38,7 @@ function RecipeRequests({
   recipeActions,
   setShowing,
   isOpen,
-  isShared
+  isShared,
 }: RecipeRequestsProps) {
   const { currentBookId, userId } = useContext(UserContext);
   const {
@@ -142,18 +136,15 @@ function RecipeRequests({
     mutableRecipe: Recipe,
   ) {
     try {
-      console.log(originalRecipe,mutableRecipe)
+      console.log(originalRecipe, mutableRecipe);
       const mutatedData = filterRecipe(originalRecipe, mutableRecipe);
       mutatedData.created_by_id = created_by_id;
-      const res = await API.patchUserRecipe(
-        recipeId,
-        mutatedData,
-      );
+      const res = await API.patchUserRecipe(recipeId, mutatedData);
       recipeActions.editRecipe();
       return res;
     } catch (error: any) {
       const message = errorHandling("RecipeRequests - editRecipe", error);
-      setError(message)
+      setError(message);
       setTimeout(() => setError(null), 5000);
     }
   }
@@ -171,7 +162,7 @@ function RecipeRequests({
         created_by_id,
       );
       recipeActions.deleteRecipe();
-      return res.message
+      return res.message;
     } catch (error: any) {
       const message = errorHandling("RecipeRequests - deleteRecipe", error);
       setError(message);
@@ -179,9 +170,24 @@ function RecipeRequests({
     }
   }
 
+  /** Calls API - delete shared recipe association */
+  async function removeSharedRecipe(bookId: number, recipeId: number) {
+    try {
+      const res = await API.deleteSharedRecipe(bookId, recipeId);
+      return res.message;
+    } catch (error) {
+      const message = errorHandling(
+        "RecipeRequests - removeSharedRecipe",
+        error,
+      );
+      setError(message);
+      setTimeout(() => setError(null), 5000);
+    }
+  }
+
   async function handleDelete() {
     const message = await deleteRecipe(userId, currentBookId, recipeId);
-    if(message) setShowing();
+    if (message) setShowing();
   }
 
   async function handleSubmit(e) {
@@ -276,42 +282,44 @@ function RecipeRequests({
                 </div>
               ) : (
                 <div className="flex">
-                  {isShared ? 
-                  <button
-                    type="button"
-                    onClick={()=>{}}
-                    disabled={isDisabled}
-                    className={`bg-button-submit inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default`}
-                  >
-                    Copy
-                  </button>
-                  :
-                  <button
-                    type="button"
-                    onClick={() => editRecipe(selectedRecipe, recipe)}
-                    disabled={isDisabled}
-                    className={`${isDisabled ? "bg-button-disabled hover:opacity-100" : "bg-button-submit"} inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default`}
-                  >
-                    Update
-                  </button>
-                  }
-                  {isShared ?
-                  <button
-                    type="button"
-                    onClick={()=>{}}
-                    className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default"
-                  >
-                    Remove
-                  </button>
-                  :
-                  <button
-                    type="button"
-                    onClick={handleDelete}
-                    className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default"
-                  >
-                    Delete
-                  </button>
-                  }
+                  {isShared ? (
+                    <button
+                      type="button"
+                      onClick={() => {}}
+                      disabled={isDisabled}
+                      className={`bg-button-submit inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default`}
+                    >
+                      Copy
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => editRecipe(selectedRecipe, recipe)}
+                      disabled={isDisabled}
+                      className={`${isDisabled ? "bg-button-disabled hover:opacity-100" : "bg-button-submit"} inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default`}
+                    >
+                      Update
+                    </button>
+                  )}
+                  {isShared ? (
+                    <button
+                      type="button"
+                      onClick={() =>
+                        removeSharedRecipe(currentBookId, recipeId)
+                      }
+                      className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default"
+                    >
+                      Remove
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={handleDelete}
+                      className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default"
+                    >
+                      Delete
+                    </button>
+                  )}
                 </div>
               )}
             </div>

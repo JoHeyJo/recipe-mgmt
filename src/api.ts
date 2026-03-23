@@ -138,6 +138,16 @@ class API {
     return res;
   }
 
+  /** Delete shared recipe association */
+  static async deleteSharedRecipe(bookId: number, recipeId: number){
+    const res = await this.request(
+      `books/${bookId}/share_recipes/${recipeId}`,
+      {},
+      "DELETE"
+    );
+    return res;
+  }
+
   // ########### BOOKS ###########
 
   /** Post new book */
