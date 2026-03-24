@@ -169,23 +169,23 @@ function MainContainer() {
                   <section className="flex flex-1 justify-start">
                     <BookView resetSelected={resetSelectedRecipe} />
                   </section>
-                    {true && (
-                  <section className="flex flex-1 justify-center">
+                  {defaultBookId && (
+                    <section className="flex [flex:0.5] justify-center">
                       <FaShareButton
                         handleClick={() => setIsDialogOpen(true)}
                       />
-                  </section>
-                    )}
-                    {true && (
-                  <section className="flex flex-1.25 justify-center">
+                    </section>
+                  )}
+                  {defaultBookId && (
+                    <section className="flex [flex:2] justify-center">
                       <Search list={recipes} setList={filterRecipes} />
-                  </section>
-                    )}
-                    {true && (
-                  <section className="flex justify-end">
+                    </section>
+                  )}
+                  {defaultBookId && (
+                    <section className="flex [flex:0.5] justify-center">
                       <FaPlusButton onAction={toggleCreateForm} />
-                  </section>
-                    )}
+                    </section>
+                  )}
                 </div>
               </div>
               <div
