@@ -47,6 +47,7 @@ function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
       >
         {recipes.map(({ name, id }, index) => (
           <RecipeListItem
+            key={id}
             name={name}
             index={index}
             recipeId={selectedId}

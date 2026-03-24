@@ -136,7 +136,9 @@ function ComponentsOptionsRequests({
         {ingredients.map((ingredient, i) => (
           <div
             ref={ingredientSectionRef}
-            key={ingredient.ingredient_id || ingredientKeys[i]}
+            // These keys are not unique using i for the time being
+            // key={ingredient.ingredient_id || ingredientKeys[i]}
+            key={i}
             className="ComponentsOptionsRequests-Ingredients-section flex items-center justify-center"
           >
             <IngredientInputGroup
