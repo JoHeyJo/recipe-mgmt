@@ -158,39 +158,34 @@ function MainContainer() {
                   isOpen={isOpen}
                 />
 
-                <div className="flex justify-between p-1 font-semibold text-lg border-b-2">
-                  <section>
-                    <div>Recipes for:</div>
-                  </section>
-                  <section>
-                    {" "}
+                <SharePopOut
+                  action={"shareBook"}
+                  isDialogOpen={isDialogOpen}
+                  closeDialog={closeDialogPanel}
+                />
+
+                <div className="flex p-1 font-semibold text-lg border-b-2">
+                  <div className="flex flex-1 justify-start">Recipes for:</div>
+                  <section className="flex flex-1 justify-start">
                     <BookView resetSelected={resetSelectedRecipe} />
                   </section>
-                  <section>
-                    {" "}
-                    <SharePopOut
-                      action={"shareBook"}
-                      isDialogOpen={isDialogOpen}
-                      closeDialog={closeDialogPanel}
-                    />
-                  </section>
-                  <section>
-                    {currentBookId && (
+                    {true && (
+                  <section className="flex flex-1 justify-center">
                       <FaShareButton
                         handleClick={() => setIsDialogOpen(true)}
                       />
-                    )}
                   </section>
-                  <section>
-                    {currentBookId && (
+                    )}
+                    {true && (
+                  <section className="flex flex-1.25 justify-center">
                       <Search list={recipes} setList={filterRecipes} />
-                    )}
                   </section>
-                  <section>
-                    {currentBookId && (
+                    )}
+                    {true && (
+                  <section className="flex justify-end">
                       <FaPlusButton onAction={toggleCreateForm} />
-                    )}
                   </section>
+                    )}
                 </div>
               </div>
               <div
