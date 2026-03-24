@@ -17,8 +17,7 @@ function RecipeContainer({
   handleModalToggle,
 }: RecipeViewProps) {
   const { recipeId } = useContext(RecipeContext);
-  const { currentBook } =useContext(UserContext)
-
+  const { currentBook } = useContext(UserContext)
   return (
     <div id="RecipeContainer-container">
       <div id="RecipeContainer-header" className="flex justify-between p-1">

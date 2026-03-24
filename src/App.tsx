@@ -6,7 +6,6 @@ import { UserSignUp as SignUpData, UserLogin } from "./utils/types";
 import API from "./api";
 import { UserContext, UserContextType } from "./context/UserContext";
 import { User } from "./utils/types";
-import { useNavigate } from "react-router-dom";
 //styles
 import "./index.css";
 import "./styles/App.css";
@@ -38,8 +37,6 @@ function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isContextInitialized, setIsContextInitialized] = useState(false);
 
-  const navigate = useNavigate();
-
   const UserDataFromContext: UserContextType = {
     user: userData?.userName,
     userId: userData?.id,
@@ -51,7 +48,7 @@ function App() {
     token,
     setUserData,
     isLoading,
-    isInitialized: isContextInitialized,
+    isInitialized: isContextInitialized
   };
 
   /** User sign up - returns token and auth credentials - saved to local storage */
