@@ -3,7 +3,7 @@ import { faShareFromSquare } from "@fortawesome/free-solid-svg-icons";
 
 /** Icon component that calls action to share a book with another user
  *
- * BookView -> FaShareButton
+ * [MainContainer, RecipeListItem] -> FaShareButton
  */
 function FaShareButton({ handleClick }) {
   return (

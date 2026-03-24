@@ -1,11 +1,4 @@
-import {
-  useState,
-  useContext,
-  useEffect,
-  FormEventHandler,
-  FormEvent,
-  useRef,
-} from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import IngredientsGroup from "../selectors/IngredientsGroup";
 import {
@@ -38,6 +31,8 @@ import { ReferenceContext } from "../../context/ReferenceContext";
 
 /** Processes recipe data. Context data is passed through here on edit. Else template data.
  * RecipeRequests data is mutable while context data(reference data) is not
+ * 
+ * Component needs to be refactored - separate API request from component logic
  *
  * MainContainer -> RecipeRequests -> [IngredientsGroup, InstructionsArea, NotesInput, TitleInput]
  */
@@ -45,10 +40,12 @@ function RecipeRequests({
   recipeActions,
   setShowing,
   isOpen,
+  isShared,
 }: RecipeRequestsProps) {
   const { currentBookId, userId } = useContext(UserContext);
   const {
     recipeId,
+    created_by_id,
     recipeName,
     requestAction,
     contextIngredients,
@@ -58,6 +55,7 @@ function RecipeRequests({
 
   const [recipe, setRecipe] = useState<any>({
     name: recipeName,
+    created_by_id,
     id: recipeId,
     ingredients: defaultIngredient,
     instructions: contextInstructions,
@@ -68,6 +66,7 @@ function RecipeRequests({
 
   const selectedRecipe = {
     recipeId,
+    created_by_id,
     recipeName,
     requestAction,
     contextIngredients,
@@ -79,6 +78,7 @@ function RecipeRequests({
   useEffect(() => {
     setRecipe({
       name: recipeName,
+      created_by_id,
       id: recipeId,
       ingredients: contextIngredients,
       instructions: contextInstructions,
@@ -92,11 +92,11 @@ function RecipeRequests({
       const name = compareNames(recipeName, recipe.name);
       const ingredients = compareIngredients(
         contextIngredients,
-        recipe.ingredients
+        recipe.ingredients,
       );
       const instructions = compareInstructions(
         contextInstructions,
-        recipe.instructions
+        recipe.instructions,
       );
       const notes = compareNotes(selectedNotes, recipe.notes);
       const isAltered = name || ingredients || instructions || notes;
@@ -109,7 +109,7 @@ function RecipeRequests({
   /** Updates recipe state */
   function handleRecipeUpdate(
     data: string | Ingredient[] | Instruction | Instructions,
-    section: string
+    section: string,
   ) {
     setRecipe((prevRecipe) => ({ ...prevRecipe, [section]: data }));
   }
@@ -121,13 +121,13 @@ function RecipeRequests({
       const res = await API.postUserRecipe(
         filteredRecipe,
         currentBookId,
-        userId
+        userId,
       );
       recipeActions.updateRecipes(res);
       return "submitted";
     } catch (error: any) {
       const message = errorHandling("RecipeRequests - addRecipe", error);
-      if(message) setError(message);
+      if (message) setError(message);
       setTimeout(() => setError(null), 5000);
     }
   }
@@ -135,45 +135,66 @@ function RecipeRequests({
   /** Calls API - sends patch request with only edited recipe data */
   async function editRecipe(
     originalRecipe: RecipeContextType,
-    mutableRecipe: Recipe
+    mutableRecipe: Recipe,
   ) {
     try {
       const mutatedData = filterRecipe(originalRecipe, mutableRecipe);
-      const res = await API.editBookRecipe(
-        userId,
-        currentBookId,
-        recipeId,
-        mutatedData
-      );
+      mutatedData.created_by_id = created_by_id;
+      const res = await API.patchUserRecipe(recipeId, mutatedData);
       recipeActions.editRecipe();
       return res;
     } catch (error: any) {
-      errorHandling("RecipeRequests - editRecipe", error);
+      const message = errorHandling("RecipeRequests - editRecipe", error);
+      setError(message);
+      setTimeout(() => setError(null), 5000);
     }
   }
   /** Calls API - sends delete request for recipe */
   async function deleteRecipe(
     userId: number,
     bookId: number,
-    recipeId: number
+    recipeId: number,
   ) {
     try {
-      const res = API.deleteUserRecipe(userId, currentBookId, recipeId);
-      recipeActions.deleteRecipe();
+      const res = await API.deleteUserRecipe(
+        userId,
+        currentBookId,
+        recipeId,
+        created_by_id,
+      );
+      if(res.message) recipeActions.deleteRecipe();
     } catch (error: any) {
-      const message = errorHandling("RecipeRequests - addRecipe", error);
+      const message = errorHandling("RecipeRequests - deleteRecipe", error);
       setError(message);
       setTimeout(() => setError(null), 5000);
     }
   }
 
-  function handleDelete() {
-    setShowing();
-    deleteRecipe(userId, currentBookId, recipeId);
+  /** Calls API - delete shared recipe association */
+  async function removeSharedRecipe(bookId: number, recipeId: number) {
+    try {
+      const res = await API.deleteSharedRecipe(bookId, recipeId);
+      if(res.message) recipeActions.deleteRecipe();
+    } catch (error) {
+      const message = errorHandling(
+        "RecipeRequests - removeSharedRecipe",
+        error,
+      );
+      setError(message);
+      setTimeout(() => setError(null), 5000);
+    }
+  }
+
+  async function handleDelete() {
+    await deleteRecipe(userId, currentBookId, recipeId);
+  }
+
+  async function handleRemove() {
+    await removeSharedRecipe(currentBookId, recipeId);
   }
 
   async function handleSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
     const res = await addRecipe();
     if (res) setShowing();
   }
@@ -216,12 +237,13 @@ function RecipeRequests({
                 className="mx-auto h-full flex-col "
               >
                 <section id="RecipeRequests-recipe" className="flex h-2/3">
-                  <ReferenceContext.Provider value={{dialogPanelRef:dialogPanelRef}}>
+                  <ReferenceContext.Provider
+                    value={{ dialogPanelRef: dialogPanelRef }}
+                  >
                     <section
                       id="RecipeRequests-title-ingredients"
                       className="flex-1 h-full flex flex-col"
                     >
-                     
                       <div className="">
                         <TitleInput handleUpdate={handleRecipeUpdate} />
                       </div>
@@ -232,7 +254,7 @@ function RecipeRequests({
                         />
                       </div>
                     </section>
-                    
+
                     <section
                       id="RecipeRequests-instructions"
                       className="flex-col flex flex-1 ml-4 rounded-md"
@@ -263,21 +285,42 @@ function RecipeRequests({
                 </div>
               ) : (
                 <div className="flex">
-                  <button
-                    type="button"
-                    onClick={() => editRecipe(selectedRecipe, recipe)}
-                    disabled={isDisabled}
-                    className={`${isDisabled ? "bg-button-disabled hover:opacity-100" : "bg-button-submit"} inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default`}
-                  >
-                    Update
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleDelete}
-                    className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default"
-                  >
-                    delete
-                  </button>
+                  {isShared ? (
+                    <button
+                      type="button"
+                      onClick={() => {}}
+                      disabled={isDisabled}
+                      className={`bg-button-submit inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default`}
+                    >
+                      Copy
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => editRecipe(selectedRecipe, recipe)}
+                      disabled={isDisabled}
+                      className={`${isDisabled ? "bg-button-disabled hover:opacity-100" : "bg-button-submit"} inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default`}
+                    >
+                      Update
+                    </button>
+                  )}
+                  {isShared ? (
+                    <button
+                      type="button"
+                      onClick={handleRemove}
+                      className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default"
+                    >
+                      Remove
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={handleDelete}
+                      className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default"
+                    >
+                      Delete
+                    </button>
+                  )}
                 </div>
               )}
             </div>

@@ -2,29 +2,29 @@ import { createContext } from "react";
 import { User, Book } from "../utils/types";
 
 export type UserContextType = {
-  user: string | undefined;
-  userId: number | undefined;
+  user: string | null;
+  userId: number | null;
   currentBookId: number;
   defaultBook: Book;
   books: Book[];
   setUserData: React.Dispatch<React.SetStateAction<User>>;
-  defaultBookId: number | undefined;
+  defaultBookId: number | null;
   currentBook: Book;
   token: string;
   isLoading: boolean;
   isInitialized: boolean;
 };
 
-const defaultBook = { id: 0, title: "", description: "" };
+const defaultBook = { id: 0, title: "", description: "", book_role: "", book_type:"" };
 
 export const UserContext = createContext<UserContextType>({
   user: "",
-  userId: undefined,
-  currentBookId: undefined,
+  userId: null,
+  currentBookId: null,
   defaultBook: defaultBook,
   books: [],
   setUserData: () => {},
-  defaultBookId: undefined,
+  defaultBookId: null,
   currentBook: defaultBook,
   token: "",
   isLoading: true,

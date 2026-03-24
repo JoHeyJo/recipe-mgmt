@@ -7,6 +7,7 @@ export type RecipeData = Recipe & {
 
 export type Recipe = {
   id: number;
+  created_by_id?: number;
   name: string;
   instructions: Instructions;
   notes: string;
@@ -80,5 +81,7 @@ export type Book = {
   id: number;
   title: string;
   description: string;
+  book_role: string;
+  book_type: string;
 };
 // export type Books = { books?: Book[] }

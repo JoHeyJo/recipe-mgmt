@@ -11,20 +11,19 @@ import RecipeRequests from "../requests/RecipeRequests";
 import { RecipeContext } from "../../context/RecipeContext";
 import BookView from "../views/BookView";
 import Search from "../ui/Search";
-import useWebSocket from "../../hooks/useWebSocket";
-import PopOutAlert from "../ui/common/PopOutAlert";
+import SharePopOut from "../ui/common/SharePopOut";
 import FaShareButton from "../ui/common/FaShareButton";
+import { WebSocketProvider } from "../../context/WebSocketProvider";
 
 /** Renders the main container (book) housing list of recipes and individual recipe
  *
  * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList, BookView, Search]
  */
 function MainContainer() {
-  const { userId, defaultBookId, currentBookId, setUserData } =
-    useContext(UserContext);
+  const { userId, defaultBookId, currentBookId, currentBook } = useContext(UserContext);
 
   const [selectedBookId, setSelectedBookId] = useState<number>();
-  const [recipes, setRecipes] = useState([]);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [filteredRecipes, setFilteredRecipe] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate);
   const [isOpen, setOpen] = useState(false);
@@ -32,15 +31,15 @@ function MainContainer() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const webSocketAPI = useWebSocket();
-
   const recipeData = {
     recipeId: selectedRecipe.id,
+    created_by_id: selectedRecipe.created_by_id,
     recipeName: selectedRecipe.name,
     contextIngredients: selectedRecipe.ingredients,
     contextInstructions: selectedRecipe.instructions,
     selectedNotes: selectedRecipe.notes,
     requestAction,
+    updateRecipes,
   };
 
   /** Updates rendered recipes after creation */
@@ -64,6 +63,7 @@ function MainContainer() {
     const updatedRecipes = recipes.filter((recipe) => recipe.id !== id);
     setRecipes(updatedRecipes);
     setSelectedRecipe(recipeTemplate);
+    setOpen(false);
   }
 
   /** Change selected recipe */
@@ -130,26 +130,7 @@ function MainContainer() {
   /** Close Share book Dialog panel */
   function closeDialogPanel() {
     setIsDialogOpen(false);
-    // state setter is delayed until Dialog fades out
-    setTimeout(() => {
-      webSocketAPI.resetMessage();
-    }, 310);
   }
-
-  /** Mange webSocket side effects */
-  useEffect(() => {
-    /** On successful communication and share with server update list of books  */
-    async function updateWithSharedBook() {
-      const res = webSocketAPI.data;
-      setUserData((data) => ({ ...data, books: res }));
-    }
-    if (webSocketAPI.status == 200) {
-      updateWithSharedBook();
-      setTimeout(() => {
-        setIsDialogOpen(true);
-      }, 310);
-    }
-  }, [webSocketAPI.status]);
 
   if (!isLoading) <div>Loading...</div>;
 
@@ -163,40 +144,43 @@ function MainContainer() {
       >
         {/* Does recipes need to be reduced to just ids and title??? */}
         <RecipeContext.Provider value={recipeData}>
-          <section
-            id="MainContainer-leftpage"
-            className="flex-1 flex flex-col min-h-0"
-          >
-            <div id="MainContainer-header">
-              <RecipeRequests
-                recipeActions={recipeActions}
-                setShowing={toggleModel}
-                isOpen={isOpen}
-              />
-              <div className="flex justify-between p-1 font-semibold text-lg border-b-2">
-                <div>Recipes for:</div>
-                <BookView resetSelected={resetSelectedRecipe} />
-                <PopOutAlert
-                  api={webSocketAPI}
-                  isDialogOpen={isDialogOpen}
-                  handleClose={closeDialogPanel}
-                />
-                <FaShareButton handleClick={() => setIsDialogOpen(true)} />
-                <Search list={recipes} setList={filterRecipes} />
-                <FaPlusButton onAction={toggleCreateForm} />
-              </div>
-            </div>
-            <div
-              id="MainContainer-recipes"
-              className="flex-1 overflow-y-auto min-h-0"
+          <WebSocketProvider>
+            <section
+              id="MainContainer-leftpage"
+              className="flex-1 flex flex-col min-h-0"
             >
-              <RecipesList
-                recipes={filteredRecipes}
-                handleSelect={selectRecipe}
-                selectedId={selectedRecipe.id}
-              />
-            </div>
-          </section>
+              <div id="MainContainer-header">
+                <RecipeRequests
+                  isShared={currentBook.book_type === "shared_inbox"} 
+                  recipeActions={recipeActions}
+                  setShowing={toggleModel}
+                  isOpen={isOpen}
+                />
+                <div className="flex justify-between p-1 font-semibold text-lg border-b-2">
+                  <div>Recipes for:</div>
+                  <BookView resetSelected={resetSelectedRecipe} />
+                  <SharePopOut
+                    action={"shareBook"}
+                    isDialogOpen={isDialogOpen}
+                    closeDialog={closeDialogPanel}
+                  />
+                  <FaShareButton handleClick={() => setIsDialogOpen(true)} />
+                  <Search list={recipes} setList={filterRecipes} />
+                  <FaPlusButton onAction={toggleCreateForm} />
+                </div>
+              </div>
+              <div
+                id="MainContainer-recipes"
+                className="flex-1 overflow-y-auto min-h-0"
+              >
+                <RecipesList
+                  recipes={filteredRecipes}
+                  handleSelect={selectRecipe}
+                  selectedId={selectedRecipe.id}
+                />
+              </div>
+            </section>
+          </WebSocketProvider>
           <section
             id="MainContainer-rightpage"
             className="overflow-y-auto divide-y border-x-2 mx-auto flex-1"

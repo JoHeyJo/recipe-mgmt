@@ -1,6 +1,29 @@
 import { jwtDecode } from "jwt-decode";
 import { AttributeData, Instructions } from "./types";
 
+/** Auth and initialize user before loading routes 
+ * skip token validation on signup/login because this will always be true
+*/
+export function initializeAuth(
+  token,
+  setIsContextInitialized,
+  setIsAuthenticated,
+  skipValidation = false
+) {
+  if (!token) {
+    setIsContextInitialized(true);
+    return;
+  }
+
+  if (skipValidation || isTokenValid(token)) {
+    setIsAuthenticated(true);
+  } else {
+    localStorage.removeItem("user-token");
+    setIsAuthenticated(false);
+  }
+  setIsContextInitialized(true);
+}
+
 /** Checks if token is valid based on expiration */
 export function isTokenValid(token: string | null) {
   if (!token) return null;
@@ -9,7 +32,7 @@ export function isTokenValid(token: string | null) {
   const currentTime = Math.floor(Date.now() / 1000);
   return expirationTime >= currentTime;
 }
-``
+
 export function scrollToElement(
   ref: React.MutableRefObject<HTMLDivElement | null>,
   offSet: number = 0

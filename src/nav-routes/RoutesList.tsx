@@ -10,14 +10,14 @@ import PasswordRecovery from "../components/PasswordRecovery";
 function RoutesList({ signUp, login }: RoutesListProps) {
   return (
     <Routes>
+      <Route element={<PrivateRoutes />}>
+        <Route path="/home" element={<MainContainer />} />
+      </Route>
       <Route element={<PublicRoutes />}>
         <Route path="/" element={<AuthTabs signUp={signUp} login={login} />} />
         <Route path="/reset" element={<PasswordRecovery />} />
       </Route>
 
-      <Route element={<PrivateRoutes />}>
-        <Route path="/home" element={<MainContainer />} />
-      </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

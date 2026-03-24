@@ -16,7 +16,6 @@ type RecipeViewProps = {
 
 function RecipeView({ recipe }: RecipeViewProps) {
   const { name, instructions, notes, ingredients } = recipe;
-
   return (
     <>
       <div className="">

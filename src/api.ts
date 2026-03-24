@@ -23,7 +23,7 @@ class API {
   static async request(
     endpoint: string,
     data: object = {},
-    method: string = "GET"
+    method: string = "GET",
   ) {
     const url = `${protocol}://${BASEURL}/${endpoint}`;
     const headers = {
@@ -69,10 +69,14 @@ class API {
   static async postPasswordReset(
     password: string,
     userName: string,
-    token: string
+    token: string,
   ) {
-    API.token = token
-    const res = await this.request(`request_reset`, { password, userName }, "POST");
+    API.token = token;
+    const res = await this.request(
+      `request_reset`,
+      { password, userName },
+      "POST",
+    );
     return res;
   }
 
@@ -82,7 +86,7 @@ class API {
     const res = await this.request(
       `users/${userId}/books/${bookId}/recipes`,
       data,
-      "POST"
+      "POST",
     );
     return res;
   }
@@ -94,28 +98,50 @@ class API {
   }
 
   /** Edit user recipe */
-  static async editBookRecipe(
-    userId: number,
-    bookId: number,
+  static async patchUserRecipe(
     recipeId: number,
-    data
+    data: any,
   ) {
     const res = await this.request(
-      `users/${userId}/books/${bookId}/recipes/${recipeId}`,
+      `recipes/${recipeId}`,
       data,
-      "PATCH"
+      "PATCH",
     );
     return res;
   }
 
-  /** Delete book recipe */
+  /** Delete user recipe */
   static async deleteUserRecipe(
     userId: number,
     bookId: number,
-    recipeId: number
+    recipeId: number,
+    createdById: number,
   ) {
     const res = await this.request(
       `users/${userId}/books/${bookId}/recipes/${recipeId}`,
+      { createdById },
+      "DELETE",
+    );
+    return res;
+  }
+
+  /** Share recipe with another user */
+  static async postShareRecipe(
+    recipeId: number,
+    recipient: string,
+  ) {
+    const res = await this.request(
+      `share_recipes/${recipeId}`,
+      { recipient },
+      "POST"
+    );
+    return res;
+  }
+
+  /** Delete shared recipe association */
+  static async deleteSharedRecipe(bookId: number, recipeId: number){
+    const res = await this.request(
+      `books/${bookId}/share_recipes/${recipeId}`,
       {},
       "DELETE"
     );
@@ -141,7 +167,7 @@ class API {
     const res = await this.request(
       `users/${userId}/books/${bookId}`,
       data,
-      "POST"
+      "POST",
     );
     return res;
   }
@@ -157,7 +183,7 @@ class API {
   /** Fetch book ingredients */
   static async getBookComponentsOptions(userId: number, bookId: number) {
     const res = await this.request(
-      `/users/${userId}/books/${bookId}/ingredients/components`
+      `/users/${userId}/books/${bookId}/ingredients/components`,
     );
     return res;
   }
@@ -173,12 +199,12 @@ class API {
     option: AttributeData,
     bookId: number,
     userId: number,
-    component: string
+    component: string,
   ) {
     const res = await this.request(
       `/users/${userId}/books/${bookId}/ingredients/${component}`,
       option,
-      "POST"
+      "POST",
     );
     return res;
   }
@@ -188,12 +214,12 @@ class API {
     userId: number,
     bookId: number,
     optionId: number,
-    component: string
+    component: string,
   ) {
     const res = await this.request(
       `/users/${userId}/books/${bookId}/components/${component}/options/${optionId}`,
       {},
-      "POST"
+      "POST",
     );
     return res;
   }
@@ -215,7 +241,7 @@ class API {
   /** Fetch book instructions */
   static async getBookInstructions(userId: number, bookId: number) {
     const res = await this.request(
-      `/users/${userId}/books/${bookId}/instructions`
+      `/users/${userId}/books/${bookId}/instructions`,
     );
     return res;
   }
@@ -224,12 +250,12 @@ class API {
   static async postInstruction(
     userId: number,
     bookId: number,
-    data: Instruction
+    data: Instruction,
   ) {
     const res = await this.request(
       `users/${userId}/books/${bookId}/instructions`,
       data,
-      "POST"
+      "POST",
     );
     return res;
   }
@@ -238,12 +264,12 @@ class API {
   static async postInstructionAssociation(
     userId: number,
     bookId: number,
-    instructionId: number
+    instructionId: number,
   ) {
     const res = await this.request(
       `users/${userId}/books/${bookId}/instructions/${instructionId}`,
       {},
-      "POST"
+      "POST",
     );
     return res;
   }

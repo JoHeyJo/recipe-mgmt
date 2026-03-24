@@ -8,14 +8,13 @@ import { Book } from "../../utils/types";
 
 /** Facilitates rendering books & book selection
  *
- * MainContainer -> BookView -> [CreateBook, MultiSelect, FaShareButton, ShareBookWithUser]
+ * MainContainer -> BookView -> [CreateBook, MultiSelect]
  */
 function BookView({ resetSelected }: BookViewProp) {
-  const { userId, defaultBook, books, setUserData } = useContext(UserContext);
+  const { defaultBook, books, setUserData } = useContext(UserContext);
   const [bookId, setBookId] = useLocalStorage("current-book-id");
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const selectedBook = books.find((book) => book.id === +bookId) || defaultBook;
+  const selectedBook = books?.find((book) => book.id === +bookId) || defaultBook;
 
   /** Set selected book id & reset selected book to default */
   function selectBook(id: number, selected: Book) {
