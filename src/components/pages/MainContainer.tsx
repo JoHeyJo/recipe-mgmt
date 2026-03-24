@@ -20,7 +20,8 @@ import { WebSocketProvider } from "../../context/WebSocketProvider";
  * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList, BookView, Search]
  */
 function MainContainer() {
-  const { userId, defaultBookId, currentBookId, currentBook } = useContext(UserContext);
+  const { userId, defaultBookId, currentBookId, currentBook } =
+    useContext(UserContext);
 
   const [selectedBookId, setSelectedBookId] = useState<number>();
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -151,22 +152,45 @@ function MainContainer() {
             >
               <div id="MainContainer-header">
                 <RecipeRequests
-                  isShared={currentBook.book_type === "shared_inbox"} 
+                  isShared={currentBook?.book_type === "shared_inbox"}
                   recipeActions={recipeActions}
                   setShowing={toggleModel}
                   isOpen={isOpen}
                 />
+
                 <div className="flex justify-between p-1 font-semibold text-lg border-b-2">
-                  <div>Recipes for:</div>
-                  <BookView resetSelected={resetSelectedRecipe} />
-                  <SharePopOut
-                    action={"shareBook"}
-                    isDialogOpen={isDialogOpen}
-                    closeDialog={closeDialogPanel}
-                  />
-                  <FaShareButton handleClick={() => setIsDialogOpen(true)} />
-                  <Search list={recipes} setList={filterRecipes} />
-                  <FaPlusButton onAction={toggleCreateForm} />
+                  <section>
+                    <div>Recipes for:</div>
+                  </section>
+                  <section>
+                    {" "}
+                    <BookView resetSelected={resetSelectedRecipe} />
+                  </section>
+                  <section>
+                    {" "}
+                    <SharePopOut
+                      action={"shareBook"}
+                      isDialogOpen={isDialogOpen}
+                      closeDialog={closeDialogPanel}
+                    />
+                  </section>
+                  <section>
+                    {currentBookId && (
+                      <FaShareButton
+                        handleClick={() => setIsDialogOpen(true)}
+                      />
+                    )}
+                  </section>
+                  <section>
+                    {currentBookId && (
+                      <Search list={recipes} setList={filterRecipes} />
+                    )}
+                  </section>
+                  <section>
+                    {currentBookId && (
+                      <FaPlusButton onAction={toggleCreateForm} />
+                    )}
+                  </section>
                 </div>
               </div>
               <div
@@ -188,7 +212,6 @@ function MainContainer() {
             <RecipeContainer
               recipe={selectedRecipe}
               handleModalToggle={toggleEditTemplate}
-              isOpen={isOpen}
             />
           </section>
         </RecipeContext.Provider>

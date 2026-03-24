@@ -15,7 +15,6 @@ import { UserContext } from "../../context/UserContext";
 function RecipeContainer({
   recipe,
   handleModalToggle,
-  isOpen,
 }: RecipeViewProps) {
   const { recipeId } = useContext(RecipeContext);
   const { currentBook } =useContext(UserContext)
@@ -30,7 +29,7 @@ function RecipeContainer({
           className="font-semibold leading-7 ml-1 hover:text-text-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-zinc-600"
         > 
           {/* Doesn't render PenToSquare if user is not owner of book or when a recipe is not selected */}
-          {currentBook.book_role === "owner" && recipeId !== 0 ? <FontAwesomeIcon icon={faPenToSquare} /> : <></>}
+          {currentBook?.book_role === "owner" && recipeId !== 0 ? <FontAwesomeIcon icon={faPenToSquare} /> : <></>}
         </button>
       </div>
       <RecipeView recipe={recipe} />

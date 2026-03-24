@@ -45,13 +45,6 @@ export type Options = {
   };
 };
 
-type HandleRecipe = {
-  handleRecipe: (
-    data: string | Ingredient[] | Instruction | Instructions,
-    section: string,
-  ) => void;
-};
-
 type HandleIngredient = {
   add: () => void;
   remove: (index: number) => void;
@@ -128,13 +121,12 @@ export type RecipeRequestsProps = {
   };
   setShowing: any;
   isOpen: boolean;
-  isShared: boolean;
+  isShared?: boolean;
 };
 
 export type RecipeViewProps = {
   recipe: Recipe;
   handleModalToggle: () => void;
-  isOpen: boolean;
 };
 
 export type IngredientsGroupProps = {
