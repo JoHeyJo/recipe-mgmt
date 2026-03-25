@@ -2,6 +2,10 @@ import { jwtDecode } from "jwt-decode";
 import { AttributeData, Instructions } from "./types";
 
 
+/** Limits string length to max input */
+export const truncate = (str: string, max: number) =>
+    str.length > max ? str.slice(0, max) + "…" : str;
+
 /** Auth and initialize user before loading routes 
  * skip token validation on signup/login because this will always be true
 */

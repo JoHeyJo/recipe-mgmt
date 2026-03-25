@@ -5,7 +5,7 @@ import { MultiSelectProp } from "../../../utils/props";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Book } from "../../../utils/types";
-// import { truncate } from "../../../utils/functions";
+import { truncate } from "../../../utils/functions";
 
 /** Renders dropdown multiselect
  *
@@ -22,7 +22,7 @@ function MultiSelect({ selected, options, handleIdChange }: MultiSelectProp) {
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <MenuButton className="inline-flex truncate w-full justify-center gap-x-1.5 rounded-md bg-selected px-3 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-light-border hover:bg-gray-50">
-          {/* {truncate(selected.title, 15)} */}
+          {truncate(selected.title, 15)}
           <ChevronDownIcon
             aria-hidden="true"
             className="-mr-1 size-5 text-gray-400"
