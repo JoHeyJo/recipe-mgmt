@@ -46,24 +46,19 @@ function useWebSocket() {
     });
 
     newSocket.on("user_shared_recipe", (data) => {
-      console.log("shared data:",data)
       if(data?.payload) {
         setUserData((prevState) => {
-          console.log("pre state:",prevState)
           const newState = {...prevState, 
             books: [data.payload],
             defaultBook: data.payload,
-            currentBookId: data.payload.id,
-            currentBook: data.payload
+            defaultBookId: data.payload.id,
+            currentBook: data.payload,
+            currentBookId: data.payload.id
           };
           setBookId(data.payload.id)
-          console.log("new state:",newState)
           return newState
         }) 
       }
-      // console.log
-      // setUserData((prevState) => ({ ...prevState, books: data.books }));
-      // setUserData((prevState) => ({ ...prevState, data, books: data.books }));
       setMessage(data.message);
       updateRecipes(data.recipe)
       setStatus(200);
