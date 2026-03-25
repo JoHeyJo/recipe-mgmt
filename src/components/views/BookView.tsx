@@ -28,7 +28,9 @@ function BookView({ resetSelected }: BookViewProp) {
     resetSelected();
   }
 
-
+  console.log("BookView")
+  console.log("selectedBook:",selectedBook)
+  console.log("bookId:", bookId);
   return (
     <section>
       {!selectedBook && !bookId ? (

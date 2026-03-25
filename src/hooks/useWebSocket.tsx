@@ -4,6 +4,7 @@ import { UserContext } from "../context/UserContext";
 import { RecipeContext } from "../context/RecipeContext";
 import API from "../api";
 import { BASEURL, protocol } from "../api";
+import useLocalStorage from "./useLocalStorage";
 
 /** Custom Hook to create open connection between client and server
  *
@@ -15,7 +16,7 @@ function useWebSocket() {
   const [socket, setSocket] = useState(null);
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState(null);
-  const [data, setData] = useState();
+  const [bookId, setBookId] = useLocalStorage("current-book-id");
 
   const { userId, currentBookId, user, currentBook, setUserData } =
     useContext(UserContext);
@@ -40,15 +41,29 @@ function useWebSocket() {
 
     newSocket.on("user_shared_book", (data) => {
       setMessage(data.message);
-      setUserData((prevState) => ({ ...prevState, data, books: data.books }));
+      setUserData((prevState) => ({ ...prevState, books: data.books }));
       setStatus(200);
     });
 
     newSocket.on("user_shared_recipe", (data) => {
       console.log("shared data:",data)
       if(data?.payload) {
-        setUserData((prevState) => ({ ...prevState, data, books: data.payload }));
+        setUserData((prevState) => {
+          console.log("pre state:",prevState)
+          const newState = {...prevState, 
+            books: [data.payload],
+            defaultBook: data.payload.id,
+            currentBookId: data.payload.id,
+            currentBook: data.payload
+          };
+          setBookId(data.payload.id)
+          console.log("new state:",newState)
+          return newState
+        }) 
       }
+      // console.log
+      // setUserData((prevState) => ({ ...prevState, books: data.books }));
+      // setUserData((prevState) => ({ ...prevState, data, books: data.books }));
       setMessage(data.message);
       updateRecipes(data.recipe)
       setStatus(200);
