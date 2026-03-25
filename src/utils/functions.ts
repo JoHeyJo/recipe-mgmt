@@ -1,6 +1,7 @@
 import { jwtDecode } from "jwt-decode";
 import { AttributeData, Instructions } from "./types";
 
+
 /** Auth and initialize user before loading routes 
  * skip token validation on signup/login because this will always be true
 */
