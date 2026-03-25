@@ -52,7 +52,7 @@ function useWebSocket() {
           console.log("pre state:",prevState)
           const newState = {...prevState, 
             books: [data.payload],
-            defaultBook: data.payload.id,
+            defaultBook: data.payload,
             currentBookId: data.payload.id,
             currentBook: data.payload
           };
