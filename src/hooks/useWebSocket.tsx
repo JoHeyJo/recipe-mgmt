@@ -45,6 +45,10 @@ function useWebSocket() {
     });
 
     newSocket.on("user_shared_recipe", (data) => {
+      console.log("shared data:",data)
+      if(data?.payload) {
+        setUserData((prevState) => ({ ...prevState, data, books: data.payload }));
+      }
       setMessage(data.message);
       updateRecipes(data.recipe)
       setStatus(200);
