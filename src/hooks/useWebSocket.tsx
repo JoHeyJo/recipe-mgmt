@@ -18,8 +18,14 @@ function useWebSocket() {
   const [status, setStatus] = useState(null);
   const [bookId, setBookId] = useLocalStorage("current-book-id");
 
-  const { userId, currentBookId, user, currentBook, setUserData } =
-    useContext(UserContext);
+  const {
+    userId,
+    currentBookId,
+    user,
+    currentBook,
+    setUserData,
+    defaultBookId,
+  } = useContext(UserContext);
   const { recipeId, recipeName, updateRecipes } = useContext(RecipeContext);
 
   /** Initiates handshake, maintains connection, & disconnects on unmount */
@@ -40,7 +46,22 @@ function useWebSocket() {
     });
 
     newSocket.on("user_shared_book", (data) => {
+      console.log("shared book data:", data);
       setMessage(data.message);
+      if (!defaultBookId) {
+        setUserData((prevState) => {
+          const newState = {
+            ...prevState,
+            books: [data.payload],
+            defaultBook: data.payload,
+            defaultBookId: data.payload.id,
+            currentBook: data.payload,
+            currentBookId: data.payload.id,
+          };
+          setBookId(data.payload.id);
+          return newState;
+        });
+      }
       setUserData((prevState) => ({ ...prevState, books: data.books }));
       setStatus(200);
     });
@@ -84,7 +105,7 @@ function useWebSocket() {
   /** Sends message to share book with recipient */
   function sendBook(recipient: string) {
     if (socket && recipient) {
-      console.log("send book:", recipient, currentBook)
+      console.log("send book:", recipient, currentBook);
       socket.emit("share_book", {
         userId,
         recipient,
@@ -96,7 +117,7 @@ function useWebSocket() {
   }
 
   function sendRecipe(recipient: string) {
-    console.log("Recipe:",currentBook)
+    console.log("Recipe:", currentBook);
     if (socket && recipient) {
       socket.emit("share_recipe", {
         recipient,
