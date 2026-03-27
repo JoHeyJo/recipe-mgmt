@@ -25,6 +25,7 @@ function Share({ action }: ShareBookProp) {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
+      // should user be passed or gathered from context
       action === "shareBook" ? sendBook(user) : sendRecipe(user);
     } catch (error: any) {
       errorHandling("Share -> handleSubmit", error);

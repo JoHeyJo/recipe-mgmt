@@ -83,8 +83,8 @@ function useWebSocket() {
 
   /** Sends message to share book with recipient */
   function sendBook(recipient: string) {
-    
     if (socket && recipient) {
+      console.log("send book:", recipient, currentBook)
       socket.emit("share_book", {
         userId,
         recipient,

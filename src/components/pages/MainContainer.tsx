@@ -20,7 +20,7 @@ import { WebSocketProvider } from "../../context/WebSocketProvider";
  * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList, BookView, Search]
  */
 function MainContainer() {
-  const { userId, defaultBookId, currentBookId, currentBook } =
+  const { userId, defaultBookId, currentBookId, currentBook, user } =
     useContext(UserContext);
 
   const [selectedBookId, setSelectedBookId] = useState<number>();
@@ -31,6 +31,8 @@ function MainContainer() {
   const [requestAction, setRequestAction] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  console.log("User data in main",user, currentBook)
 
   const recipeData = {
     recipeId: selectedRecipe.id,
