@@ -46,21 +46,24 @@ function useWebSocket() {
     });
 
     newSocket.on("user_shared_recipe", (data) => {
-      if(data?.payload) {
+      if (data?.payload) {
         setUserData((prevState) => {
-          const newState = {...prevState, 
+          const newState = {
+            ...prevState,
             books: [data.payload],
             defaultBook: data.payload,
             defaultBookId: data.payload.id,
             currentBook: data.payload,
-            currentBookId: data.payload.id
+            currentBookId: data.payload.id,
           };
-          setBookId(data.payload.id)
-          return newState
-        }) 
+          setBookId(data.payload.id);
+          return newState;
+        });
       }
+
+      console.log("current book:", data.payload);
       setMessage(data.message);
-      updateRecipes(data.recipe)
+      if (data.payload.book_type === "shared_inbox") updateRecipes(data.recipe);
       setStatus(200);
     });
 
@@ -80,6 +83,7 @@ function useWebSocket() {
 
   /** Sends message to share book with recipient */
   function sendBook(recipient: string) {
+    
     if (socket && recipient) {
       socket.emit("share_book", {
         userId,
@@ -92,6 +96,7 @@ function useWebSocket() {
   }
 
   function sendRecipe(recipient: string) {
+    console.log("Recipe:",currentBook)
     if (socket && recipient) {
       socket.emit("share_recipe", {
         recipient,
