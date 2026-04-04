@@ -88,6 +88,7 @@ class API {
       data,
       "POST",
     );
+    console.log("recipe response:",res)
     return res;
   }
 
@@ -101,7 +102,9 @@ class API {
   static async patchUserRecipe(
     recipeId: number,
     data: any,
-  ) {
+  ) 
+  {
+    console.log("edit data",data)
     const res = await this.request(
       `recipes/${recipeId}`,
       data,

@@ -124,13 +124,8 @@ function filterInstructions(original: Instructions, edited: Instructions) {
         (original[index] ? original[index].instruction : "")
       ) {
         const editedInstruction = {
-          // association id = PK of association table
-          // catches message if an additional input was created rather than replacing one
-          associationId: original[index]
-            ? original[index].association_id
-            : null,
+          oldId: original[index] ? original[index].id : null, // the instruction's own id
           newId: instruction.id,
-          // "instruction": instruction.instruction
         };
         instructions.push(editedInstruction);
       }

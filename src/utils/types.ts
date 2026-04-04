@@ -13,6 +13,7 @@ export type Recipe = {
   notes: string;
   ingredients: Ingredient[];
 };
+
 export type Ingredient = {
   ingredient_id?: number;
   id: number;
