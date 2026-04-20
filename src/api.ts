@@ -83,12 +83,12 @@ class API {
   // ############ RECIPES ###########
   /** Add user recipe to corresponding book*/
   static async postUserRecipe(data: Recipe, bookId: number, userId: number) {
+    console.log("hit postUserRecipe")
     const res = await this.request(
       `users/${userId}/books/${bookId}/recipes`,
       data,
       "POST",
     );
-    console.log("recipe response:",res)
     return res;
   }
 
@@ -104,7 +104,8 @@ class API {
     data: any,
   ) 
   {
-    console.log("edit data",data)
+    console.log("hit patchUserRecipe");
+    console.log(data);
     const res = await this.request(
       `recipes/${recipeId}`,
       data,
@@ -255,6 +256,7 @@ class API {
     bookId: number,
     data: Instruction,
   ) {
+    console.log("hit postInstruction")
     const res = await this.request(
       `users/${userId}/books/${bookId}/instructions`,
       data,
@@ -269,6 +271,7 @@ class API {
     bookId: number,
     instructionId: number,
   ) {
+    console.log("hit postInstructionAssociation")
     const res = await this.request(
       `users/${userId}/books/${bookId}/instructions/${instructionId}`,
       {},

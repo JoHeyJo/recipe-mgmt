@@ -46,7 +46,6 @@ function useWebSocket() {
     });
 
     newSocket.on("user_shared_book", (data) => {
-      console.log("shared book data:", data);
       setMessage(data.message);
       if (!defaultBookId) {
         setUserData((prevState) => {
@@ -82,7 +81,6 @@ function useWebSocket() {
         });
       }
 
-      console.log("current book:", data.payload);
       setMessage(data.message);
       if (data.payload.book_type === "shared_inbox") updateRecipes(data.recipe);
       setStatus(200);
@@ -105,7 +103,6 @@ function useWebSocket() {
   /** Sends message to share book with recipient */
   function sendBook(recipient: string) {
     if (socket && recipient) {
-      console.log("send book:", recipient, currentBook);
       socket.emit("share_book", {
         userId,
         recipient,
@@ -117,7 +114,6 @@ function useWebSocket() {
   }
 
   function sendRecipe(recipient: string) {
-    console.log("Recipe:", currentBook);
     if (socket && recipient) {
       socket.emit("share_recipe", {
         recipient,

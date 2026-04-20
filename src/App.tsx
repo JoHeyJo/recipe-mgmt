@@ -51,7 +51,6 @@ function App() {
     isInitialized: isContextInitialized
   };
 
-  console.log("user data in APP:", userData)
 
   /** User sign up - returns token and auth credentials - saved to local storage */
   async function userSignUp(signUpData: SignUpData) {

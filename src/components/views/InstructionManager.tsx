@@ -35,7 +35,6 @@ function InstructionManager({
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, width: 0 });
   const [isKbSuppressed, setIsKbSuppressed] = useState(false);
-  console.log("instrucion in manage:",instruction)
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);

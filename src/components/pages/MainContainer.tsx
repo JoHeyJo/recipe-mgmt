@@ -32,8 +32,6 @@ function MainContainer() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  console.log("User data in main",user, currentBook)
-
   const recipeData = {
     recipeId: selectedRecipe.id,
     created_by_id: selectedRecipe.created_by_id,
