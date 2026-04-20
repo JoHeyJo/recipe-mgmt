@@ -1,6 +1,6 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FaShareButton from "./common/FaShareButton";
-import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
+// import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
 
 type RecipeListItemProps = {
   name: string;
@@ -28,10 +28,10 @@ function RecipeListItem({
       onClick={() => handleSelect(index)}
       className={`flex justify-between p-2 border-b hover:bg-selected ${recipeId === id ? "text-text-hover bg-selected" : "hover:text-text-hover"}`}
     >
-      <div id="RecipeListItem-left-align" className="px-2">
+      {/* <div id="RecipeListItem-left-align" className="px-2"> */}
         {name}
-        <FontAwesomeIcon icon={faShareNodes} />
-      </div>
+        {/* <FontAwesomeIcon icon={faShareNodes} />
+      </div> */}
       <div className={`${recipeId === id ? "block" : "hidden"}`}>
         <FaShareButton handleClick={() => handleOpen()} />
       </div>

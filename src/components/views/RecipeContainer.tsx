@@ -18,7 +18,6 @@ function RecipeContainer({
 }: RecipeViewProps) {
   const { recipeId } = useContext(RecipeContext);
   const { currentBook } = useContext(UserContext)
-  console.log("book:",currentBook)
   return (
     <div id="RecipeContainer-container">
       <div id="RecipeContainer-header" className="flex justify-between p-1">
