@@ -14,6 +14,8 @@ import Search from "../ui/Search";
 import SharePopOut from "../ui/common/SharePopOut";
 import FaShareButton from "../ui/common/FaShareButton";
 import { WebSocketProvider } from "../../context/WebSocketProvider";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUsers } from "@fortawesome/free-solid-svg-icons";
 
 /** Renders the main container (book) housing list of recipes and individual recipe
  *
@@ -171,9 +173,13 @@ function MainContainer() {
                   </section>
                   {defaultBookId && (
                     <section className="flex [flex:0.5] justify-center">
-                      <FaShareButton
-                        handleClick={() => setIsDialogOpen(true)}
-                      />
+                      {currentBook.book_role === "owner" ? (
+                        <FaShareButton
+                          handleClick={() => setIsDialogOpen(true)}
+                        />
+                      ) : (
+                        <FontAwesomeIcon icon={faUsers} />
+                      )}
                     </section>
                   )}
                   {defaultBookId && (
