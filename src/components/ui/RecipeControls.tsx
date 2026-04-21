@@ -19,26 +19,22 @@ function RecipeControls({ role, type, action }: RecipeControlsProps) {
   const fullPrivileges = role === "owner" && type === "standard";
   const collaborator = role === "collaborator" && type === "standard";
   const sharedInbox = role === "owner" && type === "shared_inbox";
-  const viewOnly = role === "viewer" && type === "standard";
+  const viewer = role === "viewer" && type === "standard";
 
   const renderControl = {
-    fullPrivileges: (
+    editControls: (
       <button
         onClick={action}
         className="font-semibold leading-7 ml-1 hover:text-text-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-zinc-600"
       >
         <FontAwesomeIcon icon={faPenToSquare} />
       </button>
-    ),
-    // collaborator: (
-
-    // ),
-
+    )
   };
 
   function chooseControls(){
-    if(fullPrivileges) return renderControl.fullPrivileges;
-    // if(collaborator) return renderControl.collaborator;
+    if(fullPrivileges || collaborator) return renderControl.editControls;
+    if (sharedInbox || viewer) return; 
   }
 
   return (
