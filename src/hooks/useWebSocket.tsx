@@ -102,13 +102,13 @@ function useWebSocket() {
 
   /** Sends message to share book with recipient */
   function sendBook(recipient: string) {
+    console.log("Current book",currentBook)
     if (socket && recipient) {
       socket.emit("share_book", {
         userId,
         recipient,
-        currentBookId,
         user,
-        currentBook: currentBook.title,
+        currentBook,
       });
     }
   }

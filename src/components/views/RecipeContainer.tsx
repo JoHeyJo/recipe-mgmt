@@ -1,10 +1,10 @@
 import RecipeView from "./RecipeView";
 import { RecipeViewProps } from "../../utils/props";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { useContext } from "react";
 import { RecipeContext } from "../../context/RecipeContext";
 import { UserContext } from "../../context/UserContext";
+import Controls from "../ui/Controls";
 
 /** Renders recipe
  *
@@ -28,7 +28,13 @@ function RecipeContainer({
           className="font-semibold leading-7 ml-1 hover:text-text-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-zinc-600"
         > 
           {/* Doesn't render PenToSquare if user is not owner of book or when a recipe is not selected */}
-          {currentBook?.book_role === "owner" && recipeId !== 0 ? <FontAwesomeIcon icon={faPenToSquare} /> : <></>}
+          {/* Render edit button:
+                Owner        role = owner, type = standard
+                Collaborator role = collaborator, type = standard
+                Shared       role = owner, type = shared_inbox
+                viewer       role = viewer, type standard
+                Share_book(copy/remove controls NO edit) */}
+          {recipeId && <Controls />}
         </button>
       </div>
       <RecipeView recipe={recipe} />
