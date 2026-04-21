@@ -16,6 +16,7 @@ import FaShareButton from "../ui/common/FaShareButton";
 import { WebSocketProvider } from "../../context/WebSocketProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
+import Tooltip from "../ui/common/Tooltip";
 
 /** Renders the main container (book) housing list of recipes and individual recipe
  *
@@ -178,7 +179,9 @@ function MainContainer() {
                           handleClick={() => setIsDialogOpen(true)}
                         />
                       ) : (
-                        <FontAwesomeIcon icon={faUsers} />
+                        <Tooltip content="Collaborators cannot share book" side="top">
+                          <FontAwesomeIcon icon={faUsers} />
+                        </Tooltip>
                       )}
                     </section>
                   )}
