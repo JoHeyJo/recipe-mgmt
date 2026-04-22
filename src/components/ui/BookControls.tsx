@@ -13,16 +13,21 @@ type BookControlsProps = {
   children: ReactNode;
   render: boolean;
 };
-/**
- * 
-      /* Render edit button:
-                Owner        role = owner, type = standard
-                Collaborator role = collaborator, type = standard
-                Shared       role = owner, type = shared_inbox
-                viewer       role = viewer, type standard
-                Share_book(copy/remove controls NO edit) 
+/** Dynamically renders UI for share book and add recipe
+ * Owner        role = owner, type = standard
+ * Collaborator role = collaborator, type = standard
+ * Shared       role = owner, type = shared_inbox
+ * viewer       role = viewer, type standard
+ * Share_book(copy/remove controls NO edit)
  */
-function BookControls({ role, type, children, render, shareControl, addControl }: BookControlsProps) {
+function BookControls({
+  role,
+  type,
+  children,
+  render,
+  shareControl,
+  addControl,
+}: BookControlsProps) {
   const fullPrivileges = role === "owner" && type === "standard";
   const collaborator = role === "collaborator" && type === "standard";
   const sharedInbox = role === "owner" && type === "shared_inbox";
@@ -34,23 +39,22 @@ function BookControls({ role, type, children, render, shareControl, addControl 
       <Tooltip content="Only book owner can share" side="top">
         <FontAwesomeIcon icon={faUsers} />
       </Tooltip>
-    )
-  };
-
-  const renderAddControl = {
-    addRecipe: (
-        <FaPlusButton onAction={addControl} />
     ),
   };
 
-  function chooseShareControl(){
-    if(fullPrivileges) return renderShareControl.share
-    if(collaborator || sharedInbox || viewOnly) return renderShareControl.blockShare
+  const renderAddControl = {
+    addRecipe: <FaPlusButton onAction={addControl} />,
+  };
+
+  function chooseShareControl() {
+    if (fullPrivileges) return renderShareControl.share;
+    if (collaborator || sharedInbox || viewOnly)
+      return renderShareControl.blockShare;
   }
 
-  function chooseAddControl(){
-    if(fullPrivileges || collaborator) return renderAddControl.addRecipe;
-    if(sharedInbox || viewOnly) return;
+  function chooseAddControl() {
+    if (fullPrivileges || collaborator) return renderAddControl.addRecipe;
+    if (sharedInbox || viewOnly) return;
   }
 
   return (
