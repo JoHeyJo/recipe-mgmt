@@ -39,9 +39,7 @@ function BookControls({ role, type, children, render, shareControl, addControl 
 
   const renderAddControl = {
     addRecipe: (
-      <section className="flex [flex:0.5] justify-center">
         <FaPlusButton onAction={addControl} />
-      </section>
     ),
   };
 
@@ -55,21 +53,18 @@ function BookControls({ role, type, children, render, shareControl, addControl 
     if(sharedInbox || viewOnly) return;
   }
 
-
-
-
   return (
-    <section>
+    <section className="flex flex-1">
       {render && (
-        <section className="flex [flex:0.5] justify-center">
+        <section className="flex [flex: 0.5] justify-center">
           {chooseShareControl()}
         </section>
       )}
       {render && (
-        <section className="flex [flex:2] justify-center">{children}</section>
+        <section className="flex flex-1 justify-center">{children}</section>
       )}
       {render && (
-        <section className="flex [flex:0.5] justify-center">
+        <section className="flex [flex: 0.5] justify-center">
           {chooseAddControl()}
         </section>
       )}

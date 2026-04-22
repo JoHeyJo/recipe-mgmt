@@ -169,23 +169,51 @@ function MainContainer() {
                 />
 
                 <div className="flex p-1 font-semibold text-lg border-b-2">
-                  <div className="flex flex-1 justify-start">Recipes for:</div>
-                  <section className="flex flex-1 justify-start">
-                    <BookView resetSelected={resetSelectedRecipe} />
-                  </section>
+                  <div className="flex [flex:0.75]">
+                    <div className="flex flex-1 justify-start">Recipes for:</div>
+                    <section className="flex flex-1 justify-start">
+                      <BookView resetSelected={resetSelectedRecipe} />
+                    </section>
+                  </div>
+
                   {defaultBookId && (
+                    <BookControls
+                      role={currentBook.book_role}
+                      type={currentBook.book_type}
+                      shareControl={() => setIsDialogOpen(true)}
+                      addControl={toggleCreateForm}
+                      render={!!defaultBookId}
+                    >
+                      <Search list={recipes} setList={filterRecipes} />
+                    </BookControls>
+                  )}
+
+                  {/* {defaultBookId && (
                     <section className="flex [flex:0.5] justify-center">
-                      <BookControls
-                        role={currentBook.book_role}
-                        type={currentBook.book_type}
-                        shareControl={() => setIsDialogOpen(true)}
-                        addControl={toggleCreateForm}
-                        render={!!defaultBookId}
-                      >
-                        <Search list={recipes} setList={filterRecipes} />
-                      </BookControls>
+                      {currentBook.book_role === "owner" ? (
+                        <FaShareButton
+                          handleClick={() => setIsDialogOpen(true)}
+                        />
+                      ) : (
+                        <Tooltip
+                          content="Collaborators cannot share book"
+                          side="top"
+                        >
+                          <FontAwesomeIcon icon={faUsers} />
+                        </Tooltip>
+                      )}
                     </section>
                   )}
+                  {defaultBookId && (
+                    <section className="flex [flex:2] justify-center">
+                      <Search list={recipes} setList={filterRecipes} />
+                    </section>
+                  )}
+                  {defaultBookId && (
+                    <section className="flex [flex:0.5] justify-center">
+                      <FaPlusButton onAction={toggleCreateForm} />
+                    </section>
+                  )} */}
                 </div>
               </div>
               <div
