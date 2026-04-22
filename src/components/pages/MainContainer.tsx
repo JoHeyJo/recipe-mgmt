@@ -17,6 +17,7 @@ import { WebSocketProvider } from "../../context/WebSocketProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
 import Tooltip from "../ui/common/Tooltip";
+import BookControls from "../ui/BookControls";
 
 /** Renders the main container (book) housing list of recipes and individual recipe
  *
@@ -174,25 +175,15 @@ function MainContainer() {
                   </section>
                   {defaultBookId && (
                     <section className="flex [flex:0.5] justify-center">
-                      {currentBook.book_role === "owner" ? (
-                        <FaShareButton
-                          handleClick={() => setIsDialogOpen(true)}
-                        />
-                      ) : (
-                        <Tooltip content="Collaborators cannot share book" side="top">
-                          <FontAwesomeIcon icon={faUsers} />
-                        </Tooltip>
-                      )}
-                    </section>
-                  )}
-                  {defaultBookId && (
-                    <section className="flex [flex:2] justify-center">
-                      <Search list={recipes} setList={filterRecipes} />
-                    </section>
-                  )}
-                  {defaultBookId && (
-                    <section className="flex [flex:0.5] justify-center">
-                      <FaPlusButton onAction={toggleCreateForm} />
+                      <BookControls
+                        role={currentBook.book_role}
+                        type={currentBook.book_type}
+                        shareControl={() => setIsDialogOpen(true)}
+                        addControl={toggleCreateForm}
+                        render={!!defaultBookId}
+                      >
+                        <Search list={recipes} setList={filterRecipes} />
+                      </BookControls>
                     </section>
                   )}
                 </div>

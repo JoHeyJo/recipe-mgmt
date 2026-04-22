@@ -8,8 +8,10 @@ import FaPlusButton from "../ui/common/FaPlusButton";
 type BookControlsProps = {
   role: string;
   type: string;
-  action: () => void;
-  children?: ReactNode;
+  shareControl: () => void;
+  addControl: () => void;
+  children: ReactNode;
+  render: boolean;
 };
 /**
  * 
@@ -20,35 +22,57 @@ type BookControlsProps = {
                 viewer       role = viewer, type standard
                 Share_book(copy/remove controls NO edit) 
  */
-function BookControls({ role, type, action }: BookControlsProps) {
+function BookControls({ role, type, children, render, shareControl, addControl }: BookControlsProps) {
   const fullPrivileges = role === "owner" && type === "standard";
   const collaborator = role === "collaborator" && type === "standard";
   const sharedInbox = role === "owner" && type === "shared_inbox";
   const viewOnly = role === "viewer" && type === "standard";
 
-  const renderControl = {
-    share: <FaShareButton handleClick={action} />,
+  const renderShareControl = {
+    share: <FaShareButton handleClick={shareControl} />,
     blockShare: (
       <Tooltip content="Only book owner can share" side="top">
         <FontAwesomeIcon icon={faUsers} />
       </Tooltip>
-    ),
+    )
+  };
+
+  const renderAddControl = {
     addRecipe: (
       <section className="flex [flex:0.5] justify-center">
-        <FaPlusButton onAction={action} />
+        <FaPlusButton onAction={addControl} />
       </section>
     ),
   };
 
-  function chooseControl(){
-    if(fullPrivileges) return renderControl.share
-    if(collaborator || sharedInbox || viewOnly) return renderControl.blockShare
+  function chooseShareControl(){
+    if(fullPrivileges) return renderShareControl.share
+    if(collaborator || sharedInbox || viewOnly) return renderShareControl.blockShare
   }
+
+  function chooseAddControl(){
+    if(fullPrivileges || collaborator) return renderAddControl.addRecipe;
+    if(sharedInbox || viewOnly) return;
+  }
+
+
 
 
   return (
     <section>
-      {chooseControl()}
+      {render && (
+        <section className="flex [flex:0.5] justify-center">
+          {chooseShareControl()}
+        </section>
+      )}
+      {render && (
+        <section className="flex [flex:2] justify-center">{children}</section>
+      )}
+      {render && (
+        <section className="flex [flex:0.5] justify-center">
+          {chooseAddControl()}
+        </section>
+      )}
     </section>
   );
 }
