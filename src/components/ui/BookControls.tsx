@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faUsers, faEye } from "@fortawesome/free-solid-svg-icons";
 import Tooltip from "../ui/common/Tooltip";
 import FaShareButton from "../ui/common/FaShareButton";
 import FaPlusButton from "../ui/common/FaPlusButton";
@@ -31,13 +31,18 @@ function BookControls({
   const fullPrivileges = role === "owner" && type === "standard";
   const collaborator = role === "collaborator" && type === "standard";
   const sharedInbox = role === "owner" && type === "shared_inbox";
-  const viewOnly = role === "viewer" && type === "standard";
+  const viewer = role === "viewer" && type === "standard";
 
   const shareControls = {
     share: <FaShareButton handleClick={shareControl} />,
     blockShare: (
       <Tooltip content="Only book owner can share" side="top">
         <FontAwesomeIcon icon={faUsers} />
+      </Tooltip>
+    ),
+    viewOnly: (
+      <Tooltip content="Recipes can only be viewed" side="top">
+        <FontAwesomeIcon icon={faEye} />
       </Tooltip>
     ),
   };
@@ -48,13 +53,13 @@ function BookControls({
 
   function chooseShareControl() {
     if (fullPrivileges) return shareControls.share;
-    if (collaborator || sharedInbox || viewOnly)
-      return shareControls.blockShare;
+    if (collaborator || sharedInbox) return shareControls.blockShare;
+    if (viewer) return shareControls.viewOnly;
   }
 
   function chooseAddControl() {
     if (fullPrivileges || collaborator) return addControls.addRecipe;
-    if (sharedInbox || viewOnly) return;
+    if (sharedInbox || viewer) return;
   }
 
   return (

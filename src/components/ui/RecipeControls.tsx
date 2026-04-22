@@ -7,14 +7,13 @@ type RecipeControlsProps = {
   action: () => void;
 };
 
-/**
- Render edit button:
-                Owner        role = owner, type = standard
-                Collaborator role = collaborator, type = standard
-                Shared       role = owner, type = shared_inbox
-                viewer       role = viewer, type standard
-                Share_book(copy/remove controls NO edit) 
-*/
+/** Dynamically renders UI for edit recipe
+ * Owner        role = owner, type = standard
+ * Collaborator role = collaborator, type = standard
+ * Shared       role = owner, type = shared_inbox
+ * viewer       role = viewer, type standard
+ * Share_book(copy/remove controls NO edit)
+ */
 function RecipeControls({ role, type, action }: RecipeControlsProps) {
   const fullPrivileges = role === "owner" && type === "standard";
   const collaborator = role === "collaborator" && type === "standard";
