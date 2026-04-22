@@ -19,6 +19,7 @@ type BookControlsProps = {
  * Shared       role = owner, type = shared_inbox
  * viewer       role = viewer, type standard
  * Share_book(copy/remove controls NO edit)
+ * MainContainer -> BookControls -> Tooltip
  */
 function BookControls({
   role,

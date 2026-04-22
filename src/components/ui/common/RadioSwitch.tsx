@@ -3,31 +3,35 @@ import { ChangeEvent } from "react";
 type RadioSwitchProps = {
   handleSwitch: (event: ChangeEvent<HTMLInputElement>) => void;
   selection: string;
+  labelOne: string;
+  labelTwo: string;
+  valueOne: string; 
+  valueTwo: string;
 };
 
-function RadioSwitch({ handleSwitch, selection }: RadioSwitchProps) {
+function RadioSwitch({ handleSwitch, selection, labelOne, labelTwo, valueOne, valueTwo }: RadioSwitchProps) {
   return (
     <div className="RadioSwitch-radio-buttons flex justify-center">
       <div className="RadioSwitch-radio">
         <label>
           <input
             type="radio"
-            value="user"
+            value={valueOne}
             onChange={handleSwitch}
-            checked={selection === "user"}
+            checked={selection === valueOne}
           />
-          User
+          {labelOne}
         </label>
       </div>
       <div className="RadioSwitch-radio">
         <label>
           <input
             type="radio"
-            value="book"
+            value={valueTwo}
             onChange={handleSwitch}
-            checked={selection === "book"}
+            checked={selection === valueTwo}
           />
-          Book
+          {labelTwo}
         </label>
       </div>
     </div>

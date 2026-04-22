@@ -21,7 +21,7 @@ import BookControls from "../ui/BookControls";
 
 /** Renders the main container (book) housing list of recipes and individual recipe
  *
- * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList, BookView, Search]
+ * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList, BookView, SharePopOut, Search, BookControls]
  */
 function MainContainer() {
   const { userId, defaultBookId, currentBookId, currentBook, user } =

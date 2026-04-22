@@ -2,7 +2,7 @@ import { createContext } from "react";
 
 export type WebSocketType = {
   sendRecipe: (recipient: string) => void;
-  sendBook: (recipient: string) => void;
+  sendBook: (recipient: string, privileges: string) => void;
   message: string;
   resetMessage: () => void;
   status: number;

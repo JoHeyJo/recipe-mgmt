@@ -37,14 +37,14 @@ function ComponentsOptionsRequests({
   /** Request to create new ingredient option */
   async function addOption(
     entity: string,
-    attributeObject: AttributeData
+    attributeObject: AttributeData,
   ): Promise<AttributeData> {
     try {
       const id = await API.postComponentOption(
         attributeObject,
         currentBookId,
         userId,
-        entity
+        entity,
       );
       return id;
     } catch (error: any) {
@@ -81,7 +81,7 @@ function ComponentsOptionsRequests({
   async function fetchBookComponentsOptions() {
     const { amounts, units, items } = await API.getBookComponentsOptions(
       userId,
-      currentBookId
+      currentBookId,
     );
     setOptionsReferences({ amount: amounts, unit: units, item: items }); ///DOES THIS NEED TO BE MEMOIZED
     setItems(items);
@@ -102,14 +102,14 @@ function ComponentsOptionsRequests({
     userId: number,
     currentBookId: number,
     optionId: number,
-    component: string
+    component: string,
   ) {
     try {
       const res = await API.postOptionAssociation(
         userId,
         currentBookId,
         optionId,
-        component
+        component,
       );
     } catch (error: any) {
       errorHandling("ComponentsOptionsRequests - associateOptionToBook", error);
@@ -126,12 +126,19 @@ function ComponentsOptionsRequests({
 
   // Scrolls into view newly created ingredient
   useEffect(() => {
-    if(numOfIngredients > 3) scrollIntoViewElement(ingredientSectionRef)
+    if (numOfIngredients > 3) scrollIntoViewElement(ingredientSectionRef);
   }, [numOfIngredients]);
 
   return (
     <>
-      <RadioSwitch handleSwitch={handleRadio} selection={whichOptions} />
+      <RadioSwitch
+        handleSwitch={handleRadio}
+        selection={whichOptions}
+        labelOne="User"
+        labelTwo="Book"
+        valueOne="user"
+        valueTwo="book"
+      />
       <div className="py-2 px-1 h-40 overflow-y-scroll rounded-md border-2 border-accent-secondary">
         {ingredients.map((ingredient, i) => (
           <div

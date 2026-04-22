@@ -13,6 +13,8 @@ type RecipeControlsProps = {
  * Shared       role = owner, type = shared_inbox
  * viewer       role = viewer, type standard
  * Share_book(copy/remove controls NO edit)
+ * 
+ * RecipeContainer -> RecipeControls
  */
 function RecipeControls({ role, type, action }: RecipeControlsProps) {
   const fullPrivileges = role === "owner" && type === "standard";
