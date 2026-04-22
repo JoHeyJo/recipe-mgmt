@@ -13,7 +13,7 @@ import RadioSwitch from "../ui/common/RadioSwitch";
  */
 function Share({ action }: ShareBookProp) {
   const [user, setUser] = useState("");
-  const [privileges, setRecipient] = useState("collaborator");
+  const [privileges, setRecipient] = useState("viewer");
 
   const { sendBook, sendRecipe } = useContext(WebSocketContext);
 
@@ -51,7 +51,7 @@ function Share({ action }: ShareBookProp) {
         labelOne="Collaborator"
         labelTwo="View Only"
         valueOne="collaborator"
-        valueTwo="book"
+        valueTwo="viewer"
       />
       <InputWithLabelForm
         type={"user-name"}
