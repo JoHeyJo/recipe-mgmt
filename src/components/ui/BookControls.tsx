@@ -33,7 +33,7 @@ function BookControls({
   const sharedInbox = role === "owner" && type === "shared_inbox";
   const viewOnly = role === "viewer" && type === "standard";
 
-  const renderShareControl = {
+  const shareControls = {
     share: <FaShareButton handleClick={shareControl} />,
     blockShare: (
       <Tooltip content="Only book owner can share" side="top">
@@ -42,18 +42,18 @@ function BookControls({
     ),
   };
 
-  const renderAddControl = {
+  const addControls = {
     addRecipe: <FaPlusButton onAction={addControl} />,
   };
 
   function chooseShareControl() {
-    if (fullPrivileges) return renderShareControl.share;
+    if (fullPrivileges) return shareControls.share;
     if (collaborator || sharedInbox || viewOnly)
-      return renderShareControl.blockShare;
+      return shareControls.blockShare;
   }
 
   function chooseAddControl() {
-    if (fullPrivileges || collaborator) return renderAddControl.addRecipe;
+    if (fullPrivileges || collaborator) return addControls.addRecipe;
     if (sharedInbox || viewOnly) return;
   }
 

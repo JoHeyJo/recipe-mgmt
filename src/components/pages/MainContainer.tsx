@@ -170,12 +170,13 @@ function MainContainer() {
 
                 <div className="flex p-1 font-semibold text-lg border-b-2">
                   <div className="flex [flex:0.75]">
-                    <div className="flex flex-1 justify-start">Recipes for:</div>
+                    <div className="flex flex-1 justify-start">
+                      Recipes for:
+                    </div>
                     <section className="flex flex-1 justify-start">
                       <BookView resetSelected={resetSelectedRecipe} />
                     </section>
                   </div>
-
                   {defaultBookId && (
                     <BookControls
                       role={currentBook.book_role}
@@ -187,33 +188,6 @@ function MainContainer() {
                       <Search list={recipes} setList={filterRecipes} />
                     </BookControls>
                   )}
-
-                  {/* {defaultBookId && (
-                    <section className="flex [flex:0.5] justify-center">
-                      {currentBook.book_role === "owner" ? (
-                        <FaShareButton
-                          handleClick={() => setIsDialogOpen(true)}
-                        />
-                      ) : (
-                        <Tooltip
-                          content="Collaborators cannot share book"
-                          side="top"
-                        >
-                          <FontAwesomeIcon icon={faUsers} />
-                        </Tooltip>
-                      )}
-                    </section>
-                  )}
-                  {defaultBookId && (
-                    <section className="flex [flex:2] justify-center">
-                      <Search list={recipes} setList={filterRecipes} />
-                    </section>
-                  )}
-                  {defaultBookId && (
-                    <section className="flex [flex:0.5] justify-center">
-                      <FaPlusButton onAction={toggleCreateForm} />
-                    </section>
-                  )} */}
                 </div>
               </div>
               <div
