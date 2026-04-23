@@ -140,7 +140,7 @@ function RecipeRequests({
     try {
       const mutatedData = filterRecipe(originalRecipe, mutableRecipe);
       mutatedData.created_by_id = created_by_id;
-      const res = await API.patchUserRecipe(recipeId, mutatedData);
+      const res = await API.patchUserRecipe(currentBookId, recipeId, mutatedData);
       recipeActions.editRecipe();
       return res;
     } catch (error: any) {
