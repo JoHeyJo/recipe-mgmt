@@ -51,16 +51,18 @@ export function compareIngredients(
   originals: Ingredients,
   edited: Ingredients,
 ) {
+  // console.log("originals:",originals)
+  // console.log("edited:", edited)
   const isAltered = edited.find((editedIngredient, index) => {
     return (
       // checks for empty ingredient input
-      (editedIngredient.amount.id !== null ||
-        editedIngredient.unit.id !== null ||
-        editedIngredient.item.id !== null) &&
+      (editedIngredient.amount?.id !== null ||
+        editedIngredient.unit?.id !== null ||
+        editedIngredient.item?.id !== null) &&
       //checks for differences between original and mutable ingredient
-      (editedIngredient.amount.id !== originals[index]?.amount.id ||
-        editedIngredient.unit.id !== originals[index]?.unit.id ||
-        editedIngredient.item.id !== originals[index]?.item.id)
+      (editedIngredient.amount?.id !== originals[index].amount?.id ||
+        editedIngredient.unit?.id !== originals[index].unit?.id ||
+        editedIngredient.item?.id !== originals[index].item?.id)
     );
   });
   return isAltered ? "altered" : null;
@@ -144,6 +146,8 @@ function handleAdditionalInput(
   index: number,
 ) {
   if (!originals[index]) return edited[property];
+  if(!edited && property === "item") return originals[index][property];
+  if(edited && property === "item") return edited[property];
   if (edited)
     return edited[property] === originals[index][property]
       ? null
@@ -157,6 +161,7 @@ function filterIngredients(
 ) {
   const alteredIngredients = edited.reduce(
     (alteredIngredients, editedIngredient, index) => {
+
       const amount = handleAdditionalInput(
         editedIngredient,
         originalIngredients,
@@ -175,6 +180,7 @@ function filterIngredients(
         "unit",
         index,
       );
+
       const alteredIngredient = {
         id: editedIngredient.ingredient_id || null,
         // below can be refactored to only send id instead of entire object
@@ -195,6 +201,7 @@ function filterIngredients(
 
         if (isIngredientModified) alteredIngredients.push(alteredIngredient);
       }
+      console.log("altered ingredients:",alteredIngredients)
       return alteredIngredients;
     },
     [],
