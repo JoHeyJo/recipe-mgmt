@@ -56,6 +56,7 @@ function MainContainer() {
   async function editRecipe() {
     setOpen(false);
     const res = await API.getBookRecipes(userId, selectedBookId);
+    console.log("edit res:",res)
     for (let recipe of res) {
       if (recipe.id === selectedRecipe.id) setSelectedRecipe(recipe);
     }

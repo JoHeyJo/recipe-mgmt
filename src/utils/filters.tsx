@@ -60,9 +60,9 @@ export function compareIngredients(
         editedIngredient.unit?.id !== null ||
         editedIngredient.item?.id !== null) &&
       //checks for differences between original and mutable ingredient
-      (editedIngredient.amount?.id !== originals[index].amount?.id ||
-        editedIngredient.unit?.id !== originals[index].unit?.id ||
-        editedIngredient.item?.id !== originals[index].item?.id)
+      (editedIngredient?.amount.id !== originals[index]?.amount.id ||
+        editedIngredient?.unit.id !== originals[index]?.unit.id ||
+        editedIngredient?.item.id !== originals[index]?.item.id)
     );
   });
   return isAltered ? "altered" : null;

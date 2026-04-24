@@ -112,6 +112,7 @@ class API {
       data,
       "PATCH",
     );
+    console.log("RES:",res)
     return res;
   }
 
