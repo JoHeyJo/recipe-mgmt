@@ -14,6 +14,10 @@ export type Recipe = {
   ingredients: Ingredient[];
 };
 
+export type Recipes = {
+  recipe: Recipe[];
+}
+
 export type Ingredient = {
   ingredient_id?: number;
   id: number;

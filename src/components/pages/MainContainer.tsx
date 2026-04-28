@@ -3,7 +3,7 @@ import { UserContext } from "../../context/UserContext";
 import { useContext, useEffect, useState } from "react";
 import API from "../../api";
 import { errorHandling } from "../../utils/ErrorHandling";
-import { Recipe } from "../../utils/types";
+import { Recipe, Recipes } from "../../utils/types";
 import RecipeContainer from "../views/RecipeContainer";
 import { recipeTemplate } from "../../utils/templates";
 import FaPlusButton from "../ui/common/FaPlusButton";
@@ -28,7 +28,7 @@ function MainContainer() {
     useContext(UserContext);
 
   const [selectedBookId, setSelectedBookId] = useState<number>();
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [recipes, setRecipes] = useState<Recipes | any>([]);
   const [filteredRecipes, setFilteredRecipe] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate);
   const [isOpen, setOpen] = useState(false);
@@ -61,10 +61,10 @@ function MainContainer() {
       if (recipe.id === selectedRecipe.id) setSelectedRecipe(recipe);
     }
     setRecipes(res);
-    setRecipes((prevRecipes) => prevRecipes.map(r) =>
-    r.id === editRecipe_recipe.id ? edited_recipe : r
-  )
+    setRecipes((prevRecipes) => prevRecipes.map(recipes) => false))
+
   }
+  recipes.map(recipes) => {}
 
   /** Removes recipe from list after deletion */
   function deleteRecipe() {
