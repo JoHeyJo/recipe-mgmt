@@ -51,18 +51,16 @@ export function compareIngredients(
   originals: Ingredients,
   edited: Ingredients,
 ) {
-  // console.log("originals:",originals)
-  // console.log("edited:", edited)
   const isAltered = edited.find((editedIngredient, index) => {
     return (
       // checks for empty ingredient input
-      (editedIngredient.amount?.id !== null ||
-        editedIngredient.unit?.id !== null ||
-        editedIngredient.item?.id !== null) &&
+      (editedIngredient?.amount?.id !== null ||
+        editedIngredient?.unit?.id !== null ||
+        editedIngredient?.item?.id !== null) &&
       //checks for differences between original and mutable ingredient
-      (editedIngredient?.amount.id !== originals[index]?.amount.id ||
-        editedIngredient?.unit.id !== originals[index]?.unit.id ||
-        editedIngredient?.item.id !== originals[index]?.item.id)
+      (editedIngredient?.amount?.id !== originals[index]?.amount?.id ||
+        editedIngredient?.unit?.id !== originals[index]?.unit?.id ||
+        editedIngredient?.item?.id !== originals[index]?.item?.id)
     );
   });
   return isAltered ? "altered" : null;
