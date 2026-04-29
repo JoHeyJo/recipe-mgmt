@@ -52,19 +52,16 @@ function MainContainer() {
     setRecipes((recipes) => [...recipes, recipe]);
   }
 
-  /** Handles recipe edit action: requests updated recipes, re-selects updated recipe. */
-  async function editRecipe(edited_recipe: Recipe) {
+  /** Handles recipe edit action: updates recipes & re-selects updated recipe. */
+  async function editRecipe(editedRecipe: Recipe) {
     setOpen(false);
-    const res = await API.getBookRecipes(userId, selectedBookId);
-    console.log("RES from request:", res);
-    for (let recipe of res) {
-      if (recipe.id === selectedRecipe.id) setSelectedRecipe(recipe);
-    }
-    setRecipes(res);
-    setRecipes((prevRecipes) => prevRecipes.map(recipes) => false))
-
+    setRecipes((prevRecipes) =>
+      prevRecipes.map((recipe) => 
+        editedRecipe.id === recipe.id ? editedRecipe : recipe,
+      ),
+    );
+    setSelectedRecipe(editedRecipe);
   }
-  recipes.map(recipes) => {}
 
   /** Removes recipe from list after deletion */
   function deleteRecipe() {
