@@ -6,17 +6,12 @@ import { errorHandling } from "../../utils/ErrorHandling";
 import { Recipe, Recipes } from "../../utils/types";
 import RecipeContainer from "../views/RecipeContainer";
 import { recipeTemplate } from "../../utils/templates";
-import FaPlusButton from "../ui/common/FaPlusButton";
 import RecipeRequests from "../requests/RecipeRequests";
 import { RecipeContext } from "../../context/RecipeContext";
 import BookView from "../views/BookView";
 import Search from "../ui/Search";
 import SharePopOut from "../ui/common/SharePopOut";
-import FaShareButton from "../ui/common/FaShareButton";
 import { WebSocketProvider } from "../../context/WebSocketProvider";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUsers } from "@fortawesome/free-solid-svg-icons";
-import Tooltip from "../ui/common/Tooltip";
 import BookControls from "../ui/BookControls";
 
 /** Renders the main container (book) housing list of recipes and individual recipe
