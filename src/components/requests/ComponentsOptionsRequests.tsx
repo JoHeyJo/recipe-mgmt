@@ -79,10 +79,12 @@ function ComponentsOptionsRequests({
 
   /** Fetches components options associated to Book  */
   async function fetchBookComponentsOptions() {
+    console.log("FETCH BOOK OPTIONS")
     const { amounts, units, items } = await API.getBookComponentsOptions(
       userId,
       currentBookId,
     );
+    console.log({ amounts, units, items });
     setOptionsReferences({ amount: amounts, unit: units, item: items }); ///DOES THIS NEED TO BE MEMOIZED
     setItems(items);
     setQuantityUnits(units);
@@ -90,8 +92,10 @@ function ComponentsOptionsRequests({
   }
   /** Fetches components options associated to User  */
   async function fetchUserComponentsOptions() {
+    console.log("FETCH USER OPTIONS")
     const { amounts, units, items } =
       await API.getUserComponentsOptions(userId);
+    console.log({ amounts, units, items });
     setItems(items);
     setQuantityUnits(units);
     setQuantityAmounts(amounts);
