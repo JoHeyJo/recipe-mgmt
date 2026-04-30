@@ -109,7 +109,6 @@ class API {
       data,
       "PATCH",
     );
-    console.log("RES from edit:",res)
     return res;
   }
 
@@ -255,7 +254,6 @@ class API {
     bookId: number,
     data: Instruction,
   ) {
-    console.log("hit postInstruction")
     const res = await this.request(
       `users/${userId}/books/${bookId}/instructions`,
       data,
@@ -270,7 +268,6 @@ class API {
     bookId: number,
     instructionId: number,
   ) {
-    console.log("hit postInstructionAssociation")
     const res = await this.request(
       `users/${userId}/books/${bookId}/instructions/${instructionId}`,
       {},

@@ -199,7 +199,6 @@ function filterIngredients(
 
         if (isIngredientModified) alteredIngredients.push(alteredIngredient);
       }
-      console.log("altered ingredients:",alteredIngredients)
       return alteredIngredients;
     },
     [],
