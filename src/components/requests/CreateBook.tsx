@@ -61,12 +61,13 @@ function CreateBook({ isOpen, setOpen }) {
       const newBook = await API.postBook(bookData, userId);
       setUserData((user) => {
         const updatedUser = { ...user };
-        console.log("Copy of user:",updatedUser)
         updatedUser.books.push(newBook);
         // ensure default book id
         if (!updatedUser.defaultBookId) {
-          updatedUser.defaultBookId = newBook.id;
           updatedUser.defaultBook = newBook;
+          updatedUser.defaultBookId = newBook.id;
+          updatedUser. currentBook = newBook;
+          updatedUser.currentBookId = newBook.id
         }
         return updatedUser;
       });

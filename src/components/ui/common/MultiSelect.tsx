@@ -17,11 +17,10 @@ function MultiSelect({ selected, options, handleIdChange }: MultiSelectProp) {
     handleIdChange(option.id, option);
   }
 
-
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <MenuButton className="inline-flex truncate w-full justify-center gap-x-1.5 rounded-md bg-selected px-3 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-light-border hover:bg-gray-50">
+        <MenuButton className="inline-flex truncate justify-center gap-x-1.5 rounded-md bg-selected px-3 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-light-border hover:bg-gray-50">
           {truncate(selected.title, 15)}
           <ChevronDownIcon
             aria-hidden="true"

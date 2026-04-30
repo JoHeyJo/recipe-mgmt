@@ -3,28 +3,27 @@ import { UserContext } from "../../context/UserContext";
 import { useContext, useEffect, useState } from "react";
 import API from "../../api";
 import { errorHandling } from "../../utils/ErrorHandling";
-import { Recipe } from "../../utils/types";
+import { Recipe, Recipes } from "../../utils/types";
 import RecipeContainer from "../views/RecipeContainer";
 import { recipeTemplate } from "../../utils/templates";
-import FaPlusButton from "../ui/common/FaPlusButton";
 import RecipeRequests from "../requests/RecipeRequests";
 import { RecipeContext } from "../../context/RecipeContext";
 import BookView from "../views/BookView";
 import Search from "../ui/Search";
 import SharePopOut from "../ui/common/SharePopOut";
-import FaShareButton from "../ui/common/FaShareButton";
 import { WebSocketProvider } from "../../context/WebSocketProvider";
+import BookControls from "../ui/BookControls";
 
 /** Renders the main container (book) housing list of recipes and individual recipe
  *
- * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList, BookView, Search]
+ * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList, BookView, SharePopOut, Search, BookControls]
  */
 function MainContainer() {
-  const { userId, defaultBookId, currentBookId, currentBook } =
+  const { userId, defaultBookId, currentBookId, currentBook, user } =
     useContext(UserContext);
 
   const [selectedBookId, setSelectedBookId] = useState<number>();
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [recipes, setRecipes] = useState<Recipes | any>([]);
   const [filteredRecipes, setFilteredRecipe] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate);
   const [isOpen, setOpen] = useState(false);
@@ -48,14 +47,15 @@ function MainContainer() {
     setRecipes((recipes) => [...recipes, recipe]);
   }
 
-  /** Handles recipe edit action: requests updated recipes, re-selects updated recipe. */
-  async function editRecipe() {
+  /** Handles recipe edit action: updates recipes & re-selects updated recipe. */
+  async function editRecipe(editedRecipe: Recipe) {
     setOpen(false);
-    const res = await API.getBookRecipes(userId, selectedBookId);
-    for (let recipe of res) {
-      if (recipe.id === selectedRecipe.id) setSelectedRecipe(recipe);
-    }
-    setRecipes(res);
+    setRecipes((prevRecipes) =>
+      prevRecipes.map((recipe) => 
+        editedRecipe.id === recipe.id ? editedRecipe : recipe,
+      ),
+    );
+    setSelectedRecipe(editedRecipe);
   }
 
   /** Removes recipe from list after deletion */
@@ -165,26 +165,24 @@ function MainContainer() {
                 />
 
                 <div className="flex p-1 font-semibold text-lg border-b-2">
-                  <div className="flex flex-1 justify-start">Recipes for:</div>
-                  <section className="flex flex-1 justify-start">
-                    <BookView resetSelected={resetSelectedRecipe} />
-                  </section>
-                  {defaultBookId && (
-                    <section className="flex [flex:0.5] justify-center">
-                      <FaShareButton
-                        handleClick={() => setIsDialogOpen(true)}
-                      />
+                  <div className="flex [flex:0.75]">
+                    <div className="flex flex-1 justify-start">
+                      Recipes for:
+                    </div>
+                    <section className="flex flex-1 justify-start">
+                      <BookView resetSelected={resetSelectedRecipe} />
                     </section>
-                  )}
+                  </div>
                   {defaultBookId && (
-                    <section className="flex [flex:2] justify-center">
+                    <BookControls
+                      role={currentBook.book_role}
+                      type={currentBook.book_type}
+                      shareControl={() => setIsDialogOpen(true)}
+                      addControl={toggleCreateForm}
+                      render={!!defaultBookId}
+                    >
                       <Search list={recipes} setList={filterRecipes} />
-                    </section>
-                  )}
-                  {defaultBookId && (
-                    <section className="flex [flex:0.5] justify-center">
-                      <FaPlusButton onAction={toggleCreateForm} />
-                    </section>
+                    </BookControls>
                   )}
                 </div>
               </div>

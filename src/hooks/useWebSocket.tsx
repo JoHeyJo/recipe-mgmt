@@ -4,6 +4,7 @@ import { UserContext } from "../context/UserContext";
 import { RecipeContext } from "../context/RecipeContext";
 import API from "../api";
 import { BASEURL, protocol } from "../api";
+import useLocalStorage from "./useLocalStorage";
 
 /** Custom Hook to create open connection between client and server
  *
@@ -15,10 +16,16 @@ function useWebSocket() {
   const [socket, setSocket] = useState(null);
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState(null);
-  const [data, setData] = useState();
+  const [bookId, setBookId] = useLocalStorage("current-book-id");
 
-  const { userId, currentBookId, user, currentBook, setUserData } =
-    useContext(UserContext);
+  const {
+    userId,
+    currentBookId,
+    user,
+    currentBook,
+    setUserData,
+    defaultBookId,
+  } = useContext(UserContext);
   const { recipeId, recipeName, updateRecipes } = useContext(RecipeContext);
 
   /** Initiates handshake, maintains connection, & disconnects on unmount */
@@ -40,13 +47,42 @@ function useWebSocket() {
 
     newSocket.on("user_shared_book", (data) => {
       setMessage(data.message);
-      setUserData((prevState) => ({ ...prevState, data, books: data.books }));
+      if (!defaultBookId) {
+        setUserData((prevState) => {
+          const newState = {
+            ...prevState,
+            books: [data.payload],
+            defaultBook: data.payload,
+            defaultBookId: data.payload.id,
+            currentBook: data.payload,
+            currentBookId: data.payload.id,
+          };
+          setBookId(data.payload.id);
+          return newState;
+        });
+      }
+      setUserData((prevState) => ({ ...prevState, books: data.books }));
       setStatus(200);
     });
 
     newSocket.on("user_shared_recipe", (data) => {
+      if (data?.payload) {
+        setUserData((prevState) => {
+          const newState = {
+            ...prevState,
+            books: [data.payload],
+            defaultBook: data.payload,
+            defaultBookId: data.payload.id,
+            currentBook: data.payload,
+            currentBookId: data.payload.id,
+          };
+          setBookId(data.payload.id);
+          return newState;
+        });
+      }
+
       setMessage(data.message);
-      updateRecipes(data.recipe)
+      if (data.payload.book_type === "shared_inbox") updateRecipes(data.recipe);
       setStatus(200);
     });
 
@@ -65,14 +101,14 @@ function useWebSocket() {
   }, []);
 
   /** Sends message to share book with recipient */
-  function sendBook(recipient: string) {
+  function sendBook(recipient: string, privileges: string) {
     if (socket && recipient) {
       socket.emit("share_book", {
         userId,
         recipient,
-        currentBookId,
         user,
-        currentBook: currentBook.title,
+        currentBook,
+        privileges,
       });
     }
   }

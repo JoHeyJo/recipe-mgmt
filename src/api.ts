@@ -99,11 +99,13 @@ class API {
 
   /** Edit user recipe */
   static async patchUserRecipe(
+    bookId: number,
     recipeId: number,
     data: any,
-  ) {
+  ) 
+  {
     const res = await this.request(
-      `recipes/${recipeId}`,
+      `books/${bookId}/recipes/${recipeId}`,
       data,
       "PATCH",
     );

@@ -117,7 +117,7 @@ export type RecipeRequestsProps = {
   recipeActions: {
     updateRecipes: (recipe: Recipe) => void;
     deleteRecipe: () => void;
-    editRecipe: () => void;
+    editRecipe: (edited_recipe: Recipe) => void;
   };
   setShowing: any;
   isOpen: boolean;

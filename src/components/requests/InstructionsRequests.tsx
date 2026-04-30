@@ -99,7 +99,14 @@ function InstructionsRequests({
 
   return (
     <>
-      <RadioSwitch handleSwitch={handleRadio} selection={whichInstructions} />
+      <RadioSwitch
+        handleSwitch={handleRadio}
+        selection={whichInstructions}
+        labelOne={"User"}
+        labelTwo={"Book"}
+        valueOne={"user"}
+        valueTwo={"book"}
+      />
       <InstructionsArea
         handleRecipeUpdate={handleRecipeUpdate}
         handleInstruction={handleInstruction}

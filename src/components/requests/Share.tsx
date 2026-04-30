@@ -4,6 +4,7 @@ import InputWithLabelForm from "../views/InputWithLabelForm";
 import { PillButtonSubmit } from "../ui/PillButtonSubmit";
 import { ShareBookProp } from "../../utils/props";
 import { WebSocketContext } from "../../context/WebSocketContext";
+import RadioSwitch from "../ui/common/RadioSwitch";
 
 /** Handles User request to share book/recipe with recipient
  * Calls on custom hook to establish WebSocket connection and communication
@@ -12,8 +13,14 @@ import { WebSocketContext } from "../../context/WebSocketContext";
  */
 function Share({ action }: ShareBookProp) {
   const [user, setUser] = useState("");
+  const [privileges, setRecipient] = useState("viewer");
 
   const { sendBook, sendRecipe } = useContext(WebSocketContext);
+
+  /** handle state change for recipient */
+  function handleRadio(event: ChangeEvent<HTMLInputElement>) {
+    setRecipient(event.target.value);
+  }
   
   /** Facilitates change in user name */
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -25,7 +32,10 @@ function Share({ action }: ShareBookProp) {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      action === "shareBook" ? sendBook(user) : sendRecipe(user);
+      // should user be passed or gathered from context
+      action === "shareBook"
+        ? sendBook(user, privileges)
+        : sendRecipe(user);
     } catch (error: any) {
       errorHandling("Share -> handleSubmit", error);
       throw error;
@@ -35,6 +45,14 @@ function Share({ action }: ShareBookProp) {
   return (
     <form onSubmit={handleSubmit}>
       <div>{`Who would you like to share this ${action === "shareBook" ? "book" : "recipe"} with?`}</div>
+      <RadioSwitch
+        handleSwitch={handleRadio}
+        selection={privileges}
+        labelOne="Collaborator"
+        labelTwo="View Only"
+        valueOne="collaborator"
+        valueTwo="viewer"
+      />
       <InputWithLabelForm
         type={"user-name"}
         name={"User Name:"}

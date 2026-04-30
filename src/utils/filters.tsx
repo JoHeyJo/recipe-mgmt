@@ -54,13 +54,13 @@ export function compareIngredients(
   const isAltered = edited.find((editedIngredient, index) => {
     return (
       // checks for empty ingredient input
-      (editedIngredient.amount.id !== null ||
-        editedIngredient.unit.id !== null ||
-        editedIngredient.item.id !== null) &&
+      (editedIngredient?.amount?.id !== null ||
+        editedIngredient?.unit?.id !== null ||
+        editedIngredient?.item?.id !== null) &&
       //checks for differences between original and mutable ingredient
-      (editedIngredient.amount.id !== originals[index]?.amount.id ||
-        editedIngredient.unit.id !== originals[index]?.unit.id ||
-        editedIngredient.item.id !== originals[index]?.item.id)
+      (editedIngredient?.amount?.id !== originals[index]?.amount?.id ||
+        editedIngredient?.unit?.id !== originals[index]?.unit?.id ||
+        editedIngredient?.item?.id !== originals[index]?.item?.id)
     );
   });
   return isAltered ? "altered" : null;
@@ -124,13 +124,8 @@ function filterInstructions(original: Instructions, edited: Instructions) {
         (original[index] ? original[index].instruction : "")
       ) {
         const editedInstruction = {
-          // association id = PK of association table
-          // catches message if an additional input was created rather than replacing one
-          associationId: original[index]
-            ? original[index].association_id
-            : null,
+          oldId: original[index] ? original[index].id : null, // the instruction's own id
           newId: instruction.id,
-          // "instruction": instruction.instruction
         };
         instructions.push(editedInstruction);
       }
@@ -149,6 +144,8 @@ function handleAdditionalInput(
   index: number,
 ) {
   if (!originals[index]) return edited[property];
+  if(!edited && property === "item") return originals[index][property];
+  if(edited && property === "item") return edited[property];
   if (edited)
     return edited[property] === originals[index][property]
       ? null
@@ -162,6 +159,7 @@ function filterIngredients(
 ) {
   const alteredIngredients = edited.reduce(
     (alteredIngredients, editedIngredient, index) => {
+
       const amount = handleAdditionalInput(
         editedIngredient,
         originalIngredients,
@@ -180,6 +178,7 @@ function filterIngredients(
         "unit",
         index,
       );
+
       const alteredIngredient = {
         id: editedIngredient.ingredient_id || null,
         // below can be refactored to only send id instead of entire object
