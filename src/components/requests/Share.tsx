@@ -21,7 +21,7 @@ function Share({ action }: ShareBookProp) {
   function handleRadio(event: ChangeEvent<HTMLInputElement>) {
     setRecipient(event.target.value);
   }
-  
+
   /** Facilitates change in user name */
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const value = event.target.value;
@@ -33,9 +33,7 @@ function Share({ action }: ShareBookProp) {
     event.preventDefault();
     try {
       // should user be passed or gathered from context
-      action === "shareBook"
-        ? sendBook(user, privileges)
-        : sendRecipe(user);
+      action === "shareBook" ? sendBook(user, privileges) : sendRecipe(user);
     } catch (error: any) {
       errorHandling("Share -> handleSubmit", error);
       throw error;
@@ -45,14 +43,16 @@ function Share({ action }: ShareBookProp) {
   return (
     <form onSubmit={handleSubmit}>
       <div>{`Who would you like to share this ${action === "shareBook" ? "book" : "recipe"} with?`}</div>
-      <RadioSwitch
-        handleSwitch={handleRadio}
-        selection={privileges}
-        labelOne="Collaborator"
-        labelTwo="View Only"
-        valueOne="collaborator"
-        valueTwo="viewer"
-      />
+      {action === "shareBook" && (
+        <RadioSwitch
+          handleSwitch={handleRadio}
+          selection={privileges}
+          labelOne="Collaborator"
+          labelTwo="View Only"
+          valueOne="collaborator"
+          valueTwo="viewer"
+        />
+      )}
       <InputWithLabelForm
         type={"user-name"}
         name={"User Name:"}
