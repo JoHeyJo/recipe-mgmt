@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUsers, faEye } from "@fortawesome/free-solid-svg-icons";
+import { faUsers, faEye, faInbox } from "@fortawesome/free-solid-svg-icons";
 import Tooltip from "../ui/common/Tooltip";
 import FaShareButton from "../ui/common/FaShareButton";
 import FaPlusButton from "../ui/common/FaPlusButton";
@@ -41,6 +41,11 @@ function BookControls({
         <FontAwesomeIcon icon={faUsers} />
       </Tooltip>
     ),
+    sharedRecipes: (
+      <Tooltip content="Shared recipes can only be viewed" side="top">
+        <FontAwesomeIcon icon={faInbox} />
+      </Tooltip>
+    ),
     viewOnly: (
       <Tooltip content="Recipes can only be viewed" side="top">
         <FontAwesomeIcon icon={faEye} />
@@ -54,7 +59,8 @@ function BookControls({
 
   function chooseShareControl() {
     if (fullPrivileges) return shareControls.share;
-    if (collaborator || sharedInbox) return shareControls.blockShare;
+    if (collaborator) return shareControls.blockShare;
+    if (sharedInbox) return shareControls.sharedRecipes;
     if (viewer) return shareControls.viewOnly;
   }
 
