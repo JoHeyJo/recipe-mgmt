@@ -26,7 +26,7 @@ function useWebSocket() {
     setUserData,
     defaultBookId,
   } = useContext(UserContext);
-  const { recipeId, recipeName, updateRecipes } = useContext(RecipeContext);
+  const { selectedRecipe, updateRecipes } = useContext(RecipeContext);
 
   /** Initiates handshake, maintains connection, & disconnects on unmount */
   useEffect(() => {
@@ -117,9 +117,9 @@ function useWebSocket() {
     if (socket && recipient) {
       socket.emit("share_recipe", {
         recipient,
-        recipeId,
+        recipeId: selectedRecipe.id,
         user,
-        recipeName,
+        recipeName: selectedRecipe.name,
       });
     }
   }

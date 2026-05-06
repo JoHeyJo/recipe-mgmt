@@ -32,12 +32,14 @@ function MainContainer() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const recipeData = {
-    recipeId: selectedRecipe.id,
-    created_by_id: selectedRecipe.created_by_id,
-    recipeName: selectedRecipe.name,
-    contextIngredients: selectedRecipe.ingredients,
-    contextInstructions: selectedRecipe.instructions,
-    selectedNotes: selectedRecipe.notes,
+    selectedRecipe: {
+      id: selectedRecipe.id,
+      created_by_id: selectedRecipe.created_by_id,
+      name: selectedRecipe.name,
+      ingredients: selectedRecipe.ingredients,
+      instructions: selectedRecipe.instructions,
+      notes: selectedRecipe.notes,
+    },
     requestAction,
     updateRecipes,
   };

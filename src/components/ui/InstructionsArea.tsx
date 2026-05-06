@@ -24,12 +24,12 @@ function InstructionsArea({
   handleInstruction,
 }: InstructionsAreaProps) {
   const { userId, currentBookId } = useContext(UserContext);
-  const { requestAction, contextInstructions } = useContext(RecipeContext);
+  const { requestAction, selectedRecipe } = useContext(RecipeContext);
   const [selectedInstructions, setSelectedInstructions] =
     useState<Instructions>(
       requestAction === "edit"
         ? [
-            ...contextInstructions,
+            ...selectedRecipe.instructions,
             { id: null, instruction: "some instruction..." },
           ]
         : PLACE_HOLDER

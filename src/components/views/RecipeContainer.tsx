@@ -11,13 +11,13 @@ import RecipeControls from "../ui/controls/RecipeControls";
  */
 
 function RecipeContainer({ recipe, handleModalToggle }: RecipeViewProps) {
-  const { recipeId } = useContext(RecipeContext);
+  const { selectedRecipe } = useContext(RecipeContext);
   return (
     <div id="RecipeContainer-container">
       <div id="RecipeContainer-header" className="flex justify-between p-1">
         <h3 className="font-semibold text-lg">Recipe:</h3>
         <h2 className="font-semibold text-lg">{recipe.name}</h2>
-        {recipeId !== 0 && <RecipeControls action={handleModalToggle} />}
+        {selectedRecipe.id !== 0 && <RecipeControls action={handleModalToggle} />}
       </div>
       <RecipeView recipe={recipe} />
     </div>

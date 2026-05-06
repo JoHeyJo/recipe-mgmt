@@ -14,7 +14,7 @@ import InstructionsRequests from "./InstructionsRequests";
 import { UserContext } from "../../context/UserContext";
 import { RecipeRequestsProps } from "../../utils/props";
 import NotesInput from "../ui/NotesInput";
-import { RecipeContext, RecipeContextType } from "../../context/RecipeContext";
+import { RecipeContext } from "../../context/RecipeContext";
 import {
   compareIngredients,
   compareInstructions,
@@ -26,12 +26,11 @@ import {
 import TitleInput from "../ui/TitleInput";
 import { recipeTemplate } from "../../utils/templates";
 import Alert from "../ui/Alert";
-import { defaultIngredient } from "../../utils/templates";
 import { ReferenceContext } from "../../context/ReferenceContext";
 import RecipeFormControls from "../ui/controls/RecipeFormControls";
 
 /** Processes recipe data. Context data is passed through here on edit. Else template data.
- * RecipeRequests data is mutable while context data(reference data) is not
+ * RecipeRequests data (e.g recipe state) is mutable while context data(reference data) is not
  *
  * Component needs to be refactored - separate API request from component logic
  *
@@ -43,62 +42,50 @@ function RecipeRequests({
   isOpen,
 }: RecipeRequestsProps) {
   const { currentBookId, userId } = useContext(UserContext);
-  const {
-    recipeId,
-    created_by_id,
-    recipeName,
-    requestAction,
-    contextIngredients,
-    contextInstructions,
-    selectedNotes,
-  } = useContext(RecipeContext);
-  
-  const [recipe, setRecipe] = useState<any>({
-    name: recipeName,
-    created_by_id,
-    id: recipeId,
-    ingredients: defaultIngredient,
-    instructions: contextInstructions,
-    notes: selectedNotes,
-  });
+  const { selectedRecipe, requestAction } = useContext(RecipeContext); // this was used to build selectedRecipe
+  // const {
+  //   recipeId,
+  //   created_by_id,
+  //   recipeName,
+  //   requestAction,
+  //   contextIngredients,
+  //   contextInstructions,
+  //   selectedNotes,
+  // } = useContext(RecipeContext);
+
+
+  const [recipe, setRecipe] = useState<any>(selectedRecipe);
   const [error, setError] = useState<string | null>();
   const [isDisabled, setIsDisabled] = useState(true);
 
-  const selectedRecipe = {
-    recipeId,
-    created_by_id,
-    recipeName,
-    requestAction,
-    contextIngredients,
-    contextInstructions,
-    selectedNotes,
-  };
+  // const selectedRecipe = {
+  //   recipeId,
+  //   created_by_id,
+  //   recipeName,
+  //   requestAction,
+  //   contextIngredients,
+  //   contextInstructions,
+  //   selectedNotes,
+  // };
 
   // syncs selected original context recipe with mutable recipe state - on edit?
   useEffect(() => {
-    setRecipe({
-      name: recipeName,
-      created_by_id,
-      id: recipeId,
-      ingredients: contextIngredients,
-      instructions: contextInstructions,
-      notes: selectedNotes,
-    });
-  }, [recipeId]);
+    setRecipe(selectedRecipe);
+  }, [selectedRecipe.id]);
 
   /** Enables/disables UPDATE submit */
   useEffect(() => {
     if (requestAction === "edit") {
-      const name = compareNames(recipeName, recipe.name);
+      const name = compareNames(selectedRecipe.name, recipe.name);
       const ingredients = compareIngredients(
-        contextIngredients,
+        selectedRecipe.ingredients,
         recipe.ingredients,
       );
       const instructions = compareInstructions(
-        contextInstructions,
+        selectedRecipe.instructions,
         recipe.instructions,
       );
-      const notes = compareNotes(selectedNotes, recipe.notes);
+      const notes = compareNotes(selectedRecipe.notes, recipe.notes);
       const isAltered = name || ingredients || instructions || notes;
       setIsDisabled(!isAltered);
     }
@@ -134,15 +121,15 @@ function RecipeRequests({
 
   /** Calls API - sends patch request with only edited recipe data */
   async function editRecipe(
-    originalRecipe: RecipeContextType,
+    originalRecipe: Recipe,
     mutableRecipe: Recipe,
   ) {
     try {
       const mutatedData = filterRecipe(originalRecipe, mutableRecipe);
-      mutatedData.created_by_id = created_by_id;
+      mutatedData.created_by_id = selectedRecipe.created_by_id;
       const res = await API.patchUserRecipe(
         currentBookId,
-        recipeId,
+        selectedRecipe.id,
         mutatedData,
       );
       recipeActions.editRecipe(res);
@@ -163,7 +150,7 @@ function RecipeRequests({
         userId,
         currentBookId,
         recipeId,
-        created_by_id,
+        selectedRecipe.created_by_id,
       );
       if (res.message) recipeActions.deleteRecipe();
     } catch (error: any) {
@@ -189,11 +176,11 @@ function RecipeRequests({
   }
 
   async function handleDelete() {
-    await deleteRecipe(userId, currentBookId, recipeId);
+    await deleteRecipe(userId, currentBookId, selectedRecipe.id);
   }
 
   async function handleRemove() {
-    await removeSharedRecipe(currentBookId, recipeId);
+    await removeSharedRecipe(currentBookId, selectedRecipe.id);
   }
 
   async function handleSubmit(e) {
@@ -279,7 +266,6 @@ function RecipeRequests({
               <RecipeFormControls
                 handleSubmit={handleSubmit}
                 isDisabled={isDisabled}
-                selectedRecipe={selectedRecipe}
                 recipe={recipe}
                 handleRemove={handleRemove}
                 handleDelete={handleDelete}
