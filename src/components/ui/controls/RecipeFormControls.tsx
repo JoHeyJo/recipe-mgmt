@@ -1,25 +1,31 @@
 import { Recipe } from "../../../utils/types";
+import { useContext } from "react";
+import { UserContext } from "../../../context/UserContext";
+import { RecipeContextType } from "../../../context/RecipeContext";
 
 type RecipeFormControlsProps = {
   handleSubmit: () => {};
   isShared: boolean;
   isDisabled: boolean;
-  selectedRecipe: () => {};
+  selectedRecipe: RecipeContextType;
   recipe: Recipe;
   handleRemove: () => {};
   handleDelete: () => {};
-  editRecipe: () => {};
+  editRecipe: (originalRecipe: RecipeContextType, mutableRecipe: Recipe) => {};
+  requestAction: string;
 };
 function RecipeFormControls({
   handleSubmit,
-  isShared,
   isDisabled,
   selectedRecipe,
   recipe,
   handleRemove,
   handleDelete,
   editRecipe,
+  requestAction,
 }: RecipeFormControlsProps) {
+  const { privileges } = useContext(UserContext);
+
   const formControls = {
     create: (
       <div className="flex">
@@ -36,7 +42,7 @@ function RecipeFormControls({
       <>
         <button
           type="button"
-          // onClick={() => editRecipe(selectedRecipe, recipe)}
+          onClick={() => editRecipe(selectedRecipe, recipe)}
           disabled={isDisabled}
           className={`${isDisabled ? "bg-button-disabled hover:opacity-100" : "bg-button-submit"} inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default`}
         >
@@ -71,11 +77,21 @@ function RecipeFormControls({
       </>
     ),
   };
+
+  function renderRecipeFormControls() {
+    if (
+      requestAction === "edit" &&
+      (privileges.full || privileges.collaborator)
+    )
+      return formControls.create;
+    if (privileges.full || privileges.collaborator)
+      return formControls.editDelete;
+    if (privileges.sharedInbox) return formControls.copyRemove;
+  }
+
   return (
     <div className="SubmitButton mt-5 sm:mt-6">
-      <div className="flex">
-
-      </div>
+      <div className="flex">{renderRecipeFormControls()}</div>
     </div>
   );
 }
