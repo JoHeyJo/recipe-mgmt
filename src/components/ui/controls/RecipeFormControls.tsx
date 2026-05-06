@@ -10,7 +10,6 @@ type RecipeFormControlsProps = {
   handleRemove: () => {};
   handleDelete: () => {};
   editRecipe: (originalRecipe: Recipe, mutableRecipe: Recipe) => {};
-  requestAction: string;
 };
 function RecipeFormControls({
   handleSubmit,
@@ -19,10 +18,9 @@ function RecipeFormControls({
   handleRemove,
   handleDelete,
   editRecipe,
-  requestAction,
 }: RecipeFormControlsProps) {
   const { privileges } = useContext(UserContext);
-  const { selectedRecipe } = useContext(RecipeContext);
+  const { selectedRecipe, requestAction } = useContext(RecipeContext);
 
 
   const formControls = {

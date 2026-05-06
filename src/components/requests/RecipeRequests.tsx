@@ -42,31 +42,12 @@ function RecipeRequests({
   isOpen,
 }: RecipeRequestsProps) {
   const { currentBookId, userId } = useContext(UserContext);
-  const { selectedRecipe, requestAction } = useContext(RecipeContext); // this was used to build selectedRecipe
-  // const {
-  //   recipeId,
-  //   created_by_id,
-  //   recipeName,
-  //   requestAction,
-  //   contextIngredients,
-  //   contextInstructions,
-  //   selectedNotes,
-  // } = useContext(RecipeContext);
+  const { selectedRecipe, requestAction } = useContext(RecipeContext);
 
 
   const [recipe, setRecipe] = useState<any>(selectedRecipe);
   const [error, setError] = useState<string | null>();
   const [isDisabled, setIsDisabled] = useState(true);
-
-  // const selectedRecipe = {
-  //   recipeId,
-  //   created_by_id,
-  //   recipeName,
-  //   requestAction,
-  //   contextIngredients,
-  //   contextInstructions,
-  //   selectedNotes,
-  // };
 
   // syncs selected original context recipe with mutable recipe state - on edit?
   useEffect(() => {
@@ -270,7 +251,6 @@ function RecipeRequests({
                 handleRemove={handleRemove}
                 handleDelete={handleDelete}
                 editRecipe={editRecipe}
-                requestAction={requestAction}
               />
             </div>
             {/* </form> */}
