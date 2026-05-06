@@ -13,7 +13,7 @@ export type UserContextType = {
   token: string;
   isLoading: boolean;
   isInitialized: boolean;
-  privileges: {
+  PRIVILEGES: {
     full: boolean;
     collaborator: boolean;
     sharedInbox: boolean;
@@ -41,7 +41,7 @@ export const UserContext = createContext<UserContextType>({
   token: "",
   isLoading: true,
   isInitialized: false,
-  privileges: {
+  PRIVILEGES: {
     full: false,
     collaborator: false,
     sharedInbox: false,

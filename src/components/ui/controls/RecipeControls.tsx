@@ -7,7 +7,7 @@ type RecipeControlsProps = {
   action: () => void;
 };
 
-/** Dynamically renders UI to allow recipe edit or recipe copy based on privileges
+/** Dynamically renders UI to allow recipe edit or recipe copy based on PRIVILEGES
  * Owner        role = owner, type = standardS
  * Collaborator role = collaborator, type = standard
  * Shared       role = owner, type = shared_inbox
@@ -17,7 +17,7 @@ type RecipeControlsProps = {
  * RecipeContainer -> RecipeControls
  */
 function RecipeControls({ action }: RecipeControlsProps) {
-  const { privileges } = useContext(UserContext);
+  const { PRIVILEGES } = useContext(UserContext);
 
   const renderControl = {
     editControls: (
@@ -39,10 +39,10 @@ function RecipeControls({ action }: RecipeControlsProps) {
   };
 
   function chooseControls() {
-    if (privileges.full || privileges.collaborator)
+    if (PRIVILEGES.full || PRIVILEGES.collaborator)
       return renderControl.editControls;
-    if (privileges.sharedInbox) return renderControl.sharedInboxControls;
-    if (privileges.viewer) return;
+    if (PRIVILEGES.sharedInbox) return renderControl.sharedInboxControls;
+    if (PRIVILEGES.viewer) return;
   }
 
   return <section>{chooseControls()}</section>;

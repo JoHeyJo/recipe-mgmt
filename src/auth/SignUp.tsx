@@ -21,7 +21,7 @@ const defaultNew: UserSignUp = {
 
 /** Render SignUp form - handles SignUp logic
  *
- * New user by default is not an admin. Admin privileges are granted to user
+ * New user by default is not an admin. Admin PRIVILEGES are granted to user
  * when "Recipe Book" is created at time of creation to corresponding book.
  */
 

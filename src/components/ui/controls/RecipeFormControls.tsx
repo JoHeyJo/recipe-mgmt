@@ -19,7 +19,7 @@ function RecipeFormControls({
   handleDelete,
   editRecipe,
 }: RecipeFormControlsProps) {
-  const { privileges } = useContext(UserContext);
+  const { PRIVILEGES } = useContext(UserContext);
   const { selectedRecipe, requestAction } = useContext(RecipeContext);
 
 
@@ -76,14 +76,14 @@ function RecipeFormControls({
   function renderRecipeFormControls() {
     if (
       requestAction === "create" &&
-      (privileges.full || privileges.collaborator)
+      (PRIVILEGES.full || PRIVILEGES.collaborator)
     )
       return formControls.create;
-    if (privileges.full || privileges.collaborator)
+    if (PRIVILEGES.full || PRIVILEGES.collaborator)
       return formControls.editDelete;
-    if (privileges.full || privileges.collaborator)
+    if (PRIVILEGES.full || PRIVILEGES.collaborator)
       return formControls.editDelete;
-    if (privileges.sharedInbox) return formControls.copyRemove;
+    if (PRIVILEGES.sharedInbox) return formControls.copyRemove;
   }
 
   return (

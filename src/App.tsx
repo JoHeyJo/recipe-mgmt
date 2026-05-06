@@ -49,7 +49,7 @@ function App() {
     setUserData,
     isLoading,
     isInitialized: isContextInitialized,
-    privileges: {
+    PRIVILEGES: {
       full:
         userData?.currentBook?.book_role === "owner" &&
         userData?.currentBook?.book_type === "standard",

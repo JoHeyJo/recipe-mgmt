@@ -27,7 +27,7 @@ function BookControls({
   shareControl,
   addControl,
 }: BookControlsProps) {
-  const { privileges } = useContext(UserContext);
+  const { PRIVILEGES } = useContext(UserContext);
 
   const shareControls = {
     share: <FaShareButton handleClick={shareControl} />,
@@ -53,16 +53,16 @@ function BookControls({
   };
 
   function chooseShareControl() {
-    if (privileges.full) return shareControls.share;
-    if (privileges.collaborator) return shareControls.blockShare;
-    if (privileges.sharedInbox) return shareControls.sharedRecipes;
-    if (privileges.viewer) return shareControls.viewOnly;
+    if (PRIVILEGES.full) return shareControls.share;
+    if (PRIVILEGES.collaborator) return shareControls.blockShare;
+    if (PRIVILEGES.sharedInbox) return shareControls.sharedRecipes;
+    if (PRIVILEGES.viewer) return shareControls.viewOnly;
   }
 
   function chooseAddControl() {
-    if (privileges.full || privileges.collaborator)
+    if (PRIVILEGES.full || PRIVILEGES.collaborator)
       return addControls.addRecipe;
-    if (privileges.sharedInbox || privileges.viewer) return;
+    if (PRIVILEGES.sharedInbox || PRIVILEGES.viewer) return;
   }
 
   return (
