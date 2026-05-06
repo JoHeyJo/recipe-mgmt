@@ -1,11 +1,11 @@
 import { ReactNode } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers, faEye, faInbox } from "@fortawesome/free-solid-svg-icons";
-import Tooltip from "../ui/common/Tooltip";
-import FaShareButton from "../ui/common/FaShareButton";
-import FaPlusButton from "../ui/common/FaPlusButton";
+import Tooltip from "../common/Tooltip";
+import FaShareButton from "../common/FaShareButton";
+import FaPlusButton from "../common/FaPlusButton";
 import { useContext } from "react";
-import { UserContext } from "../../context/UserContext";
+import { UserContext } from "../../../context/UserContext";
 
 type BookControlsProps = {
   shareControl: () => void;
@@ -13,7 +13,7 @@ type BookControlsProps = {
   children: ReactNode;
   render: boolean;
 };
-/** Dynamically renders UI for share book and add recipe
+/** Dynamically renders UI to grant/prevent sharing a book and adding a recipe
  * Owner        role = owner, type = standard
  * Collaborator role = collaborator, type = standard
  * Shared       role = owner, type = shared_inbox

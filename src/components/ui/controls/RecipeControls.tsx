@@ -1,13 +1,13 @@
 import { faPenToSquare, faCopy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
-import { UserContext } from "../../context/UserContext";
+import { UserContext } from "../../../context/UserContext";
 
 type RecipeControlsProps = {
   action: () => void;
 };
 
-/** Dynamically renders UI for edit recipe
+/** Dynamically renders UI to allow recipe edit or recipe copy based on privileges
  * Owner        role = owner, type = standardS
  * Collaborator role = collaborator, type = standard
  * Shared       role = owner, type = shared_inbox

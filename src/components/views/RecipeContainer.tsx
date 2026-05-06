@@ -2,7 +2,7 @@ import RecipeView from "./RecipeView";
 import { RecipeViewProps } from "../../utils/props";
 import { useContext } from "react";
 import { RecipeContext } from "../../context/RecipeContext";
-import RecipeControls from "../ui/RecipeControls";
+import RecipeControls from "../ui/controls/RecipeControls";
 
 /** Renders recipe
  *

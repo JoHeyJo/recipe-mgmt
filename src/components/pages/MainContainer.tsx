@@ -12,7 +12,7 @@ import BookView from "../views/BookView";
 import Search from "../ui/Search";
 import SharePopOut from "../ui/common/SharePopOut";
 import { WebSocketProvider } from "../../context/WebSocketProvider";
-import BookControls from "../ui/BookControls";
+import BookControls from "../ui/controls/BookControls";
 
 /** Renders the main container (book) housing list of recipes and individual recipe
  *
