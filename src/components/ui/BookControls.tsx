@@ -4,10 +4,10 @@ import { faUsers, faEye, faInbox } from "@fortawesome/free-solid-svg-icons";
 import Tooltip from "../ui/common/Tooltip";
 import FaShareButton from "../ui/common/FaShareButton";
 import FaPlusButton from "../ui/common/FaPlusButton";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 
 type BookControlsProps = {
-  role: string;
-  type: string;
   shareControl: () => void;
   addControl: () => void;
   children: ReactNode;
@@ -22,17 +22,12 @@ type BookControlsProps = {
  * MainContainer -> BookControls -> Tooltip
  */
 function BookControls({
-  role,
-  type,
   children,
   render,
   shareControl,
   addControl,
 }: BookControlsProps) {
-  const fullPrivileges = role === "owner" && type === "standard";
-  const collaborator = role === "collaborator" && type === "standard";
-  const sharedInbox = role === "owner" && type === "shared_inbox";
-  const viewer = role === "viewer" && type === "standard";
+  const { privileges } = useContext(UserContext);
 
   const shareControls = {
     share: <FaShareButton handleClick={shareControl} />,
@@ -58,15 +53,16 @@ function BookControls({
   };
 
   function chooseShareControl() {
-    if (fullPrivileges) return shareControls.share;
-    if (collaborator) return shareControls.blockShare;
-    if (sharedInbox) return shareControls.sharedRecipes;
-    if (viewer) return shareControls.viewOnly;
+    if (privileges.full) return shareControls.share;
+    if (privileges.collaborator) return shareControls.blockShare;
+    if (privileges.sharedInbox) return shareControls.sharedRecipes;
+    if (privileges.viewer) return shareControls.viewOnly;
   }
 
   function chooseAddControl() {
-    if (fullPrivileges || collaborator) return addControls.addRecipe;
-    if (sharedInbox || viewer) return;
+    if (privileges.full || privileges.collaborator)
+      return addControls.addRecipe;
+    if (privileges.sharedInbox || privileges.viewer) return;
   }
 
   return (

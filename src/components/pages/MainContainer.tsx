@@ -175,8 +175,6 @@ function MainContainer() {
                   </div>
                   {defaultBookId && (
                     <BookControls
-                      role={currentBook.book_role}
-                      type={currentBook.book_type}
                       shareControl={() => setIsDialogOpen(true)}
                       addControl={toggleCreateForm}
                       render={!!defaultBookId}

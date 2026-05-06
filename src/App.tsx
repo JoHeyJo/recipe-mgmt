@@ -48,9 +48,22 @@ function App() {
     token,
     setUserData,
     isLoading,
-    isInitialized: isContextInitialized
+    isInitialized: isContextInitialized,
+    privileges: {
+      full:
+        userData?.currentBook?.book_role === "owner" &&
+        userData?.currentBook?.book_type === "standard",
+      collaborator:
+        userData?.currentBook?.book_role === "collaborator" &&
+        userData?.currentBook?.book_type === "standard",
+      sharedInbox:
+        userData?.currentBook?.book_role === "owner" &&
+        userData?.currentBook?.book_type === "shared_inbox",
+      viewer:
+        userData?.currentBook?.book_role === "viewer" &&
+        userData?.currentBook?.book_type === "standard",
+    },
   };
-
 
   /** User sign up - returns token and auth credentials - saved to local storage */
   async function userSignUp(signUpData: SignUpData) {
@@ -122,10 +135,7 @@ function App() {
     <div id="App-container">
       <UserContext.Provider value={UserDataFromContext}>
         <TopNav logout={logout} />
-        <RoutesList
-          signUp={userSignUp}
-          login={userLogin}
-        />
+        <RoutesList signUp={userSignUp} login={userLogin} />
       </UserContext.Provider>
       {/* <button type="button" onClick={toggleDarkMode}>toggle color scheme</button> */}
     </div>

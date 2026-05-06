@@ -1,14 +1,14 @@
 import { faPenToSquare, faCopy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 
 type RecipeControlsProps = {
-  role: string;
-  type: string;
   action: () => void;
 };
 
 /** Dynamically renders UI for edit recipe
- * Owner        role = owner, type = standard
+ * Owner        role = owner, type = standardS
  * Collaborator role = collaborator, type = standard
  * Shared       role = owner, type = shared_inbox
  * viewer       role = viewer, type standard
@@ -16,11 +16,8 @@ type RecipeControlsProps = {
  *
  * RecipeContainer -> RecipeControls
  */
-function RecipeControls({ role, type, action }: RecipeControlsProps) {
-  const fullPrivileges = role === "owner" && type === "standard";
-  const collaborator = role === "collaborator" && type === "standard";
-  const sharedInbox = role === "owner" && type === "shared_inbox";
-  const viewer = role === "viewer" && type === "standard";
+function RecipeControls({ action }: RecipeControlsProps) {
+  const { privileges } = useContext(UserContext);
 
   const renderControl = {
     editControls: (
@@ -42,9 +39,10 @@ function RecipeControls({ role, type, action }: RecipeControlsProps) {
   };
 
   function chooseControls() {
-    if (fullPrivileges || collaborator) return renderControl.editControls;
-    if (sharedInbox) return renderControl.sharedInboxControls;
-    if (viewer) return;
+    if (privileges.full || privileges.collaborator)
+      return renderControl.editControls;
+    if (privileges.sharedInbox) return renderControl.sharedInboxControls;
+    if (privileges.viewer) return;
   }
 
   return <section>{chooseControls()}</section>;
