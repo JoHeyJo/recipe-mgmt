@@ -4,8 +4,7 @@ import { UserContext } from "../../../context/UserContext";
 import { RecipeContextType } from "../../../context/RecipeContext";
 
 type RecipeFormControlsProps = {
-  handleSubmit: () => {};
-  isShared: boolean;
+  handleSubmit: (e: any) => Promise<void>;
   isDisabled: boolean;
   selectedRecipe: RecipeContextType;
   recipe: Recipe;
@@ -28,15 +27,13 @@ function RecipeFormControls({
 
   const formControls = {
     create: (
-      <div className="flex">
-        <button
-          type="submit"
-          onClick={handleSubmit}
-          className="inline-flex w-full justify-center rounded-md bg-button-submit px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default"
-        >
-          Submit
-        </button>
-      </div>
+      <button
+        type="submit"
+        onClick={handleSubmit}
+        className="inline-flex w-full justify-center rounded-md bg-button-submit px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default"
+      >
+        Submit
+      </button>
     ),
     editDelete: (
       <>
@@ -80,10 +77,12 @@ function RecipeFormControls({
 
   function renderRecipeFormControls() {
     if (
-      requestAction === "edit" &&
+      requestAction === "create" &&
       (privileges.full || privileges.collaborator)
     )
       return formControls.create;
+    if (privileges.full || privileges.collaborator)
+      return formControls.editDelete;
     if (privileges.full || privileges.collaborator)
       return formControls.editDelete;
     if (privileges.sharedInbox) return formControls.copyRemove;

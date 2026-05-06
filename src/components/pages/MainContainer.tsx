@@ -86,7 +86,7 @@ function MainContainer() {
   /** Triggers actions that renders RecipeRequests with empty data - no recipe */
   function toggleCreateForm() {
     setSelectedRecipe(recipeTemplate);
-    setRequestAction("");
+    setRequestAction("create");
     setOpen(!isOpen);
   }
 
@@ -152,7 +152,6 @@ function MainContainer() {
             >
               <div id="MainContainer-header">
                 <RecipeRequests
-                  isShared={currentBook?.book_type === "shared_inbox"}
                   recipeActions={recipeActions}
                   setShowing={toggleModel}
                   isOpen={isOpen}
