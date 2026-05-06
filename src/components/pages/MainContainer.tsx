@@ -19,7 +19,7 @@ import BookControls from "../ui/controls/BookControls";
  * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList, BookView, SharePopOut, Search, BookControls]
  */
 function MainContainer() {
-  const { userId, defaultBookId, currentBookId, currentBook, user } =
+  const { userId, defaultBookId, currentBookId } =
     useContext(UserContext);
 
   const [selectedBookId, setSelectedBookId] = useState<number>();
