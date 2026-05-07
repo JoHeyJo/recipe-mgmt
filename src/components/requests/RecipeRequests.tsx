@@ -44,7 +44,6 @@ function RecipeRequests({
   const { currentBookId, userId } = useContext(UserContext);
   const { selectedRecipe, requestAction } = useContext(RecipeContext);
 
-
   const [recipe, setRecipe] = useState<any>(selectedRecipe);
   const [error, setError] = useState<string | null>();
   const [isDisabled, setIsDisabled] = useState(true);
@@ -101,10 +100,7 @@ function RecipeRequests({
   }
 
   /** Calls API - sends patch request with only edited recipe data */
-  async function editRecipe(
-    originalRecipe: Recipe,
-    mutableRecipe: Recipe,
-  ) {
+  async function editRecipe(originalRecipe: Recipe, mutableRecipe: Recipe) {
     try {
       const mutatedData = filterRecipe(originalRecipe, mutableRecipe);
       mutatedData.created_by_id = selectedRecipe.created_by_id;
@@ -189,9 +185,7 @@ function RecipeRequests({
             {error && <Alert alert={error} degree={"yellow"} />}{" "}
             {/* This will be a popup instead */}
             {/* <form onSubmit={handleSubmit}> */}
-            <div
-              className={requestAction !== "copyRemove" ? "h-80" : ""}
-            >
+            <div className={requestAction !== "copyRemove" ? "h-80" : ""}>
               {/* <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
                 <CheckIcon aria-hidden="true" className="h-6 w-6 text-green-600" />
               </div> */}
@@ -247,7 +241,6 @@ function RecipeRequests({
                   </section>
                 </section>
               )}
-
               {/* </div> */}
             </div>
             <div className="SubmitButton mt-5 sm:mt-6">
