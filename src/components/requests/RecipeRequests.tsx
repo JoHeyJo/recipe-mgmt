@@ -198,6 +198,13 @@ function RecipeRequests({
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet labore.
                   </p>
                 </div> */}
+              {requestAction === "copyRemove" && (
+                <p>
+                  NOTE: Once a recipe is copied to a recipe book, you will be
+                  the owner of that copy.{" "}
+                </p>
+              )}
+
               {requestAction !== "copyRemove" && (
                 <section
                   id="RecipeRequests-book"
