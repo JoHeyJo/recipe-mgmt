@@ -19,7 +19,7 @@ import BookControls from "../ui/controls/BookControls";
  * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList, BookView, SharePopOut, Search, BookControls]
  */
 function MainContainer() {
-  const { userId, defaultBookId, currentBookId } =
+  const { userId, defaultBookId, currentBookId, PRIVILEGES } =
     useContext(UserContext);
 
   const [selectedBookId, setSelectedBookId] = useState<number>();
@@ -80,7 +80,8 @@ function MainContainer() {
   }
 
   /** Triggers actions that renders RecipeRequests with appropriate data set - current recipe */
-  function toggleEditTemplate() {
+  function openRecipeModal() {
+    if(PRIVILEGES.sharedInbox) setRequestAction("copyRemove")
     setRequestAction("edit");
     setOpen(!isOpen);
   }
@@ -203,7 +204,7 @@ function MainContainer() {
           >
             <RecipeContainer
               recipe={selectedRecipe}
-              handleModalToggle={toggleEditTemplate}
+              handleModalToggle={openRecipeModal}
             />
           </section>
         </RecipeContext.Provider>

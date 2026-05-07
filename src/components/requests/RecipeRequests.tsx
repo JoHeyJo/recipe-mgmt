@@ -189,7 +189,9 @@ function RecipeRequests({
             {error && <Alert alert={error} degree={"yellow"} />}{" "}
             {/* This will be a popup instead */}
             {/* <form onSubmit={handleSubmit}> */}
-            <div className="max-h-80">
+            <div
+              className={requestAction === "copyRemove" ? "h-80" : ""}
+            >
               {/* <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
                 <CheckIcon aria-hidden="true" className="h-6 w-6 text-green-600" />
               </div> */}
@@ -202,48 +204,50 @@ function RecipeRequests({
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet labore.
                   </p>
                 </div> */}
-
-              <section
-                id="RecipeRequests-book"
-                className="mx-auto h-full flex-col "
-              >
-                <section id="RecipeRequests-recipe" className="flex h-2/3">
-                  <ReferenceContext.Provider
-                    value={{ dialogPanelRef: dialogPanelRef }}
-                  >
-                    <section
-                      id="RecipeRequests-title-ingredients"
-                      className="flex-1 h-full flex flex-col"
+              {requestAction === "copyRemove" && (
+                <section
+                  id="RecipeRequests-book"
+                  className="mx-auto h-full flex-col "
+                >
+                  <section id="RecipeRequests-recipe" className="flex h-2/3">
+                    <ReferenceContext.Provider
+                      value={{ dialogPanelRef: dialogPanelRef }}
                     >
-                      <div className="">
-                        <TitleInput handleUpdate={handleRecipeUpdate} />
-                      </div>
-
-                      <div
-                        id="RecipeRequests-ingredients"
-                        className="flex-1 overflow-hidden"
+                      <section
+                        id="RecipeRequests-title-ingredients"
+                        className="flex-1 h-full flex flex-col"
                       >
-                        <IngredientsGroup
+                        <div className="">
+                          <TitleInput handleUpdate={handleRecipeUpdate} />
+                        </div>
+
+                        <div
+                          id="RecipeRequests-ingredients"
+                          className="flex-1 overflow-hidden"
+                        >
+                          <IngredientsGroup
+                            handleRecipeUpdate={handleRecipeUpdate}
+                          />
+                        </div>
+                      </section>
+
+                      <section
+                        id="RecipeRequests-instructions"
+                        className="flex-col flex flex-1 ml-4 rounded-md"
+                      >
+                        <InstructionsRequests
                           handleRecipeUpdate={handleRecipeUpdate}
                         />
-                      </div>
-                    </section>
+                      </section>
+                    </ReferenceContext.Provider>
+                  </section>
 
-                    <section
-                      id="RecipeRequests-instructions"
-                      className="flex-col flex flex-1 ml-4 rounded-md"
-                    >
-                      <InstructionsRequests
-                        handleRecipeUpdate={handleRecipeUpdate}
-                      />
-                    </section>
-                  </ReferenceContext.Provider>
+                  <section id="RecipeRequests-notes" className="">
+                    <NotesInput handleUpdate={handleRecipeUpdate} />
+                  </section>
                 </section>
+              )}
 
-                <section id="RecipeRequests-notes" className="">
-                  <NotesInput handleUpdate={handleRecipeUpdate} />
-                </section>
-              </section>
               {/* </div> */}
             </div>
             <div className="SubmitButton mt-5 sm:mt-6">
