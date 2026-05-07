@@ -53,7 +53,7 @@ function MainContainer() {
   async function editRecipe(editedRecipe: Recipe) {
     setOpen(false);
     setRecipes((prevRecipes) =>
-      prevRecipes.map((recipe) => 
+      prevRecipes.map((recipe) =>
         editedRecipe.id === recipe.id ? editedRecipe : recipe,
       ),
     );
@@ -81,8 +81,10 @@ function MainContainer() {
 
   /** Triggers actions that renders RecipeRequests with appropriate data set - current recipe */
   function openRecipeModal() {
-    if(PRIVILEGES.sharedInbox) setRequestAction("copyRemove")
-    setRequestAction("edit");
+    console.log("privileges:", PRIVILEGES.sharedInbox);
+    PRIVILEGES.sharedInbox
+      ? setRequestAction("copyRemove")
+      : setRequestAction("edit");
     setOpen(!isOpen);
   }
 

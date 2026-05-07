@@ -190,7 +190,7 @@ function RecipeRequests({
             {/* This will be a popup instead */}
             {/* <form onSubmit={handleSubmit}> */}
             <div
-              className={requestAction === "copyRemove" ? "h-80" : ""}
+              className={requestAction !== "copyRemove" ? "h-80" : ""}
             >
               {/* <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
                 <CheckIcon aria-hidden="true" className="h-6 w-6 text-green-600" />
@@ -204,7 +204,7 @@ function RecipeRequests({
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet labore.
                   </p>
                 </div> */}
-              {requestAction === "copyRemove" && (
+              {requestAction !== "copyRemove" && (
                 <section
                   id="RecipeRequests-book"
                   className="mx-auto h-full flex-col "
