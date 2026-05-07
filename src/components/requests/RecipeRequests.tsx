@@ -178,7 +178,7 @@ function RecipeRequests({
         transition
         className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
       />
-      <div className="fixed h-full inset-0 z-10 w-screen">
+      <div className="fixed inset-0 z-10 w-screen">
         <div className="flex h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
             id="RecipeRequests-DialogPanel"
@@ -189,7 +189,7 @@ function RecipeRequests({
             {error && <Alert alert={error} degree={"yellow"} />}{" "}
             {/* This will be a popup instead */}
             {/* <form onSubmit={handleSubmit}> */}
-            <div className="">
+            <div className="max-h-80">
               {/* <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
                 <CheckIcon aria-hidden="true" className="h-6 w-6 text-green-600" />
               </div> */}
@@ -231,7 +231,7 @@ function RecipeRequests({
 
                     <section
                       id="RecipeRequests-instructions"
-                      className="flex-col h-full flex flex-1 ml-4 rounded-md"
+                      className="flex-col flex flex-1 ml-4 rounded-md"
                     >
                       <InstructionsRequests
                         handleRecipeUpdate={handleRecipeUpdate}
