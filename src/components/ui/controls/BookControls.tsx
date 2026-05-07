@@ -1,19 +1,19 @@
 import { ReactNode } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers, faEye, faInbox } from "@fortawesome/free-solid-svg-icons";
-import Tooltip from "../ui/common/Tooltip";
-import FaShareButton from "../ui/common/FaShareButton";
-import FaPlusButton from "../ui/common/FaPlusButton";
+import Tooltip from "../common/Tooltip";
+import FaShareButton from "../common/FaShareButton";
+import FaPlusButton from "../common/FaPlusButton";
+import { useContext } from "react";
+import { UserContext } from "../../../context/UserContext";
 
 type BookControlsProps = {
-  role: string;
-  type: string;
   shareControl: () => void;
   addControl: () => void;
   children: ReactNode;
   render: boolean;
 };
-/** Dynamically renders UI for share book and add recipe
+/** Dynamically renders UI to grant/prevent sharing a book and adding a recipe
  * Owner        role = owner, type = standard
  * Collaborator role = collaborator, type = standard
  * Shared       role = owner, type = shared_inbox
@@ -22,17 +22,12 @@ type BookControlsProps = {
  * MainContainer -> BookControls -> Tooltip
  */
 function BookControls({
-  role,
-  type,
   children,
   render,
   shareControl,
   addControl,
 }: BookControlsProps) {
-  const fullPrivileges = role === "owner" && type === "standard";
-  const collaborator = role === "collaborator" && type === "standard";
-  const sharedInbox = role === "owner" && type === "shared_inbox";
-  const viewer = role === "viewer" && type === "standard";
+  const { PRIVILEGES } = useContext(UserContext);
 
   const shareControls = {
     share: <FaShareButton handleClick={shareControl} />,
@@ -58,15 +53,16 @@ function BookControls({
   };
 
   function chooseShareControl() {
-    if (fullPrivileges) return shareControls.share;
-    if (collaborator) return shareControls.blockShare;
-    if (sharedInbox) return shareControls.sharedRecipes;
-    if (viewer) return shareControls.viewOnly;
+    if (PRIVILEGES.full) return shareControls.share;
+    if (PRIVILEGES.collaborator) return shareControls.blockShare;
+    if (PRIVILEGES.sharedInbox) return shareControls.sharedRecipes;
+    if (PRIVILEGES.viewer) return shareControls.viewOnly;
   }
 
   function chooseAddControl() {
-    if (fullPrivileges || collaborator) return addControls.addRecipe;
-    if (sharedInbox || viewer) return;
+    if (PRIVILEGES.full || PRIVILEGES.collaborator)
+      return addControls.addRecipe;
+    if (PRIVILEGES.sharedInbox || PRIVILEGES.viewer) return;
   }
 
   return (

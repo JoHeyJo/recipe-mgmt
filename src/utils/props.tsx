@@ -121,7 +121,6 @@ export type RecipeRequestsProps = {
   };
   setShowing: any;
   isOpen: boolean;
-  isShared?: boolean;
 };
 
 export type RecipeViewProps = {

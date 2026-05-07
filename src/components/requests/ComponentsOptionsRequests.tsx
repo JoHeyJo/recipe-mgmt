@@ -139,7 +139,7 @@ function ComponentsOptionsRequests({
         valueOne="user"
         valueTwo="book"
       />
-      <div className="py-2 px-1 h-40 overflow-y-scroll rounded-md border-2 border-accent-secondary">
+      <div className="py-2 px-1 h-full overflow-y-auto rounded-md border-2 border-accent-secondary">
         {ingredients.map((ingredient, i) => (
           <div
             ref={ingredientSectionRef}

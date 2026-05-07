@@ -12,14 +12,14 @@ import BookView from "../views/BookView";
 import Search from "../ui/Search";
 import SharePopOut from "../ui/common/SharePopOut";
 import { WebSocketProvider } from "../../context/WebSocketProvider";
-import BookControls from "../ui/BookControls";
+import BookControls from "../ui/controls/BookControls";
 
 /** Renders the main container (book) housing list of recipes and individual recipe
  *
  * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList, BookView, SharePopOut, Search, BookControls]
  */
 function MainContainer() {
-  const { userId, defaultBookId, currentBookId, currentBook, user } =
+  const { userId, defaultBookId, currentBookId, PRIVILEGES } =
     useContext(UserContext);
 
   const [selectedBookId, setSelectedBookId] = useState<number>();
@@ -32,12 +32,14 @@ function MainContainer() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const recipeData = {
-    recipeId: selectedRecipe.id,
-    created_by_id: selectedRecipe.created_by_id,
-    recipeName: selectedRecipe.name,
-    contextIngredients: selectedRecipe.ingredients,
-    contextInstructions: selectedRecipe.instructions,
-    selectedNotes: selectedRecipe.notes,
+    selectedRecipe: {
+      id: selectedRecipe.id,
+      created_by_id: selectedRecipe.created_by_id,
+      name: selectedRecipe.name,
+      ingredients: selectedRecipe.ingredients,
+      instructions: selectedRecipe.instructions,
+      notes: selectedRecipe.notes,
+    },
     requestAction,
     updateRecipes,
   };
@@ -51,7 +53,7 @@ function MainContainer() {
   async function editRecipe(editedRecipe: Recipe) {
     setOpen(false);
     setRecipes((prevRecipes) =>
-      prevRecipes.map((recipe) => 
+      prevRecipes.map((recipe) =>
         editedRecipe.id === recipe.id ? editedRecipe : recipe,
       ),
     );
@@ -78,15 +80,18 @@ function MainContainer() {
   }
 
   /** Triggers actions that renders RecipeRequests with appropriate data set - current recipe */
-  function toggleEditTemplate() {
-    setRequestAction("edit");
+  function openRecipeModal() {
+    console.log("privileges:", PRIVILEGES.sharedInbox);
+    PRIVILEGES.sharedInbox
+      ? setRequestAction("copyRemove")
+      : setRequestAction("edit");
     setOpen(!isOpen);
   }
 
   /** Triggers actions that renders RecipeRequests with empty data - no recipe */
   function toggleCreateForm() {
     setSelectedRecipe(recipeTemplate);
-    setRequestAction("");
+    setRequestAction("create");
     setOpen(!isOpen);
   }
 
@@ -152,7 +157,6 @@ function MainContainer() {
             >
               <div id="MainContainer-header">
                 <RecipeRequests
-                  isShared={currentBook?.book_type === "shared_inbox"}
                   recipeActions={recipeActions}
                   setShowing={toggleModel}
                   isOpen={isOpen}
@@ -175,8 +179,6 @@ function MainContainer() {
                   </div>
                   {defaultBookId && (
                     <BookControls
-                      role={currentBook.book_role}
-                      type={currentBook.book_type}
                       shareControl={() => setIsDialogOpen(true)}
                       addControl={toggleCreateForm}
                       render={!!defaultBookId}
@@ -204,7 +206,7 @@ function MainContainer() {
           >
             <RecipeContainer
               recipe={selectedRecipe}
-              handleModalToggle={toggleEditTemplate}
+              handleModalToggle={openRecipeModal}
             />
           </section>
         </RecipeContext.Provider>
