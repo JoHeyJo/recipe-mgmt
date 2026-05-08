@@ -1,10 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 import { UserContext } from "../context/UserContext";
 import { RecipeContext } from "../context/RecipeContext";
 import API from "../api";
 import { BASEURL, protocol } from "../api";
 import useLocalStorage from "./useLocalStorage";
+import { Book } from "../utils/types";
 
 /** Custom Hook to create open connection between client and server
  *
@@ -12,6 +13,7 @@ import useLocalStorage from "./useLocalStorage";
  *
  * [MainContainer, RecipesList] -> useWebSocket
  */
+
 function useWebSocket() {
   const [socket, setSocket] = useState(null);
   const [message, setMessage] = useState("");
@@ -21,6 +23,24 @@ function useWebSocket() {
   const { userId, user, currentBook, setUserData, defaultBookId, books } =
     useContext(UserContext);
   const { selectedRecipe, updateRecipes } = useContext(RecipeContext);
+
+  const syncedValues = useRef({
+    userId,
+    user,
+    currentBook,
+    defaultBookId,
+    selectedRecipe,
+  });
+
+  useEffect(() => {
+    syncedValues.current = {
+      userId,
+      user,
+      currentBook,
+      defaultBookId,
+      selectedRecipe,
+    };
+  }, [userId, user, currentBook, defaultBookId, selectedRecipe]);
 
   /** Initiates handshake, maintains connection, & disconnects on unmount */
   useEffect(() => {
@@ -60,8 +80,7 @@ function useWebSocket() {
     });
 
     newSocket.on("user_shared_recipe", (data) => {
-      console.log("shared payload:", data);
-      // does array
+      const { currentBook } = syncedValues.current;
       if (data.payload) {
         setUserData((prevState) => {
           const newState = {
@@ -76,8 +95,7 @@ function useWebSocket() {
           return newState;
         });
       }
-      console.log("current bookk:",currentBook)
-      if (currentBook.book_type === "shared_inbox") updateRecipes(data.recipe);
+      if (currentBook?.book_type === "shared_inbox") updateRecipes(data.recipe);
       setMessage(data.message);
       setStatus(200);
     });
