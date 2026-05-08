@@ -10,7 +10,7 @@ import useLocalStorage from "./useLocalStorage";
  *
  * Notes: Should auto connect be turned off?
  *
- * [MainContainer, RecipesList] - > useWebSocket
+ * [MainContainer, RecipesList] -> useWebSocket
  */
 function useWebSocket() {
   const [socket, setSocket] = useState(null);
@@ -18,14 +18,8 @@ function useWebSocket() {
   const [status, setStatus] = useState(null);
   const [bookId, setBookId] = useLocalStorage("current-book-id");
 
-  const {
-    userId,
-    currentBookId,
-    user,
-    currentBook,
-    setUserData,
-    defaultBookId,
-  } = useContext(UserContext);
+  const { userId, user, currentBook, setUserData, defaultBookId, books } =
+    useContext(UserContext);
   const { selectedRecipe, updateRecipes } = useContext(RecipeContext);
 
   /** Initiates handshake, maintains connection, & disconnects on unmount */
@@ -66,11 +60,13 @@ function useWebSocket() {
     });
 
     newSocket.on("user_shared_recipe", (data) => {
-      if (data?.payload) {
+      console.log("shared payload:", data);
+      // does array
+      if (data.payload) {
         setUserData((prevState) => {
           const newState = {
             ...prevState,
-            books: [data.payload],
+            books: [...prevState.books, data.payload],
             defaultBook: data.payload,
             defaultBookId: data.payload.id,
             currentBook: data.payload,
@@ -80,9 +76,9 @@ function useWebSocket() {
           return newState;
         });
       }
-
+      console.log("current bookk:",currentBook)
+      if (currentBook.book_type === "shared_inbox") updateRecipes(data.recipe);
       setMessage(data.message);
-      if (data.payload.book_type === "shared_inbox") updateRecipes(data.recipe);
       setStatus(200);
     });
 
