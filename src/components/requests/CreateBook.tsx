@@ -31,7 +31,7 @@ const defaultBook = {
  * Request book creation associated to user
  *
  *
- * TopNav -> CreateBook -> [TextInputTitle, TextInputDescription]
+ * [TopNav, BookVIew] -> CreateBook -> [TextInputTitle, TextInputDescription]
  */
 function CreateBook({ isOpen, setOpen }) {
   const [bookData, setBookData] = useState<Book>(defaultBook);
@@ -66,9 +66,12 @@ function CreateBook({ isOpen, setOpen }) {
         if (!updatedUser.defaultBookId) {
           updatedUser.defaultBook = newBook;
           updatedUser.defaultBookId = newBook.id;
-          updatedUser. currentBook = newBook;
-          updatedUser.currentBookId = newBook.id
         }
+        // triggers UI to change to new book
+        console.log("updatedUser in CreateBook:", updatedUser);
+        updatedUser. currentBook = newBook;
+        updatedUser.currentBookId = newBook.id
+        console.log("updatedUser in CreateBook after ID input:", updatedUser);
         return updatedUser;
       });
     } catch (error: any) {
