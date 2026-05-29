@@ -14,6 +14,7 @@ import API from "../../api";
 import { errorHandling } from "../../utils/ErrorHandling";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 type CreateBook = {
   isOpen: boolean;
@@ -35,6 +36,7 @@ const defaultBook = {
  */
 function CreateBook({ isOpen, setOpen }) {
   const [bookData, setBookData] = useState<Book>(defaultBook);
+  const [bookId, setBookId] = useLocalStorage("current-book-id")
 
   const { userId, setUserData } =
     useContext(UserContext);
@@ -68,10 +70,10 @@ function CreateBook({ isOpen, setOpen }) {
           updatedUser.defaultBookId = newBook.id;
         }
         // triggers UI to change to new book
-        console.log("updatedUser in CreateBook:", updatedUser);
         updatedUser. currentBook = newBook;
         updatedUser.currentBookId = newBook.id
-        console.log("updatedUser in CreateBook after ID input:", updatedUser);
+        // updates localStorage
+        setBookId(newBook.id)
         return updatedUser;
       });
     } catch (error: any) {
