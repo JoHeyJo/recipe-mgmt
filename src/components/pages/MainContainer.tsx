@@ -129,7 +129,6 @@ function MainContainer() {
 
   /** Updates current book selection */
   useEffect(() => {
-    console.log("ID in MainContainer:", currentBookId)
     setSelectedBookId(currentBookId || defaultBookId);
   }, [currentBookId]);
 
