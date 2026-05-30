@@ -12,8 +12,8 @@ import { Book } from "../../utils/types";
  */
 function BookView({ resetSelected }: BookViewProp) {
   const { books, setUserData, currentBook } = useContext(UserContext);
-  const [bookId, setBookId] = useLocalStorage("current-book-id");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [bookId, setBookId] = useLocalStorage("current-book-id");
 
   /** Set selected book id & reset selected book to default */
   function selectBook(id: number, selected: Book) {

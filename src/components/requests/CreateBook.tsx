@@ -15,6 +15,7 @@ import { errorHandling } from "../../utils/ErrorHandling";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import useLocalStorage from "../../hooks/useLocalStorage";
+import Alert from "../ui/Alert";
 
 type CreateBook = {
   isOpen: boolean;
@@ -34,12 +35,12 @@ const defaultBook = {
  *
  * [TopNav, BookVIew] -> CreateBook -> [TextInputTitle, TextInputDescription]
  */
-function CreateBook({ isOpen, setOpen }) {
+function CreateBook({ isOpen, S }) {
   const [bookData, setBookData] = useState<Book>(defaultBook);
-  const [bookId, setBookId] = useLocalStorage("current-book-id")
+  const [alert, setAlert] = useState(true);
+  const [bookId, setBookId] = useLocalStorage("current-book-id");
 
-  const { userId, setUserData } =
-    useContext(UserContext);
+  const { userId, setUserData } = useContext(UserContext);
 
   /** Handles changes to book data form */
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
@@ -54,7 +55,7 @@ function CreateBook({ isOpen, setOpen }) {
   /** Consolidate modal closing actions */
   function handleClosingActions() {
     setBookData(defaultBook);
-    setOpen(false);
+    S(false);
   }
 
   /** Post request to create new book */
@@ -70,10 +71,10 @@ function CreateBook({ isOpen, setOpen }) {
           updatedUser.defaultBookId = newBook.id;
         }
         // triggers UI to change to new book
-        updatedUser. currentBook = newBook;
-        updatedUser.currentBookId = newBook.id
+        updatedUser.currentBook = newBook;
+        updatedUser.currentBookId = newBook.id;
         // updates localStorage
-        setBookId(newBook.id)
+        setBookId(newBook.id);
         return updatedUser;
       });
     } catch (error: any) {
@@ -85,7 +86,7 @@ function CreateBook({ isOpen, setOpen }) {
   function handleSubmit(bookData: Book, userId: number) {
     createBook(bookData, userId);
     setBookData(defaultBook);
-    setOpen(false);
+    S(false);
   }
 
   return (
@@ -106,44 +107,53 @@ function CreateBook({ isOpen, setOpen }) {
             transition
             className="relative bg-primary transform overflow-hidden rounded-lg px-4 pb-4 pt-5 text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg sm:p-6 data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
           >
-            <div>
-              <div className="mx-auto bg-background-color flex h-12 w-12 items-center justify-center rounded-full">
-                <BookOpenIcon
-                  aria-hidden="true"
-                  className="h-6 w-6 text-secondary"
-                />
-              </div>
-              <div className="mt-3 text-center sm:mt-5">
-                <DialogTitle as="h3" className="text-base leading-6">
-                  <TextInputTitle
-                    handleChange={handleChange}
-                    title={bookData.title}
-                  />
-                </DialogTitle>
-                <div className="CreateBook-description mt-6">
-                  <TextInputDescription handleChange={handleChange} />
+            {alert ? (
+              <Alert
+                alert={"Your new recipe book will be set as the default"}
+                degree={"yellow"}
+              />
+            ) : (
+              <>
+                <div>
+                  <div className="mx-auto bg-background-color flex h-12 w-12 items-center justify-center rounded-full">
+                    <BookOpenIcon
+                      aria-hidden="true"
+                      className="h-6 w-6 text-secondary"
+                    />
+                  </div>
+                  <div className="mt-3 text-center sm:mt-5">
+                    <DialogTitle as="h3" className="text-base leading-6">
+                      <TextInputTitle
+                        handleChange={handleChange}
+                        title={bookData.title}
+                      />
+                    </DialogTitle>
+                    <div className="CreateBook-description mt-6">
+                      <TextInputDescription handleChange={handleChange} />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-              <button
-                id="submit-button"
-                type="button"
-                onClick={() => handleSubmit(bookData, userId)}
-                className="inline-flex w-full justify-center rounded-md bg-button-submit px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-disabled sm:col-start-2"
-              >
-                Submit
-              </button>
-              <button
-                id="cancel-button"
-                type="button"
-                data-autofocus
-                onClick={() => handleClosingActions()}
-                className="mt-3 inline-flex w-full justify-center rounded-md bg-button-cancel px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-button-submit sm:col-start-1 sm:mt-0"
-              >
-                Cancel
-              </button>
-            </div>
+                <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+                  <button
+                    id="submit-button"
+                    type="button"
+                    onClick={() => handleSubmit(bookData, userId)}
+                    className="inline-flex w-full justify-center rounded-md bg-button-submit px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-disabled sm:col-start-2"
+                  >
+                    Submit
+                  </button>
+                  <button
+                    id="cancel-button"
+                    type="button"
+                    data-autofocus
+                    onClick={() => handleClosingActions()}
+                    className="mt-3 inline-flex w-full justify-center rounded-md bg-button-cancel px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-button-submit sm:col-start-1 sm:mt-0"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </>
+            )}
           </DialogPanel>
         </div>
       </div>
