@@ -90,6 +90,7 @@ function CreateBook({ isOpen, setOpen }) {
   /** Handle submitting action */
   async function handleSubmit(bookData: Book, userId: number) {
     const isDefaultBookReplaced = await createBook(bookData, userId);
+    if(isDefaultBookReplaced) setAlert("Your new recipe book will be set as the default");
     setBookData(defaultBook);
     console.log("isDefaultBookReplaced:", isDefaultBookReplaced);
     isDefaultBookReplaced ? delayCloseOnSubmit() : setOpen(false);
