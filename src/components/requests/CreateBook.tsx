@@ -35,9 +35,9 @@ const defaultBook = {
  *
  * [TopNav, BookVIew] -> CreateBook -> [TextInputTitle, TextInputDescription]
  */
-function CreateBook({ isOpen, S }) {
+function CreateBook({ isOpen, setOpen }) {
   const [bookData, setBookData] = useState<Book>(defaultBook);
-  const [alert, setAlert] = useState(true);
+  const [alert, setAlert] = useState("");
   const [bookId, setBookId] = useLocalStorage("current-book-id");
 
   const { userId, setUserData } = useContext(UserContext);
@@ -55,13 +55,16 @@ function CreateBook({ isOpen, S }) {
   /** Consolidate modal closing actions */
   function handleClosingActions() {
     setBookData(defaultBook);
-    S(false);
+    setOpen(false);
   }
 
   /** Post request to create new book */
   async function createBook(bookData: Book, userId: number) {
     try {
       const newBook = await API.postBook(bookData, userId);
+      if (newBook.is_default_replaced) {
+        setAlert("Your new recipe book will be set as the default");
+      }
       setUserData((user) => {
         const updatedUser = { ...user };
         updatedUser.books.push(newBook);
@@ -77,16 +80,26 @@ function CreateBook({ isOpen, S }) {
         setBookId(newBook.id);
         return updatedUser;
       });
+      console.log("new book:",newBook.is_default_replaced)
+      return newBook.is_default_replaced;
     } catch (error: any) {
       errorHandling("CreateBook - createBook", error);
     }
   }
 
   /** Handle submitting action */
-  function handleSubmit(bookData: Book, userId: number) {
-    createBook(bookData, userId);
+  async function handleSubmit(bookData: Book, userId: number) {
+    const isDefaultBookReplaced = await createBook(bookData, userId);
     setBookData(defaultBook);
-    S(false);
+    console.log("isDefaultBookReplaced:", isDefaultBookReplaced);
+    isDefaultBookReplaced ? delayCloseOnSubmit() : setOpen(false);
+    setAlert("");
+  }
+
+  function delayCloseOnSubmit() {
+    setTimeout(() => {
+      setOpen(false);
+    }, 5000);
   }
 
   return (
@@ -109,7 +122,7 @@ function CreateBook({ isOpen, S }) {
           >
             {alert ? (
               <Alert
-                alert={"Your new recipe book will be set as the default"}
+                alert={alert}
                 degree={"yellow"}
               />
             ) : (
