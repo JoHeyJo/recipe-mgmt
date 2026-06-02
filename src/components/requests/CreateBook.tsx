@@ -62,9 +62,9 @@ function CreateBook({ isOpen, setOpen }) {
   async function createBook(bookData: Book, userId: number) {
     try {
       const newBook = await API.postBook(bookData, userId);
-      if (newBook.is_default_replaced) {
-        setAlert("Your new recipe book will be set as the default");
-      }
+      // if (newBook.is_default_replaced) {
+      //   setAlert("Your new recipe book will be set as the default");
+      // }
       setUserData((user) => {
         const updatedUser = { ...user };
         updatedUser.books.push(newBook);
@@ -80,7 +80,8 @@ function CreateBook({ isOpen, setOpen }) {
         setBookId(newBook.id);
         return updatedUser;
       });
-      console.log("new book:",newBook.is_default_replaced)
+      console.log("new book res:", newBook);
+      console.log("new book:", newBook.is_default_replaced);
       return newBook.is_default_replaced;
     } catch (error: any) {
       errorHandling("CreateBook - createBook", error);
@@ -90,17 +91,24 @@ function CreateBook({ isOpen, setOpen }) {
   /** Handle submitting action */
   async function handleSubmit(bookData: Book, userId: number) {
     const isDefaultBookReplaced = await createBook(bookData, userId);
-    if(isDefaultBookReplaced) setAlert("Your new recipe book will be set as the default");
-    setBookData(defaultBook);
+    if (isDefaultBookReplaced) console.log("setting alert");
+    if (isDefaultBookReplaced)
+      setAlert("Your new recipe book will be set as the default");
     console.log("isDefaultBookReplaced:", isDefaultBookReplaced);
-    isDefaultBookReplaced ? delayCloseOnSubmit() : setOpen(false);
-    setAlert("");
+    isDefaultBookReplaced ? delayCloseOnSubmit() : closeOnSubmit();
+    setBookData(defaultBook);
+    console.log("Alert:", alert);
   }
 
   function delayCloseOnSubmit() {
     setTimeout(() => {
-      setOpen(false);
+      closeOnSubmit()
     }, 5000);
+  }
+
+  function closeOnSubmit(){
+      setOpen(false);
+      setAlert("");    
   }
 
   return (
@@ -122,10 +130,7 @@ function CreateBook({ isOpen, setOpen }) {
             className="relative bg-primary transform overflow-hidden rounded-lg px-4 pb-4 pt-5 text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg sm:p-6 data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
           >
             {alert ? (
-              <Alert
-                alert={alert}
-                degree={"yellow"}
-              />
+              <Alert alert={alert} degree={"yellow"} />
             ) : (
               <>
                 <div>
