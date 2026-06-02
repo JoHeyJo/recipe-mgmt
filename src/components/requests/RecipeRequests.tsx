@@ -47,6 +47,7 @@ function RecipeRequests({
   const [recipe, setRecipe] = useState<any>(selectedRecipe);
   const [error, setError] = useState<string | null>();
   const [isDisabled, setIsDisabled] = useState(true);
+  const [isRecipeSelectOpen, setIsRecipeSelectOpen] = useState(false);
 
   // syncs selected original context recipe with mutable recipe state - on edit?
   useEffect(() => {
@@ -169,7 +170,7 @@ function RecipeRequests({
   const dialogPanelRef = useRef(null);
 
   return (
-    <Dialog open={isOpen} onClose={setShowing} className="relative z-10">
+    <Dialog open={isRecipeSelectOpen} onClose={setShowing} className="relative z-10">
       <DialogBackdrop
         transition
         className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"

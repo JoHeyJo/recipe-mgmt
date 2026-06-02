@@ -1,16 +1,10 @@
-import { Recipe } from "../../../utils/types";
 import { useContext } from "react";
 import { UserContext } from "../../../context/UserContext";
-import { RecipeContextType, RecipeContext } from "../../../context/RecipeContext";
+import { RecipeContext } from "../../../context/RecipeContext";
+import { RecipeFormControlsProps } from "../../../utils/props";
 
-type RecipeFormControlsProps = {
-  handleSubmit: (e: any) => Promise<void>;
-  isDisabled: boolean;
-  recipe: Recipe;
-  handleRemove: () => {};
-  handleDelete: () => {};
-  editRecipe: (originalRecipe: Recipe, mutableRecipe: Recipe) => {};
-};
+
+
 function RecipeFormControls({
   handleSubmit,
   isDisabled,

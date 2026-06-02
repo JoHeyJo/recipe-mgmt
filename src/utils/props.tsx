@@ -227,3 +227,12 @@ export type AvatarFrameProp = {
 export type UserAvatarProp = {
   title: string;
 };
+
+export type RecipeFormControlsProps = {
+  handleSubmit: (e: any) => Promise<void>;
+  isDisabled: boolean;
+  recipe: Recipe;
+  handleRemove: () => {};
+  handleDelete: () => {};
+  editRecipe: (originalRecipe: Recipe, mutableRecipe: Recipe) => {};
+};
