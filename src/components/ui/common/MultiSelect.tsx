@@ -1,16 +1,16 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { MultiSelectProp } from "../../../utils/props";
+import { DropdownProp } from "../../../utils/props";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Book } from "../../../utils/types";
 import { truncate } from "../../../utils/functions";
 
-/** Renders dropdown multiselect
+/** Renders dropdown Dropdown
  *
- * BookView -> MultiSelect
+ * BookView -> Dropdown
  */
-function MultiSelect({ selected, options, handleIdChange }: MultiSelectProp) {
+function Dropdown({ selected, options, handleIdChange }: DropdownProp) {
   /** Selects option and sets option title for display */
   function handleSelect(option: Book) {
     handleIdChange(option.id, option);
@@ -55,4 +55,4 @@ function MultiSelect({ selected, options, handleIdChange }: MultiSelectProp) {
   );
 }
 
-export default MultiSelect;
+export default Dropdown;

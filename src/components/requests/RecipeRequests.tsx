@@ -28,7 +28,6 @@ import { recipeTemplate } from "../../utils/templates";
 import Alert from "../ui/Alert";
 import { ReferenceContext } from "../../context/ReferenceContext";
 import RecipeFormControls from "../ui/controls/RecipeFormControls";
-import Dropdown from "../ui/Dropdown";
 
 /** Processes recipe data. Context data is passed through here on edit. Else template data.
  * RecipeRequests data (e.g recipe state) is mutable while context data(reference data) is not
@@ -184,7 +183,6 @@ function RecipeRequests({
             transition
             className="relative flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"
           >
-            <Dropdown />
             {error && <Alert alert={error} degree={"yellow"} />}{" "}
             {/* This will be a popup instead */}
             {/* <form onSubmit={handleSubmit}> */}

@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../../context/UserContext";
-import MultiSelect from "../ui/common/MultiSelect";
+import Dropdown from "../ui/common/MultiSelect";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import CreateBook from "../requests/CreateBook";
 import { BookViewProp } from "../../utils/props";
@@ -8,7 +8,7 @@ import { Book } from "../../utils/types";
 
 /** Facilitates rendering books & book selection
  *
- * MainContainer -> BookView -> [CreateBook, MultiSelect]
+ * MainContainer -> BookView -> [CreateBook, Dropdown]
  */
 function BookView({ resetSelected }: BookViewProp) {
   const { books, setUserData, currentBook } = useContext(UserContext);
@@ -37,7 +37,7 @@ function BookView({ resetSelected }: BookViewProp) {
         </>
       ) : (
         <>
-          <MultiSelect
+          <Dropdown
             selected={currentBook}
             options={books}
             handleIdChange={selectBook}

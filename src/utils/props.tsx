@@ -175,7 +175,7 @@ export type RecipeInfoProp = {
   handleUpdate: (data: string, section: string) => void;
 };
 
-export type MultiSelectProp = {
+export type DropdownProp = {
   selected: Book;
   options: Book[];
   handleIdChange: (id: number, selected: Book) => void;
