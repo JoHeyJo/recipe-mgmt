@@ -4,7 +4,9 @@ import { RecipeContext } from "../../../context/RecipeContext";
 import { RecipeFormControlsProps } from "../../../utils/props";
 
 
-
+/** Dynamically renders controls for selected recipe form based on privileges
+ * RecipeRequests -> RecipeFormControls
+ */
 function RecipeFormControls({
   handleSubmit,
   isDisabled,
