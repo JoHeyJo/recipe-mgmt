@@ -13,11 +13,11 @@ import ComponentsOptionsRequests from "../requests/ComponentsOptionsRequests";
  * RecipeRequests -> IngredientsGroup -> ComponentsOptionsRequests
  */
 function IngredientsGroup({ handleRecipeUpdate }: IngredientsGroupProps) {
-  const { requestAction, contextIngredients } = useContext(RecipeContext);
+  const { requestAction, selectedRecipe } = useContext(RecipeContext);
   const [ingredients, setIngredients] = useState<Ingredients>(
-    contextIngredients.length === 0
+    selectedRecipe.ingredients.length === 0
       ? recipeTemplate.ingredients
-      : contextIngredients
+      : selectedRecipe.ingredients
   );
   const [ingredientKeys, setIngredientKeys] = useState<any>([Date.now()]); // Generate unique key on first render
 
@@ -25,7 +25,7 @@ function IngredientsGroup({ handleRecipeUpdate }: IngredientsGroupProps) {
   useEffect(() => {
     if (requestAction === "edit") {
       setIngredientKeys((keys) => {
-        return contextIngredients.map(() => uuidv4());
+        return selectedRecipe.ingredients.map(() => uuidv4());
       });
     }
   }, []);

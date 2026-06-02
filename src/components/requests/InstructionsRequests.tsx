@@ -19,7 +19,6 @@ function InstructionsRequests({
   handleRecipeUpdate,
 }: InstructionsRequestsProp) {
   const { userId, currentBookId } = useContext(UserContext);
-  const { requestAction, contextInstructions } = useContext(RecipeContext);
   const [instructions, setInstructions] = useState([]);
   const [whichInstructions, setWhichInstructions] = useState("book");
   const [instructionsReferences, setInstructionsReferences] = useState();

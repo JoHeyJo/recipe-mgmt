@@ -14,7 +14,7 @@ import InstructionsRequests from "./InstructionsRequests";
 import { UserContext } from "../../context/UserContext";
 import { RecipeRequestsProps } from "../../utils/props";
 import NotesInput from "../ui/NotesInput";
-import { RecipeContext, RecipeContextType } from "../../context/RecipeContext";
+import { RecipeContext } from "../../context/RecipeContext";
 import {
   compareIngredients,
   compareInstructions,
@@ -26,12 +26,12 @@ import {
 import TitleInput from "../ui/TitleInput";
 import { recipeTemplate } from "../../utils/templates";
 import Alert from "../ui/Alert";
-import { defaultIngredient } from "../../utils/templates";
 import { ReferenceContext } from "../../context/ReferenceContext";
+import RecipeFormControls from "../ui/controls/RecipeFormControls";
 
 /** Processes recipe data. Context data is passed through here on edit. Else template data.
- * RecipeRequests data is mutable while context data(reference data) is not
- * 
+ * RecipeRequests data (e.g recipe state) is mutable while context data(reference data) is not
+ *
  * Component needs to be refactored - separate API request from component logic
  *
  * MainContainer -> RecipeRequests -> [IngredientsGroup, InstructionsArea, NotesInput, TitleInput]
@@ -40,65 +40,32 @@ function RecipeRequests({
   recipeActions,
   setShowing,
   isOpen,
-  isShared,
 }: RecipeRequestsProps) {
   const { currentBookId, userId } = useContext(UserContext);
-  const {
-    recipeId,
-    created_by_id,
-    recipeName,
-    requestAction,
-    contextIngredients,
-    contextInstructions,
-    selectedNotes,
-  } = useContext(RecipeContext);
+  const { selectedRecipe, requestAction } = useContext(RecipeContext);
 
-  const [recipe, setRecipe] = useState<any>({
-    name: recipeName,
-    created_by_id,
-    id: recipeId,
-    ingredients: defaultIngredient,
-    instructions: contextInstructions,
-    notes: selectedNotes,
-  });
+  const [recipe, setRecipe] = useState<any>(selectedRecipe);
   const [error, setError] = useState<string | null>();
   const [isDisabled, setIsDisabled] = useState(true);
 
-  const selectedRecipe = {
-    recipeId,
-    created_by_id,
-    recipeName,
-    requestAction,
-    contextIngredients,
-    contextInstructions,
-    selectedNotes,
-  };
-
   // syncs selected original context recipe with mutable recipe state - on edit?
   useEffect(() => {
-    setRecipe({
-      name: recipeName,
-      created_by_id,
-      id: recipeId,
-      ingredients: contextIngredients,
-      instructions: contextInstructions,
-      notes: selectedNotes,
-    });
-  }, [recipeId]);
+    setRecipe(selectedRecipe);
+  }, [selectedRecipe.id]);
 
   /** Enables/disables UPDATE submit */
   useEffect(() => {
     if (requestAction === "edit") {
-      const name = compareNames(recipeName, recipe.name);
+      const name = compareNames(selectedRecipe.name, recipe.name);
       const ingredients = compareIngredients(
-        contextIngredients,
+        selectedRecipe.ingredients,
         recipe.ingredients,
       );
       const instructions = compareInstructions(
-        contextInstructions,
+        selectedRecipe.instructions,
         recipe.instructions,
       );
-      const notes = compareNotes(selectedNotes, recipe.notes);
+      const notes = compareNotes(selectedRecipe.notes, recipe.notes);
       const isAltered = name || ingredients || instructions || notes;
       setIsDisabled(!isAltered);
     }
@@ -133,14 +100,15 @@ function RecipeRequests({
   }
 
   /** Calls API - sends patch request with only edited recipe data */
-  async function editRecipe(
-    originalRecipe: RecipeContextType,
-    mutableRecipe: Recipe,
-  ) {
+  async function editRecipe(originalRecipe: Recipe, mutableRecipe: Recipe) {
     try {
       const mutatedData = filterRecipe(originalRecipe, mutableRecipe);
-      mutatedData.created_by_id = created_by_id;
-      const res = await API.patchUserRecipe(currentBookId, recipeId, mutatedData);
+      mutatedData.created_by_id = selectedRecipe.created_by_id;
+      const res = await API.patchUserRecipe(
+        currentBookId,
+        selectedRecipe.id,
+        mutatedData,
+      );
       recipeActions.editRecipe(res);
     } catch (error: any) {
       const message = errorHandling("RecipeRequests - editRecipe", error);
@@ -159,9 +127,9 @@ function RecipeRequests({
         userId,
         currentBookId,
         recipeId,
-        created_by_id,
+        selectedRecipe.created_by_id,
       );
-      if(res.message) recipeActions.deleteRecipe();
+      if (res.message) recipeActions.deleteRecipe();
     } catch (error: any) {
       const message = errorHandling("RecipeRequests - deleteRecipe", error);
       setError(message);
@@ -173,7 +141,7 @@ function RecipeRequests({
   async function removeSharedRecipe(bookId: number, recipeId: number) {
     try {
       const res = await API.deleteSharedRecipe(bookId, recipeId);
-      if(res.message) recipeActions.deleteRecipe();
+      if (res.message) recipeActions.deleteRecipe();
     } catch (error) {
       const message = errorHandling(
         "RecipeRequests - removeSharedRecipe",
@@ -185,11 +153,11 @@ function RecipeRequests({
   }
 
   async function handleDelete() {
-    await deleteRecipe(userId, currentBookId, recipeId);
+    await deleteRecipe(userId, currentBookId, selectedRecipe.id);
   }
 
   async function handleRemove() {
-    await removeSharedRecipe(currentBookId, recipeId);
+    await removeSharedRecipe(currentBookId, selectedRecipe.id);
   }
 
   async function handleSubmit(e) {
@@ -206,7 +174,7 @@ function RecipeRequests({
         transition
         className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
       />
-      <div className="fixed h-full inset-0 z-10 w-screen">
+      <div className="fixed inset-0 z-10 w-screen">
         <div className="flex h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
             id="RecipeRequests-DialogPanel"
@@ -217,7 +185,7 @@ function RecipeRequests({
             {error && <Alert alert={error} degree={"yellow"} />}{" "}
             {/* This will be a popup instead */}
             {/* <form onSubmit={handleSubmit}> */}
-            <div className="h-80">
+            <div className={requestAction !== "copyRemove" ? "h-80" : ""}>
               {/* <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
                 <CheckIcon aria-hidden="true" className="h-6 w-6 text-green-600" />
               </div> */}
@@ -230,98 +198,67 @@ function RecipeRequests({
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet labore.
                   </p>
                 </div> */}
+              {requestAction === "copyRemove" && (
+                <p>
+                  NOTE: Once a recipe is copied to a recipe book, you will be
+                  the owner of that copy.{" "}
+                </p>
+              )}
 
-              <section
-                id="RecipeRequests-book"
-                className="mx-auto h-full flex-col "
-              >
-                <section id="RecipeRequests-recipe" className="flex h-2/3">
-                  <ReferenceContext.Provider
-                    value={{ dialogPanelRef: dialogPanelRef }}
-                  >
-                    <section
-                      id="RecipeRequests-title-ingredients"
-                      className="flex-1 h-full flex flex-col"
+              {requestAction !== "copyRemove" && (
+                <section
+                  id="RecipeRequests-book"
+                  className="mx-auto h-full flex-col "
+                >
+                  <section id="RecipeRequests-recipe" className="flex h-2/3">
+                    <ReferenceContext.Provider
+                      value={{ dialogPanelRef: dialogPanelRef }}
                     >
-                      <div className="">
-                        <TitleInput handleUpdate={handleRecipeUpdate} />
-                      </div>
+                      <section
+                        id="RecipeRequests-title-ingredients"
+                        className="flex-1 h-full flex flex-col"
+                      >
+                        <div className="">
+                          <TitleInput handleUpdate={handleRecipeUpdate} />
+                        </div>
 
-                      <div className="flex-1 overflow-hidden">
-                        <IngredientsGroup
+                        <div
+                          id="RecipeRequests-ingredients"
+                          className="flex-1 overflow-hidden"
+                        >
+                          <IngredientsGroup
+                            handleRecipeUpdate={handleRecipeUpdate}
+                          />
+                        </div>
+                      </section>
+
+                      <section
+                        id="RecipeRequests-instructions"
+                        className="flex-col flex flex-1 ml-4 rounded-md"
+                      >
+                        <InstructionsRequests
                           handleRecipeUpdate={handleRecipeUpdate}
                         />
-                      </div>
-                    </section>
+                      </section>
+                    </ReferenceContext.Provider>
+                  </section>
 
-                    <section
-                      id="RecipeRequests-instructions"
-                      className="flex-col flex flex-1 ml-4 rounded-md"
-                    >
-                      <InstructionsRequests
-                        handleRecipeUpdate={handleRecipeUpdate}
-                      />
-                    </section>
-                  </ReferenceContext.Provider>
+                  <section id="RecipeRequests-notes" className="">
+                    <NotesInput handleUpdate={handleRecipeUpdate} />
+                  </section>
                 </section>
-
-                <section id="RecipeRequests-notes" className="">
-                  <NotesInput handleUpdate={handleRecipeUpdate} />
-                </section>
-              </section>
+              )}
               {/* </div> */}
             </div>
             <div className="SubmitButton mt-5 sm:mt-6">
-              {requestAction !== "edit" ? (
-                <div className="flex">
-                  <button
-                    type="submit"
-                    onClick={handleSubmit}
-                    className="inline-flex w-full justify-center rounded-md bg-button-submit px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default"
-                  >
-                    Submit
-                  </button>
-                </div>
-              ) : (
-                <div className="flex">
-                  {isShared ? (
-                    <button
-                      type="button"
-                      onClick={() => {}}
-                      disabled={isDisabled}
-                      className={`bg-button-submit inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default`}
-                    >
-                      Copy
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={() => editRecipe(selectedRecipe, recipe)}
-                      disabled={isDisabled}
-                      className={`${isDisabled ? "bg-button-disabled hover:opacity-100" : "bg-button-submit"} inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default`}
-                    >
-                      Update
-                    </button>
-                  )}
-                  {isShared ? (
-                    <button
-                      type="button"
-                      onClick={handleRemove}
-                      className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default"
-                    >
-                      Remove
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={handleDelete}
-                      className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default"
-                    >
-                      Delete
-                    </button>
-                  )}
-                </div>
-              )}
+              <RecipeFormControls
+                handleSubmit={handleSubmit}
+                isDisabled={isDisabled}
+                recipe={recipe}
+                handleRemove={handleRemove}
+                handleDelete={handleDelete}
+                editRecipe={editRecipe}
+              />
             </div>
             {/* </form> */}
           </DialogPanel>

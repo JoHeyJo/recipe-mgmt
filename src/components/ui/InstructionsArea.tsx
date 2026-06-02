@@ -24,17 +24,16 @@ function InstructionsArea({
   handleInstruction,
 }: InstructionsAreaProps) {
   const { userId, currentBookId } = useContext(UserContext);
-  const { requestAction, contextInstructions } = useContext(RecipeContext);
+  const { requestAction, selectedRecipe } = useContext(RecipeContext);
   const [selectedInstructions, setSelectedInstructions] =
     useState<Instructions>(
       requestAction === "edit"
         ? [
-            ...contextInstructions,
+            ...selectedRecipe.instructions,
             { id: null, instruction: "some instruction..." },
           ]
-        : PLACE_HOLDER
+        : PLACE_HOLDER,
     );
-  const [filterKey, setFilterKeys] = useState({});
 
   const instructionsAreaRef = useRef<HTMLDivElement>(null);
 
@@ -106,17 +105,15 @@ function InstructionsArea({
   useEffect(() => {
     handleRecipeUpdate(
       selectedInstructions.filter((i) => i.id),
-      "instructions"
+      "instructions",
     );
   }, [selectedInstructions]);
-
-
 
   return (
     <div
       ref={instructionsAreaRef}
       id="InstructionsArea"
-      className="flex-col flex-1 overflow-y-auto block w-full rounded-md border-2 border-accent-secondary pb-2 px-2 shadow-sm sm:leading-6"
+      className="min-h-0 overflow-y-auto h-full block w-full rounded-md border-2 border-accent-secondary pb-2 px-2 shadow-sm sm:leading-6"
     >
       {selectedInstructions.map((value, index) => (
         <InstructionManager
@@ -129,6 +126,17 @@ function InstructionsArea({
           handleInstruction={handleInstruction}
         />
       ))}
+      {/* <>
+        <div className="parent h-80">
+          {isRender && (
+            <>
+              <div className="child 1 overflow-y-scroll h-full"></div>
+              <div className="child 2 overflow-y-scroll h-full"></div>
+            </>
+          )}
+          <div className="child 3"></div>
+        </div>
+      </> */}
     </div>
   );
 }

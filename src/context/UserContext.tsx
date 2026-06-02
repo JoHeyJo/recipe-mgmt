@@ -13,9 +13,21 @@ export type UserContextType = {
   token: string;
   isLoading: boolean;
   isInitialized: boolean;
+  PRIVILEGES: {
+    full: boolean;
+    collaborator: boolean;
+    sharedInbox: boolean;
+    viewer: boolean;
+  };
 };
 
-const defaultBook = { id: 0, title: "", description: "", book_role: "", book_type:"" };
+const defaultBook = {
+  id: 0,
+  title: "",
+  description: "",
+  book_role: "",
+  book_type: "",
+};
 
 export const UserContext = createContext<UserContextType>({
   user: "",
@@ -29,4 +41,10 @@ export const UserContext = createContext<UserContextType>({
   token: "",
   isLoading: true,
   isInitialized: false,
+  PRIVILEGES: {
+    full: false,
+    collaborator: false,
+    sharedInbox: false,
+    viewer: false,
+  },
 });

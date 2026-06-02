@@ -14,6 +14,10 @@ import API from "../../api";
 import { errorHandling } from "../../utils/ErrorHandling";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import Alert from "../ui/Alert";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 type CreateBook = {
   isOpen: boolean;
@@ -31,13 +35,14 @@ const defaultBook = {
  * Request book creation associated to user
  *
  *
- * TopNav -> CreateBook -> [TextInputTitle, TextInputDescription]
+ * [TopNav, BookVIew] -> CreateBook -> [TextInputTitle, TextInputDescription]
  */
 function CreateBook({ isOpen, setOpen }) {
   const [bookData, setBookData] = useState<Book>(defaultBook);
+  const [alert, setAlert] = useState("");
+  const [bookId, setBookId] = useLocalStorage("current-book-id");
 
-  const { userId, setUserData } =
-    useContext(UserContext);
+  const { userId, setUserData } = useContext(UserContext);
 
   /** Handles changes to book data form */
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
@@ -66,20 +71,31 @@ function CreateBook({ isOpen, setOpen }) {
         if (!updatedUser.defaultBookId) {
           updatedUser.defaultBook = newBook;
           updatedUser.defaultBookId = newBook.id;
-          updatedUser. currentBook = newBook;
-          updatedUser.currentBookId = newBook.id
         }
+        // triggers UI to change to new book
+        updatedUser.currentBook = newBook;
+        updatedUser.currentBookId = newBook.id;
+        // updates localStorage
+        setBookId(newBook.id);
         return updatedUser;
       });
+      return newBook
     } catch (error: any) {
       errorHandling("CreateBook - createBook", error);
     }
   }
 
   /** Handle submitting action */
-  function handleSubmit(bookData: Book, userId: number) {
-    createBook(bookData, userId);
+  async function handleSubmit(bookData: Book, userId: number) {
+    const newBook = await createBook(bookData, userId);
+    if (newBook.is_default_replaced)
+      setAlert(`Your new recipe book, "${newBook.title}" will be set as the default`);
+    if (!newBook.is_default_replaced) closeOnSubmit();
     setBookData(defaultBook);
+  }
+
+  function closeOnSubmit() {
+    setAlert("");
     setOpen(false);
   }
 
@@ -101,44 +117,60 @@ function CreateBook({ isOpen, setOpen }) {
             transition
             className="relative bg-primary transform overflow-hidden rounded-lg px-4 pb-4 pt-5 text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg sm:p-6 data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
           >
-            <div>
-              <div className="mx-auto bg-background-color flex h-12 w-12 items-center justify-center rounded-full">
-                <BookOpenIcon
-                  aria-hidden="true"
-                  className="h-6 w-6 text-secondary"
-                />
+            {alert ? (
+              <div className="flex flex-row">
+                <Alert alert={alert} degree={"yellow"} />
+                <button
+                  onClick={closeOnSubmit}
+                  type="button"
+                  className="ms-auto -mx-1.5 -my-1.5 bg-blue-50 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-blue-400 dark:hover:bg-gray-700"
+                  aria-label="Close"
+                >
+                  <FontAwesomeIcon icon={faXmark} />
+                </button>
               </div>
-              <div className="mt-3 text-center sm:mt-5">
-                <DialogTitle as="h3" className="text-base leading-6">
-                  <TextInputTitle
-                    handleChange={handleChange}
-                    title={bookData.title}
-                  />
-                </DialogTitle>
-                <div className="CreateBook-description mt-6">
-                  <TextInputDescription handleChange={handleChange} />
+            ) : (
+              <>
+                <div>
+                  <div className="mx-auto bg-background-color flex h-12 w-12 items-center justify-center rounded-full">
+                    <BookOpenIcon
+                      aria-hidden="true"
+                      className="h-6 w-6 text-secondary"
+                    />
+                  </div>
+                  <div className="mt-3 text-center sm:mt-5">
+                    <DialogTitle as="h3" className="text-base leading-6">
+                      <TextInputTitle
+                        handleChange={handleChange}
+                        title={bookData.title}
+                      />
+                    </DialogTitle>
+                    <div className="CreateBook-description mt-6">
+                      <TextInputDescription handleChange={handleChange} />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-              <button
-                id="submit-button"
-                type="button"
-                onClick={() => handleSubmit(bookData, userId)}
-                className="inline-flex w-full justify-center rounded-md bg-button-submit px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-disabled sm:col-start-2"
-              >
-                Submit
-              </button>
-              <button
-                id="cancel-button"
-                type="button"
-                data-autofocus
-                onClick={() => handleClosingActions()}
-                className="mt-3 inline-flex w-full justify-center rounded-md bg-button-cancel px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-button-submit sm:col-start-1 sm:mt-0"
-              >
-                Cancel
-              </button>
-            </div>
+                <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+                  <button
+                    id="submit-button"
+                    type="button"
+                    onClick={() => handleSubmit(bookData, userId)}
+                    className="inline-flex w-full justify-center rounded-md bg-button-submit px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-disabled sm:col-start-2"
+                  >
+                    Submit
+                  </button>
+                  <button
+                    id="cancel-button"
+                    type="button"
+                    data-autofocus
+                    onClick={() => handleClosingActions()}
+                    className="mt-3 inline-flex w-full justify-center rounded-md bg-button-cancel px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-button-submit sm:col-start-1 sm:mt-0"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </>
+            )}
           </DialogPanel>
         </div>
       </div>

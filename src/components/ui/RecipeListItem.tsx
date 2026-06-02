@@ -1,6 +1,8 @@
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FaShareButton from "./common/FaShareButton";
 // import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 
 type RecipeListItemProps = {
   name: string;
@@ -22,18 +24,16 @@ function RecipeListItem({
   handleSelect,
   handleOpen,
 }: RecipeListItemProps) {
+  const { PRIVILEGES } = useContext(UserContext);
   return (
     <li
       key={id}
       onClick={() => handleSelect(index)}
       className={`flex justify-between p-2 border-b hover:bg-selected ${recipeId === id ? "text-text-hover bg-selected" : "hover:text-text-hover"}`}
     >
-      {/* <div id="RecipeListItem-left-align" className="px-2"> */}
-        {name}
-        {/* <FontAwesomeIcon icon={faShareNodes} />
-      </div> */}
+      {name}
       <div className={`${recipeId === id ? "block" : "hidden"}`}>
-        <FaShareButton handleClick={() => handleOpen()} />
+        {PRIVILEGES.full && <FaShareButton handleClick={() => handleOpen()} />}
       </div>
     </li>
   );

@@ -1,32 +1,46 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 import { UserContext } from "../context/UserContext";
 import { RecipeContext } from "../context/RecipeContext";
 import API from "../api";
 import { BASEURL, protocol } from "../api";
 import useLocalStorage from "./useLocalStorage";
+import { Book } from "../utils/types";
 
 /** Custom Hook to create open connection between client and server
  *
  * Notes: Should auto connect be turned off?
  *
- * [MainContainer, RecipesList] - > useWebSocket
+ * [MainContainer, RecipesList] -> useWebSocket
  */
+
 function useWebSocket() {
   const [socket, setSocket] = useState(null);
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState(null);
   const [bookId, setBookId] = useLocalStorage("current-book-id");
 
-  const {
+  const { userId, user, currentBook, setUserData, defaultBookId, books } =
+    useContext(UserContext);
+  const { selectedRecipe, updateRecipes } = useContext(RecipeContext);
+
+  const syncedValues = useRef({
     userId,
-    currentBookId,
     user,
     currentBook,
-    setUserData,
     defaultBookId,
-  } = useContext(UserContext);
-  const { recipeId, recipeName, updateRecipes } = useContext(RecipeContext);
+    selectedRecipe,
+  });
+
+  useEffect(() => {
+    syncedValues.current = {
+      userId,
+      user,
+      currentBook,
+      defaultBookId,
+      selectedRecipe,
+    };
+  }, [userId, user, currentBook, defaultBookId, selectedRecipe]);
 
   /** Initiates handshake, maintains connection, & disconnects on unmount */
   useEffect(() => {
@@ -66,11 +80,12 @@ function useWebSocket() {
     });
 
     newSocket.on("user_shared_recipe", (data) => {
-      if (data?.payload) {
+      const { currentBook } = syncedValues.current;
+      if (data.payload) {
         setUserData((prevState) => {
           const newState = {
             ...prevState,
-            books: [data.payload],
+            books: [...prevState.books, data.payload],
             defaultBook: data.payload,
             defaultBookId: data.payload.id,
             currentBook: data.payload,
@@ -80,9 +95,8 @@ function useWebSocket() {
           return newState;
         });
       }
-
+      if (currentBook?.book_type === "shared_inbox") updateRecipes(data.recipe);
       setMessage(data.message);
-      if (data.payload.book_type === "shared_inbox") updateRecipes(data.recipe);
       setStatus(200);
     });
 
@@ -117,9 +131,9 @@ function useWebSocket() {
     if (socket && recipient) {
       socket.emit("share_recipe", {
         recipient,
-        recipeId,
+        recipeId: selectedRecipe.id,
         user,
-        recipeName,
+        recipeName: selectedRecipe.name,
       });
     }
   }
