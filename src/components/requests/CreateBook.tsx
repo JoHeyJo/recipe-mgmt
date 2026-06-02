@@ -39,7 +39,7 @@ const defaultBook = {
  */
 function CreateBook({ isOpen, setOpen }) {
   const [bookData, setBookData] = useState<Book>(defaultBook);
-  const [alert, setAlert] = useState("message");
+  const [alert, setAlert] = useState("");
   const [bookId, setBookId] = useLocalStorage("current-book-id");
 
   const { userId, setUserData } = useContext(UserContext);
@@ -87,17 +87,11 @@ function CreateBook({ isOpen, setOpen }) {
 
   /** Handle submitting action */
   async function handleSubmit(bookData: Book, userId: number) {
-    const isDefaultBookReplaced = await createBook(bookData, userId);
-    if (isDefaultBookReplaced)
-      setAlert("Your new recipe book will be set as the default");
-    isDefaultBookReplaced ? delayCloseOnSubmit() : closeOnSubmit();
+    const newBook = await createBook(bookData, userId);
+    if (newBook.is_default_replaced)
+      setAlert(`Your new recipe book, "${newBook.currentBook.title}" will be set as the default`);
+    if (!newBook.is_default_replaced) closeOnSubmit();
     setBookData(defaultBook);
-  }
-
-  function delayCloseOnSubmit() {
-    setTimeout(() => {
-      closeOnSubmit();
-    }, 5000);
   }
 
   function closeOnSubmit() {
@@ -124,10 +118,10 @@ function CreateBook({ isOpen, setOpen }) {
             className="relative bg-primary transform overflow-hidden rounded-lg px-4 pb-4 pt-5 text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg sm:p-6 data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
           >
             {alert ? (
-              <div className="flex">
+              <div className="flex flex-row">
                 <Alert alert={alert} degree={"yellow"} />
                 <button
-                  onClick={() => {}}
+                  onClick={closeOnSubmit}
                   type="button"
                   className="ms-auto -mx-1.5 -my-1.5 bg-blue-50 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-blue-400 dark:hover:bg-gray-700"
                   aria-label="Close"
