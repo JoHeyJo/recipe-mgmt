@@ -79,7 +79,7 @@ function CreateBook({ isOpen, setOpen }) {
         setBookId(newBook.id);
         return updatedUser;
       });
-      return newBook.is_default_replaced;
+      return newBook
     } catch (error: any) {
       errorHandling("CreateBook - createBook", error);
     }
@@ -89,14 +89,14 @@ function CreateBook({ isOpen, setOpen }) {
   async function handleSubmit(bookData: Book, userId: number) {
     const newBook = await createBook(bookData, userId);
     if (newBook.is_default_replaced)
-      setAlert(`Your new recipe book, "${newBook.currentBook.title}" will be set as the default`);
+      setAlert(`Your new recipe book, "${newBook.title}" will be set as the default`);
     if (!newBook.is_default_replaced) closeOnSubmit();
     setBookData(defaultBook);
   }
 
   function closeOnSubmit() {
-    setOpen(false);
     setAlert("");
+    setOpen(false);
   }
 
   return (
