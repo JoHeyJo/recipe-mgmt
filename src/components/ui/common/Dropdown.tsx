@@ -8,18 +8,19 @@ import { truncate } from "../../../utils/functions";
 
 /** Renders dropdown Dropdown
  *
- * BookView -> Dropdown
+ * [BookView, RecipeRequest] -> Dropdown
  */
 function Dropdown({ selected, options, handleIdChange }: DropdownProp) {
   /** Selects option and sets option title for display */
   function handleSelect(option: Book) {
     handleIdChange(option.id, option);
   }
+  console.log("Book:", options)
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <MenuButton className="inline-flex truncate justify-center gap-x-1.5 rounded-md bg-selected px-3 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-light-border hover:bg-gray-50">
-          {/* {truncate(selected.title, 15)} */}
+          {truncate(selected.title, 15)}
           <ChevronDownIcon
             aria-hidden="true"
             className="-mr-1 size-5 text-gray-400"

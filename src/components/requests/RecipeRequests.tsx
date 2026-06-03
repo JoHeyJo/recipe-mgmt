@@ -42,13 +42,21 @@ function RecipeRequests({
   setShowing,
   isOpen,
 }: RecipeRequestsProps) {
-  const { currentBookId, userId } = useContext(UserContext);
+  const { currentBookId, userId, books } = useContext(UserContext);
   const { selectedRecipe, requestAction } = useContext(RecipeContext);
 
   const [recipe, setRecipe] = useState<any>(selectedRecipe);
   const [error, setError] = useState<string | null>();
   const [isDisabled, setIsDisabled] = useState(true);
   const [isRecipeSelectOpen, setIsRecipeSelectOpen] = useState(false);
+
+  const selected = {
+    book_role: "owner",
+    book_type: "shared_inbox",
+    description: "Inbox: Recipes shared by others",
+    id: 3,
+    title: "Shared Recipes",
+  };
 
   // syncs selected original context recipe with mutable recipe state - on edit?
   useEffect(() => {
@@ -169,13 +177,9 @@ function RecipeRequests({
   }
 
   const dialogPanelRef = useRef(null);
-
+  console.log("Books from RR:", books);
   return (
-    <Dialog
-      open={isOpen}
-      onClose={setShowing}
-      className="relative z-10"
-    >
+    <Dialog open={isOpen} onClose={setShowing} className="relative z-10">
       <DialogBackdrop
         transition
         className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
@@ -189,8 +193,8 @@ function RecipeRequests({
             className="relative flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"
           >
             <Dropdown
-              selected={undefined}
-              options={[]}
+              selected={selected}
+              options={books}
               handleIdChange={() => {}}
             />
             {error && <Alert alert={error} degree={"yellow"} />}{" "}
