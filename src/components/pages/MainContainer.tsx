@@ -81,10 +81,11 @@ function MainContainer() {
 
   /** Triggers actions that renders RecipeRequests with appropriate data set - current recipe */
   function openRecipeModal() {
+    console.log("click")
     PRIVILEGES.sharedInbox
       ? setRequestAction("copyRemove")
       : setRequestAction("edit");
-    setOpen(!isOpen);
+    setOpen(true);
   }
 
   /** Triggers actions that renders RecipeRequests with empty data - no recipe */

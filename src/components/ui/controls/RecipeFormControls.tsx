@@ -18,7 +18,6 @@ function RecipeFormControls({
   const { PRIVILEGES } = useContext(UserContext);
   const { selectedRecipe, requestAction } = useContext(RecipeContext);
 
-
   const formControls = {
     create: (
       <button
