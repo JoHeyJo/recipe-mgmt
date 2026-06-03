@@ -150,6 +150,15 @@ class API {
     return res;
   }
 
+  /** Copy & change ownership of user's recipe to recipient recipe book */
+  static async postCopySharedRecipe(bookId: number, recipe: Recipe){
+    const recipeId = recipe.id
+    console.log("payload:", recipe)
+    // const res = await this.request(`books/${bookId}/recipes/${recipeId}`, recipe, "POST")
+    // return res
+  }
+
+
   // ########### BOOKS ###########
 
   /** Post new book */

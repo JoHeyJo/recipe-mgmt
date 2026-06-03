@@ -48,28 +48,21 @@ function RecipeRequests({
   const [recipe, setRecipe] = useState<any>(selectedRecipe);
   const [error, setError] = useState<string | null>();
   const [isDisabled, setIsDisabled] = useState(true);
-  const [selectedBookId, setSelectedBookId] = useState<Number>();
+  const [selectedBookId, setSelectedBookId] = useState<number>();
   const [isBookSelectOpen, setIsBookSelectOpen] = useState(false);
 
   /** replaces dialog with dropdown */
-  function openBookDropdown(){
+  function openBookDropdown() {
     setIsBookSelectOpen(true);
   }
 
   /** Updates state with selected book ID */
-  function selectBookId(id: Number) {
+  function selectBookId(id: number) {
+    copySharedRecipe(id, recipe)
     setSelectedBookId(id);
-    console.log("book id:",id)
+    console.log("book id:", id);
     handleCloseDialog();
   }
-
-  const selected = {
-    book_role: "owner",
-    book_type: "shared_inbox",
-    description: "Inbox: Recipes shared by others",
-    id: 3,
-    title: "Shared Recipes",
-  };
 
   // syncs selected original context recipe with mutable recipe state - on edit?
   useEffect(() => {
@@ -175,6 +168,21 @@ function RecipeRequests({
     }
   }
 
+  /** Calls API - requests that copy of recipe be added to recipient's recipe book */
+  async function copySharedRecipe(bookId: number, recipe: Recipe) {
+    try {
+      const res = await API.postCopySharedRecipe(bookId, recipe);
+      console.log(res)
+    } catch (error) {
+      const message = errorHandling(
+        "RecipeRequests - removeSharedRecipe",
+        error,
+      );
+      setError(message);
+      setTimeout(() => setError(null), 5000);
+    }
+  }
+
   async function handleDelete() {
     await deleteRecipe(userId, currentBookId, selectedRecipe.id);
   }
@@ -191,13 +199,13 @@ function RecipeRequests({
 
   const dialogPanelRef = useRef(null);
 
-function handleCloseDialog(){
-  closeDialog();
-  setTimeout(() => {
-    // prevents flash of recipe copy controls
-    setIsBookSelectOpen(false);
-  }, 50);
-}
+  function handleCloseDialog() {
+    closeDialog();
+    setTimeout(() => {
+      // prevents flash of recipe copy controls
+      setIsBookSelectOpen(false);
+    }, 50);
+  }
 
   return (
     <Dialog open={isOpen} onClose={handleCloseDialog} className="relative z-10">
