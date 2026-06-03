@@ -192,11 +192,14 @@ function RecipeRequests({
 
 function handleCloseDialog(){
   closeDialog();
-  setIsBookSelectOpen(false);
+  setTimeout(() => {
+    // prevents flash of recipe copy controls
+    setIsBookSelectOpen(false);
+  }, 50);
 }
 
   return (
-    <Dialog open={isOpen} onClose={closeDialog} className="relative z-10">
+    <Dialog open={isOpen} onClose={handleCloseDialog} className="relative z-10">
       <DialogBackdrop
         transition
         className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
@@ -207,7 +210,7 @@ function handleCloseDialog(){
             id="RecipeRequests-DialogPanel"
             ref={dialogPanelRef}
             transition
-            className="relative flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"
+            className={`relative flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all ${isBookSelectOpen ? "" : "sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"}`}
           >
             {isBookSelectOpen ? (
               <Dropdown
