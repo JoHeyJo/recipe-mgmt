@@ -8,7 +8,8 @@ import { truncate } from "../../../utils/functions";
 
 /** Renders dropdown Dropdown
  * RecipeRequest does not pass down a selected prop. Hence the guards implemented
- * 
+ * and the additional styling for when selected === truthy
+ *
  * [BookView, RecipeRequest] -> Dropdown
  */
 function Dropdown({ selected, options, handleIdChange }: DropdownProp) {
@@ -16,12 +17,12 @@ function Dropdown({ selected, options, handleIdChange }: DropdownProp) {
   function handleSelect(option: Book) {
     handleIdChange(option.id, option);
   }
-  console.log("Book:", options)
+  console.log("Book:", options);
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <MenuButton className="inline-flex truncate justify-center gap-x-1.5 rounded-md bg-selected px-3 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-light-border hover:bg-gray-50">
-          {selected && truncate(selected.title, 15)}
+          {selected ? truncate(selected.title, 15) : "Select recipe book"}
           <ChevronDownIcon
             aria-hidden="true"
             className="-mr-1 size-5 text-gray-400"
@@ -30,7 +31,8 @@ function Dropdown({ selected, options, handleIdChange }: DropdownProp) {
       </div>
       <MenuItems
         transition
-        className="absolute right-0 z-10 mt-2 w-56 origin-top-right max-h-60 overflow-auto rounded-md bg-primary shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+        className="absolute z-10 mt-2 w-56 max-h-60 overflow-auto rounded-md bg-primary shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+        anchor={selected ?  {to: "bottom start"} : {to: "bottom"}}
       >
         <div className="py-1">
           {options?.map((option) => (
@@ -41,8 +43,7 @@ function Dropdown({ selected, options, handleIdChange }: DropdownProp) {
                   ${selected?.id === option.id ? "text-gray-700 font-semibold" : "text-gray-700"}`}
               >
                 <span className="block truncate">{option.title}</span>
-
-                {selected?.id === option.id && (
+                {selected && selected.id === option.id && (
                   <FontAwesomeIcon
                     className="text-icon-color group-data-[focus]:text-accent"
                     icon={faCheck}
