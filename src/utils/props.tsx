@@ -119,7 +119,7 @@ export type RecipeRequestsProps = {
     deleteRecipe: () => void;
     editRecipe: (edited_recipe: Recipe) => void;
   };
-  setShowing: any;
+  closeDialog: () => void;
   isOpen: boolean;
 };
 
@@ -235,4 +235,5 @@ export type RecipeFormControlsProps = {
   handleRemove: () => {};
   handleDelete: () => {};
   editRecipe: (originalRecipe: Recipe, mutableRecipe: Recipe) => {};
+  openDropdown: () => void;
 };

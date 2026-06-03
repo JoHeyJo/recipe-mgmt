@@ -75,8 +75,8 @@ function MainContainer() {
   }
 
   /** Model toggle function for children components */
-  function toggleModel() {
-    setOpen(!isOpen);
+  function closeDialog() {
+    setOpen(false);
   }
 
   /** Triggers actions that renders RecipeRequests with appropriate data set - current recipe */
@@ -158,7 +158,7 @@ function MainContainer() {
               <div id="MainContainer-header">
                 <RecipeRequests
                   recipeActions={recipeActions}
-                  setShowing={toggleModel}
+                  closeDialog={closeDialog}
                   isOpen={isOpen}
                 />
 

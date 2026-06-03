@@ -7,7 +7,8 @@ import { Book } from "../../../utils/types";
 import { truncate } from "../../../utils/functions";
 
 /** Renders dropdown Dropdown
- *
+ * RecipeRequest does not pass down a selected prop. Hence the guards implemented
+ * 
  * [BookView, RecipeRequest] -> Dropdown
  */
 function Dropdown({ selected, options, handleIdChange }: DropdownProp) {
@@ -20,7 +21,7 @@ function Dropdown({ selected, options, handleIdChange }: DropdownProp) {
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <MenuButton className="inline-flex truncate justify-center gap-x-1.5 rounded-md bg-selected px-3 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-light-border hover:bg-gray-50">
-          {truncate(selected.title, 15)}
+          {selected && truncate(selected.title, 15)}
           <ChevronDownIcon
             aria-hidden="true"
             className="-mr-1 size-5 text-gray-400"
@@ -37,11 +38,11 @@ function Dropdown({ selected, options, handleIdChange }: DropdownProp) {
               <li
                 onClick={() => handleSelect(option)}
                 className={`group relative flex justify-between px-4 py-2 text-sm cursor-pointer data-[focus]:bg-selected data-[focus]:text-accent 
-                  ${selected.id === option.id ? "text-gray-700 font-semibold" : "text-gray-700"}`}
+                  ${selected?.id === option.id ? "text-gray-700 font-semibold" : "text-gray-700"}`}
               >
                 <span className="block truncate">{option.title}</span>
 
-                {selected.id === option.id && (
+                {selected?.id === option.id && (
                   <FontAwesomeIcon
                     className="text-icon-color group-data-[focus]:text-accent"
                     icon={faCheck}

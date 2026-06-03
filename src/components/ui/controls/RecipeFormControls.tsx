@@ -14,6 +14,7 @@ function RecipeFormControls({
   handleRemove,
   handleDelete,
   editRecipe,
+  openDropdown
 }: RecipeFormControlsProps) {
   const { PRIVILEGES } = useContext(UserContext);
   const { selectedRecipe, requestAction } = useContext(RecipeContext);
@@ -51,8 +52,8 @@ function RecipeFormControls({
       <>
         <button
           type="button"
-          onClick={() => {}}
-          disabled={isDisabled}
+          onClick={openDropdown}
+          // disabled={isDisabled}
           className={`bg-button-submit inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default`}
         >
           Copy
