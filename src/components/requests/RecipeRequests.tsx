@@ -59,6 +59,8 @@ function RecipeRequests({
   /** Updates state with selected book ID */
   function selectBookId(id: Number) {
     setSelectedBookId(id);
+    console.log("book id:",id)
+    handleCloseDialog();
   }
 
   const selected = {
@@ -188,7 +190,6 @@ function RecipeRequests({
   }
 
   const dialogPanelRef = useRef(null);
-  console.log("Books from RR:", books);
 
 function handleCloseDialog(){
   closeDialog();

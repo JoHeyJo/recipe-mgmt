@@ -9,7 +9,7 @@ import { truncate } from "../../../utils/functions";
 /** Renders dropdown Dropdown
  * RecipeRequest does not pass down a selected prop. Hence the guards implemented
  * and the additional styling for when selected === truthy
- *
+ * selected is only necessary to indicate which item has been chosen
  * [BookView, RecipeRequest] -> Dropdown
  */
 function Dropdown({ selected, options, handleIdChange }: DropdownProp) {
@@ -17,7 +17,6 @@ function Dropdown({ selected, options, handleIdChange }: DropdownProp) {
   function handleSelect(option: Book) {
     handleIdChange(option.id, option);
   }
-  console.log("Book:", options);
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
