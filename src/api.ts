@@ -155,7 +155,8 @@ class API {
     const recipeId = recipe.id
     console.log("payload:", recipe)
     // const res = await this.request(`books/${bookId}/recipes/${recipeId}`, recipe, "POST")
-    // return res
+    recipe.id = 45
+    return {recipe, bookId} 
   }
 
 

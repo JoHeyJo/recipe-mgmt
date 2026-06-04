@@ -42,13 +42,13 @@ function RecipeRequests({
   closeDialog,
   isOpen,
 }: RecipeRequestsProps) {
-  const { currentBookId, userId, books } = useContext(UserContext);
+  const { currentBookId, userId, books, setUserData } = useContext(UserContext);
   const { selectedRecipe, requestAction } = useContext(RecipeContext);
 
   const [recipe, setRecipe] = useState<any>(selectedRecipe);
   const [error, setError] = useState<string | null>();
   const [isDisabled, setIsDisabled] = useState(true);
-  const [selectedBookId, setSelectedBookId] = useState<number>();
+  // const [selectedBookId, setSelectedBookId] = useState<number>();
   const [isBookSelectOpen, setIsBookSelectOpen] = useState(false);
 
   /** replaces dialog with dropdown */
@@ -58,9 +58,14 @@ function RecipeRequests({
 
   /** Updates state with selected book ID */
   function selectBookId(id: number) {
-    copySharedRecipe(id, recipe)
-    setSelectedBookId(id);
+    copySharedRecipe(id, recipe);
+    // setSelectedBookId(id);
     console.log("book id:", id);
+    setUserData((prevData) => {
+      const userData = { ...prevData };
+      userData.currentBookId = 
+      return userData
+    });
     handleCloseDialog();
   }
 
@@ -172,7 +177,7 @@ function RecipeRequests({
   async function copySharedRecipe(bookId: number, recipe: Recipe) {
     try {
       const res = await API.postCopySharedRecipe(bookId, recipe);
-      console.log(res)
+      console.log(res);
     } catch (error) {
       const message = errorHandling(
         "RecipeRequests - removeSharedRecipe",
