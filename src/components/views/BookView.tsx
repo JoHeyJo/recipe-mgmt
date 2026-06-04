@@ -20,6 +20,7 @@ function BookView({ resetSelected }: BookViewProp) {
     setUserData((user) => {
       const userData = { ...user };
       userData.currentBookId = id;
+      console.log("selected:",selected)
       userData.currentBook = selected;
       setBookId(id);
       return userData;

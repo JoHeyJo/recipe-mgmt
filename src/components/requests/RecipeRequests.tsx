@@ -56,15 +56,22 @@ function RecipeRequests({
     setIsBookSelectOpen(true);
   }
 
-  /** Updates state with selected book ID */
-  function selectBookId(id: number) {
-    copySharedRecipe(id, recipe);
+  /** Updates state with selected book ID - triggers copy of recipe to book */
+  async function selectBookId(id: number) {
+    const res = await copySharedRecipe(id, recipe);
     // setSelectedBookId(id);
     console.log("book id:", id);
-    setUserData((prevData) => {
-      const userData = { ...prevData };
-      userData.currentBookId = 
-      return userData
+    setUserData((user) => {
+      const userData = { ...user };
+      userData.currentBookId = res.bookId;
+      userData.currentBook = {
+        book_role: "owner",
+        book_type: "standard",
+        description: "",
+        id: res.bookId,
+        title: "Default - Jo",
+      };
+      return userData;
     });
     handleCloseDialog();
   }
@@ -177,7 +184,7 @@ function RecipeRequests({
   async function copySharedRecipe(bookId: number, recipe: Recipe) {
     try {
       const res = await API.postCopySharedRecipe(bookId, recipe);
-      console.log(res);
+      return res;
     } catch (error) {
       const message = errorHandling(
         "RecipeRequests - removeSharedRecipe",
