@@ -40,6 +40,7 @@ function MainContainer() {
       instructions: selectedRecipe.instructions,
       notes: selectedRecipe.notes,
     },
+    setRecipes,
     requestAction,
     updateRecipes,
   };

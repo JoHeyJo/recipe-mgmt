@@ -43,7 +43,7 @@ function RecipeRequests({
   isOpen,
 }: RecipeRequestsProps) {
   const { currentBookId, userId, books, setUserData } = useContext(UserContext);
-  const { selectedRecipe, requestAction } = useContext(RecipeContext);
+  const { selectedRecipe, requestAction, setRecipes } = useContext(RecipeContext);
 
   const [recipe, setRecipe] = useState<any>(selectedRecipe);
   const [error, setError] = useState<string | null>();
@@ -64,6 +64,7 @@ function RecipeRequests({
     setUserData((user) => {
       const userData = { ...user };
       userData.currentBookId = res.bookId;
+      // userData.
       userData.currentBook = {
         book_role: "owner",
         book_type: "standard",
@@ -74,6 +75,11 @@ function RecipeRequests({
       return userData;
     });
     handleCloseDialog();
+    setRecipes((recipes) => [...recipes, recipe]);
+  }
+
+  async function updateRecipe(){
+
   }
 
   // syncs selected original context recipe with mutable recipe state - on edit?
