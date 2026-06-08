@@ -96,6 +96,7 @@ function MainContainer() {
     setOpen(!isOpen);
   }
 
+  // Removes recipes selection
   function resetSelectedRecipe() {
     setSelectedRecipe(recipeTemplate);
   }

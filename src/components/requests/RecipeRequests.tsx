@@ -42,8 +42,8 @@ function RecipeRequests({
   closeDialog,
   isOpen,
 }: RecipeRequestsProps) {
-  const { currentBookId, userId, books, setUserData } = useContext(UserContext);
-  const { selectedRecipe, requestAction, setRecipes } = useContext(RecipeContext);
+  const { currentBookId, userId, books, setUserData, currentBook } = useContext(UserContext);
+  const { selectedRecipe, requestAction, setRecipes, updateRecipes } = useContext(RecipeContext);
 
   const [recipe, setRecipe] = useState<any>(selectedRecipe);
   const [error, setError] = useState<string | null>();
@@ -59,6 +59,7 @@ function RecipeRequests({
   /** Updates state with selected book ID - triggers copy of recipe to book */
   async function selectBookId(id: number) {
     const res = await copySharedRecipe(id, recipe);
+    console.log("Book id in selecBookId",currentBookId)
     // setSelectedBookId(id);
     console.log("book id:", id);
     setUserData((user) => {
@@ -72,15 +73,19 @@ function RecipeRequests({
         id: res.bookId,
         title: "Default - Jo",
       };
+      setRecipe(res.recipe);
       return userData;
     });
     handleCloseDialog();
-    setRecipes((recipes) => [...recipes, recipe]);
   }
-
-  async function updateRecipe(){
-
-  }
+  
+  // change book then update recipe
+  // useEffect(()=>{
+  //   console.log("recipes in useEffect")
+  //   console.log("current id in useEffect:",currentBookId)
+  //     // setRecipes((recipes) => [...recipes, recipe]);
+  //     updateRecipes(recipe);
+  // },[recipe])
 
   // syncs selected original context recipe with mutable recipe state - on edit?
   useEffect(() => {
@@ -222,6 +227,7 @@ function RecipeRequests({
     setTimeout(() => {
       // prevents flash of recipe copy controls
       setIsBookSelectOpen(false);
+      updateRecipes(recipe);
     }, 50);
   }
 

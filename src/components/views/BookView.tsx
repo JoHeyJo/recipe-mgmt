@@ -25,7 +25,7 @@ function BookView({ resetSelected }: BookViewProp) {
       setBookId(id);
       return userData;
     });
-    resetSelected();
+    // resetSelected();
   }
 
   return (
