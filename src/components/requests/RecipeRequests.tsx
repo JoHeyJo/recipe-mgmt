@@ -56,8 +56,7 @@ function RecipeRequests({
   const [recipe, setRecipe] = useState<any>(selectedRecipe);
   const [error, setError] = useState<string | null>();
   const [isDisabled, setIsDisabled] = useState(true);
-  const [flag, setFlag] = useState(false);
-  // const [selectedBookId, setSelectedBookId] = useState<number>();
+  const [isCopyAuthed, setIsCopyAuthed] = useState(false);
   const [isBookSelectOpen, setIsBookSelectOpen] = useState(false);
 
   /** replaces dialog with dropdown */
@@ -67,6 +66,9 @@ function RecipeRequests({
 
   /** Updates state with selected book ID - triggers copy of recipe to book */
   async function selectBookId(id: number, book: Book) {
+    setIsCopyAuthed(PRIVILEGES.sharedInbox);
+    console.log("trigger selectBookId",recipe.id, PRIVILEGES.sharedInbox);
+    console.log("currentBookId:", currentBookId);
     setUserData((user) => {
       const userData = { ...user };
       userData.currentBookId = id;
@@ -79,20 +81,20 @@ function RecipeRequests({
       };
       return userData;
     });
-    // setFlag((flag) => !flag);
     handleCloseDialog();
   }
 
   async function copyRecipe() {
     const res = await copySharedRecipe(currentBookId, recipe);
-    console.log("res in copyRecipe:",res)
     setRecipes(res);
     setFilteredRecipe(res);
+    setIsCopyAuthed(false);
   }
 
   useEffect(() => {
-    console.log(recipe.id, PRIVILEGES.sharedInbox)
-    if (recipe.id && PRIVILEGES.sharedInbox) copyRecipe();
+    console.log("trigger useEffect", recipe.id, PRIVILEGES.sharedInbox)
+    console.log("currentBookId:", currentBookId);
+    if (recipe.id && isCopyAuthed) copyRecipe();
   }, [currentBookId]);
 
   //  function copy(id: number, book: Book) {
