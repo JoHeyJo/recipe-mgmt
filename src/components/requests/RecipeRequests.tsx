@@ -43,7 +43,7 @@ function RecipeRequests({
   closeDialog,
   isOpen,
 }: RecipeRequestsProps) {
-  const { currentBookId, userId, books, setUserData, currentBook } =
+  const { currentBookId, userId, books, setUserData, PRIVILEGES } =
     useContext(UserContext);
   const {
     selectedRecipe,
@@ -79,19 +79,27 @@ function RecipeRequests({
       };
       return userData;
     });
-    setFlag((flag) => !flag);
+    // setFlag((flag) => !flag);
     handleCloseDialog();
   }
 
-  useEffect(()=>{
-    if(!recipe.id) return;
-    async function copyRecipe(){
-      const res = await copySharedRecipe(currentBookId, recipe);
-      setRecipes(res);
-      setFilteredRecipe(res);
-    }
-    copyRecipe();
-  }, [flag])
+  async function copyRecipe() {
+    const res = await copySharedRecipe(currentBookId, recipe);
+    console.log("res in copyRecipe:",res)
+    setRecipes(res);
+    setFilteredRecipe(res);
+  }
+
+  useEffect(() => {
+    console.log(recipe.id, PRIVILEGES.sharedInbox)
+    if (recipe.id && PRIVILEGES.sharedInbox) copyRecipe();
+  }, [currentBookId]);
+
+  //  function copy(id: number, book: Book) {
+  //     console.log(" Book ID on call", currentBookId)
+  //     selectBookId(id, book);
+  //     console.log("Book ID on return", currentBookId)
+  //   }
 
   // syncs selected original context recipe with mutable recipe state - on edit?
   useEffect(() => {
