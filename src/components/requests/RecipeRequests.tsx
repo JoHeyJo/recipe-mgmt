@@ -56,6 +56,7 @@ function RecipeRequests({
   const [recipe, setRecipe] = useState<any>(selectedRecipe);
   const [error, setError] = useState<string | null>();
   const [isDisabled, setIsDisabled] = useState(true);
+  const [flag, setFlag] = useState(false);
   // const [selectedBookId, setSelectedBookId] = useState<number>();
   const [isBookSelectOpen, setIsBookSelectOpen] = useState(false);
 
@@ -87,7 +88,7 @@ function RecipeRequests({
     // console.log("Book id in selecBookId", currentBookId);
     // setSelectedBookId(id);
     // console.log("book id:", id);
-
+    setFlag(true);
     handleCloseDialog();
   }
 
@@ -99,9 +100,9 @@ function RecipeRequests({
   }
 
   // change book then update recipe - this should be triggered by a specific flag
-  useEffect(() => {
-     console.log("Current book ID:", currentBookId);
-    // const res = await copySharedRecipe(id, recipe);
+  // useEffect(() => {
+    //  console.log("Current book ID:", currentBookId);
+    // const res = await copySharedRecipe(currentBookId, recipe);
     // console.log("Current book ID:", currentBookId);
     // setRecipes(res);
     // setFilteredRecipe(res);
@@ -109,18 +110,20 @@ function RecipeRequests({
     //   console.log("current id in useEffect:", currentBookId);
     //   // setRecipes((recipes) => [...recipes, recipe]);
     //   updateRecipes(recipe);
-  }, [currentBookId]);
+  // }, [flag]);
 
   useEffect(()=>{
     if(!recipe.id) return;
     async function copyRecipe(){
-      
+      console.log("Current book ID:", currentBookId);
       const res = await copySharedRecipe(currentBookId, recipe);
-      // setRecipes(res);
-      // setFilteredRecipe(res);
+      console.log("res from useEfftect:",res)
+      setRecipes(res);
+      setFilteredRecipe(res);
     }
     copyRecipe();
-  }, [currentBookId])
+    setFlag(false);
+  }, [flag])
 
   // syncs selected original context recipe with mutable recipe state - on edit?
   useEffect(() => {
