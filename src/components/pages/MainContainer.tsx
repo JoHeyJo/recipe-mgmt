@@ -32,6 +32,7 @@ function MainContainer() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const recipeData = {
+    recipes,
     selectedRecipe: {
       id: selectedRecipe.id,
       created_by_id: selectedRecipe.created_by_id,
@@ -48,7 +49,7 @@ function MainContainer() {
 
   /** Updates rendered recipes after creation */
   function updateRecipes(recipe: Recipe) {
-    console.log("recipes in Main:",recipes)
+    console.log("recipes in Main:",recipes, recipe)
     setRecipes((recipes) => [...recipes, recipe]);
   }
 

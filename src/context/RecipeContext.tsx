@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { Instructions, Ingredients, Recipe } from "../utils/types";
+import { Instructions, Ingredients, Recipe, Recipes } from "../utils/types";
 
 export type RecipeContextType = {
   selectedRecipe: {
@@ -14,6 +14,7 @@ export type RecipeContextType = {
   updateRecipes?: (recipe: Recipe) => void;
   setRecipes: React.Dispatch<any>;
   setFilteredRecipe: React.Dispatch<any>;
+  recipes: []
 };
 
 export const RecipeContext = createContext<RecipeContextType | null>({
@@ -29,4 +30,5 @@ export const RecipeContext = createContext<RecipeContextType | null>({
   requestAction: "",
   setRecipes: () => {},
   setFilteredRecipe: () => {},
+  recipes: [],
 });

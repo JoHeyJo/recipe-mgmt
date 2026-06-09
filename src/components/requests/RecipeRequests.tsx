@@ -49,8 +49,8 @@ function RecipeRequests({
     selectedRecipe,
     requestAction,
     setRecipes,
-    updateRecipes,
     setFilteredRecipe,
+    recipes,
   } = useContext(RecipeContext);
 
   const [recipe, setRecipe] = useState<any>(selectedRecipe);
@@ -67,8 +67,8 @@ function RecipeRequests({
   /** Updates state with selected book ID - triggers copy of recipe to book */
   async function selectBookId(id: number, book: Book) {
     setIsCopyAuthed(PRIVILEGES.sharedInbox);
-    console.log("trigger selectBookId",recipe.id, PRIVILEGES.sharedInbox);
-    console.log("currentBookId:", currentBookId);
+    console.log("trigger selectBookId", recipe.id, PRIVILEGES.sharedInbox);
+    console.log("currentBookId in seelectBook:", currentBookId);
     setUserData((user) => {
       const userData = { ...user };
       userData.currentBookId = id;
@@ -85,16 +85,20 @@ function RecipeRequests({
   }
 
   async function copyRecipe() {
+    console.log("recipes:", recipes);
     const res = await copySharedRecipe(currentBookId, recipe);
-    setRecipes(res);
-    setFilteredRecipe(res);
-    setIsCopyAuthed(false);
+    console.log("response in copyRecipe:", res);
+    console.log("current book id in CopyRecipe:", currentBookId);
+    setRecipes((prev) => [...prev, ...res]);
+    setFilteredRecipe((prev) => [...prev, ...res]);
+    // setIsCopyAuthed(false);
   }
 
   useEffect(() => {
-    console.log("trigger useEffect", recipe.id, PRIVILEGES.sharedInbox)
+    if (!recipe.id) return;
+    console.log("trigger useEffect", recipe.id, "isCopyAuthed:", isCopyAuthed);
     console.log("currentBookId:", currentBookId);
-    if (recipe.id && isCopyAuthed) copyRecipe();
+    copyRecipe();
   }, [currentBookId]);
 
   //  function copy(id: number, book: Book) {
