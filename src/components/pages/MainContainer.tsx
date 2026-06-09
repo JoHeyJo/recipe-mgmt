@@ -47,6 +47,7 @@ function MainContainer() {
 
   /** Updates rendered recipes after creation */
   function updateRecipes(recipe: Recipe) {
+    console.log("recipes in Main:",recipes)
     setRecipes((recipes) => [...recipes, recipe]);
   }
 

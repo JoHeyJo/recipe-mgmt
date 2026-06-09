@@ -80,12 +80,12 @@ function RecipeRequests({
   }
   
   // change book then update recipe
-  // useEffect(()=>{
-  //   console.log("recipes in useEffect")
-  //   console.log("current id in useEffect:",currentBookId)
-  //     // setRecipes((recipes) => [...recipes, recipe]);
-  //     updateRecipes(recipe);
-  // },[recipe])
+  useEffect(() => {
+    console.log("recipes in useEffect");
+    console.log("current id in useEffect:", currentBookId);
+    // setRecipes((recipes) => [...recipes, recipe]);
+    updateRecipes(recipe);
+  }, [currentBookId]);
 
   // syncs selected original context recipe with mutable recipe state - on edit?
   useEffect(() => {
@@ -227,7 +227,7 @@ function RecipeRequests({
     setTimeout(() => {
       // prevents flash of recipe copy controls
       setIsBookSelectOpen(false);
-      updateRecipes(recipe);
+      // updateRecipes(recipe);
     }, 50);
   }
 
