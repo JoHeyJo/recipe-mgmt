@@ -155,9 +155,8 @@ class API {
     const recipeId = recipe.id
     console.log("uploaded:", recipe)
     const res = await this.request(`books/${bookId}/recipes/${recipeId}`, recipe, "POST")
-    // recipe.id = 45
-    console.log("copied recipe:",res)
-    return {recipe, bookId} 
+    console.log("returned copied recipe:",res)
+    return res
   }
 
 

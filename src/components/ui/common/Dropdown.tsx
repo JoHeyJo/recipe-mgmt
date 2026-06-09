@@ -15,6 +15,7 @@ import { truncate } from "../../../utils/functions";
 function Dropdown({ selected, options, handleIdChange }: DropdownProp) {
   /** Selects option and sets option title for display */
   function handleSelect(option: Book) { 
+    console.log("selected option",option)
     handleIdChange(option.id, option);
   }
   return (

@@ -6,6 +6,7 @@ import {
   Instruction,
   Instructions,
   Recipe,
+  Book,
 } from "../../utils/types";
 import API from "../../api";
 import { errorHandling } from "../../utils/ErrorHandling";
@@ -42,8 +43,10 @@ function RecipeRequests({
   closeDialog,
   isOpen,
 }: RecipeRequestsProps) {
-  const { currentBookId, userId, books, setUserData, currentBook } = useContext(UserContext);
-  const { selectedRecipe, requestAction, setRecipes, updateRecipes } = useContext(RecipeContext);
+  const { currentBookId, userId, books, setUserData, currentBook } =
+    useContext(UserContext);
+  const { selectedRecipe, requestAction, setRecipes, updateRecipes } =
+    useContext(RecipeContext);
 
   const [recipe, setRecipe] = useState<any>(selectedRecipe);
   const [error, setError] = useState<string | null>();
@@ -57,28 +60,27 @@ function RecipeRequests({
   }
 
   /** Updates state with selected book ID - triggers copy of recipe to book */
-  async function selectBookId(id: number) {
-    const res = await copySharedRecipe(id, recipe);
-    console.log("Book id in selecBookId",currentBookId)
-    // setSelectedBookId(id);
-    console.log("book id:", id);
+  async function selectBookId(id: number, book: Book) {
     setUserData((user) => {
       const userData = { ...user };
-      userData.currentBookId = res.bookId;
-      // userData.
+      userData.currentBookId = id;
       userData.currentBook = {
-        book_role: "owner",
-        book_type: "standard",
-        description: "",
-        id: res.bookId,
-        title: "Default - Jo",
+        book_role: book.book_role,
+        book_type: book.book_type,
+        description: book.description,
+        id: book.id,
+        title: book.title,
       };
-      setRecipe(res.recipe);
       return userData;
     });
-    handleCloseDialog();
+    const res = await copySharedRecipe(id, recipe);
+    console.log("Book id in selecBookId", currentBookId);
+    // setSelectedBookId(id);
+    console.log("book id:", id);
+
+    // handleCloseDialog();
   }
-  
+
   // change book then update recipe
   useEffect(() => {
     console.log("recipes in useEffect");
