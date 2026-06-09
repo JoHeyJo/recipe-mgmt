@@ -13,6 +13,7 @@ export type RecipeContextType = {
   requestAction: string;
   updateRecipes?: (recipe: Recipe) => void;
   setRecipes: React.Dispatch<any>;
+  setFilteredRecipe: React.Dispatch<any>;
 };
 
 export const RecipeContext = createContext<RecipeContextType | null>({
@@ -27,4 +28,5 @@ export const RecipeContext = createContext<RecipeContextType | null>({
   updateRecipes: () => {},
   requestAction: "",
   setRecipes: () => {},
+  setFilteredRecipe: () => {},
 });

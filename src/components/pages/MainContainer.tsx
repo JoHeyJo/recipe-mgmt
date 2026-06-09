@@ -43,6 +43,7 @@ function MainContainer() {
     setRecipes,
     requestAction,
     updateRecipes,
+    setFilteredRecipe
   };
 
   /** Updates rendered recipes after creation */
