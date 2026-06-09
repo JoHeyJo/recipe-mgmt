@@ -67,7 +67,6 @@ function RecipeRequests({
 
   /** Updates state with selected book ID - triggers copy of recipe to book */
   async function selectBookId(id: number, book: Book) {
-    console.log("Previous book ID:", currentBookId);
     setUserData((user) => {
       const userData = { ...user };
       userData.currentBookId = id;
@@ -80,49 +79,18 @@ function RecipeRequests({
       };
       return userData;
     });
-    // const res = await copySharedRecipe(id, recipe);
-    // return res;
-    // setRecipes(res);
-    // setRecipes(res);/
-    // setFilteredRecipe(res);
-    // console.log("Book id in selecBookId", currentBookId);
-    // setSelectedBookId(id);
-    // console.log("book id:", id);
-    setFlag(true);
+    setFlag((flag) => !flag);
     handleCloseDialog();
   }
-
-  async function changeBook(id: number, book: Book) {
-    const res = await selectBookId(id, book);
-    console.log("Current book ID:", currentBookId);
-    setRecipes(res);
-    setFilteredRecipe(res);
-  }
-
-  // change book then update recipe - this should be triggered by a specific flag
-  // useEffect(() => {
-    //  console.log("Current book ID:", currentBookId);
-    // const res = await copySharedRecipe(currentBookId, recipe);
-    // console.log("Current book ID:", currentBookId);
-    // setRecipes(res);
-    // setFilteredRecipe(res);
-    //   console.log("recipes in useEffect");
-    //   console.log("current id in useEffect:", currentBookId);
-    //   // setRecipes((recipes) => [...recipes, recipe]);
-    //   updateRecipes(recipe);
-  // }, [flag]);
 
   useEffect(()=>{
     if(!recipe.id) return;
     async function copyRecipe(){
-      console.log("Current book ID:", currentBookId);
       const res = await copySharedRecipe(currentBookId, recipe);
-      console.log("res from useEfftect:",res)
       setRecipes(res);
       setFilteredRecipe(res);
     }
     copyRecipe();
-    setFlag(false);
   }, [flag])
 
   // syncs selected original context recipe with mutable recipe state - on edit?
