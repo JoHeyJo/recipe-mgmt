@@ -68,9 +68,8 @@ function RecipeRequests({
   /** Updates state with selected book ID - triggers copy of recipe to book */
   async function selectBookId(id: number, book: Book) {
     setIsCopyAuthed(PRIVILEGES.sharedInbox);
+    console.log("PRIVILEGES IN RR:", PRIVILEGES);
     setFlag(true)
-    console.log("1ST TRIGGER Book ID", currentBookId);
-    console.log("1ST TRIGGER recipes", recipes);
     setUserData((user) => {
       const userData = { ...user };
       userData.currentBookId = id;
@@ -87,32 +86,18 @@ function RecipeRequests({
   }
 
   async function copyRecipe() {
-    console.log("2nd TRIGGER Book ID", currentBookId);
-    console.log("2nd TRIGGER recipes", recipes);
     const res = await copySharedRecipe(currentBookId, recipe);
-    // setRecipes((prev) => {
-    //   console.log("Logging prev:", prev);
-    //   const recipes = [...prev, ...res];
-    //   return recipes;
-    // });
-    // setFilteredRecipes((prev) => [...prev, ...res]);
+    // console.log("PRIVILEGES IN RR:", PRIVILEGES);
     setRecipes(res);
     setFilteredRecipes(res);
     setIsCopyAuthed(false);
   }
 
   useEffect(() => {
-    console.log("Recipe id:,", recipe.id)
     if (!recipe.id) return;
     copyRecipe();
-    console.log("3rd TRIGGER recipes:", recipes);
-  }, [flag]);
+  }, [currentBookId]);
 
-  //  function copy(id: number, book: Book) {
-  //     console.log(" Book ID on call", currentBookId)
-  //     selectBookId(id, book);
-  //     console.log("Book ID on return", currentBookId)
-  //   }
 
   // syncs selected original context recipe with mutable recipe state - on edit?
   useEffect(() => {

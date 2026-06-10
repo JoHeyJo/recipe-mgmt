@@ -116,6 +116,7 @@ function MainContainer() {
 
   /** Loads user recipes when user data is populated */
   useEffect(() => {
+    console.log("PRIVILEGES IN MAIN:",PRIVILEGES)
     async function fetchUserRecipes() {
       try {
         const res = await API.getBookRecipes(userId, currentBookId);
@@ -131,12 +132,6 @@ function MainContainer() {
       fetchUserRecipes();
     }
   }, [currentBookId, userId]);
-
-  /** Updates current book selection */
-  // useEffect(() => {
-  //   // if (PRIVILEGES.sharedInbox)
-  //     setSelectedBookId(currentBookId || defaultBookId);
-  // }, [currentBookId]);
 
   /** Close Share book Dialog panel */
   function closeDialogPanel() {
