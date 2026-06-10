@@ -22,9 +22,9 @@ function MainContainer() {
   const { userId, defaultBookId, currentBookId, PRIVILEGES } =
     useContext(UserContext);
 
-  const [selectedBookId, setSelectedBookId] = useState<number>();
+  // const [selectedBookId, setSelectedBookId] = useState<number>();
   const [recipes, setRecipes] = useState<Recipes | any>([]);
-  const [filteredRecipes, setFilteredRecipe] = useState([]);
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate);
   const [isOpen, setOpen] = useState(false);
   const [requestAction, setRequestAction] = useState<string>("");
@@ -44,12 +44,12 @@ function MainContainer() {
     setRecipes,
     requestAction,
     updateRecipes,
-    setFilteredRecipe
+    setFilteredRecipes,
   };
 
   /** Updates rendered recipes after creation */
   function updateRecipes(recipe: Recipe) {
-    console.log("recipes in Main:",recipes, recipe)
+    console.log("recipes in Main:", recipes, recipe);
     setRecipes((recipes) => [...recipes, recipe]);
   }
 
@@ -85,7 +85,6 @@ function MainContainer() {
 
   /** Triggers actions that renders RecipeRequests with appropriate data set - current recipe */
   function openRecipeModal() {
-    console.log("click")
     PRIVILEGES.sharedInbox
       ? setRequestAction("copyRemove")
       : setRequestAction("edit");
@@ -106,7 +105,7 @@ function MainContainer() {
 
   /** Filter recipes */
   function filterRecipes(filteredRecipes: Recipe[]) {
-    setFilteredRecipe(filteredRecipes);
+    setFilteredRecipes(filteredRecipes);
   }
 
   const recipeActions = {
@@ -119,24 +118,25 @@ function MainContainer() {
   useEffect(() => {
     async function fetchUserRecipes() {
       try {
-        const res = await API.getBookRecipes(userId, selectedBookId);
+        const res = await API.getBookRecipes(userId, currentBookId);
         setRecipes(res);
-        setFilteredRecipe(res);
+        setFilteredRecipes(res);
       } catch (error: any) {
         errorHandling("MainContainer -> fetchUserRecipes", error);
       } finally {
         setIsLoading(false);
       }
     }
-    if (selectedBookId) {
+    if (currentBookId) {
       fetchUserRecipes();
     }
-  }, [selectedBookId, userId]);
+  }, [currentBookId, userId]);
 
   /** Updates current book selection */
-  useEffect(() => {
-    setSelectedBookId(currentBookId || defaultBookId);
-  }, [currentBookId]);
+  // useEffect(() => {
+  //   // if (PRIVILEGES.sharedInbox)
+  //     setSelectedBookId(currentBookId || defaultBookId);
+  // }, [currentBookId]);
 
   /** Close Share book Dialog panel */
   function closeDialogPanel() {

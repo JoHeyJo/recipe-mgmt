@@ -49,7 +49,7 @@ function RecipeRequests({
     selectedRecipe,
     requestAction,
     setRecipes,
-    setFilteredRecipe,
+    setFilteredRecipes,
     recipes,
   } = useContext(RecipeContext);
 
@@ -88,12 +88,14 @@ function RecipeRequests({
     console.log("2nd TRIGGER Book ID", currentBookId);
     console.log("2nd TRIGGER recipes", recipes);
     const res = await copySharedRecipe(currentBookId, recipe);
-    setRecipes((prev) => {
-      console.log("Logging prev:", prev);
-      const recipes = [...prev, ...res];
-      return recipes;
-    });
-    setFilteredRecipe((prev) => [...prev, ...res]);
+    // setRecipes((prev) => {
+    //   console.log("Logging prev:", prev);
+    //   const recipes = [...prev, ...res];
+    //   return recipes;
+    // });
+    // setFilteredRecipes((prev) => [...prev, ...res]);
+    setRecipes(res);
+    setFilteredRecipes(res);
     setIsCopyAuthed(false);
   }
 
@@ -110,9 +112,9 @@ function RecipeRequests({
   //   }
 
   // syncs selected original context recipe with mutable recipe state - on edit?
-  useEffect(() => {
-    setRecipe(selectedRecipe);
-  }, [selectedRecipe.id]);
+  // useEffect(() => {
+  //   setRecipe(selectedRecipe);
+  // }, [selectedRecipe.id]);
 
   /** Enables/disables UPDATE submit */
   useEffect(() => {
