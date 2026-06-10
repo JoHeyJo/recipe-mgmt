@@ -30,6 +30,7 @@ import Alert from "../ui/Alert";
 import { ReferenceContext } from "../../context/ReferenceContext";
 import RecipeFormControls from "../ui/controls/RecipeFormControls";
 import Dropdown from "../ui/common/Dropdown";
+import { idText } from "typescript";
 
 /** Processes recipe data. Context data is passed through here on edit. Else template data.
  * RecipeRequests data (e.g recipe state) is mutable while context data(reference data) is not
@@ -93,10 +94,14 @@ function RecipeRequests({
     setIsCopyAuthed(false);
   }
 
-  useEffect(() => {
-    if (!recipe.id) return;
-    copyRecipe();
-  }, [currentBookId]);
+  function copy(id: number, book: Book) {
+    selectBookId(id, book);
+    copyRecipe()
+  }
+
+  // useEffect(() => {
+  //   if(recipe.id && isCopyAuthed) copyRecipe();
+  // }, [currentBookId]);
 
 
   // syncs selected original context recipe with mutable recipe state - on edit?
@@ -258,11 +263,7 @@ function RecipeRequests({
             className={`relative flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all ${isBookSelectOpen ? "" : "sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"}`}
           >
             {isBookSelectOpen ? (
-              <Dropdown
-                selected={null}
-                options={books}
-                handleIdChange={selectBookId}
-              />
+              <Dropdown selected={null} options={books} handleIdChange={copy} />
             ) : (
               <>
                 {error && <Alert alert={error} degree={"yellow"} />}{" "}
