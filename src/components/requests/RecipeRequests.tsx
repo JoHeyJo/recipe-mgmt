@@ -58,6 +58,7 @@ function RecipeRequests({
   const [isDisabled, setIsDisabled] = useState(true);
   const [isCopyAuthed, setIsCopyAuthed] = useState(false);
   const [isBookSelectOpen, setIsBookSelectOpen] = useState(false);
+  const [flag, setFlag] = useState(false);
 
   /** replaces dialog with dropdown */
   function openBookDropdown() {
@@ -67,6 +68,7 @@ function RecipeRequests({
   /** Updates state with selected book ID - triggers copy of recipe to book */
   async function selectBookId(id: number, book: Book) {
     setIsCopyAuthed(PRIVILEGES.sharedInbox);
+    setFlag(true)
     console.log("1ST TRIGGER Book ID", currentBookId);
     console.log("1ST TRIGGER recipes", recipes);
     setUserData((user) => {
@@ -100,10 +102,11 @@ function RecipeRequests({
   }
 
   useEffect(() => {
+    console.log("Recipe id:,", recipe.id)
     if (!recipe.id) return;
     copyRecipe();
     console.log("3rd TRIGGER recipes:", recipes);
-  }, [currentBookId]);
+  }, [flag]);
 
   //  function copy(id: number, book: Book) {
   //     console.log(" Book ID on call", currentBookId)
@@ -112,9 +115,9 @@ function RecipeRequests({
   //   }
 
   // syncs selected original context recipe with mutable recipe state - on edit?
-  // useEffect(() => {
-  //   setRecipe(selectedRecipe);
-  // }, [selectedRecipe.id]);
+  useEffect(() => {
+    setRecipe(selectedRecipe);
+  }, [selectedRecipe.id]);
 
   /** Enables/disables UPDATE submit */
   useEffect(() => {
