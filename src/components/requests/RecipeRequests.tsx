@@ -86,8 +86,8 @@ function RecipeRequests({
     handleCloseDialog();
   }
 
-  async function copyRecipe() {
-    const res = await copySharedRecipe(currentBookId, recipe);
+  async function copyRecipe(targetBookId: number) {
+    const res = await copySharedRecipe(targetBookId, recipe);
     // console.log("PRIVILEGES IN RR:", PRIVILEGES);
     setRecipes(res);
     setFilteredRecipes(res);
@@ -95,8 +95,9 @@ function RecipeRequests({
   }
 
   function copy(id: number, book: Book) {
+    console.log("target book id>>>>>>>>",id)
     selectBookId(id, book);
-    copyRecipe()
+    copyRecipe(id)
   }
 
   // useEffect(() => {
@@ -209,9 +210,9 @@ function RecipeRequests({
   }
 
   /** Calls API - requests that copy of recipe be added to recipient's recipe book */
-  async function copySharedRecipe(bookId: number, recipe: Recipe) {
+  async function copySharedRecipe(targetBookId: number, recipe: Recipe) {
     try {
-      const res = await API.postCopySharedRecipe(bookId, recipe);
+      const res = await API.postCopySharedRecipe(targetBookId, recipe);
       return res;
     } catch (error) {
       const message = errorHandling(
