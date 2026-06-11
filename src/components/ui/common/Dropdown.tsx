@@ -13,12 +13,21 @@ import { truncate } from "../../../utils/functions";
  * [BookView, RecipeRequest] -> Dropdown
  */
 function Dropdown({ selected, options, handleIdChange }: DropdownProp) {
+
+const  createDefault = () => (
+  options.length === 1 && options[0].book_type === "shared_inbox" 
+)
+
+
   /** Selects option and sets option title for display */
-  function handleSelect(option: Book) { 
-    console.log("selected option",option)
+  function handleSelect(option: Book) {
     handleIdChange(option.id, option);
   }
+
+  console.log("OPTIONS:", options);
   return (
+    <>
+    {}
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <MenuButton className="inline-flex truncate justify-center gap-x-1.5 rounded-md bg-selected px-3 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-light-border hover:bg-gray-50">
@@ -32,7 +41,7 @@ function Dropdown({ selected, options, handleIdChange }: DropdownProp) {
       <MenuItems
         transition
         className="absolute z-10 mt-2 w-56 max-h-60 overflow-auto rounded-md bg-primary shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-        anchor={selected ?  {to: "bottom start"} : {to: "bottom"}}
+        anchor={selected ? { to: "bottom start" } : { to: "bottom" }}
       >
         <div className="py-1">
           {options?.map((option) => (
@@ -55,6 +64,7 @@ function Dropdown({ selected, options, handleIdChange }: DropdownProp) {
         </div>
       </MenuItems>
     </Menu>
+    </>
   );
 }
 
