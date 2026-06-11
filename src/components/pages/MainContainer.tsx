@@ -49,7 +49,6 @@ function MainContainer() {
 
   /** Updates rendered recipes after creation */
   function updateRecipes(recipe: Recipe) {
-    console.log("recipes in Main:", recipes, recipe);
     setRecipes((recipes) => [...recipes, recipe]);
   }
 
@@ -116,7 +115,6 @@ function MainContainer() {
 
   /** Loads user recipes when user data is populated */
   useEffect(() => {
-    console.log("PRIVILEGES IN MAIN:",PRIVILEGES)
     async function fetchUserRecipes() {
       try {
         const res = await API.getBookRecipes(userId, currentBookId);

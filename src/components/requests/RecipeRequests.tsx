@@ -66,10 +66,9 @@ function RecipeRequests({
     setIsBookSelectOpen(true);
   }
 
-  /** Updates state with selected book ID - triggers copy of recipe to book */
+  /** Updates state with selected book ID - changes book in UI*/
   async function selectBookId(id: number, book: Book) {
     setIsCopyAuthed(PRIVILEGES.sharedInbox);
-    console.log("PRIVILEGES IN RR:", PRIVILEGES);
     setFlag(true)
     setUserData((user) => {
       const userData = { ...user };
@@ -86,24 +85,19 @@ function RecipeRequests({
     handleCloseDialog();
   }
 
+  /** Calls API to handle recipe copy and state changes in UI */
   async function copyRecipe(targetBookId: number) {
     const res = await copySharedRecipe(targetBookId, recipe);
-    // console.log("PRIVILEGES IN RR:", PRIVILEGES);
     setRecipes(res);
     setFilteredRecipes(res);
     setIsCopyAuthed(false);
   }
 
-  function copy(id: number, book: Book) {
-    console.log("target book id>>>>>>>>",id)
+  /** Handles sequence when user copies a recipe - changing book & copying recipe */
+  function triggerCopy(id: number, book: Book) {
     selectBookId(id, book);
     copyRecipe(id)
   }
-
-  // useEffect(() => {
-  //   if(recipe.id && isCopyAuthed) copyRecipe();
-  // }, [currentBookId]);
-
 
   // syncs selected original context recipe with mutable recipe state - on edit?
   useEffect(() => {
@@ -264,7 +258,7 @@ function RecipeRequests({
             className={`relative flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all ${isBookSelectOpen ? "" : "sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"}`}
           >
             {isBookSelectOpen ? (
-              <Dropdown selected={null} options={books} handleIdChange={copy} />
+              <Dropdown selected={null} options={books} handleIdChange={triggerCopy} />
             ) : (
               <>
                 {error && <Alert alert={error} degree={"yellow"} />}{" "}
