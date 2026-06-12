@@ -179,6 +179,7 @@ export type DropdownProp = {
   selected: Book;
   options: Book[];
   handleIdChange: (id: number, selected: Book) => void;
+  action?: string;
 };
 
 export type BookViewProp = {
