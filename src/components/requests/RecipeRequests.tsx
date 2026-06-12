@@ -88,7 +88,7 @@ function RecipeRequests({
 
   /** Calls API to handle recipe copy and state changes in UI */
   async function copyRecipe(targetBookId: number) {
-    const res = await copySharedRecipe(targetBookId, recipe);
+    const res = await handleCopySharedRecipe(targetBookId, recipe);
     setRecipes(res);
     setFilteredRecipes(res);
     setIsCopyAuthed(false);
@@ -134,7 +134,7 @@ function RecipeRequests({
   }
 
   /** Calls API - sends patch request with only edited recipe data */
-  async function editRecipe(originalRecipe: Recipe, mutableRecipe: Recipe) {
+  async function handleEditRecipe(originalRecipe: Recipe, mutableRecipe: Recipe) {
     try {
       const mutatedData = filterRecipe(originalRecipe, mutableRecipe);
       mutatedData.created_by_id = selectedRecipe.created_by_id;
@@ -151,7 +151,7 @@ function RecipeRequests({
     }
   }
   /** Calls API - sends delete request for recipe */
-  async function deleteRecipe(
+  async function handleDeleteRecipe(
     userId: number,
     bookId: number,
     recipeId: number,
@@ -172,13 +172,13 @@ function RecipeRequests({
   }
 
   /** Calls API - delete shared recipe association */
-  async function removeSharedRecipe(bookId: number, recipeId: number) {
+  async function handleRemoveSharedRecipe(bookId: number, recipeId: number) {
     try {
       const res = await API.deleteSharedRecipe(bookId, recipeId);
       if (res.message) stateActions.deleteRecipe();
     } catch (error) {
       const message = errorHandling(
-        "RecipeRequests - removeSharedRecipe",
+        "RecipeRequests - handleRemoveSharedRecipe",
         error,
       );
       setError(message);
@@ -187,13 +187,13 @@ function RecipeRequests({
   }
 
   /** Calls API - requests that copy of recipe be added to recipient's recipe book */
-  async function copySharedRecipe(targetBookId: number, recipe: Recipe) {
+  async function handleCopySharedRecipe(targetBookId: number, recipe: Recipe) {
     try {
       const res = await API.postCopySharedRecipe(targetBookId, recipe);
       return res;
     } catch (error) {
       const message = errorHandling(
-        "RecipeRequests - removeSharedRecipe",
+        "RecipeRequests - handleCopySharedRecipe",
         error,
       );
       setError(message);
@@ -206,11 +206,11 @@ function RecipeRequests({
   }
 
   async function removeRecipe() {
-    await removeSharedRecipe(currentBookId, selectedRecipe.id);
+    handleRemoveSharedRecipe(currentBookId, selectedRecipe.id);
   }
 
   /** handle recipe submit */
-  async function submitRecipe(e) {
+  async function handleSubmitRecipe(e) {
     e.preventDefault();
     const res = await addRecipe();
     if (res) closeDialog();
@@ -225,10 +225,10 @@ function RecipeRequests({
   }
 
   const recipeActions = {
-    submit: submitRecipe,
-    remove: removeRecipe,
-    delete: deleteRecipe,
-    edit: editRecipe,
+    submit: handleSubmitRecipe,
+    remove: handleRemoveSharedRecipe(currentBookId, selectedRecipe.id),
+    delete: handleDeleteRecipe(userId, currentBookId, selectedRecipe.id),
+    edit: handleEditRecipe,
   };
 
   return (
