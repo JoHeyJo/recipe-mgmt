@@ -114,7 +114,7 @@ export type NotesViewProp = {
 };
 
 export type RecipeRequestsProps = {
-  recipeActions: {
+  stateActions: {
     updateRecipes: (recipe: Recipe) => void;
     deleteRecipe: () => void;
     editRecipe: (edited_recipe: Recipe) => void;

@@ -107,7 +107,7 @@ function MainContainer() {
     setFilteredRecipes(filteredRecipes);
   }
 
-  const recipeActions = {
+  const stateActions = {
     updateRecipes,
     deleteRecipe,
     editRecipe,
@@ -155,7 +155,7 @@ function MainContainer() {
             >
               <div id="MainContainer-header">
                 <RecipeRequests
-                  recipeActions={recipeActions}
+                  stateActions={stateActions}
                   closeDialog={closeDialog}
                   isOpen={isOpen}
                 />
