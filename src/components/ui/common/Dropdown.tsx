@@ -12,8 +12,12 @@ import { truncate } from "../../../utils/functions";
  * selected is only necessary to indicate which item has been chosen
  * [BookView, RecipeRequest] -> Dropdown
  */
-function Dropdown({ selected, options, handleIdChange, action="" }: DropdownProp) {
-
+function Dropdown({
+  selected,
+  options,
+  handleIdChange,
+  isActionCopy,
+}: DropdownProp) {
   const doesDefaultNeedCreation = () =>
     options.length === 1 && options[0].book_type === "shared_inbox";
 
@@ -54,8 +58,6 @@ function Dropdown({ selected, options, handleIdChange, action="" }: DropdownProp
   }
 
   return (
-    <>
-      {}
       <Menu as="div" className="relative inline-block text-left">
         <div>
           <MenuButton className="inline-flex truncate justify-center gap-x-1.5 rounded-md bg-selected px-3 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-light-border hover:bg-gray-50">
@@ -72,13 +74,12 @@ function Dropdown({ selected, options, handleIdChange, action="" }: DropdownProp
           anchor={selected ? { to: "bottom start" } : { to: "bottom" }}
         >
           <div className="py-1">
-            {action === "copy" && doesDefaultNeedCreation
+            {isActionCopy && doesDefaultNeedCreation
               ? createBookUI
               : options?.map((option) => menuListUI(option))}
           </div>
         </MenuItems>
       </Menu>
-    </>
   );
 }
 

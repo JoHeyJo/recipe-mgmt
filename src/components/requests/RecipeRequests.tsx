@@ -262,7 +262,7 @@ function RecipeRequests({
                 selected={null}
                 options={books}
                 handleIdChange={triggerCopy}
-                action={"copy"}
+                isActionCopy={true}
               />
             ) : (
               <>
