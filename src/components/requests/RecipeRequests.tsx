@@ -88,16 +88,16 @@ function RecipeRequests({
 
   /** Calls API to handle recipe copy and state changes in UI */
   async function copyRecipe(targetBookId: number) {
-    const res = await handleCopySharedRecipe(targetBookId, recipe);
+    const res = await copySharedRecipe(targetBookId, recipe);
     setRecipes(res);
     setFilteredRecipes(res);
     setIsCopyAuthed(false);
   }
 
   /** Handles sequence when user copies a recipe - changing book & copying recipe */
-  function triggerCopy(id: number, book: Book) {
-    selectBookId(id, book);
-    copyRecipe(id);
+  function triggerCopy(targetBookId: number, book: Book) {
+    selectBookId(targetBookId, book);
+    copyRecipe(targetBookId);
   }
 
   // syncs selected original context recipe with mutable recipe state - on edit?
@@ -108,7 +108,7 @@ function RecipeRequests({
   const isLargeScreen = useMediaQuery({ query: "(min-width: 1024px)" }); // lg breakpoint in Tailwind
 
   /** Updates recipe state */
-  function recipeUpdate(
+  function handleRecipeUpdate(
     data: string | Ingredient[] | Instruction | Instructions,
     section: string,
   ) {
@@ -151,7 +151,7 @@ function RecipeRequests({
     }
   }
   /** Calls API - sends delete request for recipe */
-  async function deleteRecipe(
+  async function handleDeleteRecipe(
     userId: number,
     bookId: number,
     recipeId: number,
@@ -172,7 +172,7 @@ function RecipeRequests({
   }
 
   /** Calls API - delete shared recipe association */
-  async function removeSharedRecipe(bookId: number, recipeId: number) {
+  async function handleRemoveSharedRecipe(bookId: number, recipeId: number) {
     try {
       const res = await API.deleteSharedRecipe(bookId, recipeId);
       if (res.message) stateActions.deleteRecipe();
@@ -193,7 +193,7 @@ function RecipeRequests({
       return res;
     } catch (error) {
       const message = errorHandling(
-        "RecipeRequests - handleCopySharedRecipe",
+        "RecipeRequests - copySharedRecipe",
         error,
       );
       setError(message);
@@ -206,7 +206,7 @@ function RecipeRequests({
   }
 
   async function removeRecipe() {
-    handleRemoveSharedRecipe(currentBookId, selectedRecipe.id);
+    await handleRemoveSharedRecipe(currentBookId, selectedRecipe.id);
   }
 
   /** handle recipe submit */
@@ -225,10 +225,10 @@ function RecipeRequests({
   }
 
   const recipeActions = {
-    submit: submitRecipe,
-    remove: handleRemoveSharedRecipe(currentBookId, selectedRecipe.id),
-    delete: handleDeleteRecipe(userId, currentBookId, selectedRecipe.id),
-    edit: handleEditRecipe,
+    submit: hadnleSubmitRecipe,
+    remove: handleRemoveRecipe,
+    delete: handleDeleteRecipe,
+    edit: editRecipe,
   };
 
   return (
@@ -249,7 +249,7 @@ function RecipeRequests({
               <Dropdown
                 selected={null}
                 options={books}
-                handleIdChange={triggerCopy}
+                onIdChange={triggerCopy}
                 isActionCopy={true}
               />
             ) : (

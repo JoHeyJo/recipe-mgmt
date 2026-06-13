@@ -15,15 +15,15 @@ import { truncate } from "../../../utils/functions";
 function Dropdown({
   selected,
   options,
-  handleIdChange,
+  onIdChange,
   isActionCopy,
 }: DropdownProp) {
   const doesDefaultNeedCreation = () =>
     options.length === 1 && options[0].book_type === "shared_inbox";
 
-  /** Selects option and sets option title for display */
+  /** Sets option and option id */
   function handleSelect(option: Book) {
-    handleIdChange(option.id, option);
+    onIdChange(option.id, option);
   }
 
   const createBookUI = (
