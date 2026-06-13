@@ -30,7 +30,6 @@ import Alert from "../ui/Alert";
 import { ReferenceContext } from "../../context/ReferenceContext";
 import RecipeFormControls from "../ui/controls/RecipeFormControls";
 import Dropdown from "../ui/common/Dropdown";
-import { idText } from "typescript";
 import RecipeForm from "../views/RecipeForm";
 
 /** Processes recipe data. Context data is passed through here on edit. Else template data.
