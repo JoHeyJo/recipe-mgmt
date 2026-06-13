@@ -108,7 +108,7 @@ function RecipeRequests({
   const isLargeScreen = useMediaQuery({ query: "(min-width: 1024px)" }); // lg breakpoint in Tailwind
 
   /** Updates recipe state */
-  function handleRecipeUpdate(
+  function recipeUpdate(
     data: string | Ingredient[] | Instruction | Instructions,
     section: string,
   ) {
@@ -134,7 +134,7 @@ function RecipeRequests({
   }
 
   /** Calls API - sends patch request with only edited recipe data */
-  async function handleEditRecipe(originalRecipe: Recipe, mutableRecipe: Recipe) {
+  async function editRecipe(originalRecipe: Recipe, mutableRecipe: Recipe) {
     try {
       const mutatedData = filterRecipe(originalRecipe, mutableRecipe);
       mutatedData.created_by_id = selectedRecipe.created_by_id;
@@ -151,7 +151,7 @@ function RecipeRequests({
     }
   }
   /** Calls API - sends delete request for recipe */
-  async function handleDeleteRecipe(
+  async function deleteRecipe(
     userId: number,
     bookId: number,
     recipeId: number,
@@ -172,7 +172,7 @@ function RecipeRequests({
   }
 
   /** Calls API - delete shared recipe association */
-  async function handleRemoveSharedRecipe(bookId: number, recipeId: number) {
+  async function removeSharedRecipe(bookId: number, recipeId: number) {
     try {
       const res = await API.deleteSharedRecipe(bookId, recipeId);
       if (res.message) stateActions.deleteRecipe();
@@ -187,7 +187,7 @@ function RecipeRequests({
   }
 
   /** Calls API - requests that copy of recipe be added to recipient's recipe book */
-  async function handleCopySharedRecipe(targetBookId: number, recipe: Recipe) {
+  async function copySharedRecipe(targetBookId: number, recipe: Recipe) {
     try {
       const res = await API.postCopySharedRecipe(targetBookId, recipe);
       return res;
@@ -210,7 +210,7 @@ function RecipeRequests({
   }
 
   /** handle recipe submit */
-  async function handleSubmitRecipe(e) {
+  async function submitRecipe(e) {
     e.preventDefault();
     const res = await addRecipe();
     if (res) closeDialog();
@@ -225,7 +225,7 @@ function RecipeRequests({
   }
 
   const recipeActions = {
-    submit: handleSubmitRecipe,
+    submit: submitRecipe,
     remove: handleRemoveSharedRecipe(currentBookId, selectedRecipe.id),
     delete: handleDeleteRecipe(userId, currentBookId, selectedRecipe.id),
     edit: handleEditRecipe,
