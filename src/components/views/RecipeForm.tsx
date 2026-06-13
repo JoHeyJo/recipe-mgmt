@@ -18,6 +18,7 @@ function RecipeForm(
   error,
   isActionCopyRemove,
   handleRecipeUpdate,
+  handleRecipeSubmit,
   recipe,
   selectedRecipe,
   openBookDropdown,
@@ -108,7 +109,7 @@ function RecipeForm(
             <section id="RecipeRequests-notes" className="">
               <NotesInput handleUpdate={handleRecipeUpdate} />
             </section>
-          </section>
+          </section> 
         )}
         {/* </div> */}
       </div>
