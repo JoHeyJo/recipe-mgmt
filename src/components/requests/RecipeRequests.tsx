@@ -37,7 +37,7 @@ import RecipeForm from "../views/RecipeForm";
  *
  * Component needs to be refactored - separate API request from component logic
  *
- * MainContainer -> RecipeRequests -> [IngredientsGroup, InstructionsArea, NotesInput, TitleInput]
+ * MainContainer -> RecipeRequests -> [Dropdown, RecipeForm]
  */
 function RecipeRequests({
   stateActions,
@@ -48,7 +48,6 @@ function RecipeRequests({
     useContext(UserContext);
   const {
     selectedRecipe,
-    requestAction,
     setRecipes,
     setFilteredRecipes,
     recipes,

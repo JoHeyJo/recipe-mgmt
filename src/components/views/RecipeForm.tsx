@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import Alert from "../ui/Alert";
 import { ReferenceContext } from "../../context/ReferenceContext";
 import TitleInput from "../ui/TitleInput";
@@ -6,17 +6,26 @@ import IngredientsGroup from "../selectors/IngredientsGroup";
 import InstructionsRequests from "../requests/InstructionsRequests";
 import NotesInput from "../ui/NotesInput";
 import RecipeFormControls from "../ui/controls/RecipeFormControls";
-import { compareIngredients, compareInstructions, compareNames, compareNotes } from "../../utils/filters";
-
+import {
+  compareIngredients,
+  compareInstructions,
+  compareNames,
+  compareNotes,
+} from "../../utils/filters";
+import { RecipeContext } from "../../context/RecipeContext";
 
 const action = {
   copyRemove: true,
-  edit: true
-}
+  edit: true,
+};
 
+
+action.edit = true
+/**
+ * RecipeRequests -> RecipeForm -> [IngredientsGroup, InstructionsArea, NotesInput, TitleInput]
+ */
 function RecipeForm(
   error,
-  isActionCopyRemove,
   handleRecipeUpdate,
   handleRecipeSubmit,
   recipe,
@@ -25,11 +34,12 @@ function RecipeForm(
 ) {
   const [isDisabled, setIsDisabled] = useState(true);
 
+  const { requestAction } = useContext(RecipeContext);
   const dialogPanelRef = useRef(null);
 
   /** Enables/disables UPDATE submit */
   useEffect(() => {
-    if (requestAction === "edit") {
+    if (requestAction.edit) {
       const name = compareNames(selectedRecipe.name, recipe.name);
       const ingredients = compareIngredients(
         selectedRecipe.ingredients,
@@ -50,7 +60,7 @@ function RecipeForm(
       {error && <Alert alert={error} degree={"yellow"} />}{" "}
       {/* This will be a popup instead */}
       {/* <form onSubmit={handleSubmit}> */}
-      <div className={isActionCopyRemove !== "copyRemove" ? "h-80" : ""}>
+      <div className={(requestAction.create || requestAction.edit) ? "h-80" : ""}>
         {/* <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
                 <CheckIcon aria-hidden="true" className="h-6 w-6 text-green-600" />
               </div> */}
@@ -63,14 +73,14 @@ function RecipeForm(
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet labore.
                   </p>
                 </div> */}
-        {isActionCopyRemove === "copyRemove" && (
+        {requestAction.copyRemove && (
           <p>
             NOTE: Once a recipe is copied to a recipe book, you will be the
             owner of that copy.{" "}
           </p>
         )}
 
-        {isActionCopyRemove !== "copyRemove" && (
+        {!requestAction.copyRemove && (
           <section
             id="RecipeRequests-book"
             className="mx-auto h-full flex-col "
@@ -109,7 +119,7 @@ function RecipeForm(
             <section id="RecipeRequests-notes" className="">
               <NotesInput handleUpdate={handleRecipeUpdate} />
             </section>
-          </section> 
+          </section>
         )}
         {/* </div> */}
       </div>

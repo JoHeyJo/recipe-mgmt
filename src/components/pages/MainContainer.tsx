@@ -27,7 +27,7 @@ function MainContainer() {
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate);
   const [isOpen, setOpen] = useState(false);
-  const [requestAction, setRequestAction] = useState<string>("");
+  const [requestAction, setRequestAction] = useState<any>({});
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -85,15 +85,21 @@ function MainContainer() {
   /** Triggers actions that renders RecipeRequests with appropriate data set - current recipe */
   function openRecipeModal() {
     PRIVILEGES.sharedInbox
-      ? setRequestAction("copyRemove")
-      : setRequestAction("edit");
+      ? setRequestAction((action) => {
+          action.copyRemove = true;
+        })
+      : setRequestAction((action) => {
+          action.edit = true;
+        });
     setOpen(true);
   }
 
   /** Triggers actions that renders RecipeRequests with empty data - no recipe */
   function toggleCreateForm() {
     setSelectedRecipe(recipeTemplate);
-    setRequestAction("create");
+    setRequestAction((action) => {
+      action.create = true;
+    });
     setOpen(!isOpen);
   }
 
