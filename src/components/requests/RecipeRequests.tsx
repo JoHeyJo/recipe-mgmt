@@ -249,7 +249,7 @@ function RecipeRequests({
                 isActionCopy={true}
               />
             ) : (
-              <RecipeForm />
+              <RecipeForm error={error}/>
             )}
             {/* </form> */}
           </DialogPanel>

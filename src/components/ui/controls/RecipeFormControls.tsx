@@ -10,14 +10,13 @@ import { RecipeFormControlsProps } from "../../../utils/props";
 function RecipeFormControls({
   handleSubmit,
   isDisabled,
-  recipe,
   handleRemove,
   handleDelete,
   editRecipe,
   openDropdown
 }: RecipeFormControlsProps) {
   const { PRIVILEGES } = useContext(UserContext);
-  const { selectedRecipe, requestAction } = useContext(RecipeContext);
+  const { requestAction } = useContext(RecipeContext);
 
   const formControls = {
     create: (
@@ -33,7 +32,7 @@ function RecipeFormControls({
       <>
         <button
           type="button"
-          onClick={() => editRecipe(selectedRecipe, recipe)}
+          onClick={() => editRecipe()}
           disabled={isDisabled}
           className={`${isDisabled ? "bg-button-disabled hover:opacity-100" : "bg-button-submit"} inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default`}
         >

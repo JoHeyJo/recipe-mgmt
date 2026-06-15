@@ -235,6 +235,6 @@ export type RecipeFormControlsProps = {
   recipe: Recipe;
   handleRemove: () => {};
   handleDelete: () => {};
-  editRecipe: (originalRecipe: Recipe, mutableRecipe: Recipe) => {};
+  editRecipe: () => {};
   openDropdown: () => void;
 };

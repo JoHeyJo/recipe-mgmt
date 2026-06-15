@@ -26,10 +26,7 @@ action.edit = true
  */
 function RecipeForm(
   error,
-  handleRecipeUpdate,
-  handleRecipeSubmit,
-  recipe,
-  selectedRecipe,
+  recipeInput,
   openBookDropdown,
 ) {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -40,20 +37,20 @@ function RecipeForm(
   /** Enables/disables UPDATE submit */
   useEffect(() => {
     if (requestAction.edit) {
-      const name = compareNames(selectedRecipe.name, recipe.name);
+      const name = compareNames(selectedRecipe.name, recipeInput.name);
       const ingredients = compareIngredients(
         selectedRecipe.ingredients,
-        recipe.ingredients,
+        recipeInput.ingredients,
       );
       const instructions = compareInstructions(
         selectedRecipe.instructions,
-        recipe.instructions,
+        recipeInput.instructions,
       );
-      const notes = compareNotes(selectedRecipe.notes, recipe.notes);
+      const notes = compareNotes(selectedRecipe.notes, recipeInput.notes);
       const isAltered = name || ingredients || instructions || notes;
       setIsDisabled(!isAltered);
     }
-  }, [recipe]);
+  }, [recipeInput]);
 
   return (
     <>

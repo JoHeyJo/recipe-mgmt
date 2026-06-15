@@ -22,7 +22,6 @@ function MainContainer() {
   const { userId, defaultBookId, currentBookId, PRIVILEGES } =
     useContext(UserContext);
 
-  // const [selectedBookId, setSelectedBookId] = useState<number>();
   const [recipes, setRecipes] = useState<Recipes | any>([]);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate);
