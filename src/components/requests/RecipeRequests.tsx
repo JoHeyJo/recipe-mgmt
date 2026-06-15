@@ -85,7 +85,7 @@ function RecipeRequests({
     handleCloseDialog();
   }
 
-  /** Calls API to handle recipe copy and state changes in UI */
+  /** Calls API to handle recipe copy and state update in parent. */
   async function copyRecipe(targetBookId: number) {
     const res = await copySharedRecipe(targetBookId, selectedRecipe);
     setRecipes(res);
@@ -93,13 +93,13 @@ function RecipeRequests({
     setIsCopyAuthed(false);
   }
 
-  /** Handles sequence when user copies a recipe - changing book & copying recipe */
+  /** Triggers UI change(switch book) and sequence to copy a recipe */
   function triggerCopy(targetBookId: number, book: Book) {
     selectBookId(targetBookId, book);
     copyRecipe(targetBookId);
   }
 
-  // syncs selected original context recipe with recipe state that tracks changes.
+  // syncs selected original context recipe with recipe state that tracks input.
   useEffect(() => {
     setRecipeInput(selectedRecipe);
   }, [selectedRecipe.id]);
@@ -132,15 +132,15 @@ function RecipeRequests({
     }
   }
 
-  /** Calls API - sends patch request with only edited recipe data */
-  async function editRecipe(originalRecipe: Recipe, mutableRecipe: Recipe) {
+  /** Calls API - sends edited recipe input*/
+  async function editRecipe() {
     try {
-      const mutatedData = filterRecipe(originalRecipe, mutableRecipe);
-      mutatedData.created_by_id = selectedRecipe.created_by_id;
+      const editedRecipe = filterRecipe(selectedRecipe, recipeInput);
+      editedRecipe.created_by_id = selectedRecipe.created_by_id;
       const res = await API.patchUserRecipe(
         currentBookId,
         selectedRecipe.id,
-        mutatedData,
+        editedRecipe,
       );
       stateActions.editRecipe(res);
     } catch (error: any) {
@@ -149,17 +149,13 @@ function RecipeRequests({
       setTimeout(() => setError(null), 5000);
     }
   }
-  /** Calls API - sends delete request for recipe */
-  async function handleDeleteRecipe(
-    userId: number,
-    bookId: number,
-    recipeId: number,
-  ) {
+  /** Calls API - sends delete data for recipe */
+  async function deleteRecipe() {
     try {
       const res = await API.deleteUserRecipe(
         userId,
         currentBookId,
-        recipeId,
+        selectedRecipe.id,
         selectedRecipe.created_by_id,
       );
       if (res.message) stateActions.deleteRecipe();
@@ -170,14 +166,17 @@ function RecipeRequests({
     }
   }
 
-  /** Calls API - delete shared recipe association */
-  async function handleRemoveSharedRecipe(bookId: number, recipeId: number) {
+  /** Calls API - removes shared recipe from shared book */
+  async function removeSharedRecipe() {
     try {
-      const res = await API.deleteSharedRecipe(bookId, recipeId);
+      const res = await API.deleteSharedRecipe(
+        currentBookId,
+        selectedRecipe.id,
+      );
       if (res.message) stateActions.deleteRecipe();
     } catch (error) {
       const message = errorHandling(
-        "RecipeRequests - handleRemoveSharedRecipe",
+        "RecipeRequests - removeSharedRecipe",
         error,
       );
       setError(message);
@@ -185,34 +184,33 @@ function RecipeRequests({
     }
   }
 
-  /** Calls API - requests that copy of recipe be added to recipient's recipe book */
+  /** Calls API - sends recipe and book data to copy recipe to recipient's recipe book */
   async function copySharedRecipe(targetBookId: number, recipe: Recipe) {
     try {
       const res = await API.postCopySharedRecipe(targetBookId, recipe);
       return res;
     } catch (error) {
-      const message = errorHandling(
-        "RecipeRequests - copySharedRecipe",
-        error,
-      );
+      const message = errorHandling("RecipeRequests - copySharedRecipe", error);
       setError(message);
       setTimeout(() => setError(null), 5000);
     }
   }
 
-  async function deleteRecipe() {
-    await deleteRecipe(userId, currentBookId, selectedRecipe.id);
-  }
-
-  async function removeRecipe() {
-    await handleRemoveSharedRecipe(currentBookId, selectedRecipe.id);
-  }
-
   /** handle recipe submit */
   async function submitRecipe(e) {
     e.preventDefault();
-    const res = await addRecipe();
-    if (res) closeDialog();
+    try {
+      const res = await addRecipe();
+      if (res) closeDialog();
+      
+    } catch (error) {
+            const message = errorHandling(
+              "RecipeRequests - submitRecipe",
+              error,
+            );
+            setError(message);
+            setTimeout(() => setError(null), 5000);
+    }
   }
 
   function handleCloseDialog() {
@@ -224,9 +222,9 @@ function RecipeRequests({
   }
 
   const recipeActions = {
-    submit: hadnleSubmitRecipe,
-    remove: handleRemoveRecipe,
-    delete: handleDeleteRecipe,
+    submit: submitRecipe,
+    remove: removeSharedRecipe,
+    delete: deleteRecipe,
     edit: editRecipe,
   };
 
