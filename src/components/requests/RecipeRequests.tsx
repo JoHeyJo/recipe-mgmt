@@ -54,7 +54,7 @@ function RecipeRequests({
     recipes,
   } = useContext(RecipeContext);
 
-  const [recipe, setRecipe] = useState<any>(selectedRecipe);
+  const [recipeInput, setRecipeInput] = useState<any>(selectedRecipe);
   const [error, setError] = useState<string | null>();
   const [isDisabled, setIsDisabled] = useState(true);
   const [isCopyAuthed, setIsCopyAuthed] = useState(false);
@@ -87,7 +87,7 @@ function RecipeRequests({
 
   /** Calls API to handle recipe copy and state changes in UI */
   async function copyRecipe(targetBookId: number) {
-    const res = await copySharedRecipe(targetBookId, recipe);
+    const res = await copySharedRecipe(targetBookId, selectedRecipe);
     setRecipes(res);
     setFilteredRecipes(res);
     setIsCopyAuthed(false);
@@ -99,25 +99,25 @@ function RecipeRequests({
     copyRecipe(targetBookId);
   }
 
-  // syncs selected original context recipe with mutable recipe state - on edit?
+  // syncs selected original context recipe with recipe state that tracks changes.
   useEffect(() => {
-    setRecipe(selectedRecipe);
+    setRecipeInput(selectedRecipe);
   }, [selectedRecipe.id]);
 
   const isLargeScreen = useMediaQuery({ query: "(min-width: 1024px)" }); // lg breakpoint in Tailwind
 
-  /** Updates recipe state */
+  /** Updates parent recipe state */
   function handleRecipeUpdate(
     data: string | Ingredient[] | Instruction | Instructions,
     section: string,
   ) {
-    setRecipe((prevRecipe) => ({ ...prevRecipe, [section]: data }));
+    setRecipeInput((prevRecipe) => ({ ...prevRecipe, [section]: data }));
   }
 
   /** Calls API - sends post request with recipe data */
   async function addRecipe() {
     try {
-      const filteredRecipe = filterTemplate(recipe, recipeTemplate);
+      const filteredRecipe = filterTemplate(recipeInput, recipeTemplate);
       const res = await API.postUserRecipe(
         filteredRecipe,
         currentBookId,
