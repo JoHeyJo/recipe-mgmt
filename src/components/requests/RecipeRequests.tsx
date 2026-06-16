@@ -31,6 +31,7 @@ import { ReferenceContext } from "../../context/ReferenceContext";
 import RecipeFormControls from "../ui/controls/RecipeFormControls";
 import Dropdown from "../ui/common/Dropdown";
 import RecipeForm from "../views/RecipeForm";
+import CreateBook from "./CreateBook";
 
 /** Processes recipe data. Context data is passed through here on edit. Else template data.
  * RecipeRequests data (e.g recipe state) is mutable while context data(reference data) is not
@@ -54,6 +55,7 @@ function RecipeRequests({
   const [isDisabled, setIsDisabled] = useState(true);
   const [isCopyAuthed, setIsCopyAuthed] = useState(false);
   const [isBookSelectOpen, setIsBookSelectOpen] = useState(false);
+  const [isCreateBookOpen, setIsCreateBookOpen] = useState(false);
 
   const dialogPanelRef = useRef(null);
 
@@ -219,6 +221,11 @@ function RecipeRequests({
     edit: editRecipe,
   };
 
+  function createBook(){
+    setIsCreateBookOpen(true);
+    setIsBookSelectOpen(false);
+  }
+
   return (
     <Dialog open={isOpen} onClose={handleCloseDialog} className="relative z-10">
       <DialogBackdrop
@@ -233,12 +240,19 @@ function RecipeRequests({
             transition
             className={`relative flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all ${isBookSelectOpen ? "" : "sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"}`}
           >
+            {isCreateBookOpen ? (
+              <CreateBook
+                isOpen={isCreateBookOpen}
+                setOpen={setIsCreateBookOpen}
+              />
+            ) : null}
             {isBookSelectOpen ? (
               <Dropdown
                 selected={null}
                 options={books}
-                onIdChange={triggerCopy}
+                onChange={triggerCopy}
                 isActionCopy={true}
+                onCreateBook={createBook}
               />
             ) : (
               <RecipeForm

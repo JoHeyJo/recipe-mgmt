@@ -12,15 +12,14 @@ import { Book } from "../../utils/types";
  */
 function BookView({ resetSelected }: BookViewProp) {
   const { books, setUserData, currentBook } = useContext(UserContext);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCreateBookOpen, setIsCreateBookOpen] = useState(false);
   const [bookId, setBookId] = useLocalStorage("current-book-id");
 
   /** Set selected book id & reset selected book to default */
-  function selectBook(id: number, selected: Book) {
+  function onSelectBook(id: number, selected: Book) {
     setUserData((user) => {
       const userData = { ...user };
       userData.currentBookId = id;
-      console.log("selected:",selected)
       userData.currentBook = selected;
       setBookId(id);
       return userData;
@@ -33,15 +32,15 @@ function BookView({ resetSelected }: BookViewProp) {
       {!currentBook && !bookId ? (
         <>
           {/* Model */}
-          <CreateBook isOpen={isModalOpen} setOpen={setIsModalOpen} />
-          <button onClick={() => setIsModalOpen(true)}>Create Book</button>
+          <CreateBook isOpen={isCreateBookOpen} setOpen={setIsCreateBookOpen} />
+          <button onClick={() => setIsCreateBookOpen(true)}>Create Book</button>
         </>
       ) : (
         <>
           <Dropdown
             selected={currentBook}
             options={books}
-            onIdChange={selectBook}
+            onChange={onSelectBook}
           />
         </>
       )}

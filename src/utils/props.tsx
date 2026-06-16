@@ -178,8 +178,9 @@ export type RecipeInfoProp = {
 export type DropdownProp = {
   selected: Book;
   options: Book[];
-  onIdChange: (id: number, selected: Book) => void;
+  onChange: (id: number, selected: Book) => void;
   isActionCopy?: boolean;
+  onCreateBook?: () => void;
 };
 
 export type BookViewProp = {
