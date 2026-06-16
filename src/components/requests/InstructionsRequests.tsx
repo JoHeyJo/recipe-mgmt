@@ -16,7 +16,7 @@ import { InstructionsRequestsProp } from "../../utils/props";
  * RecipeRequests -> InstructionsRequests -> InstructionsArea
  */
 function InstructionsRequests({
-  handleRecipeUpdate,
+  onInstructionInput,
 }: InstructionsRequestsProp) {
   const { userId, currentBookId } = useContext(UserContext);
   const [instructions, setInstructions] = useState([]);
@@ -107,7 +107,7 @@ function InstructionsRequests({
         valueTwo={"book"}
       />
       <InstructionsArea
-        handleRecipeUpdate={handleRecipeUpdate}
+        onInstructionInput={onInstructionInput}
         handleInstruction={handleInstruction}
         data={data}
       />

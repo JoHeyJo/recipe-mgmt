@@ -6,19 +6,19 @@ import { RecipeContext } from "../../context/RecipeContext";
  *
  * RecipeRequests -> NotesInput
  */
-function NotesInput({ handleUpdate }: NotesInputProps) {
+function NotesInput({ onNotesInput }: NotesInputProps) {
   const { selectedRecipe } = useContext(RecipeContext);
   const [notes, setNotes] = useState<string>(selectedRecipe.notes);
 
   /** handles changes in notes */
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setNotes(event.target.value);
-    handleUpdate(event.target.value, "notes");
+    onNotesInput(event.target.value, "notes");
   }
 
   /** handles parent state changes */
   useEffect(() => {
-    handleUpdate(notes, "notes");
+    onNotesInput(notes, "notes");
   }, [notes]);
 
   return (

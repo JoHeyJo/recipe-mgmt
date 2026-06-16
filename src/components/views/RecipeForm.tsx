@@ -101,13 +101,13 @@ function RecipeForm({
                   id="RecipeRequests-instructions"
                   className="flex-col flex flex-1 ml-4 rounded-md"
                 >
-                  <InstructionsRequests onRecipeInput={onUpdateRecipeInput} />
+                  <InstructionsRequests onInstructionInput={onUpdateRecipeInput} />
                 </section>
               </ReferenceContext.Provider>
             </section>
 
             <section id="RecipeRequests-notes">
-              <NotesInput onRecipeInput={onUpdateRecipeInput} />
+              <NotesInput onNotesInput={onUpdateRecipeInput} />
             </section>
           </section>
         )}

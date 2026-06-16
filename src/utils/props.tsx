@@ -66,7 +66,7 @@ type HandleOption = {
 };
 
 export type InstructionsRequestsProp = {
-  handleRecipeUpdate: (data: Instructions, section: string) => void;
+  onInstructionInput: (data: Instructions, section: string) => void;
 };
 
 export type IngredientInputGroupProps = {
@@ -139,7 +139,7 @@ type InstructionsData = {
 };
 
 export type InstructionsAreaProps = {
-  handleRecipeUpdate: (data: Instructions, section: string) => void;
+  onInstructionInput: (data: Instructions, section: string) => void;
   data: InstructionsData;
   handleInstruction: HandleInstruction;
 };
@@ -153,7 +153,7 @@ export type FaMinusButtonProp = {
 };
 
 export type NotesInputProps = {
-  handleUpdate: (data: string, section: string) => void;
+  onNotesInput: (data: string, section: string) => void;
 };
 
 export type RecipesListProps = {

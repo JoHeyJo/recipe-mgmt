@@ -13,13 +13,15 @@ const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) =>
   inputs - 1 === arrayKey;
 
 /** InstructionsArea handles selected instruction - updates GrandParent recipe state
+ * 
+ * NOTE: handleInstruction needs to be changed to onInstructionAction
  *
  * Dynamically renders list of instructions - filters out selected options (WIP)
  *
  * InstructionsRequests -> InstructionsArea -> InstructionManager
  */
 function InstructionsArea({
-  handleRecipeUpdate,
+  onInstructionInput,
   data,
   handleInstruction,
 }: InstructionsAreaProps) {
@@ -103,7 +105,7 @@ function InstructionsArea({
 
   /** Updates parent state of instructions when instructions is changed and on mount */
   useEffect(() => {
-    handleRecipeUpdate(
+    onInstructionInput(
       selectedInstructions.filter((i) => i.id),
       "instructions",
     );
