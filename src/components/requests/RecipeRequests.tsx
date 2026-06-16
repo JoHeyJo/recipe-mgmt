@@ -46,7 +46,7 @@ function RecipeRequests({
 }: RecipeRequestsProps) {
   const { currentBookId, userId, books, setUserData, PRIVILEGES } =
     useContext(UserContext);
-  const { selectedRecipe, setRecipes, setFilteredRecipes, recipes } =
+  const { selectedRecipe, setRecipes, setFilteredRecipes } =
     useContext(RecipeContext);
 
   const [recipeInput, setRecipeInput] = useState<any>(selectedRecipe);

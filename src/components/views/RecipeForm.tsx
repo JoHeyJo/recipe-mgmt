@@ -25,10 +25,9 @@ function RecipeForm({
   recipeAction,
 }) {
   const [isDisabled, setIsDisabled] = useState(true);
-
   const { requestAction, selectedRecipe } = useContext(RecipeContext);
   const dialogPanelRef = useRef(null);
-
+  
   /** Enables/disables UPDATE submit */
   useEffect(() => {
     if (requestAction.edit) {

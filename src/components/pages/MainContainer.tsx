@@ -29,6 +29,7 @@ function MainContainer() {
   const [requestAction, setRequestAction] = useState<any>({});
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  console.log("request action in main:", requestAction);
 
   const recipeData = {
     recipes,
@@ -45,6 +46,8 @@ function MainContainer() {
     updateRecipes,
     setFilteredRecipes,
   };
+
+  console.log("recipe data in main:", requestAction);
 
   /** Updates rendered recipes after creation */
   function updateRecipes(recipe: Recipe) {
@@ -84,21 +87,15 @@ function MainContainer() {
   /** Triggers actions that renders RecipeRequests with appropriate data set - current recipe */
   function openRecipeModal() {
     PRIVILEGES.sharedInbox
-      ? setRequestAction((action) => {
-          action.copyRemove = true;
-        })
-      : setRequestAction((action) => {
-          action.edit = true;
-        });
+      ? setRequestAction({ copy: true })
+      : setRequestAction({ edit: true });
     setOpen(true);
   }
 
   /** Triggers actions that renders RecipeRequests with empty data - no recipe */
   function toggleCreateForm() {
     setSelectedRecipe(recipeTemplate);
-    setRequestAction((action) => {
-      action.create = true;
-    });
+    setRequestAction({ create: true });
     setOpen(!isOpen);
   }
 
