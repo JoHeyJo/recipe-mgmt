@@ -58,7 +58,7 @@ function IngredientsGroup({ onIngredientInput }: IngredientsGroupProps) {
     });
   }
 
-  const handleIngredient = {
+  const ingredientActions = {
     add: addIngredient,
     remove: removeIngredient,
     update: updateIngredients,
@@ -75,7 +75,7 @@ function IngredientsGroup({ onIngredientInput }: IngredientsGroupProps) {
         numOfIngredients={ingredients.length}
         ingredients={ingredients}
         ingredientKeys={ingredientKeys}
-        handleIngredient={handleIngredient}
+        handleIngredient={ingredientActions}
       />
     </div>
   );

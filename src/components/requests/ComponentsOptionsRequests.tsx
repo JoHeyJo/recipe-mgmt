@@ -17,7 +17,7 @@ function ComponentsOptionsRequests({
   numOfIngredients,
   ingredients,
   ingredientKeys,
-  handleIngredient,
+  ingredientAction,
 }: ComponentsOptionsRequestsProps) {
   const [items, setItems] = useState<AttributeData[]>([]);
   const [quantityAmount, setQuantityAmounts] = useState<AttributeData[]>([]);
@@ -63,7 +63,7 @@ function ComponentsOptionsRequests({
       setQuantityAmounts((options: AttributeData[]) => [...options, option]);
   }
 
-  const handleOption = {
+  const optionAction = {
     post: addOption,
     addCreated: updateAvailableOptions,
     associate: associateOptionToBook,
@@ -151,8 +151,8 @@ function ComponentsOptionsRequests({
             <IngredientInputGroup
               index={i}
               ingredient={ingredient}
-              handleIngredient={handleIngredient}
-              handleOption={handleOption}
+              onIngredientAction={ingredientAction}
+              optionAction={optionAction}
               options={options}
               length={ingredients.length - 1}
             />
