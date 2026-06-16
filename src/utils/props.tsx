@@ -179,7 +179,7 @@ export type DropdownProp = {
   selected: Book;
   options: Book[];
   onIdChange: (id: number, selected: Book) => void;
-  isActionCopy?: boolean
+  isActionCopy?: boolean;
 };
 
 export type BookViewProp = {
@@ -229,12 +229,15 @@ export type UserAvatarProp = {
   title: string;
 };
 
+export type recipeAction = {
+  submit: (e: any) => Promise<void>;
+  remove: () => Promise<void>;
+  delete: () => Promise<void>;
+  edit: () => Promise<void>;
+};
+
 export type RecipeFormControlsProps = {
-  handleSubmit: (e: any) => Promise<void>;
+  recipeAction: recipeAction;
   isDisabled: boolean;
-  recipe: Recipe;
-  handleRemove: () => {};
-  handleDelete: () => {};
-  editRecipe: () => {};
   openDropdown: () => void;
 };

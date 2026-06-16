@@ -22,7 +22,7 @@ function RecipeForm({
   recipeInput,
   onUpdateRecipeInput,
   openBookDropdown,
-  recipeActions,
+  recipeAction,
 }) {
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -115,12 +115,8 @@ function RecipeForm({
       </div>
       <div className="SubmitButton mt-5 sm:mt-6">
         <RecipeFormControls
-          handleSubmit={handleRecipeSubmit}
+          recipeAction={recipeAction}
           isDisabled={isDisabled}
-          recipe={recipe}
-          handleRemove={handleRemove}
-          handleDelete={handleDelete}
-          editRecipe={editRecipe}
           openDropdown={openBookDropdown}
         />
       </div>

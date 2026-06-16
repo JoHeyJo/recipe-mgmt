@@ -212,7 +212,7 @@ function RecipeRequests({
     }, 50);
   }
 
-  const recipeActions = {
+  const recipeAction = {
     submit: submitRecipe,
     remove: removeSharedRecipe,
     delete: deleteRecipe,
@@ -246,7 +246,7 @@ function RecipeRequests({
                 recipeInput={recipeInput}
                 onUpdateRecipeInput={updateRecipeInput}
                 openBookDropdown={openBookDropdown}
-                recipeActions={recipeActions}
+                recipeAction={recipeAction}
               />
             )}
             {/* </form> */}

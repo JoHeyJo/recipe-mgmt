@@ -8,11 +8,8 @@ import { RecipeFormControlsProps } from "../../../utils/props";
  * RecipeRequests -> RecipeFormControls
  */
 function RecipeFormControls({
-  handleSubmit,
+  recipeAction,
   isDisabled,
-  handleRemove,
-  handleDelete,
-  editRecipe,
   openDropdown
 }: RecipeFormControlsProps) {
   const { PRIVILEGES } = useContext(UserContext);
@@ -22,7 +19,7 @@ function RecipeFormControls({
     create: (
       <button
         type="submit"
-        onClick={handleSubmit}
+        onClick={recipeAction.submit}
         className="inline-flex w-full justify-center rounded-md bg-button-submit px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default"
       >
         Submit
@@ -32,7 +29,7 @@ function RecipeFormControls({
       <>
         <button
           type="button"
-          onClick={() => editRecipe()}
+          onClick={recipeAction.edit}
           disabled={isDisabled}
           className={`${isDisabled ? "bg-button-disabled hover:opacity-100" : "bg-button-submit"} inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default`}
         >
@@ -40,7 +37,7 @@ function RecipeFormControls({
         </button>
         <button
           type="button"
-          onClick={handleDelete}
+          onClick={recipeAction.delete}
           className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default"
         >
           Delete
@@ -59,7 +56,7 @@ function RecipeFormControls({
         </button>
         <button
           type="button"
-          onClick={handleRemove}
+          onClick={recipeAction.remove}
           className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default"
         >
           Remove
