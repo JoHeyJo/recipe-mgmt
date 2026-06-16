@@ -11,7 +11,7 @@ function TextInput({
   handleUpdate,
   type,
   placeholder,
-}: InputWithLabelProps) {
+}) {
   return (
     <div>
       <label

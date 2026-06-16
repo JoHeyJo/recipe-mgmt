@@ -41,7 +41,7 @@ function BookView({ resetSelected }: BookViewProp) {
           <Dropdown
             selected={currentBook}
             options={books}
-            handleIdChange={selectBook}
+            onIdChange={selectBook}
           />
         </>
       )}
