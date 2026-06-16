@@ -129,7 +129,7 @@ export type RecipeViewProps = {
 };
 
 export type IngredientsGroupProps = {
-  handleRecipeUpdate: (data: Ingredient[], section: string) => void;
+  onIngredientInput: (data: Ingredient[], section: string) => void;
 };
 
 type InstructionsData = {
@@ -163,7 +163,7 @@ export type RecipesListProps = {
 };
 
 export type InputWithLabelProps = {
-  handleUpdate: (e: any) => void;
+  onUpdate: (e: any) => void;
   id: string;
   name: string;
   value: string;
@@ -172,7 +172,7 @@ export type InputWithLabelProps = {
 };
 
 export type RecipeInfoProp = {
-  handleUpdate: (data: string, section: string) => void;
+  onTitleInput: (data: string, section: string) => void;
 };
 
 export type DropdownProp = {

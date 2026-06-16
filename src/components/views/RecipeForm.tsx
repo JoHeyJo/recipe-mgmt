@@ -14,24 +14,19 @@ import {
 } from "../../utils/filters";
 import { RecipeContext } from "../../context/RecipeContext";
 
-const action = {
-  copyRemove: true,
-  edit: true,
-};
-
-
-action.edit = true
 /**
  * RecipeRequests -> RecipeForm -> [IngredientsGroup, InstructionsArea, NotesInput, TitleInput]
  */
-function RecipeForm(
+function RecipeForm({
   error,
   recipeInput,
+  onUpdateRecipeInput,
   openBookDropdown,
-) {
+  recipeActions,
+}) {
   const [isDisabled, setIsDisabled] = useState(true);
 
-  const { requestAction } = useContext(RecipeContext);
+  const { requestAction, selectedRecipe } = useContext(RecipeContext);
   const dialogPanelRef = useRef(null);
 
   /** Enables/disables UPDATE submit */
@@ -57,7 +52,7 @@ function RecipeForm(
       {error && <Alert alert={error} degree={"yellow"} />}{" "}
       {/* This will be a popup instead */}
       {/* <form onSubmit={handleSubmit}> */}
-      <div className={(requestAction.create || requestAction.edit) ? "h-80" : ""}>
+      <div className={requestAction.create || requestAction.edit ? "h-80" : ""}>
         {/* <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
                 <CheckIcon aria-hidden="true" className="h-6 w-6 text-green-600" />
               </div> */}
@@ -91,14 +86,14 @@ function RecipeForm(
                   className="flex-1 h-full flex flex-col"
                 >
                   <div className="">
-                    <TitleInput handleUpdate={handleRecipeUpdate} />
+                    <TitleInput onTitleInput={onUpdateRecipeInput} />
                   </div>
 
                   <div
                     id="RecipeRequests-ingredients"
                     className="flex-1 overflow-hidden"
                   >
-                    <IngredientsGroup handleRecipeUpdate={handleRecipeUpdate} />
+                    <IngredientsGroup onIngredientInput={onUpdateRecipeInput} />
                   </div>
                 </section>
 
@@ -106,15 +101,13 @@ function RecipeForm(
                   id="RecipeRequests-instructions"
                   className="flex-col flex flex-1 ml-4 rounded-md"
                 >
-                  <InstructionsRequests
-                    handleRecipeUpdate={handleRecipeUpdate}
-                  />
+                  <InstructionsRequests onRecipeInput={onUpdateRecipeInput} />
                 </section>
               </ReferenceContext.Provider>
             </section>
 
-            <section id="RecipeRequests-notes" className="">
-              <NotesInput handleUpdate={handleRecipeUpdate} />
+            <section id="RecipeRequests-notes">
+              <NotesInput onRecipeInput={onUpdateRecipeInput} />
             </section>
           </section>
         )}

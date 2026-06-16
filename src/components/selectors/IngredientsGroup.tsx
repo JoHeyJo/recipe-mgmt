@@ -12,7 +12,7 @@ import ComponentsOptionsRequests from "../requests/ComponentsOptionsRequests";
  *
  * RecipeRequests -> IngredientsGroup -> ComponentsOptionsRequests
  */
-function IngredientsGroup({ handleRecipeUpdate }: IngredientsGroupProps) {
+function IngredientsGroup({ onIngredientInput }: IngredientsGroupProps) {
   const { requestAction, selectedRecipe } = useContext(RecipeContext);
   const [ingredients, setIngredients] = useState<Ingredients>(
     selectedRecipe.ingredients.length === 0
@@ -66,7 +66,7 @@ function IngredientsGroup({ handleRecipeUpdate }: IngredientsGroupProps) {
 
   /** Updates parent state of ingredients when ingredient is added to state */
   useEffect(() => {
-    handleRecipeUpdate(ingredients, "ingredients");
+    onIngredientInput(ingredients, "ingredients");
   }, [ingredients]);
 
   return (

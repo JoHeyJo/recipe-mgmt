@@ -7,13 +7,13 @@ import { RecipeContext } from "../../context/RecipeContext";
  *
  * RecipeRequests -> TitleInput -> TextInput
  */
-function TitleInput({ handleUpdate }: RecipeInfoProp) {
+function TitleInput({ onTitleInput }: RecipeInfoProp) {
   const { id, name } = useContext(RecipeContext).selectedRecipe;
   const [title, setTitle] = useState(name);
 
   /** Updates parent component with title data */
   function updateTitle() {
-    handleUpdate(title, "name");
+    onTitleInput(title, "name");
   }
 
   /** Handles changes to title state */
@@ -33,7 +33,7 @@ function TitleInput({ handleUpdate }: RecipeInfoProp) {
       name={name}
       value={title}
       type={"title"}
-      handleUpdate={handleChange}
+      onUpdate={handleChange}
       placeholder={"Awesome recipe name!"}
     />
   );

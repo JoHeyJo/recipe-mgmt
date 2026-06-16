@@ -8,7 +8,7 @@ function TextInput({
   id,
   name,
   value,
-  handleUpdate,
+  onUpdate,
   type,
   placeholder,
 }: InputWithLabelProps) {
@@ -16,7 +16,7 @@ function TextInput({
     <div>
         <input
           // required={name === "title"}
-          onChange={handleUpdate}
+          onChange={onUpdate}
           value={value || ""}
           id={id}
           name={name}

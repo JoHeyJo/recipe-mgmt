@@ -46,12 +46,8 @@ function RecipeRequests({
 }: RecipeRequestsProps) {
   const { currentBookId, userId, books, setUserData, PRIVILEGES } =
     useContext(UserContext);
-  const {
-    selectedRecipe,
-    setRecipes,
-    setFilteredRecipes,
-    recipes,
-  } = useContext(RecipeContext);
+  const { selectedRecipe, setRecipes, setFilteredRecipes, recipes } =
+    useContext(RecipeContext);
 
   const [recipeInput, setRecipeInput] = useState<any>(selectedRecipe);
   const [error, setError] = useState<string | null>();
@@ -105,8 +101,8 @@ function RecipeRequests({
 
   const isLargeScreen = useMediaQuery({ query: "(min-width: 1024px)" }); // lg breakpoint in Tailwind
 
-  /** Updates parent recipe state */
-  function handleRecipeUpdate(
+  /**Enables children to update recipeInput state */
+  function updateRecipeInput(
     data: string | Ingredient[] | Instruction | Instructions,
     section: string,
   ) {
@@ -201,14 +197,10 @@ function RecipeRequests({
     try {
       const res = await addRecipe();
       if (res) closeDialog();
-      
     } catch (error) {
-            const message = errorHandling(
-              "RecipeRequests - submitRecipe",
-              error,
-            );
-            setError(message);
-            setTimeout(() => setError(null), 5000);
+      const message = errorHandling("RecipeRequests - submitRecipe", error);
+      setError(message);
+      setTimeout(() => setError(null), 5000);
     }
   }
 
@@ -249,7 +241,13 @@ function RecipeRequests({
                 isActionCopy={true}
               />
             ) : (
-              <RecipeForm error={error}/>
+              <RecipeForm
+                error={error}
+                recipeInput={recipeInput}
+                onUpdateRecipeInput={updateRecipeInput}
+                openBookDropdown={openBookDropdown}
+                recipeActions={recipeActions}
+              />
             )}
             {/* </form> */}
           </DialogPanel>
