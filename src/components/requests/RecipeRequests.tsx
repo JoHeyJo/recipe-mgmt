@@ -61,6 +61,7 @@ function RecipeRequests({
 
   /** replaces dialog with dropdown */
   function openBookDropdown() {
+    if(isCreateBookOpen) return;
     setIsBookSelectOpen(true);
   }
 
@@ -223,7 +224,6 @@ function RecipeRequests({
 
   function createBook(){
     setIsCreateBookOpen(true);
-    setIsBookSelectOpen(false);
   }
 
   function closeCreateBook(){
