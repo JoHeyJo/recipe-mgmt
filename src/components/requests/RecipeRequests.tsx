@@ -228,28 +228,11 @@ function RecipeRequests({
 
   function createBook() {
     setRender({ createBook: true });
-    // setIsCreateBookOpen(true);
-    // setIsRecipeRequestActive(false);
-    // setIsBookSelectOpen(false);
   }
 
   function closeCreateBook() {
     setIsCreateBookOpen(false);
     handleCloseDialog()
-  }
-
-  function requestUI() {
-    isBookSelectOpen ? (
-      <Dropdown
-        selected={null}
-        options={books}
-        onChange={triggerCopy}
-        isActionCopy={true}
-        onCreateBook={createBook}
-      />
-    ) : (
-      <CreateBook isOpen={isCreateBookOpen} setIsOpen={closeCreateBook} />
-    );
   }
 
   return (
@@ -289,10 +272,10 @@ function RecipeRequests({
                 recipeAction={recipeAction}
               />
             )}
-            {/* </form> */}
             {render.createBook && (
-              <CreateBook isOpen={render.createBook} setIsOpen={closeCreateBook} />
+              <CreateBook isOpen={render.createBook} onCloseModal={closeCreateBook} />
             )}
+            {/* </form> */}
           </DialogPanel>
         </div>
       </div>

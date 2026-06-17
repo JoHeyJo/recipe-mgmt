@@ -27,12 +27,19 @@ function BookView({ resetSelected }: BookViewProp) {
     resetSelected();
   }
 
+  function closeCreateBook() {
+    setIsCreateBookOpen(false);
+  }
+
   return (
     <section>
       {!currentBook && !bookId ? (
         <>
           {/* Model */}
-          <CreateBook isOpen={isCreateBookOpen} setIsOpen={setIsCreateBookOpen} />
+          <CreateBook
+            isOpen={isCreateBookOpen}
+            onCloseModal={closeCreateBook}
+          />
           <button onClick={() => setIsCreateBookOpen(true)}>Create Book</button>
         </>
       ) : (
