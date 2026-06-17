@@ -130,7 +130,7 @@ function CreateBook({ isOpen, onCloseModal }) {
                 </button>
               </div>
             ) : (
-              <>
+              <form>
                 <div>
                   <div className="mx-auto bg-background-color flex h-12 w-12 items-center justify-center rounded-full">
                     <BookOpenIcon
@@ -169,7 +169,7 @@ function CreateBook({ isOpen, onCloseModal }) {
                     Cancel
                   </button>
                 </div>
-              </>
+              </form>
             )}
           </DialogPanel>
         </div>
