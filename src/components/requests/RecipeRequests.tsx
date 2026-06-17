@@ -1,6 +1,5 @@
 import { useState, useContext, useEffect, useRef } from "react";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
-import IngredientsGroup from "../selectors/IngredientsGroup";
 import {
   Ingredient,
   Instruction,
@@ -11,24 +10,11 @@ import {
 import API from "../../api";
 import { errorHandling } from "../../utils/ErrorHandling";
 import { useMediaQuery } from "react-responsive";
-import InstructionsRequests from "./InstructionsRequests";
 import { UserContext } from "../../context/UserContext";
 import { RecipeRequestsProps } from "../../utils/props";
-import NotesInput from "../ui/NotesInput";
 import { RecipeContext } from "../../context/RecipeContext";
-import {
-  compareIngredients,
-  compareInstructions,
-  compareNames,
-  filterRecipe,
-  compareNotes,
-  filterTemplate,
-} from "../../utils/filters";
-import TitleInput from "../ui/TitleInput";
+import { filterRecipe, filterTemplate } from "../../utils/filters";
 import { recipeTemplate } from "../../utils/templates";
-import Alert from "../ui/Alert";
-import { ReferenceContext } from "../../context/ReferenceContext";
-import RecipeFormControls from "../ui/controls/RecipeFormControls";
 import Dropdown from "../ui/common/Dropdown";
 import RecipeForm from "../views/RecipeForm";
 import CreateBook from "./CreateBook";
@@ -52,25 +38,19 @@ function RecipeRequests({
 
   const [recipeInput, setRecipeInput] = useState<any>(selectedRecipe);
   const [error, setError] = useState<string | null>();
-  const [isDisabled, setIsDisabled] = useState(true);
-  const [isCopyAuthed, setIsCopyAuthed] = useState(false);
   const [isBookSelectOpen, setIsBookSelectOpen] = useState(false);
-  const [isCreateBookOpen, setIsCreateBookOpen] = useState(false);
-  const [isRecipeRequestActive, setIsRecipeRequestActive] = useState(true);
   const [render, setRender] = useState<any>({ recipeForm: true });
 
   const dialogPanelRef = useRef(null);
 
   /** replaces dialog with dropdown */
   function openBookDropdown() {
-    // if (isCreateBookOpen) return;
     setRender({ dropdown: true });
     setIsBookSelectOpen(true);
   }
 
   /** Updates state with selected book ID - changes book in UI*/
   async function selectBookId(id: number, book: Book) {
-    setIsCopyAuthed(PRIVILEGES.sharedInbox);
     setUserData((user) => {
       const userData = { ...user };
       userData.currentBookId = id;
@@ -91,7 +71,6 @@ function RecipeRequests({
     const res = await copySharedRecipe(targetBookId, selectedRecipe);
     setRecipes(res);
     setFilteredRecipes(res);
-    setIsCopyAuthed(false);
   }
 
   /** Triggers UI change(switch book) and sequence to copy a recipe */
@@ -210,15 +189,6 @@ function RecipeRequests({
     }
   }
 
-  function handleCloseDialog() {
-    closeDialog();
-    setTimeout(() => {
-      setRender({ recipeForm: true });
-      // prevents flash of recipe copy controls
-      setIsBookSelectOpen(false);
-    }, 50);
-  }
-
   const recipeAction = {
     submit: submitRecipe,
     remove: removeSharedRecipe,
@@ -226,13 +196,14 @@ function RecipeRequests({
     edit: editRecipe,
   };
 
-  function createBook() {
-    setRender({ createBook: true });
-  }
-
-  function closeCreateBook() {
-    setIsCreateBookOpen(false);
-    handleCloseDialog()
+  /** syncs all closing actions */
+  function handleCloseDialog() {
+    closeDialog();
+    setTimeout(() => {
+      setRender({ recipeForm: true });
+      // prevents flash of recipe copy controls
+      setIsBookSelectOpen(false);
+    }, 50);
   }
 
   return (
@@ -260,7 +231,7 @@ function RecipeRequests({
                 options={books}
                 onChange={triggerCopy}
                 isActionCopy={true}
-                onCreateBook={createBook}
+                onCreateBook={() => setRender({ createBook: true })}
               />
             )}
             {render.recipeForm && (
@@ -273,7 +244,10 @@ function RecipeRequests({
               />
             )}
             {render.createBook && (
-              <CreateBook isOpen={render.createBook} onCloseModal={closeCreateBook} />
+              <CreateBook
+                isOpen={render.createBook}
+                onCloseModal={handleCloseDialog}
+              />
             )}
             {/* </form> */}
           </DialogPanel>
