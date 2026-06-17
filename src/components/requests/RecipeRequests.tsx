@@ -57,12 +57,14 @@ function RecipeRequests({
   const [isBookSelectOpen, setIsBookSelectOpen] = useState(false);
   const [isCreateBookOpen, setIsCreateBookOpen] = useState(false);
   const [isRecipeRequestActive, setIsRecipeRequestActive] = useState(true);
+  const [render, setRender] = useState<any>({ recipeForm: true });
 
   const dialogPanelRef = useRef(null);
 
   /** replaces dialog with dropdown */
   function openBookDropdown() {
-    if(isCreateBookOpen) return;
+    // if (isCreateBookOpen) return;
+    setRender({ dropdown: true });
     setIsBookSelectOpen(true);
   }
 
@@ -211,6 +213,7 @@ function RecipeRequests({
   function handleCloseDialog() {
     closeDialog();
     setTimeout(() => {
+      setRender({ recipeForm: true });
       // prevents flash of recipe copy controls
       setIsBookSelectOpen(false);
     }, 50);
@@ -223,27 +226,30 @@ function RecipeRequests({
     edit: editRecipe,
   };
 
-  function createBook(){
-    setIsCreateBookOpen(true);
+  function createBook() {
+    setRender({ createBook: true });
+    // setIsCreateBookOpen(true);
+    // setIsRecipeRequestActive(false);
+    // setIsBookSelectOpen(false);
   }
 
-  function closeCreateBook(){
+  function closeCreateBook() {
     setIsCreateBookOpen(false);
-    setIsRecipeRequestActive(false);
+    handleCloseDialog()
   }
 
-  function requestUI(){
-  isBookSelectOpen ? (
-    <Dropdown
-      selected={null}
-      options={books}
-      onChange={triggerCopy}
-      isActionCopy={true}
-      onCreateBook={createBook}
-    />
-  ) : (
-    <CreateBook isOpen={isCreateBookOpen} setIsOpen={closeCreateBook} />
-  );
+  function requestUI() {
+    isBookSelectOpen ? (
+      <Dropdown
+        selected={null}
+        options={books}
+        onChange={triggerCopy}
+        isActionCopy={true}
+        onCreateBook={createBook}
+      />
+    ) : (
+      <CreateBook isOpen={isCreateBookOpen} setIsOpen={closeCreateBook} />
+    );
   }
 
   return (
@@ -261,35 +267,32 @@ function RecipeRequests({
             className={`relative flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all ${isBookSelectOpen ? "" : "sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"}`}
           >
             {/**
-             * open dropdown - no default book && in shared recipes 
+             * open dropdown - no default book && in shared recipes
              * open recipe form - not in shared recipes
              * open create book - in shared recipes
              */}
-            {isBookSelectOpen ? (
+            {render.dropdown && (
               <Dropdown
-              selected={null}
-              options={books}
-              onChange={triggerCopy}
-              isActionCopy={true}
-              onCreateBook={createBook}
+                selected={null}
+                options={books}
+                onChange={triggerCopy}
+                isActionCopy={true}
+                onCreateBook={createBook}
               />
-            ) : (
-              !isRecipeRequestActive &&
+            )}
+            {render.recipeForm && (
               <RecipeForm
-              error={error}
-              recipeInput={recipeInput}
-              onUpdateRecipeInput={updateRecipeInput}
-              onOpenBookDropdown={openBookDropdown}
-              recipeAction={recipeAction}
+                error={error}
+                recipeInput={recipeInput}
+                onUpdateRecipeInput={updateRecipeInput}
+                onOpenBookDropdown={openBookDropdown}
+                recipeAction={recipeAction}
               />
             )}
             {/* </form> */}
-            {isCreateBookOpen ? (
-              <CreateBook
-                isOpen={isCreateBookOpen}
-                setIsOpen={closeCreateBook}
-              />
-            ) : null}
+            {render.createBook && (
+              <CreateBook isOpen={render.createBook} setIsOpen={closeCreateBook} />
+            )}
           </DialogPanel>
         </div>
       </div>

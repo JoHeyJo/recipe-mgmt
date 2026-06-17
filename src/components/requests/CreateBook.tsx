@@ -57,7 +57,7 @@ function CreateBook({ isOpen, setIsOpen }) {
   /** Consolidate modal closing actions */
   function handleClosingActions() {
     setBookData(defaultBook);
-    setIsOpen(false);
+    setIsOpen();
   }
 
   /** Post request to create new book */
