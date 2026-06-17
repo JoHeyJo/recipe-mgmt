@@ -29,8 +29,6 @@ function MainContainer() {
   const [requestAction, setRequestAction] = useState<any>({});
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  console.log("request action in main:", requestAction);
-
   const recipeData = {
     recipes,
     selectedRecipe: {
@@ -46,8 +44,6 @@ function MainContainer() {
     updateRecipes,
     setFilteredRecipes,
   };
-
-  console.log("recipe data in main:", requestAction);
 
   /** Updates rendered recipes after creation */
   function updateRecipes(recipe: Recipe) {

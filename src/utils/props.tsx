@@ -240,5 +240,5 @@ export type recipeAction = {
 export type RecipeFormControlsProps = {
   recipeAction: recipeAction;
   isDisabled: boolean;
-  openDropdown: () => void;
+  onOpenDropdown: () => void;
 };

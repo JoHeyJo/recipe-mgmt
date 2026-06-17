@@ -21,7 +21,7 @@ function RecipeForm({
   error,
   recipeInput,
   onUpdateRecipeInput,
-  openBookDropdown,
+  onOpenBookDropdown,
   recipeAction,
 }) {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -116,7 +116,7 @@ function RecipeForm({
         <RecipeFormControls
           recipeAction={recipeAction}
           isDisabled={isDisabled}
-          openDropdown={openBookDropdown}
+          onOpenDropdown={onOpenBookDropdown}
         />
       </div>
     </>

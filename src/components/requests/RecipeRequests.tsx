@@ -226,6 +226,11 @@ function RecipeRequests({
     setIsBookSelectOpen(false);
   }
 
+  function closeCreateBook(){
+    setIsCreateBookOpen(false);
+
+  }
+
   return (
     <Dialog open={isOpen} onClose={handleCloseDialog} className="relative z-10">
       <DialogBackdrop
@@ -240,30 +245,35 @@ function RecipeRequests({
             transition
             className={`relative flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all ${isBookSelectOpen ? "" : "sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"}`}
           >
-            {isCreateBookOpen ? (
-              <CreateBook
-                isOpen={isCreateBookOpen}
-                setOpen={setIsCreateBookOpen}
-              />
-            ) : null}
+            {/**
+             * open dropdown - no default book, in shared recipes 
+             * open recipe form - not in shared recipes
+             * open create book - in shared recipes
+             */}
             {isBookSelectOpen ? (
               <Dropdown
-                selected={null}
-                options={books}
-                onChange={triggerCopy}
-                isActionCopy={true}
-                onCreateBook={createBook}
+              selected={null}
+              options={books}
+              onChange={triggerCopy}
+              isActionCopy={true}
+              onCreateBook={createBook}
               />
             ) : (
               <RecipeForm
-                error={error}
-                recipeInput={recipeInput}
-                onUpdateRecipeInput={updateRecipeInput}
-                openBookDropdown={openBookDropdown}
-                recipeAction={recipeAction}
+              error={error}
+              recipeInput={recipeInput}
+              onUpdateRecipeInput={updateRecipeInput}
+              onOpenBookDropdown={openBookDropdown}
+              recipeAction={recipeAction}
               />
             )}
             {/* </form> */}
+            {isCreateBookOpen ? (
+              <CreateBook
+                isOpen={isCreateBookOpen}
+                setIsOpen={closeCreateBook}
+              />
+            ) : null}
           </DialogPanel>
         </div>
       </div>

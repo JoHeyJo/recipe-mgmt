@@ -5,12 +5,12 @@ import { RecipeFormControlsProps } from "../../../utils/props";
 
 
 /** Dynamically renders controls for selected recipe form based on privileges
- * RecipeRequests -> RecipeFormControls
+ * RecipeForm -> RecipeFormControls
  */
 function RecipeFormControls({
   recipeAction,
   isDisabled,
-  openDropdown
+  onOpenDropdown
 }: RecipeFormControlsProps) {
   const { PRIVILEGES } = useContext(UserContext);
   const { requestAction } = useContext(RecipeContext);
@@ -48,7 +48,7 @@ function RecipeFormControls({
       <>
         <button
           type="button"
-          onClick={openDropdown}
+          onClick={onOpenDropdown}
           // disabled={isDisabled}
           className={`bg-button-submit inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default`}
         >

@@ -32,7 +32,7 @@ function BookView({ resetSelected }: BookViewProp) {
       {!currentBook && !bookId ? (
         <>
           {/* Model */}
-          <CreateBook isOpen={isCreateBookOpen} setOpen={setIsCreateBookOpen} />
+          <CreateBook isOpen={isCreateBookOpen} setIsOpen={setIsCreateBookOpen} />
           <button onClick={() => setIsCreateBookOpen(true)}>Create Book</button>
         </>
       ) : (

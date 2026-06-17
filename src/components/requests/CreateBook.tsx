@@ -21,7 +21,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 type CreateBook = {
   isOpen: boolean;
-  setOpen: () => void;
+  setIsOpen: () => void;
 };
 
 const defaultBook = {
@@ -37,7 +37,7 @@ const defaultBook = {
  *
  * [TopNav, BookVIew] -> CreateBook -> [TextInputTitle, TextInputDescription]
  */
-function CreateBook({ isOpen, setOpen }) {
+function CreateBook({ isOpen, setIsOpen }) {
   const [bookData, setBookData] = useState<Book>(defaultBook);
   const [alert, setAlert] = useState("");
   const [bookId, setBookId] = useLocalStorage("current-book-id");
@@ -57,7 +57,7 @@ function CreateBook({ isOpen, setOpen }) {
   /** Consolidate modal closing actions */
   function handleClosingActions() {
     setBookData(defaultBook);
-    setOpen(false);
+    setIsOpen(false);
   }
 
   /** Post request to create new book */
@@ -96,7 +96,7 @@ function CreateBook({ isOpen, setOpen }) {
 
   function closeOnSubmit() {
     setAlert("");
-    setOpen(false);
+    setIsOpen(false);
   }
 
   return (
