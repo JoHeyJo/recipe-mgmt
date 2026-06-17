@@ -13,7 +13,7 @@ function TextInputTitle({ handleChange, title }: TextInputTitle) {
         <BookBadge title={title} />
       </div>
       <div className="min-w-0 flex-1">
-        <form action="">
+        {/* <form action=""> */}
           <div className="TextInputTitle-text border-b focus-within:border-secondary">
             <label htmlFor="title" className="sr-only"></label>
             <TextArea
@@ -35,7 +35,7 @@ function TextInputTitle({ handleChange, title }: TextInputTitle) {
             <div className="flex-shrink-0">
             </div>
           </div> */}
-        </form>
+        {/* </form> */}
       </div>
     </div>
   );

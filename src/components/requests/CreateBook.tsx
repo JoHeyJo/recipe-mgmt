@@ -130,7 +130,7 @@ function CreateBook({ isOpen, onCloseModal }) {
                 </button>
               </div>
             ) : (
-              <form>
+              <form onSubmit={() => handleSubmit(bookData, userId)}>
                 <div>
                   <div className="mx-auto bg-background-color flex h-12 w-12 items-center justify-center rounded-full">
                     <BookOpenIcon
@@ -153,8 +153,8 @@ function CreateBook({ isOpen, onCloseModal }) {
                 <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                   <button
                     id="submit-button"
-                    type="button"
-                    onClick={() => handleSubmit(bookData, userId)}
+                    type="submit"
+                    // onClick={() => handleSubmit(bookData, userId)}
                     className="inline-flex w-full justify-center rounded-md bg-button-submit px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-disabled sm:col-start-2"
                   >
                     Submit
