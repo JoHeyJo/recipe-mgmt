@@ -56,6 +56,7 @@ function RecipeRequests({
   const [isCopyAuthed, setIsCopyAuthed] = useState(false);
   const [isBookSelectOpen, setIsBookSelectOpen] = useState(false);
   const [isCreateBookOpen, setIsCreateBookOpen] = useState(false);
+  const [isRecipeRequestActive, setIsRecipeRequestActive] = useState(true);
 
   const dialogPanelRef = useRef(null);
 
@@ -228,7 +229,21 @@ function RecipeRequests({
 
   function closeCreateBook(){
     setIsCreateBookOpen(false);
+    setIsRecipeRequestActive(false);
+  }
 
+  function requestUI(){
+  isBookSelectOpen ? (
+    <Dropdown
+      selected={null}
+      options={books}
+      onChange={triggerCopy}
+      isActionCopy={true}
+      onCreateBook={createBook}
+    />
+  ) : (
+    <CreateBook isOpen={isCreateBookOpen} setIsOpen={closeCreateBook} />
+  );
   }
 
   return (
@@ -246,7 +261,7 @@ function RecipeRequests({
             className={`relative flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all ${isBookSelectOpen ? "" : "sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"}`}
           >
             {/**
-             * open dropdown - no default book, in shared recipes 
+             * open dropdown - no default book && in shared recipes 
              * open recipe form - not in shared recipes
              * open create book - in shared recipes
              */}
@@ -259,6 +274,7 @@ function RecipeRequests({
               onCreateBook={createBook}
               />
             ) : (
+              !isRecipeRequestActive &&
               <RecipeForm
               error={error}
               recipeInput={recipeInput}
