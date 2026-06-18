@@ -1,11 +1,11 @@
 import { TextAreaProps } from "../../../utils/props";
 
-function TextArea({id,name, rows, placeholder, defaultValue, handleChange, isRequired=false}: TextAreaProps){
+function TextArea({id,name, rows, placeholder, defaultValue, onChange, isRequired=false}: TextAreaProps){
   return (
     <textarea
       value={defaultValue}
       required={isRequired}
-      onChange={handleChange}
+      onChange={onChange}
       id={id}
       name={name}
       rows={rows}

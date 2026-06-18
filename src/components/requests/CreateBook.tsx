@@ -146,11 +146,11 @@ function CreateBook({ isOpen, onCloseModal }) {
                       <TextInputTitle
                         isRequired={true}
                         handleChange={handleChange}
-                        title={bookData.title}
+                        title={bookData.title.trim()}
                       />
                     </DialogTitle>
                     <div className="CreateBook-description mt-6">
-                      <TextInputDescription handleChange={handleChange} />
+                      <TextInputDescription onChange={handleChange} description={bookData.description.trim()}/>
                     </div>
                   </div>
                 </div>

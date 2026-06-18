@@ -27,7 +27,7 @@ function TextInputTitle({ handleChange, title, isRequired=false }: TextInputTitl
             rows={1}
             name={"title"}
             id={"title"}
-            handleChange={handleChange}
+            onChange={handleChange}
           />
         </div>
         {/* <div className="flex justify-between pt-2">

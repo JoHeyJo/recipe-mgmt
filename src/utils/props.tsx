@@ -193,7 +193,7 @@ export type TextAreaProps = {
   rows: number;
   placeholder: string;
   defaultValue: string;
-  handleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   isRequired?: boolean;
 };
 
