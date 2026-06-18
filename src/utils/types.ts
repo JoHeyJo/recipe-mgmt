@@ -89,4 +89,10 @@ export type Book = {
   book_role: string;
   book_type: string;
 };
+
+export type requestAction = {
+  copy: boolean;
+  edit: boolean;
+  create: boolean;
+};
 // export type Books = { books?: Book[] }

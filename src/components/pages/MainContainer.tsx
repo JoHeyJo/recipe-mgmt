@@ -3,7 +3,7 @@ import { UserContext } from "../../context/UserContext";
 import { useContext, useEffect, useState } from "react";
 import API from "../../api";
 import { errorHandling } from "../../utils/ErrorHandling";
-import { Recipe, Recipes } from "../../utils/types";
+import { Recipe, Recipes, requestAction } from "../../utils/types";
 import RecipeContainer from "../views/RecipeContainer";
 import { recipeTemplate } from "../../utils/templates";
 import RecipeRequests from "../requests/RecipeRequests";
@@ -26,7 +26,7 @@ function MainContainer() {
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate);
   const [isOpen, setOpen] = useState(false);
-  const [requestAction, setRequestAction] = useState<any>({});
+  const [requestAction, setRequestAction] = useState<requestAction | object>({});
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const recipeData = {

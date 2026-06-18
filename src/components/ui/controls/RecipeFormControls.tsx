@@ -66,8 +66,10 @@ function RecipeFormControls({
   };
 
   function renderRecipeFormControls() {
+    console.log("requestAction:",requestAction)
+    console.log("PRIVILEGES:", PRIVILEGES);
     if (
-      requestAction === "create" &&
+      requestAction.create &&
       (PRIVILEGES.full || PRIVILEGES.collaborator)
     )
       return formControls.create;

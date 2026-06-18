@@ -51,7 +51,7 @@ function RecipeForm({
       {error && <Alert alert={error} degree={"yellow"} />}{" "}
       {/* This will be a popup instead */}
       {/* <form onSubmit={handleSubmit}> */}
-      <div className={requestAction.create || requestAction.edit ? "h-80" : ""}>
+      <div className={!requestAction.copy ? "h-80" : ""}>
         {/* <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
                 <CheckIcon aria-hidden="true" className="h-6 w-6 text-green-600" />
               </div> */}
@@ -64,14 +64,14 @@ function RecipeForm({
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet labore.
                   </p>
                 </div> */}
-        {requestAction.copyRemove && (
+        {requestAction.copy && (
           <p>
             NOTE: Once a recipe is copied to a recipe book, you will be the
             owner of that copy.{" "}
           </p>
         )}
 
-        {!requestAction.copyRemove && (
+        {!requestAction.copy && (
           <section
             id="RecipeRequests-book"
             className="mx-auto h-full flex-col "

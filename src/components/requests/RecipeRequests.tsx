@@ -31,7 +31,7 @@ function RecipeRequests({
   closeDialog,
   isOpen,
 }: RecipeRequestsProps) {
-  const { currentBookId, userId, books, setUserData, PRIVILEGES } =
+  const { currentBookId, userId, books, setUserData } =
     useContext(UserContext);
   const { selectedRecipe, setRecipes, setFilteredRecipes } =
     useContext(RecipeContext);
