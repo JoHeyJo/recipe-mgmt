@@ -194,6 +194,7 @@ export type TextAreaProps = {
   placeholder: string;
   defaultValue: string;
   handleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  isRequired?: boolean;
 };
 
 export type SearchProps = {

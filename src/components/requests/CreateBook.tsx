@@ -141,6 +141,7 @@ function CreateBook({ isOpen, onCloseModal }) {
                   <div className="mt-3 text-center sm:mt-5">
                     <DialogTitle as="h3" className="text-base leading-6">
                       <TextInputTitle
+                        isRequired={true}
                         handleChange={handleChange}
                         title={bookData.title}
                       />

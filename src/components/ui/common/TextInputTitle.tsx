@@ -4,9 +4,13 @@ import BookBadge from "../BookBadge";
 type TextInputTitle = {
   handleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   title: string;
+  isRequired: boolean;
 };
 
-function TextInputTitle({ handleChange, title }: TextInputTitle) {
+/**
+ * CreateBook ->TextInputTitle -> TextArea
+ */
+function TextInputTitle({ handleChange, title, isRequired=false }: TextInputTitle) {
   return (
     <div className="flex items-start space-x-4">
       <div className="flex-shrink-0">
@@ -14,18 +18,19 @@ function TextInputTitle({ handleChange, title }: TextInputTitle) {
       </div>
       <div className="min-w-0 flex-1">
         {/* <form action=""> */}
-          <div className="TextInputTitle-text border-b focus-within:border-secondary">
-            <label htmlFor="title" className="sr-only"></label>
-            <TextArea
-              defaultValue={""}
-              placeholder="Book Title..."
-              rows={1}
-              name={"title"}
-              id={"title"}
-              handleChange={handleChange}
-            />
-          </div>
-          {/* <div className="flex justify-between pt-2">
+        <div className="TextInputTitle-text border-b focus-within:border-secondary">
+          <label htmlFor="title" className="sr-only"></label>
+          <TextArea
+            isRequired={isRequired}
+            defaultValue={title}
+            placeholder="Book Title..."
+            rows={1}
+            name={"title"}
+            id={"title"}
+            handleChange={handleChange}
+          />
+        </div>
+        {/* <div className="flex justify-between pt-2">
             <div className="flex items-center space-x-5">
               <div className="flow-root">
               </div>
