@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import {
   Dialog,
   DialogBackdrop,
@@ -79,17 +79,20 @@ function CreateBook({ isOpen, onCloseModal }) {
         setBookId(newBook.id);
         return updatedUser;
       });
-      return newBook
+      return newBook;
     } catch (error: any) {
       errorHandling("CreateBook - createBook", error);
     }
   }
 
   /** Handle submitting action */
-  async function handleSubmit(bookData: Book, userId: number) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     const newBook = await createBook(bookData, userId);
     if (newBook.is_default_replaced)
-      setAlert(`Your new recipe book, "${newBook.title}" will be set as the default`);
+      setAlert(
+        `Your new recipe book, "${newBook.title}" will be set as the default`,
+      );
     if (!newBook.is_default_replaced) closeOnSubmit();
     setBookData(defaultBook);
   }
@@ -130,7 +133,7 @@ function CreateBook({ isOpen, onCloseModal }) {
                 </button>
               </div>
             ) : (
-              <form onSubmit={() => handleSubmit(bookData, userId)}>
+              <form onSubmit={handleSubmit}>
                 <div>
                   <div className="mx-auto bg-background-color flex h-12 w-12 items-center justify-center rounded-full">
                     <BookOpenIcon
