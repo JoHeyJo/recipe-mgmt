@@ -54,15 +54,6 @@ function CreateBook({ isOpen, onCloseModal }) {
     });
   }
 
-  /** Consolidate modal closing actions */
-  function handleClosingActions() {
-    onCloseModal();
-    setTimeout(() => {
-      setBookData(defaultBook);
-    }, 500);
-    // setBookData(defaultBook);
-  }
-
   /** Post request to create new book */
   async function createBook(bookData: Book, userId: number) {
     try {
@@ -96,19 +87,29 @@ function CreateBook({ isOpen, onCloseModal }) {
       setAlert(
         `Your new recipe book, "${newBook.title}" will be set as the default`,
       );
-    if (!newBook.is_default_replaced) closeOnSubmit();
+    if (!newBook.is_default_replaced) closeOnAlert();
   }
 
-  function closeOnSubmit() {
+  function closeOnAlert() {
     setAlert("");
     onCloseModal(false);
     setBookData(defaultBook);
   }
 
+  /** Consolidate modal closing actions */
+  function handleClosingOnSubmit() {
+    onCloseModal();
+    // prevents flash of default recipe
+    setTimeout(() => {
+      setBookData(defaultBook);
+    }, 500);
+    // setBookData(defaultBook);
+  }
+
   return (
     <Dialog
       open={isOpen}
-      onClose={handleClosingActions}
+      onClose={handleClosingOnSubmit}
       className="relative z-10"
     >
       <DialogBackdrop
@@ -127,7 +128,7 @@ function CreateBook({ isOpen, onCloseModal }) {
               <div className="flex flex-row">
                 <Alert alert={alert} degree={"yellow"} />
                 <button
-                  onClick={closeOnSubmit}
+                  onClick={closeOnAlert}
                   type="button"
                   className="ms-auto -mx-1.5 -my-1.5 bg-blue-50 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-blue-400 dark:hover:bg-gray-700"
                   aria-label="Close"
@@ -153,7 +154,10 @@ function CreateBook({ isOpen, onCloseModal }) {
                       />
                     </DialogTitle>
                     <div className="CreateBook-description mt-6">
-                      <TextInputDescription onChange={handleChange} description={bookData.description.trim()}/>
+                      <TextInputDescription
+                        onChange={handleChange}
+                        description={bookData.description.trim()}
+                      />
                     </div>
                   </div>
                 </div>
@@ -170,7 +174,7 @@ function CreateBook({ isOpen, onCloseModal }) {
                     id="cancel-button"
                     type="button"
                     data-autofocus
-                    onClick={() => handleClosingActions()}
+                    onClick={() => handleClosingOnSubmit()}
                     className="mt-3 inline-flex w-full justify-center rounded-md bg-button-cancel px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-button-submit sm:col-start-1 sm:mt-0"
                   >
                     Cancel

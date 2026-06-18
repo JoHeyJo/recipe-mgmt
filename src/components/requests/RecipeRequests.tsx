@@ -220,11 +220,6 @@ function RecipeRequests({
             transition
             className={`relative flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all ${isBookSelectOpen ? "" : "sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"}`}
           >
-            {/**
-             * open dropdown - no default book && in shared recipes
-             * open recipe form - not in shared recipes
-             * open create book - in shared recipes
-             */}
             {render.dropdown && (
               <Dropdown
                 selected={null}
