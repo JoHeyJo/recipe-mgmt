@@ -56,8 +56,11 @@ function CreateBook({ isOpen, onCloseModal }) {
 
   /** Consolidate modal closing actions */
   function handleClosingActions() {
-    setBookData(defaultBook);
     onCloseModal();
+    setTimeout(() => {
+      setBookData(defaultBook);
+    }, 500);
+    // setBookData(defaultBook);
   }
 
   /** Post request to create new book */
@@ -94,12 +97,12 @@ function CreateBook({ isOpen, onCloseModal }) {
         `Your new recipe book, "${newBook.title}" will be set as the default`,
       );
     if (!newBook.is_default_replaced) closeOnSubmit();
-    setBookData(defaultBook);
   }
 
   function closeOnSubmit() {
     setAlert("");
     onCloseModal(false);
+    setBookData(defaultBook);
   }
 
   return (
