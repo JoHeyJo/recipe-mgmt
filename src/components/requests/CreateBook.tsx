@@ -87,10 +87,10 @@ function CreateBook({ isOpen, onCloseModal }) {
       setAlert(
         `Your new recipe book, "${newBook.title}" will be set as the default`,
       );
-    if (!newBook.is_default_replaced) closeOnAlert();
+    if (!newBook.is_default_replaced) handleClosingOnSubmit();
   }
 
-  function closeOnAlert() {
+  function hanldeCloseOnAlert() {
     setAlert("");
     onCloseModal(false);
     setBookData(defaultBook);
@@ -128,7 +128,7 @@ function CreateBook({ isOpen, onCloseModal }) {
               <div className="flex flex-row">
                 <Alert alert={alert} degree={"yellow"} />
                 <button
-                  onClick={closeOnAlert}
+                  onClick={hanldeCloseOnAlert}
                   type="button"
                   className="ms-auto -mx-1.5 -my-1.5 bg-blue-50 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-blue-400 dark:hover:bg-gray-700"
                   aria-label="Close"
@@ -150,13 +150,13 @@ function CreateBook({ isOpen, onCloseModal }) {
                       <TextInputTitle
                         isRequired={true}
                         handleChange={handleChange}
-                        title={bookData.title.trim()}
+                        title={bookData.title}
                       />
                     </DialogTitle>
                     <div className="CreateBook-description mt-6">
                       <TextInputDescription
                         onChange={handleChange}
-                        description={bookData.description.trim()}
+                        description={bookData.description}
                       />
                     </div>
                   </div>
@@ -165,7 +165,6 @@ function CreateBook({ isOpen, onCloseModal }) {
                   <button
                     id="submit-button"
                     type="submit"
-                    // onClick={() => handleSubmit(bookData, userId)}
                     className="inline-flex w-full justify-center rounded-md bg-button-submit px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-disabled sm:col-start-2"
                   >
                     Submit

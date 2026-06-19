@@ -12,7 +12,6 @@ function TextInputDescription({ onChange, description }: TextInputDescription) {
   return (
     <div className="flex items-start space-x-4">
       <div className="min-w-0 flex-1">
-        <form action="#">
           <div className="TextInputDescription-text border-b focus-within:border-secondary">
             <label htmlFor="description" className="sr-only"></label>
             <TextArea
@@ -31,7 +30,6 @@ function TextInputDescription({ onChange, description }: TextInputDescription) {
             </div>
             <div className="flex-shrink-0"></div>
           </div>
-        </form>
       </div>
     </div>
   );

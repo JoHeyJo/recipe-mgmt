@@ -225,7 +225,7 @@ function RecipeRequests({
                 selected={null}
                 options={books}
                 onChange={triggerCopy}
-                isActionCopy={true}
+                isActionCopy={render.copy}
                 onCreateBook={() => setRender({ createBook: true })}
               />
             )}
