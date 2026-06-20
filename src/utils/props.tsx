@@ -179,7 +179,6 @@ export type DropdownProp = {
   selected: Book;
   options: Book[];
   onChange: (id: number, selected: Book) => void;
-  isActionCopy?: boolean;
   onCreateBook?: () => void;
 };
 

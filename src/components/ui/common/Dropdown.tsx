@@ -19,11 +19,8 @@ function Dropdown({
   selected,
   options,
   onChange,
-  isActionCopy,
   onCreateBook,
 }: DropdownProp) {
-  const isDefaultSet = () =>
-    options.length === 2 && options[0].book_type === "shared_inbox";
 
   /** Sets option and option id */
   function handleSelect(option: Book) {
@@ -41,12 +38,14 @@ function Dropdown({
     </MenuItem>
   );
 
-  /**  */
+  function isSharedHidden(option) {
+    return selected ? true : option.book_type !== "shared_inbox";
+  }
+
+  /** Render dropdown options based on parent component   */
   function menuListUI(option) {
-    console.log(option)
     return (
-      selected
-    ?
+      isSharedHidden(option) && (
         <MenuItem key={option.id}>
           <li
             onClick={() => handleSelect(option)}
@@ -62,25 +61,7 @@ function Dropdown({
             )}
           </li>
         </MenuItem>
-        :
-      option.book_type !== "shared_inbox" &&
-        <MenuItem key={option.id}>
-          <li
-            onClick={() => handleSelect(option)}
-            className={`group relative flex justify-between px-4 py-2 text-sm cursor-pointer data-[focus]:bg-selected data-[focus]:text-accent 
-            ${selected?.id === option.id ? "text-gray-700 font-semibold" : "text-gray-700"}`}
-          >
-            <span className="block truncate">{option.title}</span>
-            {selected && selected.id === option.id && (
-              <FontAwesomeIcon
-                className="text-icon-color group-data-[focus]:text-accent"
-                icon={faCheck}
-              />
-            )}
-          </li>
-        </MenuItem>
-  
-      
+      )
     );
   }
 
@@ -101,11 +82,9 @@ function Dropdown({
         anchor={selected ? { to: "bottom start" } : { to: "bottom" }}
       >
         <div className="py-1">
-          {isActionCopy && isDefaultSet
+          {!selected
             ? createBookUI
             : options?.map((option) => menuListUI(option))}
-          {/* // : options?.filter((options)) */}
-          {/* // } */}
         </div>
       </MenuItems>
     </Menu>

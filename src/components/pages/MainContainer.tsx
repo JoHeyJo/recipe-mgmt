@@ -26,7 +26,9 @@ function MainContainer() {
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate);
   const [isOpen, setOpen] = useState(false);
-  const [requestAction, setRequestAction] = useState<requestAction | object>({});
+  const [requestAction, setRequestAction] = useState<requestAction | object>(
+    {},
+  );
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const recipeData = {
@@ -80,7 +82,7 @@ function MainContainer() {
     setOpen(false);
   }
 
-  /** Triggers actions that renders RecipeRequests with appropriate data set - current recipe */
+  /** Triggers actions that renders RecipeRequests with appropriate data/controls set - current recipe */
   function openRecipeModal() {
     PRIVILEGES.sharedInbox
       ? setRequestAction({ copy: true })

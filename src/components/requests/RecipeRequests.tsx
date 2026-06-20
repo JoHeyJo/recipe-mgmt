@@ -200,11 +200,23 @@ function RecipeRequests({
   function handleCloseDialog() {
     closeDialog();
     setTimeout(() => {
-      setRender({ recipeForm: true });
       // prevents flash of recipe copy controls
       setIsBookSelectOpen(false);
-    }, 50);
+      setRender({ recipeForm: true });
+    }, 100);
   }
+
+  /** Close create book modal */
+  function onCloseCreateBook(){
+    closeDialog() 
+        setTimeout(() => {
+          setIsBookSelectOpen(false);
+          setRender({ recipeForm: true });
+        }, 100);
+  //  setIsBookSelectOpen(false);
+  //  setRender({ recipeForm: true });
+  }
+
 
   return (
     <Dialog open={isOpen} onClose={handleCloseDialog} className="relative z-10">
@@ -225,7 +237,6 @@ function RecipeRequests({
                 selected={null}
                 options={books}
                 onChange={triggerCopy}
-                isActionCopy={render.copy}
                 onCreateBook={() => setRender({ createBook: true })}
               />
             )}
