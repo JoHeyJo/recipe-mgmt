@@ -206,17 +206,15 @@ function RecipeRequests({
     }, 100);
   }
 
-  /** Close create book modal */
-  function onCloseCreateBook(){
-    closeDialog() 
-        setTimeout(() => {
-          setIsBookSelectOpen(false);
-          setRender({ recipeForm: true });
-        }, 100);
-  //  setIsBookSelectOpen(false);
-  //  setRender({ recipeForm: true });
+  /** syncs all closing actions - triggers recipe cop after book creation*/
+  function handleCloseDialogAfterBookCrreation() {
+    closeDialog();
+    setTimeout(() => {
+      // prevents flash of recipe copy controls
+      setIsBookSelectOpen(false);
+      setRender({ recipeForm: true });
+    }, 100);
   }
-
 
   return (
     <Dialog open={isOpen} onClose={handleCloseDialog} className="relative z-10">
