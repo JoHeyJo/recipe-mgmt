@@ -22,6 +22,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 type CreateBook = {
   isOpen: boolean;
   onCloseDialog: (bookId: number) => void;
+  createBook: () => void;
 };
 
 const defaultBook = {
@@ -37,7 +38,7 @@ const defaultBook = {
  *
  * [TopNav, BookVIew, RecipeRequests] -> CreateBook -> [TextInputTitle, TextInputDescription]
  */
-function CreateBook({ isOpen, onCloseDialog }) {
+function CreateBook({ isOpen, onCloseDialog, createBook }) {
   const [bookData, setBookData] = useState<Book>(defaultBook);
   const [alert, setAlert] = useState("");
   const [bookId, setBookId] = useLocalStorage("current-book-id");
@@ -52,31 +53,6 @@ function CreateBook({ isOpen, onCloseDialog }) {
       updatedBook[name] = value;
       return updatedBook;
     });
-  }
-
-  /** Post request to create new book */
-  async function createBook(bookData: Book, userId: number) {
-    try {
-      const newBook = await API.postBook(bookData, userId);
-      setUserData((user) => {
-        const updatedUser = { ...user };
-        updatedUser.books.push(newBook);
-        // ensure default book id
-        if (!updatedUser.defaultBookId) {
-          updatedUser.defaultBook = newBook;
-          updatedUser.defaultBookId = newBook.id;
-        }
-        // triggers UI to change to new book
-        updatedUser.currentBook = newBook;
-        updatedUser.currentBookId = newBook.id;
-        // updates localStorage
-        setBookId(newBook.id);
-        return updatedUser;
-      });
-      return newBook;
-    } catch (error: any) {
-      errorHandling("CreateBook - createBook", error);
-    }
   }
 
   /** Handles book creation and recipe copy */
