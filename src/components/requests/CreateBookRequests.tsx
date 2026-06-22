@@ -21,7 +21,7 @@ function CreateBookRequests({
 
   const { userId, setUserData } = useContext(UserContext);
 
-  /** Post request to create new book */
+  /** Calls post request to create new book */
   async function createBook(bookData: Book) {
     try {
       const newBook = await API.postBook(bookData, userId);

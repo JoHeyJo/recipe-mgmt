@@ -37,8 +37,6 @@ function CreateBook({ isOpen, onCloseDialog, createBook }: CreateBookProps) {
     });
   }
 
-  /** Handles book creation and recipe copy */
-
   /** Handle submitting action */
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
