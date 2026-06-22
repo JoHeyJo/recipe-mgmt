@@ -21,7 +21,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 type CreateBook = {
   isOpen: boolean;
-  onCloseModal: () => void;
+  onCloseDialog: (bookId: number) => void;
 };
 
 const defaultBook = {
@@ -37,7 +37,7 @@ const defaultBook = {
  *
  * [TopNav, BookVIew, RecipeRequests] -> CreateBook -> [TextInputTitle, TextInputDescription]
  */
-function CreateBook({ isOpen, onCloseModal }) {
+function CreateBook({ isOpen, onCloseDialog }) {
   const [bookData, setBookData] = useState<Book>(defaultBook);
   const [alert, setAlert] = useState("");
   const [bookId, setBookId] = useLocalStorage("current-book-id");
@@ -87,31 +87,30 @@ function CreateBook({ isOpen, onCloseModal }) {
       setAlert(
         `Your new recipe book, "${newBook.title}" will be set as the default`,
       );
-    if (!newBook.is_default_replaced) handleClosingOnSubmit();
+    if (!newBook.is_default_replaced) handleClosingOnSubmit(newBook.id);
   }
 
-  function hanldeCloseOnAlert() {
+  function handleCloseOnAlert() {
     setAlert("");
-    onCloseModal(false);
+    onCloseDialog(false);
     setBookData(defaultBook);
   }
 
   /** Consolidate modal closing actions */
-  function handleClosingOnSubmit() {
-    onCloseModal();
-    // prevents flash of default recipe
+  function handleClosingOnSubmit(bookId?: number) {
+    onCloseDialog(bookId);
+    handleClose();
+  }
+
+  function handleClose() {
     setTimeout(() => {
+      // prevents flash of default recipe
       setBookData(defaultBook);
     }, 500);
-    // setBookData(defaultBook);
   }
 
   return (
-    <Dialog
-      open={isOpen}
-      onClose={handleClosingOnSubmit}
-      className="relative z-10"
-    >
+    <Dialog open={isOpen} onClose={handleClose} className="relative z-10">
       <DialogBackdrop
         transition
         className="CreateBook-container fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
@@ -128,7 +127,7 @@ function CreateBook({ isOpen, onCloseModal }) {
               <div className="flex flex-row">
                 <Alert alert={alert} degree={"yellow"} />
                 <button
-                  onClick={hanldeCloseOnAlert}
+                  onClick={handleCloseOnAlert}
                   type="button"
                   className="ms-auto -mx-1.5 -my-1.5 bg-blue-50 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-blue-400 dark:hover:bg-gray-700"
                   aria-label="Close"
@@ -173,7 +172,7 @@ function CreateBook({ isOpen, onCloseModal }) {
                     id="cancel-button"
                     type="button"
                     data-autofocus
-                    onClick={() => handleClosingOnSubmit()}
+                    onClick={handleClose}
                     className="mt-3 inline-flex w-full justify-center rounded-md bg-button-cancel px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-button-submit sm:col-start-1 sm:mt-0"
                   >
                     Cancel

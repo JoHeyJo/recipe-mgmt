@@ -38,7 +38,7 @@ function BookView({ resetSelected }: BookViewProp) {
           {/* Model */}
           <CreateBook
             isOpen={isCreateBookOpen}
-            onCloseModal={closeCreateBook}
+            onCloseDialog={closeCreateBook}
           />
           <button onClick={() => setIsCreateBookOpen(true)}>Create Book</button>
         </>

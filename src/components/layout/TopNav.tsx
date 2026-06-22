@@ -46,7 +46,7 @@ function TopNav({ logout }: TopNavProps) {
 
   return (
     <>
-      <CreateBook isOpen={isModalOpen} onCloseModal={closeModal} />
+      <CreateBook isOpen={isModalOpen} onCloseDialog={closeModal} />
       <Disclosure as="nav" className="TopNav-Disclosure bg-secondary">
         {({ open }) => (
           <>
