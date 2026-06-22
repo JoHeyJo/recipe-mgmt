@@ -36,3 +36,12 @@ export const PLACE_HOLDER: Instructions = [
   { instruction: "Add ice...", id: null },
   { instruction: "Shake...", id: null },
 ];
+
+export const defaultBook = {
+  id: null,
+  title: "",
+  description: "",
+  book_role: "",
+  book_type: "",
+  is_default_replaced: false,
+};

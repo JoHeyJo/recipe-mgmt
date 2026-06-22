@@ -10,40 +10,22 @@ import TextInputTitle from "../ui/common/TextInputTitle";
 import TextInputDescription from "../ui/common/TextInputDescription";
 import { Book } from "../../utils/types";
 import { ChangeEvent } from "react";
-import API from "../../api";
-import { errorHandling } from "../../utils/ErrorHandling";
-import { useContext } from "react";
-import { UserContext } from "../../context/UserContext";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import Alert from "../ui/Alert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { defaultBook } from "../../utils/templates";
+import { CreateBookProps } from "../../utils/types";
 
-type CreateBook = {
-  isOpen: boolean;
-  onCloseDialog: (bookId: number) => void;
-  createBook: () => void;
-};
-
-const defaultBook = {
-  id: null,
-  title: "",
-  description: "",
-  book_role: "",
-  book_type: "",
-};
-/** Renders modal that holds book information
- * Request book creation associated to user
+/** Renders form that holds book information
  *
  *
- * [TopNav, BookVIew, RecipeRequests] -> CreateBook -> [TextInputTitle, TextInputDescription]
+ * CreateBookRequests -> CreateBook -> [TextInputTitle, TextInputDescription]
  */
-function CreateBook({ isOpen, onCloseDialog, createBook }) {
+function CreateBook({ isOpen, onCloseDialog, createBook }: CreateBookProps) {
   const [bookData, setBookData] = useState<Book>(defaultBook);
   const [alert, setAlert] = useState("");
   const [bookId, setBookId] = useLocalStorage("current-book-id");
-
-  const { userId, setUserData } = useContext(UserContext);
 
   /** Handles changes to book data form */
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
@@ -60,27 +42,22 @@ function CreateBook({ isOpen, onCloseDialog, createBook }) {
   /** Handle submitting action */
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const newBook = await createBook(bookData, userId);
+    const newBook = await createBook(bookData);
     if (newBook.is_default_replaced)
       setAlert(
         `Your new recipe book, "${newBook.title}" will be set as the default`,
       );
-    if (!newBook.is_default_replaced) handleClosingOnSubmit(newBook.id);
+    if (!newBook.is_default_replaced) handleClose();
   }
 
   function handleCloseOnAlert() {
     setAlert("");
-    onCloseDialog(false);
+    onCloseDialog();
     setBookData(defaultBook);
   }
 
-  /** Consolidate modal closing actions */
-  function handleClosingOnSubmit(bookId?: number) {
-    onCloseDialog(bookId);
-    handleClose();
-  }
-
   function handleClose() {
+    onCloseDialog();
     setTimeout(() => {
       // prevents flash of default recipe
       setBookData(defaultBook);

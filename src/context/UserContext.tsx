@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import { User, Book } from "../utils/types";
+import { defaultBook } from "../utils/templates";
 
 export type UserContextType = {
   user: string | null;
@@ -19,14 +20,6 @@ export type UserContextType = {
     sharedInbox: boolean;
     viewer: boolean;
   };
-};
-
-const defaultBook = {
-  id: 0,
-  title: "",
-  description: "",
-  book_role: "",
-  book_type: "",
 };
 
 export const UserContext = createContext<UserContextType>({

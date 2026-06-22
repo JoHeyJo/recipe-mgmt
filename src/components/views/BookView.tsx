@@ -2,9 +2,9 @@ import { useContext, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import Dropdown from "../ui/common/Dropdown";
 import useLocalStorage from "../../hooks/useLocalStorage";
-import CreateBook from "../requests/CreateBook";
 import { BookViewProp } from "../../utils/props";
 import { Book } from "../../utils/types";
+import CreateBookRequests from "../requests/CreateBookRequests";
 
 /** Facilitates rendering books & book selection
  *
@@ -36,7 +36,7 @@ function BookView({ resetSelected }: BookViewProp) {
       {!currentBook && !bookId ? (
         <>
           {/* Model */}
-          <CreateBook
+          <CreateBookRequests
             isOpen={isCreateBookOpen}
             onCloseDialog={closeCreateBook}
           />

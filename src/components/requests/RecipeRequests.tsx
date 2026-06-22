@@ -60,6 +60,7 @@ function RecipeRequests({
         description: book.description,
         id: book.id,
         title: book.title,
+        is_default_replaced: null
       };
       return userData;
     });
@@ -243,12 +244,12 @@ function onCreateBook(bookId: number) {
                 recipeAction={recipeAction}
               />
             )}
-            {render.createBook && (
+            {/* {render.createBook && (
               <CreateBook
                 isOpen={render.createBook}
                 onCloseDialog={onCreateBook}
               />
-            )}
+            )} */}
             {/* </form> */}
           </DialogPanel>
         </div>

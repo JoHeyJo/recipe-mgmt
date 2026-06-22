@@ -13,8 +13,8 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import ToggleColorScheme from "../../utils/ToggleColorScheme";
-import CreateBook from "../requests/CreateBook";
 import UserAvatar from "../ui/UserAvatar";
+import CreateBookRequests from "../requests/CreateBookRequests";
 
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
@@ -46,7 +46,7 @@ function TopNav({ logout }: TopNavProps) {
 
   return (
     <>
-      <CreateBook isOpen={isModalOpen} onCloseDialog={closeModal} />
+      <CreateBookRequests isOpen={isModalOpen} onCloseDialog={closeModal} />
       <Disclosure as="nav" className="TopNav-Disclosure bg-secondary">
         {({ open }) => (
           <>
