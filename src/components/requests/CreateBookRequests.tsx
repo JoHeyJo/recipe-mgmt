@@ -6,6 +6,7 @@ import { UserContext } from "../../context/UserContext";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import CreateBook from "./CreateBook";
 import { CreateBookRequestsProps } from "../../utils/types";
+import { changeBook } from "../../utils/functions";
 
 /** Handles requests for user to create a new book
  * Request book creation associated to user
@@ -25,21 +26,7 @@ function CreateBookRequests({
   async function createBook(bookData: Book) {
     try {
       const newBook = await API.postBook(bookData, userId);
-      setUserData((user) => {
-        const updatedUser = { ...user };
-        updatedUser.books.push(newBook);
-        // ensure default book id
-        if (!updatedUser.defaultBookId) {
-          updatedUser.defaultBook = newBook;
-          updatedUser.defaultBookId = newBook.id;
-        }
-        // triggers UI to change to new book
-        updatedUser.currentBook = newBook;
-        updatedUser.currentBookId = newBook.id;
-        // updates localStorage
-        setBookId(newBook.id);
-        return updatedUser;
-      });
+      changeBook(setBookId, setUserData, newBook);
       return newBook;
     } catch (error: any) {
       errorHandling("CreateBookRequests - createBook", error);

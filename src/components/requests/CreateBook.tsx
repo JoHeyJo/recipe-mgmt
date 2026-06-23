@@ -19,7 +19,7 @@ import { CreateBookProps } from "../../utils/types";
 /** Renders form that holds book information
  *
  *
- * CreateBookRequests -> CreateBook -> [TextInputTitle, TextInputDescription]
+ * [CreateBookRequests, CreateBookCopyRecipeProps] -> CreateBook -> [TextInputTitle, TextInputDescription]
  */
 function CreateBook({ isOpen, onCloseDialog, createBook }: CreateBookProps) {
   const [bookData, setBookData] = useState<Book>(defaultBook);

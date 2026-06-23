@@ -6,6 +6,7 @@ import {
   Book,
   AttributeData,
   Instruction,
+  Recipes,
 } from "./utils/types";
 import { errorHandling } from "./utils/ErrorHandling";
 
@@ -84,8 +85,7 @@ class API {
   static async postCreateBookCopyRecipe(
     book: Book,
     recipe: Recipe,
-  ): Promise<{ book: Book; recipe: Recipe }> {
-    console.log(book,recipe)
+  ): Promise<{ book: Book; recipes: Recipes }> {
     const res = await this.request(
       `create_copy`,
       { title: book.title, description: book.description, recipe: recipe },

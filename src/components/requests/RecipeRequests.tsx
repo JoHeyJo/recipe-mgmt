@@ -207,12 +207,6 @@ function RecipeRequests({
     }, 100);
   }
 
-
-function onCreateBook(bookId: number) {
-  if (render.createBook) copyRecipe(bookId);
-  handleCloseDialog();
-}
-
   return (
     <Dialog open={isOpen} onClose={handleCloseDialog} className="relative z-10">
       <DialogBackdrop
@@ -247,7 +241,7 @@ function onCreateBook(bookId: number) {
             {render.createBook && (
               <CreateBookCopyRecipe
                 isOpen={render.createBook}
-                onCloseDialog={onCreateBook}
+                onCloseDialog={handleCloseDialog}
               />
             )}
             {/* </form> */}

@@ -112,7 +112,7 @@ export type CreateBookRequestsProps = {
 
 export type CreateBookCopyRecipeProps = {
   isOpen: boolean;
-  onCloseDialog: (bookId: number) => void;
+  onCloseDialog: () => void;
 };
 
 
