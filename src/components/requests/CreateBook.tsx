@@ -10,7 +10,6 @@ import TextInputTitle from "../ui/common/TextInputTitle";
 import TextInputDescription from "../ui/common/TextInputDescription";
 import { Book } from "../../utils/types";
 import { ChangeEvent } from "react";
-import useLocalStorage from "../../hooks/useLocalStorage";
 import Alert from "../ui/Alert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -25,7 +24,6 @@ import { CreateBookProps } from "../../utils/types";
 function CreateBook({ isOpen, onCloseDialog, createBook }: CreateBookProps) {
   const [bookData, setBookData] = useState<Book>(defaultBook);
   const [alert, setAlert] = useState("");
-  const [bookId, setBookId] = useLocalStorage("current-book-id");
 
   /** Handles changes to book data form */
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {

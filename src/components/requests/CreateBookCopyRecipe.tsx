@@ -7,6 +7,7 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 import CreateBook from "./CreateBook";
 import { CreateBookCopyRecipeProps } from "../../utils/types";
 import { RecipeContext } from "../../context/RecipeContext";
+import { changeBook } from "../../utils/functions";
 
 /** Handles requests for user to create a new book  
  * Request book creation associated to user
@@ -23,11 +24,20 @@ function CreateBookCopyRecipe({
   const { userId, setUserData } = useContext(UserContext);
   const { selectedRecipe } = useContext(RecipeContext);
 
+  function handleCloseDialog(){
+    onCloseDialog(1)
+  }
+
   /** Calls POST request book creation and recipe copy */
-  function createBookCopyRecipe(bookData: Book) {
-    const {book, recipe} = API.postCreateBookCopyRecipe(bookData, selectedRecipe, userId);
-    
+  async function createBookCopyRecipe(bookData: Book) {
     try {
+      const { book, recipe } = await API.postCreateBookCopyRecipe(
+        bookData,
+        selectedRecipe,
+      );
+      console.log(book, recipe);
+      changeBook(setBookId, setUserData, book)
+      return book;
     } catch (error: any) {
       throw errorHandling("CreateBookRequests - createBookCopyRecipe", error);
     }
@@ -63,7 +73,7 @@ function CreateBookCopyRecipe({
   return (
     <CreateBook
       isOpen={isOpen}
-      onCloseDialog={onCloseDialog}
+      onCloseDialog={handleCloseDialog}
       createBook={createBookCopyRecipe}
     />
   );

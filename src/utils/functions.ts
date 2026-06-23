@@ -1,6 +1,30 @@
+import { SetStateAction, Dispatch } from "react";
 import { jwtDecode } from "jwt-decode";
 import { AttributeData, Instructions } from "./types";
+import { User, Book } from "./types";
 
+
+export function changeBook(
+  setBookId: Dispatch<SetStateAction<string | number>>,
+  setUserState: Dispatch<SetStateAction<User>>,
+  book: Book
+) {
+  setUserState((user) => {
+    const updatedUser = { ...user };
+    updatedUser.books.push(book);
+    // ensure default book id
+    if (!updatedUser.defaultBookId) {
+      updatedUser.defaultBook = book;
+      updatedUser.defaultBookId = book.id;
+    }
+    // triggers UI to change to new book
+    updatedUser.currentBook = book;
+    updatedUser.currentBookId = book.id;
+    // updates localStorage
+    setBookId(book.id);
+    return updatedUser;
+  });
+}
 
 /** Limits string length to max input */
 export const truncate = (str: string, max: number) =>

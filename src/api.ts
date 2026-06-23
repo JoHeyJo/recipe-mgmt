@@ -84,11 +84,11 @@ class API {
   static async postCreateBookCopyRecipe(
     book: Book,
     recipe: Recipe,
-    userId: number,
-  ) {
+  ): Promise<{ book: Book; recipe: Recipe }> {
+    console.log(book,recipe)
     const res = await this.request(
-      `users/${userId}/create_copy`,
-      { book, recipe },
+      `create_copy`,
+      { title: book.title, description: book.description, recipe: recipe },
       "POST",
     );
     return res;

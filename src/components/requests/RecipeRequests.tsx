@@ -17,7 +17,7 @@ import { filterRecipe, filterTemplate } from "../../utils/filters";
 import { recipeTemplate } from "../../utils/templates";
 import Dropdown from "../ui/common/Dropdown";
 import RecipeForm from "../views/RecipeForm";
-import CreateBook from "./CreateBook";
+import CreateBookCopyRecipe from "./CreateBookCopyRecipe";
 
 /** Processes recipe data. Context data is passed through here on edit. Else template data.
  * RecipeRequests data (e.g recipe state) is mutable while context data(reference data) is not
@@ -244,12 +244,12 @@ function onCreateBook(bookId: number) {
                 recipeAction={recipeAction}
               />
             )}
-            {/* {render.createBook && (
-              <CreateBook
+            {render.createBook && (
+              <CreateBookCopyRecipe
                 isOpen={render.createBook}
                 onCloseDialog={onCreateBook}
               />
-            )} */}
+            )}
             {/* </form> */}
           </DialogPanel>
         </div>
