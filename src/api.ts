@@ -96,10 +96,10 @@ class API {
 
   // ############ RECIPES ###########
   /** Add user recipe to corresponding book*/
-  static async postUserRecipe(data: Recipe, bookId: number, userId: number) {
+  static async postUserRecipe(recipe: Recipe, bookId: number, userId: number) {
     const res = await this.request(
       `users/${userId}/books/${bookId}/recipes`,
-      data,
+      recipe,
       "POST",
     );
     return res;
