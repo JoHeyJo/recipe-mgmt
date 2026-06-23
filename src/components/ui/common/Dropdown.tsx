@@ -22,6 +22,9 @@ function Dropdown({ selected, options, onChange, onCreateBook }: DropdownProp) {
     onChange(option.id, option);
   }
 
+
+
+
   /** Render "CreateBook" - Default book is "Shared Inbox" & user is creating book  */
   const createBookUI = (
     <MenuItem key={1}>
@@ -40,8 +43,9 @@ function Dropdown({ selected, options, onChange, onCreateBook }: DropdownProp) {
   }
 
   /** Render  "books except selected book*" - Default book is NOT "Shared Inbox" - User is selecting book to copy to */
-  function copyRecipeUI(option) {
+  function copyRecipeToUI(option) {
     return (
+      isSharedHidden &&
       <MenuItem key={option.id}>
         <li
           onClick={() => handleSelect(option)}
@@ -61,7 +65,7 @@ function Dropdown({ selected, options, onChange, onCreateBook }: DropdownProp) {
   }
 
   /** Render "books" - Default book is NOT "Shared Inbox" - User is selecting book to view    */
-  function viewBookUI(option) {
+  function viewBooksUI(option) {
     return (
       <MenuItem key={option.id}>
         <li
@@ -81,14 +85,10 @@ function Dropdown({ selected, options, onChange, onCreateBook }: DropdownProp) {
     );
   }
 
-  function renderDropdown(action) {
-    switch (action) {
-      case "":
-        return createBookUI;
-      case "l":
-        return copyRecipeUI;
-    }
-  }
+  // function renderDropdown(option) {
+  //   if(selected.book_type === "shared_inbox") createBookUI;
+  //   if(selected.book_type !== "shared_inbox") copyRecipeToUI(option)
+  // }
 
   return (
     <Menu as="div" className="relative inline-block text-left">
@@ -107,9 +107,9 @@ function Dropdown({ selected, options, onChange, onCreateBook }: DropdownProp) {
         anchor={selected ? { to: "bottom start" } : { to: "bottom" }}
       >
         <div className="py-1">
-          {selected.book_type === "shared_inbox"
+          {!selected
             ? createBookUI
-            : options?.map((option) => viewBookUI(option))}
+            : options?.map((option) => viewBooksUI(option))}
         </div>
       </MenuItems>
     </Menu>
