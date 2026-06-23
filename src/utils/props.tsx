@@ -176,7 +176,7 @@ export type RecipeInfoProp = {
 };
 
 export type DropdownProp = {
-  selected: Book;
+  selected?: Book;
   options: Book[];
   onChange: (id: number, selected: Book) => void;
   onCreateBook?: () => void;

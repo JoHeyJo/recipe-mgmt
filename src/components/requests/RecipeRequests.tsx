@@ -31,7 +31,7 @@ function RecipeRequests({
   closeDialog,
   isOpen,
 }: RecipeRequestsProps) {
-  const { currentBookId, userId, books, setUserData } =
+  const { currentBookId, userId, books, setUserData, currentBook } =
     useContext(UserContext);
   const { selectedRecipe, setRecipes, setFilteredRecipes } =
     useContext(RecipeContext);
@@ -206,7 +206,6 @@ function RecipeRequests({
       setRender({ recipeForm: true });
     }, 100);
   }
-
   return (
     <Dialog open={isOpen} onClose={handleCloseDialog} className="relative z-10">
       <DialogBackdrop

@@ -82,7 +82,7 @@ function MainContainer() {
     setOpen(false);
   }
 
-  /** Triggers actions that renders RecipeRequests with appropriate data/controls set - current recipe */
+  /** Triggers actions that renders RecipeRequests with appropriate data/controls*/
   function openRecipeModal() {
     PRIVILEGES.sharedInbox
       ? setRequestAction({ copy: true })

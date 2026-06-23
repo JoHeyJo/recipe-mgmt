@@ -21,7 +21,7 @@ function Dropdown({
   onChange,
   onCreateBook,
 }: DropdownProp) {
-
+console.log(selected)
   /** Sets option and option id */
   function handleSelect(option: Book) {
     onChange(option.id, option);
