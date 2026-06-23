@@ -222,7 +222,7 @@ function RecipeRequests({
           >
             {render.dropdown && (
               <Dropdown
-                selected={null}
+                selected={currentBook}
                 options={books}
                 onChange={triggerCopy}
                 onCreateBook={() => setRender({ createBook: true })}
