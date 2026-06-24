@@ -1,8 +1,17 @@
+## Notes
+Function naming convention to dictate origin:
+
+handle* → defined locally, wired to the element's event right here.
+
+on* → arrived through a prop (origin encoded in the name, since props are invisible at the call site).
+
+role name + useX() above it → came through context (origin shown by the hook, so the name is free to just describe the action).
+
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npx prettier --write .`
+### `npx prettier --write .
 
 Run Prettier over all files in the project
 `option + shift + f` - run on current file if set as default formatter

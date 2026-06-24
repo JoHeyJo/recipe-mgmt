@@ -88,5 +88,31 @@ export type Book = {
   description: string;
   book_role: string;
   book_type: string;
+  is_default_replaced: boolean
+};
+
+export type requestAction = {
+  copy: boolean;
+  edit: boolean;
+  create: boolean;
 };
 // export type Books = { books?: Book[] }
+
+
+export type CreateBookProps = {
+  isOpen: boolean;
+  onCloseDialog: () => void;
+  createBook: (bookData: Book) => Promise<Book>;
+};
+
+export type CreateBookRequestsProps = {
+  isOpen: boolean;
+  onCloseDialog: () => void;
+};
+
+export type CreateBookCopyRecipeProps = {
+  isOpen: boolean;
+  onCloseDialog: () => void;
+};
+
+

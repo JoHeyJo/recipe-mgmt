@@ -1,22 +1,22 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../../context/UserContext";
-import MultiSelect from "../ui/common/MultiSelect";
+import Dropdown from "../ui/common/Dropdown";
 import useLocalStorage from "../../hooks/useLocalStorage";
-import CreateBook from "../requests/CreateBook";
 import { BookViewProp } from "../../utils/props";
 import { Book } from "../../utils/types";
+import CreateBookRequests from "../requests/CreateBookRequests";
 
 /** Facilitates rendering books & book selection
  *
- * MainContainer -> BookView -> [CreateBook, MultiSelect]
+ * MainContainer -> BookView -> [CreateBook, Dropdown]
  */
 function BookView({ resetSelected }: BookViewProp) {
   const { books, setUserData, currentBook } = useContext(UserContext);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCreateBookOpen, setIsCreateBookOpen] = useState(false);
   const [bookId, setBookId] = useLocalStorage("current-book-id");
 
   /** Set selected book id & reset selected book to default */
-  function selectBook(id: number, selected: Book) {
+  function onSelectBook(id: number, selected: Book) {
     setUserData((user) => {
       const userData = { ...user };
       userData.currentBookId = id;
@@ -27,20 +27,28 @@ function BookView({ resetSelected }: BookViewProp) {
     resetSelected();
   }
 
+  function closeCreateBook() {
+    setIsCreateBookOpen(false);
+  }
+
   return (
     <section>
       {!currentBook && !bookId ? (
         <>
           {/* Model */}
-          <CreateBook isOpen={isModalOpen} setOpen={setIsModalOpen} />
-          <button onClick={() => setIsModalOpen(true)}>Create Book</button>
+          <CreateBookRequests
+            isOpen={isCreateBookOpen}
+            onCloseDialog={closeCreateBook}
+          />
+          <button onClick={() => setIsCreateBookOpen(true)}>Create Book</button>
         </>
       ) : (
         <>
-          <MultiSelect
+          <Dropdown
             selected={currentBook}
             options={books}
-            handleIdChange={selectBook}
+            onChange={onSelectBook}
+            render={{ viewBooks: true }}
           />
         </>
       )}

@@ -6,6 +6,7 @@ import {
   Book,
   AttributeData,
   Instruction,
+  Recipes,
 } from "./utils/types";
 import { errorHandling } from "./utils/ErrorHandling";
 
@@ -80,12 +81,25 @@ class API {
     return res;
   }
 
+  /** Create new default book and copy recipe to new default book */
+  static async postCreateBookCopyRecipe(
+    book: Book,
+    recipe: Recipe,
+  ): Promise<{ book: Book; recipes: Recipes }> {
+    const res = await this.request(
+      `create_copy`,
+      { title: book.title, description: book.description, recipe: recipe },
+      "POST",
+    );
+    return res;
+  }
+
   // ############ RECIPES ###########
   /** Add user recipe to corresponding book*/
-  static async postUserRecipe(data: Recipe, bookId: number, userId: number) {
+  static async postUserRecipe(recipe: Recipe, bookId: number, userId: number) {
     const res = await this.request(
       `users/${userId}/books/${bookId}/recipes`,
-      data,
+      recipe,
       "POST",
     );
     return res;
@@ -98,12 +112,7 @@ class API {
   }
 
   /** Edit user recipe */
-  static async patchUserRecipe(
-    bookId: number,
-    recipeId: number,
-    data: any,
-  ) 
-  {
+  static async patchUserRecipe(bookId: number, recipeId: number, data: any) {
     const res = await this.request(
       `books/${bookId}/recipes/${recipeId}`,
       data,
@@ -128,24 +137,32 @@ class API {
   }
 
   /** Share recipe with another user */
-  static async postShareRecipe(
-    recipeId: number,
-    recipient: string,
-  ) {
+  static async postShareRecipe(recipeId: number, recipient: string) {
     const res = await this.request(
       `share_recipes/${recipeId}`,
       { recipient },
-      "POST"
+      "POST",
     );
     return res;
   }
 
   /** Delete shared recipe association */
-  static async deleteSharedRecipe(bookId: number, recipeId: number){
+  static async deleteSharedRecipe(bookId: number, recipeId: number) {
     const res = await this.request(
       `books/${bookId}/share_recipes/${recipeId}`,
       {},
-      "DELETE"
+      "DELETE",
+    );
+    return res;
+  }
+
+  /** Copy & change ownership of user's recipe to recipient recipe book */
+  static async postCopySharedRecipe(bookId: number, recipe: Recipe) {
+    const recipeId = recipe.id;
+    const res = await this.request(
+      `books/${bookId}/recipes/${recipeId}`,
+      recipe,
+      "POST",
     );
     return res;
   }

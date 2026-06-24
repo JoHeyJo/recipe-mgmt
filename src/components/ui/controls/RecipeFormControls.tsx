@@ -1,33 +1,25 @@
-import { Recipe } from "../../../utils/types";
 import { useContext } from "react";
 import { UserContext } from "../../../context/UserContext";
-import { RecipeContextType, RecipeContext } from "../../../context/RecipeContext";
+import { RecipeContext } from "../../../context/RecipeContext";
+import { RecipeFormControlsProps } from "../../../utils/props";
 
-type RecipeFormControlsProps = {
-  handleSubmit: (e: any) => Promise<void>;
-  isDisabled: boolean;
-  recipe: Recipe;
-  handleRemove: () => {};
-  handleDelete: () => {};
-  editRecipe: (originalRecipe: Recipe, mutableRecipe: Recipe) => {};
-};
+
+/** Dynamically renders controls for selected recipe form based on privileges
+ * RecipeForm -> RecipeFormControls
+ */
 function RecipeFormControls({
-  handleSubmit,
+  recipeAction,
   isDisabled,
-  recipe,
-  handleRemove,
-  handleDelete,
-  editRecipe,
+  onOpenDropdown
 }: RecipeFormControlsProps) {
   const { PRIVILEGES } = useContext(UserContext);
-  const { selectedRecipe, requestAction } = useContext(RecipeContext);
-
+  const { requestAction } = useContext(RecipeContext);
 
   const formControls = {
     create: (
       <button
         type="submit"
-        onClick={handleSubmit}
+        onClick={recipeAction.submit}
         className="inline-flex w-full justify-center rounded-md bg-button-submit px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default"
       >
         Submit
@@ -37,7 +29,7 @@ function RecipeFormControls({
       <>
         <button
           type="button"
-          onClick={() => editRecipe(selectedRecipe, recipe)}
+          onClick={recipeAction.edit}
           disabled={isDisabled}
           className={`${isDisabled ? "bg-button-disabled hover:opacity-100" : "bg-button-submit"} inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default`}
         >
@@ -45,7 +37,7 @@ function RecipeFormControls({
         </button>
         <button
           type="button"
-          onClick={handleDelete}
+          onClick={recipeAction.delete}
           className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default"
         >
           Delete
@@ -56,15 +48,15 @@ function RecipeFormControls({
       <>
         <button
           type="button"
-          onClick={() => {}}
-          disabled={isDisabled}
+          onClick={onOpenDropdown}
+          // disabled={isDisabled}
           className={`bg-button-submit inline-flex w-full justify-center rounded-md px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default`}
         >
           Copy
         </button>
         <button
           type="button"
-          onClick={handleRemove}
+          onClick={recipeAction.remove}
           className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 mx-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-default"
         >
           Remove
@@ -75,7 +67,7 @@ function RecipeFormControls({
 
   function renderRecipeFormControls() {
     if (
-      requestAction === "create" &&
+      requestAction.create &&
       (PRIVILEGES.full || PRIVILEGES.collaborator)
     )
       return formControls.create;

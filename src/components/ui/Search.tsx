@@ -31,7 +31,7 @@ function Search({ list, setList }: SearchProps) {
         id={"null"}
         name={"search"}
         value={query}
-        handleUpdate={handleChange}
+        onUpdate={handleChange}
         type={"recipes-search-bar"}
         placeholder={"Search..."}
       />

@@ -66,15 +66,15 @@ type HandleOption = {
 };
 
 export type InstructionsRequestsProp = {
-  handleRecipeUpdate: (data: Instructions, section: string) => void;
+  onInstructionInput: (data: Instructions, section: string) => void;
 };
 
 export type IngredientInputGroupProps = {
   options: Options;
   ingredient: Ingredient;
   index: number;
-  handleIngredient: HandleIngredient;
-  handleOption: HandleOption;
+  onIngredientAction: HandleIngredient;
+  optionAction: HandleOption;
   length: number;
 };
 
@@ -82,7 +82,7 @@ export type ComponentsOptionsRequestsProps = {
   numOfIngredients: number;
   ingredients: Ingredients;
   ingredientKeys: number[];
-  handleIngredient: HandleIngredient;
+  ingredientAction: HandleIngredient;
 };
 
 export type IngredientManagerProps = {
@@ -114,12 +114,12 @@ export type NotesViewProp = {
 };
 
 export type RecipeRequestsProps = {
-  recipeActions: {
+  stateActions: {
     updateRecipes: (recipe: Recipe) => void;
     deleteRecipe: () => void;
     editRecipe: (edited_recipe: Recipe) => void;
   };
-  setShowing: any;
+  closeDialog: () => void;
   isOpen: boolean;
 };
 
@@ -129,7 +129,7 @@ export type RecipeViewProps = {
 };
 
 export type IngredientsGroupProps = {
-  handleRecipeUpdate: (data: Ingredient[], section: string) => void;
+  onIngredientInput: (data: Ingredient[], section: string) => void;
 };
 
 type InstructionsData = {
@@ -139,7 +139,7 @@ type InstructionsData = {
 };
 
 export type InstructionsAreaProps = {
-  handleRecipeUpdate: (data: Instructions, section: string) => void;
+  onInstructionInput: (data: Instructions, section: string) => void;
   data: InstructionsData;
   handleInstruction: HandleInstruction;
 };
@@ -153,7 +153,7 @@ export type FaMinusButtonProp = {
 };
 
 export type NotesInputProps = {
-  handleUpdate: (data: string, section: string) => void;
+  onNotesInput: (data: string, section: string) => void;
 };
 
 export type RecipesListProps = {
@@ -163,7 +163,7 @@ export type RecipesListProps = {
 };
 
 export type InputWithLabelProps = {
-  handleUpdate: (e: any) => void;
+  onUpdate: (e: any) => void;
   id: string;
   name: string;
   value: string;
@@ -172,13 +172,15 @@ export type InputWithLabelProps = {
 };
 
 export type RecipeInfoProp = {
-  handleUpdate: (data: string, section: string) => void;
+  onTitleInput: (data: string, section: string) => void;
 };
 
-export type MultiSelectProp = {
-  selected: Book;
+export type DropdownProp = {
+  selected?: Book;
   options: Book[];
-  handleIdChange: (id: number, selected: Book) => void;
+  onChange: (id: number, selected: Book) => void;
+  onCreateBook?: () => void;
+  render: {[string: string]: boolean}
 };
 
 export type BookViewProp = {
@@ -191,7 +193,8 @@ export type TextAreaProps = {
   rows: number;
   placeholder: string;
   defaultValue: string;
-  handleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  isRequired?: boolean;
 };
 
 export type SearchProps = {
@@ -226,4 +229,17 @@ export type AvatarFrameProp = {
 
 export type UserAvatarProp = {
   title: string;
+};
+
+export type recipeAction = {
+  submit: (e: any) => Promise<void>;
+  remove: () => Promise<void>;
+  delete: () => Promise<void>;
+  edit: () => Promise<void>;
+};
+
+export type RecipeFormControlsProps = {
+  recipeAction: recipeAction;
+  isDisabled: boolean;
+  onOpenDropdown: () => void;
 };

@@ -13,10 +13,10 @@ import Alert from "../ui/Alert";
  * ComponentsOptionsRequests -> IngredientInputGroup -> IngredientManager
  */
 function IngredientInputGroup({
-  handleIngredient,
+  onIngredientAction,
   ingredient,
   index,
-  handleOption,
+  optionAction,
   options,
   length,
 }: IngredientInputGroupProps) {
@@ -30,7 +30,7 @@ function IngredientInputGroup({
   /** Calls parent callback to handleUpdate name */
   function updateIngredientList() {
     const updatedIngredient = { ...ingredient, item, amount, unit };
-    handleIngredient.update(updatedIngredient, index);
+    onIngredientAction.update(updatedIngredient, index);
   }
 
   /** Changes selected option */
@@ -42,7 +42,7 @@ function IngredientInputGroup({
       options.selected === "user" &&
       isOptionNotAssociated(option, options, state)
     )
-      handleOption.associate(userId, currentBookId, +option.id, state);
+      optionAction.associate(userId, currentBookId, +option.id, state);
   }
 
   /** Checks if selected user option already exists in list of user's book options */
@@ -80,11 +80,11 @@ function IngredientInputGroup({
    * "+" or "-" button to add or remove additional ingredient inputs
    */
   function renderHandleIngredientUI() {
-    if (length === 0) return <FaPlusButton onAction={handleIngredient.add} />;
+    if (length === 0) return <FaPlusButton onAction={onIngredientAction.add} />;
     return (item.id || amount.id || unit.id) && length === index ? (
-      <FaPlusButton onAction={handleIngredient.add} />
+      <FaPlusButton onAction={onIngredientAction.add} />
     ) : (
-      <FaMinusButton onAction={() => handleIngredient.remove(index)} />
+      <FaMinusButton onAction={() => onIngredientAction.remove(index)} />
     );
   }
 
@@ -104,7 +104,7 @@ function IngredientInputGroup({
           attribute={"value"}
           entity={"amount"}
           options={options.amounts}
-          handleOption={handleOption}
+          handleOption={optionAction}
           handleComponent={handleComponent}
           placeholder={"2"}
         />
@@ -114,7 +114,7 @@ function IngredientInputGroup({
           attribute={"type"}
           entity={"unit"}
           options={options.units}
-          handleOption={handleOption}
+          handleOption={optionAction}
           handleComponent={handleComponent}
           placeholder={"oz"}
         />
@@ -124,7 +124,7 @@ function IngredientInputGroup({
           attribute={"name"}
           entity={"item"}
           options={options.items}
-          handleOption={handleOption}
+          handleOption={optionAction}
           handleComponent={handleComponent}
           placeholder={"some liquid"}
         />

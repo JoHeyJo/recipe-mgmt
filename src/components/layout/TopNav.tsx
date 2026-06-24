@@ -13,8 +13,8 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import ToggleColorScheme from "../../utils/ToggleColorScheme";
-import CreateBook from "../requests/CreateBook";
 import UserAvatar from "../ui/UserAvatar";
+import CreateBookRequests from "../requests/CreateBookRequests";
 
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
@@ -32,6 +32,10 @@ type TopNavProps = { logout: () => void };
 function TopNav({ logout }: TopNavProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  function closeModal(){
+    setIsModalOpen(false);
+  }
+
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -42,7 +46,7 @@ function TopNav({ logout }: TopNavProps) {
 
   return (
     <>
-      <CreateBook isOpen={isModalOpen} setOpen={setIsModalOpen} />
+      <CreateBookRequests isOpen={isModalOpen} onCloseDialog={closeModal} />
       <Disclosure as="nav" className="TopNav-Disclosure bg-secondary">
         {({ open }) => (
           <>
@@ -195,7 +199,7 @@ function TopNav({ logout }: TopNavProps) {
                       item.current
                         ? "bg-gray-900 text-accent"
                         : "text-light-border hover:bg-gray-700 hover:text-accent",
-                      "block rounded-md px-3 py-2 text-base font-medium"
+                      "block rounded-md px-3 py-2 text-base font-medium",
                     )}
                     aria-current={item.current ? "page" : undefined}
                   >

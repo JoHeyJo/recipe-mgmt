@@ -2,23 +2,25 @@ import { ChangeEvent } from "react";
 import TextArea from "./TextArea";
 
 type TextInputDescription = {
-  handleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  description: string;
 };
-
-function TextInputDescription({ handleChange }: TextInputDescription) {
+/**
+ * CreateBook -> TextInputDescription -> TextArea
+ */
+function TextInputDescription({ onChange, description }: TextInputDescription) {
   return (
     <div className="flex items-start space-x-4">
       <div className="min-w-0 flex-1">
-        <form action="#">
           <div className="TextInputDescription-text border-b focus-within:border-secondary">
             <label htmlFor="description" className="sr-only"></label>
             <TextArea
-              defaultValue={""}
+              defaultValue={description}
               placeholder="Book Description..."
               rows={1}
               name={"description"}
               id={"description"}
-              handleChange={handleChange}
+              onChange={onChange}
             />
           </div>
           <div className="flex justify-between pt-2">
@@ -28,7 +30,6 @@ function TextInputDescription({ handleChange }: TextInputDescription) {
             </div>
             <div className="flex-shrink-0"></div>
           </div>
-        </form>
       </div>
     </div>
   );

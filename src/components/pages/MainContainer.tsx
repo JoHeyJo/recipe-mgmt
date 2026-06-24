@@ -3,7 +3,7 @@ import { UserContext } from "../../context/UserContext";
 import { useContext, useEffect, useState } from "react";
 import API from "../../api";
 import { errorHandling } from "../../utils/ErrorHandling";
-import { Recipe, Recipes } from "../../utils/types";
+import { Recipe, Recipes, requestAction } from "../../utils/types";
 import RecipeContainer from "../views/RecipeContainer";
 import { recipeTemplate } from "../../utils/templates";
 import RecipeRequests from "../requests/RecipeRequests";
@@ -22,16 +22,17 @@ function MainContainer() {
   const { userId, defaultBookId, currentBookId, PRIVILEGES } =
     useContext(UserContext);
 
-  const [selectedBookId, setSelectedBookId] = useState<number>();
   const [recipes, setRecipes] = useState<Recipes | any>([]);
-  const [filteredRecipes, setFilteredRecipe] = useState([]);
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate);
   const [isOpen, setOpen] = useState(false);
-  const [requestAction, setRequestAction] = useState<string>("");
+  const [requestAction, setRequestAction] = useState<requestAction | object>(
+    {},
+  );
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
   const recipeData = {
+    recipes,
     selectedRecipe: {
       id: selectedRecipe.id,
       created_by_id: selectedRecipe.created_by_id,
@@ -40,8 +41,10 @@ function MainContainer() {
       instructions: selectedRecipe.instructions,
       notes: selectedRecipe.notes,
     },
+    setRecipes,
     requestAction,
     updateRecipes,
+    setFilteredRecipes,
   };
 
   /** Updates rendered recipes after creation */
@@ -75,35 +78,36 @@ function MainContainer() {
   }
 
   /** Model toggle function for children components */
-  function toggleModel() {
-    setOpen(!isOpen);
+  function closeDialog() {
+    setOpen(false);
   }
 
-  /** Triggers actions that renders RecipeRequests with appropriate data set - current recipe */
+  /** Triggers actions that renders RecipeRequests with appropriate data/controls*/
   function openRecipeModal() {
     PRIVILEGES.sharedInbox
-      ? setRequestAction("copyRemove")
-      : setRequestAction("edit");
-    setOpen(!isOpen);
+      ? setRequestAction({ copy: true })
+      : setRequestAction({ edit: true });
+    setOpen(true);
   }
 
   /** Triggers actions that renders RecipeRequests with empty data - no recipe */
   function toggleCreateForm() {
     setSelectedRecipe(recipeTemplate);
-    setRequestAction("create");
+    setRequestAction({ create: true });
     setOpen(!isOpen);
   }
 
+  // Removes recipes selection
   function resetSelectedRecipe() {
     setSelectedRecipe(recipeTemplate);
   }
 
   /** Filter recipes */
   function filterRecipes(filteredRecipes: Recipe[]) {
-    setFilteredRecipe(filteredRecipes);
+    setFilteredRecipes(filteredRecipes);
   }
 
-  const recipeActions = {
+  const stateActions = {
     updateRecipes,
     deleteRecipe,
     editRecipe,
@@ -113,24 +117,19 @@ function MainContainer() {
   useEffect(() => {
     async function fetchUserRecipes() {
       try {
-        const res = await API.getBookRecipes(userId, selectedBookId);
+        const res = await API.getBookRecipes(userId, currentBookId);
         setRecipes(res);
-        setFilteredRecipe(res);
+        setFilteredRecipes(res);
       } catch (error: any) {
         errorHandling("MainContainer -> fetchUserRecipes", error);
       } finally {
         setIsLoading(false);
       }
     }
-    if (selectedBookId) {
+    if (currentBookId) {
       fetchUserRecipes();
     }
-  }, [selectedBookId, userId]);
-
-  /** Updates current book selection */
-  useEffect(() => {
-    setSelectedBookId(currentBookId || defaultBookId);
-  }, [currentBookId]);
+  }, [currentBookId, userId]);
 
   /** Close Share book Dialog panel */
   function closeDialogPanel() {
@@ -156,8 +155,8 @@ function MainContainer() {
             >
               <div id="MainContainer-header">
                 <RecipeRequests
-                  recipeActions={recipeActions}
-                  setShowing={toggleModel}
+                  stateActions={stateActions}
+                  closeDialog={closeDialog}
                   isOpen={isOpen}
                 />
 

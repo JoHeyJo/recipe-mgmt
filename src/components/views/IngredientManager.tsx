@@ -13,6 +13,8 @@ import { createPortal } from "react-dom";
 import { filterOptions } from "../../utils/functions";
 
 /** IngredientManager - Searches and filters existing ingredient options - ring is removed
+ * 
+ * NOTE: handleOption needs to be changed to optionAction
  *
  * Renders input field with capability to create new options.
  *
