@@ -180,6 +180,7 @@ export type DropdownProp = {
   options: Book[];
   onChange: (id: number, selected: Book) => void;
   onCreateBook?: () => void;
+  render: {[string: string]: boolean}
 };
 
 export type BookViewProp = {

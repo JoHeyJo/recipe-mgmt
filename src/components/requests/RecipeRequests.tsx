@@ -31,7 +31,7 @@ function RecipeRequests({
   closeDialog,
   isOpen,
 }: RecipeRequestsProps) {
-  const { currentBookId, userId, books, setUserData, currentBook } =
+  const { currentBookId, userId, books, setUserData, currentBook, defaultBookId } =
     useContext(UserContext);
   const { selectedRecipe, setRecipes, setFilteredRecipes } =
     useContext(RecipeContext);
@@ -222,10 +222,14 @@ function RecipeRequests({
           >
             {render.dropdown && (
               <Dropdown
-                selected={currentBook}
                 options={books}
                 onChange={triggerCopy}
                 onCreateBook={() => setRender({ createBook: true })}
+                render={
+                  currentBook.book_type === "shared_inbox" && currentBookId === defaultBookId
+                    ? { createBook: true }
+                    : { copyRecipe: true }
+                }
               />
             )}
             {render.recipeForm && (

@@ -48,6 +48,7 @@ function BookView({ resetSelected }: BookViewProp) {
             selected={currentBook}
             options={books}
             onChange={onSelectBook}
+            render={{ viewBooks: true }}
           />
         </>
       )}
