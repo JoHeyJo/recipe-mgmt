@@ -15,7 +15,13 @@ import { truncate } from "../../../utils/functions";
  *
  * [BookView, RecipeRequest] -> Dropdown
  */
-function Dropdown({ selected, options, onChange, onCreateBook, render }: DropdownProp) {
+function Dropdown({
+  selected,
+  options,
+  onChange,
+  onCreateBook,
+  render,
+}: DropdownProp) {
   console.log(selected);
   /** Sets option and option id */
   function handleSelect(option: Book) {
@@ -23,7 +29,7 @@ function Dropdown({ selected, options, onChange, onCreateBook, render }: Dropdow
   }
 
   /** Render "CreateBook" - Default book is "Shared Inbox" & user is creating book  */
-  const createBookUI = (
+  const createBookDropdown = (
     <MenuItem key={1}>
       <li
         onClick={onCreateBook}
@@ -35,34 +41,33 @@ function Dropdown({ selected, options, onChange, onCreateBook, render }: Dropdow
   );
 
   /** Hides "Shared Inbox" in dropdown when user is selecting a book to copy  */
-  function isSharedHidden(option) {
-    return option.book_type !== "shared_inbox";
-  }
+  const isSharedHidden = (option: Book) => option.book_type !== "shared_inbox";
 
   /** Render  "books except selected book*" - Default book is NOT "Shared Inbox" - User is selecting book to copy to */
-  function copyRecipeToUI(option) {
+  function copyRecipeToDropdown(option) {
     return (
-      isSharedHidden(option) &&
-      <MenuItem key={option.id}>
-        <li
-          onClick={() => handleSelect(option)}
-          className={`group relative flex justify-between px-4 py-2 text-sm cursor-pointer data-[focus]:bg-selected data-[focus]:text-accent 
+      isSharedHidden(option) && (
+        <MenuItem key={option.id}>
+          <li
+            onClick={() => handleSelect(option)}
+            className={`group relative flex justify-between px-4 py-2 text-sm cursor-pointer data-[focus]:bg-selected data-[focus]:text-accent 
              ${selected?.id === option.id ? "text-gray-700 font-semibold" : "text-gray-700"}`}
-        >
-          <span className="block truncate">{option.title}</span>
-          {selected && selected.id === option.id && (
-            <FontAwesomeIcon
-              className="text-icon-color group-data-[focus]:text-accent"
-              icon={faCheck}
-            />
-          )}
-        </li>
-      </MenuItem>
+          >
+            <span className="block truncate">{option.title}</span>
+            {selected && selected.id === option.id && (
+              <FontAwesomeIcon
+                className="text-icon-color group-data-[focus]:text-accent"
+                icon={faCheck}
+              />
+            )}
+          </li>
+        </MenuItem>
+      )
     );
   }
 
   /** Render "books" - Default book is NOT "Shared Inbox" - User is selecting book to view    */
-  function viewBooksUI(option) {
+  function viewBooksDropdown(option) {
     return (
       <MenuItem key={option.id}>
         <li
@@ -83,14 +88,14 @@ function Dropdown({ selected, options, onChange, onCreateBook, render }: Dropdow
   }
 
   function renderDropdown() {
-    if(render.viewBooks){
-     return options?.map((option) => viewBooksUI(option))
+    if (render.viewBooks) {
+      return options?.map((option) => viewBooksDropdown(option));
     }
     if (render.copyRecipe) {
-      return options?.map((option) => copyRecipeToUI(option));
+      return options?.map((option) => copyRecipeToDropdown(option));
     }
   }
-console.log("render:",render)
+
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -108,7 +113,7 @@ console.log("render:",render)
         anchor={selected ? { to: "bottom start" } : { to: "bottom" }}
       >
         <div className="py-1">
-          {render.createBook ? createBookUI : renderDropdown()}
+          {render.createBook ? createBookDropdown : renderDropdown()}
         </div>
       </MenuItems>
     </Menu>
