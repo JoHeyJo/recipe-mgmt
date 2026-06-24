@@ -33,7 +33,6 @@ function CreateBookCopyRecipe({
         selectedRecipe,
       );
 
-      console.log("book:", book, "recipes:", recipes);
       changeBook(setBookId, setUserData, book)
       setFilteredRecipes(recipes);
       setRecipes(recipes)
