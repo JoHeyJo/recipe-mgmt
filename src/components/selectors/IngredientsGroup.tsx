@@ -23,7 +23,7 @@ function IngredientsGroup({ onIngredientInput }: IngredientsGroupProps) {
 
   /** Create unique keys array needed for children components */
   useEffect(() => {
-    if (requestAction === "edit") {
+    if (requestAction.edit) {
       setIngredientKeys((keys) => {
         return selectedRecipe.ingredients.map(() => uuidv4());
       });

@@ -29,7 +29,7 @@ function InstructionsArea({
   const { requestAction, selectedRecipe } = useContext(RecipeContext);
   const [selectedInstructions, setSelectedInstructions] =
     useState<Instructions>(
-      requestAction === "edit"
+      requestAction.edit
         ? [
             ...selectedRecipe.instructions,
             { id: null, instruction: "some instruction..." },
