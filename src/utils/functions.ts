@@ -88,7 +88,7 @@ export function filterOptions(
   options,
   attribute,
   stableId
-): AttributeData[] | Instructions {
+): any{
   const q = query.trim().toLowerCase();
   if (options.length === 0) {
     return [
@@ -98,9 +98,10 @@ export function filterOptions(
       } 
     ];
   }
+  console.log("options>", options);
 
   // Collect matches (keep your original ordering)
-  const matches = options.filter((opt) =>
+  const matches = options.instructions.filter((opt) =>
     String(opt[attribute] ?? "")
       .toLowerCase()
       .includes(q)

@@ -51,6 +51,7 @@ function InstructionsRequests({
   /** Fetch instructions associated to Book */
   async function fetchBookInstructions() {
     const res = await API.getBookInstructions(userId, currentBookId);
+    console.log("getBookInstructions",res)
     setInstructions(res);
   }
 

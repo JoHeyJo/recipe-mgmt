@@ -83,6 +83,7 @@ function ComponentsOptionsRequests({
       userId,
       currentBookId,
     );
+    console.log("getBookComponentsOptions",{ amounts, units, items });
     setOptionsReferences({ amount: amounts, unit: units, item: items }); ///DOES THIS NEED TO BE MEMOIZED
     setItems(items);
     setQuantityUnits(units);
