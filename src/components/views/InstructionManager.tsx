@@ -35,7 +35,7 @@ function InstructionManager({
 
   const instructionRef = useRef<HTMLDivElement>(null);
   const stableId = useId();
-
+console.log("options.......",options);
   /** Options filtered by the current search query. */
   const filteredOptions =
     query.trim() === ""
@@ -79,7 +79,7 @@ function InstructionManager({
   useEffect(() => {
     if (numOfInstruction > 4) scrollIntoViewElement(instructionRef);
   }, [numOfInstruction]);
-
+console.log("filteredOptions:", filteredOptions.instructions);
   return (
     <Combobox
       ref={instructionRef}
@@ -93,12 +93,12 @@ function InstructionManager({
       <div className="relative mt-2">
         <ComboboxInput
           inputMode={isKbSuppressed ? "none" : undefined}
-          placeholder="Search or create an instruction…"
+          placeholder={!instruction.id && instruction.instruction}
           className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
           onClick={() => setIsKbSuppressed(false)}
           onChange={(event) => setQuery(event.target.value)}
-          displayValue={(option: Instruction | null) =>
-            option?.instruction ?? ""
+          displayValue={(option: any) =>
+            option.id && option.instruction
           }
         />
 
@@ -122,7 +122,7 @@ function InstructionManager({
               Nothing found.
             </div>
           ) : (
-            filteredOptions.instructions.map((option) => (
+            filteredOptions.map((option) => (
               <ComboboxOption
                 key={option.id}
                 value={option}

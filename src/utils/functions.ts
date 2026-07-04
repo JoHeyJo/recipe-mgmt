@@ -101,7 +101,7 @@ export function filterOptions(
   console.log("options>", options);
 
   // Collect matches (keep your original ordering)
-  const matches = options.instructions.filter((opt) =>
+  const matches = options.filter((opt) =>
     String(opt[attribute] ?? "")
       .toLowerCase()
       .includes(q)
@@ -124,6 +124,7 @@ export function filterOptions(
         .trim()
         .toLowerCase() === q
   );
+  console.log("matches:",matches)
   if (hasExact) return matches;
 
   // Fuzzy matches exist but no exact → append create at the end
