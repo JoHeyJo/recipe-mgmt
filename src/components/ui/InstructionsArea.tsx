@@ -108,7 +108,6 @@ function InstructionsArea({
       "instructions",
     );
   }, [selectedInstructions]);
-console.log("instructionRequestAPI.instructions::::",instructionRequestAPI.instructions);
   return (
     <div
       ref={instructionsAreaRef}
