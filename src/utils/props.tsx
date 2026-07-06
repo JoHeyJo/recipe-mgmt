@@ -10,7 +10,7 @@ import {
   AttributeData,
 } from "./types";
 
-type HandleInstruction = {
+type instructionRequestAction = {
   post: (instruction: Instruction) => Promise<Instruction>;
   associate: (
     userId: number,
@@ -25,7 +25,7 @@ export type InstructionManagerProps = {
   instruction: Instruction;
   arrayKey: number;
   options: Instructions;
-  handleInstruction: HandleInstruction;
+  handleInstruction: instructionRequestAction;
   handleSelected: {
     updateSelected: (instruction: Instruction, arrayKey: number) => void;
     removeSelected: (instructionKey: number) => void;
@@ -140,8 +140,8 @@ type InstructionsData = {
 
 export type InstructionsAreaProps = {
   onInstructionInput: (data: Instructions, section: string) => void;
-  data: InstructionsData;
-  handleInstruction: HandleInstruction;
+  instructionRequestAPI: InstructionsData;
+  onInstructionRequest: instructionRequestAction;
 };
 
 export type FaPlusButtonProp = {

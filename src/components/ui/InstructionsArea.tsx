@@ -14,16 +14,14 @@ const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) =>
 
 /** InstructionsArea handles selected instruction - updates GrandParent recipe state
  * 
- * NOTE: handleInstruction needs to be changed to onInstructionAction
- *
  * Dynamically renders list of instructions - filters out selected options (WIP)
  *
  * InstructionsRequests -> InstructionsArea -> InstructionManager
  */
 function InstructionsArea({
   onInstructionInput,
-  data,
-  handleInstruction,
+  instructionRequestAPI,
+  onInstructionRequest,
 }: InstructionsAreaProps) {
   const { userId, currentBookId } = useContext(UserContext);
   const { requestAction, selectedRecipe } = useContext(RecipeContext);
@@ -55,8 +53,8 @@ function InstructionsArea({
       return updatedInstructions;
     });
 
-    if (data.selected === "user")
-      handleInstruction.associate(userId, currentBookId, +instruction.id);
+    if (instructionRequestAPI.selected === "user")
+      onInstructionRequest.associate(userId, currentBookId, +instruction.id);
 
     if (HAS_NO_REMAINING_INPUT(selectedInstructions.length, arrayKey))
       createInstructionInput();
@@ -110,7 +108,6 @@ function InstructionsArea({
       "instructions",
     );
   }, [selectedInstructions]);
-
   return (
     <div
       ref={instructionsAreaRef}
@@ -123,9 +120,9 @@ function InstructionsArea({
           arrayKey={index}
           numOfInstruction={selectedInstructions.length}
           instruction={value}
-          options={data.instructions}
+          options={instructionRequestAPI.instructions}
           handleSelected={handleSelected}
-          handleInstruction={handleInstruction}
+          handleInstruction={onInstructionRequest}
         />
       ))}
       {/* <>

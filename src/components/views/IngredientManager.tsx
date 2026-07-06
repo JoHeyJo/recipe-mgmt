@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useId } from "react";
+import { useState, useId } from "react";
 import { AttributeData } from "../../utils/types";
 import {
   Combobox,
@@ -9,25 +9,22 @@ import {
 } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { IngredientManagerProps } from "../../utils/props";
-import { createPortal } from "react-dom";
 import { filterOptions } from "../../utils/functions";
 
-/** IngredientManager - Searches and filters existing ingredient options - ring is removed
- * 
- * NOTE: handleOption needs to be changed to optionAction
+/**
+ * IngredientManager — searchable / creatable option picker for a single ingredient field.
  *
- * Renders input field with capability to create new options.
+ * Open state and positioning are owned by Headless UI:
+ *  - `immediate`  opens the option list on focus
+ *  - `anchor`     portals + repositions the list (floating-ui) on scroll/resize/flip
+ *  - `onClose`    clears the search query whenever the list closes
  *
  * IngredientInputGroup -> IngredientManager
  *
- * Commit with all attempted handler variations for keyboard interactions
- * & useEffect to handle close on outside scroll and close on outside click -  b0a1cee
- *
- * Currently all data posted is type of string..
+ * NOTE: handleOption should be renamed to optionAction.
+ * NOTE: all data is currently posted as a string.
  */
-
 function IngredientManager({
-  length,
   value,
   attribute,
   entity,
@@ -38,26 +35,20 @@ function IngredientManager({
 }: IngredientManagerProps) {
   const [query, setQuery] = useState<string>("");
   const [selected, setSelected] = useState<AttributeData>(value);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, width: 0 });
   const [isKbSuppressed, setIsKbSuppressed] = useState(false);
-
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const stableId = useId();
 
   const isNewOption = (option: AttributeData) =>
     typeof option.id === "string" && option[attribute] === "+ create...";
 
-  /** Creates a list of filtered options based on search query */
+  /** Options filtered by the current search query. */
   const filteredOptions: AttributeData[] =
     query.trim() === ""
       ? options
       : filterOptions(query, options, attribute, stableId);
 
-  /** Injects query string prior to POST request and updates parent state  */
+  /** Injects the query into the POST body, then updates parent + local state. */
   async function processNewOption(option: AttributeData) {
     typeCheckIngredientQuery();
     const newOption = { ...option, id: null, [attribute]: query };
@@ -67,27 +58,27 @@ function IngredientManager({
     setSelected(createdOption);
   }
 
-  /** Updates parent state with selected option */
+  /** Updates parent + local state with an existing option. */
   function processExistingOption(option: AttributeData) {
     handleComponent.updateSelected(entity, option);
     setSelected(option);
   }
 
-  /** Consolidates actions that deselect option */
+  /** Clears the selection in parent + local state. */
   function processDeselect() {
     handleComponent.removeSelected(entity);
     setSelected(null);
   }
 
-  /** Handles parent state update when selection is made in combobox */
-  function updateOnSelect(option: any) {
+  /** Routes a combobox change to the correct handler. */
+  function updateOnSelect(option: AttributeData | null) {
     if (!option) return processDeselect();
-
     isNewOption(option)
       ? processNewOption(option)
       : processExistingOption(option);
   }
 
+  /** Validates the query against the entity type before a create. */
   function typeCheckIngredientQuery() {
     try {
       if (entity === "amount") {
@@ -114,93 +105,35 @@ function IngredientManager({
     }
   }
 
-  /** Consolidates actions taken when dropdown value is selected  */
-  function onValueSelect(value: any) {
-    // inputRef.current?.blur() // consider implementing this for friendly accessibility
+  /** Consolidates actions taken when a dropdown value is selected. */
+  function onValueSelect(option: AttributeData | null) {
     setIsKbSuppressed(true);
-    setQuery("");
-    updateOnSelect(value);
-    setDropdownOpen(false);
+    updateOnSelect(option);
   }
 
-  // Update dropdown position: Dependencies track potential change in dropdown position
-  useEffect(() => {
-    if (!dropdownOpen) return;
-
-    const rect = wrapperRef.current?.getBoundingClientRect();
-    if (rect) {
-      setDropdownPos({
-        top: rect.bottom,
-        left: rect.left,
-        width: rect.width,
-      });
-    }
-  }, [dropdownOpen, selected, length]);
-
-  // Close on scroll *outside* dropdown - necessary to auto close dropdown when scrolling outside dropdown
-  const openedAtRef = useRef(0);
-
-  const openDropdown = () => {
-    openedAtRef.current = performance.now();
-    setDropdownOpen(true);
-  };
-
-  useEffect(() => {
-    if (!dropdownOpen) return;
-
-    const closeOnScroll = (event: Event) => {
-      // Ignore “scroll caused by focusing / viewport settling” right after open
-      if (performance.now() - openedAtRef.current < 200) return;
-
-      const target = event.target as HTMLElement | Document | null;
-
-      // If scroll target isn't an element, don't treat it as “outside”
-      if (!(target instanceof HTMLElement)) return;
-
-      const isInsideDropdown = dropdownRef.current?.contains(target) ?? false;
-      const isInsideCombobox = wrapperRef.current?.contains(target) ?? false;
-
-      if (!isInsideDropdown && !isInsideCombobox) {
-        setDropdownOpen(false);
-      }
-    };
-
-    window.addEventListener("scroll", closeOnScroll, true);
-    return () => window.removeEventListener("scroll", closeOnScroll, true);
-  }, [dropdownOpen]);
-
   return (
-    <Combobox as="div" value={selected || ""} onChange={onValueSelect}>
+    <Combobox
+      as="div"
+      immediate
+      value={selected}
+      onChange={onValueSelect}
+      onClose={() => setQuery("")}
+    >
       {/* <Alert alert={"error"} degree={"yellow"} /> */}
-      <div ref={wrapperRef} className="relative mt-2">
+      <div className="relative mt-2">
         <ComboboxInput
-          // required={entity === "item" ? true : false}
-          ref={inputRef}
           inputMode={isKbSuppressed ? "none" : undefined}
           placeholder={placeholder}
           className="w-full rounded-md border-0 bg-accent py-1.5 placeholder:text-gray-500 text-gray-900 shadow-sm ring-1 ring-inset ring-light-border focus:ring-2 focus:ring-inset focus:ring-focus-color sm:text-sm sm:leading-6"
-          onFocus={() => {
-            // prevents modal from being pushed under keyboard on key input
-            setDropdownOpen(true);
-          }}
-          onClick={(e) => {
-            setIsKbSuppressed(false);
-            setDropdownOpen(true);
-            // scrollToElement(dialogPanelRef, 40); // clicking on input causes position to jump up and down
-          }}
-          onChange={(event) => {
-            // event.preventDefault();
-            setQuery(event.target.value);
-          }}
-          displayValue={(option: { [key: string]: string }) =>
-            option?.[attribute]
+          onClick={() => setIsKbSuppressed(false)}
+          onChange={(event) => setQuery(event.target.value)}
+          displayValue={(option: AttributeData | null) =>
+            option?.[attribute] ?? ""
           }
         />
+
         <ComboboxButton
-          onClick={() => {
-            setIsKbSuppressed(true);
-            setDropdownOpen(true);
-          }}
+          onClick={() => setIsKbSuppressed(true)}
           className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none"
         >
           <ChevronUpDownIcon
@@ -209,36 +142,31 @@ function IngredientManager({
           />
         </ComboboxButton>
 
-        {dropdownOpen &&
-          createPortal(
-            <ComboboxOptions
-              ref={dropdownRef}
-              className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-accent py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-              style={{
-                position: "fixed",
-                top: dropdownPos.top,
-                left: dropdownPos.left,
-                width: dropdownPos.width,
-              }}
-            >
-              {filteredOptions.map((option) => (
-                <ComboboxOption
-                  key={option.id}
-                  value={option}
-                  className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-selected data-[focus]:text-accent"
-                >
-                  <span className="block truncate group-data-[selected]:font-semibold">
-                    {option[attribute]}
-                  </span>
-
-                  <span className="absolute inset-y-0 right-0 hidden items-center pr-4 text-indigo-600 group-data-[selected]:flex group-data-[focus]:text-accent">
-                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                  </span>
-                </ComboboxOption>
-              ))}
-            </ComboboxOptions>,
-            document.body
+        <ComboboxOptions
+          anchor="bottom start"
+          className="z-50 max-h-60 w-[var(--input-width)] overflow-auto rounded-md bg-accent py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 [--anchor-gap:4px] focus:outline-none sm:text-sm"
+        >
+          {filteredOptions.length === 0 ? (
+            <div className="relative cursor-default select-none py-2 pl-3 pr-9 text-gray-500">
+              Nothing found.
+            </div>
+          ) : (
+            filteredOptions.map((option) => (
+              <ComboboxOption
+                key={option.id}
+                value={option}
+                className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-selected data-[focus]:text-accent"
+              >
+                <span className="block truncate group-data-[selected]:font-semibold">
+                  {option[attribute]}
+                </span>
+                <span className="absolute inset-y-0 right-0 hidden items-center pr-4 text-indigo-600 group-data-[selected]:flex group-data-[focus]:text-accent">
+                  <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                </span>
+              </ComboboxOption>
+            ))
           )}
+        </ComboboxOptions>
       </div>
     </Combobox>
   );

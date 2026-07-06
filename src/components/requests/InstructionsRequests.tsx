@@ -1,7 +1,6 @@
 import { useState, useContext, useEffect, ChangeEvent } from "react";
 import { UserContext } from "../../context/UserContext";
-import { RecipeContext } from "../../context/RecipeContext";
-import { Instruction } from "../../utils/types";
+import { Instruction, Instructions } from "../../utils/types";
 import API from "../../api";
 import { errorHandling } from "../../utils/ErrorHandling";
 import InstructionsArea from "../ui/InstructionsArea";
@@ -11,7 +10,7 @@ import { InstructionsRequestsProp } from "../../utils/props";
 // utils/scrollIntoKeyboardSafeView.ts
 
 
-/** Handles API requests & data management for Instructions
+/** Handles API requests & instructionRequestAPI management for Instructions
  *
  * RecipeRequests -> InstructionsRequests -> InstructionsArea
  */
@@ -19,7 +18,7 @@ function InstructionsRequests({
   onInstructionInput,
 }: InstructionsRequestsProp) {
   const { userId, currentBookId } = useContext(UserContext);
-  const [instructions, setInstructions] = useState([]);
+  const [instructions, setInstructions] = useState<Instructions>([]);
   const [whichInstructions, setWhichInstructions] = useState("book");
   const [instructionsReferences, setInstructionsReferences] = useState();
 
@@ -51,7 +50,7 @@ function InstructionsRequests({
   /** Fetch instructions associated to Book */
   async function fetchBookInstructions() {
     const res = await API.getBookInstructions(userId, currentBookId);
-    setInstructions(res);
+    setInstructions(res.instructions);
   }
 
   /** Fetch instructions associated to User */
@@ -78,13 +77,13 @@ function InstructionsRequests({
     }
   }
 
-  const handleInstruction = {
+  const instructionRequestAction = {
     post: addInstruction,
     associate: associateInstructionToBook,
     addCreated: updateAvailableInstructions,
   };
 
-  const data = {
+  const instructionRequestAPI = {
     instructions,
     selected: whichInstructions,
     references: instructionsReferences,
@@ -108,8 +107,8 @@ function InstructionsRequests({
       />
       <InstructionsArea
         onInstructionInput={onInstructionInput}
-        handleInstruction={handleInstruction}
-        data={data}
+        onInstructionRequest={instructionRequestAction}
+        instructionRequestAPI={instructionRequestAPI}
       />
     </>
   );

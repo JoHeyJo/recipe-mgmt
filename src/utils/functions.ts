@@ -88,7 +88,7 @@ export function filterOptions(
   options,
   attribute,
   stableId
-): AttributeData[] | Instructions {
+): any{
   const q = query.trim().toLowerCase();
   if (options.length === 0) {
     return [
