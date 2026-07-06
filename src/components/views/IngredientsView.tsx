@@ -30,13 +30,10 @@ function IngredientsView({ ingredients }: IngredientsViewProp) {
               id="IngredientsView-ingredient"
               className={`md:pr-9 py-2 pl-2 text-md flex odd:bg-accent even:bg-accent-secondary`}
             >
-              <div className="flex-1 leading-6 sm:col-span-2">
-                {amount ? amount.value : ""}
+              <div className="min-w-10 w-max shrink-0 font-semibold leading-6 sm:col-span-2">
+                {amount ? amount.value : ""} {unit ? unit.type : ""}
               </div>
-              <div className="flex-1 leading-6 sm:col-span-2">
-                {unit ? unit.type : ""}
-              </div>
-              <div className="flex-1 leading-6 sm:col-span-2">
+              <div className="flex-1 pl-3 leading-6 sm:col-span-2">
                 {item ? item.name : ""}
               </div>
             </li>
