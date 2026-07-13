@@ -5,7 +5,6 @@ import Alert from "../components/ui/Alert";
 import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 //styles
-import "../styles/SignUp.css";
 import "../styles/theme.css";
 import { PillButtonSubmit } from "../components/ui/PillButtonSubmit";
 import { SignUp as SignUpProps, UserSignUp } from "../utils/types";
@@ -52,10 +51,14 @@ function SignUp({ signUp }: SignUpProps) {
 
   return (
     <>
-      <div className="SignUp-container">
-        <form onSubmit={handleSubmit} className="SignUp">
-          <div className="form-group">
+      <div className="SignUp-container flex justify-center items-center">
+        <form
+          onSubmit={handleSubmit}
+          className="SignUp flex flex-col p-5 rounded-lg shadow w-full max-w-sm"
+        >
+          <div className="form-group block mb-2">
             <InputWithLabelForm
+              styles={"w-full p-2.5 mb-4 border border-gray-800 rounded text-base"}
               name={"First Name:"}
               id={"firstName"}
               type={"text"}
@@ -65,8 +68,9 @@ function SignUp({ signUp }: SignUpProps) {
               required={true}
             />
           </div>
-          <div className="form-group">
+          <div className="form-group block mb-2">
             <InputWithLabelForm
+              styles={"w-full p-2.5 mb-4 border border-gray-800 rounded text-base"}
               name={"Last Name:"}
               id={"lastName"}
               type={"text"}
@@ -76,8 +80,9 @@ function SignUp({ signUp }: SignUpProps) {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group block mb-2">
             <InputWithLabelForm
+              styles={"w-full p-2.5 mb-4 border border-gray-800 rounded text-base"}
               id={"email"}
               name={"Email:"}
               className={"SignUp-email"}
@@ -87,8 +92,9 @@ function SignUp({ signUp }: SignUpProps) {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group block mb-2">
             <InputWithLabelForm
+              styles={"w-full p-2.5 mb-4 border border-gray-800 rounded text-base"}
               id={"password"}
               name={"Password:"}
               className={"SignUp-pw"}
@@ -98,8 +104,9 @@ function SignUp({ signUp }: SignUpProps) {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group block mb-2">
             <InputWithLabelForm
+              styles={"w-full p-2.5 mb-4 border border-gray-800 rounded text-base"}
               id={"userName"}
               name={"User name:"}
               type={"text"}
