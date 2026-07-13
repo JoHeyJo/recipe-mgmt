@@ -8,7 +8,6 @@ import { errorHandling } from "../utils/ErrorHandling";
 import InputWithLabelForm from "../components/views/InputWithLabelForm";
 import Alert from "../components/ui/Alert";
 //styles
-import "../styles/Login.css";
 
 const defaultCredentials: UserLogin = { userName: "", password: "" };
 
@@ -57,10 +56,16 @@ function LoginForm({ login }: Login) {
   }, [alert]);
 
   return (
-    <div className="LoginForm-container">
-      <form onSubmit={handleSubmit} className="LoginForm">
+    <div className="LoginForm-container flex justify-center items-center">
+      <form
+        onSubmit={handleSubmit}
+        className="LoginForm flex flex-col p-5 rounded-lg shadow w-full max-w-sm"
+      >
         <div className="form-group">
           <InputWithLabelForm
+            styles={
+              "w-full p-2.5 mb-4 border border-gray-800 rounded text-base"
+            }
             name={"Username:"}
             id={"userName"}
             type={"text"}
@@ -72,6 +77,9 @@ function LoginForm({ login }: Login) {
         </div>
         <div className="form-group">
           <InputWithLabelForm
+            styles={
+              "w-full p-2.5 mb-4 border border-gray-800 rounded text-base"
+            }
             name={"Password:"}
             id={"password"}
             type={"password"}
