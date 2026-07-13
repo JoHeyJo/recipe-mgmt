@@ -106,7 +106,7 @@ function IngredientInputGroup({
           options={options.amounts}
           handleOption={optionAction}
           handleComponent={handleComponent}
-          placeholder={"2"}
+          placeholder={"amount (e.g. 2)"}
         />
         <IngredientManager
           length={length}
@@ -116,7 +116,7 @@ function IngredientInputGroup({
           options={options.units}
           handleOption={optionAction}
           handleComponent={handleComponent}
-          placeholder={"oz"}
+          placeholder={"unit: oz"}
         />
         <IngredientManager
           length={length}
@@ -126,7 +126,7 @@ function IngredientInputGroup({
           options={options.items}
           handleOption={optionAction}
           handleComponent={handleComponent}
-          placeholder={"some liquid"}
+          placeholder={"item (gin)"}
         />
         {renderHandleIngredientUI()}
       </div>
