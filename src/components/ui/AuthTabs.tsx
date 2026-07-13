@@ -3,6 +3,7 @@ import Login from "../../auth/Login";
 import SignUp from "../../auth/SignUp";
 import "../../styles/AuthTabs.css";
 import { AuthProps } from "../../utils/types";
+import { useSearchParams } from "react-router-dom";
 
 /** Displays user auth forms
  *
@@ -10,7 +11,9 @@ import { AuthProps } from "../../utils/types";
  * RoutesList -> AuthTabs -> [Login, SignUp]
  */
 function AuthTabs({ signUp, login }: AuthProps) {
-  const [activeTab, setActiveTab] = useState("login");
+  const [searchParams] = useSearchParams();
+  const [activeTab, setActiveTab] = useState(searchParams.get("tab") || "login");
+
   // border-solid border-b border-white border-b-1
   return (
     <div className="cardContainer border border-border-color">

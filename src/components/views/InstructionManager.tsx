@@ -113,7 +113,8 @@ function InstructionManager({
         <ComboboxOptions
           id="InstructionsManager-Options"
           anchor="bottom start"
-          className="z-50 max-h-60 w-[var(--input-width)] overflow-auto rounded-md bg-accent py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 [--anchor-gap:4px] focus:outline-none sm:text-sm"
+          transition
+          className="z-50 max-h-60 w-[var(--input-width)] overflow-auto rounded-md bg-accent py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 [--anchor-gap:4px] focus:outline-none transition duration-100 ease-out data-[closed]:opacity-0 sm:text-sm"
         >
           {filteredOptions.length === 0 ? (
             <div className="relative cursor-default select-none py-2 pl-3 pr-9 text-gray-500">
