@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Login from "../../auth/Login";
 import SignUp from "../../auth/SignUp";
-import "../../styles/AuthTabs.css";
 import { AuthProps } from "../../utils/types";
 import { useSearchParams } from "react-router-dom";
 
@@ -16,24 +15,24 @@ function AuthTabs({ signUp, login }: AuthProps) {
 
   // border-solid border-b border-white border-b-1
   return (
-    <div className="cardContainer border border-border-color">
+    <div className="cardContainer border border-border-color grid rounded-lg shadow-md w-[80vw] xs:w-[50vw] md:w-[40vw] xl:w-[30vw] mx-auto mt-[5%] overflow-hidden h-[75vh]">
       <nav id="AuthTabs-container">
-        <ul className="navList">
+        <ul className="navList flex list-none m-0 p-0">
           <li
-            className={`navItem ${activeTab === "login" ? "light-border" : "border-b bg-selected"}`}
+            className={`navItem cursor-pointer flex-1 text-center p-2 transition-colors duration-300 ${activeTab === "login" ? "light-border" : "border-b bg-selected"}`}
             onClick={() => setActiveTab("login")}
           >
             Login
           </li>
           <li
-            className={`navItem ${activeTab === "signup" ? "light-border" : "border-b bg-selected"}`}
+            className={`navItem cursor-pointer flex-1 text-center p-2 transition-colors duration-300 ${activeTab === "signup" ? "light-border font-bold" : "border-b bg-selected"}`}
             onClick={() => setActiveTab("signup")}
           >
             Sign up
           </li>
         </ul>
       </nav>
-      <div className="formContent">
+      <div className="formContent overflow-y-auto flex-1">
         {activeTab === "login" ? (
           <Login login={login} />
         ) : (

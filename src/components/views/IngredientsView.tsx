@@ -1,4 +1,5 @@
 import { IngredientsViewProp } from "../../utils/props";
+import { Ingredients } from "../../utils/types";
 
 /** Renders list of ingredients
  *
