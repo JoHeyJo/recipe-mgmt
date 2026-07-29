@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import ToggleColorScheme from "../../utils/ToggleColorScheme";
 import UserAvatar from "../ui/UserAvatar";
 import CreateBookRequests from "../requests/CreateBookRequests";
+import Invite from "../requests/Invite";
 
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
@@ -30,10 +31,15 @@ function classNames(...classes: any) {
 type TopNavProps = { logout: () => void };
 
 function TopNav({ logout }: TopNavProps) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCreateBookOpen, setIsCreateBookOpen] = useState(false);
+  const [isInviteOpen, setIsInviteOpen] = useState(false);
 
-  function closeModal(){
-    setIsModalOpen(false);
+  function handleOpenInvite(){
+    setIsInviteOpen(true);
+  }
+
+  function handleModale(){
+    setIsCreateBookOpen(false);
   }
 
   const { user } = useContext(UserContext);
@@ -46,10 +52,14 @@ function TopNav({ logout }: TopNavProps) {
 
   return (
     <>
-      <CreateBookRequests isOpen={isModalOpen} onCloseDialog={closeModal} />
+      <CreateBookRequests
+        isOpen={isCreateBookOpen}
+        onCloseDialog={handleModale}
+      />
       <Disclosure as="nav" className="TopNav-Disclosure bg-secondary">
         {({ open }) => (
           <>
+          {/* <Invite /> */}
             <div className="mx-auto bg-pr max-w-7xl px-2 sm:px-6 lg:px-8">
               <div className="relative flex h-16 items-center justify-between">
                 <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -146,7 +156,7 @@ function TopNav({ logout }: TopNavProps) {
                           </MenuItem>
                           <MenuItem>
                             <a
-                              onClick={() => setIsModalOpen(true)}
+                              onClick={() => setIsCreateBookOpen(true)}
                               href="#"
                               className="TopNav-Item block px-4 py-2 text-sm bg-primary"
                             >
@@ -173,7 +183,7 @@ function TopNav({ logout }: TopNavProps) {
                           {}
                           <MenuItem>
                             <a
-                              onClick={()=>{}}
+                              onClick={handleOpenInvite}
                               href="#"
                               className="TopNav-Item block px-4 py-2 text-sm bg-primary"
                             >
