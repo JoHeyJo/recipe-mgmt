@@ -7,7 +7,8 @@ import { WebSocketContext } from "../../context/WebSocketContext";
 import RadioSwitch from "../ui/common/RadioSwitch";
 
 /** Handles User request to share book/recipe with recipient
- * Calls on custom hook to establish WebSocket connection and communication
+ * Consumes data from custom useWEbSocket hook - returned message is consumed by
+ * parent component SharePopOut
  *
  * SharePopOut -> Share -> [InputWithLabelForm, PillButtonSubmit]
  */

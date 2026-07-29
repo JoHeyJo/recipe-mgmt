@@ -8,7 +8,8 @@ import { useContext } from "react";
 import Invite from "../../requests/Invite";
 
 /** PopOut overlay on grey dialog screen that contains an input box
- *
+ * Couple with WebSocket Context
+ * 
  * [MainContainer, RecipesList] -> SharePopOut -> [Share, Invite]
  */
 function SharePopOut({ action, isDialogOpen, closeDialog, whichComponent }: SharePopOutProps) {
@@ -16,7 +17,7 @@ function SharePopOut({ action, isDialogOpen, closeDialog, whichComponent }: Shar
 
   const COMPONENT = {
     share: <Share action={action} />,
-    invite: <Invite />
+    invite: <Invite />,
   };
 
   // closes dialog panel 

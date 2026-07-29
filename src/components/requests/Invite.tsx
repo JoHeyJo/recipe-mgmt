@@ -5,13 +5,13 @@ import { PillButtonSubmit } from "../ui/PillButtonSubmit";
 /** Invite form component - renders  Pop Out UI that allows ADMIN to invite testers
  * 
  * 
- * SharePopOut -> Invite
+ * SharePopOut -> Invite -> [InputWithLabelForm, PillButtonSubmit]
 */
 function Invite() {
   const [tester, setTester] = useState("");
 
-  function handleSubmit(){
-
+  function handleSubmit(event: FormEvent<HTMLFormElement>){
+    event.preventDefault();
   }
   
   function handleChange(event: ChangeEvent<HTMLInputElement>){
@@ -20,18 +20,17 @@ function Invite() {
 
   return (
     <form onSubmit={handleSubmit}>
-    {/* <div>{`Who would you like to share this ${action === "shareBook" ? "book" : "recipe"} with?`}</div> */}
       <InputWithLabelForm
-        type={"user-name"}
-        name={"User Name:"}
-        id={"user-name"}
-        className={"user-name"}
+        type={"email"}
+        name={"Email:"}
+        id={"email"}
+        className={"email"}
         handleChange={handleChange}
         value={tester}
         required={true}
         styles={"px-2 border-2 border-solid"}
       />
-      <PillButtonSubmit action={"share"} />
+      <PillButtonSubmit action={"invite"} />
     </form>
   );
 }
