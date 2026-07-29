@@ -10,13 +10,14 @@ import RecipeRequests from "../requests/RecipeRequests";
 import { RecipeContext } from "../../context/RecipeContext";
 import BookView from "../views/BookView";
 import Search from "../ui/Search";
-import SharePopOut from "../ui/common/SharePopOut";
+import PopOut from "../ui/common/PopOut";
 import { WebSocketProvider } from "../../context/WebSocketProvider";
 import BookControls from "../ui/controls/BookControls";
+import Share from "../requests/Share";
 
 /** Renders the main container (book) housing list of recipes and individual recipe
  *
- * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList, BookView, SharePopOut, Search, BookControls]
+ * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList, BookView, PopOut, Search, BookControls]
  */
 function MainContainer() {
   const { userId, defaultBookId, currentBookId, PRIVILEGES } =
@@ -160,12 +161,12 @@ function MainContainer() {
                   isOpen={isOpen}
                 />
 
-                <SharePopOut
-                  action={"shareBook"}
+                <PopOut
                   isDialogOpen={isDialogOpen}
                   closeDialog={closeDialogPanel}
-                  whichComponent={"share"}
-                />
+                >
+                  <Share action={"shareBook"} />
+                </PopOut>
 
                 <div className="flex p-1 font-semibold text-lg border-b-2">
                   <div className="flex [flex:0.75]">

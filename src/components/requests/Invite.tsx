@@ -5,7 +5,7 @@ import { PillButtonSubmit } from "../ui/PillButtonSubmit";
 /** Invite form component - renders  Pop Out UI that allows ADMIN to invite testers
  * 
  * 
- * SharePopOut -> Invite -> [InputWithLabelForm, PillButtonSubmit]
+ * PopOut -> Invite -> [InputWithLabelForm, PillButtonSubmit]
 */
 function Invite() {
   const [tester, setTester] = useState("");

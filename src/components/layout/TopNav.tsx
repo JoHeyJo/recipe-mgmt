@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import ToggleColorScheme from "../../utils/ToggleColorScheme";
 import UserAvatar from "../ui/UserAvatar";
 import CreateBookRequests from "../requests/CreateBookRequests";
-import SharePopOut from "../ui/common/SharePopOut";
+import PopOut from "../ui/common/PopOut";
 
 
 const navigation = [
@@ -63,11 +63,11 @@ function TopNav({ logout }: TopNavProps) {
         onCloseDialog={handleModale}
       />
       {/* Invite component */}
-      <SharePopOut
+      {/* <PopOut
         isDialogOpen={isInviteOpen}
         closeDialog={toggleOpenInvite}
         whichComponent={"invite"}
-      />
+      /> */}
       <Disclosure as="nav" className="TopNav-Disclosure bg-secondary">
         {({ open }) => (
           <>

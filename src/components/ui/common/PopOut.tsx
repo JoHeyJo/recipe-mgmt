@@ -1,5 +1,5 @@
 import { Dialog, DialogBackdrop } from "@headlessui/react";
-import { SharePopOutProps } from "../../../utils/props";
+import { PopOutProps } from "../../../utils/props";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import Share from "../../requests/Share";
@@ -10,15 +10,12 @@ import Invite from "../../requests/Invite";
 /** PopOut overlay on grey dialog screen that contains an input box
  * Couple with WebSocket Context
  * 
- * [MainContainer, RecipesList] -> SharePopOut -> [Share, Invite]
+ * Abstract to render Form request components - Component(child instead of prop), message
+ * 
+ * [MainContainer, RecipesList] -> PopOut -> [Share, Invite]
  */
-function SharePopOut({ action, isDialogOpen, closeDialog, whichComponent }: SharePopOutProps) {
-  const { message, resetMessage } = useContext(WebSocketContext);
+function PopOut({ isDialogOpen, closeDialog, children, message, resetMessage }: PopOutProps) {
 
-  const COMPONENT = {
-    share: <Share action={action} />,
-    invite: <Invite />,
-  };
 
   // closes dialog panel 
   function handleClose() {
@@ -41,7 +38,7 @@ function SharePopOut({ action, isDialogOpen, closeDialog, whichComponent }: Shar
             className="flex items-center p-4 mb-4 text-blue-800 border-t-4 border-blue-300 bg-blue-50 dark:text-blue-400 dark:bg-gray-800 dark:border-blue-800"
             role="alert"
           >
-            {message ? message : COMPONENT[whichComponent]}
+            {message ? message : children}
             <button
               onClick={handleClose}
               type="button"
@@ -57,4 +54,4 @@ function SharePopOut({ action, isDialogOpen, closeDialog, whichComponent }: Shar
   );
 }
 
-export default SharePopOut;
+export default PopOut;

@@ -1,14 +1,15 @@
 import { useContext, useState, useEffect } from "react";
 import "../../styles/Recipes.css";
 import { RecipesListProps } from "../../utils/props";
-import SharePopOut from "../ui/common/SharePopOut";
+import PopOut from "../ui/common/PopOut";
 import RecipeListItem from "../ui/RecipeListItem";
 import { WebSocketContext } from "../../context/WebSocketContext";
+import Share from "../requests/Share";
 
 /** Renders list of recipes that can be selected for view
  *
  *
- * MainContainer -> RecipesList -> [SharePopOut, RecipeListItem]
+ * MainContainer -> RecipesList -> [PopOut, RecipeListItem]
  */
 function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -26,20 +27,17 @@ function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
   }
 
   // Triggers recipient UI to communicate successful share of recipe/book.
-  // No need to communicate to recipient failure. Only to sender. 
+  // No need to communicate to recipient failure. Only to sender.
   useEffect(() => {
-    if(status === 200) setIsDialogOpen(true);
+    if (status === 200) setIsDialogOpen(true);
   }, [status]);
 
   return (
     <section>
       <div>
-        <SharePopOut
-          action={"shareRecipe"}
-          isDialogOpen={isDialogOpen}
-          closeDialog={closeDialogPanel}
-          whichComponent={"share"}
-        />
+        <PopOut isDialogOpen={isDialogOpen} closeDialog={closeDialogPanel}>
+          <Share />
+        </PopOut>
       </div>
       <ul
         // className="h-full overflow-y-scroll"

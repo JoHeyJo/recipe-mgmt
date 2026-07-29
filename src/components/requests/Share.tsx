@@ -7,10 +7,9 @@ import { WebSocketContext } from "../../context/WebSocketContext";
 import RadioSwitch from "../ui/common/RadioSwitch";
 
 /** Handles User request to share book/recipe with recipient
- * Consumes data from custom useWEbSocket hook - returned message is consumed by
- * parent component SharePopOut
+ * Consumes data from custom useWEbSocket hook
  *
- * SharePopOut -> Share -> [InputWithLabelForm, PillButtonSubmit]
+ * PopOut -> Share -> [InputWithLabelForm, PillButtonSubmit]
  */
 function Share({ action }: ShareBookProp) {
   const [user, setUser] = useState("");
