@@ -203,7 +203,7 @@ export type SearchProps = {
 };
 
 export type SharePopOutProps = {
-  action: string;
+  action?: string;
   isDialogOpen: boolean;
   closeDialog: () => void;
   whichComponent: string;

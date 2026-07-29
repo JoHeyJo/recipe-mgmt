@@ -16,7 +16,8 @@ import { useNavigate } from "react-router-dom";
 import ToggleColorScheme from "../../utils/ToggleColorScheme";
 import UserAvatar from "../ui/UserAvatar";
 import CreateBookRequests from "../requests/CreateBookRequests";
-import Invite from "../requests/Invite";
+import SharePopOut from "../ui/common/SharePopOut";
+
 
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
@@ -31,33 +32,42 @@ function classNames(...classes: any) {
 
 type TopNavProps = { logout: () => void };
 
+/**
+ * 
+ * App -> TopNav -> [CreateBookRequests, Invite]
+ */
 function TopNav({ logout }: TopNavProps) {
   const [isCreateBookOpen, setIsCreateBookOpen] = useState(false);
   const [isInviteOpen, setIsInviteOpen] = useState(false);
 
-  function handleOpenInvite(){
-    setIsInviteOpen(true);
+  const { user, userId } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  function toggleOpenInvite(){
+    setIsInviteOpen(isOpen => !isOpen);
   }
 
   function handleModale(){
     setIsCreateBookOpen(false);
   }
 
-  const { user } = useContext(UserContext);
-  const navigate = useNavigate();
 
   function logOutAndRedirect() {
     logout();
     navigate("/");
   }
-
   return (
     <>
       <CreateBookRequests
         isOpen={isCreateBookOpen}
         onCloseDialog={handleModale}
       />
-      <Invite />
+      {/* Invite component */}
+      <SharePopOut
+        isDialogOpen={isInviteOpen}
+        closeDialog={toggleOpenInvite}
+        whichComponent={"invite"}
+      />
       <Disclosure as="nav" className="TopNav-Disclosure bg-secondary">
         {({ open }) => (
           <>
@@ -156,13 +166,12 @@ function TopNav({ logout }: TopNavProps) {
                             </a>
                           </MenuItem>
                           <MenuItem>
-                            <a
+                            <button
                               onClick={() => setIsCreateBookOpen(true)}
-                              href="#"
                               className="TopNav-Item block px-4 py-2 text-sm bg-primary"
                             >
                               Create Book
-                            </a>
+                            </button>
                           </MenuItem>
                           <MenuItem>
                             <a
@@ -175,22 +184,21 @@ function TopNav({ logout }: TopNavProps) {
                           <MenuItem>
                             <a
                               onClick={logOutAndRedirect}
-                              href="#"
                               className="TopNav-Item block px-4 py-2 text-sm bg-primary"
                             >
                               Logout
                             </a>
                           </MenuItem>
-                          {}
-                          <MenuItem>
-                            <a
-                              onClick={handleOpenInvite}
-                              href="#"
-                              className="TopNav-Item block px-4 py-2 text-sm bg-primary"
-                            >
-                              Invite
-                            </a>
-                          </MenuItem>
+                          {userId === 1 && (
+                            <MenuItem>
+                              <button
+                                onClick={toggleOpenInvite}
+                                className="TopNav-Item block px-4 py-2 text-sm bg-primary"
+                              >
+                                Invite
+                              </button>
+                            </MenuItem>
+                          )}
                         </>
                       ) : (
                         <MenuItem>
