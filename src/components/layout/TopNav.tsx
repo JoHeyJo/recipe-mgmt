@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import {
+  DialogBackdrop,
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
@@ -56,10 +57,10 @@ function TopNav({ logout }: TopNavProps) {
         isOpen={isCreateBookOpen}
         onCloseDialog={handleModale}
       />
+      <Invite />
       <Disclosure as="nav" className="TopNav-Disclosure bg-secondary">
         {({ open }) => (
           <>
-          {/* <Invite /> */}
             <div className="mx-auto bg-pr max-w-7xl px-2 sm:px-6 lg:px-8">
               <div className="relative flex h-16 items-center justify-between">
                 <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
