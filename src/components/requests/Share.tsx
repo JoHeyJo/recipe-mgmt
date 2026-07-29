@@ -5,13 +5,14 @@ import { PillButtonSubmit } from "../ui/PillButtonSubmit";
 import { ShareBookProp } from "../../utils/props";
 import { WebSocketContext } from "../../context/WebSocketContext";
 import RadioSwitch from "../ui/common/RadioSwitch";
+import PopOut from "../ui/common/PopOut";
 
 /** Handles User request to share book/recipe with recipient
  * Consumes data from custom useWEbSocket hook
  *
  * PopOut -> Share -> [InputWithLabelForm, PillButtonSubmit]
  */
-function Share({ action }: ShareBookProp) {
+function Share({ action, isDialogOpen, closeDialogPanel }: ShareBookProp) {
   const [user, setUser] = useState("");
   const [privileges, setRecipient] = useState("viewer");
 
@@ -41,30 +42,32 @@ function Share({ action }: ShareBookProp) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>{`Who would you like to share this ${action === "shareBook" ? "book" : "recipe"} with?`}</div>
-      {action === "shareBook" && (
-        <RadioSwitch
-          handleSwitch={handleRadio}
-          selection={privileges}
-          labelOne="Collaborator"
-          labelTwo="View Only"
-          valueOne="collaborator"
-          valueTwo="viewer"
+    <PopOut isDialogOpen={true} closeDialog={closeDialogPanel}>
+      <form onSubmit={handleSubmit}>
+        <div>{`Who would you like to share this ${action === "shareBook" ? "book" : "recipe"} with?`}</div>
+        {action === "shareBook" && (
+          <RadioSwitch
+            handleSwitch={handleRadio}
+            selection={privileges}
+            labelOne="Collaborator"
+            labelTwo="View Only"
+            valueOne="collaborator"
+            valueTwo="viewer"
+          />
+        )}
+        <InputWithLabelForm
+          type={"user-name"}
+          name={"User Name:"}
+          id={"user-name"}
+          className={"user-name"}
+          handleChange={handleChange}
+          value={user}
+          required={true}
+          styles={"px-2 border-2 border-solid"}
         />
-      )}
-      <InputWithLabelForm
-        type={"user-name"}
-        name={"User Name:"}
-        id={"user-name"}
-        className={"user-name"}
-        handleChange={handleChange}
-        value={user}
-        required={true}
-        styles={"px-2 border-2 border-solid"}
-      />
-      <PillButtonSubmit action={"share"} />
-    </form>
+        <PillButtonSubmit action={"share"} />
+      </form>
+    </PopOut>
   );
 }
 

@@ -161,12 +161,8 @@ function MainContainer() {
                   isOpen={isOpen}
                 />
 
-                <PopOut
-                  isDialogOpen={isDialogOpen}
-                  closeDialog={closeDialogPanel}
-                >
+         
                   <Share action={"shareBook"} />
-                </PopOut>
 
                 <div className="flex p-1 font-semibold text-lg border-b-2">
                   <div className="flex [flex:0.75]">

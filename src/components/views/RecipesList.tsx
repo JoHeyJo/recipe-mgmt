@@ -35,9 +35,9 @@ function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
   return (
     <section>
       <div>
-        <PopOut isDialogOpen={isDialogOpen} closeDialog={closeDialogPanel}>
+        {/* <PopOut isDialogOpen={isDialogOpen} closeDialog={closeDialogPanel}>
           <Share />
-        </PopOut>
+        </PopOut> */}
       </div>
       <ul
         // className="h-full overflow-y-scroll"
