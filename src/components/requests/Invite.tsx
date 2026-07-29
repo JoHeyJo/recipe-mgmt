@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useState, FormEvent, ChangeEvent } from "react";
 import InputWithLabelForm from "../views/InputWithLabelForm";
 import { PillButtonSubmit } from "../ui/PillButtonSubmit";
 
-/** Invite form component - renders  Pop Out UI that allows ADMIN to invite testers*/
+/** Invite form component - renders  Pop Out UI that allows ADMIN to invite testers
+ * 
+ * 
+ * SharePopOut -> Invite
+*/
 function Invite() {
   const [tester, setTester] = useState("");
 
@@ -10,8 +14,8 @@ function Invite() {
 
   }
   
-  function handleChange(){
-
+  function handleChange(event: ChangeEvent<HTMLInputElement>){
+    setTester(event.target.value)
   }
 
   return (
@@ -23,7 +27,7 @@ function Invite() {
         id={"user-name"}
         className={"user-name"}
         handleChange={handleChange}
-        value={user}
+        value={tester}
         required={true}
         styles={"px-2 border-2 border-solid"}
       />

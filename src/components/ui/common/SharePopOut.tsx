@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import Share from "../../requests/Share";
 import { WebSocketContext } from "../../../context/WebSocketContext";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 
 /** PopOut overlay on grey dialog screen that contains an input box
  *
