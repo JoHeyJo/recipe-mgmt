@@ -20,7 +20,7 @@ function Invite() {
 
   return (
     <form onSubmit={handleSubmit}>
-      {/* <div>{`Who would you like to share this ${action === "shareBook" ? "book" : "recipe"} with?`}</div> */}
+    {/* <div>{`Who would you like to share this ${action === "shareBook" ? "book" : "recipe"} with?`}</div> */}
       <InputWithLabelForm
         type={"user-name"}
         name={"User Name:"}

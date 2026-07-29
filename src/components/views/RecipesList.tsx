@@ -38,6 +38,7 @@ function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
           action={"shareRecipe"}
           isDialogOpen={isDialogOpen}
           closeDialog={closeDialogPanel}
+          whichComponent={"share"}
         />
       </div>
       <ul

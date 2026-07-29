@@ -5,13 +5,19 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import Share from "../../requests/Share";
 import { WebSocketContext } from "../../../context/WebSocketContext";
 import { useContext } from "react";
+import Invite from "../../requests/Invite";
 
 /** PopOut overlay on grey dialog screen that contains an input box
  *
- * [MainContainer, RecipesList] -> SharePopOut -> Share
+ * [MainContainer, RecipesList] -> SharePopOut -> [Share, Invite]
  */
-function SharePopOut({ action, isDialogOpen, closeDialog }: SharePopOutProps) {
+function SharePopOut({ action, isDialogOpen, closeDialog, whichComponent }: SharePopOutProps) {
   const { message, resetMessage } = useContext(WebSocketContext);
+
+  const COMPONENT = {
+    share: <Share action={action} />,
+    invite: <Invite />
+  };
 
   // closes dialog panel 
   function handleClose() {
@@ -34,7 +40,7 @@ function SharePopOut({ action, isDialogOpen, closeDialog }: SharePopOutProps) {
             className="flex items-center p-4 mb-4 text-blue-800 border-t-4 border-blue-300 bg-blue-50 dark:text-blue-400 dark:bg-gray-800 dark:border-blue-800"
             role="alert"
           >
-            {message ? message : <Share action={action} />}
+            {message ? message : COMPONENT[whichComponent]}
             <button
               onClick={handleClose}
               type="button"

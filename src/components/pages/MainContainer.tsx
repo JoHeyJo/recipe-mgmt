@@ -164,6 +164,7 @@ function MainContainer() {
                   action={"shareBook"}
                   isDialogOpen={isDialogOpen}
                   closeDialog={closeDialogPanel}
+                  whichComponent={"share"}
                 />
 
                 <div className="flex p-1 font-semibold text-lg border-b-2">
