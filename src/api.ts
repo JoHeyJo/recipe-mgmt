@@ -41,6 +41,7 @@ class API {
   }
 
   // ########### USERS ###########
+  // ################################
 
   /** Register user: returns token */
   static async signUp(data: UserSignUp) {
@@ -81,6 +82,13 @@ class API {
     return res;
   }
 
+  static async inviteTester(email: string) {
+    const res = await this.request("invite", {email}, "POST");
+    return res;
+  }
+
+  // ############ RECIPES ###########
+  // ################################
   /** Create new default book and copy recipe to new default book */
   static async postCreateBookCopyRecipe(
     book: Book,
@@ -94,7 +102,6 @@ class API {
     return res;
   }
 
-  // ############ RECIPES ###########
   /** Add user recipe to corresponding book*/
   static async postUserRecipe(recipe: Recipe, bookId: number, userId: number) {
     const res = await this.request(
@@ -168,6 +175,7 @@ class API {
   }
 
   // ########### BOOKS ###########
+  // ################################
 
   /** Post new book */
   static async postBook(data: Book, userId: number) {
@@ -192,6 +200,7 @@ class API {
   }
 
   // ########### COMPONENT OPTIONS = {amount, unit, item} = INGREDIENT ###########
+  // ################################################################
 
   /** Fetch all ingredients  */
   static async getUserComponentsOptions(userId: number) {
@@ -244,6 +253,7 @@ class API {
   }
 
   // ########### INSTRUCTIONS ###########
+  // ################################
 
   /** Fetch all instructions */
   static async getInstructions() {
