@@ -9,7 +9,7 @@ import {
   MenuItems,
   Transition,
 } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import ToggleColorScheme from "../../utils/ToggleColorScheme";
@@ -168,6 +168,16 @@ function TopNav({ logout }: TopNavProps) {
                               className="TopNav-Item block px-4 py-2 text-sm bg-primary"
                             >
                               Logout
+                            </a>
+                          </MenuItem>
+                          {}
+                          <MenuItem>
+                            <a
+                              onClick={()=>{}}
+                              href="#"
+                              className="TopNav-Item block px-4 py-2 text-sm bg-primary"
+                            >
+                              Invite
                             </a>
                           </MenuItem>
                         </>
