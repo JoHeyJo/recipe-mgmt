@@ -19,7 +19,7 @@ const defaultNew: UserSignUp = {
 };
 
 // const DEV = process.env.NODE_ENV === "development"
-const DEV = process.env.NODE_ENV === "production"
+const PROD = true
 
 /** Render SignUp form - handles SignUp logic
  * PROD and DEV build have different signup UI/UX
@@ -63,7 +63,8 @@ function SignUp({ signUp }: SignUpProps) {
         >
           <div className="form-group block mb-2">
             <InputWithLabelForm
-              styles={"w-full p-2.5 mb-4 border border-gray-800 rounded text-base"}
+              styles={`w-full p-2.5 mb-4 border border-gray-800 rounded text-base ${PROD && "bg-gray-500"}`}
+              isDisabled={PROD}
               name={"First Name:"}
               id={"firstName"}
               type={"text"}
@@ -75,7 +76,9 @@ function SignUp({ signUp }: SignUpProps) {
           </div>
           <div className="form-group block mb-2">
             <InputWithLabelForm
-              styles={"w-full p-2.5 mb-4 border border-gray-800 rounded text-base"}
+              styles={
+                "w-full p-2.5 mb-4 border border-gray-800 rounded text-base"
+              }
               name={"Last Name:"}
               id={"lastName"}
               type={"text"}
@@ -87,7 +90,9 @@ function SignUp({ signUp }: SignUpProps) {
           </div>
           <div className="form-group block mb-2">
             <InputWithLabelForm
-              styles={"w-full p-2.5 mb-4 border border-gray-800 rounded text-base"}
+              styles={
+                "w-full p-2.5 mb-4 border border-gray-800 rounded text-base"
+              }
               id={"email"}
               name={"Email:"}
               className={"SignUp-email"}
@@ -99,7 +104,9 @@ function SignUp({ signUp }: SignUpProps) {
           </div>
           <div className="form-group block mb-2">
             <InputWithLabelForm
-              styles={"w-full p-2.5 mb-4 border border-gray-800 rounded text-base"}
+              styles={
+                "w-full p-2.5 mb-4 border border-gray-800 rounded text-base"
+              }
               id={"password"}
               name={"Password:"}
               className={"SignUp-pw"}
@@ -111,7 +118,9 @@ function SignUp({ signUp }: SignUpProps) {
           </div>
           <div className="form-group block mb-2">
             <InputWithLabelForm
-              styles={"w-full p-2.5 mb-4 border border-gray-800 rounded text-base"}
+              styles={
+                "w-full p-2.5 mb-4 border border-gray-800 rounded text-base"
+              }
               id={"userName"}
               name={"User name:"}
               type={"text"}
@@ -121,7 +130,7 @@ function SignUp({ signUp }: SignUpProps) {
               required
             />
           </div>
-          <PillButtonSubmit action={DEV ? "submit" : "Request Invite"} />
+          <PillButtonSubmit action={PROD ? "submit" : "Request Invite"} />
         </form>
       </div>
       {alert && <Alert alert={alert} degree={"yellow"} />}

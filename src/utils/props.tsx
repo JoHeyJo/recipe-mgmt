@@ -219,6 +219,7 @@ export type InputWithLabelFormProps = {
   value: string;
   required: boolean;
   styles?: string;
+  isDisabled?: boolean;
 };
 
 export type ShareBookProp = {
