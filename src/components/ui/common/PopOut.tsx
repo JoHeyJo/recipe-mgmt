@@ -2,22 +2,23 @@ import { Dialog, DialogBackdrop } from "@headlessui/react";
 import { PopOutProps } from "../../../utils/props";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import Share from "../../requests/Share";
-import { WebSocketContext } from "../../../context/WebSocketContext";
-import { useContext } from "react";
-import Invite from "../../requests/Invite";
 
-/** PopOut overlay on grey dialog screen that contains an input box
- * Couple with WebSocket Context
- * 
+/** Grey DialogBackdrop overlay with a dialog container. Houses forms for sharing:
+ * Books, Recipes, Invite(closed beta tester)
+ *
  * Abstract to render Form request components - Component(child instead of prop), message
- * 
+ *
  * [Share, RecipesList] -> PopOut -> Children
  */
-function PopOut({ isDialogOpen, onCloseDialog, children, message, onResetMessage }: PopOutProps) {
+function PopOut({
+  isDialogOpen,
+  onCloseDialog,
+  children,
+  message,
+  onResetMessage,
+}: PopOutProps) {
 
-
-  // closes dialog panel 
+  /** Close PopOut component while calling parent close logic*/
   function handleClose() {
     onCloseDialog();
     setTimeout(() => {
