@@ -18,10 +18,15 @@ const defaultNew: UserSignUp = {
   userName: "",
 };
 
+// const DEV = process.env.NODE_ENV === "development"
+const DEV = process.env.NODE_ENV === "production"
+
 /** Render SignUp form - handles SignUp logic
+ * PROD and DEV build have different signup UI/UX
+ * Production requires user request token before signing up 
  *
  * New user by default is not an admin. Admin PRIVILEGES are granted to user
- * when "Recipe Book" is created at time of creation to corresponding book.
+ * when "Recipe Book" is created at time of creation to corresponding book. - DEPRECATED? 
  */
 
 function SignUp({ signUp }: SignUpProps) {
@@ -116,7 +121,7 @@ function SignUp({ signUp }: SignUpProps) {
               required
             />
           </div>
-          <PillButtonSubmit action={"submit"} />
+          <PillButtonSubmit action={DEV ? "submit" : "Request Invite"} />
         </form>
       </div>
       {alert && <Alert alert={alert} degree={"yellow"} />}
