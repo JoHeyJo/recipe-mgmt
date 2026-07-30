@@ -18,7 +18,9 @@ function PopOut({
   onResetMessage,
 }: PopOutProps) {
 
-  /** Close PopOut component while calling parent close logic*/
+  /** Consolidations necessary closing actions across different rendered components
+   * Close PopOut component while calling parent close logic
+   * */
   function handleClose() {
     onCloseDialog();
     setTimeout(() => {

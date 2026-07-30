@@ -203,11 +203,11 @@ export type SearchProps = {
 };
 
 export type PopOutProps = {
-  children?: any;
-  isDialogOpen?: boolean;
-  onCloseDialog?: () => void;
-  message?: string;
-  onResetMessage?: () => void;
+  children: any;
+  isDialogOpen: boolean;
+  onCloseDialog: () => void;
+  message: string;
+  onResetMessage: () => void;
 };
 
 export type InputWithLabelFormProps = {

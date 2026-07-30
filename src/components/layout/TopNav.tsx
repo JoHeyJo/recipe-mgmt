@@ -17,6 +17,7 @@ import ToggleColorScheme from "../../utils/ToggleColorScheme";
 import UserAvatar from "../ui/UserAvatar";
 import CreateBookRequests from "../requests/CreateBookRequests";
 import PopOut from "../ui/common/PopOut";
+import Invite from "../requests/Invite";
 
 
 const navigation = [
@@ -43,14 +44,13 @@ function TopNav({ logout }: TopNavProps) {
   const { user, userId } = useContext(UserContext);
   const navigate = useNavigate();
 
-  function toggleOpenInvite(){
+  function handleToggleOpenInvite(){
     setIsInviteOpen(isOpen => !isOpen);
   }
 
   function handleModale(){
     setIsCreateBookOpen(false);
   }
-
 
   function logOutAndRedirect() {
     logout();
@@ -62,12 +62,10 @@ function TopNav({ logout }: TopNavProps) {
         isOpen={isCreateBookOpen}
         onCloseDialog={handleModale}
       />
-      {/* Invite component */}
-      {/* <PopOut
+      <Invite
         isDialogOpen={isInviteOpen}
-        closeDialog={toggleOpenInvite}
-        whichComponent={"invite"}
-      /> */}
+        onCloseDialogPanel={handleToggleOpenInvite}
+      />
       <Disclosure as="nav" className="TopNav-Disclosure bg-secondary">
         {({ open }) => (
           <>
@@ -192,7 +190,7 @@ function TopNav({ logout }: TopNavProps) {
                           {userId === 1 && (
                             <MenuItem>
                               <button
-                                onClick={toggleOpenInvite}
+                                onClick={handleToggleOpenInvite}
                                 className="TopNav-Item block px-4 py-2 text-sm bg-primary"
                               >
                                 Invite
