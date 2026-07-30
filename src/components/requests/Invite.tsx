@@ -2,26 +2,34 @@ import { useState, FormEvent, ChangeEvent } from "react";
 import InputWithLabelForm from "../views/InputWithLabelForm";
 import { PillButtonSubmit } from "../ui/PillButtonSubmit";
 import PopOut from "../ui/common/PopOut";
+import API from "../../api";
+import { errorHandling } from "../../utils/ErrorHandling";
 
 /** Invite form component - renders  Pop Out UI that allows ADMIN to invite testers
  *
  *
  * TopNav -> Invite -> PopOut -{ InputWithLabelForm, PillButtonSubmit }
  */
-function Invite({isDialogOpen, onCloseDialogPanel}) {
+function Invite({ isDialogOpen, onCloseDialogPanel }) {
   const [tester, setTester] = useState("");
-  const [message, setMessage] = useState("")
+  const [message, setMessage] = useState("");
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log("submit")
+    try {
+      const res = await API.inviteTester(tester);
+      setMessage(res.message);
+    } catch (error) {
+      errorHandling("Invite -> handleSubmit", error);
+      throw error;
+    }
   }
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     setTester(event.target.value);
   }
 
-  function handleResetMessage(){
+  function handleResetMessage() {
     setTester("");
     setMessage("");
   }
