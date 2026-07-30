@@ -9,6 +9,7 @@ import "../styles/theme.css";
 import { PillButtonSubmit } from "../components/ui/PillButtonSubmit";
 import { SignUp as SignUpProps, UserSignUp } from "../utils/types";
 import { errorHandling } from "../utils/ErrorHandling";
+import API from "../api";
 
 const defaultNew: UserSignUp = {
   firstName: "",
@@ -18,7 +19,7 @@ const defaultNew: UserSignUp = {
   userName: "",
 };
 
-const isProd = process.env.NODE_ENV === "production";
+const isProd = true
 
 /** Render SignUp form - handles SignUp logic
  * PROD and DEV build have different signup UI/UX
@@ -46,15 +47,18 @@ function SignUp({ signUp }: SignUpProps) {
     try {
       await signUp(newUser);
       setNewUser(defaultNew);
-      navigate("/home");
+      // navigate("/home");
     } catch (error: any) {
       const message = errorHandling("SignUp - handlesubmit", error);
       setAlert(message);
     }
   }
 
-  async function handleInvite() {
+  async function handleInvite(event: any) {
+    event.preventDefault();
     try {
+      const res = await API.requestInvite(newUser.email)
+      console.log(res)
     } catch (error) {
       const message = errorHandling("SignUp - handleInvite", error);
       setAlert(message);
@@ -65,7 +69,7 @@ function SignUp({ signUp }: SignUpProps) {
     <>
       <div className="SignUp-container flex justify-center items-center">
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleInvite}
           className="SignUp flex flex-col p-5 rounded-lg shadow w-full max-w-sm"
         >
           <div className="form-group block mb-2">
