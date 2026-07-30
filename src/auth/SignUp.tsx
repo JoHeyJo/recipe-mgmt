@@ -18,15 +18,14 @@ const defaultNew: UserSignUp = {
   userName: "",
 };
 
-// const DEV = process.env.NODE_ENV === "development"
-const PROD = true
+const isProd = process.env.NODE_ENV === "production";
 
 /** Render SignUp form - handles SignUp logic
  * PROD and DEV build have different signup UI/UX
- * Production requires user request token before signing up 
+ * Production requires user request token before signing up
  *
  * New user by default is not an admin. Admin PRIVILEGES are granted to user
- * when "Recipe Book" is created at time of creation to corresponding book. - DEPRECATED? 
+ * when "Recipe Book" is created at time of creation to corresponding book. - DEPRECATED?
  */
 
 function SignUp({ signUp }: SignUpProps) {
@@ -49,7 +48,15 @@ function SignUp({ signUp }: SignUpProps) {
       setNewUser(defaultNew);
       navigate("/home");
     } catch (error: any) {
-      const message = errorHandling("SignUp", error);
+      const message = errorHandling("SignUp - handlesubmit", error);
+      setAlert(message);
+    }
+  }
+
+  async function handleInvite() {
+    try {
+    } catch (error) {
+      const message = errorHandling("SignUp - handleInvite", error);
       setAlert(message);
     }
   }
@@ -63,8 +70,8 @@ function SignUp({ signUp }: SignUpProps) {
         >
           <div className="form-group block mb-2">
             <InputWithLabelForm
-              styles={`w-full p-2.5 mb-4 border border-gray-800 rounded text-base ${PROD && "bg-gray-500"}`}
-              isDisabled={PROD}
+              styles={`w-full p-2.5 mb-4 border border-gray-800 rounded text-base ${isProd && "bg-gray-500"}`}
+              isDisabled={isProd}
               name={"First Name:"}
               id={"firstName"}
               type={"text"}
@@ -76,9 +83,8 @@ function SignUp({ signUp }: SignUpProps) {
           </div>
           <div className="form-group block mb-2">
             <InputWithLabelForm
-              styles={
-                "w-full p-2.5 mb-4 border border-gray-800 rounded text-base"
-              }
+              styles={`w-full p-2.5 mb-4 border border-gray-800 rounded text-base ${isProd && "bg-gray-500"}`}
+              isDisabled={isProd}
               name={"Last Name:"}
               id={"lastName"}
               type={"text"}
@@ -104,9 +110,8 @@ function SignUp({ signUp }: SignUpProps) {
           </div>
           <div className="form-group block mb-2">
             <InputWithLabelForm
-              styles={
-                "w-full p-2.5 mb-4 border border-gray-800 rounded text-base"
-              }
+              styles={`w-full p-2.5 mb-4 border border-gray-800 rounded text-base ${isProd && "bg-gray-500"}`}
+              isDisabled={isProd}
               id={"password"}
               name={"Password:"}
               className={"SignUp-pw"}
@@ -118,9 +123,8 @@ function SignUp({ signUp }: SignUpProps) {
           </div>
           <div className="form-group block mb-2">
             <InputWithLabelForm
-              styles={
-                "w-full p-2.5 mb-4 border border-gray-800 rounded text-base"
-              }
+              styles={`w-full p-2.5 mb-4 border border-gray-800 rounded text-base ${isProd && "bg-gray-500"}`}
+              isDisabled={isProd}
               id={"userName"}
               name={"User name:"}
               type={"text"}
@@ -130,7 +134,7 @@ function SignUp({ signUp }: SignUpProps) {
               required
             />
           </div>
-          <PillButtonSubmit action={PROD ? "submit" : "Request Invite"} />
+          <PillButtonSubmit action={isProd ? "Request Invite" : "submit"} />
         </form>
       </div>
       {alert && <Alert alert={alert} degree={"yellow"} />}

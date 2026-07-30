@@ -87,6 +87,11 @@ class API {
     return res;
   }
 
+  static async requestInvite(email: string){
+    const res = await this.request("request_invite",{email}, "POST")
+    return res;
+  }
+
   // ############ RECIPES ###########
   // ################################
   /** Create new default book and copy recipe to new default book */
