@@ -7,9 +7,9 @@ import { WebSocketContext } from "../../context/WebSocketContext";
 import RadioSwitch from "../ui/common/RadioSwitch";
 import PopOut from "../ui/common/PopOut";
 
-/** Handles User request to share book/recipe with recipient
+/** Handles User request to share book or recipe with recipient
  *
- * MainContainer -> Share -> PopOut -{ [InputWithLabelForm, PillButtonSubmit]
+ * MainContainer -> Share -> PopOut -{ InputWithLabelForm, PillButtonSubmit
  */
 function Share({ action, isDialogOpen, onCloseDialogPanel }: ShareBookProp) {
   const [user, setUser] = useState("");
