@@ -22,7 +22,6 @@ function PopOut({
    * Close PopOut component while calling parent close logic
    * */
   function handleClose() {
-    console.log("close")
     onCloseDialog();
     setTimeout(() => {
       onResetMessage();
@@ -30,12 +29,11 @@ function PopOut({
   }
 
   return (
-    <Dialog
-      open={isDialogOpen}
-      onClose={handleClose}
-      className="relative z-10"
-    >
-      <DialogBackdrop transition className="fixed inset-0 bg-black/30" />
+    <Dialog open={isDialogOpen} onClose={handleClose} className="relative z-10">
+      <DialogBackdrop
+        transition
+        className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
+      />
       <div className="fixed inset-0 flex items-center ">
         <DialogPanel transition className="transform">
           <div className="fixed h-full inset-0 z-10 w-screen">

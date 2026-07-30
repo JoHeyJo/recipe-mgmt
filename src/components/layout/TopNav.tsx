@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import {
-  DialogBackdrop,
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
@@ -8,7 +7,6 @@ import {
   MenuButton,
   MenuItem,
   MenuItems,
-  Transition,
 } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { UserContext } from "../../context/UserContext";
@@ -16,7 +14,6 @@ import { useNavigate } from "react-router-dom";
 import ToggleColorScheme from "../../utils/ToggleColorScheme";
 import UserAvatar from "../ui/UserAvatar";
 import CreateBookRequests from "../requests/CreateBookRequests";
-import PopOut from "../ui/common/PopOut";
 import Invite from "../requests/Invite";
 
 
@@ -44,8 +41,12 @@ function TopNav({ logout }: TopNavProps) {
   const { user, userId } = useContext(UserContext);
   const navigate = useNavigate();
 
-  function handleToggleOpenInvite(){
-    setIsInviteOpen(isOpen => !isOpen);
+  function handleCloseInvite(){
+    setIsInviteOpen(false);
+  }
+
+  function handleOpenInvite(){
+    setIsInviteOpen(true);
   }
 
   function handleModale(){
@@ -64,7 +65,7 @@ function TopNav({ logout }: TopNavProps) {
       />
       <Invite
         isDialogOpen={isInviteOpen}
-        onCloseDialogPanel={handleToggleOpenInvite}
+        onCloseDialogPanel={handleCloseInvite}
       />
       <Disclosure as="nav" className="TopNav-Disclosure bg-secondary">
         {({ open }) => (
@@ -190,7 +191,7 @@ function TopNav({ logout }: TopNavProps) {
                           {userId === 1 && (
                             <MenuItem>
                               <button
-                                onClick={handleToggleOpenInvite}
+                                onClick={handleOpenInvite}
                                 className="TopNav-Item block px-4 py-2 text-sm bg-primary"
                               >
                                 Invite

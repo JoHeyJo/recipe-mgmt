@@ -14,6 +14,7 @@ function Invite({isDialogOpen, onCloseDialogPanel}) {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    console.log("submit")
   }
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
