@@ -12,14 +12,14 @@ import Invite from "../../requests/Invite";
  * 
  * Abstract to render Form request components - Component(child instead of prop), message
  * 
- * [MainContainer, RecipesList] -> PopOut -> [Share, Invite]
+ * [Share, RecipesList] -> PopOut -> Children
  */
-function PopOut({ isDialogOpen, closeDialog, children, message, resetMessage }: PopOutProps) {
+function PopOut({ isDialogOpen, onCloseDialog, children, message, resetMessage }: PopOutProps) {
 
 
   // closes dialog panel 
   function handleClose() {
-    closeDialog();
+    onCloseDialog();
     setTimeout(() => {
       resetMessage();
     }, 310);

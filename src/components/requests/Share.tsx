@@ -10,13 +10,14 @@ import PopOut from "../ui/common/PopOut";
 /** Handles User request to share book/recipe with recipient
  * Consumes data from custom useWEbSocket hook
  *
- * PopOut -> Share -> [InputWithLabelForm, PillButtonSubmit]
+ * MainContainer -> Share -> PopOut ={ [InputWithLabelForm, PillButtonSubmit]
  */
-function Share({ action, isDialogOpen, closeDialogPanel }: ShareBookProp) {
+function Share({ action, isDialogOpen, onCloseDialogPanel }: ShareBookProp) {
   const [user, setUser] = useState("");
   const [privileges, setRecipient] = useState("viewer");
 
-  const { sendBook, sendRecipe } = useContext(WebSocketContext);
+  const { sendBook, sendRecipe, message, resetMessage } =
+    useContext(WebSocketContext);
 
   /** handle state change for recipient */
   function handleRadio(event: ChangeEvent<HTMLInputElement>) {
@@ -42,7 +43,12 @@ function Share({ action, isDialogOpen, closeDialogPanel }: ShareBookProp) {
   }
 
   return (
-    <PopOut isDialogOpen={true} closeDialog={closeDialogPanel}>
+    <PopOut
+      isDialogOpen={isDialogOpen}
+      onCloseDialog={onCloseDialogPanel}
+      message={message}
+      resetMessage={resetMessage}
+    >
       <form onSubmit={handleSubmit}>
         <div>{`Who would you like to share this ${action === "shareBook" ? "book" : "recipe"} with?`}</div>
         {action === "shareBook" && (

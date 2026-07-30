@@ -31,7 +31,7 @@ function MainContainer() {
     {},
   );
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isShareBookOpen, setIsShareBookOpen] = useState(false);
   const recipeData = {
     recipes,
     selectedRecipe: {
@@ -133,8 +133,8 @@ function MainContainer() {
   }, [currentBookId, userId]);
 
   /** Close Share book Dialog panel */
-  function closeDialogPanel() {
-    setIsDialogOpen(false);
+  function handleCloseShareBook() {
+    setIsShareBookOpen(false);
   }
 
   if (!isLoading) <div>Loading...</div>;
@@ -160,10 +160,11 @@ function MainContainer() {
                   closeDialog={closeDialog}
                   isOpen={isOpen}
                 />
-
-         
-                  <Share action={"shareBook"} />
-
+                <Share
+                  action={"shareBook"}
+                  isDialogOpen={isShareBookOpen}
+                  onCloseDialogPanel={handleCloseShareBook}
+                />
                 <div className="flex p-1 font-semibold text-lg border-b-2">
                   <div className="flex [flex:0.75]">
                     <div className="flex flex-1 justify-start">
@@ -175,7 +176,7 @@ function MainContainer() {
                   </div>
                   {defaultBookId && (
                     <BookControls
-                      shareControl={() => setIsDialogOpen(true)}
+                      shareControl={() => setIsShareBookOpen(true)}
                       addControl={toggleCreateForm}
                       render={!!defaultBookId}
                     >

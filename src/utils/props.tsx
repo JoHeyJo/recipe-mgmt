@@ -205,7 +205,7 @@ export type SearchProps = {
 export type PopOutProps = {
   children?: any;
   isDialogOpen?: boolean;
-  closeDialog?: () => void;
+  onCloseDialog?: () => void;
   message?: string;
   resetMessage?: ()=> void;
 };
@@ -223,8 +223,8 @@ export type InputWithLabelFormProps = {
 
 export type ShareBookProp = {
   action?: string;
-  isDialogOpen?: boolean;
-  closeDialogPanel?: ()=> void;
+  isDialogOpen: boolean;
+  onCloseDialogPanel: () => void;
 };
 
 export type AvatarFrameProp = {
