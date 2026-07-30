@@ -207,7 +207,7 @@ export type PopOutProps = {
   isDialogOpen?: boolean;
   onCloseDialog?: () => void;
   message?: string;
-  resetMessage?: ()=> void;
+  onResetMessage?: () => void;
 };
 
 export type InputWithLabelFormProps = {

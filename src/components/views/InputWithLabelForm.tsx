@@ -1,8 +1,7 @@
-import { ChangeEvent } from "react";
 import { InputWithLabelFormProps } from "../../utils/props";
 /** Handles form input and label
  *
- * [Login, SignUp] -> InputWithLabelForm
+ * [Login, SignUp, Share] -> InputWithLabelForm
  */
 function InputWithLabelForm({
   type,

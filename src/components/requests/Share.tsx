@@ -8,9 +8,8 @@ import RadioSwitch from "../ui/common/RadioSwitch";
 import PopOut from "../ui/common/PopOut";
 
 /** Handles User request to share book/recipe with recipient
- * Consumes data from custom useWEbSocket hook
  *
- * MainContainer -> Share -> PopOut ={ [InputWithLabelForm, PillButtonSubmit]
+ * MainContainer -> Share -> PopOut -{ [InputWithLabelForm, PillButtonSubmit]
  */
 function Share({ action, isDialogOpen, onCloseDialogPanel }: ShareBookProp) {
   const [user, setUser] = useState("");
@@ -42,12 +41,17 @@ function Share({ action, isDialogOpen, onCloseDialogPanel }: ShareBookProp) {
     }
   }
 
+  function handleResetMessage(){
+    resetMessage();
+    setUser("");
+  }
+
   return (
     <PopOut
       isDialogOpen={isDialogOpen}
       onCloseDialog={onCloseDialogPanel}
       message={message}
-      resetMessage={resetMessage}
+      onResetMessage={handleResetMessage}
     >
       <form onSubmit={handleSubmit}>
         <div>{`Who would you like to share this ${action === "shareBook" ? "book" : "recipe"} with?`}</div>

@@ -14,14 +14,14 @@ import Invite from "../../requests/Invite";
  * 
  * [Share, RecipesList] -> PopOut -> Children
  */
-function PopOut({ isDialogOpen, onCloseDialog, children, message, resetMessage }: PopOutProps) {
+function PopOut({ isDialogOpen, onCloseDialog, children, message, onResetMessage }: PopOutProps) {
 
 
   // closes dialog panel 
   function handleClose() {
     onCloseDialog();
     setTimeout(() => {
-      resetMessage();
+      onResetMessage();
     }, 310);
   }
 
