@@ -203,7 +203,7 @@ export type SearchProps = {
 };
 
 export type PopOutProps = {
-  children: any;
+  children?: any;
   isDialogOpen: boolean;
   onCloseDialog: () => void;
   message: string;

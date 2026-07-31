@@ -2,14 +2,15 @@
 import InputWithLabelForm from "../components/views/InputWithLabelForm";
 import Alert from "../components/ui/Alert";
 //modules
-import { ChangeEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { ChangeEvent, useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 //styles
 import "../styles/theme.css";
 import { PillButtonSubmit } from "../components/ui/PillButtonSubmit";
 import { SignUp as SignUpProps, UserSignUp } from "../utils/types";
 import { errorHandling } from "../utils/ErrorHandling";
 import API from "../api";
+import PopOut from "../components/ui/common/PopOut";
 
 const defaultNew: UserSignUp = {
   firstName: "",
@@ -19,7 +20,7 @@ const defaultNew: UserSignUp = {
   userName: "",
 };
 
-const isProd = true
+const isProd = true;
 
 /** Render SignUp form - handles SignUp logic
  * PROD and DEV build have different signup UI/UX
@@ -32,7 +33,9 @@ const isProd = true
 function SignUp({ signUp }: SignUpProps) {
   const [newUser, setNewUser] = useState(defaultNew);
   const [alert, setAlert] = useState(undefined);
-  const navigate = useNavigate();
+  const [message, setMessage] = useState("");
+  const [isMessageOpen ,setIsMessageOpen] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   /** Handle changes to sign up form */
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -47,7 +50,6 @@ function SignUp({ signUp }: SignUpProps) {
     try {
       await signUp(newUser);
       setNewUser(defaultNew);
-      // navigate("/home");
     } catch (error: any) {
       const message = errorHandling("SignUp - handlesubmit", error);
       setAlert(message);
@@ -57,17 +59,40 @@ function SignUp({ signUp }: SignUpProps) {
   async function handleInvite(event: any) {
     event.preventDefault();
     try {
-      const res = await API.requestInvite(newUser.email)
-      console.log(res)
+      const res = await API.requestInvite(newUser.email);
+      setMessage(res.message);
+      setIsMessageOpen(true);
     } catch (error) {
       const message = errorHandling("SignUp - handleInvite", error);
       setAlert(message);
     }
   }
 
+  function handleCloseMessage(){
+    setIsMessageOpen(false);
+  }
+
+  function handleResetMessage(){
+    setMessage("");
+  }
+
+  useEffect(()=>{
+    const URLEmail = searchParams.get("email")
+    const URLToken = searchParams.get("token");
+    API.token = URLToken
+    setNewUser((user) => {
+      const addEmail = {...user}
+      addEmail.email = URLEmail;
+      return addEmail
+    }
+    
+    )
+  },[searchParams])
+
   return (
     <>
       <div className="SignUp-container flex justify-center items-center">
+        <PopOut message={message} isDialogOpen={isMessageOpen} onCloseDialog={handleCloseMessage} onResetMessage={handleResetMessage}/>
         <form
           onSubmit={handleInvite}
           className="SignUp flex flex-col p-5 rounded-lg shadow w-full max-w-sm"
