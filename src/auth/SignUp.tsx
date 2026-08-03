@@ -89,7 +89,7 @@ function SignUp({ signUp }: SignUpProps) {
     try {
       if (URLToken) {
         const isTokenValid = jwtDecode(URLToken);
-        if (isTokenValid && true) {
+        if (isTokenValid && isProd) {
           setNeedsInvite(false);
           setNewUser({ ...newUser, email: URLEmail });
           setToken(URLToken);
