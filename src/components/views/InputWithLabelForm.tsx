@@ -1,8 +1,8 @@
-import { ChangeEvent } from "react";
+import { isDisabled } from "@testing-library/user-event/dist/utils";
 import { InputWithLabelFormProps } from "../../utils/props";
 /** Handles form input and label
  *
- * [Login, SignUp] -> InputWithLabelForm
+ * [Login, SignUp, Share] -> InputWithLabelForm
  */
 function InputWithLabelForm({
   type,
@@ -12,7 +12,8 @@ function InputWithLabelForm({
   handleChange,
   value,
   required,
-  styles
+  styles,
+  isDisabled
 }: InputWithLabelFormProps) {
   return (
     <>
@@ -20,6 +21,7 @@ function InputWithLabelForm({
         {name}
       </label>
       <input
+        disabled={isDisabled}
         type={type}
         id={id}
         className={`${className}-input ${styles}`}

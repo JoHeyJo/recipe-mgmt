@@ -19,7 +19,7 @@ export const protocol =
  * Static class - Contains methods that facilitate communications between client
  * and backend API */
 class API {
-  static token: string | null = null;
+  static token;
 
   static async request(
     endpoint: string,
@@ -41,9 +41,11 @@ class API {
   }
 
   // ########### USERS ###########
+  // ################################
 
   /** Register user: returns token */
-  static async signUp(data: UserSignUp) {
+  static async signUp(data: UserSignUp, token?: string) {
+    API.token = token
     const res = await this.request("signup", data, "POST");
     return res;
   }
@@ -81,6 +83,18 @@ class API {
     return res;
   }
 
+  static async inviteTester(email: string) {
+    const res = await this.request("invite", { email }, "POST");
+    return res;
+  }
+
+  static async requestInvite(email: string) {
+    const res = await this.request("request_invite", { email }, "POST");
+    return res;
+  }
+
+  // ############ RECIPES ###########
+  // ################################
   /** Create new default book and copy recipe to new default book */
   static async postCreateBookCopyRecipe(
     book: Book,
@@ -94,7 +108,6 @@ class API {
     return res;
   }
 
-  // ############ RECIPES ###########
   /** Add user recipe to corresponding book*/
   static async postUserRecipe(recipe: Recipe, bookId: number, userId: number) {
     const res = await this.request(
@@ -168,6 +181,7 @@ class API {
   }
 
   // ########### BOOKS ###########
+  // ################################
 
   /** Post new book */
   static async postBook(data: Book, userId: number) {
@@ -192,6 +206,7 @@ class API {
   }
 
   // ########### COMPONENT OPTIONS = {amount, unit, item} = INGREDIENT ###########
+  // ################################################################
 
   /** Fetch all ingredients  */
   static async getUserComponentsOptions(userId: number) {
@@ -244,6 +259,7 @@ class API {
   }
 
   // ########### INSTRUCTIONS ###########
+  // ################################
 
   /** Fetch all instructions */
   static async getInstructions() {

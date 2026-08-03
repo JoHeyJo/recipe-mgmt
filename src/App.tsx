@@ -66,9 +66,9 @@ function App() {
   };
 
   /** User sign up - returns token and auth credentials - saved to local storage */
-  async function userSignUp(signUpData: SignUpData) {
+  async function userSignUp(signUpData: SignUpData, token: string) {
     try {
-      const res = await API.signUp(signUpData);
+      const res = await API.signUp(signUpData, token);
       const userId = await extractAndSetUser(res.token, setUserData);
       API.token = res.token;
       setToken(res.token);

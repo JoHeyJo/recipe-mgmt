@@ -202,10 +202,12 @@ export type SearchProps = {
   setList: (list: Recipe[]) => void;
 };
 
-export type SharePopOutProps = {
-  action: string;
+export type PopOutProps = {
+  children?: any;
   isDialogOpen: boolean;
-  closeDialog: () => void;
+  onCloseDialog: () => void;
+  message: string;
+  onResetMessage: () => void;
 };
 
 export type InputWithLabelFormProps = {
@@ -217,10 +219,13 @@ export type InputWithLabelFormProps = {
   value: string;
   required: boolean;
   styles?: string;
+  isDisabled?: boolean;
 };
 
 export type ShareBookProp = {
-  action: string;
+  action?: string;
+  isDialogOpen: boolean;
+  onCloseDialogPanel: () => void;
 };
 
 export type AvatarFrameProp = {

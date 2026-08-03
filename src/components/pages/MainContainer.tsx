@@ -10,13 +10,14 @@ import RecipeRequests from "../requests/RecipeRequests";
 import { RecipeContext } from "../../context/RecipeContext";
 import BookView from "../views/BookView";
 import Search from "../ui/Search";
-import SharePopOut from "../ui/common/SharePopOut";
+import PopOut from "../ui/common/PopOut";
 import { WebSocketProvider } from "../../context/WebSocketProvider";
 import BookControls from "../ui/controls/BookControls";
+import Share from "../requests/Share";
 
 /** Renders the main container (book) housing list of recipes and individual recipe
  *
- * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList, BookView, SharePopOut, Search, BookControls]
+ * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList, BookView, PopOut, Search, BookControls]
  */
 function MainContainer() {
   const { userId, defaultBookId, currentBookId, PRIVILEGES } =
@@ -30,7 +31,7 @@ function MainContainer() {
     {},
   );
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isShareBookOpen, setIsShareBookOpen] = useState(false);
   const recipeData = {
     recipes,
     selectedRecipe: {
@@ -132,8 +133,8 @@ function MainContainer() {
   }, [currentBookId, userId]);
 
   /** Close Share book Dialog panel */
-  function closeDialogPanel() {
-    setIsDialogOpen(false);
+  function handleCloseShareBook() {
+    setIsShareBookOpen(false);
   }
 
   if (!isLoading) <div>Loading...</div>;
@@ -159,13 +160,11 @@ function MainContainer() {
                   closeDialog={closeDialog}
                   isOpen={isOpen}
                 />
-
-                <SharePopOut
+                <Share
                   action={"shareBook"}
-                  isDialogOpen={isDialogOpen}
-                  closeDialog={closeDialogPanel}
+                  isDialogOpen={isShareBookOpen}
+                  onCloseDialogPanel={handleCloseShareBook}
                 />
-
                 <div className="flex p-1 font-semibold text-lg border-b-2">
                   <div className="flex [flex:0.75]">
                     <div className="flex flex-1 justify-start">
@@ -177,7 +176,7 @@ function MainContainer() {
                   </div>
                   {defaultBookId && (
                     <BookControls
-                      shareControl={() => setIsDialogOpen(true)}
+                      shareControl={() => setIsShareBookOpen(true)}
                       addControl={toggleCreateForm}
                       render={!!defaultBookId}
                     >

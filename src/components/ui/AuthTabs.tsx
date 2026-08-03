@@ -15,7 +15,6 @@ function AuthTabs({ signUp, login }: AuthProps) {
     searchParams.get("tab") || "login",
   );
 
-  // border-solid border-b border-white border-b-1
   return (
     <div className="cardContainer border border-border-color flex flex-col rounded-lg shadow-md w-[80vw] xs:w-[50vw] md:w-[40vw] xl:w-[30vw] mx-auto mt-[5%] overflow-hidden h-[75vh]">
       <nav id="AuthTabs-container">

@@ -1,43 +1,42 @@
 import { useContext, useState, useEffect } from "react";
 import "../../styles/Recipes.css";
 import { RecipesListProps } from "../../utils/props";
-import SharePopOut from "../ui/common/SharePopOut";
 import RecipeListItem from "../ui/RecipeListItem";
 import { WebSocketContext } from "../../context/WebSocketContext";
+import Share from "../requests/Share";
 
 /** Renders list of recipes that can be selected for view
  *
  *
- * MainContainer -> RecipesList -> [SharePopOut, RecipeListItem]
+ * MainContainer -> RecipesList -> Share
  */
 function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isRecipeShareOpen, setIsRecipeShareOpen] = useState(false);
 
   const { status } = useContext(WebSocketContext);
 
   /** Close Share recipe Dialog panel */
-  function closeDialogPanel() {
-    setIsDialogOpen(false);
+  function handleCloseRecipeShare() {
+    setIsRecipeShareOpen(false);
   }
 
   /** Open share recipes Dialog panel */
   function openDialogPanel() {
-    setIsDialogOpen(true);
+    setIsRecipeShareOpen(true);
   }
 
   // Triggers recipient UI to communicate successful share of recipe/book.
-  // No need to communicate to recipient failure. Only to sender. 
+  // No need to communicate to recipient failure. Only to sender.
   useEffect(() => {
-    if(status === 200) setIsDialogOpen(true);
+    if (status === 200) setIsRecipeShareOpen(true);
   }, [status]);
 
   return (
     <section>
       <div>
-        <SharePopOut
-          action={"shareRecipe"}
-          isDialogOpen={isDialogOpen}
-          closeDialog={closeDialogPanel}
+        <Share
+          isDialogOpen={isRecipeShareOpen}
+          onCloseDialogPanel={handleCloseRecipeShare}
         />
       </div>
       <ul

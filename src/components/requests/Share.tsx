@@ -5,17 +5,18 @@ import { PillButtonSubmit } from "../ui/PillButtonSubmit";
 import { ShareBookProp } from "../../utils/props";
 import { WebSocketContext } from "../../context/WebSocketContext";
 import RadioSwitch from "../ui/common/RadioSwitch";
+import PopOut from "../ui/common/PopOut";
 
-/** Handles User request to share book/recipe with recipient
- * Calls on custom hook to establish WebSocket connection and communication
+/** Handles User request to share book or recipe with recipient
  *
- * SharePopOut -> Share -> [InputWithLabelForm, PillButtonSubmit]
+ * MainContainer -> Share -> PopOut -{ InputWithLabelForm, PillButtonSubmit }
  */
-function Share({ action }: ShareBookProp) {
+function Share({ action, isDialogOpen, onCloseDialogPanel }: ShareBookProp) {
   const [user, setUser] = useState("");
   const [privileges, setRecipient] = useState("viewer");
 
-  const { sendBook, sendRecipe } = useContext(WebSocketContext);
+  const { sendBook, sendRecipe, message, resetMessage } =
+    useContext(WebSocketContext);
 
   /** handle state change for recipient */
   function handleRadio(event: ChangeEvent<HTMLInputElement>) {
@@ -40,31 +41,43 @@ function Share({ action }: ShareBookProp) {
     }
   }
 
+  function handleResetMessage(){
+    resetMessage();
+    setUser("");
+  }
+
   return (
-    <form onSubmit={handleSubmit}>
-      <div>{`Who would you like to share this ${action === "shareBook" ? "book" : "recipe"} with?`}</div>
-      {action === "shareBook" && (
-        <RadioSwitch
-          handleSwitch={handleRadio}
-          selection={privileges}
-          labelOne="Collaborator"
-          labelTwo="View Only"
-          valueOne="collaborator"
-          valueTwo="viewer"
+    <PopOut
+      isDialogOpen={isDialogOpen}
+      onCloseDialog={onCloseDialogPanel}
+      message={message}
+      onResetMessage={handleResetMessage}
+    >
+      <form onSubmit={handleSubmit}>
+        <div>{`Who would you like to share this ${action === "shareBook" ? "book" : "recipe"} with?`}</div>
+        {action === "shareBook" && (
+          <RadioSwitch
+            handleSwitch={handleRadio}
+            selection={privileges}
+            labelOne="Collaborator"
+            labelTwo="View Only"
+            valueOne="collaborator"
+            valueTwo="viewer"
+          />
+        )}
+        <InputWithLabelForm
+          type={"user-name"}
+          name={"User Name:"}
+          id={"user-name"}
+          className={"user-name"}
+          handleChange={handleChange}
+          value={user}
+          required={true}
+          styles={"px-2 border-2 border-solid"}
         />
-      )}
-      <InputWithLabelForm
-        type={"user-name"}
-        name={"User Name:"}
-        id={"user-name"}
-        className={"user-name"}
-        handleChange={handleChange}
-        value={user}
-        required={true}
-        styles={"px-2 border-2 border-solid"}
-      />
-      <PillButtonSubmit action={"share"} />
-    </form>
+        <PillButtonSubmit action={"share"} />
+      </form>
+    </PopOut>
   );
 }
 
