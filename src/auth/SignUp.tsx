@@ -2,8 +2,9 @@
 import InputWithLabelForm from "../components/views/InputWithLabelForm";
 import Alert from "../components/ui/Alert";
 //modules
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState, FormEvent } from "react";
 import { useSearchParams } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 //styles
 import "../styles/theme.css";
 import { PillButtonSubmit } from "../components/ui/PillButtonSubmit";
@@ -20,7 +21,8 @@ const defaultNew: UserSignUp = {
   userName: "",
 };
 
-const isProd = true;
+const isProd = process.env.NODE_ENV === "production";
+const environment = process.env.NODE_ENV;
 
 /** Render SignUp form - handles SignUp logic
  * PROD and DEV build have different signup UI/UX
@@ -34,8 +36,9 @@ function SignUp({ signUp }: SignUpProps) {
   const [newUser, setNewUser] = useState(defaultNew);
   const [alert, setAlert] = useState(undefined);
   const [message, setMessage] = useState("");
-  const [isMessageOpen ,setIsMessageOpen] = useState(false);
+  const [isMessageOpen, setIsMessageOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [needsInvite, setNeedsInvite] = useState(true);
 
   /** Handle changes to sign up form */
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -45,18 +48,18 @@ function SignUp({ signUp }: SignUpProps) {
   }
 
   /** Submits new user data for */
-  async function handleSubmit(event: any) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
       await signUp(newUser);
       setNewUser(defaultNew);
     } catch (error: any) {
-      const message = errorHandling("SignUp - handlesubmit", error);
+      const message = errorHandling("SignUp - handleSubmit", error);
       setAlert(message);
     }
   }
 
-  async function handleInvite(event: any) {
+  async function handleInvite(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
       const res = await API.requestInvite(newUser.email);
@@ -68,39 +71,54 @@ function SignUp({ signUp }: SignUpProps) {
     }
   }
 
-  function handleCloseMessage(){
+  function handleCloseMessage() {
     setIsMessageOpen(false);
   }
 
-  function handleResetMessage(){
+  function handleResetMessage() {
     setMessage("");
   }
 
-  useEffect(()=>{
-    const URLEmail = searchParams.get("email")
+  /** Checks for beta tester invitation */
+  useEffect(() => {
+    if(environment === "development") setNeedsInvite(false);
+    const URLEmail = searchParams.get("email");
     const URLToken = searchParams.get("token");
-    API.token = URLToken
-    setNewUser((user) => {
-      const addEmail = {...user}
-      addEmail.email = URLEmail;
-      return addEmail
+    try {
+      if(URLToken){
+        const isTokenValid = jwtDecode(URLToken);
+        if (isTokenValid && isProd) {
+          setNeedsInvite(false);
+          setNewUser({...newUser, email: URLEmail})
+          API.token = URLToken;
+          setSearchParams(searchParams, { replace: true });
+        }
+      } 
+    } catch (error) {
+      const message = errorHandling("SignUp - token validation", error);
+      setAlert(message);
     }
     
-    )
-  },[searchParams])
+    
+  }, [searchParams]);
 
   return (
     <>
       <div className="SignUp-container flex justify-center items-center">
-        <PopOut message={message} isDialogOpen={isMessageOpen} onCloseDialog={handleCloseMessage} onResetMessage={handleResetMessage}/>
+        <PopOut
+          message={message}
+          isDialogOpen={isMessageOpen}
+          onCloseDialog={handleCloseMessage}
+          onResetMessage={handleResetMessage}
+        />
         <form
-          onSubmit={handleInvite}
+          onSubmit={needsInvite ? handleInvite : handleSubmit}
           className="SignUp flex flex-col p-5 rounded-lg shadow w-full max-w-sm"
         >
           <div className="form-group block mb-2">
             <InputWithLabelForm
-              styles={`w-full p-2.5 mb-4 border border-gray-800 rounded text-base ${isProd && "bg-gray-500"}`}
-              isDisabled={isProd}
+              styles={`w-full p-2.5 mb-4 border border-gray-800 rounded text-base ${needsInvite && "bg-gray-500"}`}
+              isDisabled={needsInvite}
               name={"First Name:"}
               id={"firstName"}
               type={"text"}
@@ -112,8 +130,8 @@ function SignUp({ signUp }: SignUpProps) {
           </div>
           <div className="form-group block mb-2">
             <InputWithLabelForm
-              styles={`w-full p-2.5 mb-4 border border-gray-800 rounded text-base ${isProd && "bg-gray-500"}`}
-              isDisabled={isProd}
+              styles={`w-full p-2.5 mb-4 border border-gray-800 rounded text-base ${needsInvite && "bg-gray-500"}`}
+              isDisabled={needsInvite}
               name={"Last Name:"}
               id={"lastName"}
               type={"text"}
@@ -139,8 +157,8 @@ function SignUp({ signUp }: SignUpProps) {
           </div>
           <div className="form-group block mb-2">
             <InputWithLabelForm
-              styles={`w-full p-2.5 mb-4 border border-gray-800 rounded text-base ${isProd && "bg-gray-500"}`}
-              isDisabled={isProd}
+              styles={`w-full p-2.5 mb-4 border border-gray-800 rounded text-base ${needsInvite && "bg-gray-500"}`}
+              isDisabled={needsInvite}
               id={"password"}
               name={"Password:"}
               className={"SignUp-pw"}
@@ -152,8 +170,8 @@ function SignUp({ signUp }: SignUpProps) {
           </div>
           <div className="form-group block mb-2">
             <InputWithLabelForm
-              styles={`w-full p-2.5 mb-4 border border-gray-800 rounded text-base ${isProd && "bg-gray-500"}`}
-              isDisabled={isProd}
+              styles={`w-full p-2.5 mb-4 border border-gray-800 rounded text-base ${needsInvite && "bg-gray-500"}`}
+              isDisabled={needsInvite}
               id={"userName"}
               name={"User name:"}
               type={"text"}
@@ -163,7 +181,9 @@ function SignUp({ signUp }: SignUpProps) {
               required
             />
           </div>
-          <PillButtonSubmit action={isProd ? "Request Invite" : "submit"} />
+          <PillButtonSubmit
+            action={needsInvite ? "Request Invite" : "submit"}
+          />
         </form>
       </div>
       {alert && <Alert alert={alert} degree={"yellow"} />}

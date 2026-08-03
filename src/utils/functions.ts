@@ -1,6 +1,5 @@
 import { SetStateAction, Dispatch } from "react";
 import { jwtDecode } from "jwt-decode";
-import { AttributeData, Instructions } from "./types";
 import { User, Book } from "./types";
 
 
