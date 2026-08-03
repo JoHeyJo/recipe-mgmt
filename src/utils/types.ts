@@ -50,7 +50,7 @@ export type UserSignUp = User & {
 };
 
 export type SignUp = {
-  signUp: (signUpData: UserSignUp) => Promise<void>;
+  signUp: (signUpData: UserSignUp, token?: string) => Promise<void>;
 };
 
 export type Login = {

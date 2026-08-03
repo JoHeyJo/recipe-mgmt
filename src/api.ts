@@ -44,7 +44,10 @@ class API {
   // ################################
 
   /** Register user: returns token */
-  static async signUp(data: UserSignUp) {
+  static async signUp(data: UserSignUp, token?: string) {
+    console.log("torken consumed in API:",token)
+    API.token = token;
+    console.log("API.token in API",API.token, token)
     const res = await this.request("signup", data, "POST");
     return res;
   }
@@ -83,12 +86,12 @@ class API {
   }
 
   static async inviteTester(email: string) {
-    const res = await this.request("invite", {email}, "POST");
+    const res = await this.request("invite", { email }, "POST");
     return res;
   }
 
-  static async requestInvite(email: string){
-    const res = await this.request("request_invite",{email}, "POST")
+  static async requestInvite(email: string) {
+    const res = await this.request("request_invite", { email }, "POST");
     return res;
   }
 

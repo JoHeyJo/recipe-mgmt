@@ -39,6 +39,7 @@ function SignUp({ signUp }: SignUpProps) {
   const [isMessageOpen, setIsMessageOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [needsInvite, setNeedsInvite] = useState(true);
+  const [token, setToken] = useState("");
 
   /** Handle changes to sign up form */
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -51,7 +52,9 @@ function SignUp({ signUp }: SignUpProps) {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      await signUp(newUser);
+
+      console.log("torken in handleSubmit:",token)
+      await signUp(newUser, token);
       setNewUser(defaultNew);
     } catch (error: any) {
       const message = errorHandling("SignUp - handleSubmit", error);
@@ -81,16 +84,18 @@ function SignUp({ signUp }: SignUpProps) {
 
   /** Checks for beta tester invitation */
   useEffect(() => {
-    if(environment === "development") setNeedsInvite(false);
+    // if(environment === "development") setNeedsInvite(false);
     const URLEmail = searchParams.get("email");
     const URLToken = searchParams.get("token");
     try {
       if(URLToken){
         const isTokenValid = jwtDecode(URLToken);
-        if (isTokenValid && isProd) {
+        if (isTokenValid && true) {
+          API.token = URLToken
           setNeedsInvite(false);
           setNewUser({...newUser, email: URLEmail})
-          API.token = URLToken;
+          console.log("token insighup:",URLToken)
+          setToken(URLToken)
           setSearchParams(searchParams, { replace: true });
         }
       } 
