@@ -19,7 +19,7 @@ export const protocol =
  * Static class - Contains methods that facilitate communications between client
  * and backend API */
 class API {
-  static token: string | null = null;
+  static token;
 
   static async request(
     endpoint: string,
@@ -45,10 +45,9 @@ class API {
 
   /** Register user: returns token */
   static async signUp(data: UserSignUp, token?: string) {
-    console.log("torken consumed in API:",token)
-    API.token = token;
-    console.log("API.token in API",API.token, token)
+    API.token = token
     const res = await this.request("signup", data, "POST");
+    console.log("res:",res)
     return res;
   }
 

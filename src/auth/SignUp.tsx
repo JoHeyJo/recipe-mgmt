@@ -53,7 +53,6 @@ function SignUp({ signUp }: SignUpProps) {
     event.preventDefault();
     try {
 
-      console.log("torken in handleSubmit:",token)
       await signUp(newUser, token);
       setNewUser(defaultNew);
     } catch (error: any) {
@@ -84,27 +83,23 @@ function SignUp({ signUp }: SignUpProps) {
 
   /** Checks for beta tester invitation */
   useEffect(() => {
-    // if(environment === "development") setNeedsInvite(false);
+    if(environment === "development") setNeedsInvite(false);
     const URLEmail = searchParams.get("email");
     const URLToken = searchParams.get("token");
     try {
-      if(URLToken){
+      if (URLToken) {
         const isTokenValid = jwtDecode(URLToken);
         if (isTokenValid && true) {
-          API.token = URLToken
           setNeedsInvite(false);
-          setNewUser({...newUser, email: URLEmail})
-          console.log("token insighup:",URLToken)
-          setToken(URLToken)
+          setNewUser({ ...newUser, email: URLEmail });
+          setToken(URLToken);
           setSearchParams(searchParams, { replace: true });
         }
-      } 
+      }
     } catch (error) {
       const message = errorHandling("SignUp - token validation", error);
       setAlert(message);
     }
-    
-    
   }, [searchParams]);
 
   return (
