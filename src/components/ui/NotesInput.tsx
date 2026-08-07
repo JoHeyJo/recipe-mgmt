@@ -1,6 +1,8 @@
 import { useState, useEffect, ChangeEvent, useContext } from "react";
 import { NotesInputProps } from "../../utils/props";
 import { RecipeContext } from "../../context/RecipeContext";
+import FormLabel from "./common/Label";
+import { Field } from "@headlessui/react";
 
 /** Render Notes
  *
@@ -24,20 +26,18 @@ function NotesInput({ onNotesInput }: NotesInputProps) {
   return (
     <div className="flex items-start space-x-4">
       <div className="min-w-0 flex-1">
-        <form action="#">
-          <div className="NotesInput-text focus-within:border-gray-800">
-            <label htmlFor="notes" className=""></label>
+        <Field >
+            <FormLabel label={"Notes:"} />
             <textarea
               onChange={handleChange}
               id="notes"
               name="notes"
               rows={3}
-              placeholder="Notes: Serve on rocks or ice..."
-              className="block w-full resize-none rounded-xl mt-3 p-2 border-2 border-gray-300 bg-accent placeholder:text-gray-500 focus:border-gray-800 focus:ring-0 sm:text-sm sm:leading-6"
+              placeholder="Serve on rocks or ice..."
+              className="block w-full resize-none rounded-xl p-2 border-2 border-gray-300 bg-accent placeholder:text-gray-500 focus:border-gray-800 focus:ring-0 sm:text-sm sm:leading-6"
               defaultValue={notes}
             />
-          </div>
-        </form>
+        </Field>
       </div>
     </div>
   );

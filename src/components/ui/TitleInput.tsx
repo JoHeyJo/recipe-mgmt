@@ -2,6 +2,8 @@ import TextInput from "./common/TextInput";
 import { RecipeInfoProp } from "../../utils/props";
 import { useState, useContext, useEffect } from "react";
 import { RecipeContext } from "../../context/RecipeContext";
+import FormLabel from "./common/Label";
+import { Field } from "@headlessui/react";
 
 /** Consolidations recipe data and logic
  *
@@ -28,10 +30,8 @@ function TitleInput({ onTitleInput }: RecipeInfoProp) {
   }, [title]);
 
   return (
-    <>
-      <section className="text-gray-400 placeholder:italic text-sm">
-        Title:
-      </section>
+    <Field>
+      <FormLabel label={"Title:"} />
       <TextInput
         id={id.toString()}
         name={name}
@@ -40,7 +40,7 @@ function TitleInput({ onTitleInput }: RecipeInfoProp) {
         onUpdate={handleChange}
         placeholder={"Recipe name: Margarita"}
       />
-    </>
+    </Field>
   );
 }
 
