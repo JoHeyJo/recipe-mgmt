@@ -5,6 +5,8 @@ import { RecipeContext } from "../../context/RecipeContext";
 import { v4 as uuidv4 } from "uuid";
 import { defaultIngredient, recipeTemplate } from "../../utils/templates";
 import ComponentsOptionsRequests from "../requests/ComponentsOptionsRequests";
+import FormLabel from "../ui/common/Label";
+import { Field } from "@headlessui/react";
 
 /** Handles selected Ingredients - mutation of ingredient's array - updates parent recipe state
  * Refactor: IngredientKeys can be removed and id associated with ingredient can now be used.
@@ -17,7 +19,7 @@ function IngredientsGroup({ onIngredientInput }: IngredientsGroupProps) {
   const [ingredients, setIngredients] = useState<Ingredients>(
     selectedRecipe.ingredients.length === 0
       ? recipeTemplate.ingredients
-      : selectedRecipe.ingredients
+      : selectedRecipe.ingredients,
   );
   const [ingredientKeys, setIngredientKeys] = useState<any>([Date.now()]); // Generate unique key on first render
 
@@ -43,7 +45,7 @@ function IngredientsGroup({ onIngredientInput }: IngredientsGroupProps) {
   /** Handles removing ingredient object from array of ingredients */
   function removeIngredient(index: number) {
     setIngredients((prevIngredients) =>
-      prevIngredients.filter((_, i) => i !== index)
+      prevIngredients.filter((_, i) => i !== index),
     );
 
     setIngredientKeys((prevKeys) => prevKeys.filter((_, i) => i !== index));
@@ -70,14 +72,17 @@ function IngredientsGroup({ onIngredientInput }: IngredientsGroupProps) {
   }, [ingredients]);
 
   return (
-    <div id="IngredientsGroup-main" className="h-full flex flex-col">
-      <ComponentsOptionsRequests
-        numOfIngredients={ingredients.length}
-        ingredients={ingredients}
-        ingredientKeys={ingredientKeys}
-        ingredientAction={ingredientActions}
-      />
-    </div>
+    <Field>
+      <div id="IngredientsGroup-main" className="h-full flex flex-col">
+        <FormLabel label={"Ingredients: 1 oz Tequila"} />
+        <ComponentsOptionsRequests
+          numOfIngredients={ingredients.length}
+          ingredients={ingredients}
+          ingredientKeys={ingredientKeys}
+          ingredientAction={ingredientActions}
+        />
+      </div>
+    </Field>
   );
 }
 

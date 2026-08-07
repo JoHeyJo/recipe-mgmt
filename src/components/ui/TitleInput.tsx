@@ -28,14 +28,19 @@ function TitleInput({ onTitleInput }: RecipeInfoProp) {
   }, [title]);
 
   return (
-    <TextInput
-      id={id.toString()}
-      name={name}
-      value={title}
-      type={"title"}
-      onUpdate={handleChange}
-      placeholder={"Awesome recipe name!"}
-    />
+    <>
+      <section className="text-gray-400 placeholder:italic text-sm">
+        Title:
+      </section>
+      <TextInput
+        id={id.toString()}
+        name={name}
+        value={title}
+        type={"title"}
+        onUpdate={handleChange}
+        placeholder={"Recipe name: Margarita"}
+      />
+    </>
   );
 }
 

@@ -6,9 +6,9 @@ import { errorHandling } from "../../utils/ErrorHandling";
 import InstructionsArea from "../ui/InstructionsArea";
 import RadioSwitch from "../ui/common/RadioSwitch";
 import { InstructionsRequestsProp } from "../../utils/props";
-
+import FormLabel from "../ui/common/Label";
+import { Field } from "@headlessui/react";
 // utils/scrollIntoKeyboardSafeView.ts
-
 
 /** Handles API requests & instructionRequestAPI management for Instructions
  *
@@ -96,21 +96,24 @@ function InstructionsRequests({
   }, [whichInstructions]);
 
   return (
-    <>
-      <RadioSwitch
-        handleSwitch={handleRadio}
-        selection={whichInstructions}
-        labelOne={"User"}
-        labelTwo={"Book"}
-        valueOne={"user"}
-        valueTwo={"book"}
-      />
+    <Field>
+      <div className="flex justify-between">
+        <FormLabel label={"Instructions:"} />
+        <RadioSwitch
+          handleSwitch={handleRadio}
+          selection={whichInstructions}
+          labelOne={"User"}
+          labelTwo={"Book"}
+          valueOne={"user"}
+          valueTwo={"book"}
+        />
+      </div>
       <InstructionsArea
         onInstructionInput={onInstructionInput}
         onInstructionRequest={instructionRequestAction}
         instructionRequestAPI={instructionRequestAPI}
       />
-    </>
+    </Field>
   );
 }
 

@@ -131,14 +131,14 @@ function ComponentsOptionsRequests({
 
   return (
     <>
-      <RadioSwitch
+      {/* <RadioSwitch
         handleSwitch={handleRadio}
         selection={whichOptions}
         labelOne="User"
         labelTwo="Book"
         valueOne="user"
         valueTwo="book"
-      />
+      /> */}
       <div className="py-2 px-1 h-full overflow-y-auto rounded-md border-2 border-accent-secondary">
         {ingredients.map((ingredient, i) => (
           <div
