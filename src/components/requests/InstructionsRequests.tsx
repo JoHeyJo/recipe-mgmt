@@ -96,7 +96,7 @@ function InstructionsRequests({
   }, [whichInstructions]);
 
   return (
-    <Field>
+    <Field className="h-full pb-5">
       <div className="flex justify-between">
         <FormLabel label={"Instructions:"} />
         <RadioSwitch

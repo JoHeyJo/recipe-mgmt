@@ -72,7 +72,7 @@ function IngredientsGroup({ onIngredientInput }: IngredientsGroupProps) {
   }, [ingredients]);
 
   return (
-    <Field>
+    <Field className="h-full">
       <div id="IngredientsGroup-main" className="h-full flex flex-col">
         <FormLabel label={"Ingredients: 1 oz Tequila"} />
         <ComponentsOptionsRequests
