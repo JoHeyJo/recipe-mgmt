@@ -25,7 +25,7 @@ function NotesInput({ onNotesInput }: NotesInputProps) {
 
   return (
     <div className="flex items-start space-x-4">
-      <div className="min-w-0 flex-1 pt-4">
+      <div className="min-w-0 flex-1 ">
         <Field >
             <FormLabel label={"Notes:"} />
             <textarea
