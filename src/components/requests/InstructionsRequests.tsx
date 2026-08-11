@@ -8,6 +8,8 @@ import RadioSwitch from "../ui/common/RadioSwitch";
 import { InstructionsRequestsProp } from "../../utils/props";
 import FormLabel from "../ui/common/Label";
 import { Field } from "@headlessui/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 // utils/scrollIntoKeyboardSafeView.ts
 
 /** Handles API requests & instructionRequestAPI management for Instructions
@@ -97,16 +99,21 @@ function InstructionsRequests({
 
   return (
     <Field className="h-full pb-5">
-      <div className="flex justify-between">
+      <div className="grid grid-cols-2 gap-4">
         <FormLabel label={"Instructions:"} />
-        <RadioSwitch
-          handleSwitch={handleRadio}
-          selection={whichInstructions}
-          labelOne={"User"}
-          labelTwo={"Book"}
-          valueOne={"user"}
-          valueTwo={"book"}
-        />
+        <div className="flex justify-end">
+          <div className="pr-4"> 
+            <RadioSwitch
+              handleSwitch={handleRadio}
+              selection={whichInstructions}
+              labelOne={"User"}
+              labelTwo={"Book"}
+              valueOne={"user"}
+              valueTwo={"book"}
+            />
+          </div>
+          <FontAwesomeIcon icon={faCircleInfo} />
+        </div>
       </div>
       <InstructionsArea
         onInstructionInput={onInstructionInput}
