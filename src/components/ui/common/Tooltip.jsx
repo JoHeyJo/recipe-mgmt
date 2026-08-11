@@ -10,12 +10,26 @@ import { useState, useRef, useEffect, cloneElement, Children } from "react";
  *   delay        number (ms) before showing            (default: 150)
  *   offset       number (px) gap between trigger/tip   (default: 8)
  *   disabled     boolean                               (default: false)
+ *   multiline    boolean — allow text to wrap onto     (default: false)
+ *                multiple lines instead of one row
+ *   maxWidth     number (px) — cap width when wrapping (default: 240)
+ *                (only applies when multiline is true)
  *   className    extra classes for the tooltip bubble
  *   children     a single focusable/hoverable element (required)
  *
  * Usage:
  *   <Tooltip content="Copy to clipboard" side="top">
  *     <button className="...">Copy</button>
+ *   </Tooltip>
+ *
+ *   // Multi-line: wraps automatically at maxWidth
+ *   <Tooltip multiline maxWidth={180} c content="A longer explanation that should wrap across several lines.">
+ *     <button>Help</button>
+ *   </Tooltip>
+ *
+ *   // Explicit line breaks — pass JSX
+ *   <Tooltip multiline content={<>Line one<br/>Line two<br/>Line three</>}>
+ *     <button>Details</button>
  *   </Tooltip>
  */
 export default function Tooltip({
@@ -25,6 +39,8 @@ export default function Tooltip({
   delay = 150,
   offset = 8,
   disabled = false,
+  multiline = false,
+  maxWidth = 240,
   className = "",
   children,
 }) {
@@ -110,8 +126,12 @@ export default function Tooltip({
         <span
           id={id}
           role="tooltip"
+          style={multiline ? { maxWidth: `${maxWidth}px` } : undefined}
           className={[
-            "absolute z-50 whitespace-nowrap",
+            "absolute z-50",
+            multiline
+              ? "w-max whitespace-pre-line leading-snug text-left"
+              : "whitespace-nowrap",
             "rounded-md px-2.5 py-1.5",
             "text-xs font-medium tracking-tight",
             "bg-neutral-900 text-neutral-50",
@@ -144,32 +164,32 @@ function getPositionClasses(side, align, offset) {
   const gap = `${offset}px`;
 
   const sideMap = {
-    top:    `bottom-full mb-[${gap}]`,
+    top: `bottom-full mb-[${gap}]`,
     bottom: `top-full mt-[${gap}]`,
-    left:   `right-full mr-[${gap}]`,
-    right:  `left-full ml-[${gap}]`,
+    left: `right-full mr-[${gap}]`,
+    right: `left-full ml-[${gap}]`,
   };
 
   const alignMap = {
     top: {
-      start:  "left-0",
+      start: "left-0",
       center: "left-1/2 -translate-x-1/2",
-      end:    "right-0",
+      end: "right-0",
     },
     bottom: {
-      start:  "left-0",
+      start: "left-0",
       center: "left-1/2 -translate-x-1/2",
-      end:    "right-0",
+      end: "right-0",
     },
     left: {
-      start:  "top-0",
+      start: "top-0",
       center: "top-1/2 -translate-y-1/2",
-      end:    "bottom-0",
+      end: "bottom-0",
     },
     right: {
-      start:  "top-0",
+      start: "top-0",
       center: "top-1/2 -translate-y-1/2",
-      end:    "bottom-0",
+      end: "bottom-0",
     },
   };
 
@@ -178,32 +198,32 @@ function getPositionClasses(side, align, offset) {
 
 function getArrowClasses(side, align) {
   const sideMap = {
-    top:    "bottom-[-3px]",
+    top: "bottom-[-3px]",
     bottom: "top-[-3px]",
-    left:   "right-[-3px]",
-    right:  "left-[-3px]",
+    left: "right-[-3px]",
+    right: "left-[-3px]",
   };
 
   const alignMap = {
     top: {
-      start:  "left-3",
+      start: "left-3",
       center: "left-1/2 -translate-x-1/2",
-      end:    "right-3",
+      end: "right-3",
     },
     bottom: {
-      start:  "left-3",
+      start: "left-3",
       center: "left-1/2 -translate-x-1/2",
-      end:    "right-3",
+      end: "right-3",
     },
     left: {
-      start:  "top-3",
+      start: "top-3",
       center: "top-1/2 -translate-y-1/2",
-      end:    "bottom-3",
+      end: "bottom-3",
     },
     right: {
-      start:  "top-3",
+      start: "top-3",
       center: "top-1/2 -translate-y-1/2",
-      end:    "bottom-3",
+      end: "bottom-3",
     },
   };
 

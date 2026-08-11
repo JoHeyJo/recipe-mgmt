@@ -10,6 +10,7 @@ import FormLabel from "../ui/common/Label";
 import { Field } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import Tooltip from "../ui/common/Tooltip";
 // utils/scrollIntoKeyboardSafeView.ts
 
 /** Handles API requests & instructionRequestAPI management for Instructions
@@ -102,7 +103,7 @@ function InstructionsRequests({
       <div className="grid grid-cols-2 gap-4">
         <FormLabel label={"Instructions:"} />
         <div className="flex justify-end">
-          <div className="pr-4"> 
+          <div className="pr-4">
             <RadioSwitch
               handleSwitch={handleRadio}
               selection={whichInstructions}
@@ -112,7 +113,15 @@ function InstructionsRequests({
               valueTwo={"book"}
             />
           </div>
-          <FontAwesomeIcon icon={faCircleInfo} />
+          <Tooltip
+            multiline
+            maxWidth={200}
+            content={
+              "Toggle to view in dropdown \nUser = all recorded information \n Book = information corresponding to selected book"
+            }
+          >
+            <FontAwesomeIcon icon={faCircleInfo} />
+          </Tooltip>
         </div>
       </div>
       <InstructionsArea
