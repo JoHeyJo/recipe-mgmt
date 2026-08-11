@@ -30,7 +30,7 @@ function TitleInput({ onTitleInput }: RecipeInfoProp) {
   }, [title]);
 
   return (
-    <Field>
+    <Field className="pb-2">
       <FormLabel label={"Title:"} />
       <TextInput
         id={id.toString()}

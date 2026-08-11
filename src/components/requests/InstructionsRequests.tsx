@@ -11,7 +11,8 @@ import { Field } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import Tooltip from "../ui/common/Tooltip";
-// utils/scrollIntoKeyboardSafeView.ts
+import ToggleSwitch from "../ui/ToggleSwitch";
+import { BookOpen, User } from "lucide-react";
 
 /** Handles API requests & instructionRequestAPI management for Instructions
  *
@@ -24,6 +25,7 @@ function InstructionsRequests({
   const [instructions, setInstructions] = useState<Instructions>([]);
   const [whichInstructions, setWhichInstructions] = useState("book");
   const [instructionsReferences, setInstructionsReferences] = useState();
+  const [whichOptions, setWhichOptions] = useState(true)
 
   /** handle state change for whichInstructions */
   function handleRadio(event: ChangeEvent<HTMLInputElement>) {
@@ -98,26 +100,39 @@ function InstructionsRequests({
       : fetchUserInstructions();
   }, [whichInstructions]);
 
+  /** Toggle switch */
+  function toggleSwitch(){
+    setWhichOptions((option) => !option)
+  }
+
+
   return (
     <Field className="h-full pb-5">
       <div className="grid grid-cols-2 gap-4">
         <FormLabel label={"Instructions:"} />
         <div className="flex justify-end">
           <div className="pr-4">
-            <RadioSwitch
+            {/* <RadioSwitch
               handleSwitch={handleRadio}
               selection={whichInstructions}
               labelOne={"User"}
               labelTwo={"Book"}
               valueOne={"user"}
               valueTwo={"book"}
-            />
+            /> */}
+            <ToggleSwitch toggleView={toggleSwitch} isGrid={whichOptions} />
           </div>
           <Tooltip
             multiline
             maxWidth={200}
             content={
-              "Toggle to view in dropdown \nUser = all recorded information \n Book = information corresponding to selected book"
+              <>
+                Toggle to view in dropdown <br />
+                <User className="inline h-4 w-4 shrink-0" /> User = all recorded
+                information <br />
+                <BookOpen className="inline h-4 w-4 shrink-0" />{" "}
+                 Book = information corresponding to selected book
+              </>
             }
           >
             <FontAwesomeIcon icon={faCircleInfo} />

@@ -75,7 +75,7 @@ function RecipeForm({
             id="RecipeRequests-book"
             className="mx-auto h-full flex-col "
           >
-            <section id="RecipeRequests-recipe" className="flex h-2/3">
+            <section id="RecipeForm-recipe" className="flex h-3/4">
               <ReferenceContext.Provider
                 value={{ dialogPanelRef: dialogPanelRef }}
               >
