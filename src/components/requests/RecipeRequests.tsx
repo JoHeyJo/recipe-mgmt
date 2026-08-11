@@ -190,6 +190,11 @@ function RecipeRequests({
     }
   }
 
+/** Request data corresponding to User or Book */
+  function requestIngredientsInstructions(){
+    
+  }
+
   const recipeAction = {
     submit: submitRecipe,
     remove: removeSharedRecipe,

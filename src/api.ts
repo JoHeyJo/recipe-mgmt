@@ -45,7 +45,7 @@ class API {
 
   /** Register user: returns token */
   static async signUp(data: UserSignUp, token?: string) {
-    API.token = token
+    API.token = token;
     const res = await this.request("signup", data, "POST");
     return res;
   }
@@ -308,6 +308,18 @@ class API {
     );
     return res;
   }
+
+  // ########### DATA - User or Book  ###########
+  // ################################
+  static async getUserData(){
+    return await this.request("users/ingredients/instructions")
+
+  }
+
+  static async getBookData(bookId: number){
+  return await this.request(`books/${bookId}/ingredients/instructions`)
+  }
+
 }
 
 export default API;

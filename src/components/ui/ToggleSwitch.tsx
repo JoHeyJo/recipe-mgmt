@@ -1,5 +1,7 @@
 import { BookOpen, User } from "lucide-react";
 
+
+
 function ViewSwitch({ toggleView, isGrid }) {
   return (
     <label className="relative inline-block">

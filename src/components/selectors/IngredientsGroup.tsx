@@ -12,7 +12,7 @@ import { Field } from "@headlessui/react";
  * Refactor: IngredientKeys can be removed and id associated with ingredient can now be used.
  * Need to choose between using DATE or UUID
  *
- * RecipeRequests -> IngredientsGroup -> ComponentsOptionsRequests
+ * RecipeForm -> IngredientsGroup -> ComponentsOptionsRequests
  */
 function IngredientsGroup({ onIngredientInput }: IngredientsGroupProps) {
   const { requestAction, selectedRecipe } = useContext(RecipeContext);

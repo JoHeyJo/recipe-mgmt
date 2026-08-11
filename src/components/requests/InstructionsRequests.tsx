@@ -16,7 +16,7 @@ import { BookOpen, User } from "lucide-react";
 
 /** Handles API requests & instructionRequestAPI management for Instructions
  *
- * RecipeRequests -> InstructionsRequests -> InstructionsArea
+ * RecipeForm -> InstructionsRequests -> InstructionsArea
  */
 function InstructionsRequests({
   onInstructionInput,
