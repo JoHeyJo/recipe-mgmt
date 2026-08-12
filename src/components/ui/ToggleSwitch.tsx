@@ -1,8 +1,11 @@
 import { BookOpen, User } from "lucide-react";
 
+type ToggleSwitchProps = {
+  toggleSource: () => void;
+  isUser: boolean;
+};
 
-
-function ViewSwitch({ toggleView, isGrid }) {
+function ToggleSwitch({ toggleSource, isUser }: ToggleSwitchProps) {
   return (
     <label className="relative inline-block">
       {/* Hidden checkbox drives peer-based styles */}
@@ -11,7 +14,7 @@ function ViewSwitch({ toggleView, isGrid }) {
         role="switch"
         aria-label="Dark Mode"
         // checked={isDark}
-        onChange={toggleView}
+        onChange={toggleSource}
         className="peer sr-only"
       />
 
@@ -45,10 +48,10 @@ function ViewSwitch({ toggleView, isGrid }) {
       {/* Thumb */}
       <span
         className={`absolute left-0.5 top-0.5 w-5 h-5 ${
-          isGrid ? "bg-white" : "bg-white"
+          isUser ? "bg-white" : "bg-white"
         } rounded-full transition-transform peer-checked:translate-x-6 flex items-center justify-center text-xs`}
       >
-        {isGrid ? <User /> : <BookOpen />}
+        {isUser ? <User /> : <BookOpen />}
       </span>
 
       {/* SR-only text */}
@@ -57,4 +60,4 @@ function ViewSwitch({ toggleView, isGrid }) {
   );
 }
 
-export default ViewSwitch;
+export default ToggleSwitch;

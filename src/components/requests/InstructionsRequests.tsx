@@ -26,7 +26,7 @@ function InstructionsRequests({
   const [instructions, setInstructions] = useState<Instructions>([]);
   const [whichInstructions, setWhichInstructions] = useState("book");
   const [instructionsReferences, setInstructionsReferences] = useState();
-  const [whichOptions, setWhichOptions] = useState(true)
+  const [whichOptions, setWhichOptions] = useState(true);
   const [data, requestData, toggleSource] = useDataRequest();
 
   /** handle state change for whichInstructions */
@@ -101,10 +101,9 @@ function InstructionsRequests({
   }, [whichInstructions]);
 
   /** Toggle switch */
-  function toggleSwitch(){
-    setWhichOptions((option) => !option)
+  function toggleSwitch() {
+    setWhichOptions((option) => !option);
   }
-
 
   return (
     <Field className="h-full pb-5">
@@ -112,15 +111,7 @@ function InstructionsRequests({
         <FormLabel label={"Instructions:"} />
         <div className="flex justify-end">
           <div className="pr-4">
-            {/* <RadioSwitch
-              handleSwitch={handleRadio}
-              selection={whichInstructions}
-              labelOne={"User"}
-              labelTwo={"Book"}
-              valueOne={"user"}
-              valueTwo={"book"}
-            /> */}
-            <ToggleSwitch toggleView={toggleSwitch} isGrid={whichOptions} />
+            <ToggleSwitch toggleSource={toggleSwitch} isUser={whichOptions} />
           </div>
           <Tooltip
             multiline
@@ -130,8 +121,8 @@ function InstructionsRequests({
                 Toggle to view in dropdown <br />
                 <User className="inline h-4 w-4 shrink-0" /> User = all recorded
                 information <br />
-                <BookOpen className="inline h-4 w-4 shrink-0" />{" "}
-                 Book = information corresponding to selected book
+                <BookOpen className="inline h-4 w-4 shrink-0" /> Book =
+                information corresponding to selected book
               </>
             }
           >
