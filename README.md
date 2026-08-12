@@ -1,3 +1,26 @@
+# WebSocket Frontend (React + TypeScript)
+
+Client-side real-time layer for sharing books and recipes. A single `useWebSocket` hook owns the socket connection, exposed to the whole app through a `WebSocketProvider` context.
+
+## Overview
+
+```
+WebSocketProvider (calls useWebSocket once)
+        │
+        ├── exposes { message, status, sendBook, sendRecipe, resetMessage, data }
+        │
+        └── any component ──► useContext(WebSocketContext)
+```
+
+The hook establishes the connection on mount, registers listeners, and tears the connection down on unmount.
+
+## Critical Rule: Call the Hook Once
+
+**Every call to `useWebSocket()` creates its own socket connection and its own independent state.** Calling it in multiple components gives each one a separate connection that can't see the others' state.
+
+The hook is therefore called **exactly once**, inside `WebSocketProvider`, and every component reads from context instead.
+
+
 ## Notes
 Function naming convention to dictate origin:
 
