@@ -1,11 +1,13 @@
 import { useState } from "react";
-import API from "../../api";
-import { errorHandling } from "../../utils/ErrorHandling";
+import API from "../api";
+import { errorHandling } from "../utils/ErrorHandling";
+import { Ingredients, Instructions } from "../utils/types";
 
 /** Request all of a users's instructions and ingredients OR all instructions and
  * ingredients corresponding to a book
  */
-function UserBookDataRequest() {
+function useDataRequest() {
+  const [data, setDate] = useState<Ingredients | Instructions>([])
   const [ingredients, setIngredients] = useState([]);
   const [instructions, setInstructions] = useState([]);
   const [error, setError] = useState("");
@@ -18,7 +20,7 @@ function UserBookDataRequest() {
       setInstructions(res.instructions);
     } catch (error: any) {
       const message = errorHandling(
-        "UserBookDataRequest - requestUserData",
+        "useDataRequest - requestUserData",
         error,
       );
       setError(message);
@@ -33,11 +35,11 @@ function UserBookDataRequest() {
       setInstructions(res.instructions);
     } catch (error: any) {
       const message = errorHandling(
-        "UserBookDataRequest - requestBookData",
+        "useDataRequest - requestBookData",
         error,
       );
       setError(message);
     }
   }
 }
-export default UserBookDataRequest;
+export default useDataRequest;
