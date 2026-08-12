@@ -20,6 +20,7 @@ function useDataRequest() {
       const res = await API.getUserData();
       setIngredients(res.ingredients);
       setInstructions(res.instructions);
+      console.log("user data!")
     } catch (error: any) {
       const message = errorHandling("useDataRequest - requestUserData", error);
       setError(message);
@@ -32,6 +33,7 @@ function useDataRequest() {
       const res = await API.getUserData();
       setIngredients(res.ingredients);
       setInstructions(res.instructions);
+      console.log("book data!")
     } catch (error: any) {
       const message = errorHandling("useDataRequest - requestBookData", error);
       setError(message);
@@ -49,9 +51,9 @@ function useDataRequest() {
    * default = User data
    */
   function requestData() {
-    return isUserSource ? requestUserData : requestBookData;
+    return isUserSource ? requestUserData() : requestBookData();
   }
 
-  return [data, requestData, toggleSource] as const;
+  return [data, requestData, toggleSource, isUserSource] as const;
 }
 export default useDataRequest;

@@ -27,7 +27,7 @@ function InstructionsRequests({
   const [whichInstructions, setWhichInstructions] = useState("book");
   const [instructionsReferences, setInstructionsReferences] = useState();
   const [whichOptions, setWhichOptions] = useState(true);
-  const [data, requestData, toggleSource] = useDataRequest();
+  const [data, requestData, toggleSource, isUserSource] = useDataRequest();
 
   /** handle state change for whichInstructions */
   function handleRadio(event: ChangeEvent<HTMLInputElement>) {
@@ -98,12 +98,7 @@ function InstructionsRequests({
   /** Populate instruction area on mount */
   useEffect(() => {
     requestData();
-  }, [whichInstructions]);
-
-  /** Toggle switch */
-  function toggleSwitch() {
-    setWhichOptions((option) => !option);
-  }
+  }, [isUserSource]);
 
   return (
     <Field className="h-full pb-5">
@@ -111,7 +106,7 @@ function InstructionsRequests({
         <FormLabel label={"Instructions:"} />
         <div className="flex justify-end">
           <div className="pr-4">
-            <ToggleSwitch toggleSource={toggleSwitch} isUser={whichOptions} />
+            <ToggleSwitch toggleSource={toggleSource} isUser={isUserSource} />
           </div>
           <Tooltip
             multiline
