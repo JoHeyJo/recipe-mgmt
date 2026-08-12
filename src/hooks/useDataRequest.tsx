@@ -3,14 +3,16 @@ import API from "../api";
 import { errorHandling } from "../utils/ErrorHandling";
 import { Ingredients, Instructions } from "../utils/types";
 
-/** Request all of a users's instructions and ingredients OR all instructions and
- * ingredients corresponding to a book
+/** Request data: instructions and ingredients.
+ * requestUserData => all user's instructions and ingredients
+ * requestBookData => selected book's instructions and ingredients
  */
 function useDataRequest() {
   const [data, setDate] = useState<Ingredients | Instructions>([])
   const [ingredients, setIngredients] = useState([]);
   const [instructions, setInstructions] = useState([]);
   const [error, setError] = useState("");
+  const [isUserSource, setIsUserSource] = useState(true);
 
   /** Fetch instructions and ingredients associated to User */
   async function requestUserData() {
@@ -19,10 +21,7 @@ function useDataRequest() {
       setIngredients(res.ingredients);
       setInstructions(res.instructions);
     } catch (error: any) {
-      const message = errorHandling(
-        "useDataRequest - requestUserData",
-        error,
-      );
+      const message = errorHandling("useDataRequest - requestUserData", error);
       setError(message);
     }
   }
@@ -34,12 +33,25 @@ function useDataRequest() {
       setIngredients(res.ingredients);
       setInstructions(res.instructions);
     } catch (error: any) {
-      const message = errorHandling(
-        "useDataRequest - requestBookData",
-        error,
-      );
+      const message = errorHandling("useDataRequest - requestBookData", error);
       setError(message);
     }
   }
+
+  /** Toggles boolean value
+   * default value = True
+   */
+  function toggleSource(){
+    setIsUserSource((source) => !source)
+  }
+
+  /** Triggers Book data request or User data request
+   * default = User data
+   */
+  function requestData() {
+    return isUserSource ? requestUserData : requestBookData;
+  }
+
+  return [data, requestData, toggleSource] as const;
 }
 export default useDataRequest;

@@ -13,6 +13,7 @@ import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import Tooltip from "../ui/common/Tooltip";
 import ToggleSwitch from "../ui/ToggleSwitch";
 import { BookOpen, User } from "lucide-react";
+import useDataRequest from "../../hooks/useDataRequest";
 
 /** Handles API requests & instructionRequestAPI management for Instructions
  *
@@ -26,6 +27,7 @@ function InstructionsRequests({
   const [whichInstructions, setWhichInstructions] = useState("book");
   const [instructionsReferences, setInstructionsReferences] = useState();
   const [whichOptions, setWhichOptions] = useState(true)
+  const [data, requestData, toggleSource] = useDataRequest();
 
   /** handle state change for whichInstructions */
   function handleRadio(event: ChangeEvent<HTMLInputElement>) {
@@ -95,9 +97,7 @@ function InstructionsRequests({
   };
   /** Populate instruction area on mount */
   useEffect(() => {
-    whichInstructions == "book"
-      ? fetchBookInstructions()
-      : fetchUserInstructions();
+    requestData();
   }, [whichInstructions]);
 
   /** Toggle switch */

@@ -91,6 +91,7 @@ function RecipeForm({
                     id="RecipeRequests-ingredients"
                     className="flex-1 overflow-hidden"
                   >
+                    
                     <IngredientsGroup onIngredientInput={onUpdateRecipeInput} />
                   </div>
                 </section>
