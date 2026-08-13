@@ -24,7 +24,7 @@ function ComponentsOptionsRequests({
   const [quantityAmount, setQuantityAmounts] = useState<AttributeData[]>([]);
   const [quantityUnits, setQuantityUnits] = useState<AttributeData[]>([]);
   const [optionsReferences, setOptionsReferences] = useState(references);
-  const [isBookSource, toggleSource ] = useDataRequest();
+  const { isBookSource } = useDataRequest();
 
   const ingredientSectionRef = useRef<HTMLDivElement>();
 
@@ -69,7 +69,7 @@ function ComponentsOptionsRequests({
     items,
     amounts: quantityAmount,
     units: quantityUnits,
-    selected: isBookSource,
+    isBookSource,
     references: optionsReferences,
   };
 

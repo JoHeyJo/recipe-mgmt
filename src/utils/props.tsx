@@ -37,7 +37,7 @@ export type Options = {
   items: AttributeData[];
   amounts: AttributeData[];
   units: AttributeData[];
-  selected: string;
+  isBookSource: boolean;
   references: {
     item: AttributeData[];
     amount: AttributeData[];

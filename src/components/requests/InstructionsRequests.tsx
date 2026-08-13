@@ -27,7 +27,7 @@ function InstructionsRequests({
   const [whichInstructions, setWhichInstructions] = useState("book");
   const [instructionsReferences, setInstructionsReferences] = useState();
   const [whichOptions, setWhichOptions] = useState(true);
-  const [data, requestData, toggleSource, isBookSource] = useDataRequest();
+  const { requestData, toggleSource, isBookSource } = useDataRequest();
 
   /** handle state change for whichInstructions */
   function handleRadio(event: ChangeEvent<HTMLInputElement>) {

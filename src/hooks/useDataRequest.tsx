@@ -13,7 +13,7 @@ function useDataRequest() {
   const [ingredients, setIngredients] = useState([]);
   const [instructions, setInstructions] = useState([]);
   const [error, setError] = useState("");
-  const [isBookSource, setIsBookSource] = useState(true);
+  const [isBookSource, setIsBookSource] = useState<boolean>(true);
   const { currentBookId } = useContext(UserContext);
 
   /** Fetch instructions and ingredients associated to User */
@@ -22,7 +22,7 @@ function useDataRequest() {
       const res = await API.getUserData();
       setIngredients(res.ingredients);
       setInstructions(res.instructions);
-      console.log("user data===!",res);
+      console.log("user data===!", res);
     } catch (error: any) {
       const message = errorHandling("useDataRequest - requestUserData", error);
       setError(message);
@@ -56,6 +56,6 @@ function useDataRequest() {
     return isBookSource ? requestUserData() : requestBookData();
   }
 
-  return [data, requestData, toggleSource, isBookSource] as const;
+  return { data, requestData, toggleSource, isBookSource };
 }
 export default useDataRequest;

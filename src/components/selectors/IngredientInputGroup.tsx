@@ -39,7 +39,7 @@ function IngredientInputGroup({
     if (state === "unit") setUnit(option);
     if (state === "amount") setAmount(option);
     if (
-      options.selected === "user" &&
+      !options.isBookSource &&
       isOptionNotAssociated(option, options, state)
     )
       optionAction.associate(userId, currentBookId, +option.id, state);
