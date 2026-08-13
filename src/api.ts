@@ -209,13 +209,13 @@ class API {
   // ################################################################
 
   /** Fetch all ingredients  */
-  static async getUserComponentsOptions(userId: number) {
+  static async getUserIngredientOptions(userId: number) {
     const res = await this.request(`/users/${userId}/ingredients/components`);
     return res;
   }
 
   /** Fetch book ingredients */
-  static async getBookComponentsOptions(userId: number, bookId: number) {
+  static async getBookIngredientOptions(userId: number, bookId: number) {
     const res = await this.request(
       `/users/${userId}/books/${bookId}/ingredients/components`,
     );
@@ -229,7 +229,7 @@ class API {
   }
 
   /** Add book ingredient */
-  static async postComponentOption(
+  static async postIngredientOption(
     option: AttributeData,
     bookId: number,
     userId: number,
@@ -313,7 +313,6 @@ class API {
   // ################################
   static async getUserData(){
     return await this.request("users/ingredients/instructions")
-
   }
 
   static async getBookData(bookId: number){

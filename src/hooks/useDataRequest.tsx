@@ -1,18 +1,20 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import API from "../api";
 import { errorHandling } from "../utils/ErrorHandling";
 import { Ingredients, Instructions } from "../utils/types";
+import { UserContext } from "../context/UserContext";
 
 /** Request data: instructions and ingredients.
  * requestUserData => all user's instructions and ingredients
  * requestBookData => selected book's instructions and ingredients
  */
 function useDataRequest() {
-  const [data, setDate] = useState<Ingredients | Instructions>([])
+  const [data, setDate] = useState<Ingredients | Instructions>([]);
   const [ingredients, setIngredients] = useState([]);
   const [instructions, setInstructions] = useState([]);
   const [error, setError] = useState("");
   const [isUserSource, setIsUserSource] = useState(true);
+  const { currentBookId } = useContext(UserContext);
 
   /** Fetch instructions and ingredients associated to User */
   async function requestUserData() {
@@ -20,7 +22,7 @@ function useDataRequest() {
       const res = await API.getUserData();
       setIngredients(res.ingredients);
       setInstructions(res.instructions);
-      console.log("user data!")
+      console.log("user data===!",res);
     } catch (error: any) {
       const message = errorHandling("useDataRequest - requestUserData", error);
       setError(message);
@@ -30,10 +32,10 @@ function useDataRequest() {
   /** Fetch instructions and ingredients associated to Book */
   async function requestBookData() {
     try {
-      const res = await API.getUserData();
+      const res = await API.getBookData(currentBookId);
+      console.log("book data!::::", res);
       setIngredients(res.ingredients);
       setInstructions(res.instructions);
-      console.log("book data!")
     } catch (error: any) {
       const message = errorHandling("useDataRequest - requestBookData", error);
       setError(message);
@@ -43,8 +45,8 @@ function useDataRequest() {
   /** Toggles boolean value
    * default value = True
    */
-  function toggleSource(){
-    setIsUserSource((source) => !source)
+  function toggleSource() {
+    setIsUserSource((source) => !source);
   }
 
   /** Triggers Book data request or User data request

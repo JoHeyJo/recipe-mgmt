@@ -40,7 +40,7 @@ function ComponentsOptionsRequests({
     attributeObject: AttributeData,
   ): Promise<AttributeData> {
     try {
-      const id = await API.postComponentOption(
+      const id = await API.postIngredientOption(
         attributeObject,
         currentBookId,
         userId,
@@ -79,7 +79,7 @@ function ComponentsOptionsRequests({
 
   /** Fetches components options associated to Book  */
   async function fetchBookComponentsOptions() {
-    const { amounts, units, items } = await API.getBookComponentsOptions(
+    const { amounts, units, items } = await API.getBookIngredientOptions(
       userId,
       currentBookId,
     );
@@ -91,7 +91,7 @@ function ComponentsOptionsRequests({
   /** Fetches components options associated to User  */
   async function fetchUserComponentsOptions() {
     const { amounts, units, items } =
-      await API.getUserComponentsOptions(userId);
+      await API.getUserIngredientOptions(userId);
     setItems(items);
     setQuantityUnits(units);
     setQuantityAmounts(amounts);
@@ -119,9 +119,9 @@ function ComponentsOptionsRequests({
 
   /** Populate each instance of component with the most current options */
   useEffect(() => {
-    whichOptions == "book"
-      ? fetchBookComponentsOptions()
-      : fetchUserComponentsOptions();
+    // whichOptions == "book"
+    //   ? fetchBookComponentsOptions()
+    //   : fetchUserComponentsOptions();
   }, [whichOptions]);
 
   // Scrolls into view newly created ingredient
