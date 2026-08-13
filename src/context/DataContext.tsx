@@ -1,18 +1,14 @@
-import { Ingredients, Instructions } from "../utils/types";
+import { Options } from "../utils/props";
+import { Instructions } from "../utils/types";
 import { createContext } from "react";
 
-type IngredientContextType = {
-  ingredients: Ingredients;
-};
 
-type InstructionsContextType = {
+type DataContextType = {
+  ingredients: Options;
   instructions: Instructions;
-};
+}
 
-export const ingredientContext = createContext<IngredientContextType>({
+export const DataContext = createContext<DataContextType>({
   ingredients: [],
-});
-
-export const instructionsContext = createContext<InstructionsContextType>({
   instructions: [],
 });

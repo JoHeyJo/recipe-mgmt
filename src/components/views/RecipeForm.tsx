@@ -2,10 +2,10 @@ import { useRef, useState, useEffect, useContext } from "react";
 import Alert from "../ui/Alert";
 import { ReferenceContext } from "../../context/ReferenceContext";
 import TitleInput from "../ui/TitleInput";
-import IngredientsGroup from "../selectors/IngredientsGroup";
 import InstructionsRequests from "../requests/InstructionsRequests";
 import NotesInput from "../ui/NotesInput";
 import RecipeFormControls from "../ui/controls/RecipeFormControls";
+import IngredientsGroup from "../selectors/IngredientsGroup";
 import {
   compareIngredients,
   compareInstructions,
@@ -13,6 +13,8 @@ import {
   compareNotes,
 } from "../../utils/filters";
 import { RecipeContext } from "../../context/RecipeContext";
+import { DataContext } from "../../context/DataContext";
+import useDataRequest from "../../hooks/useDataRequest";
 
 /**
  * RecipeRequests -> RecipeForm -> [IngredientsGroup, InstructionsArea, NotesInput, TitleInput]
@@ -27,6 +29,11 @@ function RecipeForm({
   const [isDisabled, setIsDisabled] = useState(true);
   const { requestAction, selectedRecipe } = useContext(RecipeContext);
   const dialogPanelRef = useRef(null);
+
+  const { data, requestData } = useDataRequest();
+
+  const ingredientsInstructions =  { instructions : data.instructions, ingredients : data.ingredients } 
+
   /** Enables/disables UPDATE submit */
   useEffect(() => {
     if (requestAction.edit) {
@@ -44,6 +51,10 @@ function RecipeForm({
       setIsDisabled(!isAltered);
     }
   }, [recipeInput]);
+
+  useEffect(() => {
+    requestData();
+  }, []);
 
   return (
     <>
@@ -91,7 +102,7 @@ function RecipeForm({
                     id="RecipeRequests-ingredients"
                     className="flex-1 overflow-hidden"
                   >
-                    
+                    <DataContext.Provider value={ingredientsInstructions}></DataContext.Provider>
                     <IngredientsGroup onIngredientInput={onUpdateRecipeInput} />
                   </div>
                 </section>
@@ -100,7 +111,9 @@ function RecipeForm({
                   id="RecipeRequests-instructions"
                   className="flex-col flex flex-1 ml-4 rounded-md"
                 >
-                  <InstructionsRequests onInstructionInput={onUpdateRecipeInput} />
+                  <InstructionsRequests
+                    onInstructionInput={onUpdateRecipeInput}
+                  />
                 </section>
               </ReferenceContext.Provider>
             </section>

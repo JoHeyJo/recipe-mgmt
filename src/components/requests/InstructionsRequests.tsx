@@ -4,7 +4,6 @@ import { Instruction, Instructions } from "../../utils/types";
 import API from "../../api";
 import { errorHandling } from "../../utils/ErrorHandling";
 import InstructionsArea from "../ui/InstructionsArea";
-import RadioSwitch from "../ui/common/RadioSwitch";
 import { InstructionsRequestsProp } from "../../utils/props";
 import FormLabel from "../ui/common/Label";
 import { Field } from "@headlessui/react";
@@ -26,8 +25,7 @@ function InstructionsRequests({
   const [instructions, setInstructions] = useState<Instructions>([]);
   const [whichInstructions, setWhichInstructions] = useState("book");
   const [instructionsReferences, setInstructionsReferences] = useState();
-  const [whichOptions, setWhichOptions] = useState(true);
-  const { data, requestData, toggleSource, isBookSource } = useDataRequest();
+  const { data, toggleSource, isBookSource } = useDataRequest();
 
   /** handle state change for whichInstructions */
   function handleRadio(event: ChangeEvent<HTMLInputElement>) {
@@ -85,7 +83,6 @@ function InstructionsRequests({
   };
   /** Populate instruction area on mount */
   useEffect(() => {
-    requestData();
     setInstructions(data.instructions);
   }, [isBookSource]);
 

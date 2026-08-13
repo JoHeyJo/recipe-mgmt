@@ -8,13 +8,13 @@ import { Options } from "../utils/props";
 type data = {
   ingredients: Options;
   instructions: Instructions;
-}
+};
 
 /** Request data: instructions and ingredients.
  * requestUserData => all user's instructions and ingredients
  * requestBookData => selected book's instructions and ingredients
- * 
- * [ComponentsOptionsRequests, InstructionsRequests] 
+ *
+ * [ComponentsOptionsRequests, InstructionsRequests]
  */
 function useDataRequest() {
   const [data, setDate] = useState<data>();
@@ -60,7 +60,7 @@ function useDataRequest() {
   /** Triggers Book data request or User data request
    * default = User data
    */
-  function requestData() {
+ async function requestData() {
     return isBookSource ? requestUserData() : requestBookData();
   }
 
