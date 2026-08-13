@@ -3,13 +3,21 @@ import API from "../api";
 import { errorHandling } from "../utils/ErrorHandling";
 import { Ingredients, Instructions } from "../utils/types";
 import { UserContext } from "../context/UserContext";
+import { Options } from "../utils/props";
+
+type data = {
+  ingredients: Options;
+  instructions: Instructions;
+}
 
 /** Request data: instructions and ingredients.
  * requestUserData => all user's instructions and ingredients
  * requestBookData => selected book's instructions and ingredients
+ * 
+ * [ComponentsOptionsRequests, InstructionsRequests] 
  */
 function useDataRequest() {
-  const [data, setDate] = useState<Ingredients | Instructions>([]);
+  const [data, setDate] = useState<data>();
   const [ingredients, setIngredients] = useState([]);
   const [instructions, setInstructions] = useState([]);
   const [error, setError] = useState("");

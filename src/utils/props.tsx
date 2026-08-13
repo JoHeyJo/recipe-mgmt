@@ -37,6 +37,9 @@ export type Options = {
   items: AttributeData[];
   amounts: AttributeData[];
   units: AttributeData[];
+  // needs to be encapsulated in its own type. That data should also be removed
+  // from the options object in ComponentsOptionsRequests
+  // How options is consumed in IngredientInputGroup needs to be restructured
   isBookSource: boolean;
   references: {
     item: AttributeData[];

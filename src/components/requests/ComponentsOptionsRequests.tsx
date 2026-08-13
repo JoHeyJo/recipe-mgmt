@@ -24,7 +24,7 @@ function ComponentsOptionsRequests({
   const [quantityAmount, setQuantityAmounts] = useState<AttributeData[]>([]);
   const [quantityUnits, setQuantityUnits] = useState<AttributeData[]>([]);
   const [optionsReferences, setOptionsReferences] = useState(references);
-  const { isBookSource } = useDataRequest();
+  const { data, isBookSource } = useDataRequest();
 
   const ingredientSectionRef = useRef<HTMLDivElement>();
 
@@ -73,26 +73,6 @@ function ComponentsOptionsRequests({
     references: optionsReferences,
   };
 
-  /** Fetches components options associated to Book  */
-  async function fetchBookComponentsOptions() {
-    const { amounts, units, items } = await API.getBookIngredientOptions(
-      userId,
-      currentBookId,
-    );
-    setOptionsReferences({ amount: amounts, unit: units, item: items }); ///DOES THIS NEED TO BE MEMOIZED
-    setItems(items);
-    setQuantityUnits(units);
-    setQuantityAmounts(amounts);
-  }
-  /** Fetches components options associated to User  */
-  async function fetchUserComponentsOptions() {
-    const { amounts, units, items } =
-      await API.getUserIngredientOptions(userId);
-    setItems(items);
-    setQuantityUnits(units);
-    setQuantityAmounts(amounts);
-  }
-
   /** Automatically associates "global user" option to current book on select - could this be better on switch?*/
   async function associateOptionToBook(
     userId: number,
@@ -117,6 +97,17 @@ function ComponentsOptionsRequests({
   useEffect(() => {
     if (numOfIngredients > 3) scrollIntoViewElement(ingredientSectionRef);
   }, [numOfIngredients]);
+
+  useEffect(() => {
+    console.log("data in copr:",data)
+    const { items, units, amounts } = data.ingredients;
+    if (isBookSource) {
+      setOptionsReferences({ amount: amounts, unit: units, item: items }); ///DOES THIS NEED TO BE MEMOIZED
+    }
+    setItems(items);
+    setQuantityUnits(units);
+    setQuantityAmounts(amounts);
+  }, [isBookSource]);
 
   return (
     <>

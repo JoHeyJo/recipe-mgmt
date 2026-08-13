@@ -27,7 +27,7 @@ function InstructionsRequests({
   const [whichInstructions, setWhichInstructions] = useState("book");
   const [instructionsReferences, setInstructionsReferences] = useState();
   const [whichOptions, setWhichOptions] = useState(true);
-  const { requestData, toggleSource, isBookSource } = useDataRequest();
+  const { data, requestData, toggleSource, isBookSource } = useDataRequest();
 
   /** handle state change for whichInstructions */
   function handleRadio(event: ChangeEvent<HTMLInputElement>) {
@@ -52,18 +52,6 @@ function InstructionsRequests({
       errorHandling("InstructionsArea - addInstruction", error);
       throw error;
     }
-  }
-
-  /** Fetch instructions associated to Book */
-  async function fetchBookInstructions() {
-    const res = await API.getBookInstructions(userId, currentBookId);
-    setInstructions(res.instructions);
-  }
-
-  /** Fetch instructions associated to User */
-  async function fetchUserInstructions() {
-    const res = await API.getUserInstructions(userId);
-    setInstructions(res);
   }
 
   /** Automatically associates "global user" instructions to current book on select */
@@ -98,6 +86,7 @@ function InstructionsRequests({
   /** Populate instruction area on mount */
   useEffect(() => {
     requestData();
+    setInstructions(data.instructions);
   }, [isBookSource]);
 
   return (
@@ -106,7 +95,7 @@ function InstructionsRequests({
         <FormLabel label={"Instructions:"} />
         <div className="flex justify-end">
           <div className="pr-4">
-            <ToggleSwitch toggleSource={toggleSource} isUser={isBookSource} />
+            <ToggleSwitch toggleSource={toggleSource} isBook={isBookSource} />
           </div>
           <Tooltip
             multiline

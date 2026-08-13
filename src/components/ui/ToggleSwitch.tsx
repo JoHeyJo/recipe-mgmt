@@ -2,10 +2,14 @@ import { BookOpen, User } from "lucide-react";
 
 type ToggleSwitchProps = {
   toggleSource: () => void;
-  isUser: boolean;
+  isBook: boolean;
 };
 
-function ToggleSwitch({ toggleSource, isUser }: ToggleSwitchProps) {
+/**
+ * InstructionsRequests -> ToggleSwitch
+ */
+
+function ToggleSwitch({ toggleSource, isBook }: ToggleSwitchProps) {
   return (
     <label className="relative inline-block">
       {/* Hidden checkbox drives peer-based styles */}
@@ -48,10 +52,10 @@ function ToggleSwitch({ toggleSource, isUser }: ToggleSwitchProps) {
       {/* Thumb */}
       <span
         className={`absolute left-0.5 top-0.5 w-5 h-5 ${
-          isUser ? "bg-white" : "bg-white"
+          isBook ? "bg-white" : "bg-white"
         } rounded-full transition-transform peer-checked:translate-x-6 flex items-center justify-center text-xs`}
       >
-        {isUser ? <User /> : <BookOpen />}
+        {isBook ? <BookOpen /> : <User />}
       </span>
 
       {/* SR-only text */}
