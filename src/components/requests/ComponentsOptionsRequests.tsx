@@ -8,6 +8,7 @@ import { AttributeData } from "../../utils/types";
 import { errorHandling } from "../../utils/ErrorHandling";
 import { references } from "../../utils/templates";
 import { scrollIntoViewElement } from "../../utils/functions";
+import useDataRequest from "../../hooks/useDataRequest";
 
 /** Manages ingredient requests and dropdown options
  *
@@ -22,17 +23,12 @@ function ComponentsOptionsRequests({
   const [items, setItems] = useState<AttributeData[]>([]);
   const [quantityAmount, setQuantityAmounts] = useState<AttributeData[]>([]);
   const [quantityUnits, setQuantityUnits] = useState<AttributeData[]>([]);
-  const [whichOptions, setWhichOptions] = useState<string>("book");
   const [optionsReferences, setOptionsReferences] = useState(references);
+  const [isBookSource, toggleSource ] = useDataRequest();
 
   const ingredientSectionRef = useRef<HTMLDivElement>();
 
   const { userId, currentBookId } = useContext(UserContext);
-
-  /** handle state change for whichIngredients */
-  function handleRadio(event: ChangeEvent<HTMLInputElement>) {
-    setWhichOptions(event.target.value);
-  }
 
   /** Request to create new ingredient option */
   async function addOption(
@@ -73,7 +69,7 @@ function ComponentsOptionsRequests({
     items,
     amounts: quantityAmount,
     units: quantityUnits,
-    selected: whichOptions,
+    selected: isBookSource,
     references: optionsReferences,
   };
 
@@ -117,13 +113,6 @@ function ComponentsOptionsRequests({
     }
   }
 
-  /** Populate each instance of component with the most current options */
-  useEffect(() => {
-    // whichOptions == "book"
-    //   ? fetchBookComponentsOptions()
-    //   : fetchUserComponentsOptions();
-  }, [whichOptions]);
-
   // Scrolls into view newly created ingredient
   useEffect(() => {
     if (numOfIngredients > 3) scrollIntoViewElement(ingredientSectionRef);
@@ -131,14 +120,6 @@ function ComponentsOptionsRequests({
 
   return (
     <>
-      {/* <RadioSwitch
-        handleSwitch={handleRadio}
-        selection={whichOptions}
-        labelOne="User"
-        labelTwo="Book"
-        valueOne="user"
-        valueTwo="book"
-      /> */}
       <div className="py-2 px-1 h-full overflow-y-auto rounded-md border-2 border-accent-secondary">
         {ingredients.map((ingredient, i) => (
           <div

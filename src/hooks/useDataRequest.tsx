@@ -13,7 +13,7 @@ function useDataRequest() {
   const [ingredients, setIngredients] = useState([]);
   const [instructions, setInstructions] = useState([]);
   const [error, setError] = useState("");
-  const [isUserSource, setIsUserSource] = useState(true);
+  const [isBookSource, setIsBookSource] = useState(true);
   const { currentBookId } = useContext(UserContext);
 
   /** Fetch instructions and ingredients associated to User */
@@ -46,16 +46,16 @@ function useDataRequest() {
    * default value = True
    */
   function toggleSource() {
-    setIsUserSource((source) => !source);
+    setIsBookSource((source) => !source);
   }
 
   /** Triggers Book data request or User data request
    * default = User data
    */
   function requestData() {
-    return isUserSource ? requestUserData() : requestBookData();
+    return isBookSource ? requestUserData() : requestBookData();
   }
 
-  return [data, requestData, toggleSource, isUserSource] as const;
+  return [data, requestData, toggleSource, isBookSource] as const;
 }
 export default useDataRequest;
