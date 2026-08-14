@@ -13,6 +13,7 @@ import Tooltip from "../ui/common/Tooltip";
 import ToggleSwitch from "../ui/ToggleSwitch";
 import { BookOpen, User } from "lucide-react";
 import useDataRequest from "../../hooks/useDataRequest";
+import { DataContext } from "../../context/DataContext";
 
 /** Handles API requests & instructionRequestAPI management for Instructions
  *
@@ -21,10 +22,12 @@ import useDataRequest from "../../hooks/useDataRequest";
 function InstructionsRequests({
   onInstructionInput,
 }: InstructionsRequestsProp) {
-  const { userId, currentBookId } = useContext(UserContext);
-  const [instructions, setInstructions] = useState<Instructions>([]);
+  // const [instructions, setInstructions] = useState<Instructions>([]);
   const [whichInstructions, setWhichInstructions] = useState("book");
   const [instructionsReferences, setInstructionsReferences] = useState();
+
+  const { userId, currentBookId } = useContext(UserContext);
+  const { instructions, setInstructions } = useContext(DataContext);
   const { toggleSource, isBookSource } = useDataRequest();
 
   /** handle state change for whichInstructions */

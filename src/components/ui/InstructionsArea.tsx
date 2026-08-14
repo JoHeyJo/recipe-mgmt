@@ -90,7 +90,7 @@ function InstructionsArea({
   //   })
   // }
 
-  /** Consolidates logic pertaining to adding instructions */
+  /** Consolidates logic that adds instructions */
   const handleSelected = {
     // addInstruction,
     // addCreated,

@@ -15,7 +15,7 @@ import {
 import { RecipeContext } from "../../context/RecipeContext";
 import { DataContext } from "../../context/DataContext";
 import useDataRequest from "../../hooks/useDataRequest";
-import { FormData } from "../../utils/types";
+import { FormData, IngredientOptions, Instruction } from "../../utils/types";
 
 /**
  * RecipeRequests -> RecipeForm -> [IngredientsGroup, InstructionsArea, NotesInput, TitleInput]
@@ -29,8 +29,14 @@ function RecipeForm({
 }) {
   const [isDisabled, setIsDisabled] = useState(true);
   const [formData, setFormData] = useState<FormData>({
+    ingredients: { items: [], amounts: [], units: [] },
     instructions: [],
-    ingredients: { items:[], amounts:[], units:[] },
+  });
+  const [instructions, setInstructions] = useState<Instruction>();
+  const [ingredients, setIngredients] = useState<IngredientOptions>({
+    items: [],
+    amounts: [],
+    units: [],
   });
 
   const { requestAction, selectedRecipe } = useContext(RecipeContext);
@@ -39,8 +45,10 @@ function RecipeForm({
   const { requestData } = useDataRequest();
 
   const ingredientsInstructions = {
-    instructions: formData.ingredients,
-    ingredients: formData.instructions,
+    instructions: formData.instructions,
+    ingredients: formData.ingredients,
+    setInstructions,
+    setIngredients
   };
 
   /** Enables/disables UPDATE submit */
@@ -64,7 +72,8 @@ function RecipeForm({
   useEffect(() => {
     (async () => {
       const data = await requestData();
-      setFormData(data);
+      setInstructions(data.instructions)
+      setIngredients(data.ingredients)
     })();
   }, []);
 
@@ -102,31 +111,34 @@ function RecipeForm({
               <ReferenceContext.Provider
                 value={{ dialogPanelRef: dialogPanelRef }}
               >
-                <section
-                  id="RecipeRequests-title-ingredients"
-                  className="flex-1 h-full flex flex-col"
-                >
-                  <div className="">
-                    <TitleInput onTitleInput={onUpdateRecipeInput} />
-                  </div>
-
-                  <div
-                    id="RecipeRequests-ingredients"
-                    className="flex-1 overflow-hidden"
+                <DataContext.Provider value={ingredientsInstructions}>
+                  <section
+                    id="RecipeRequests-title-ingredients"
+                    className="flex-1 h-full flex flex-col"
                   >
-                    {/* <DataContext.Provider value={ingredientsInstructions}></DataContext.Provider> */}
-                    <IngredientsGroup onIngredientInput={onUpdateRecipeInput} />
-                  </div>
-                </section>
+                    <div className="">
+                      <TitleInput onTitleInput={onUpdateRecipeInput} />
+                    </div>
 
-                <section
-                  id="RecipeRequests-instructions"
-                  className="flex-col flex flex-1 ml-4 rounded-md"
-                >
-                  <InstructionsRequests
-                    onInstructionInput={onUpdateRecipeInput}
-                  />
-                </section>
+                    <div
+                      id="RecipeRequests-ingredients"
+                      className="flex-1 overflow-hidden"
+                    >
+                      <IngredientsGroup
+                        onIngredientInput={onUpdateRecipeInput}
+                      />
+                    </div>
+                  </section>
+
+                  <section
+                    id="RecipeRequests-instructions"
+                    className="flex-col flex flex-1 ml-4 rounded-md"
+                  >
+                    <InstructionsRequests
+                      onInstructionInput={onUpdateRecipeInput}
+                    />
+                  </section>
+                </DataContext.Provider>
               </ReferenceContext.Provider>
             </section>
 
