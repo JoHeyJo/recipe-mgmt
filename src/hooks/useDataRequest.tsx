@@ -1,12 +1,11 @@
 import { useContext, useState } from "react";
 import API from "../api";
 import { errorHandling } from "../utils/ErrorHandling";
-import { Ingredients, Instructions } from "../utils/types";
+import { IngredientOptions, Instructions } from "../utils/types";
 import { UserContext } from "../context/UserContext";
-import { Options } from "../utils/props";
 
 type data = {
-  ingredients: Options;
+  ingredients: IngredientOptions
   instructions: Instructions;
 };
 
@@ -30,6 +29,7 @@ function useDataRequest() {
       const res = await API.getUserData();
       setIngredients(res.ingredients);
       setInstructions(res.instructions);
+      return res
       console.log("user data===!", res);
     } catch (error: any) {
       const message = errorHandling("useDataRequest - requestUserData", error);
@@ -44,6 +44,7 @@ function useDataRequest() {
       console.log("book data!::::", res);
       setIngredients(res.ingredients);
       setInstructions(res.instructions);
+      return res
     } catch (error: any) {
       const message = errorHandling("useDataRequest - requestBookData", error);
       setError(message);
@@ -61,9 +62,9 @@ function useDataRequest() {
    * default = User data
    */
  async function requestData() {
-    return isBookSource ? requestUserData() : requestBookData();
+    return isBookSource ? await requestUserData() : await requestBookData();
   }
 
-  return { data, requestData, toggleSource, isBookSource };
+  return { requestData, toggleSource, isBookSource };
 }
 export default useDataRequest;

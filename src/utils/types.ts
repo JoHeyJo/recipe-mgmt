@@ -115,4 +115,13 @@ export type CreateBookCopyRecipeProps = {
   onCloseDialog: () => void;
 };
 
+export type IngredientOptions = {
+  items: [];
+  amounts: [];
+  units: [];
+};
 
+export type FormData = {
+  instructions: Instructions;
+  ingredients: IngredientOptions;
+};

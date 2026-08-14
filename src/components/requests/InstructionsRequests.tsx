@@ -25,7 +25,7 @@ function InstructionsRequests({
   const [instructions, setInstructions] = useState<Instructions>([]);
   const [whichInstructions, setWhichInstructions] = useState("book");
   const [instructionsReferences, setInstructionsReferences] = useState();
-  const { data, toggleSource, isBookSource } = useDataRequest();
+  const { toggleSource, isBookSource } = useDataRequest();
 
   /** handle state change for whichInstructions */
   function handleRadio(event: ChangeEvent<HTMLInputElement>) {
@@ -82,9 +82,9 @@ function InstructionsRequests({
     references: instructionsReferences,
   };
   /** Populate instruction area on mount */
-  useEffect(() => {
-    setInstructions(data.instructions);
-  }, [isBookSource]);
+  // useEffect(() => {
+  //   setInstructions(data.instructions);
+  // }, [isBookSource]);
 
   return (
     <Field className="h-full pb-5">

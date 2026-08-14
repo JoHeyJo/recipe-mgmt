@@ -24,7 +24,7 @@ function ComponentsOptionsRequests({
   const [quantityAmount, setQuantityAmounts] = useState<AttributeData[]>([]);
   const [quantityUnits, setQuantityUnits] = useState<AttributeData[]>([]);
   const [optionsReferences, setOptionsReferences] = useState(references);
-  const { data, isBookSource } = useDataRequest();
+  const { isBookSource } = useDataRequest();
 
   const ingredientSectionRef = useRef<HTMLDivElement>();
 
@@ -98,16 +98,15 @@ function ComponentsOptionsRequests({
     if (numOfIngredients > 3) scrollIntoViewElement(ingredientSectionRef);
   }, [numOfIngredients]);
 
-  useEffect(() => {
-    console.log("data in copr:",data)
-    const { items, units, amounts } = data.ingredients;
-    if (isBookSource) {
-      setOptionsReferences({ amount: amounts, unit: units, item: items }); ///DOES THIS NEED TO BE MEMOIZED
-    }
-    setItems(items);
-    setQuantityUnits(units);
-    setQuantityAmounts(amounts);
-  }, [isBookSource]);
+  // useEffect(() => {
+  //   const { items, units, amounts } = data.ingredients;
+  //   if (isBookSource) {
+  //     setOptionsReferences({ amount: amounts, unit: units, item: items }); ///DOES THIS NEED TO BE MEMOIZED
+  //   }
+  //   setItems(items);
+  //   setQuantityUnits(units);
+  //   setQuantityAmounts(amounts);
+  // }, [isBookSource]);
 
   return (
     <>

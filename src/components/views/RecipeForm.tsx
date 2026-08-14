@@ -15,6 +15,7 @@ import {
 import { RecipeContext } from "../../context/RecipeContext";
 import { DataContext } from "../../context/DataContext";
 import useDataRequest from "../../hooks/useDataRequest";
+import { FormData } from "../../utils/types";
 
 /**
  * RecipeRequests -> RecipeForm -> [IngredientsGroup, InstructionsArea, NotesInput, TitleInput]
@@ -27,12 +28,20 @@ function RecipeForm({
   recipeAction,
 }) {
   const [isDisabled, setIsDisabled] = useState(true);
+  const [formData, setFormData] = useState<FormData>({
+    instructions: [],
+    ingredients: { items:[], amounts:[], units:[] },
+  });
+
   const { requestAction, selectedRecipe } = useContext(RecipeContext);
+
   const dialogPanelRef = useRef(null);
+  const { requestData } = useDataRequest();
 
-  const { data, requestData } = useDataRequest();
-
-  const ingredientsInstructions =  { instructions : data.instructions, ingredients : data.ingredients } 
+  const ingredientsInstructions = {
+    instructions: formData.ingredients,
+    ingredients: formData.instructions,
+  };
 
   /** Enables/disables UPDATE submit */
   useEffect(() => {
@@ -53,7 +62,10 @@ function RecipeForm({
   }, [recipeInput]);
 
   useEffect(() => {
-    requestData();
+    (async () => {
+      const data = await requestData();
+      setFormData(data);
+    })();
   }, []);
 
   return (
@@ -102,7 +114,7 @@ function RecipeForm({
                     id="RecipeRequests-ingredients"
                     className="flex-1 overflow-hidden"
                   >
-                    <DataContext.Provider value={ingredientsInstructions}></DataContext.Provider>
+                    {/* <DataContext.Provider value={ingredientsInstructions}></DataContext.Provider> */}
                     <IngredientsGroup onIngredientInput={onUpdateRecipeInput} />
                   </div>
                 </section>
