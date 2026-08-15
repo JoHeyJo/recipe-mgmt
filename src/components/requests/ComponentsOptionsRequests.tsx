@@ -9,6 +9,7 @@ import { errorHandling } from "../../utils/ErrorHandling";
 import { references } from "../../utils/templates";
 import { scrollIntoViewElement } from "../../utils/functions";
 import useDataRequest from "../../hooks/useDataRequest";
+import { DataContext } from "../../context/DataContext";
 
 /** Manages ingredient requests and dropdown options
  *
@@ -20,10 +21,13 @@ function ComponentsOptionsRequests({
   ingredientKeys,
   ingredientAction,
 }: ComponentsOptionsRequestsProps) {
-  const [items, setItems] = useState<AttributeData[]>([]);
-  const [quantityAmount, setQuantityAmounts] = useState<AttributeData[]>([]);
-  const [quantityUnits, setQuantityUnits] = useState<AttributeData[]>([]);
+  const { ingredientOptions, setIngredientOptions } = useContext(DataContext);
+
+  // const [items, setItems] = useState<AttributeData[]>(ingredientOptions.items);
+  // const [quantityAmount, setQuantityAmounts] = useState<AttributeData[]>(ingredientOptions.amounts);
+  // const [quantityUnits, setQuantityUnits] = useState<AttributeData[]>(ingredientOptions.units);
   const [optionsReferences, setOptionsReferences] = useState(references);
+
   const { isBookSource } = useDataRequest();
 
   const ingredientSectionRef = useRef<HTMLDivElement>();
@@ -49,14 +53,14 @@ function ComponentsOptionsRequests({
     }
   }
 
-  /** Handles list of available options - adds newly created */
+  /** Handles list of available options - adds newly created to parent state*/
   async function updateAvailableOptions(state: string, option: AttributeData) {
     if (state === "item")
-      setItems((options: AttributeData[]) => [...options, option]);
+      setIngredientOptions({...options, items: [...options.items, option]});
     if (state === "unit")
-      setQuantityUnits((options: AttributeData[]) => [...options, option]);
+      setIngredientOptions({...options, units: [...options.units, option]});
     if (state === "amount")
-      setQuantityAmounts((options: AttributeData[]) => [...options, option]);
+      setIngredientOptions({...options, amounts: [...options.amounts, option]});
   }
 
   const optionAction = {
@@ -66,9 +70,9 @@ function ComponentsOptionsRequests({
   };
 
   const options = {
-    items,
-    amounts: quantityAmount,
-    units: quantityUnits,
+    items: ingredientOptions.items,
+    amounts: ingredientOptions.amounts,
+    units: ingredientOptions.units,
     isBookSource,
     references: optionsReferences,
   };
@@ -99,14 +103,15 @@ function ComponentsOptionsRequests({
   }, [numOfIngredients]);
 
   // useEffect(() => {
-  //   const { items, units, amounts } = data.ingredients;
+  //   const { items, units, amounts } = ingredientOptions;
+  //   console.log("in useEffect", ingredientOptions)
   //   if (isBookSource) {
   //     setOptionsReferences({ amount: amounts, unit: units, item: items }); ///DOES THIS NEED TO BE MEMOIZED
   //   }
   //   setItems(items);
   //   setQuantityUnits(units);
   //   setQuantityAmounts(amounts);
-  // }, [isBookSource]);
+  // }, []);
 
   return (
     <>

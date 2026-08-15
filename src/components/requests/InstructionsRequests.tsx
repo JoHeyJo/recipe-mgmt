@@ -22,18 +22,12 @@ import { DataContext } from "../../context/DataContext";
 function InstructionsRequests({
   onInstructionInput,
 }: InstructionsRequestsProp) {
-  // const [instructions, setInstructions] = useState<Instructions>([]);
-  const [whichInstructions, setWhichInstructions] = useState("book");
-  const [instructionsReferences, setInstructionsReferences] = useState();
+  // const [instructionsReferences, setInstructionsReferences] = useState();
 
   const { userId, currentBookId } = useContext(UserContext);
   const { instructions, setInstructions } = useContext(DataContext);
+  console.log("instructions in IR:", instructions);
   const { toggleSource, isBookSource } = useDataRequest();
-
-  /** handle state change for whichInstructions */
-  function handleRadio(event: ChangeEvent<HTMLInputElement>) {
-    setWhichInstructions(event.target.value);
-  }
 
   /** Add newly created instruction (DB return object) to list of available instructions */
   function updateAvailableInstructions(instruction: Instruction) {
@@ -81,13 +75,9 @@ function InstructionsRequests({
 
   const instructionRequestAPI = {
     instructions,
-    selected: whichInstructions,
-    references: instructionsReferences,
+    isBookSource,
+    // references: instructionsReferences,
   };
-  /** Populate instruction area on mount */
-  // useEffect(() => {
-  //   setInstructions(data.instructions);
-  // }, [isBookSource]);
 
   return (
     <Field className="h-full pb-5">

@@ -53,7 +53,7 @@ function InstructionsArea({
       return updatedInstructions;
     });
 
-    if (instructionRequestAPI.selected === "user")
+    if (!instructionRequestAPI.isBookSource)
       onInstructionRequest.associate(userId, currentBookId, +instruction.id);
 
     if (HAS_NO_REMAINING_INPUT(selectedInstructions.length, arrayKey))

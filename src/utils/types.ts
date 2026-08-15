@@ -116,9 +116,9 @@ export type CreateBookCopyRecipeProps = {
 };
 
 export type IngredientOptions = {
-  items: [];
-  amounts: [];
-  units: [];
+  items: AttributeData[];
+  amounts: AttributeData[];
+  units: AttributeData[];
 };
 
 export type FormData = {

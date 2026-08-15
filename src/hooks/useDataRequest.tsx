@@ -29,8 +29,8 @@ function useDataRequest() {
       const res = await API.getUserData();
       setIngredients(res.ingredients);
       setInstructions(res.instructions);
-      return res
       console.log("user data===!", res);
+      return res
     } catch (error: any) {
       const message = errorHandling("useDataRequest - requestUserData", error);
       setError(message);

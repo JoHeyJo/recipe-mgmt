@@ -1,16 +1,16 @@
 import { Instructions, IngredientOptions } from "../utils/types";
-import { createContext } from "react";
+import { createContext, Dispatch, SetStateAction } from "react";
 
 type DataContextType = {
-  ingredients: IngredientOptions;
+  ingredientOptions: IngredientOptions;
   instructions: Instructions;
-  setInstructions: React.Dispatch<React.SetStateAction<FormData>>;
-  setIngredients: React.Dispatch<React.SetStateAction<FormData>>;
+  setInstructions: Dispatch<SetStateAction<Instructions>>;
+  setIngredientOptions: Dispatch<SetStateAction<IngredientOptions>>;
 };
 
 export const DataContext = createContext<DataContextType>({
-  ingredients: { items:[], amounts:[], units: [] },
+  ingredientOptions: { items:[], amounts:[], units: [] },
   instructions: [],
   setInstructions: () => {},
-  setIngredients: () => {}
+  setIngredientOptions: () => {}
 });

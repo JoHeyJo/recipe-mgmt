@@ -137,8 +137,7 @@ export type IngredientsGroupProps = {
 
 type InstructionsData = {
   instructions: Instructions;
-  selected: string;
-  references: Instructions;
+  isBookSource: boolean;
 };
 
 export type InstructionsAreaProps = {

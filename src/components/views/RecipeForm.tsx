@@ -15,7 +15,8 @@ import {
 import { RecipeContext } from "../../context/RecipeContext";
 import { DataContext } from "../../context/DataContext";
 import useDataRequest from "../../hooks/useDataRequest";
-import { FormData, IngredientOptions, Instruction } from "../../utils/types";
+import { FormData, IngredientOptions, Instructions } from "../../utils/types";
+import { AttributeData } from "../../utils/types";
 
 /**
  * RecipeRequests -> RecipeForm -> [IngredientsGroup, InstructionsArea, NotesInput, TitleInput]
@@ -28,12 +29,8 @@ function RecipeForm({
   recipeAction,
 }) {
   const [isDisabled, setIsDisabled] = useState(true);
-  const [formData, setFormData] = useState<FormData>({
-    ingredients: { items: [], amounts: [], units: [] },
-    instructions: [],
-  });
-  const [instructions, setInstructions] = useState<Instruction>();
-  const [ingredients, setIngredients] = useState<IngredientOptions>({
+  const [instructions, setInstructions] = useState<Instructions>([]);
+  const [ingredientOptions, setIngredientOptions] = useState<IngredientOptions>({
     items: [],
     amounts: [],
     units: [],
@@ -44,11 +41,11 @@ function RecipeForm({
   const dialogPanelRef = useRef(null);
   const { requestData } = useDataRequest();
 
-  const ingredientsInstructions = {
-    instructions: formData.instructions,
-    ingredients: formData.ingredients,
+  const formData = {
+    ingredientOptions,
+    instructions,
     setInstructions,
-    setIngredients
+    setIngredientOptions
   };
 
   /** Enables/disables UPDATE submit */
@@ -72,8 +69,9 @@ function RecipeForm({
   useEffect(() => {
     (async () => {
       const data = await requestData();
+      console.log("data in RF:",data)
       setInstructions(data.instructions)
-      setIngredients(data.ingredients)
+      setIngredientOptions(data.ingredients);
     })();
   }, []);
 
@@ -111,7 +109,7 @@ function RecipeForm({
               <ReferenceContext.Provider
                 value={{ dialogPanelRef: dialogPanelRef }}
               >
-                <DataContext.Provider value={ingredientsInstructions}>
+                <DataContext.Provider value={formData}>
                   <section
                     id="RecipeRequests-title-ingredients"
                     className="flex-1 h-full flex flex-col"
