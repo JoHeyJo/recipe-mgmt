@@ -16,9 +16,6 @@ type data = {
  * [ComponentsOptionsRequests, InstructionsRequests]
  */
 function useDataRequest() {
-  const [data, setDate] = useState<data>();
-  const [ingredients, setIngredients] = useState([]);
-  const [instructions, setInstructions] = useState([]);
   const [error, setError] = useState("");
   const [isBookSource, setIsBookSource] = useState<boolean>(true);
   const { currentBookId } = useContext(UserContext);
@@ -27,8 +24,6 @@ function useDataRequest() {
   async function requestUserData() {
     try {
       const res = await API.getUserData();
-      setIngredients(res.ingredients);
-      setInstructions(res.instructions);
       console.log("user data===!", res);
       return res;
     } catch (error: any) {
@@ -42,8 +37,6 @@ function useDataRequest() {
     try {
       const res = await API.getBookData(currentBookId);
       console.log("book data!::::", res);
-      setIngredients(res.ingredients);
-      setInstructions(res.instructions);
       return res;
     } catch (error: any) {
       const message = errorHandling("useDataRequest - requestBookData", error);
@@ -51,11 +44,11 @@ function useDataRequest() {
     }
   }
 
-  /** Toggles boolean value
-   * default value = True
+  /** Toggles boolean value - default value = True
    */
   function toggleSource() {
     setIsBookSource((source) => !source);
+    console.log('isBookSource:', isBookSource)
   }
 
   /** Triggers Book data request or User data request

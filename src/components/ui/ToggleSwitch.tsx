@@ -1,15 +1,17 @@
 import { BookOpen, User } from "lucide-react";
-
-type ToggleSwitchProps = {
-  toggleSource: () => void;
-  isBook: boolean;
-};
+import useDataRequest from "../../hooks/useDataRequest";
 
 /**
  * InstructionsRequests -> ToggleSwitch
  */
 
-function ToggleSwitch({ toggleSource, isBook }: ToggleSwitchProps) {
+function ToggleSwitch({}) {
+  const { toggleSource, isBookSource, requestData } = useDataRequest();
+
+  function handleToggle(){
+    requestData();
+    toggleSource();
+  }
   return (
     <label className="relative inline-block">
       {/* Hidden checkbox drives peer-based styles */}
@@ -18,7 +20,7 @@ function ToggleSwitch({ toggleSource, isBook }: ToggleSwitchProps) {
         role="switch"
         aria-label="Dark Mode"
         // checked={isDark}
-        onChange={toggleSource}
+        onChange={handleToggle}
         className="peer sr-only"
       />
 
@@ -52,10 +54,10 @@ function ToggleSwitch({ toggleSource, isBook }: ToggleSwitchProps) {
       {/* Thumb */}
       <span
         className={`absolute left-0.5 top-0.5 w-5 h-5 ${
-          isBook ? "bg-white" : "bg-white"
+          isBookSource ? "bg-white" : "bg-white"
         } rounded-full transition-transform peer-checked:translate-x-6 flex items-center justify-center text-xs`}
       >
-        {isBook ? <BookOpen /> : <User />}
+        {isBookSource ? <BookOpen /> : <User />}
       </span>
 
       {/* SR-only text */}

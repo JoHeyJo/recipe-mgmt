@@ -12,7 +12,6 @@ import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import Tooltip from "../ui/common/Tooltip";
 import ToggleSwitch from "../ui/ToggleSwitch";
 import { BookOpen, User } from "lucide-react";
-import useDataRequest from "../../hooks/useDataRequest";
 import { DataContext } from "../../context/DataContext";
 
 /** Handles API requests & instructionRequestAPI management for Instructions
@@ -22,11 +21,9 @@ import { DataContext } from "../../context/DataContext";
 function InstructionsRequests({
   onInstructionInput,
 }: InstructionsRequestsProp) {
-  // const [instructionsReferences, setInstructionsReferences] = useState();
 
   const { userId, currentBookId } = useContext(UserContext);
   const { setInstructions } = useContext(DataContext);
-  const { toggleSource, isBookSource } = useDataRequest();
 
   /** Add newly created instruction (DB return object) to list of available instructions */
   function updateAvailableInstructions(instruction: Instruction) {
@@ -78,7 +75,7 @@ function InstructionsRequests({
         <FormLabel label={"Instructions:"} />
         <div className="flex justify-end">
           <div className="pr-4">
-            <ToggleSwitch toggleSource={toggleSource} isBook={isBookSource} />
+            <ToggleSwitch />
           </div>
           <Tooltip
             multiline
