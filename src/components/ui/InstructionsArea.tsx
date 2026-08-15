@@ -20,7 +20,6 @@ const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) =>
  */
 function InstructionsArea({
   onInstructionInput,
-  instructionRequestAPI,
   onInstructionRequest,
 }: InstructionsAreaProps) {
   const { userId, currentBookId } = useContext(UserContext);

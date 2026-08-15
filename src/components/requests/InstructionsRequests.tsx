@@ -25,8 +25,7 @@ function InstructionsRequests({
   // const [instructionsReferences, setInstructionsReferences] = useState();
 
   const { userId, currentBookId } = useContext(UserContext);
-  const { instructions, setInstructions } = useContext(DataContext);
-  console.log("instructions in IR:", instructions);
+  const { setInstructions } = useContext(DataContext);
   const { toggleSource, isBookSource } = useDataRequest();
 
   /** Add newly created instruction (DB return object) to list of available instructions */
@@ -73,12 +72,6 @@ function InstructionsRequests({
     addCreated: updateAvailableInstructions,
   };
 
-  const instructionRequestAPI = {
-    instructions,
-    isBookSource,
-    // references: instructionsReferences,
-  };
-
   return (
     <Field className="h-full pb-5">
       <div className="grid grid-cols-2 gap-4">
@@ -107,7 +100,6 @@ function InstructionsRequests({
       <InstructionsArea
         onInstructionInput={onInstructionInput}
         onInstructionRequest={instructionRequestAction}
-        instructionRequestAPI={instructionRequestAPI}
       />
     </Field>
   );

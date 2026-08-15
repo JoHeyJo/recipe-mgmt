@@ -32,6 +32,7 @@ function InstructionManager({
   const [query, setQuery] = useState<string>("");
   const [selected, setSelected] = useState<Instruction>(instruction);
   const [isKbSuppressed, setIsKbSuppressed] = useState(false);
+  console.log("InstructionManager:",options);
 
   const instructionRef = useRef<HTMLDivElement>(null);
   const stableId = useId();
@@ -78,6 +79,7 @@ function InstructionManager({
   useEffect(() => {
     if (numOfInstruction > 4) scrollIntoViewElement(instructionRef);
   }, [numOfInstruction]);
+  console.log("filteredOptions:", filteredOptions);
   return (
     <Combobox
       ref={instructionRef}

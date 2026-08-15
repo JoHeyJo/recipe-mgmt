@@ -142,7 +142,6 @@ type InstructionsData = {
 
 export type InstructionsAreaProps = {
   onInstructionInput: (data: Instructions, section: string) => void;
-  instructionRequestAPI: InstructionsData;
   onInstructionRequest: instructionRequestAction;
 };
 

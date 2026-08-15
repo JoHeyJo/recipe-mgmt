@@ -69,7 +69,6 @@ function RecipeForm({
   useEffect(() => {
     (async () => {
       const data = await requestData();
-      console.log("data in RF:",data)
       setInstructions(data.instructions)
       setIngredientOptions(data.ingredients);
     })();

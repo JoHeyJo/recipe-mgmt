@@ -5,7 +5,7 @@ import { IngredientOptions, Instructions } from "../utils/types";
 import { UserContext } from "../context/UserContext";
 
 type data = {
-  ingredients: IngredientOptions
+  ingredients: IngredientOptions;
   instructions: Instructions;
 };
 
@@ -30,7 +30,7 @@ function useDataRequest() {
       setIngredients(res.ingredients);
       setInstructions(res.instructions);
       console.log("user data===!", res);
-      return res
+      return res;
     } catch (error: any) {
       const message = errorHandling("useDataRequest - requestUserData", error);
       setError(message);
@@ -44,7 +44,7 @@ function useDataRequest() {
       console.log("book data!::::", res);
       setIngredients(res.ingredients);
       setInstructions(res.instructions);
-      return res
+      return res;
     } catch (error: any) {
       const message = errorHandling("useDataRequest - requestBookData", error);
       setError(message);
@@ -61,8 +61,8 @@ function useDataRequest() {
   /** Triggers Book data request or User data request
    * default = User data
    */
- async function requestData() {
-    return isBookSource ? await requestUserData() : await requestBookData();
+  async function requestData() {
+    return isBookSource ? requestBookData() : requestUserData();
   }
 
   return { requestData, toggleSource, isBookSource };
