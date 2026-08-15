@@ -40,10 +40,9 @@ function RecipeForm({
 
   const dialogPanelRef = useRef(null);
   const { requestData } = useDataRequest();
-
   const formData = {
     ingredientOptions,
-    instructions,
+    instructions: instructions,
     setInstructions,
     setIngredientOptions
   };

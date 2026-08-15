@@ -5,6 +5,8 @@ import { InstructionsAreaProps } from "../../utils/props";
 import { UserContext } from "../../context/UserContext";
 import { PLACE_HOLDER } from "../../utils/templates";
 import { RecipeContext } from "../../context/RecipeContext";
+import { DataContext } from "../../context/DataContext";
+import useDataRequest from "../../hooks/useDataRequest";
 
 /** Triggers creation of input if there are no inputs left (num of inputs = array index)
  * This doesn't work with refactoring of PLACE_HOLDER instructions
@@ -13,7 +15,7 @@ const HAS_NO_REMAINING_INPUT = (inputs: number, arrayKey: number) =>
   inputs - 1 === arrayKey;
 
 /** InstructionsArea handles selected instruction - updates GrandParent recipe state
- * 
+ *
  * Dynamically renders list of instructions - filters out selected options (WIP)
  *
  * InstructionsRequests -> InstructionsArea -> InstructionManager
@@ -34,6 +36,8 @@ function InstructionsArea({
         : PLACE_HOLDER,
     );
 
+  const { isBookSource } = useDataRequest();
+
   const instructionsAreaRef = useRef<HTMLDivElement>(null);
 
   /** Create additional input field for new instruction */
@@ -52,7 +56,7 @@ function InstructionsArea({
       return updatedInstructions;
     });
 
-    if (!instructionRequestAPI.isBookSource)
+    if (!isBookSource)
       onInstructionRequest.associate(userId, currentBookId, +instruction.id);
 
     if (HAS_NO_REMAINING_INPUT(selectedInstructions.length, arrayKey))
@@ -119,7 +123,6 @@ function InstructionsArea({
           arrayKey={index}
           numOfInstruction={selectedInstructions.length}
           instruction={value}
-          options={instructionRequestAPI.instructions}
           handleSelected={handleSelected}
           handleInstruction={onInstructionRequest}
         />

@@ -24,7 +24,6 @@ export type InstructionManagerProps = {
   numOfInstruction: number;
   instruction: Instruction;
   arrayKey: number;
-  options: Instructions;
   handleInstruction: instructionRequestAction;
   handleSelected: {
     updateSelected: (instruction: Instruction, arrayKey: number) => void;
