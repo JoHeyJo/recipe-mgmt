@@ -6,11 +6,17 @@ type DataContextType = {
   instructions: Instructions;
   setInstructions: Dispatch<SetStateAction<Instructions>>;
   setIngredientOptions: Dispatch<SetStateAction<IngredientOptions>>;
+  requestData: () => void;
+  toggleSource: () => void;
+  isBookSource: boolean;
 };
 
 export const DataContext = createContext<DataContextType>({
-  ingredientOptions: { items:[], amounts:[], units: [] },
+  ingredientOptions: { items: [], amounts: [], units: [] },
   instructions: [],
   setInstructions: () => {},
-  setIngredientOptions: () => {}
+  setIngredientOptions: () => {},
+  requestData: () => {},
+  toggleSource: () => {},
+  isBookSource: true,
 });
