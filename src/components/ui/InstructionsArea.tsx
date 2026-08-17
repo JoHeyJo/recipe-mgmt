@@ -6,7 +6,6 @@ import { UserContext } from "../../context/UserContext";
 import { PLACE_HOLDER } from "../../utils/templates";
 import { RecipeContext } from "../../context/RecipeContext";
 import { DataContext } from "../../context/DataContext";
-import useDataRequest from "../../hooks/useDataRequest";
 
 /** Triggers creation of input if there are no inputs left (num of inputs = array index)
  * This doesn't work with refactoring of PLACE_HOLDER instructions
@@ -36,7 +35,7 @@ function InstructionsArea({
         : PLACE_HOLDER,
     );
 
-  const { isBookSource } = useDataRequest();
+  const { isBookSource } = useContext(DataContext);
 
   const instructionsAreaRef = useRef<HTMLDivElement>(null);
 

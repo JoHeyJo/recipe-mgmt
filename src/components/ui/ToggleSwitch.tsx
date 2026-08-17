@@ -1,12 +1,13 @@
 import { BookOpen, User } from "lucide-react";
-import useDataRequest from "../../hooks/useDataRequest";
+import { useContext } from "react";
+import { DataContext } from "../../context/DataContext";
 
 /**
  * InstructionsRequests -> ToggleSwitch
  */
 
 function ToggleSwitch({}) {
-  const { toggleSource, isBookSource, requestData } = useDataRequest();
+  const { toggleSource, isBookSource, requestData } = useContext(DataContext);
 
   function handleToggle(){
     requestData();

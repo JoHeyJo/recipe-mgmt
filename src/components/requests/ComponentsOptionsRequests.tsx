@@ -8,7 +8,6 @@ import { AttributeData } from "../../utils/types";
 import { errorHandling } from "../../utils/ErrorHandling";
 import { references } from "../../utils/templates";
 import { scrollIntoViewElement } from "../../utils/functions";
-import useDataRequest from "../../hooks/useDataRequest";
 import { DataContext } from "../../context/DataContext";
 
 /** Manages ingredient requests and dropdown options
@@ -28,7 +27,7 @@ function ComponentsOptionsRequests({
   // const [quantityUnits, setQuantityUnits] = useState<AttributeData[]>(ingredientOptions.units);
   const [optionsReferences, setOptionsReferences] = useState(references);
 
-  const { isBookSource } = useDataRequest();
+  const { isBookSource } = useContext(DataContext);
 
   const ingredientSectionRef = useRef<HTMLDivElement>();
 

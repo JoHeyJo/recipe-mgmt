@@ -36,8 +36,8 @@ function RecipeForm({
     units: [],
   });
 
-  const { requestAction, selectedRecipe } = useContext(RecipeContext);
   const { requestData, toggleSource } = useDataRequest();
+  const { requestAction, selectedRecipe } = useContext(RecipeContext);
   const dialogPanelRef = useRef(null);
 
   const formData = {
