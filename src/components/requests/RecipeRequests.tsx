@@ -42,7 +42,7 @@ function RecipeRequests({
   const [render, setRender] = useState<any>({ recipeForm: true });
 
   const dialogPanelRef = useRef(null);
-
+  console.log("in recipe request")
   /** replaces dialog with dropdown */
   function openBookDropdown() {
     setRender({ dropdown: true });

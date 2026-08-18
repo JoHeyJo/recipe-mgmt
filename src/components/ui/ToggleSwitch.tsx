@@ -6,12 +6,13 @@ import { DataContext } from "../../context/DataContext";
  * InstructionsRequests -> ToggleSwitch
  */
 
-function ToggleSwitch({}) {
+function ToggleSwitch() {
   const { isBookSource, requestData } = useContext(DataContext);
-
+  console.log("isbooksource:",isBookSource)
   function handleToggle(){
     requestData();
   }
+
   return (
     <label className="relative inline-block">
       {/* Hidden checkbox drives peer-based styles */}
@@ -57,7 +58,7 @@ function ToggleSwitch({}) {
           isBookSource ? "bg-white" : "bg-white"
         } rounded-full transition-transform peer-checked:translate-x-6 flex items-center justify-center text-xs`}
       >
-        {isBookSource ? <BookOpen /> : <User />}
+        {/* {isBookSource ? <BookOpen /> : <User />} */}
       </span>
 
       {/* SR-only text */}

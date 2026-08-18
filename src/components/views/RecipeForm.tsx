@@ -41,6 +41,7 @@ function RecipeForm({
   const { requestData, isBookSource } = useDataRequest();
   const { requestAction, selectedRecipe } = useContext(RecipeContext);
   const dialogPanelRef = useRef(null);
+  console.log(isBookSource)
 
   const formData = {
     ingredientOptions,

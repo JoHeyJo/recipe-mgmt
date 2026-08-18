@@ -54,10 +54,10 @@ function useDataRequest() {
    * default = User data
    */
   async function requestData() {
-    toggleSource();
+    // toggleSource();
     return isBookSource ? requestBookData() : requestUserData();
   }
 
-  return { requestData, toggleSource, isBookSource };
+  return { requestData, isBookSource };
 }
 export default useDataRequest;
