@@ -30,13 +30,15 @@ function RecipeForm({
 }) {
   const [isDisabled, setIsDisabled] = useState(true);
   const [instructions, setInstructions] = useState<Instructions>([]);
-  const [ingredientOptions, setIngredientOptions] = useState<IngredientOptions>({
-    items: [],
-    amounts: [],
-    units: [],
-  });
+  const [ingredientOptions, setIngredientOptions] = useState<IngredientOptions>(
+    {
+      items: [],
+      amounts: [],
+      units: [],
+    },
+  );
 
-  const { requestData, toggleSource } = useDataRequest();
+  const { requestData, isBookSource } = useDataRequest();
   const { requestAction, selectedRecipe } = useContext(RecipeContext);
   const dialogPanelRef = useRef(null);
 
@@ -44,7 +46,9 @@ function RecipeForm({
     ingredientOptions,
     instructions,
     setInstructions,
-    setIngredientOptions
+    setIngredientOptions,
+    requestData,
+    isBookSource,
   };
 
   /** Enables/disables UPDATE submit */
@@ -68,8 +72,7 @@ function RecipeForm({
   useEffect(() => {
     (async () => {
       const data = await requestData();
-      toggleSource();
-      setInstructions(data.instructions)
+      setInstructions(data.instructions);
       setIngredientOptions(data.ingredients);
     })();
   }, []);

@@ -7,11 +7,10 @@ import { DataContext } from "../../context/DataContext";
  */
 
 function ToggleSwitch({}) {
-  const { toggleSource, isBookSource, requestData } = useContext(DataContext);
+  const { isBookSource, requestData } = useContext(DataContext);
 
   function handleToggle(){
     requestData();
-    toggleSource();
   }
   return (
     <label className="relative inline-block">

@@ -48,13 +48,13 @@ function useDataRequest() {
    */
   function toggleSource() {
     setIsBookSource((source) => !source);
-    console.log('isBookSource:', isBookSource)
   }
 
   /** Triggers Book data request or User data request
    * default = User data
    */
   async function requestData() {
+    toggleSource();
     return isBookSource ? requestBookData() : requestUserData();
   }
 
