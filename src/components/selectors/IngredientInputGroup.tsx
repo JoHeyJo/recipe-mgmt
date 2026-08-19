@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { AttributeData } from "../../utils/types";
-import { IngredientInputGroupProps, Options } from "../../utils/props";
+import { IngredientInputGroupProps } from "../../utils/props";
 import IngredientManager from "../views/IngredientManager";
 import { UserContext } from "../../context/UserContext";
 import { defaultItem, defaultAmount, defaultUnit, references } from "../../utils/templates";
@@ -19,7 +19,6 @@ function IngredientInputGroup({
   ingredient,
   index,
   optionAction,
-  options,
   length,
 }: IngredientInputGroupProps) {
   const [item, setItem] = useState<AttributeData>(ingredient.item);
@@ -42,14 +41,13 @@ function IngredientInputGroup({
     if (state === "item") setItem(option);
     if (state === "unit") setUnit(option);
     if (state === "amount") setAmount(option);
-    if (!isBookSource && isOptionNotAssociated(option, options, state))
+    if (!isBookSource && isOptionNotAssociated(option, state))
       optionAction.associate(userId, currentBookId, +option.id, state);
   }
 
   /** Checks if selected user option already exists in list of user's book options */
   function isOptionNotAssociated(
     option: AttributeData,
-    options: Options,
     state: string,
   ) {
     const isAssociated = optionsReferences[state].some(
@@ -113,7 +111,7 @@ function IngredientInputGroup({
           value={ingredient.amount}
           attribute={"value"}
           entity={"amount"}
-          options={options.amounts}
+          options={ingredientOptions.amounts}
           handleOption={optionAction}
           handleComponent={handleComponent}
           placeholder={"amount (e.g. 2)"}
@@ -123,7 +121,7 @@ function IngredientInputGroup({
           value={ingredient.unit}
           attribute={"type"}
           entity={"unit"}
-          options={options.units}
+          options={ingredientOptions.units}
           handleOption={optionAction}
           handleComponent={handleComponent}
           placeholder={"unit: oz"}
@@ -133,7 +131,7 @@ function IngredientInputGroup({
           value={ingredient.item}
           attribute={"name"}
           entity={"item"}
-          options={options.items}
+          options={ingredientOptions.items}
           handleOption={optionAction}
           handleComponent={handleComponent}
           placeholder={"item (gin)"}

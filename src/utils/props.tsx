@@ -63,7 +63,6 @@ export type InstructionsRequestsProp = {
 };
 
 export type IngredientInputGroupProps = {
-  options: Options;
   ingredient: Ingredient;
   index: number;
   onIngredientAction: HandleIngredient;

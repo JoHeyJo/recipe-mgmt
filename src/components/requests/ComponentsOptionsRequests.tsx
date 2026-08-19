@@ -1,5 +1,4 @@
-import { useState, ChangeEvent, useEffect, useContext, useRef } from "react";
-import RadioSwitch from "../ui/common/RadioSwitch";
+import { useEffect, useContext, useRef } from "react";
 import IngredientInputGroup from "../selectors/IngredientInputGroup";
 import { ComponentsOptionsRequestsProps } from "../../utils/props";
 import API from "../../api";
@@ -19,7 +18,7 @@ function ComponentsOptionsRequests({
   ingredientKeys,
   ingredientAction,
 }: ComponentsOptionsRequestsProps) {
-  const { ingredientOptions, setIngredientOptions } = useContext(DataContext);
+  const { setIngredientOptions, ingredientOptions } = useContext(DataContext);
   const ingredientSectionRef = useRef<HTMLDivElement>();
 
   const { userId, currentBookId } = useContext(UserContext);
@@ -46,23 +45,26 @@ function ComponentsOptionsRequests({
   /** Handles list of available options - adds newly created to parent state*/
   async function updateAvailableOptions(state: string, option: AttributeData) {
     if (state === "item")
-      setIngredientOptions({...options, items: [...options.items, option]});
+      setIngredientOptions({
+        ...ingredientOptions,
+        items: [...ingredientOptions.items, option],
+      });
     if (state === "unit")
-      setIngredientOptions({...options, units: [...options.units, option]});
+      setIngredientOptions({
+        ...ingredientOptions,
+        units: [...ingredientOptions.units, option],
+      });
     if (state === "amount")
-      setIngredientOptions({...options, amounts: [...options.amounts, option]});
+      setIngredientOptions({
+        ...ingredientOptions,
+        amounts: [...ingredientOptions.amounts, option],
+      });
   }
 
   const optionAction = {
     post: addOption,
     addCreated: updateAvailableOptions,
     associate: associateOptionToBook,
-  };
-
-  const options = {
-    items: ingredientOptions.items,
-    amounts: ingredientOptions.amounts,
-    units: ingredientOptions.units,
   };
 
   /** Automatically associates "global user" option to current book on select*/
@@ -90,7 +92,6 @@ function ComponentsOptionsRequests({
     if (numOfIngredients > 3) scrollIntoViewElement(ingredientSectionRef);
   }, [numOfIngredients]);
 
-
   return (
     <>
       <div className="py-2 px-1 h-full overflow-y-auto rounded-md border-2 border-accent-secondary">
@@ -107,7 +108,6 @@ function ComponentsOptionsRequests({
               ingredient={ingredient}
               onIngredientAction={ingredientAction}
               optionAction={optionAction}
-              options={options}
               length={ingredients.length - 1}
             />
           </div>
