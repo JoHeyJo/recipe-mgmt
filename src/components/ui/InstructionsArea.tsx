@@ -23,6 +23,7 @@ function InstructionsArea({
   onInstructionInput,
   onInstructionRequest,
 }: InstructionsAreaProps) {
+  const { isBookSource } = useContext(DataContext);
   const { userId, currentBookId } = useContext(UserContext);
   const { requestAction, selectedRecipe } = useContext(RecipeContext);
   const [selectedInstructions, setSelectedInstructions] =
@@ -34,8 +35,6 @@ function InstructionsArea({
           ]
         : PLACE_HOLDER,
     );
-
-  const { isBookSource } = useContext(DataContext);
 
   const instructionsAreaRef = useRef<HTMLDivElement>(null);
 
@@ -54,8 +53,8 @@ function InstructionsArea({
       updatedInstructions[arrayKey] = instruction;
       return updatedInstructions;
     });
-
-    if (!isBookSource)
+    // Recipe form is rendering global user instructions - on select instruction is associated to selected book
+    if (isBookSource)
       onInstructionRequest.associate(userId, currentBookId, +instruction.id);
 
     if (HAS_NO_REMAINING_INPUT(selectedInstructions.length, arrayKey))
