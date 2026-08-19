@@ -31,8 +31,14 @@ function RecipeRequests({
   closeDialog,
   isOpen,
 }: RecipeRequestsProps) {
-  const { currentBookId, userId, books, setUserData, currentBook, defaultBookId } =
-    useContext(UserContext);
+  const {
+    currentBookId,
+    userId,
+    books,
+    setUserData,
+    currentBook,
+    defaultBookId,
+  } = useContext(UserContext);
   const { selectedRecipe, setRecipes, setFilteredRecipes } =
     useContext(RecipeContext);
 
@@ -42,7 +48,6 @@ function RecipeRequests({
   const [render, setRender] = useState<any>({ recipeForm: true });
 
   const dialogPanelRef = useRef(null);
-
   /** replaces dialog with dropdown */
   function openBookDropdown() {
     setRender({ dropdown: true });
@@ -60,7 +65,7 @@ function RecipeRequests({
         description: book.description,
         id: book.id,
         title: book.title,
-        is_default_replaced: null
+        is_default_replaced: null,
       };
       return userData;
     });
@@ -190,6 +195,9 @@ function RecipeRequests({
     }
   }
 
+  /** Request data corresponding to User or Book */
+  function requestIngredientsInstructions() {}
+
   const recipeAction = {
     submit: submitRecipe,
     remove: removeSharedRecipe,
@@ -226,7 +234,8 @@ function RecipeRequests({
                 onChange={triggerCopy}
                 onCreateBook={() => setRender({ createBook: true })}
                 render={
-                  currentBook.book_type === "shared_inbox" && currentBookId === defaultBookId
+                  currentBook.book_type === "shared_inbox" &&
+                  currentBookId === defaultBookId
                     ? { createBook: true }
                     : { copyRecipe: true }
                 }

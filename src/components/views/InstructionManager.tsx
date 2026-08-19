@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useId } from "react";
+import { useContext, useState, useEffect, useRef, useId } from "react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import {
   Combobox,
@@ -10,6 +10,7 @@ import {
 import { Instruction } from "../../utils/types";
 import { InstructionManagerProps } from "../../utils/props";
 import { scrollIntoViewElement, filterOptions } from "../../utils/functions";
+import { DataContext } from "../../context/DataContext";
 
 /**
  * InstructionManager — searchable / creatable instruction picker.
@@ -25,7 +26,6 @@ function InstructionManager({
   numOfInstruction,
   arrayKey,
   instruction,
-  options,
   handleSelected,
   handleInstruction,
 }: InstructionManagerProps) {
@@ -33,13 +33,15 @@ function InstructionManager({
   const [selected, setSelected] = useState<Instruction>(instruction);
   const [isKbSuppressed, setIsKbSuppressed] = useState(false);
 
+  const { instructions } = useContext(DataContext);
+  
   const instructionRef = useRef<HTMLDivElement>(null);
   const stableId = useId();
   /** Options filtered by the current search query. */
   const filteredOptions =
     query.trim() === ""
-      ? options
-      : filterOptions(query, options, "instruction", stableId);
+      ? instructions
+      : filterOptions(query, instructions, "instruction", stableId);
 
   const isNewInstruction = (option: Instruction) =>
     typeof option.id === "string" && option.instruction === "+ create...";

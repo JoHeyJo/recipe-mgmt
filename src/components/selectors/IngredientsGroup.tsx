@@ -7,12 +7,14 @@ import { defaultIngredient, recipeTemplate } from "../../utils/templates";
 import ComponentsOptionsRequests from "../requests/ComponentsOptionsRequests";
 import FormLabel from "../ui/common/Label";
 import { Field } from "@headlessui/react";
+import { DataContext } from "../../context/DataContext";
+
 
 /** Handles selected Ingredients - mutation of ingredient's array - updates parent recipe state
  * Refactor: IngredientKeys can be removed and id associated with ingredient can now be used.
  * Need to choose between using DATE or UUID
  *
- * RecipeRequests -> IngredientsGroup -> ComponentsOptionsRequests
+ * RecipeForm -> IngredientsGroup -> ComponentsOptionsRequests
  */
 function IngredientsGroup({ onIngredientInput }: IngredientsGroupProps) {
   const { requestAction, selectedRecipe } = useContext(RecipeContext);
@@ -22,6 +24,8 @@ function IngredientsGroup({ onIngredientInput }: IngredientsGroupProps) {
       : selectedRecipe.ingredients,
   );
   const [ingredientKeys, setIngredientKeys] = useState<any>([Date.now()]); // Generate unique key on first render
+
+    // const {ingredients} = useContext(DataContext);
 
   /** Create unique keys array needed for children components */
   useEffect(() => {

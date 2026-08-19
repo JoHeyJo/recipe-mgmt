@@ -45,7 +45,7 @@ class API {
 
   /** Register user: returns token */
   static async signUp(data: UserSignUp, token?: string) {
-    API.token = token
+    API.token = token;
     const res = await this.request("signup", data, "POST");
     return res;
   }
@@ -209,13 +209,13 @@ class API {
   // ################################################################
 
   /** Fetch all ingredients  */
-  static async getUserComponentsOptions(userId: number) {
+  static async getUserIngredientOptions(userId: number) {
     const res = await this.request(`/users/${userId}/ingredients/components`);
     return res;
   }
 
   /** Fetch book ingredients */
-  static async getBookComponentsOptions(userId: number, bookId: number) {
+  static async getBookIngredientOptions(userId: number, bookId: number) {
     const res = await this.request(
       `/users/${userId}/books/${bookId}/ingredients/components`,
     );
@@ -229,7 +229,7 @@ class API {
   }
 
   /** Add book ingredient */
-  static async postComponentOption(
+  static async postIngredientOption(
     option: AttributeData,
     bookId: number,
     userId: number,
@@ -308,6 +308,17 @@ class API {
     );
     return res;
   }
+
+  // ########### DATA - User or Book  ###########
+  // ################################
+  static async getUserData(){
+    return await this.request("users/ingredients/instructions")
+  }
+
+  static async getBookData(bookId: number){
+  return await this.request(`books/${bookId}/ingredients/instructions`)
+  }
+
 }
 
 export default API;

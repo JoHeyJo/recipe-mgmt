@@ -24,7 +24,6 @@ export type InstructionManagerProps = {
   numOfInstruction: number;
   instruction: Instruction;
   arrayKey: number;
-  options: Instructions;
   handleInstruction: instructionRequestAction;
   handleSelected: {
     updateSelected: (instruction: Instruction, arrayKey: number) => void;
@@ -37,12 +36,6 @@ export type Options = {
   items: AttributeData[];
   amounts: AttributeData[];
   units: AttributeData[];
-  selected: string;
-  references: {
-    item: AttributeData[];
-    amount: AttributeData[];
-    unit: AttributeData[];
-  };
 };
 
 type HandleIngredient = {
@@ -70,7 +63,6 @@ export type InstructionsRequestsProp = {
 };
 
 export type IngredientInputGroupProps = {
-  options: Options;
   ingredient: Ingredient;
   index: number;
   onIngredientAction: HandleIngredient;
@@ -134,13 +126,11 @@ export type IngredientsGroupProps = {
 
 type InstructionsData = {
   instructions: Instructions;
-  selected: string;
-  references: Instructions;
+  isBookSource: boolean;
 };
 
 export type InstructionsAreaProps = {
   onInstructionInput: (data: Instructions, section: string) => void;
-  instructionRequestAPI: InstructionsData;
   onInstructionRequest: instructionRequestAction;
 };
 

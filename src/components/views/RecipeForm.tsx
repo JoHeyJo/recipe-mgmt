@@ -2,10 +2,10 @@ import { useRef, useState, useEffect, useContext } from "react";
 import Alert from "../ui/Alert";
 import { ReferenceContext } from "../../context/ReferenceContext";
 import TitleInput from "../ui/TitleInput";
-import IngredientsGroup from "../selectors/IngredientsGroup";
 import InstructionsRequests from "../requests/InstructionsRequests";
 import NotesInput from "../ui/NotesInput";
 import RecipeFormControls from "../ui/controls/RecipeFormControls";
+import IngredientsGroup from "../selectors/IngredientsGroup";
 import {
   compareIngredients,
   compareInstructions,
@@ -13,6 +13,10 @@ import {
   compareNotes,
 } from "../../utils/filters";
 import { RecipeContext } from "../../context/RecipeContext";
+import { DataContext } from "../../context/DataContext";
+import useDataRequest from "../../hooks/useDataRequest";
+import { FormData, IngredientOptions, Instructions } from "../../utils/types";
+import { AttributeData } from "../../utils/types";
 
 /**
  * RecipeRequests -> RecipeForm -> [IngredientsGroup, InstructionsArea, NotesInput, TitleInput]
@@ -25,8 +29,28 @@ function RecipeForm({
   recipeAction,
 }) {
   const [isDisabled, setIsDisabled] = useState(true);
+  const [instructions, setInstructions] = useState<Instructions>([]);
+  const [ingredientOptions, setIngredientOptions] = useState<IngredientOptions>(
+    {
+      items: [],
+      amounts: [],
+      units: [],
+    },
+  );
+
+  const { requestData, isBookSource } = useDataRequest();
   const { requestAction, selectedRecipe } = useContext(RecipeContext);
   const dialogPanelRef = useRef(null);
+
+  const formData = {
+    ingredientOptions,
+    instructions,
+    setInstructions,
+    setIngredientOptions,
+    requestData,
+    isBookSource,
+  };
+
   /** Enables/disables UPDATE submit */
   useEffect(() => {
     if (requestAction.edit) {
@@ -44,6 +68,14 @@ function RecipeForm({
       setIsDisabled(!isAltered);
     }
   }, [recipeInput]);
+
+  useEffect(() => {
+    (async () => {
+      const data = await requestData(isBookSource);
+        setInstructions(data.instructions);
+      setIngredientOptions(data.ingredients);
+    })();
+  }, []);
 
   return (
     <>
@@ -79,28 +111,34 @@ function RecipeForm({
               <ReferenceContext.Provider
                 value={{ dialogPanelRef: dialogPanelRef }}
               >
-                <section
-                  id="RecipeRequests-title-ingredients"
-                  className="flex-1 h-full flex flex-col"
-                >
-                  <div className="">
-                    <TitleInput onTitleInput={onUpdateRecipeInput} />
-                  </div>
-
-                  <div
-                    id="RecipeRequests-ingredients"
-                    className="flex-1 overflow-hidden"
+                <DataContext.Provider value={formData}>
+                  <section
+                    id="RecipeRequests-title-ingredients"
+                    className="flex-1 h-full flex flex-col"
                   >
-                    <IngredientsGroup onIngredientInput={onUpdateRecipeInput} />
-                  </div>
-                </section>
+                    <div className="">
+                      <TitleInput onTitleInput={onUpdateRecipeInput} />
+                    </div>
 
-                <section
-                  id="RecipeRequests-instructions"
-                  className="flex-col flex flex-1 ml-4 rounded-md"
-                >
-                  <InstructionsRequests onInstructionInput={onUpdateRecipeInput} />
-                </section>
+                    <div
+                      id="RecipeRequests-ingredients"
+                      className="flex-1 overflow-hidden"
+                    >
+                      <IngredientsGroup
+                        onIngredientInput={onUpdateRecipeInput}
+                      />
+                    </div>
+                  </section>
+
+                  <section
+                    id="RecipeRequests-instructions"
+                    className="flex-col flex flex-1 ml-4 rounded-md"
+                  >
+                    <InstructionsRequests
+                      onInstructionInput={onUpdateRecipeInput}
+                    />
+                  </section>
+                </DataContext.Provider>
               </ReferenceContext.Provider>
             </section>
 
