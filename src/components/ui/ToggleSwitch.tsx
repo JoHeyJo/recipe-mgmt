@@ -7,10 +7,10 @@ import { DataContext } from "../../context/DataContext";
  */
 
 function ToggleSwitch() {
-  const { isBookSource, requestData, toggleSource } = useContext(DataContext);
+  const { isBookSource, requestData } = useContext(DataContext);
 
   function handleToggle(){
-    toggleSource();
+    requestData(isBookSource);
   }
 
   return (
@@ -58,7 +58,7 @@ function ToggleSwitch() {
           isBookSource ? "bg-white" : "bg-white"
         } rounded-full transition-transform peer-checked:translate-x-6 flex items-center justify-center text-xs`}
       >
-        {isBookSource ? <BookOpen /> : <User />}
+        {!isBookSource ? <BookOpen /> : <User />}
       </span>
 
       {/* SR-only text */}

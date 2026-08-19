@@ -24,7 +24,6 @@ function useDataRequest() {
   async function requestUserData() {
     try {
       const res = await API.getUserData();
-      console.log("user data===!", res);
       return res;
     } catch (error: any) {
       const message = errorHandling("useDataRequest - requestUserData", error);
@@ -36,7 +35,6 @@ function useDataRequest() {
   async function requestBookData() {
     try {
       const res = await API.getBookData(currentBookId);
-      console.log("book data!::::", res);
       return res;
     } catch (error: any) {
       const message = errorHandling("useDataRequest - requestBookData", error);
@@ -47,15 +45,14 @@ function useDataRequest() {
   /** Toggles boolean value - default value = True
    */
   function toggleSource() {
-    console.log("toggled")
     setIsBookSource((source) => !source);
-    requestData();
   }
 
   /** Triggers Book data request or User data request
    * default = User data
    */
-  async function requestData() {
+  async function requestData(isBookSource) {
+    toggleSource();
     return isBookSource ? requestBookData() : requestUserData();
   }
 

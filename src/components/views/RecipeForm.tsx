@@ -48,7 +48,6 @@ function RecipeForm({
     setInstructions,
     setIngredientOptions,
     requestData,
-    toggleSource,
     isBookSource,
   };
 
@@ -72,7 +71,7 @@ function RecipeForm({
 
   useEffect(() => {
     (async () => {
-      const data = await requestData();
+      const data = await requestData(isBookSource);
         setInstructions(data.instructions);
       setIngredientOptions(data.ingredients);
     })();
