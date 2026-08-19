@@ -41,7 +41,8 @@ function IngredientInputGroup({
     if (state === "item") setItem(option);
     if (state === "unit") setUnit(option);
     if (state === "amount") setAmount(option);
-    if (!isBookSource && isOptionNotAssociated(option, state))
+    // Recipe form is rendering global user options - on select option is associated to selected book
+    if (isBookSource && isOptionNotAssociated(option, state))
       optionAction.associate(userId, currentBookId, +option.id, state);
   }
 
@@ -53,7 +54,6 @@ function IngredientInputGroup({
     const isAssociated = optionsReferences[state].some(
       (o) => o.id === option.id,
     );
-
     return !isAssociated;
   }
 
