@@ -51,7 +51,7 @@ function useDataRequest() {
   /** Triggers Book data request or User data request
    * default = User data
    */
-  async function requestData(isBookSource) {
+  function requestData(isBookSource) {
     toggleSource();
     return isBookSource ? requestBookData() : requestUserData();
   }

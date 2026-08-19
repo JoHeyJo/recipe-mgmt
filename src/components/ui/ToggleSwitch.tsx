@@ -7,10 +7,13 @@ import { DataContext } from "../../context/DataContext";
  */
 
 function ToggleSwitch() {
-  const { isBookSource, requestData } = useContext(DataContext);
+  const { isBookSource, requestData, setIngredientOptions, setInstructions } =
+    useContext(DataContext);
 
-  function handleToggle(){
-    requestData(isBookSource);
+  async function handleToggle() {
+    const data: any = await requestData(isBookSource);
+    setInstructions(data.instructions);
+    setIngredientOptions(data.ingredients);
   }
 
   return (
