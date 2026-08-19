@@ -6,7 +6,6 @@ import API from "../../api";
 import { UserContext } from "../../context/UserContext";
 import { AttributeData } from "../../utils/types";
 import { errorHandling } from "../../utils/ErrorHandling";
-import { references } from "../../utils/templates";
 import { scrollIntoViewElement } from "../../utils/functions";
 import { DataContext } from "../../context/DataContext";
 
@@ -21,14 +20,6 @@ function ComponentsOptionsRequests({
   ingredientAction,
 }: ComponentsOptionsRequestsProps) {
   const { ingredientOptions, setIngredientOptions } = useContext(DataContext);
-
-  // const [items, setItems] = useState<AttributeData[]>(ingredientOptions.items);
-  // const [quantityAmount, setQuantityAmounts] = useState<AttributeData[]>(ingredientOptions.amounts);
-  // const [quantityUnits, setQuantityUnits] = useState<AttributeData[]>(ingredientOptions.units);
-  const [optionsReferences, setOptionsReferences] = useState(references);
-
-  const { isBookSource } = useContext(DataContext)
-
   const ingredientSectionRef = useRef<HTMLDivElement>();
 
   const { userId, currentBookId } = useContext(UserContext);
@@ -72,11 +63,9 @@ function ComponentsOptionsRequests({
     items: ingredientOptions.items,
     amounts: ingredientOptions.amounts,
     units: ingredientOptions.units,
-    isBookSource,
-    references: optionsReferences,
   };
 
-  /** Automatically associates "global user" option to current book on select - could this be better on switch?*/
+  /** Automatically associates "global user" option to current book on select*/
   async function associateOptionToBook(
     userId: number,
     currentBookId: number,
@@ -101,16 +90,6 @@ function ComponentsOptionsRequests({
     if (numOfIngredients > 3) scrollIntoViewElement(ingredientSectionRef);
   }, [numOfIngredients]);
 
-  // useEffect(() => {
-  //   const { items, units, amounts } = ingredientOptions;
-  //   console.log("in useEffect", ingredientOptions)
-  //   if (isBookSource) {
-  //     setOptionsReferences({ amount: amounts, unit: units, item: items }); ///DOES THIS NEED TO BE MEMOIZED
-  //   }
-  //   setItems(items);
-  //   setQuantityUnits(units);
-  //   setQuantityAmounts(amounts);
-  // }, []);
 
   return (
     <>

@@ -3,10 +3,12 @@ import { AttributeData } from "../../utils/types";
 import { IngredientInputGroupProps, Options } from "../../utils/props";
 import IngredientManager from "../views/IngredientManager";
 import { UserContext } from "../../context/UserContext";
-import { defaultItem, defaultAmount, defaultUnit } from "../../utils/templates";
+import { defaultItem, defaultAmount, defaultUnit, references } from "../../utils/templates";
 import FaPlusButton from "../ui/common/FaPlusButton";
 import FaMinusButton from "../ui/common/FaMinusButton";
 import Alert from "../ui/Alert";
+import { DataContext } from "../../context/DataContext";
+
 
 /** Manages individual components of Ingredient object
  *
@@ -24,8 +26,10 @@ function IngredientInputGroup({
   const [amount, setAmount] = useState<AttributeData>(ingredient.amount);
   const [unit, setUnit] = useState<AttributeData>(ingredient.unit);
   const [error, setError] = useState<string | null>();
+  const [optionsReferences, setOptionsReferences] = useState(references);
 
   const { userId, currentBookId } = useContext(UserContext);
+  const { isBookSource, ingredientOptions } = useContext(DataContext);
 
   /** Calls parent callback to handleUpdate name */
   function updateIngredientList() {
@@ -38,10 +42,7 @@ function IngredientInputGroup({
     if (state === "item") setItem(option);
     if (state === "unit") setUnit(option);
     if (state === "amount") setAmount(option);
-    if (
-      !options.isBookSource &&
-      isOptionNotAssociated(option, options, state)
-    )
+    if (!isBookSource && isOptionNotAssociated(option, options, state))
       optionAction.associate(userId, currentBookId, +option.id, state);
   }
 
@@ -49,10 +50,10 @@ function IngredientInputGroup({
   function isOptionNotAssociated(
     option: AttributeData,
     options: Options,
-    state: string
+    state: string,
   ) {
-    const isAssociated = options.references[state].some(
-      (o) => o.id === option.id
+    const isAssociated = optionsReferences[state].some(
+      (o) => o.id === option.id,
     );
 
     return !isAssociated;
@@ -68,7 +69,7 @@ function IngredientInputGroup({
   const handleComponent = {
     updateSelected,
     removeSelected,
-    handleError
+    handleError,
   };
 
   /** Maintains parent components state synced with latest selections */
@@ -91,8 +92,17 @@ function IngredientInputGroup({
   /** Handle error display */
   function handleError(error: string) {
     setError(error);
-    setTimeout(()=>{setError(null)},5000)
+    setTimeout(() => {
+      setError(null);
+    }, 5000);
   }
+
+  useEffect(() => {
+    const { items, units, amounts } = ingredientOptions;
+    if (isBookSource) {
+      setOptionsReferences({ amount: amounts, unit: units, item: items }); ///DOES THIS NEED TO BE MEMOIZED
+    }
+  }, []);
 
   return (
     <div>
