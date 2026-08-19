@@ -47,17 +47,18 @@ function useDataRequest() {
   /** Toggles boolean value - default value = True
    */
   function toggleSource() {
+    console.log("toggled")
     setIsBookSource((source) => !source);
+    requestData();
   }
 
   /** Triggers Book data request or User data request
    * default = User data
    */
   async function requestData() {
-    // toggleSource();
     return isBookSource ? requestBookData() : requestUserData();
   }
 
-  return { requestData, isBookSource };
+  return { requestData, isBookSource, toggleSource };
 }
 export default useDataRequest;

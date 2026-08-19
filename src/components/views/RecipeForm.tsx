@@ -38,10 +38,9 @@ function RecipeForm({
     },
   );
 
-  const { requestData, isBookSource } = useDataRequest();
+  const { requestData, isBookSource, toggleSource } = useDataRequest();
   const { requestAction, selectedRecipe } = useContext(RecipeContext);
   const dialogPanelRef = useRef(null);
-  console.log(isBookSource)
 
   const formData = {
     ingredientOptions,
@@ -49,6 +48,7 @@ function RecipeForm({
     setInstructions,
     setIngredientOptions,
     requestData,
+    toggleSource,
     isBookSource,
   };
 
@@ -73,7 +73,7 @@ function RecipeForm({
   useEffect(() => {
     (async () => {
       const data = await requestData();
-      setInstructions(data.instructions);
+        setInstructions(data.instructions);
       setIngredientOptions(data.ingredients);
     })();
   }, []);

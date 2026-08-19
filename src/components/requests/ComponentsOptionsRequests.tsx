@@ -27,7 +27,7 @@ function ComponentsOptionsRequests({
   // const [quantityUnits, setQuantityUnits] = useState<AttributeData[]>(ingredientOptions.units);
   const [optionsReferences, setOptionsReferences] = useState(references);
 
-  const { isBookSource } = useContext(DataContext);
+  const { isBookSource } = useContext(DataContext)
 
   const ingredientSectionRef = useRef<HTMLDivElement>();
 

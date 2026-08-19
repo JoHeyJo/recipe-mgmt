@@ -7,6 +7,7 @@ type DataContextType = {
   setInstructions: Dispatch<SetStateAction<Instructions>>;
   setIngredientOptions: Dispatch<SetStateAction<IngredientOptions>>;
   requestData: () => void;
+  toggleSource: () => void;
   isBookSource: boolean;
 };
 
@@ -16,5 +17,6 @@ export const DataContext = createContext<DataContextType>({
   setInstructions: () => {},
   setIngredientOptions: () => {},
   requestData: () => {},
+  toggleSource: () => {},
   isBookSource: true,
 });

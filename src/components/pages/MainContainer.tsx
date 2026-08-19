@@ -47,7 +47,6 @@ function MainContainer() {
     updateRecipes,
     setFilteredRecipes,
   };
-
   /** Updates rendered recipes after creation */
   function updateRecipes(recipe: Recipe) {
     setRecipes((recipes) => [...recipes, recipe]);
