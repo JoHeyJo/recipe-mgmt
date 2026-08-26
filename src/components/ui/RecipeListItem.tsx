@@ -9,7 +9,7 @@ type RecipeListItemProps = {
   recipeId: number;
   id: number;
   handleSelect: (index) => void;
-  handleOpen: () => void;
+  onOpen: () => void;
 };
 /** Renders individual recipe item
  *
@@ -21,7 +21,7 @@ function RecipeListItem({
   recipeId,
   id,
   handleSelect,
-  handleOpen,
+  onOpen,
 }: RecipeListItemProps) {
   const { PRIVILEGES } = useContext(UserContext);
   return (
@@ -33,7 +33,7 @@ function RecipeListItem({
       {name}
       <div className={`flex ${recipeId === id ? "block" : "hidden"}`}>
         {PRIVILEGES.full && <LucideMoveButton handleClick={() => {}} />}
-        {PRIVILEGES.full && <FaShareButton handleClick={() => handleOpen()} />}
+        {PRIVILEGES.full && <FaShareButton handleClick={() => onOpen()} />}
       </div>
     </li>
   );

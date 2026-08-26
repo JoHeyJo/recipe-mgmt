@@ -21,7 +21,7 @@ function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
   }
 
   /** Open share recipes Dialog panel */
-  function openDialogPanel() {
+  function handleOpenDialogPanel() {
     setIsRecipeShareOpen(true);
   }
 
@@ -52,7 +52,7 @@ function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
             recipeId={selectedId}
             id={id}
             handleSelect={handleSelect}
-            handleOpen={openDialogPanel}
+            onOpen={handleOpenDialogPanel}
           />
         ))}
       </ul>
