@@ -1,8 +1,7 @@
 import FaShareButton from "./common/FaShareButton";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
-import { FolderInput } from "lucide-react";
-
+import { LucideMoveButton } from "./common/LucideMoveButton";
 
 type RecipeListItemProps = {
   name: string;
@@ -33,7 +32,7 @@ function RecipeListItem({
     >
       {name}
       <div className={`flex ${recipeId === id ? "block" : "hidden"}`}>
-        <FolderInput />
+        {PRIVILEGES.full && <LucideMoveButton handleClick={() => {}} />}
         {PRIVILEGES.full && <FaShareButton handleClick={() => handleOpen()} />}
       </div>
     </li>
