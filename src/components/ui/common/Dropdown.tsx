@@ -42,7 +42,7 @@ function Dropdown({
   /** Hides "Shared Inbox" in dropdown when user is selecting a book to copy  */
   const isSharedHidden = (option: Book) => option.book_type !== "shared_inbox";
 
-  /** Render  "books except selected book*" - Default book is NOT "Shared Inbox" - User is selecting book to copy to */
+  /** Render "books except selected book*" - Default book is NOT "Shared Inbox" - User is selecting book to copy to */
   function copyRecipeToDropdown(option) {
     return (
       isSharedHidden(option) && (
