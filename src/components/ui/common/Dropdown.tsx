@@ -13,7 +13,7 @@ import DropDownOptions from "../DropDownOptions";
  * RecipeRequest does not pass down a selected prop. Hence the guards implemented
  * and the additional styling for when selected === truthy
  * selected is only necessary to indicate which item has been chosen - applicable to BookView & RecipeMove
- * 
+ *
  * NOTE: can options be acquired through context? Currently, all options are books.
  *
  * [BookView, RecipeRequest, RecipeMove] -> Dropdown
@@ -42,7 +42,9 @@ function Dropdown({
   //   </MenuItem>
   // );
 
-  const createBookDropdown = <DropDownOptions options={["Create book"]} onAction={onCreateBook} id={1}/>
+  const createBookDropdown = (
+    <DropDownOptions options={["Create book"]} onAction={onCreateBook} id={1} />
+  );
 
   /** Hides "Shared Inbox" in dropdown when user is selecting a book to copy  */
   const isSharedHidden = (option: Book) => option.book_type !== "shared_inbox";
@@ -95,6 +97,31 @@ function Dropdown({
     );
   }
 
+  /** Render "books" - Default book is NOT "Shared Inbox" - User is selecting book to view    */
+  function moveRecipeDropdown(option) {
+    return (
+      <MenuItem disabled={option.id === selected.id} key={option.id}>
+        <li
+          onClick={() => handleSelect(option)}
+          className={`group disabled relative flex justify-between px-4 py-2 text-sm cursor-pointer data-[focus]:bg-selected data-[focus]:text-accent 
+            ${selected?.id === option.id ? "text-gray-700 font-semibold" : "text-gray-700"}`}
+        >
+          <span
+            className={`block truncate ${option.id === selected.id && "text-gray-400"}`}
+          >
+            {option.title}
+          </span>
+          {selected && selected.id === option.id && (
+            <FontAwesomeIcon
+              className="text-icon-color group-data-[focus]:text-accent"
+              icon={faCheck}
+            />
+          )}
+        </li>
+      </MenuItem>
+    );
+  }
+
   function renderDropdown() {
     if (render.viewBooks) {
       return options?.map((option) => viewBooksDropdown(option));
@@ -104,11 +131,20 @@ function Dropdown({
     }
   }
 
+  function menuButtonLabel(): string {
+    if (render.copyRecipe) {
+      return "Copy to recipe book:";
+    }
+    if (render.moveRecipe) {
+      return "Move to recipe book:";
+    }
+  }
+
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <MenuButton className="inline-flex truncate justify-center gap-x-1.5 rounded-md bg-selected px-3 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-light-border hover:bg-gray-50">
-          {selected ? truncate(selected.title, 15) : "Select recipe book"}
+          {selected ? truncate(selected.title, 15) : menuButtonLabel()}
           <ChevronDownIcon
             aria-hidden="true"
             className="-mr-1 size-5 text-gray-400"
