@@ -12,9 +12,11 @@ import DropDownOptions from "../DropDownOptions";
  *
  * RecipeRequest does not pass down a selected prop. Hence the guards implemented
  * and the additional styling for when selected === truthy
- * selected is only necessary to indicate which item has been chosen - only applicable to BookView
+ * selected is only necessary to indicate which item has been chosen - applicable to BookView & RecipeMove
+ * 
+ * NOTE: can options be acquired through context? Currently, all options are books.
  *
- * [BookView, RecipeRequest] -> Dropdown
+ * [BookView, RecipeRequest, RecipeMove] -> Dropdown
  */
 function Dropdown({
   selected,
@@ -71,13 +73,17 @@ function Dropdown({
   /** Render "books" - Default book is NOT "Shared Inbox" - User is selecting book to view    */
   function viewBooksDropdown(option) {
     return (
-      <MenuItem key={option.id}>
+      <MenuItem disabled={option.id === selected.id} key={option.id}>
         <li
           onClick={() => handleSelect(option)}
-          className={`group relative flex justify-between px-4 py-2 text-sm cursor-pointer data-[focus]:bg-selected data-[focus]:text-accent 
+          className={`group disabled relative flex justify-between px-4 py-2 text-sm cursor-pointer data-[focus]:bg-selected data-[focus]:text-accent 
             ${selected?.id === option.id ? "text-gray-700 font-semibold" : "text-gray-700"}`}
         >
-          <span className="block truncate">{option.title}</span>
+          <span
+            className={`block truncate ${option.id === selected.id && "text-gray-400"}`}
+          >
+            {option.title}
+          </span>
           {selected && selected.id === option.id && (
             <FontAwesomeIcon
               className="text-icon-color group-data-[focus]:text-accent"

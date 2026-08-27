@@ -1,34 +1,37 @@
+import { useContext, useState } from "react";
+import { UserContext } from "../../context/UserContext";
+import Dropdown from "../ui/common/Dropdown";
 import PopOut from "../ui/common/PopOut";
+import { errorHandling } from "../../utils/ErrorHandling";
 
-/** Request Component 
- * 
- * RecipesList -> RecipeMove -> PopOut
-*/
+/** Request component - move recipe to selected recipe book
+ *
+ * RecipesList -> RecipeMove -> PopOut -{Dropdown}
+ */
 function RecipeMove({ isDialogOpen, onCloseDialogPanel }) {
+  const { books, currentBook } = useContext(UserContext);
+  // const [error, setError] = useState("");
+
+  /** Request to move recipe to selected recipe book */
+  function requestMoveRecipe() {
+    try {
+      console.log("request recipe move")
+    } catch (error) {
+      const message = errorHandling("RecipeRequests - submitRecipe", error);
+      // setError(message);
+      // setTimeout(() => setError(null), 5000);
+    }
+  }
   return (
     <PopOut isDialogOpen={isDialogOpen} onCloseDialog={onCloseDialogPanel}>
-      <div className="dropdown">
-        <button
-          className="dropdown-btn"
-          aria-haspopup="listbox"
-          aria-expanded="false"
-        >
-          Select an option
-        </button>
-        <ul className="dropdown-menu" role="listbox">
-          <li role="option" data-value="profile">
-            Profile
-          </li>
-          <li role="option" data-value="settings">
-            Settings
-          </li>
-          <li role="option" data-value="logout">
-            Logout
-          </li>
-        </ul>
-      </div>
+      <Dropdown
+        options={books}
+        onChange={requestMoveRecipe}
+        render={{ viewBooks: true }}
+        selected={currentBook}
+      />
     </PopOut>
   );
-};
+}
 
 export default RecipeMove;
