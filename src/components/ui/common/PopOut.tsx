@@ -8,7 +8,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
  *
  * Abstract to render Form request components - Component(child instead of prop), message
  *
- * [Share, RecipesList] -> PopOut -> Children
+ * [Share, RecipeMove] -> PopOut -> Children
  */
 function PopOut({
   isDialogOpen,
@@ -17,15 +17,16 @@ function PopOut({
   message,
   onResetMessage,
 }: PopOutProps) {
-
   /** Consolidations necessary closing actions across different rendered components
    * Close PopOut component while calling parent close logic
    * */
   function handleClose() {
     onCloseDialog();
-    setTimeout(() => {
-      onResetMessage();
-    }, 310);
+    if(message){
+      setTimeout(() => {
+        onResetMessage();
+      }, 310);
+    }
   }
 
   return (

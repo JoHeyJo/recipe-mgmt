@@ -4,14 +4,16 @@ import { RecipesListProps } from "../../utils/props";
 import RecipeListItem from "../ui/RecipeListItem";
 import { WebSocketContext } from "../../context/WebSocketContext";
 import Share from "../requests/Share";
+import RecipeMove from "../requests/RecipeMove";
 
 /** Renders list of recipes that can be selected for view
  *
  *
- * MainContainer -> RecipesList -> Share
+ * MainContainer -> RecipesList -> [Share, RecipeMove, RecipeListItem]
  */
 function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
   const [isRecipeShareOpen, setIsRecipeShareOpen] = useState(false);
+  const [isRecipeMoveOpen, setIsRecipeMoveOpen] = useState(false);
 
   const { status } = useContext(WebSocketContext);
 
@@ -20,9 +22,19 @@ function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
     setIsRecipeShareOpen(false);
   }
 
+  /** Close move recipe Dialog panel */
+  function handleCloseRecipeMove(){
+    setIsRecipeMoveOpen(false);
+  }
+
   /** Open share recipes Dialog panel */
-  function handleOpenDialogPanel() {
+  function handleOpenSharePanel() {
     setIsRecipeShareOpen(true);
+  }
+
+  /** Open move recipes dialog panel */
+  function handleOpenMovePanel(){
+    setIsRecipeMoveOpen(true);
   }
 
   // Triggers recipient UI to communicate successful share of recipe/book.
@@ -39,6 +51,10 @@ function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
           onCloseDialogPanel={handleCloseRecipeShare}
         />
       </div>
+      <RecipeMove
+        isDialogOpen={isRecipeMoveOpen}
+        onCloseDialogPanel={handleCloseRecipeMove}
+      />
       <ul
         // className="h-full overflow-y-scroll"
         role="list"
@@ -52,7 +68,8 @@ function RecipesList({ recipes, handleSelect, selectedId }: RecipesListProps) {
             recipeId={selectedId}
             id={id}
             handleSelect={handleSelect}
-            onOpen={handleOpenDialogPanel}
+            onOpenSharePanel={handleOpenSharePanel}
+            onOpenMovePanel={handleOpenMovePanel}
           />
         ))}
       </ul>

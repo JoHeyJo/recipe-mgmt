@@ -1,8 +1,10 @@
-import { Dropdown } from "react-bootstrap";
 import PopOut from "../ui/common/PopOut";
 
-function RecipeMove({ action, isDialogOpen, onCloseDialogPanel }) {
-
+/** Request Component 
+ * 
+ * RecipesList -> RecipeMove -> PopOut
+*/
+function RecipeMove({ isDialogOpen, onCloseDialogPanel }) {
   return (
     <PopOut isDialogOpen={isDialogOpen} onCloseDialog={onCloseDialogPanel}>
       <div className="dropdown">
@@ -27,4 +29,6 @@ function RecipeMove({ action, isDialogOpen, onCloseDialogPanel }) {
       </div>
     </PopOut>
   );
-}export default RecipeMove;
+};
+
+export default RecipeMove;

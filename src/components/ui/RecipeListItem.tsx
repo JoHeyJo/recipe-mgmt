@@ -9,7 +9,8 @@ type RecipeListItemProps = {
   recipeId: number;
   id: number;
   handleSelect: (index) => void;
-  onOpen: () => void;
+  onOpenSharePanel: () => void;
+  onOpenMovePanel: () => void;
 };
 /** Renders individual recipe item
  *
@@ -21,7 +22,8 @@ function RecipeListItem({
   recipeId,
   id,
   handleSelect,
-  onOpen,
+  onOpenSharePanel,
+  onOpenMovePanel
 }: RecipeListItemProps) {
   const { PRIVILEGES } = useContext(UserContext);
   return (
@@ -32,8 +34,12 @@ function RecipeListItem({
     >
       {name}
       <div className={`flex ${recipeId === id ? "block" : "hidden"}`}>
-        {PRIVILEGES.full && <LucideMoveButton handleClick={() => {}} />}
-        {PRIVILEGES.full && <FaShareButton handleClick={() => onOpen()} />}
+        {PRIVILEGES.full && (
+          <LucideMoveButton handleClick={() => onOpenMovePanel()} />
+        )}
+        {PRIVILEGES.full && (
+          <FaShareButton handleClick={() => onOpenSharePanel()} />
+        )}
       </div>
     </li>
   );

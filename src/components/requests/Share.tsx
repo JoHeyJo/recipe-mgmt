@@ -9,7 +9,7 @@ import PopOut from "../ui/common/PopOut";
 
 /** Handles User request to share book or recipe with recipient
  *
- * MainContainer -> Share -> PopOut -{ InputWithLabelForm, PillButtonSubmit }
+ * [MainContainer, RecipeList] -> Share -> PopOut -{ InputWithLabelForm, PillButtonSubmit }
  */
 function Share({ action, isDialogOpen, onCloseDialogPanel }: ShareBookProp) {
   const [user, setUser] = useState("");
