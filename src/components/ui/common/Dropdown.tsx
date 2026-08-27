@@ -5,6 +5,7 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Book } from "../../../utils/types";
 import { truncate } from "../../../utils/functions";
+import DropDownOptions from "../DropDownOptions";
 
 /** Renders dropdown Dropdown
  * Note: UI can be abstracted into its own component and and the logical mechanics into their own
@@ -28,16 +29,18 @@ function Dropdown({
   }
 
   /** Render "CreateBook" - Default book is "Shared Inbox" & user is creating book  */
-  const createBookDropdown = (
-    <MenuItem key={1}>
-      <li
-        onClick={onCreateBook}
-        className={`relative flex justify-between px-4 py-2 text-sm cursor-pointer data-[focus]:bg-selected data-[focus]:text-accent`}
-      >
-        <span className="block truncate">{"Create book"}</span>
-      </li>
-    </MenuItem>
-  );
+  // const createBookDropdown = (
+  //   <MenuItem key={1}>
+  //     <li
+  //       onClick={onCreateBook}
+  //       className={`relative flex justify-between px-4 py-2 text-sm cursor-pointer data-[focus]:bg-selected data-[focus]:text-accent`}
+  //     >
+  //       <span className="block truncate">{"Create book"}</span>
+  //     </li>
+  //   </MenuItem>
+  // );
+
+  const createBookDropdown = <DropDownOptions options={["Create book"]} onAction={onCreateBook} id={1}/>
 
   /** Hides "Shared Inbox" in dropdown when user is selecting a book to copy  */
   const isSharedHidden = (option: Book) => option.book_type !== "shared_inbox";
