@@ -16,12 +16,15 @@ function RecipeMove({ isDialogOpen, onCloseDialogPanel }) {
   function requestMoveRecipe() {
     try {
       console.log("request recipe move")
+      onCloseDialogPanel();
     } catch (error) {
       const message = errorHandling("RecipeRequests - submitRecipe", error);
       // setError(message);
       // setTimeout(() => setError(null), 5000);
     }
   }
+
+  /**  */
   return (
     <PopOut isDialogOpen={isDialogOpen} onCloseDialog={onCloseDialogPanel}>
       <Dropdown
