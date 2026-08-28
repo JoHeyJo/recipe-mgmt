@@ -30,7 +30,7 @@ function RecipeMove({ isDialogOpen, onCloseDialogPanel }) {
       <Dropdown
         options={books}
         onChange={requestMoveRecipe}
-        render={{ viewBooks: true }}
+        render={{ moveRecipe: true }}
         selected={currentBook}
       />
     </PopOut>

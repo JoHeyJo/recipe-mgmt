@@ -97,8 +97,11 @@ function Dropdown({
     );
   }
 
-  /** Render "books" - Default book is NOT "Shared Inbox" - User is selecting book to view    */
+  /** Renders book options User can move to: Authored and collaborative books
+   * NOTE: User cannot move to "Shared Recipes" & "View Only" books.
+    */
   function moveRecipeDropdown(option) {
+    console.log("option:,",option)
     return (
       <MenuItem disabled={option.id === selected.id} key={option.id}>
         <li
@@ -129,9 +132,15 @@ function Dropdown({
     if (render.copyRecipe) {
       return options?.map((option) => copyRecipeToDropdown(option));
     }
+    if(render.moveRecipe){
+      return options?.filter((option) => )
+    }
   }
 
   function menuButtonLabel(): string {
+    if(render.viewBooks){
+      return truncate(selected.title, 15);
+    }
     if (render.copyRecipe) {
       return "Copy to recipe book:";
     }
@@ -139,12 +148,11 @@ function Dropdown({
       return "Move to recipe book:";
     }
   }
-
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <MenuButton className="inline-flex truncate justify-center gap-x-1.5 rounded-md bg-selected px-3 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-light-border hover:bg-gray-50">
-          {selected ? truncate(selected.title, 15) : menuButtonLabel()}
+          {menuButtonLabel()}
           <ChevronDownIcon
             aria-hidden="true"
             className="-mr-1 size-5 text-gray-400"
