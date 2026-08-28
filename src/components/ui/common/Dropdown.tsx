@@ -54,8 +54,8 @@ function Dropdown({
 
   /** Render "books except selected book*" - Default book is NOT "Shared Inbox" - User is selecting book to copy to */
   function copyRecipeToDropdown(option) {
+    console.log("options copy:,", option);
     return (
-      isSharedHidden(option) && (
         <MenuItem key={option.id}>
           <li
             onClick={() => handleSelect(option)}
@@ -71,7 +71,6 @@ function Dropdown({
             )}
           </li>
         </MenuItem>
-      )
     );
   }
 
@@ -104,7 +103,7 @@ function Dropdown({
    * NOTE: User cannot move to "Shared Recipes" & "View Only" books.
    */
   function moveRecipeDropdown(option) {
-    console.log("option:,", option);
+    console.log("options move:,", option);
     return (
       <MenuItem disabled={option.id === selected.id} key={option.id}>
         <li
@@ -129,16 +128,29 @@ function Dropdown({
   }
 
   function renderDropdown() {
-    console.log("render:",render, PRIVILEGES)
+    const filterBy = {
+      ownedSharedBooks(option: Book) {
+        return (
+          (option.book_role === "owner" ||
+            option.book_role === "collaborator") &&
+          option.book_type == "standard"
+        );
+      },
+      copy(option: Book) {
+        return option.book_type === "standard";
+      },
+    };
+
     if (render.viewBooks) {
       return options?.map((option) => viewBooksDropdown(option));
     }
     if (render.copyRecipe) {
       return options?.map((option) => copyRecipeToDropdown(option));
     }
-    if(render.moveRecipe){
-      return options?.filter((option) => (option.book_role === "owner" || option.book_role === "collaborator") && option.book_type == "standard")
-      .map((option) => moveRecipeDropdown(option));
+    if (render.moveRecipe) {
+      return options
+        ?.filter((option) => filterBy.ownedSharedBooks(option))
+        .map((option) => moveRecipeDropdown(option));
     }
   }
 

@@ -1,3 +1,10 @@
+# RULES OF THUMB
+Recipes always belong to a book. Not a User
+
+# BOOK COPYING (FROM SHARED RECIPES)
+recipient can only copy to books they own/authored. 
+Cannot copy to "View Only", "Shared Recipes", "Collaborative" 
+
 # WebSocket Frontend (React + TypeScript)
 
 Client-side real-time layer for sharing books and recipes. A single `useWebSocket` hook owns the socket connection, exposed to the whole app through a `WebSocketProvider` context.
