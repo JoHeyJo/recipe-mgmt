@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Book } from "../../../utils/types";
 import { truncate } from "../../../utils/functions";
 import DropDownOptions from "../DropDownOptions";
+import { UserContext } from "../../../context/UserContext";
+import { useContext } from "react";
 
 /** Renders dropdown Dropdown
  * Note: UI can be abstracted into its own component and and the logical mechanics into their own
@@ -25,6 +27,7 @@ function Dropdown({
   onCreateBook,
   render,
 }: DropdownProp) {
+  const { PRIVILEGES } = useContext(UserContext);
   /** Sets option and option id */
   function handleSelect(option: Book) {
     onChange(option.id, option);
@@ -99,9 +102,9 @@ function Dropdown({
 
   /** Renders book options User can move to: Authored and collaborative books
    * NOTE: User cannot move to "Shared Recipes" & "View Only" books.
-    */
+   */
   function moveRecipeDropdown(option) {
-    console.log("option:,",option)
+    console.log("option:,", option);
     return (
       <MenuItem disabled={option.id === selected.id} key={option.id}>
         <li
@@ -126,6 +129,7 @@ function Dropdown({
   }
 
   function renderDropdown() {
+    console.log("render:",render, PRIVILEGES)
     if (render.viewBooks) {
       return options?.map((option) => viewBooksDropdown(option));
     }
@@ -133,12 +137,13 @@ function Dropdown({
       return options?.map((option) => copyRecipeToDropdown(option));
     }
     if(render.moveRecipe){
-      return options?.filter((option) => )
+      return options?.filter((option) => (option.book_role === "owner" || option.book_role === "collaborator") && option.book_type == "standard")
+      .map((option) => moveRecipeDropdown(option));
     }
   }
 
   function menuButtonLabel(): string {
-    if(render.viewBooks){
+    if (render.viewBooks) {
       return truncate(selected.title, 15);
     }
     if (render.copyRecipe) {
