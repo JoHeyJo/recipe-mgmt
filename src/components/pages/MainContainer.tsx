@@ -14,6 +14,7 @@ import PopOut from "../ui/common/PopOut";
 import { WebSocketProvider } from "../../context/WebSocketProvider";
 import BookControls from "../ui/controls/BookControls";
 import Share from "../requests/Share";
+import MobileToolBar from "../ui/MobileToolBar";
 
 /** Renders the main container (book) housing list of recipes and individual recipe
  *
@@ -139,9 +140,10 @@ function MainContainer() {
   if (!isLoading) <div>Loading...</div>;
 
   return (
-    <div className="border-4 mt-7 bg-primary mx-auto max-w-7xl xl:px-8 xl:border-2">
+    <div className="border-4 md:mt-7 bg-primary mx-auto max-w-7xl xl:px-8 xl:border-2">
       {/* <div className="w-[1350px] h-[819px] absolute overflow-hidden -translate-x-2/4 p-0 border-[3px] "> */}
       {/* We've used 3xl here, but feel free to try other max-widths based on your needs */}
+      <MobileToolBar />
       <div
         id="MainContainer-container"
         className="border-2 bg-primary h-[75vh] flex min-h-0"
@@ -151,7 +153,7 @@ function MainContainer() {
           <WebSocketProvider>
             <section
               id="MainContainer-leftpage"
-              className="flex-1 flex flex-col min-h-0"
+              className="flex-1 flex flex-col md:block min-h-0"
             >
               <div id="MainContainer-header">
                 <RecipeRequests
@@ -198,7 +200,7 @@ function MainContainer() {
           </WebSocketProvider>
           <section
             id="MainContainer-rightpage"
-            className="overflow-y-auto divide-y border-x-2 mx-auto flex-1"
+            className="hidden md:block overflow-y-auto divide-y border-x-2 mx-auto flex-1"
           >
             <RecipeContainer
               recipe={selectedRecipe}
