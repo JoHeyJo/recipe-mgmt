@@ -1,10 +1,5 @@
 import { useContext, useState } from "react";
-import {
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
-} from "@headlessui/react";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import ToggleColorScheme from "../../utils/ToggleColorScheme";
@@ -20,6 +15,7 @@ type TopNavProps = { logout: () => void };
  * App -> TopNav -> [CreateBookRequests, Invite]
  */
 function TopNav({ logout }: TopNavProps) {
+  const { togglePage } = useContext(UserContext);
   const [isCreateBookOpen, setIsCreateBookOpen] = useState(false);
   const [isInviteOpen, setIsInviteOpen] = useState(false);
 
@@ -64,11 +60,11 @@ function TopNav({ logout }: TopNavProps) {
             id="TopNav-toggle-mobile-view"
             className="bg-transparent md:hidden"
           >
-            <ToggleMobile />
+            <ToggleMobile toggleView={togglePage} />
           </button>
 
           <div id="TopNav-Icon-Dropdown" className="flex ml-auto pr-12">
-            <ToggleColorScheme  />
+            <ToggleColorScheme />
             <Menu as="div" className="relative ml-3">
               <div>
                 <MenuButton className="relative flex rounded-full bg-primary text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-gray-800">

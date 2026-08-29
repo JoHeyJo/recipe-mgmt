@@ -21,7 +21,7 @@ import MobileToolBar from "../ui/MobileToolBar";
  * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList, BookView, PopOut, Search, BookControls]
  */
 function MainContainer() {
-  const { userId, defaultBookId, currentBookId, PRIVILEGES } =
+  const { userId, defaultBookId, currentBookId, PRIVILEGES, page } =
     useContext(UserContext);
 
   const [recipes, setRecipes] = useState<Recipes | any>([]);
@@ -152,7 +152,7 @@ function MainContainer() {
           <WebSocketProvider>
             <section
               id="MainContainer-leftpage"
-              className="flex-1 flex flex-col md:block min-h-0"
+              className={`flex-1 flex flex-col ${page === "right" && "hidden"} md:block min-h-0`}
             >
               <div id="MainContainer-header">
                 <RecipeRequests
@@ -199,7 +199,7 @@ function MainContainer() {
           </WebSocketProvider>
           <section
             id="MainContainer-rightpage"
-            className="hidden md:block overflow-y-auto divide-y border-x-2 mx-auto flex-1"
+            className={`${page === "left" && "hidden"} md:block overflow-y-auto divide-y border-x-2 mx-auto flex-1`}
           >
             <RecipeContainer
               recipe={selectedRecipe}
