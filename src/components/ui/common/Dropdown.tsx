@@ -12,7 +12,7 @@ import { useContext } from "react";
 /** Renders dropdown Dropdown
  * Note: UI can be abstracted into its own component and and the logical mechanics into their own
  *
- * RecipeRequest does not pass down a selected prop. Hence the guards implemented
+ * RecipeRequest does not pass down selected prop. Hence the guards implemented
  * and the additional styling for when selected === truthy
  * selected is only necessary to indicate which item has been chosen - applicable to BookView & RecipeMove
  *
@@ -54,23 +54,22 @@ function Dropdown({
 
   /** Render "books except selected book*" - Default book is NOT "Shared Inbox" - User is selecting book to copy to */
   function copyRecipeToDropdown(option) {
-    console.log("options copy:,", option);
     return (
-        <MenuItem key={option.id}>
-          <li
-            onClick={() => handleSelect(option)}
-            className={`group relative flex justify-between px-4 py-2 text-sm cursor-pointer data-[focus]:bg-selected data-[focus]:text-accent 
+      <MenuItem key={option.id}>
+        <li
+          onClick={() => handleSelect(option)}
+          className={`group relative flex justify-between px-4 py-2 text-sm cursor-pointer data-[focus]:bg-selected data-[focus]:text-accent 
              ${selected?.id === option.id ? "text-gray-700 font-semibold" : "text-gray-700"}`}
-          >
-            <span className="block truncate">{option.title}</span>
-            {selected && selected.id === option.id && (
-              <FontAwesomeIcon
-                className="text-icon-color group-data-[focus]:text-accent"
-                icon={faCheck}
-              />
-            )}
-          </li>
-        </MenuItem>
+        >
+          <span className="block truncate">{option.title}</span>
+          {selected && selected.id === option.id && (
+            <FontAwesomeIcon
+              className="text-icon-color group-data-[focus]:text-accent"
+              icon={faCheck}
+            />
+          )}
+        </li>
+      </MenuItem>
     );
   }
 
@@ -103,7 +102,6 @@ function Dropdown({
    * NOTE: User cannot move to "Shared Recipes" & "View Only" books.
    */
   function moveRecipeDropdown(option) {
-    console.log("options move:,", option);
     return (
       <MenuItem disabled={option.id === selected.id} key={option.id}>
         <li
@@ -133,11 +131,11 @@ function Dropdown({
         return (
           (option.book_role === "owner" ||
             option.book_role === "collaborator") &&
-          option.book_type == "standard"
+          option.book_type === "standard"
         );
       },
-      copy(option: Book) {
-        return option.book_type === "standard";
+      createdBooks(option: Book) {
+        return option.book_role === "owner" && option.book_type === "standard";
       },
     };
 
@@ -145,7 +143,9 @@ function Dropdown({
       return options?.map((option) => viewBooksDropdown(option));
     }
     if (render.copyRecipe) {
-      return options?.map((option) => copyRecipeToDropdown(option));
+      return options
+        ?.filter((option) => filterBy.createdBooks(option))
+        .map((option) => copyRecipeToDropdown(option));
     }
     if (render.moveRecipe) {
       return options
@@ -165,6 +165,7 @@ function Dropdown({
       return "Move to recipe book:";
     }
   }
+
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>

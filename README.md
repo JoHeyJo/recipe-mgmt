@@ -1,8 +1,29 @@
 # RULES OF THUMB
 Recipes always belong to a book. Not a User
 
-# BOOK COPYING (FROM SHARED RECIPES)
-recipient can only copy to books they own/authored. 
+# RECIPE ACTIONS     
+Move (A → B): delete the (recipe → A) link, create a (recipe → B) reference link. Still one Recipe row. Same recipe, different shelf.
+Copy (→ B): create a brand-new Recipe row (created_by_id = you) plus a (newRecipe → B) link. Now two Recipe rows exist. 
+## MOVING RECIPES
+User can move recipe between "Created" and into "Collaborative" recipe books 
+User cannot move recipes from "Collaborative" recipe books
+But then User looses recipe
+Unless user can still move the recipe out of the recipe book...
+Recipe owner can move recipes in and out of collaborative book. Is this messy and unclear? Kind of goes against the rule "Recipes always belong to a book, not a user" - Could be ok. At least for now
+
+
+User cannot move recipes from "Collaborative" recipe books
+A copy can be made but that makes rules of moving inconsistent
+So No
+
+User can move recipes from "Collaborative" recipe books
+Truly makes book collaborative. Anyone that has access to the recipe book can move a recipe.
+This is a more consistent solution but can that affect the integrity of the recipe book? 
+Since you're only collaborating with trusted users probably not a problem 
+
+## COPYING RECIPES
+### COPY FROM "SHARED RECIPES"
+Recipient can only copy to books they own/created. 
 Cannot copy to "View Only", "Shared Recipes", "Collaborative" 
 
 # WebSocket Frontend (React + TypeScript)
