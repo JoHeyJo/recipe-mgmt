@@ -13,17 +13,6 @@ import CreateBookRequests from "../requests/CreateBookRequests";
 import Invite from "../requests/Invite";
 import ToggleMobile from "../ui/ToggleMobile";
 
-const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Team", href: "#", current: false },
-  { name: "Projects", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
-];
-
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(" ");
-}
-
 type TopNavProps = { logout: () => void };
 
 /**
@@ -79,7 +68,7 @@ function TopNav({ logout }: TopNavProps) {
           </button>
 
           <div id="TopNav-Icon-Dropdown" className="flex ml-auto pr-12">
-            <ToggleColorScheme />
+            <ToggleColorScheme  />
             <Menu as="div" className="relative ml-3">
               <div>
                 <MenuButton className="relative flex rounded-full bg-primary text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-gray-800">

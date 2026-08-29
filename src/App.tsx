@@ -36,6 +36,7 @@ function App() {
   const [userData, setUserData] = useState<User>(defaultUser);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isContextInitialized, setIsContextInitialized] = useState(false);
+  const [togglePage, setTogglePage] = useState();
 
   const UserDataFromContext: UserContextType = {
     user: userData?.userName,
@@ -137,7 +138,6 @@ function App() {
         <TopNav logout={logout} />
         <RoutesList signUp={userSignUp} login={userLogin} />
       </UserContext.Provider>
-      {/* <button type="button" onClick={toggleDarkMode}>toggle color scheme</button> */}
     </div>
   );
 }
