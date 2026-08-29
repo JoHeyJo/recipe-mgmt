@@ -180,6 +180,8 @@ class API {
     return res;
   }
 
+  /** Change recipe's default book */
+
   // ########### BOOKS ###########
   // ################################
 

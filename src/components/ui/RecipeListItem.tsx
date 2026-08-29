@@ -1,8 +1,7 @@
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FaShareButton from "./common/FaShareButton";
-// import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
+import { LucideMoveButton } from "./common/LucideMoveButton";
 
 type RecipeListItemProps = {
   name: string;
@@ -10,7 +9,8 @@ type RecipeListItemProps = {
   recipeId: number;
   id: number;
   handleSelect: (index) => void;
-  handleOpen: () => void;
+  onOpenSharePanel: () => void;
+  onOpenMovePanel: () => void;
 };
 /** Renders individual recipe item
  *
@@ -22,7 +22,8 @@ function RecipeListItem({
   recipeId,
   id,
   handleSelect,
-  handleOpen,
+  onOpenSharePanel,
+  onOpenMovePanel
 }: RecipeListItemProps) {
   const { PRIVILEGES } = useContext(UserContext);
   return (
@@ -32,8 +33,13 @@ function RecipeListItem({
       className={`flex justify-between p-2 border-b hover:bg-selected ${recipeId === id ? "text-text-hover bg-selected" : "hover:text-text-hover"}`}
     >
       {name}
-      <div className={`${recipeId === id ? "block" : "hidden"}`}>
-        {PRIVILEGES.full && <FaShareButton handleClick={() => handleOpen()} />}
+      <div className={`flex ${recipeId === id ? "block" : "hidden"}`}>
+        {PRIVILEGES.full && (
+          <LucideMoveButton handleClick={() => onOpenMovePanel()} />
+        )}
+        {PRIVILEGES.full && (
+          <FaShareButton handleClick={() => onOpenSharePanel()} />
+        )}
       </div>
     </li>
   );
