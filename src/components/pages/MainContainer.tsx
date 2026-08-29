@@ -143,7 +143,6 @@ function MainContainer() {
     <div className="border-4 md:mt-7 bg-primary mx-auto max-w-7xl xl:px-8 xl:border-2">
       {/* <div className="w-[1350px] h-[819px] absolute overflow-hidden -translate-x-2/4 p-0 border-[3px] "> */}
       {/* We've used 3xl here, but feel free to try other max-widths based on your needs */}
-      <MobileToolBar />
       <div
         id="MainContainer-container"
         className="border-2 bg-primary h-[75vh] flex min-h-0"

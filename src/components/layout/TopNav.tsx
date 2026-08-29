@@ -15,6 +15,8 @@ import ToggleColorScheme from "../../utils/ToggleColorScheme";
 import UserAvatar from "../ui/UserAvatar";
 import CreateBookRequests from "../requests/CreateBookRequests";
 import Invite from "../requests/Invite";
+import { BellIcon } from "@heroicons/react/20/solid";
+import ToggleSwitch from "../ui/ToggleSwitch";
 
 
 const navigation = [
@@ -95,7 +97,7 @@ function TopNav({ logout }: TopNavProps) {
                       alt="Your Company"
                     />
                   </div> */}
-                  {/* <div className="hidden sm:ml-6 sm:block">
+                  <div className="hidden sm:ml-6 sm:block">
                     <div className="flex space-x-4">
                       {navigation.map((item) => (
                         <a
@@ -111,18 +113,12 @@ function TopNav({ logout }: TopNavProps) {
                         </a>
                       ))}
                     </div>
-                  </div> */}
+                  </div>
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  {/* BELL ICON - NOTIFICATIONS MAYBE - MAYBE DELETE */}
-                  {/* <button
-                    type="button"
-                    className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-gray-800"
-                  >
-                    <span className="absolute -inset-1.5" />
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button> */}
+                  <button>
+                        <ToggleSwitch />
+                  </button>
 
                   {/* Profile dropdown */}
                   <ToggleColorScheme />
@@ -216,7 +212,7 @@ function TopNav({ logout }: TopNavProps) {
               </div>
             </div>
             {/* MOBILE DROPDOWN */}
-            <DisclosurePanel className="sm:hidden">
+            {/* <DisclosurePanel className="sm:hidden">
               <div className="space-y-1 px-2 pb-3 pt-2">
                 {navigation.map((item) => (
                   <DisclosureButton
@@ -235,7 +231,7 @@ function TopNav({ logout }: TopNavProps) {
                   </DisclosureButton>
                 ))}
               </div>
-            </DisclosurePanel>
+            </DisclosurePanel> */}
           </>
         )}
       </Disclosure>
