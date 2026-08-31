@@ -10,7 +10,7 @@ import { Field } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import Tooltip from "../ui/common/Tooltip";
-import ToggleSwitch from "../ui/ToggleSwitch";
+import ToggleSource from "../ui/ToggleSwitch";
 import { BookOpen, User } from "lucide-react";
 import { DataContext } from "../../context/DataContext";
 
@@ -75,7 +75,7 @@ function InstructionsRequests({
         <FormLabel label={"Instructions:"} />
         <div className="flex justify-end">
           <div className="pr-4">
-            <ToggleSwitch />
+            <ToggleSource />
           </div>
           <Tooltip
             multiline

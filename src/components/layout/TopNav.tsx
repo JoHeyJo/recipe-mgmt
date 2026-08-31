@@ -60,7 +60,7 @@ function TopNav({ logout }: TopNavProps) {
             id="TopNav-toggle-mobile-view"
             className="bg-transparent md:hidden"
           >
-            <ToggleMobile toggleView={togglePage} />
+            <ToggleMobile onToggleView={togglePage} />
           </button>
 
           <div id="TopNav-Icon-Dropdown" className="flex ml-auto pr-12">
