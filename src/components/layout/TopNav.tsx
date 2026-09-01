@@ -57,7 +57,7 @@ function TopNav({ logout }: TopNavProps) {
         >
           <button
             id="TopNav-toggle-mobile-view"
-            className="bg-transparent md:hidden"
+            className="bg-transparent sm:hidden"
           >
             <ToggleMobile />
           </button>
