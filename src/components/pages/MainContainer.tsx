@@ -21,7 +21,7 @@ import MobileToolBar from "../ui/MobileToolBar";
  * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList, BookView, PopOut, Search, BookControls]
  */
 function MainContainer() {
-  const { userId, defaultBookId, currentBookId, PRIVILEGES, isList } =
+  const { userId, defaultBookId, currentBookId, PRIVILEGES, isList, togglePage } =
     useContext(UserContext);
 
   const [recipes, setRecipes] = useState<Recipes | any>([]);
@@ -76,6 +76,7 @@ function MainContainer() {
   /** Change selected recipe */
   function selectRecipe(index: number) {
     setSelectedRecipe(filteredRecipes[index]);
+    togglePage();
   }
 
   /** Model toggle function for children components */
@@ -151,7 +152,7 @@ function MainContainer() {
         <RecipeContext.Provider value={recipeData}>
           <WebSocketProvider>
             <section
-              id="MainContainer-leftpage"
+              id="MainContainer-recipes-panel"
               className={`flex-1 flex flex-col ${isList ? "block" : "hidden"} sm:block min-h-0`}
             >
               <div id="MainContainer-header">
@@ -198,7 +199,7 @@ function MainContainer() {
             </section>
           </WebSocketProvider>
           <section
-            id="MainContainer-rightpage"
+            id="MainContainer-recipe"
             className={`flex-1 flex flex-col ${!isList ? "block" : "hidden"} sm:block overflow-y-auto divide-y border-x-2 mx-auto flex-1`}
           >
             <RecipeContainer
