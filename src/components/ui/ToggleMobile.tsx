@@ -4,13 +4,12 @@ import { SquareDashedText } from "lucide-react";
 import { UserContext } from "../../context/UserContext";
 import { useContext } from "react";
 
-/** Renders toggle switch the changes view from reipce list to recipe on mobile
+/** Renders toggle switch the changes view from recipe list to recipe on mobile
  * 
  * TopNav -> ToggleMobile -> ToggleSwitch
  */
 function ToggleMobile() {
     const { togglePage, isList } = useContext(UserContext);
-    console.log("isLis:",isList)
   return (
     <ToggleSwitch
       iconOne={TextAlignJustify}

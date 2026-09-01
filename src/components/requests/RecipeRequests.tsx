@@ -16,7 +16,7 @@ import { RecipeContext } from "../../context/RecipeContext";
 import { filterRecipe, filterTemplate } from "../../utils/filters";
 import { recipeTemplate } from "../../utils/templates";
 import Dropdown from "../ui/common/Dropdown";
-import RecipeForm from "../views/RecipeForm";
+import RecipeForm from "../ui/RecipeForm";
 import CreateBookCopyRecipe from "./CreateBookCopyRecipe";
 
 /** Processes recipe data. Context data is passed through here on edit. Else template data.
