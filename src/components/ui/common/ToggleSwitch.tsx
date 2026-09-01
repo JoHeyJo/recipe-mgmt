@@ -3,10 +3,11 @@ import { LucideIcon } from "lucide-react";
 type ToggleSwitchProps = {
   iconOne: LucideIcon;
   iconTwo: LucideIcon;
-  onAction: () => {};
+  onAction: () => void;
+  isDefault: boolean;
 };
 
-function ToggleSwitch({ iconOne: IconOne, iconTwo: IconTwo, onAction }: ToggleSwitchProps) {
+function ToggleSwitch({ iconOne: IconOne, iconTwo: IconTwo, onAction, isDefault }: ToggleSwitchProps) {
   return (
     <label className="relative inline-block">
       {/* Hidden checkbox drives peer-based styles */}
@@ -48,11 +49,11 @@ function ToggleSwitch({ iconOne: IconOne, iconTwo: IconTwo, onAction }: ToggleSw
 
       {/* Thumb */}
       <span
-        className={`absolute left-0.5 top-0.5 w-5 h-5 ${
-          true ? "bg-white" : "bg-white"
-        } rounded-full transition-transform peer-checked:translate-x-6 flex items-center justify-center text-xs`}
+        className={`absolute left-0.5 top-0.5 w-5 h-5 
+          ${isDefault ? "bg-white" : "bg-white"} 
+          rounded-full transition-transform peer-checked:translate-x-6 flex items-center justify-center text-xs`}
       >
-        {!true ? <IconOne /> : <IconTwo />}
+        {isDefault ? <IconOne /> : <IconTwo />}
       </span>
 
       {/* SR-only text */}

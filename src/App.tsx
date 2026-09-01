@@ -36,16 +36,15 @@ function App() {
   const [userData, setUserData] = useState<User>(defaultUser);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isContextInitialized, setIsContextInitialized] = useState(false);
-  const [page, setPage] = useState("right");
+  const [isList, setIsList] = useState(true);
 
   /** Toggle between left and right side panel in mobile view */
   function togglePage(){
-    console.log(page)
-    page === "left" ? setPage("right") : setPage("left");
+    setIsList((list) => !list)
   }
 
   const UserDataFromContext: UserContextType = {
-    page,
+    isList,
     togglePage,
     user: userData?.userName,
     userId: userData?.id,

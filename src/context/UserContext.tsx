@@ -3,7 +3,7 @@ import { User, Book } from "../utils/types";
 import { defaultBook } from "../utils/templates";
 
 export type UserContextType = {
-  page: string;
+  isList: boolean;
   togglePage: () => void;
   user: string | null;
   userId: number | null;
@@ -25,7 +25,7 @@ export type UserContextType = {
 };
 
 export const UserContext = createContext<UserContextType>({
-  page:"",
+  isList: true,
   togglePage: () => {},
   user: "",
   userId: null,

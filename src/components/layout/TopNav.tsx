@@ -12,10 +12,9 @@ type TopNavProps = { logout: () => void };
 
 /**
  *
- * App -> TopNav -> [CreateBookRequests, Invite]
+ * App -> TopNav -> [CreateBookRequests, Invite, ToggleMobile, ToggleColorScheme]
  */
 function TopNav({ logout }: TopNavProps) {
-  const { togglePage } = useContext(UserContext);
   const [isCreateBookOpen, setIsCreateBookOpen] = useState(false);
   const [isInviteOpen, setIsInviteOpen] = useState(false);
 
@@ -60,7 +59,7 @@ function TopNav({ logout }: TopNavProps) {
             id="TopNav-toggle-mobile-view"
             className="bg-transparent md:hidden"
           >
-            <ToggleMobile onToggleView={togglePage} />
+            <ToggleMobile />
           </button>
 
           <div id="TopNav-Icon-Dropdown" className="flex ml-auto pr-12">

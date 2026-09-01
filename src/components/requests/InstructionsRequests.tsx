@@ -10,7 +10,7 @@ import { Field } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import Tooltip from "../ui/common/Tooltip";
-import ToggleSource from "../ui/ToggleSwitch";
+import ToggleSource from "../ui/ToggleSource";
 import { BookOpen, User } from "lucide-react";
 import { DataContext } from "../../context/DataContext";
 
