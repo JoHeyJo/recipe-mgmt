@@ -226,7 +226,7 @@ function RecipeRequests({
             id="RecipeRequests-DialogPanel"
             ref={dialogPanelRef}
             transition
-            className={`relative flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all ${isBookSelectOpen ? "" : "sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"}`}
+            className={`relative h-2/3 flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all ${isBookSelectOpen ? "" : "sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"}`}
           >
             {render.dropdown && (
               <Dropdown
