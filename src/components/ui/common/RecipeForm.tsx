@@ -1,4 +1,4 @@
-function FormContainer() {
+export default function FormContainer() {
   // Visible outlines so the structure is easy to read
   const panel =
     "rounded-md border border-dashed border-neutral-300 bg-white min-h-0";
@@ -48,5 +48,3 @@ function FormContainer() {
     </div>
   );
 }
-
-export default FormContainer
