@@ -1,4 +1,6 @@
+import InstructionsRequests from "../../requests/InstructionsRequests";
 import IngredientsGroup from "../../selectors/IngredientsGroup";
+import NotesInput from "../NotesInput";
 import TitleInput from "../TitleInput";
 
 export default function FormContainer() {
@@ -16,7 +18,7 @@ export default function FormContainer() {
       {/* ── Row 1: half the container. Stacks on mobile, two columns from md up. */}
       <div
         id="FormContainer-title-ingredients"
-        className="flex flex-[3] flex-col gap-3 sm:flex-row"
+        className="flex basis-5/6 sm:basis-3/5 flex-col gap-3 sm:flex-row"
       >
         {/* Left column */}
         <div
@@ -40,14 +42,17 @@ export default function FormContainer() {
         </div>
 
         {/* Right column: single box filling the rest of the row */}
-        <div className="min-h-0 min-w-0 flex-1 overflow-y-auto rounded border border-dashed border-slate-300 p-3">
-          {/* content */}
+        <div className="min-h-0 min-w-0 flex-1 rounded p-3">
+          <InstructionsRequests onInstructionInput={() => {}} />
         </div>
       </div>
 
       {/* ── Row 2: takes whatever height is left */}
-      <div className="min-h-0 w-full flex-1  overflow-y-auto rounded border border-dashed border-slate-300 p-3">
-        {/* content */}
+      <div
+        id="FormContainer-notes"
+        className="min-h-0 w-full flex-1  overflow-y-auto rounded border border-dashed border-slate-300 p-3"
+      >
+        <NotesInput onNotesInput={() => {}} />
       </div>
 
       {/* ── Row 3: just the button, sized to its content */}

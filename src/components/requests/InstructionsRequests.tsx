@@ -70,7 +70,7 @@ function InstructionsRequests({
   };
 
   return (
-    <Field className="h-full pb-5">
+    <Field className="sm:h-full pb-5">
       <div className="grid grid-cols-2 gap-4">
         <FormLabel label={"Instructions:"} />
         <div className="flex justify-end">
