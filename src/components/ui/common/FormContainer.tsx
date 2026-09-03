@@ -1,3 +1,6 @@
+import IngredientsGroup from "../../selectors/IngredientsGroup";
+import TitleInput from "../TitleInput";
+
 export default function FormContainer() {
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -6,23 +9,33 @@ export default function FormContainer() {
   return (
     // Root: fills its parent. Parent must have a real height (h-screen, h-full, or a grid/flex track).
     <form
+      id="FormContainer-book"
       onSubmit={handleSubmit}
-      className="flex h-full w-full flex-col gap-3 p-3"
+      className="w-full flex-col"
     >
       {/* ── Row 1: half the container. Stacks on mobile, two columns from md up. */}
-      <div className="flex min-h-0 shrink-0 basis-1/2 flex-col gap-3 md:flex-row">
+      <div
+        id="FormContainer-title-ingredients"
+        className="flex basis-3/5 flex-col gap-3 sm:flex-row"
+      >
         {/* Left column */}
-        <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3">
+        <div
+          id="FormContainer-title"
+          className="flex min-h-0 min-w-0 flex-1 flex-col "
+        >
           {/* Fixed-height input, sized for a line of text */}
-          <input
-            type="text"
-            placeholder="Name this batch"
+          {/* <input
             className="w-full shrink-0 rounded border border-slate-300 px-3 py-2 text-sm outline-none focus-visible:border-slate-500 focus-visible:ring-2 focus-visible:ring-slate-300"
-          />
+          /> */}
+          <TitleInput onTitleInput={() => {}} />
 
           {/* Grows with its contents, scrolls once it runs out of room */}
-          <div className="min-h-0 w-full flex-1 overflow-y-auto rounded border border-dashed border-slate-300 p-3">
+          <div
+            id="FormContainer-ingredients"
+            className="min-h-0 w-full flex-1 overflow-y-auto"
+          >
             {/* items go here */}
+            <IngredientsGroup onIngredientInput={() => {}} />
           </div>
         </div>
 
@@ -33,7 +46,7 @@ export default function FormContainer() {
       </div>
 
       {/* ── Row 2: takes whatever height is left */}
-      <div className="min-h-0 w-full flex-1 overflow-y-auto rounded border border-dashed border-slate-300 p-3">
+      <div className="min-h-0 w-full  overflow-y-auto rounded border border-dashed border-slate-300 p-3">
         {/* content */}
       </div>
 
