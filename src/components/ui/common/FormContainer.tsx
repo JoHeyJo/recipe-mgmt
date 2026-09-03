@@ -42,7 +42,7 @@ export default function FormContainer() {
         </div>
 
         {/* Right column: single box filling the rest of the row */}
-        <div className="min-h-0 min-w-0 flex-1 rounded p-3">
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
           <InstructionsRequests onInstructionInput={() => {}} />
         </div>
       </div>
