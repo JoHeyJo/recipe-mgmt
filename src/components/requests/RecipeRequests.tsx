@@ -226,7 +226,7 @@ function RecipeRequests({
             id="RecipeRequests-DialogPanel"
             ref={dialogPanelRef}
             transition
-            className={`relative w-full h-full sm:h-[60vh] flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all ${isBookSelectOpen ? "" : "sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"}`}
+            className={`relative flex flex-col flex-1 sm:h-[50vh] transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all ${isBookSelectOpen ? "" : "sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"}`}
           >
             {render.dropdown && (
               <Dropdown
@@ -256,7 +256,6 @@ function RecipeRequests({
                 onCloseDialog={handleCloseDialog}
               />
             )}
-            {/* </form> */}
           </DialogPanel>
         </div>
       </div>

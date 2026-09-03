@@ -11,12 +11,12 @@ export default function FormContainer() {
     <form
       id="FormContainer-book"
       onSubmit={handleSubmit}
-      className="w-full flex-col"
+      className="flex flex-1 w-full flex-col"
     >
       {/* ── Row 1: half the container. Stacks on mobile, two columns from md up. */}
       <div
         id="FormContainer-title-ingredients"
-        className="flex basis-3/5 flex-col gap-3 sm:flex-row"
+        className="flex flex-[3] flex-col gap-3 sm:flex-row"
       >
         {/* Left column */}
         <div
@@ -46,7 +46,7 @@ export default function FormContainer() {
       </div>
 
       {/* ── Row 2: takes whatever height is left */}
-      <div className="min-h-0 w-full  overflow-y-auto rounded border border-dashed border-slate-300 p-3">
+      <div className="min-h-0 w-full flex-1  overflow-y-auto rounded border border-dashed border-slate-300 p-3">
         {/* content */}
       </div>
 
