@@ -40,7 +40,7 @@ function RecipeRequests({
     defaultBookId,
   } = useContext(UserContext);
 
-  const { selectedRecipe, setRecipes, setFilteredRecipes } =
+  const { selectedRecipe, setRecipes, setFilteredRecipes, requestAction } =
     useContext(RecipeContext);
 
   const [recipeInput, setRecipeInput] = useState<any>(selectedRecipe);
@@ -224,7 +224,7 @@ function RecipeRequests({
             id="RecipeRequests-DialogPanel"
             ref={dialogPanelRef}
             transition
-            className={`relative flex flex-col h-full sm:h-[max(40dvh,30rem)] sm:max-h-[90dvh] transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all ${isBookSelectOpen ? "" : "sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"}`}
+            className={`relative flex flex-col ${!requestAction.copy && "h-full sm:h-[max(40dvh,30rem)] sm:max-h-[90dvh]"} transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all ${isBookSelectOpen ? "" : "sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"}`}
           >
             {render.dropdown && (
               <Dropdown

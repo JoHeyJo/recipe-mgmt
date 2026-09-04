@@ -131,12 +131,12 @@ function RecipeForm({
               </div>
             </DataContext.Provider>
           </ReferenceContext.Provider>
+          {/* ── Row 2: takes whatever height is left */}
+          <div id="FormContainer-notes" className="min-h-0 w-full flex-1">
+            <NotesInput onNotesInput={onUpdateRecipeInput} />
+          </div>
         </>
       )}
-      {/* ── Row 2: takes whatever height is left */}
-      <div id="FormContainer-notes" className="min-h-0 w-full flex-1">
-        <NotesInput onNotesInput={onUpdateRecipeInput} />
-      </div>
       {/* ── Row 3: just the button, sized to its content */}
       <div className="shrink-0">
         <RecipeFormControls
