@@ -220,13 +220,13 @@ function RecipeRequests({
         transition
         className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
       />
-      <div className="fixed inset-0 z-10 w-screen">
+      <div className="fixed inset-0 z-10">
         <div className="flex h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
             id="RecipeRequests-DialogPanel"
             ref={dialogPanelRef}
             transition
-            className={`relative flex flex-col h-full sm:h-[60vh] md:h-[70vh] transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all ${isBookSelectOpen ? "" : "sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"}`}
+            className={`relative flex flex-col h-full sm:h-[max(40dvh,30rem)] sm:max-h-[90dvh] transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all ${isBookSelectOpen ? "" : "sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"}`}
           >
             {render.dropdown && (
               <Dropdown
