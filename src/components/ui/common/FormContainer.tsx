@@ -18,7 +18,7 @@ export default function FormContainer() {
       {/* ── Row 1: half the container. Stacks on mobile, two columns from md up. */}
       <div
         id="FormContainer-title-ingredients"
-        className="flex basis-5/6 sm:basis-3/5 flex-col gap-3 sm:flex-row"
+        className="flex basis-4/6 sm:basis-3/5 flex-col gap-3 sm:flex-row"
       >
         {/* Left column */}
         <div
