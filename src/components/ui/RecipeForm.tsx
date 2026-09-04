@@ -83,7 +83,7 @@ function RecipeForm({
     <form
       id="FormContainer-book"
       // onSubmit={}
-      className="flex flex-1 w-full flex-col"
+      className="flex min-h-0 flex-1 w-full flex-col"
     >
       {error && <Alert alert={error} degree={"yellow"} />}{" "}
       {requestAction.copy && (
@@ -99,31 +99,26 @@ function RecipeForm({
             <DataContext.Provider value={formData}>
               <div
                 id="FormContainer-title-ingredients"
-                className="flex basis-4/6 sm:basis-3/5 flex-col gap-3 sm:flex-row"
+                className="min-h-0 flex basis-4/6 sm:basis-3/5 flex-col gap-3 sm:flex-row"
               >
                 {/* Left column */}
                 <div
-                  id="FormContainer-title"
+                  id="FormContainer-left-panel"
                   className="flex min-h-0 min-w-0 flex-1 flex-col "
                 >
-                  {/* Fixed-height input, sized for a line of text */}
-                  {/* <input
-            className="w-full shrink-0 rounded border border-slate-300 px-3 py-2 text-sm outline-none focus-visible:border-slate-500 focus-visible:ring-2 focus-visible:ring-slate-300"
-          /> */}
                   <TitleInput onTitleInput={onUpdateRecipeInput} />
 
                   {/* Grows with its contents, scrolls once it runs out of room */}
                   <div
                     id="FormContainer-ingredients"
-                    className="min-h-0 w-full flex-1 overflow-y-auto"
+                    className="flex min-h-0 w-full flex-1"
                   >
-                    {/* items go here */}
                     <IngredientsGroup onIngredientInput={onUpdateRecipeInput} />
                   </div>
                 </div>
 
                 {/* Right column: single box filling the rest of the row */}
-                <div className="flex min-h-0 min-w-0 flex-1 flex-col ">
+                <div className="flex min-h-0 min-w-0 flex-1 flex-col">
                   <InstructionsRequests
                     onInstructionInput={onUpdateRecipeInput}
                   />
