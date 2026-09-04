@@ -39,6 +39,7 @@ function RecipeRequests({
     currentBook,
     defaultBookId,
   } = useContext(UserContext);
+
   const { selectedRecipe, setRecipes, setFilteredRecipes } =
     useContext(RecipeContext);
 
@@ -194,9 +195,6 @@ function RecipeRequests({
       setTimeout(() => setError(null), 5000);
     }
   }
-
-  /** Request data corresponding to User or Book */
-  function requestIngredientsInstructions() {}
 
   const recipeAction = {
     submit: submitRecipe,
