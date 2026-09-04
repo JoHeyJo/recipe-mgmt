@@ -94,7 +94,7 @@ function ComponentsOptionsRequests({
 
   return (
     <>
-      <div className="py-2 px-1 flex-1 min-h-0 overflow-y-auto rounded-md border-2 border-accent-secondary">
+      <div className="flex-1 min-h-0 py-2 px-1 overflow-y-auto rounded-md border-2 border-accent-secondary">
         {ingredients.map((ingredient, i) => (
           <div
             ref={ingredientSectionRef}
