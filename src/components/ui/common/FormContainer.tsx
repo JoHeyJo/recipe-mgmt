@@ -50,7 +50,7 @@ export default function FormContainer() {
       {/* ── Row 2: takes whatever height is left */}
       <div
         id="FormContainer-notes"
-        className="min-h-0 w-full flex-1  overflow-y-auto"
+        className="min-h-0 w-full flex-1"
       >
         <NotesInput onNotesInput={() => {}} />
       </div>
