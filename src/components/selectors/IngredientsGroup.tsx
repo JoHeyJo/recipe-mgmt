@@ -81,7 +81,7 @@ function IngredientsGroup({ onIngredientInput }: IngredientsGroupProps) {
         id="IngredientsGroup-main"
         className="flex flex-1 min-h-0 flex-col overflow-hidden"
       >
-        <FormLabel label={"Ingredients: 1 oz Tequila"} />
+        <FormLabel label={"Ingredients:"} />
         <ComponentsOptionsRequests
           numOfIngredients={ingredients.length}
           ingredients={ingredients}
