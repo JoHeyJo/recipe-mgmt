@@ -36,7 +36,7 @@ function TitleInput({ onTitleInput }: RecipeInfoProp) {
         id={id.toString()}
         name={name}
         value={title}
-        type={"title"}
+        type="text"
         onUpdate={handleChange}
         placeholder={"Recipe name: Margarita"}
       />

@@ -1,21 +1,13 @@
-import { BookOpen, User } from "lucide-react";
-import { useContext } from "react";
-import { DataContext } from "../../context/DataContext";
+import { LucideIcon } from "lucide-react";
 
-/**
- * InstructionsRequests -> ToggleSwitch
- */
+type ToggleSwitchProps = {
+  iconOne: LucideIcon;
+  iconTwo: LucideIcon;
+  onAction: () => void;
+  isDefault: boolean;
+};
 
-function ToggleSwitch() {
-  const { isBookSource, requestData, setIngredientOptions, setInstructions } =
-    useContext(DataContext);
-
-  async function handleToggle() {
-    const data: any = await requestData(isBookSource);
-    setInstructions(data.instructions);
-    setIngredientOptions(data.ingredients);
-  }
-
+function ToggleSwitch({ iconOne: IconOne, iconTwo: IconTwo, onAction, isDefault }: ToggleSwitchProps) {
   return (
     <label className="relative inline-block">
       {/* Hidden checkbox drives peer-based styles */}
@@ -24,7 +16,7 @@ function ToggleSwitch() {
         role="switch"
         aria-label="Dark Mode"
         // checked={isDark}
-        onChange={handleToggle}
+        onChange={onAction}
         className="peer sr-only"
       />
 
@@ -57,11 +49,11 @@ function ToggleSwitch() {
 
       {/* Thumb */}
       <span
-        className={`absolute left-0.5 top-0.5 w-5 h-5 ${
-          isBookSource ? "bg-white" : "bg-white"
-        } rounded-full transition-transform peer-checked:translate-x-6 flex items-center justify-center text-xs`}
+        className={`absolute left-0.5 top-0.5 w-5 h-5 
+          ${isDefault ? "bg-white" : "bg-white"} 
+          rounded-full transition-transform peer-checked:translate-x-6 flex items-center justify-center text-xs`}
       >
-        {!isBookSource ? <BookOpen /> : <User />}
+        {isDefault ? <IconOne /> : <IconTwo />}
       </span>
 
       {/* SR-only text */}
