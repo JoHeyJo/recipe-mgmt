@@ -94,14 +94,15 @@ function ComponentsOptionsRequests({
 
   return (
     <>
-      <div className="flex-1 min-h-0 py-2 px-1 max-h-22 sm:max-h-none overflow-y-auto overscroll-contain rounded-md border-2 border-accent-secondary">
+      <div className="flex-1 min-h-0 py-2 px-1 min-h-40 max-h-40 overflow-y-auto overscroll-contain rounded-md border-2 border-accent-secondary">
         {ingredients.map((ingredient, i) => (
           <div
             ref={ingredientSectionRef}
             // These keys are not unique using i for the time being
             // key={ingredient.ingredient_id || ingredientKeys[i]}
             key={i}
-            className="ComponentsOptionsRequests-Ingredients-section flex items-center justify-center"
+            id="ComponentsOptionsRequests-Ingredients-sectionw"
+            className="flex items-center justify-center"
           >
             <IngredientInputGroup
               index={i}
