@@ -138,6 +138,72 @@ function IngredientInputGroup({
         />
         {renderHandleIngredientUI()}
       </div>
+      <div className="IngredientInputGroup-Ingredient-section flex rounded-md">
+        <IngredientManager
+          length={length}
+          value={ingredient.amount}
+          attribute={"value"}
+          entity={"amount"}
+          options={ingredientOptions.amounts}
+          handleOption={optionAction}
+          handleComponent={handleComponent}
+          placeholder={"amount (e.g. 2)"}
+        />
+        <IngredientManager
+          length={length}
+          value={ingredient.unit}
+          attribute={"type"}
+          entity={"unit"}
+          options={ingredientOptions.units}
+          handleOption={optionAction}
+          handleComponent={handleComponent}
+          placeholder={"unit: oz"}
+        />
+        <IngredientManager
+          length={length}
+          value={ingredient.item}
+          attribute={"name"}
+          entity={"item"}
+          options={ingredientOptions.items}
+          handleOption={optionAction}
+          handleComponent={handleComponent}
+          placeholder={"item (gin)"}
+        />
+        {renderHandleIngredientUI()}
+      </div>
+      <div className="IngredientInputGroup-Ingredient-section flex rounded-md">
+        <IngredientManager
+          length={length}
+          value={ingredient.amount}
+          attribute={"value"}
+          entity={"amount"}
+          options={ingredientOptions.amounts}
+          handleOption={optionAction}
+          handleComponent={handleComponent}
+          placeholder={"amount (e.g. 2)"}
+        />
+        <IngredientManager
+          length={length}
+          value={ingredient.unit}
+          attribute={"type"}
+          entity={"unit"}
+          options={ingredientOptions.units}
+          handleOption={optionAction}
+          handleComponent={handleComponent}
+          placeholder={"unit: oz"}
+        />
+        <IngredientManager
+          length={length}
+          value={ingredient.item}
+          attribute={"name"}
+          entity={"item"}
+          options={ingredientOptions.items}
+          handleOption={optionAction}
+          handleComponent={handleComponent}
+          placeholder={"item (gin)"}
+        />
+        {renderHandleIngredientUI()}
+      </div>
     </div>
   );
 }

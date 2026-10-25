@@ -16,7 +16,7 @@ import { RecipeContext } from "../../context/RecipeContext";
 import { filterRecipe, filterTemplate } from "../../utils/filters";
 import { recipeTemplate } from "../../utils/templates";
 import Dropdown from "../ui/common/Dropdown";
-import RecipeForm from "../views/RecipeForm";
+import RecipeForm from "../ui/RecipeForm";
 import CreateBookCopyRecipe from "./CreateBookCopyRecipe";
 
 /** Processes recipe data. Context data is passed through here on edit. Else template data.
@@ -39,7 +39,8 @@ function RecipeRequests({
     currentBook,
     defaultBookId,
   } = useContext(UserContext);
-  const { selectedRecipe, setRecipes, setFilteredRecipes } =
+
+  const { selectedRecipe, setRecipes, setFilteredRecipes, requestAction } =
     useContext(RecipeContext);
 
   const [recipeInput, setRecipeInput] = useState<any>(selectedRecipe);
@@ -195,9 +196,6 @@ function RecipeRequests({
     }
   }
 
-  /** Request data corresponding to User or Book */
-  function requestIngredientsInstructions() {}
-
   const recipeAction = {
     submit: submitRecipe,
     remove: removeSharedRecipe,
@@ -220,13 +218,13 @@ function RecipeRequests({
         transition
         className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
       />
-      <div className="fixed inset-0 z-10 w-screen">
+      <div className="fixed inset-0 z-10">
         <div className="flex h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
             id="RecipeRequests-DialogPanel"
             ref={dialogPanelRef}
             transition
-            className={`relative flex flex-col transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all ${isBookSelectOpen ? "" : "sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"}`}
+            className={`relative flex flex-col ${!requestAction.copy && "h-full sm:h-[max(38dvh,28rem)] sm:max-h-[90dvh]"} transform rounded-lg bg-primary px-4 pb-4 pt-5 text-left shadow-xl transition-all ${isBookSelectOpen ? "" : "sm:my-8 sm:w-full sm:max-w-4xl sm:p-6"}`}
           >
             {render.dropdown && (
               <Dropdown
@@ -256,7 +254,6 @@ function RecipeRequests({
                 onCloseDialog={handleCloseDialog}
               />
             )}
-            {/* </form> */}
           </DialogPanel>
         </div>
       </div>

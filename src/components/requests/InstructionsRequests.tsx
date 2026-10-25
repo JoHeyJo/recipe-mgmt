@@ -10,7 +10,7 @@ import { Field } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import Tooltip from "../ui/common/Tooltip";
-import ToggleSwitch from "../ui/ToggleSwitch";
+import ToggleSource from "../ui/ToggleSource";
 import { BookOpen, User } from "lucide-react";
 import { DataContext } from "../../context/DataContext";
 
@@ -70,12 +70,12 @@ function InstructionsRequests({
   };
 
   return (
-    <Field className="h-full pb-5">
+    <Field className="flex flex-col min-h-0 flex-1 overflow-hidden">
       <div className="grid grid-cols-2 gap-4">
         <FormLabel label={"Instructions:"} />
         <div className="flex justify-end">
           <div className="pr-4">
-            <ToggleSwitch />
+            <ToggleSource />
           </div>
           <Tooltip
             multiline

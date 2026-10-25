@@ -6,7 +6,7 @@ import { Field } from "@headlessui/react";
 
 /** Render Notes
  *
- * RecipeRequests -> NotesInput
+ * FormContainer -> NotesInput
  */
 function NotesInput({ onNotesInput }: NotesInputProps) {
   const { selectedRecipe } = useContext(RecipeContext);
