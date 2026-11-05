@@ -105,7 +105,10 @@ function IngredientInputGroup({
   return (
     <div>
       <div>{error && <Alert alert={error} degree={"yellow"} />}</div>
-      <div className="IngredientInputGroup-Ingredient-section flex rounded-md">
+      <div
+        id="IngredientInputGroup-Ingredient-section"
+        className="flex rounded-md"
+      >
         <IngredientManager
           length={length}
           value={ingredient.amount}

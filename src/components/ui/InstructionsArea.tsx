@@ -111,10 +111,10 @@ function InstructionsArea({
   }, [selectedInstructions]);
   return (
     <div
-      ref={instructionsAreaRef}
       id="InstructionsArea"
       // className="min-h-0 overflow-y-auto overscroll-contain min-h-full max-h-full block w-full rounded-md border-2 border-accent-secondary pb-2 px-2 shadow-sm sm:leading-6"
-      className="min-h-0 overflow-y-auto overscroll-contain max-h-[7rem] sm:max-h-none rounded-md border-2 border-accent-secondary pb-2 px-2 shadow-sm sm:leading-6"
+      // className="min-h-0 overflow-y-auto overscroll-contain max-h-[7rem] sm:max-h-none rounded-md border-2 border-accent-secondary pb-2 px-2 shadow-sm sm:leading-6"
+      className="flex-1 min-h-0 py-2 px-1 min-h-40 max-h-full overflow-y-auto overscroll-contain rounded-md border-2 border-accent-secondary"
     >
       {selectedInstructions.map((value, index) => (
         <InstructionManager

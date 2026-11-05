@@ -101,8 +101,7 @@ function ComponentsOptionsRequests({
             // These keys are not unique using i for the time being
             // key={ingredient.ingredient_id || ingredientKeys[i]}
             key={i}
-            id="ComponentsOptionsRequests-Ingredients-sectionw"
-            className="flex items-center justify-center"
+            id="ComponentsOptionsRequests-Ingredient-Group"
           >
             <IngredientInputGroup
               index={i}
