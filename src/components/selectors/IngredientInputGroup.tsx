@@ -138,7 +138,7 @@ function IngredientInputGroup({
         />
         {renderHandleIngredientUI()}
       </div>
-      <div className="IngredientInputGroup-Ingredient-section flex rounded-md">
+      {/* <div className="IngredientInputGroup-Ingredient-section flex rounded-md">
         <IngredientManager
           length={length}
           value={ingredient.amount}
@@ -203,7 +203,7 @@ function IngredientInputGroup({
           placeholder={"item (gin)"}
         />
         {renderHandleIngredientUI()}
-      </div>
+      </div> */}
     </div>
   );
 }
