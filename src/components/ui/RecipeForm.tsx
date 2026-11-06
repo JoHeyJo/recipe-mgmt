@@ -97,19 +97,19 @@ function RecipeForm({
             <DataContext.Provider value={formData}>
               <div
                 id="FormContainer-top-row"
-                className="flex min-h-0 flex-col gap-3 sm:flex-row"
+                className="flex flex-1 min-h-0 flex-col gap-3 sm:flex-row"
               >
                 {/* Left column */}
                 <div
                   id="FormContainer-left-panel"
-                  className="flex min-h-0 min-w-0 flex-col "
+                  className="flex flex-1 min-h-0 min-w-0 flex-col "
                 >
                   <TitleInput onTitleInput={onUpdateRecipeInput} />
 
                   {/* Grows with its contents, scrolls once it runs out of room */}
                   <div
                     id="FormContainer-ingredients"
-                    className="flex flex-1 min-h-0 w-full"
+                    className="flex flex-1 min-h-0"
                   >
                     <IngredientsGroup onIngredientInput={onUpdateRecipeInput} />
                   </div>
@@ -118,7 +118,7 @@ function RecipeForm({
                 {/* Right column: single box filling the rest of the row */}
                 <div
                   id="RecipeForm-instructions"
-                  className="flex flex-1 min-h-0 min-w-0 flex-col"
+                  className="flex flex-col flex-1 min-h-0"
                 >
                   <InstructionsRequests
                     onInstructionInput={onUpdateRecipeInput}

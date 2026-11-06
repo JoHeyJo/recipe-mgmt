@@ -70,7 +70,8 @@ function InstructionsRequests({
   };
 
   return (
-    <Field className="flex flex-col min-h-full max-h-full flex-1 overflow-hidden">
+    // <Field className="flex flex-col min-h-full max-h-full flex-1 overflow-hidden">
+    <Field className="flex flex-col min-h-0">
       <div className="grid grid-cols-2 gap-4">
         <FormLabel label={"Instructions:"} />
         <div className="flex justify-end">
@@ -94,10 +95,16 @@ function InstructionsRequests({
           </Tooltip>
         </div>
       </div>
-      <InstructionsArea
-        onInstructionInput={onInstructionInput}
-        onInstructionRequest={instructionRequestAction}
-      />
+      <div
+        id="instructionsRequest-Instructions-Area"
+        // className="flex flex-col flex-1 overflow-hidden"
+        className="flex flex-col min-h-40 min-w-0 flex-col sm:min-h-0"
+      >
+        <InstructionsArea
+          onInstructionInput={onInstructionInput}
+          onInstructionRequest={instructionRequestAction}
+        />
+      </div>
     </Field>
   );
 }
