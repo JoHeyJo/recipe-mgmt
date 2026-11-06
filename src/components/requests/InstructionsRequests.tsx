@@ -97,8 +97,8 @@ function InstructionsRequests({
       </div>
       <div
         id="instructionsRequest-Instructions-Area"
-        // className="flex flex-col flex-1 overflow-hidden"
-        className="flex flex-col min-h-40 min-w-0 flex-col sm:min-h-0"
+        className="flex flex-col flex-1 min-h-0 overflow-hidden"
+        // className="flex flex-1 flex-col min-h-40 min-w-0 flex-col sm:min-h-0"
       >
         <InstructionsArea
           onInstructionInput={onInstructionInput}

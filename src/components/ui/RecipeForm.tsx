@@ -97,7 +97,7 @@ function RecipeForm({
             <DataContext.Provider value={formData}>
               <div
                 id="FormContainer-top-row"
-                className="flex flex-1 min-h-0 flex-col gap-3 sm:flex-row"
+                className="flex flex-1 basis-2/5 min-h-0 flex-col gap-3 sm:flex-row"
               >
                 {/* Left column */}
                 <div

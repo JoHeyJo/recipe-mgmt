@@ -76,10 +76,10 @@ function IngredientsGroup({ onIngredientInput }: IngredientsGroupProps) {
   }, [ingredients]);
 
   return (
-    <Field className="flex flex-col flex-1 min-h-0">
+    <Field className="flex flex-col min-h-0">
       <div
         id="IngredientsGroup-main"
-        className="flex flex-1 min-h-0 flex-col overflow-hidden"
+        className="flex flex-1 flex-col min-h-0 overflow-hidden"
       >
         <FormLabel label={"Ingredients:"} />
         <ComponentsOptionsRequests
