@@ -71,7 +71,10 @@ function InstructionsRequests({
 
   return (
     // <Field className="flex flex-col min-h-full max-h-full flex-1 overflow-hidden">
-    <Field className="flex flex-col min-h-0">
+    <Field 
+    // className="flex flex-col min-h-0"
+    className="flex min-h-0 flex-1 flex-col">
+
       <div className="grid grid-cols-2 gap-4">
         <FormLabel label={"Instructions:"} />
         <div className="flex justify-end">
@@ -97,8 +100,9 @@ function InstructionsRequests({
       </div>
       <div
         id="instructionsRequest-Instructions-Area"
-        className="flex flex-col flex-1 min-h-0 overflow-hidden"
+        // className="flex flex-col flex-1 min-h-0 overflow-hidden"
         // className="flex flex-1 flex-col min-h-40 min-w-0 flex-col sm:min-h-0"
+        className="flex min-h-0 min-w-0 flex-1 flex-col"
       >
         <InstructionsArea
           onInstructionInput={onInstructionInput}
