@@ -7,6 +7,7 @@ import { AttributeData } from "../../utils/types";
 import { errorHandling } from "../../utils/ErrorHandling";
 import { scrollIntoViewElement } from "../../utils/functions";
 import { DataContext } from "../../context/DataContext";
+import { RecipeContext } from "../../context/RecipeContext";
 
 /** Manages ingredient requests and dropdown options
  *
@@ -22,6 +23,7 @@ function ComponentsOptionsRequests({
   const ingredientSectionRef = useRef<HTMLDivElement>();
 
   const { userId, currentBookId } = useContext(UserContext);
+  const { requestAction } = useContext(RecipeContext);
 
   /** Request to create new ingredient option */
   async function addOption(
@@ -91,6 +93,11 @@ function ComponentsOptionsRequests({
   useEffect(() => {
     if (numOfIngredients > 3) scrollIntoViewElement(ingredientSectionRef);
   }, [numOfIngredients]);
+
+  /** On conditional evaluation, render ingredient input group for Create or Edit requests */
+  function renderIngredientInputGroup(){
+    // requestAction.create 
+  }
 
   return (
     <>

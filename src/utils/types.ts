@@ -91,10 +91,10 @@ export type Book = {
   is_default_replaced: boolean
 };
 
-export type requestAction = {
-  copy: boolean;
-  edit: boolean;
-  create: boolean;
+export type RequestAction = {
+  copy?: boolean;
+  edit?: boolean;
+  create?: boolean;
 };
 // export type Books = { books?: Book[] }
 
