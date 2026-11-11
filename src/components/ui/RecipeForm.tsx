@@ -5,7 +5,7 @@ import TitleInput from "../ui/TitleInput";
 import InstructionsRequests from "../requests/InstructionsRequests";
 import NotesInput from "../ui/NotesInput";
 import RecipeFormControls from "../ui/controls/RecipeFormControls";
-import IngredientsArea from "../selectors/IngredientsGroup";
+import IngredientsArea from "../selectors/IngredientsArea";
 import {
   compareIngredients,
   compareInstructions,

@@ -14,6 +14,9 @@ import { DataContext } from "../../context/DataContext";
  * Refactor: IngredientKeys can be removed and id associated with ingredient can now be used.
  * Need to choose between using DATE or UUID
  *
+ * NOTE: Request components should be the top level parent component that houses 
+ * everything pertaining to those requests. 
+ * 
  * RecipeForm -> IngredientsArea -> ComponentsOptionsRequests
  */
 function IngredientsArea({ onIngredientInput }: IngredientsAreaProps) {

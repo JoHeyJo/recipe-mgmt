@@ -9,7 +9,7 @@ import { scrollIntoViewElement } from "../../utils/functions";
 import { DataContext } from "../../context/DataContext";
 import { RecipeContext } from "../../context/RecipeContext";
 
-/** Manages ingredient requests and dropdown options
+/** Manages ingredient API requests and dropdown options
  *
  * IngredientsArea -> ComponentsOptionsRequests -> IngredientInputGroup
  */
