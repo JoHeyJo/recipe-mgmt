@@ -95,30 +95,80 @@ function ComponentsOptionsRequests({
   }, [numOfIngredients]);
 
   /** On conditional evaluation, render ingredient input group for Create or Edit requests */
-  function renderIngredientInputGroup(){
-    // requestAction.create 
+  function renderIngredientInputGroup() {
+    return requestAction.edit ? (
+      ingredients.map((ingredient, i) => (
+        <div
+          ref={ingredientSectionRef}
+          // These keys are not unique using i for the time being
+          // key={ingredient.ingredient_id || ingredientKeys[i]}
+          key={i}
+          id="ComponentsOptionsRequests-Ingredient-Group"
+        >
+          <IngredientInputGroup
+            index={i}
+            ingredient={ingredient}
+            onIngredientAction={ingredientAction}
+            optionAction={optionAction}
+            length={ingredients.length - 1}
+          />
+        </div>
+      ))
+    ) : (
+      <>
+        <div
+          ref={ingredientSectionRef}
+          // These keys are not unique using i for the time being
+          // key={ingredient.ingredient_id || ingredientKeys[i]}
+          // key={}
+          id="ComponentsOptionsRequests-Ingredient-Group"
+        >
+          <IngredientInputGroup
+            index={0}
+            ingredient={ingredients[0]}
+            onIngredientAction={ingredientAction}
+            optionAction={optionAction}
+            length={ingredients.length - 1}
+          />
+        </div>
+        <div
+          ref={ingredientSectionRef}
+          // These keys are not unique using i for the time being
+          // key={ingredient.ingredient_id || ingredientKeys[i]}
+          // key={}
+          id="ComponentsOptionsRequests-Ingredient-Group"
+        >
+          <IngredientInputGroup
+            index={0}
+            ingredient={ingredients[0]}
+            onIngredientAction={ingredientAction}
+            optionAction={optionAction}
+            length={ingredients.length - 1}
+          />
+        </div>
+        <div
+          ref={ingredientSectionRef}
+          // These keys are not unique using i for the time being
+          // key={ingredient.ingredient_id || ingredientKeys[i]}
+          // key={}
+          id="ComponentsOptionsRequests-Ingredient-Group"
+        >
+          <IngredientInputGroup
+            index={0}
+            ingredient={ingredients[0]}
+            onIngredientAction={ingredientAction}
+            optionAction={optionAction}
+            length={ingredients.length - 1}
+          />
+        </div>
+      </>
+    );
   }
 
   return (
     <>
       <div className="flex flex-col flex-1 min-h-0 py-2 px-1 overflow-y-auto overscroll-contain rounded-md border-2 border-accent-secondary">
-        {ingredients.map((ingredient, i) => (
-          <div
-            ref={ingredientSectionRef}
-            // These keys are not unique using i for the time being
-            // key={ingredient.ingredient_id || ingredientKeys[i]}
-            key={i}
-            id="ComponentsOptionsRequests-Ingredient-Group"
-          >
-            <IngredientInputGroup
-              index={i}
-              ingredient={ingredient}
-              onIngredientAction={ingredientAction}
-              optionAction={optionAction}
-              length={ingredients.length - 1}
-            />
-          </div>
-        ))}
+        {renderIngredientInputGroup()}
       </div>
     </>
   );
