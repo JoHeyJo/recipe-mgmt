@@ -1,6 +1,8 @@
+// DEPRAECATED ???
+
 import { useState } from "react";
 import InstructionsRequests from "../../requests/InstructionsRequests";
-import IngredientsGroup from "../../selectors/IngredientsGroup";
+import IngredientsArea from "../../selectors/IngredientsGroup";
 import NotesInput from "../NotesInput";
 import TitleInput from "../TitleInput";
 import Alert from "../Alert";

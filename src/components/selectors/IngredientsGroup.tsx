@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { Ingredients, Ingredient } from "../../utils/types";
-import { IngredientsGroupProps } from "../../utils/props";
+import { IngredientsAreaProps } from "../../utils/props";
 import { RecipeContext } from "../../context/RecipeContext";
 import { v4 as uuidv4 } from "uuid";
 import { defaultIngredient, recipeTemplate } from "../../utils/templates";
@@ -14,9 +14,9 @@ import { DataContext } from "../../context/DataContext";
  * Refactor: IngredientKeys can be removed and id associated with ingredient can now be used.
  * Need to choose between using DATE or UUID
  *
- * RecipeForm -> IngredientsGroup -> ComponentsOptionsRequests
+ * RecipeForm -> IngredientsArea -> ComponentsOptionsRequests
  */
-function IngredientsGroup({ onIngredientInput }: IngredientsGroupProps) {
+function IngredientsArea({ onIngredientInput }: IngredientsAreaProps) {
   const { requestAction, selectedRecipe } = useContext(RecipeContext);
   const [ingredients, setIngredients] = useState<Ingredients>(
     selectedRecipe.ingredients.length === 0
@@ -78,7 +78,7 @@ function IngredientsGroup({ onIngredientInput }: IngredientsGroupProps) {
   return (
     <Field className="flex flex-col min-h-0">
       <div
-        id="IngredientsGroup-main"
+        id="IngredientsArea-main"
         className="flex flex-1 flex-col min-h-0 overflow-hidden"
       >
         <FormLabel label={"Ingredients:"} />
@@ -93,4 +93,4 @@ function IngredientsGroup({ onIngredientInput }: IngredientsGroupProps) {
   );
 }
 
-export default IngredientsGroup;
+export default IngredientsArea;

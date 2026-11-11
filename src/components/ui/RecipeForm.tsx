@@ -5,7 +5,7 @@ import TitleInput from "../ui/TitleInput";
 import InstructionsRequests from "../requests/InstructionsRequests";
 import NotesInput from "../ui/NotesInput";
 import RecipeFormControls from "../ui/controls/RecipeFormControls";
-import IngredientsGroup from "../selectors/IngredientsGroup";
+import IngredientsArea from "../selectors/IngredientsGroup";
 import {
   compareIngredients,
   compareInstructions,
@@ -18,7 +18,7 @@ import useDataRequest from "../../hooks/useDataRequest";
 import { IngredientOptions, Instructions } from "../../utils/types";
 
 /**
- * RecipeRequests -> RecipeForm -> [IngredientsGroup, InstructionsArea, NotesInput, TitleInput]
+ * RecipeRequests -> RecipeForm -> [IngredientsArea, InstructionsRequests, NotesInput, TitleInput]
  */
 function RecipeForm({
   error,
@@ -111,7 +111,7 @@ function RecipeForm({
                     id="FormContainer-ingredients"
                     className="flex flex-1 min-h-0"
                   >
-                    <IngredientsGroup onIngredientInput={onUpdateRecipeInput} />
+                    <IngredientsArea onIngredientInput={onUpdateRecipeInput} />
                   </div>
                 </div>
 

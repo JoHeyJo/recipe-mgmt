@@ -120,7 +120,7 @@ export type RecipeViewProps = {
   handleModalToggle: () => void;
 };
 
-export type IngredientsGroupProps = {
+export type IngredientsAreaProps = {
   onIngredientInput: (data: Ingredient[], section: string) => void;
 };
 

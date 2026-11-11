@@ -11,7 +11,7 @@ import { RecipeContext } from "../../context/RecipeContext";
 
 /** Manages ingredient requests and dropdown options
  *
- * IngredientsGroup -> ComponentsOptionsRequests -> IngredientInputGroup
+ * IngredientsArea -> ComponentsOptionsRequests -> IngredientInputGroup
  */
 function ComponentsOptionsRequests({
   numOfIngredients,
