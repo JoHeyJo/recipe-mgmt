@@ -36,8 +36,16 @@ function App() {
   const [userData, setUserData] = useState<User>(defaultUser);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isContextInitialized, setIsContextInitialized] = useState(false);
+  const [isList, setIsList] = useState(true);
+
+  /** Toggle between left and right side panel in mobile view */
+  function togglePage(){
+    setIsList((list) => !list)
+  }
 
   const UserDataFromContext: UserContextType = {
+    isList,
+    togglePage,
     user: userData?.userName,
     userId: userData?.id,
     defaultBook: userData?.defaultBook,
@@ -137,7 +145,6 @@ function App() {
         <TopNav logout={logout} />
         <RoutesList signUp={userSignUp} login={userLogin} />
       </UserContext.Provider>
-      {/* <button type="button" onClick={toggleDarkMode}>toggle color scheme</button> */}
     </div>
   );
 }

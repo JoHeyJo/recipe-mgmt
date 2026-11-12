@@ -10,7 +10,7 @@ import { Field } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import Tooltip from "../ui/common/Tooltip";
-import ToggleSwitch from "../ui/ToggleSwitch";
+import ToggleSource from "../ui/ToggleSource";
 import { BookOpen, User } from "lucide-react";
 import { DataContext } from "../../context/DataContext";
 
@@ -70,12 +70,16 @@ function InstructionsRequests({
   };
 
   return (
-    <Field className="h-full pb-5">
+    // <Field className="flex flex-col min-h-full max-h-full flex-1 overflow-hidden">
+    <Field 
+    // className="flex flex-col min-h-0"
+    className="flex min-h-0 flex-1 flex-col">
+
       <div className="grid grid-cols-2 gap-4">
         <FormLabel label={"Instructions:"} />
         <div className="flex justify-end">
           <div className="pr-4">
-            <ToggleSwitch />
+            <ToggleSource />
           </div>
           <Tooltip
             multiline
@@ -94,10 +98,17 @@ function InstructionsRequests({
           </Tooltip>
         </div>
       </div>
-      <InstructionsArea
-        onInstructionInput={onInstructionInput}
-        onInstructionRequest={instructionRequestAction}
-      />
+      <div
+        id="instructionsRequest-Instructions-Area"
+        // className="flex flex-col flex-1 min-h-0 overflow-hidden"
+        // className="flex flex-1 flex-col min-h-40 min-w-0 flex-col sm:min-h-0"
+        className="flex min-h-0 min-w-0 flex-1 flex-col"
+      >
+        <InstructionsArea
+          onInstructionInput={onInstructionInput}
+          onInstructionRequest={instructionRequestAction}
+        />
+      </div>
     </Field>
   );
 }

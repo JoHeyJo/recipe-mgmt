@@ -3,14 +3,13 @@ import { UserContext } from "../../context/UserContext";
 import { useContext, useEffect, useState } from "react";
 import API from "../../api";
 import { errorHandling } from "../../utils/ErrorHandling";
-import { Recipe, Recipes, requestAction } from "../../utils/types";
+import { Recipe, Recipes, RequestAction } from "../../utils/types";
 import RecipeContainer from "../views/RecipeContainer";
 import { recipeTemplate } from "../../utils/templates";
 import RecipeRequests from "../requests/RecipeRequests";
 import { RecipeContext } from "../../context/RecipeContext";
 import BookView from "../views/BookView";
 import Search from "../ui/Search";
-import PopOut from "../ui/common/PopOut";
 import { WebSocketProvider } from "../../context/WebSocketProvider";
 import BookControls from "../ui/controls/BookControls";
 import Share from "../requests/Share";
@@ -20,16 +19,24 @@ import Share from "../requests/Share";
  * RoutesList -> MainContainer -> [RecipeRequests, RecipeContainer, RecipesList, BookView, PopOut, Search, BookControls]
  */
 function MainContainer() {
-  const { userId, defaultBookId, currentBookId, PRIVILEGES } =
-    useContext(UserContext);
+  const {
+    userId,
+    defaultBookId,
+    currentBookId,
+    PRIVILEGES,
+    isList,
+    togglePage,
+  } = useContext(UserContext);
 
   const [recipes, setRecipes] = useState<Recipes | any>([]);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>(recipeTemplate);
   const [isOpen, setOpen] = useState(false);
-  const [requestAction, setRequestAction] = useState<requestAction | object>(
-    {},
-  );
+  const [requestAction, setRequestAction] = useState<RequestAction>({
+    copy: false,
+    edit: false,
+    create: false,
+  });
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isShareBookOpen, setIsShareBookOpen] = useState(false);
   const recipeData = {
@@ -75,6 +82,7 @@ function MainContainer() {
   /** Change selected recipe */
   function selectRecipe(index: number) {
     setSelectedRecipe(filteredRecipes[index]);
+    togglePage();
   }
 
   /** Model toggle function for children components */
@@ -139,7 +147,7 @@ function MainContainer() {
   if (!isLoading) <div>Loading...</div>;
 
   return (
-    <div className="border-4 mt-7 bg-primary mx-auto max-w-7xl xl:px-8 xl:border-2">
+    <div className="border-4 md:mt-7 bg-primary mx-auto max-w-7xl xl:px-8 xl:border-2">
       {/* <div className="w-[1350px] h-[819px] absolute overflow-hidden -translate-x-2/4 p-0 border-[3px] "> */}
       {/* We've used 3xl here, but feel free to try other max-widths based on your needs */}
       <div
@@ -150,8 +158,8 @@ function MainContainer() {
         <RecipeContext.Provider value={recipeData}>
           <WebSocketProvider>
             <section
-              id="MainContainer-leftpage"
-              className="flex-1 flex flex-col min-h-0"
+              id="MainContainer-recipes-panel"
+              className={`flex-1 flex flex-col ${isList ? "block" : "hidden"} sm:block min-h-0`}
             >
               <div id="MainContainer-header">
                 <RecipeRequests
@@ -197,8 +205,8 @@ function MainContainer() {
             </section>
           </WebSocketProvider>
           <section
-            id="MainContainer-rightpage"
-            className="overflow-y-auto divide-y border-x-2 mx-auto flex-1"
+            id="MainContainer-recipe"
+            className={`flex-1 flex flex-col ${!isList ? "block" : "hidden"} sm:block overflow-y-auto divide-y border-x-2 mx-auto flex-1`}
           >
             <RecipeContainer
               recipe={selectedRecipe}
