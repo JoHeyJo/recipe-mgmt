@@ -160,6 +160,13 @@ function ComponentsOptionsRequests({
             optionAction={optionAction}
             length={ingredients.length - 1}
           />
+          <IngredientInputGroup
+            index={0}
+            ingredient={ingredients[0]}
+            onIngredientAction={ingredientAction}
+            optionAction={optionAction}
+            length={ingredients.length - 1}
+          />
         </div>
       </>
     );

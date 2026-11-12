@@ -81,7 +81,7 @@ function RecipeForm({
     <form
       id="FormContainer-book"
       // onSubmit={}
-      className="flex min-h-0 flex-1 w-full flex-col"
+      className="flex h-full w-full flex-col" //DONE
     >
       {error && <Alert alert={error} degree={"yellow"} />}{" "}
       {requestAction.copy && (
@@ -97,7 +97,7 @@ function RecipeForm({
             <DataContext.Provider value={formData}>
               <div
                 id="FormContainer-top-row"
-                className="flex flex-1 basis-2/5 min-h-0 flex-col gap-3 sm:flex-row"
+                className="flex flex-1 flex-col basis-2/5 sm:min-h-0 gap-3 sm:flex-row" //DONE
               >
                 {/* Left column */}
                 <div
