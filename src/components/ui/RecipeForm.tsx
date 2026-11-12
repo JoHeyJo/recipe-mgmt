@@ -81,7 +81,7 @@ function RecipeForm({
     <form
       id="FormContainer-book"
       // onSubmit={}
-      className="flex h-full w-full flex-col" //DONE
+      className="flex h-full w-full flex-col overflow-y-auto" //DONE
     >
       {error && <Alert alert={error} degree={"yellow"} />}{" "}
       {requestAction.copy && (
