@@ -118,7 +118,7 @@ function RecipeForm({
                 {/* Right column: single box filling the rest of the row */}
                 <div
                   id="RecipeForm-instructions"
-                  className="flex flex-col flex-1 min-h-0"
+                  className="flex flex-col sm:flex-1 min-h-0" // keep playing in this area
                 >
                   <InstructionsRequests
                     onInstructionInput={onUpdateRecipeInput}
