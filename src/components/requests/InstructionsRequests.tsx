@@ -70,9 +70,7 @@ function InstructionsRequests({
   };
 
   return (
-    // <Field className="flex flex-col min-h-full max-h-full flex-1 overflow-hidden">
     <Field 
-    // className="flex flex-col min-h-0"
     className="flex min-h-0 flex-1 flex-col">
 
       <div className="grid grid-cols-2 gap-4">

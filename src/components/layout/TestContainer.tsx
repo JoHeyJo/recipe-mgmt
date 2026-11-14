@@ -26,23 +26,51 @@ type FormContainerProps = {
  * them all, the form itself scrolls.
  */
 const pane =
-  "min-h-40 min-w-0 flex-[1_1_0px] overflow-auto rounded-lg border border-red-500 md:min-h-0";
+  "flex flex-col min-h-40 min-w-0 flex-[1_1_0px] overflow-y rounded-lg border border-red-500 md:min-h-0";
 
 export function FormContainer({
   onSubmit,
-  leftPanel,
-  rightPanel,
+  leftPanel = [
+    <div>Test</div>,
+    <div>Test</div>,
+    <div>Test</div>,
+    <div>Test</div>,
+    <div>Test</div>,
+    <div>Test</div>,
+    <div>Test</div>,
+    <div>Test</div>,
+    <div>Test</div>,
+    <div>Test</div>,
+    <div>Test</div>,
+    <div>Test</div>,
+  ],
+  rightPanel = [
+    <div>Test</div>,
+    <div>Test</div>,
+    <div>Test</div>,
+    <div>Test</div>,
+    <div>Test</div>,
+    <div>Test</div>,
+    <div>Test</div>,
+    <div>Test</div>,
+    <div>Test</div>,
+    <div>Test</div>,
+    <div>Test</div>,
+    <div>Test</div>,
+  ],
   secondRow,
 }: FormContainerProps) {
   return (
     <form
       onSubmit={onSubmit}
-      className="flex h-full w-full flex-col gap-4 overflow-y-auto"//DONE
+      className="flex h-full w-full flex-col gap-4 overflow-y-auto" //DONE
     >
       {/* Row 1: two columns (stacked on mobile) */}
-      <div className="flex flex-[3_1_0px] flex-col gap-4 md:min-h-0 md:flex-row"> //
+      <div className="flex flex-[3_1_0px] flex-col gap-4 md:min-h-0 md:flex-row">
+        {" "}
+        //DONE
         {/* Left column: text input + overflow pane */}
-        <div className="flex min-w-0 flex-[1_1_0px] flex-col gap-3 md:min-h-0">
+        <div className="flex min-w-0 flex-[1_1_0px] flex-col gap-3 md:min-h-0"> //DONE
           <input
             type="text"
             name="text"
@@ -52,7 +80,6 @@ export function FormContainer({
           />
           <div className={pane}>{leftPanel}</div>
         </div>
-
         {/* Right column: overflow pane */}
         <div className={pane}>{rightPanel}</div>
       </div>

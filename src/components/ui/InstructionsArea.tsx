@@ -117,7 +117,7 @@ function InstructionsArea({
       // className="flex-1 min-h-0 py-2 px-1  max-h-full overflow-y-auto overscroll-contain rounded-md border-2 border-accent-secondary"
       // className="min-h-0 overflow-y-auto overscroll-contain rounded-md border-2 border-accent-secondary px-1 py-2"
       // className="flex flex-1 min-h-0 py-2 px-1 overflow-y-auto overscroll-contain rounded-md border-2 border-accent-secondary"
-      className="min-h-0 flex-1 overflow-y-auto overscroll-contain rounded-md border-2 border-accent-secondary px-1 py-2 "
+      className="min-h-0 flex-1  overflow-y-auto overscroll-contain rounded-md border-2 border-accent-secondary px-1 py-2 "
     >
       {selectedInstructions.map((value, index) => (
         <InstructionManager
