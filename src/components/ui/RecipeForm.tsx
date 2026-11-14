@@ -81,7 +81,7 @@ function RecipeForm({
     <form
       id="FormContainer-book"
       // onSubmit={}
-      className="flex h-full w-full flex-col overflow-y-auto" //DONE
+      className="flex h-full w-full flex-col overflow-y-auto"
     >
       {error && <Alert alert={error} degree={"yellow"} />}{" "}
       {requestAction.copy && (
@@ -97,7 +97,7 @@ function RecipeForm({
             <DataContext.Provider value={formData}>
               <div
                 id="FormContainer-top-row"
-                className="flex sm:flex-1 flex-col basis-4/5 sm:basis-2/5 min-h-0 gap-3 sm:flex-row" //DONE
+                className="flex sm:flex-1 flex-col basis-4/5 sm:basis-2/5 min-h-0 gap-3 sm:flex-row" 
               >
                 {/* Left column */}
                 <div
@@ -128,7 +128,7 @@ function RecipeForm({
             </DataContext.Provider>
           </ReferenceContext.Provider>
           {/* ── Row 2: takes whatever height is left */}
-          <div id="FormContainer-notes" className="min-h-0 w-full flex-1">
+          <div id="FormContainer-notes" className="min-h-0 w-full sm:flex-1">
             <NotesInput onNotesInput={onUpdateRecipeInput} />
           </div>
         </>
