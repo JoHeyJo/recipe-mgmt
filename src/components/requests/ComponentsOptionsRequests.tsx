@@ -97,7 +97,6 @@ function ComponentsOptionsRequests({
   /** On conditional evaluation, render ingredient input group for Create or Edit requests */
   function renderIngredientInputGroup() {
     console.log("action:",requestAction)
-    // return requestAction.edit ? (
       return ingredients.map((ingredient, i) => (
         <div
           ref={ingredientSectionRef}
@@ -115,25 +114,6 @@ function ComponentsOptionsRequests({
           />
         </div>
       ))
-    // ) : (
-      // <>
-      //   <div
-      //     ref={ingredientSectionRef}
-      //     // These keys are not unique using i for the time being
-      //     // key={ingredient.ingredient_id || ingredientKeys[i]}
-      //     // key={}
-      //     id="ComponentsOptionsRequests-Ingredient-Group"
-      //   >
-      //     <IngredientInputGroup
-      //       index={0}
-      //       ingredient={ingredients[0]}
-      //       onIngredientAction={ingredientAction}
-      //       optionAction={optionAction}
-      //       length={ingredients.length - 1}
-      //     />
-      //   </div>
-      // </>
-    // );
   }
 
   return (
