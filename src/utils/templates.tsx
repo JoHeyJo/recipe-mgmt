@@ -2,7 +2,7 @@ import { Recipe, Ingredient, Instructions, Instruction } from "./types";
 
 export const defaultInstruction: Instruction = {
   id: 0,
-  instruction:''
+  instruction: "",
 };
 
 export const defaultIngredient: Ingredient = {
@@ -18,7 +18,7 @@ export const recipeTemplate: Recipe = {
   name: "",
   instructions: [defaultInstruction],
   notes: "",
-  ingredients: [defaultIngredient],
+  ingredients: [defaultIngredient, defaultIngredient, defaultIngredient],
 };
 
 export const references = {
